@@ -23,8 +23,8 @@ new MaterialDialog.Builder(this)
 
 ![Example 1](/art/example1.png)
 
-On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` attribute to
-the `colorAccent` attribute of your styles.xml theme.
+On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` (which is used on the
+positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 ---
 
