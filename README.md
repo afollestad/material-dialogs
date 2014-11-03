@@ -270,6 +270,13 @@ View neutral = dialog.getButton(DialogAction.NEUTRAL);
 View positive = dialog.getButton(DialogAction.POSITIVE);
 ```
 
+If you want to update the title of a dialog action button (you can pass a string resource ID in place of the literal string, too):
+
+```java
+MaterialDialog dialog = //... initialization via the builder ...
+dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
+```
+
 --
 
 ### Maven/Gradle Dependency

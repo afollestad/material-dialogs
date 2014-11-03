@@ -583,6 +583,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     /**
+     * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
+     *
+     * @param which    The action button to update.
+     * @param titleRes The string resource of the new title of the action button.
+     */
+    public final void setActionButton(DialogAction which, @StringRes int titleRes) {
+        setActionButton(which, mContext.getString(titleRes));
+    }
+
+    /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
      */
     public final View getCustomView() {
