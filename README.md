@@ -21,6 +21,9 @@ new MaterialDialog.Builder(this)
 
 ![Example 1](/art/example1.png)
 
+On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` attribute to
+the `colorAccent` attribute of your styles.xml theme.
+
 ---
 
 ### Stacked Buttons
@@ -121,7 +124,6 @@ new MaterialDialog.Builder(this)
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(int which, String text) {
-                Toast.makeText(MyActivity.this, which + ": " + text, Toast.LENGTH_LONG).show();
             }
         })
         .build()
@@ -129,6 +131,32 @@ new MaterialDialog.Builder(this)
 ```
 
 ![Example 4](/art/example4.png)
+
+---
+
+### Multichoice List Dialogs
+
+Multichoice list dialogs are almost identical to regular list dialogs. The only difference is that
+you use `itemsCallbackMulti` to set a callback rather than `itemsCallback`. That signals the dialog to
+display checkboxes next to list items and return multiple selections in the callback.
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Social Networks")
+        .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .itemsCallbackMulti(new MaterialDialog.ListCallbackMulti() {
+            @Override
+            public void onSelection(int which[], String[] text) {
+            }
+        })
+        .positiveText("Choose")
+        .build()
+        .show();
+```
+
+The result:
+
+![Example 5](/art/example5.png)
 
 ---
 
@@ -154,10 +182,10 @@ is used on the top, bottom, left, or right of the root view, that's all stock to
 and don't worry about it being too long. However, you should avoid making any content that wouldn't belong
 in a dialog because of its size.
 
-![Example 5](/art/example5.png)
+![Example 6](/art/example6.png)
 
 ---
 
 ### Coming Soon
 
-1. Radio/checkbox list items for selection modes
+1. Radio list items for selection modes

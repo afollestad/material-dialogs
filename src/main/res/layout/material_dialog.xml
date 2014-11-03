@@ -72,6 +72,15 @@
         android:visibility="gone"
         android:paddingTop="@dimen/button_frame_margin" />
 
+    <LinearLayout
+        android:id="@+id/listFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingLeft="@dimen/dialog_frame_margin"
+        android:paddingRight="@dimen/dialog_frame_margin" />
+
     <RelativeLayout
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
@@ -121,15 +130,5 @@
             android:gravity="center|right" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/listFrame"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:paddingLeft="@dimen/dialog_frame_margin"
-        android:paddingRight="@dimen/dialog_frame_margin"
-        android:paddingBottom="@dimen/button_frame_margin" />
 
 </LinearLayout>

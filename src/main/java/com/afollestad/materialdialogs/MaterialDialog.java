@@ -3,8 +3,10 @@ package com.afollestad.materialdialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
@@ -15,6 +17,7 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,6 +43,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private int positiveColor;
     private SimpleCallback callback;
     private ListCallback listCallback;
+    private ListCallbackMulti listCallbackMulti;
     private View customView;
     private float buttonHeight;
     private String[] items;
@@ -65,6 +69,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
+        this.listCallbackMulti = builder.listCallbackMulti;
         this.positiveText = builder.positiveText;
         this.neutralText = builder.neutralText;
         this.negativeText = builder.negativeText;
@@ -123,12 +128,24 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         LayoutInflater li = LayoutInflater.from(mContext);
 
         for (int index = 0; index < items.length; index++) {
-            TextView il = (TextView) li.inflate(R.layout.dialog_listitem, null);
-            il.setText(items[index]);
-            if (this.theme == Theme.LIGHT) {
-                il.setTextColor(LightColors.ITEM.get());
+            View il;
+            if (listCallbackMulti == null) {
+                il = li.inflate(R.layout.dialog_listitem, null);
+                ((TextView) il).setText(items[index]);
+                if (this.theme == Theme.LIGHT) {
+                    ((TextView) il).setTextColor(LightColors.ITEM.get());
+                } else {
+                    ((TextView) il).setTextColor(DarkColors.ITEM.get());
+                }
             } else {
-                il.setTextColor(DarkColors.ITEM.get());
+                il = li.inflate(R.layout.dialog_listitem_multichoice, null);
+                CheckBox cb = (CheckBox) ((LinearLayout) il).getChildAt(0);
+                cb.setText(items[index]);
+                if (this.theme == Theme.LIGHT) {
+                    cb.setTextColor(LightColors.ITEM.get());
+                } else {
+                    cb.setTextColor(DarkColors.ITEM.get());
+                }
             }
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
@@ -137,7 +154,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     private void checkIfStackingNeeded() {
-        if (items != null || (negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE)) {
+        if ((negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE)) {
             // Stacking isn't necessary if you only have one button
             return;
         }
@@ -176,7 +193,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     private void invalidateActions() {
-        if (items != null) {
+        if (items != null && listCallbackMulti == null) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
@@ -254,6 +271,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             String[] split = tag.split(":");
             int index = Integer.parseInt(split[0]);
             listCallback.onSelection(index, split[1]);
+        } else if (listCallbackMulti != null) {
+            CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
+            cb.performClick();
         }
     }
 
@@ -274,13 +294,24 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         protected int positiveColor;
         protected SimpleCallback callback;
         protected ListCallback listCallback;
+        private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
         protected Alignment titleAlignment = Alignment.LEFT;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
             this.positiveText = context.getString(R.string.accept);
-            this.positiveColor = context.getResources().getColor(R.color.material_blue_500);
+            final int materialBlue = context.getResources().getColor(R.color.material_blue_500);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
+                try {
+                    this.positiveColor = a.getColor(0, materialBlue);
+                } finally {
+                    a.recycle();
+                }
+            } else {
+                this.positiveColor = materialBlue;
+            }
         }
 
         public Builder title(@StringRes int titleRes) {
@@ -320,6 +351,13 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder itemsCallback(ListCallback callback) {
             this.listCallback = callback;
+            this.listCallbackMulti = null;
+            return this;
+        }
+
+        public Builder itemsCallbackMulti(ListCallbackMulti callback) {
+            this.listCallback = null;
+            this.listCallbackMulti = callback;
             return this;
         }
 
@@ -392,6 +430,10 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
     public static interface ListCallback {
         void onSelection(int which, String text);
+    }
+
+    public static interface ListCallbackMulti {
+        void onSelection(int[] which, String[] text);
     }
 
     public static interface SimpleCallback {
