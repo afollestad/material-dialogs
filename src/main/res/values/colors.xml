@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="divider">#10000000</color>
     <color name="material_blue_500">#5677fc</color>
 
 </resources>

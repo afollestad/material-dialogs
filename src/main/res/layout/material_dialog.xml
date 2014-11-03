@@ -7,8 +7,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/mainFrame"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dialog_frame_margin"
         android:paddingBottom="@dimen/dialog_frame_margin"
@@ -17,7 +18,7 @@
 
         <com.afollestad.materialdialogs.MaterialTextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             lib:font="medium"
             android:layout_marginBottom="@dimen/button_frame_margin"
@@ -35,13 +36,48 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:id="@+id/customViewScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/customViewFrame"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dialog_frame_margin"
+            android:paddingRight="@dimen/dialog_frame_margin"
+            android:paddingTop="@dimen/dialog_frame_margin"
+            android:paddingBottom="@dimen/dialog_frame_margin">
+
+            <com.afollestad.materialdialogs.MaterialTextView
+                android:id="@+id/titleCustomView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                lib:font="medium"
+                android:layout_marginBottom="@dimen/button_frame_margin"
+                android:textSize="@dimen/title_textsize"
+                tools:text="Title"
+                android:paddingBottom="@dimen/title_margin_customview" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/customViewDivider"
+        style="@style/Divider"
+        android:visibility="gone"
+        android:paddingTop="@dimen/button_frame_margin" />
+
     <RelativeLayout
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/button_frame_margin"
-        android:paddingRight="@dimen/button_frame_margin"
-        android:paddingBottom="@dimen/button_frame_margin">
+        android:paddingRight="@dimen/button_frame_margin">
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNeutral"
@@ -67,7 +103,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/button_frame_margin"
         android:paddingRight="@dimen/button_frame_margin"
-        android:paddingBottom="@dimen/button_frame_margin"
         android:gravity="right">
 
         <com.afollestad.materialdialogs.MaterialButton
@@ -86,5 +121,15 @@
             android:gravity="center|right" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingLeft="@dimen/dialog_frame_margin"
+        android:paddingRight="@dimen/dialog_frame_margin"
+        android:paddingBottom="@dimen/button_frame_margin" />
 
 </LinearLayout>

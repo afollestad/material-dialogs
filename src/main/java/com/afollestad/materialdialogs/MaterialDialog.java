@@ -12,8 +12,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -35,21 +38,21 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private View view;
     private Theme theme;
     private int positiveColor;
+    private SimpleCallback callback;
+    private ListCallback listCallback;
+    private View customView;
+    private float buttonHeight;
+    private String[] items;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
         mContext = builder.context;
         view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
+        customView = builder.customView;
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(builder.title);
-        if (builder.theme == Theme.LIGHT) {
-            title.setTextColor(LightColors.TITLE.get());
-        } else {
-            title.setTextColor(DarkColors.TITLE.get());
-        }
-
         TextView body = (TextView) view.findViewById(R.id.content);
+
         body.setText(builder.content);
         body.setMovementMethod(new LinkMovementMethod());
         body.setVisibility(View.VISIBLE);
@@ -66,19 +69,79 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         this.negativeText = builder.negativeText;
         this.theme = builder.theme;
         this.positiveColor = builder.positiveColor;
+        this.items = builder.items;
 
+        if (customView != null) {
+            title = (TextView) view.findViewById(R.id.titleCustomView);
+            buttonHeight = mContext.getResources().getDimension(R.dimen.button_height_customview);
+            view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
+            view.findViewById(R.id.customViewScroll).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.customViewDivider).setVisibility(View.VISIBLE);
+            ((LinearLayout) view.findViewById(R.id.customViewFrame)).addView(customView);
+        } else {
+            buttonHeight = mContext.getResources().getDimension(R.dimen.button_height);
+            view.findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.customViewScroll).setVisibility(View.GONE);
+            view.findViewById(R.id.customViewDivider).setVisibility(View.GONE);
+        }
+
+        // Title is set after it's determined whether to use first title or custom view title
+        title.setText(builder.title);
+        if (builder.theme == Theme.LIGHT) {
+            title.setTextColor(LightColors.TITLE.get());
+        } else {
+            title.setTextColor(DarkColors.TITLE.get());
+        }
+        if (builder.titleAlignment == Alignment.CENTER) {
+            title.setGravity(Gravity.CENTER_HORIZONTAL);
+        } else if (builder.titleAlignment == Alignment.RIGHT) {
+            title.setGravity(Gravity.RIGHT);
+        }
+
+        invalidateList();
         invalidateActions(false);
         checkIfStackingNeeded();
         setView(view);
     }
 
+    private void invalidateList() {
+        if (items == null || items.length == 0) return;
+        view.findViewById(R.id.content).setVisibility(View.GONE);
+        View mainFrame = view.findViewById(R.id.mainFrame);
+        mainFrame.setPadding(mainFrame.getPaddingLeft(), mainFrame.getPaddingTop(), mainFrame.getPaddingRight(), 0);
+
+        View title = view.findViewById(R.id.title);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) title.getLayoutParams();
+        params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.title_margin_customview);
+        title.setLayoutParams(params);
+        int dp = (int) mContext.getResources().getDimension(R.dimen.button_padding);
+        title.setPadding(dp, 0, dp, 0);
+
+        LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
+        list.setVisibility(View.VISIBLE);
+        LayoutInflater li = LayoutInflater.from(mContext);
+
+        for (int index = 0; index < items.length; index++) {
+            TextView il = (TextView) li.inflate(R.layout.dialog_listitem, null);
+            il.setText(items[index]);
+            if (this.theme == Theme.LIGHT) {
+                il.setTextColor(LightColors.ITEM.get());
+            } else {
+                il.setTextColor(DarkColors.ITEM.get());
+            }
+            il.setTag(index + ":" + items[index]);
+            il.setOnClickListener(this);
+            list.addView(il);
+        }
+    }
+
     private void checkIfStackingNeeded() {
-        if (negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE) {
+        if (items != null || (negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE)) {
             // Stacking isn't necessary if you only have one button
             return;
         }
         Paint paint = positiveButton.getPaint();
-        float px = Utils.convertToPx(mContext, 88);
+        float px = mContext.getResources().getDimension(R.dimen.button_regular_width);
         boolean isStackingNeeded = paint.measureText(positiveButton.getText().toString()) > px;
         if (this.neutralText != null)
             isStackingNeeded = isStackingNeeded || paint.measureText(neutralButton.getText().toString()) > px;
@@ -87,7 +150,36 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         invalidateActions(isStackingNeeded);
     }
 
+    private void invalidateHeightAndMargin(View button) {
+        if (button.getLayoutParams() instanceof LinearLayout.LayoutParams) {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
+            params.height = (int) buttonHeight;
+            if (customView != null) {
+                params.bottomMargin = 0;
+            } else {
+                params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
+            }
+            button.setLayoutParams(params);
+        } else {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) button.getLayoutParams();
+            params.height = (int) buttonHeight;
+            if (customView != null) {
+                params.bottomMargin = 0;
+            } else {
+                params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
+            }
+            button.setLayoutParams(params);
+        }
+    }
+
     private void invalidateActions(boolean stacked) {
+        if (items != null) {
+            // If the dialog is a plain list dialog, no buttons are shown.
+            view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
+            view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
+            return;
+        }
+
         view.findViewById(R.id.buttonDefaultFrame).setVisibility(stacked ? View.GONE : View.VISIBLE);
         view.findViewById(R.id.buttonStackedFrame).setVisibility(stacked ? View.VISIBLE : View.GONE);
 
@@ -97,6 +189,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             this.positiveText = mContext.getString(R.string.accept);
         positiveButton.setText(this.positiveText);
         positiveButton.setTextColor(this.positiveColor);
+        invalidateHeightAndMargin(positiveButton);
         positiveButton.setTag(POSITIVE);
         positiveButton.setOnClickListener(this);
 
@@ -110,6 +203,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 neutralButton.setTextColor(DarkColors.BUTTON.get());
             }
             neutralButton.setText(this.neutralText);
+            invalidateHeightAndMargin(neutralButton);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
         } else {
@@ -126,6 +220,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 negativeButton.setTextColor(DarkColors.BUTTON.get());
             }
             negativeButton.setText(this.negativeText);
+            invalidateHeightAndMargin(negativeButton);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
         } else {
@@ -151,56 +246,16 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 dismiss();
                 ((FullCallback) callback).onNeutral();
             }
+        } else if (listCallback != null) {
+            dismiss();
+            String[] split = tag.split(":");
+            int index = Integer.parseInt(split[0]);
+            listCallback.onSelection(index, split[1]);
         }
     }
 
-    static enum LightColors {
-        TITLE("#3C3C3D"), CONTENT("#535353"), ITEM("#535353"), BUTTON("#3C3C3D");
-
-        final String mColor;
-
-        LightColors(String color) {
-            this.mColor = color;
-        }
-
-        public int get() {
-            return Color.parseColor(mColor);
-        }
-    }
-
-    static enum DarkColors {
-        TITLE("#FFFFFF"), CONTENT("#EDEDED"), ITEM("#EDEDED"), BUTTON("#FFFFFF");
-
-        final String mColor;
-
-        DarkColors(String color) {
-            this.mColor = color;
-        }
-
-        public int get() {
-            return Color.parseColor(mColor);
-        }
-    }
-
-    private SimpleCallback callback;
-    private ListCallback listCallback;
-
-    public static interface ListCallback {
-        void onSelection(int which, String text);
-    }
-
-    public static interface SimpleCallback {
-        void onPositive();
-    }
-
-    public static interface Callback extends SimpleCallback {
-        void onPositive();
-
-        void onNegative();
-    }
-
-    public static interface FullCallback extends Callback {
-        void onNeutral();
+    public View getCustomView() {
+        return customView;
     }
 
     public static class Builder {
@@ -217,6 +272,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         protected SimpleCallback callback;
         protected ListCallback listCallback;
         protected Theme theme = Theme.LIGHT;
+        protected Alignment titleAlignment = Alignment.LEFT;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -231,6 +287,11 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder title(String title) {
             this.title = title;
+            return this;
+        }
+
+        public Builder titleAlignment(Alignment align) {
+            this.titleAlignment = align;
             return this;
         }
 
@@ -322,6 +383,53 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public MaterialDialog build() {
             return new MaterialDialog(this);
+        }
+    }
+
+
+    public static interface ListCallback {
+        void onSelection(int which, String text);
+    }
+
+    public static interface SimpleCallback {
+        void onPositive();
+    }
+
+    public static interface Callback extends SimpleCallback {
+        void onPositive();
+
+        void onNegative();
+    }
+
+    public static interface FullCallback extends Callback {
+        void onNeutral();
+    }
+
+    static enum LightColors {
+        TITLE("#3C3C3D"), CONTENT("#535353"), ITEM("#535353"), BUTTON("#3C3C3D");
+
+        final String mColor;
+
+        LightColors(String color) {
+            this.mColor = color;
+        }
+
+        public int get() {
+            return Color.parseColor(mColor);
+        }
+    }
+
+    static enum DarkColors {
+        TITLE("#FFFFFF"), CONTENT("#EDEDED"), ITEM("#EDEDED"), BUTTON("#FFFFFF");
+
+        final String mColor;
+
+        DarkColors(String color) {
+            this.mColor = color;
+        }
+
+        public int get() {
+            return Color.parseColor(mColor);
         }
     }
 }

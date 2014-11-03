@@ -19,10 +19,6 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-The result is this:
-
-![Example 1 screenshot](/art/example1.png)
-
 ---
 
 If the action text is too long, it will stack the buttons as also seen on Google's Material design guidelines.
@@ -37,6 +33,82 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-The result is this:
+---
 
-![Example 2 screenshot](/art/example2.png)
+To know when the user selects a button, you set a callback. There's three variations of the callback for the action buttons:
+
+```java
+new MaterialDialog.Builder(this)
+                .callback(new MaterialDialog.SimpleCallback() {
+                    @Override
+                    public void onPositive() {
+                    }
+                });
+
+new MaterialDialog.Builder(this)
+                .callback(new MaterialDialog.Callback() {
+                    @Override
+                    public void onPositive() {
+                    }
+
+                    @Override
+                    public void onNegative() {
+                    }
+                });
+
+new MaterialDialog.Builder(this)
+                .callback(new MaterialDialog.FullCallback() {
+                    @Override
+                    public void onPositive() {
+                    }
+
+                    @Override
+                    public void onNegative() {
+                    }
+
+                    @Override
+                    public void onNeutral() {
+                    }
+                });
+```
+
+You can choose which one to use based on which actions you make visible, and which actions need to trigger an event.
+If you pass text to an action, it will become visible; you don't need a callback to do that. But the dialog will
+not dismiss when an action is pressed if no callback is set for it.
+
+---
+
+Creating a list dialog only requires passing in an array of strings. The callback (`itemsCallback`) is
+also very simple.
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Social Networks")
+        .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .itemsCallback(new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(int which, String text) {
+                Toast.makeText(MyActivity.this, which + ": " + text, Toast.LENGTH_LONG).show();
+            }
+        })
+        .build()
+        .show();
+```
+
+---
+
+Custom views are very easy to implement. To match the dialog show here: http://www.google.com/design/spec/components/dialogs.html#dialogs-behavior
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Google Wifi")
+        .positiveText(R.string.accept)
+        .customView(R.layout.custom_view)
+        .positiveText("Connect")
+        .positiveColor(Color.parseColor("#03a9f4"))
+        .build()
+        .show();
+```
+
+Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. No padding
+is used on the top, bottom, left, or right of the root view, that's all stock to the dialog.
