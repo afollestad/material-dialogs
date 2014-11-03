@@ -22,3 +22,21 @@ new MaterialDialog.Builder(this)
 The result is this:
 
 ![Example 1 screenshot](/art/example1.png)
+
+---
+
+If the action text is too long, it will stack the buttons as also seen on Google's Material design guidelines.
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Permissions")
+        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
+        .positiveText("Turn on speed boost")
+        .negativeText("No thanks")
+        .build()
+        .show();
+```
+
+The result is this:
+
+![Example 2 screenshot](/art/example2.png)
