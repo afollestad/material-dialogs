@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.afollestad.materialdialogs"
-        minSdkVersion 15
+        minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
