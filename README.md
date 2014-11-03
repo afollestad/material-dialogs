@@ -237,6 +237,7 @@ new MaterialDialog.Builder(this)
         .positiveColor(materialRed500)
         .titleAlignment(Alignment.CENTER)
         .titleColor(materialRed500)
+        .theme(Theme.DARK)
         .build()
         .show();
 ```
