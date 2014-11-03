@@ -379,7 +379,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
-        public Builder title(String title) {
+        public Builder title(CharSequence title) {
             this.title = title;
             return this;
         }
@@ -404,7 +404,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
-        public Builder content(String content) {
+        public Builder content(CharSequence content) {
             this.content = content;
             return this;
         }
@@ -450,7 +450,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
-        public Builder positiveText(String message) {
+        public Builder positiveText(CharSequence message) {
             this.positiveText = message;
             return this;
         }
@@ -460,7 +460,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
-        public Builder neutralText(String message) {
+        public Builder neutralText(CharSequence message) {
             this.neutralText = message;
             return this;
         }
@@ -470,7 +470,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
-        public Builder negativeText(String message) {
+        public Builder negativeText(CharSequence message) {
             this.negativeText = message;
             return this;
         }
