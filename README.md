@@ -251,6 +251,25 @@ To see more colors that fit the Material design palette, see this page: http://w
 
 ---
 
+### Misc
+
+**Something to note:** when a dialog is dismissed, the dialog automatically calls your callbacks `onNegative()`
+method. There's no need to have a separate dismiss listener. If you want a separate dismiss listener, it can
+be set to the `MaterialDialog` returned by the `Builder`, however this will override the behavior of calling
+the callback.
+
+If you want to get a reference to one of the dialog action buttons (e.g. to enable or disable buttons):
+
+```java
+MaterialDialog dialog = //... initialization via the builder ...
+View negative = dialog.getButton(MaterialDialog.DialogAction.NEGATIVE);
+View neutral = dialog.getButton(MaterialDialog.DialogAction.NEUTRAL);
+View positive = dialog.getButton(MaterialDialog.DialogAction.POSITIVE);
+```
+
+--
+
+
 ### Maven/Gradle Dependency
 
 Coming soon

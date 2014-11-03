@@ -18,6 +18,7 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -578,5 +579,39 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener,
         public int get() {
             return Color.parseColor(mColor);
         }
+    }
+
+    @Override
+    public Button getButton(int whichButton) {
+        throw new RuntimeException("Use getButton(MaterialDialog.Button) instead.");
+    }
+
+    public View getButton(DialogAction which) {
+        if (view == null) return null;
+        if (isStacked) {
+            switch (which) {
+                default:
+                    return view.findViewById(R.id.buttonStackedPositive);
+                case NEUTRAL:
+                    return view.findViewById(R.id.buttonStackedNeutral);
+                case NEGATIVE:
+                    return view.findViewById(R.id.buttonStackedNegative);
+            }
+        } else {
+            switch (which) {
+                default:
+                    return view.findViewById(R.id.buttonDefaultPositive);
+                case NEUTRAL:
+                    return view.findViewById(R.id.buttonDefaultNeutral);
+                case NEGATIVE:
+                    return view.findViewById(R.id.buttonDefaultNegative);
+            }
+        }
+    }
+
+    public static enum DialogAction {
+        POSITIVE,
+        NEUTRAL,
+        NEGATIVE
     }
 }
