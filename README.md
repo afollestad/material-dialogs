@@ -246,3 +246,9 @@ The result:
 ![Example 8](/art/example8.png)
 
 To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
+
+---
+
+### Maven/Gradle Dependency
+
+Coming soon
