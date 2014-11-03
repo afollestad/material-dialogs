@@ -36,11 +36,11 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private final static String NEUTRAL = "NEUTRAL";
 
     private Context mContext;
-    private String positiveText;
+    private CharSequence positiveText;
     private TextView positiveButton;
-    private String neutralText;
+    private CharSequence neutralText;
     private TextView neutralButton;
-    private String negativeText;
+    private CharSequence negativeText;
     private TextView negativeButton;
     private View view;
     private Theme theme;
@@ -342,14 +342,14 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     public static class Builder {
 
         protected Activity context;
-        protected String title;
+        protected CharSequence title;
         protected Alignment titleAlignment = Alignment.LEFT;
         protected int titleColor = -1;
-        protected String content;
+        protected CharSequence content;
         protected String[] items;
-        protected String positiveText;
-        protected String neutralText;
-        protected String negativeText;
+        protected CharSequence positiveText;
+        protected CharSequence neutralText;
+        protected CharSequence negativeText;
         protected View customView;
         protected int positiveColor;
         protected SimpleCallback callback;
