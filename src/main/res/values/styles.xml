@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Light" parent="android:Theme.Light" />
+    <style name="Light" parent="android:Theme.Light">
+        <item name="android:actionModeStyle">@style/ActionModeStyle</item>
+    </style>
 
     <style name="Dark" parent="android:Theme.Black" />
 
@@ -21,6 +23,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/divider</item>
+    </style>
+
+    <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="android:background">#000</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_action_close</item>
+        <item name="android:actionModeCloseDrawable">@drawable/ic_action_close</item>
     </style>
 
 </resources>

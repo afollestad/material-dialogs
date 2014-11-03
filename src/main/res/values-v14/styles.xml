@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Light" parent="android:Theme.Holo.Light" />
+    <style name="Light" parent="android:Theme.Holo.Light">
+        <item name="android:actionModeStyle">@style/ActionModeStyle</item>
+    </style>
 
     <style name="Dark" parent="android:Theme.Holo" />
 
