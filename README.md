@@ -23,6 +23,8 @@ new MaterialDialog.Builder(this)
 
 ---
 
+### Stacked Buttons
+
 If the action text is too long, it will stack the buttons as also seen on Google's Material design guidelines.
 
 ```java
@@ -38,6 +40,8 @@ new MaterialDialog.Builder(this)
 ![Example 2](/art/example2.png)
 
 ---
+
+### Callbacks
 
 To know when the user selects a button, you set a callback. There's three variations of the callback for the action buttons:
 
@@ -82,6 +86,8 @@ not dismiss when an action is pressed if no callback is set for it.
 
 ---
 
+### List Dialogs
+
 Creating a list dialog only requires passing in an array of strings. The callback (`itemsCallback`) is
 also very simple.
 
@@ -103,6 +109,8 @@ new MaterialDialog.Builder(this)
 
 ---
 
+### Custom Views
+
 Custom views are very easy to implement. To match the dialog show here: http://www.google.com/design/spec/components/dialogs.html#dialogs-behavior
 
 ```java
@@ -120,3 +128,9 @@ Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a
 is used on the top, bottom, left, or right of the root view, that's all stock to the dialog.
 
 ![Example 4](/art/example4.png)
+
+---
+
+### Coming Soon
+
+1. Radio/checkbox list items for selection modes
