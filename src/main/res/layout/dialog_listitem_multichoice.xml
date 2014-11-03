@@ -16,6 +16,6 @@
         tools:text="Item"
         android:textSize="@dimen/listitem_textsize"
         android:clickable="false"
-        android:background="@null"/>
+        android:background="@null" />
 
 </LinearLayout>
