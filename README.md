@@ -176,7 +176,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackMultiChoice(new MaterialDialog.ListCallbackMulti() {
             @Override
-            public void onSelection(int which[], String[] text) {
+            public void onSelection(Integer[] which, String[] text) {
             }
         })
         .positiveText("Choose")

@@ -23,6 +23,9 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
@@ -275,7 +278,32 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     public void onClick(View v) {
         String tag = (String) v.getTag();
         if (tag.equals(POSITIVE)) {
-            if (callback != null) {
+            if (listCallbackSingle != null) {
+                dismiss();
+                LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
+                for (int i = 0; i < list.getChildCount(); i++) {
+                    RadioButton rb = (RadioButton) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
+                    if (rb.isChecked()) {
+                        listCallbackSingle.onSelection(i, rb.getText().toString());
+                        break;
+                    }
+                }
+            } else if (listCallbackMulti != null) {
+                dismiss();
+                List<Integer> selectedIndices = new ArrayList<Integer>();
+                List<String> selectedTitles = new ArrayList<String>();
+                LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
+                for (int i = 0; i < list.getChildCount(); i++) {
+                    RadioButton rb = (RadioButton) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
+                    if (rb.isChecked()) {
+                        selectedIndices.add(i);
+                        selectedTitles.add(rb.getText().toString());
+                    }
+                }
+                listCallbackMulti.onSelection(
+                        selectedIndices.toArray(new Integer[selectedIndices.size()]),
+                        selectedTitles.toArray(new String[selectedTitles.size()]));
+            } else if (callback != null) {
                 dismiss();
                 callback.onPositive();
             }
@@ -483,7 +511,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     public static interface ListCallbackMulti {
-        void onSelection(int[] which, String[] text);
+        void onSelection(Integer[] which, String[] text);
     }
 
     public static interface SimpleCallback {
