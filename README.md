@@ -17,3 +17,7 @@ new MaterialDialog.Builder(this)
     .build()
     .show();
 ```
+
+The result is this:
+
+![Example 1 screenshot](/art/example1.png)
