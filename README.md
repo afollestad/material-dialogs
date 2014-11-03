@@ -63,7 +63,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-Results in this on a tablet:
+The result on a tablet:
 
 ![Example 3](/art/example3.png)
 
