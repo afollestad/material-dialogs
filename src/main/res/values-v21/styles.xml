@@ -6,7 +6,7 @@
         <item name="content_color">@color/content_light</item>
         <item name="item_color">@color/item_light</item>
         <item name="button_color">@color/button_light</item>
-        <item name="divider_color">@color/divider_white</item>
+        <item name="divider_color">@color/divider_black</item>
     </style>
 
     <style name="Dark" parent="android:Theme.Material.Dialog.Alert">
@@ -14,7 +14,7 @@
         <item name="content_color">@color/content_dark</item>
         <item name="item_color">@color/item_dark</item>
         <item name="button_color">@color/button_dark</item>
-        <item name="divider_color">@color/divider_black</item>
+        <item name="divider_color">@color/divider_white</item>
     </style>
 
 </resources>
