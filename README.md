@@ -211,3 +211,30 @@ so don't wrap your custom view in a scroll view and don't worry about it being t
 However, you should avoid making any content that wouldn't belong in a dialog because of its size.
 
 ![Example 7](/art/example7.png)
+
+---
+
+### Theming
+
+Before Lollipop, theming AlertDialogs was basically impossible without using reflection and custom drawables.
+Since KitKat, Android became more color neutral but AlertDialogs continued to use Holo Blue for the title and
+title divider. Lollipop has improved even more, with no colors in the dialog by default other than the action
+buttons. This library makes theming even easier. Here's a basic example:
+
+```java
+final int materialRed500 = Color.parseColor("#D50000");
+new MaterialDialog.Builder(this)
+        .title("Permissions")
+        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
+        .positiveText("Accept")
+        .negativeText("Decline")
+        .positiveColor(materialRed500)
+        .titleAlignment(Alignment.CENTER)
+        .titleColor(materialRed500)
+        .build()
+        .show();
+```
+
+The result:
+
+![Example 8](/art/example8.png)

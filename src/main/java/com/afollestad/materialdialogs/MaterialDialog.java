@@ -96,7 +96,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         // Title is set after it's determined whether to use first title or custom view title
         title.setText(builder.title);
-        if (builder.theme == Theme.LIGHT) {
+        if (builder.titleColor != -1) {
+            title.setTextColor(builder.titleColor);
+        } else if (builder.theme == Theme.LIGHT) {
             title.setTextColor(LightColors.TITLE.get());
         } else {
             title.setTextColor(DarkColors.TITLE.get());
@@ -312,6 +314,8 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         protected Activity context;
         protected String title;
+        protected Alignment titleAlignment = Alignment.LEFT;
+        protected int titleColor = -1;
         protected String content;
         protected String[] items;
         protected String positiveText;
@@ -324,7 +328,6 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         protected ListCallback listCallbackSingle;
         private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
-        protected Alignment titleAlignment = Alignment.LEFT;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -354,6 +357,16 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder titleAlignment(Alignment align) {
             this.titleAlignment = align;
+            return this;
+        }
+
+        public Builder titleColorRes(@ColorRes int colorRes) {
+            titleColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder titleColor(int color) {
+            this.titleColor = color;
             return this;
         }
 
