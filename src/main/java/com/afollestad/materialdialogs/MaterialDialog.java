@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
@@ -57,11 +58,17 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private String[] items;
     private boolean isStacked;
 
+    private Typeface regularFont;
+    private Typeface mediumFont;
+
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
         mContext = builder.context;
         view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
         customView = builder.customView;
+
+        regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
+        mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView body = (TextView) view.findViewById(R.id.content);
@@ -69,6 +76,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         body.setText(builder.content);
         body.setMovementMethod(new LinkMovementMethod());
         body.setVisibility(View.VISIBLE);
+        body.setTypeface(regularFont);
         if (builder.theme == Theme.LIGHT) {
             body.setTextColor(LightColors.CONTENT.get());
         } else {
@@ -104,6 +112,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         // Title is set after it's determined whether to use first title or custom view title
         title.setText(builder.title);
+        title.setTypeface(mediumFont);
         if (builder.titleColor != -1) {
             title.setTextColor(builder.titleColor);
         } else if (builder.theme == Theme.LIGHT) {
@@ -237,6 +246,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         positiveButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
+        positiveButton.setTypeface(mediumFont);
         if (this.positiveText == null)
             this.positiveText = mContext.getString(R.string.accept);
         positiveButton.setText(this.positiveText);
@@ -252,6 +262,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         neutralButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
+        neutralButton.setTypeface(mediumFont);
         if (this.neutralText != null) {
             neutralButton.setVisibility(View.VISIBLE);
             if (this.theme == Theme.LIGHT) {
@@ -269,6 +280,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         negativeButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
+        negativeButton.setTypeface(mediumFont);
         if (this.negativeText != null) {
             negativeButton.setVisibility(View.VISIBLE);
             if (this.theme == Theme.LIGHT) {

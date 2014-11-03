@@ -5,11 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialButton extends MaterialTextView {
+public class MaterialButton extends TextView {
 
     public MaterialButton(Context context) {
         super(context);
@@ -27,7 +28,6 @@ public class MaterialButton extends MaterialTextView {
     }
 
     private void init() {
-        setFont(MaterialTextView.MEDIUM, false);
         setClickable(true);
         TypedArray a = getContext().getTheme().obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
         try {

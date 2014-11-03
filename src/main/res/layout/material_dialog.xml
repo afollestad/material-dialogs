@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:lib="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -16,20 +15,18 @@
         android:paddingLeft="@dimen/dialog_frame_margin"
         android:paddingRight="@dimen/dialog_frame_margin">
 
-        <com.afollestad.materialdialogs.MaterialTextView
+        <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            lib:font="medium"
             android:layout_marginBottom="@dimen/button_frame_margin"
             android:textSize="@dimen/title_textsize"
             tools:text="Title" />
 
-        <com.afollestad.materialdialogs.MaterialTextView
+        <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            lib:font="regular"
             android:textSize="@dimen/content_textsize"
             tools:text="Content"
             android:lineSpacingMultiplier="1.4" />
@@ -52,11 +49,10 @@
             android:paddingTop="@dimen/dialog_frame_margin"
             android:paddingBottom="@dimen/dialog_frame_margin">
 
-            <com.afollestad.materialdialogs.MaterialTextView
+            <TextView
                 android:id="@+id/titleCustomView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                lib:font="medium"
                 android:layout_marginBottom="@dimen/button_frame_margin"
                 android:textSize="@dimen/title_textsize"
                 tools:text="Title"
