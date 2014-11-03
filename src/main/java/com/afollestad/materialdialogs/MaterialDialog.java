@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -26,10 +27,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends AlertDialog implements View.OnClickListener {
+public class MaterialDialog extends AlertDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
 
     private final static String POSITIVE = "POSITIVE";
     private final static String NEGATIVE = "NEGATIVE";
@@ -82,6 +84,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         this.theme = builder.theme;
         this.positiveColor = builder.positiveColor;
         this.items = builder.items;
+
+        setCancelable(builder.cancelable);
+        setOnDismissListener(this);
 
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
@@ -339,6 +344,13 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         return customView;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (callback != null && callback instanceof Callback) {
+            ((Callback) callback).onNegative();
+        }
+    }
+
     public static class Builder {
 
         protected Activity context;
@@ -357,6 +369,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         protected ListCallback listCallbackSingle;
         private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
+        protected boolean cancelable = true;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -503,6 +516,11 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder theme(Theme theme) {
             this.theme = theme;
+            return this;
+        }
+
+        public Builder cancelable(boolean cancelable) {
+            this.cancelable = cancelable;
             return this;
         }
 
