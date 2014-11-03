@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -18,12 +17,13 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.base.DialogBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +32,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends AlertDialog implements View.OnClickListener {
-
-    private final static String POSITIVE = "POSITIVE";
-    private final static String NEGATIVE = "NEGATIVE";
-    private final static String NEUTRAL = "NEUTRAL";
+public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     private Context mContext;
     private CharSequence positiveText;
@@ -124,6 +120,10 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         setView(view);
     }
 
+    /**
+     * Invalidates the radio buttons in the single choice mode list so that only the radio button that
+     * was previous selected is checked.
+     */
     private void invalidateSingleChoice(int newSelection) {
         LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
         for (int i = 0; i < list.getChildCount(); i++) {
@@ -133,6 +133,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
     }
 
+    /**
+     * Constructs the dialog's list content and sets up click listeners.
+     */
     private void invalidateList() {
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
@@ -174,6 +177,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
     }
 
+    /**
+     * Measures the action button's and their text to decide whether or not the button should be stacked.
+     */
     private void checkIfStackingNeeded() {
         if (((negativeButton == null || negativeButton.getVisibility() == View.GONE) &&
                 (neutralButton == null || neutralButton.getVisibility() == View.GONE))) {
@@ -190,6 +196,10 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         invalidateActions();
     }
 
+    /**
+     * Invalidates the height of action buttons based on whether there's a custom view or not, also
+     * adds bottom margin to the buttons (only to the bottom one if they're stacked).
+     */
     private void invalidateHeightAndMargin(View button, boolean bottom) {
         if (button.getLayoutParams() instanceof LinearLayout.LayoutParams) {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
@@ -214,6 +224,10 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
     }
 
+    /**
+     * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
+     * and sets their properties (such as height, text color, etc.).
+     */
     private void invalidateActions() {
         if (items != null && listCallbackSingle == null && listCallbackMulti == null) {
             // If the dialog is a plain list dialog, no buttons are shown.
@@ -267,7 +281,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     @Override
-    public void onClick(View v) {
+    public final void onClick(View v) {
         String tag = (String) v.getTag();
         if (tag.equals(POSITIVE)) {
             if (listCallbackSingle != null) {
@@ -326,10 +340,9 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
     }
 
-    public View getCustomView() {
-        return customView;
-    }
-
+    /**
+     * The class used to construct a MaterialDialog.
+     */
     public static class Builder {
 
         protected Activity context;
@@ -509,29 +522,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
 
-    public static interface ListCallback {
-        void onSelection(int which, String text);
-    }
-
-    public static interface ListCallbackMulti {
-        void onSelection(Integer[] which, String[] text);
-    }
-
-    public static interface SimpleCallback {
-        void onPositive();
-    }
-
-    public static interface Callback extends SimpleCallback {
-        void onPositive();
-
-        void onNegative();
-    }
-
-    public static interface FullCallback extends Callback {
-        void onNeutral();
-    }
-
-    public ColorStateList getActionTextStateList(int newPrimaryColor) {
+    private ColorStateList getActionTextStateList(int newPrimaryColor) {
         final int buttonColor = Utils.resolveColor(getContext(), R.attr.button_color);
         if (newPrimaryColor == 0) newPrimaryColor = buttonColor;
         int[][] states = new int[][]{
@@ -545,12 +536,10 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         return new ColorStateList(states, colors);
     }
 
-    @Override
-    public Button getButton(int whichButton) {
-        throw new RuntimeException("Use getButton(MaterialDialog.Button) instead.");
-    }
-
-    public View getButton(DialogAction which) {
+    /**
+     * Retrieves the view of an action button, allowing you to modify properties such as whether or not it's enabled.
+     */
+    public final View getActionButton(DialogAction which) {
         if (view == null) return null;
         if (isStacked) {
             switch (which) {
@@ -573,9 +562,54 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
     }
 
-    public static enum DialogAction {
-        POSITIVE,
-        NEUTRAL,
-        NEGATIVE
+    /**
+     * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
+     *
+     * @param which The action button to update.
+     * @param title The new title of the action button.
+     */
+    public final void setActionButton(DialogAction which, CharSequence title) {
+        switch (which) {
+            default:
+                this.positiveText = title;
+                break;
+            case NEUTRAL:
+                this.neutralText = title;
+                break;
+            case NEGATIVE:
+                this.negativeText = title;
+                break;
+        }
+        invalidateActions();
+    }
+
+    /**
+     * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
+     */
+    public final View getCustomView() {
+        return customView;
+    }
+
+
+    public static interface ListCallback {
+        void onSelection(int which, String text);
+    }
+
+    public static interface ListCallbackMulti {
+        void onSelection(Integer[] which, String[] text);
+    }
+
+    public static interface SimpleCallback {
+        void onPositive();
+    }
+
+    public static interface Callback extends SimpleCallback {
+        void onPositive();
+
+        void onNegative();
+    }
+
+    public static interface FullCallback extends Callback {
+        void onNeutral();
     }
 }
