@@ -19,6 +19,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
+![Example 1](/art/example1.png)
+
 ---
 
 If the action text is too long, it will stack the buttons as also seen on Google's Material design guidelines.
@@ -32,6 +34,8 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
+
+![Example 2](/art/example2.png)
 
 ---
 
@@ -95,6 +99,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
+![Example 3](/art/example3.png)
+
 ---
 
 Custom views are very easy to implement. To match the dialog show here: http://www.google.com/design/spec/components/dialogs.html#dialogs-behavior
@@ -112,3 +118,5 @@ new MaterialDialog.Builder(this)
 
 Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. No padding
 is used on the top, bottom, left, or right of the root view, that's all stock to the dialog.
+
+![Example 4](/art/example4.png)
