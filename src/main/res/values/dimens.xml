@@ -3,7 +3,7 @@
 
     <dimen name="dialog_frame_margin">24dp</dimen>
 
-    <dimen name="button_height">36dp</dimen>
+    <dimen name="button_height">48dp</dimen>
     <dimen name="button_height_customview">56dp</dimen>
 
     <dimen name="title_margin_customview">8dp</dimen>
@@ -11,9 +11,9 @@
     <dimen name="button_regular_width">88dp</dimen>
     <dimen name="button_padding">8dp</dimen>
 
-    <dimen name="title_textsize">22sp</dimen>
-    <dimen name="content_textsize">18sp</dimen>
-    <dimen name="button_textsize">16sp</dimen>
+    <dimen name="title_textsize">20sp</dimen>
+    <dimen name="content_textsize">16sp</dimen>
+    <dimen name="button_textsize">14sp</dimen>
     <dimen name="listitem_textsize">18sp</dimen>
     <dimen name="listitem_height">56dp</dimen>
 
