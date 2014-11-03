@@ -17,7 +17,10 @@ import android.widget.TextView;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends AlertDialog {
+public class MaterialDialog extends AlertDialog implements View.OnClickListener {
+
+    private final static String POSITIVE = "POSITIVE";
+    private final static String NEGATIVE = "NEGATIVE";
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -41,7 +44,18 @@ public class MaterialDialog extends AlertDialog {
             body.setTextColor(DarkColors.CONTENT.get());
         }
 
+        this.callback = builder.callback;
+        TextView positiveButton = (TextView) view.findViewById(R.id.buttonDefaultPositive);
+        positiveButton.setTextColor(builder.positiveColor);
+        positiveButton.setTag(POSITIVE);
+        positiveButton.setOnClickListener(this);
+        if (this.callback != null) {
+
+        }
+
         TextView negativeButton = (TextView) view.findViewById(R.id.buttonDefaultNegative);
+        negativeButton.setTag(NEGATIVE);
+        negativeButton.setOnClickListener(this);
         if (builder.theme == Theme.LIGHT) {
             negativeButton.setTextColor(LightColors.BUTTON.get());
         } else {
@@ -49,6 +63,11 @@ public class MaterialDialog extends AlertDialog {
         }
 
         setView(view);
+    }
+
+    @Override
+    public void onClick(View v) {
+        String tag = (String)v.getTag();
     }
 
     static enum LightColors {
@@ -117,6 +136,7 @@ public class MaterialDialog extends AlertDialog {
 
         public Builder(@NonNull Activity context) {
             this.context = context;
+            this.positiveColor = context.getResources().getColor(R.color.material_blue_500);
         }
 
         public Builder title(@StringRes int titleRes) {
