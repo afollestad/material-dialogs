@@ -41,6 +41,29 @@ new MaterialDialog.Builder(this)
 
 ---
 
+### Neutral Button
+
+You can specify neutral text in addition to the positive and negative text. On smaller screens, it will
+cause the buttons to be stacked due to limited space. On a larger screen, however, it will show the neutral
+action on the far left as seen on the Design Guidelines (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-actions).
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Permissions")
+        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
+        .positiveText("Accept")
+        .negativeText("Decline")
+        .neutralText("More info")
+        .build()
+        .show();
+```
+
+Results in this on a tablet:
+
+![Example 3](/art/example3.png)
+
+---
+
 ### Callbacks
 
 To know when the user selects a button, you set a callback. There's three variations of the callback for the action buttons:
@@ -105,7 +128,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 3](/art/example3.png)
+![Example 4](/art/example4.png)
 
 ---
 
@@ -131,7 +154,7 @@ is used on the top, bottom, left, or right of the root view, that's all stock to
 and don't worry about it being too long. However, you should avoid making any content that wouldn't belong
 in a dialog because of its size.
 
-![Example 4](/art/example4.png)
+![Example 5](/art/example5.png)
 
 ---
 
