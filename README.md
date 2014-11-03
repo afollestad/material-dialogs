@@ -178,9 +178,9 @@ new MaterialDialog.Builder(this)
 Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. No padding
 is used on the top, bottom, left, or right of the root view, that's all stock to the dialog.
 
-`MaterialDialog` inserts your view into a `ScrollView`, so don't wrap your custom view in a scroll view
-and don't worry about it being too long. However, you should avoid making any content that wouldn't belong
-in a dialog because of its size.
+`MaterialDialog` inserts your view into a `ScrollView` and displays a divider above the action buttons,
+so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
+However, you should avoid making any content that wouldn't belong in a dialog because of its size.
 
 ![Example 6](/art/example6.png)
 
