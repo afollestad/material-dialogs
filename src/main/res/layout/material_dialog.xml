@@ -62,7 +62,8 @@
 
     <View
         android:id="@+id/customViewDivider"
-        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:visibility="gone"
         android:paddingTop="@dimen/button_frame_margin_side" />
 

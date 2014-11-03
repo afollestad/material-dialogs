@@ -1,5 +1,7 @@
 package com.afollestad.materialdialogs;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 
 /**
@@ -13,5 +15,14 @@ public class Utils {
         int green = Color.green(color);
         int blue = Color.blue(color);
         return Color.argb(alpha, red, green, blue);
+    }
+
+    public static int resolveColor(Context context, int attr) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
+        try {
+            return a.getColor(0, 0);
+        } finally {
+            a.recycle();
+        }
     }
 }

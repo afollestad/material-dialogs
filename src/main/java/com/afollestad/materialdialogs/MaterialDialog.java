@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -47,7 +46,6 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private CharSequence negativeText;
     private TextView negativeButton;
     private View view;
-    private Theme theme;
     private int positiveColor;
     private SimpleCallback callback;
     private ListCallback listCallback;
@@ -77,11 +75,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         body.setMovementMethod(new LinkMovementMethod());
         body.setVisibility(View.VISIBLE);
         body.setTypeface(regularFont);
-        if (builder.theme == Theme.LIGHT) {
-            body.setTextColor(LightColors.CONTENT.get());
-        } else {
-            body.setTextColor(DarkColors.CONTENT.get());
-        }
+        body.setTextColor(Utils.resolveColor(getContext(), R.attr.content_color));
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
@@ -90,7 +84,6 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         this.positiveText = builder.positiveText;
         this.neutralText = builder.neutralText;
         this.negativeText = builder.negativeText;
-        this.theme = builder.theme;
         this.positiveColor = builder.positiveColor;
         this.items = builder.items;
 
@@ -102,6 +95,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
             view.findViewById(R.id.customViewScroll).setVisibility(View.VISIBLE);
             view.findViewById(R.id.customViewDivider).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.customViewDivider).setBackgroundColor(Utils.resolveColor(getContext(), R.attr.divider_color));
             ((LinearLayout) view.findViewById(R.id.customViewFrame)).addView(customView);
         } else {
             buttonHeight = mContext.getResources().getDimension(R.dimen.button_height);
@@ -115,10 +109,8 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         title.setTypeface(mediumFont);
         if (builder.titleColor != -1) {
             title.setTextColor(builder.titleColor);
-        } else if (builder.theme == Theme.LIGHT) {
-            title.setTextColor(LightColors.TITLE.get());
         } else {
-            title.setTextColor(DarkColors.TITLE.get());
+            title.setTextColor(Utils.resolveColor(getContext(), R.attr.title_color));
         }
         if (builder.titleAlignment == Alignment.CENTER) {
             title.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -158,34 +150,23 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         list.setVisibility(View.VISIBLE);
         LayoutInflater li = LayoutInflater.from(mContext);
 
+        final int itemColor = Utils.resolveColor(getContext(), R.attr.item_color);
         for (int index = 0; index < items.length; index++) {
             View il;
             if (listCallbackSingle != null) {
                 il = li.inflate(R.layout.dialog_listitem_singlechoice, null);
                 RadioButton rb = (RadioButton) ((LinearLayout) il).getChildAt(0);
                 rb.setText(items[index]);
-                if (this.theme == Theme.LIGHT) {
-                    rb.setTextColor(LightColors.ITEM.get());
-                } else {
-                    rb.setTextColor(DarkColors.ITEM.get());
-                }
+                rb.setTextColor(itemColor);
             } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.dialog_listitem_multichoice, null);
                 CheckBox cb = (CheckBox) ((LinearLayout) il).getChildAt(0);
                 cb.setText(items[index]);
-                if (this.theme == Theme.LIGHT) {
-                    cb.setTextColor(LightColors.ITEM.get());
-                } else {
-                    cb.setTextColor(DarkColors.ITEM.get());
-                }
+                cb.setTextColor(itemColor);
             } else {
                 il = li.inflate(R.layout.dialog_listitem, null);
                 ((TextView) il).setText(items[index]);
-                if (this.theme == Theme.LIGHT) {
-                    ((TextView) il).setTextColor(LightColors.ITEM.get());
-                } else {
-                    ((TextView) il).setTextColor(DarkColors.ITEM.get());
-                }
+                ((TextView) il).setTextColor(itemColor);
             }
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
@@ -248,11 +229,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         if (this.positiveText == null)
             this.positiveText = mContext.getString(R.string.accept);
         positiveButton.setText(this.positiveText);
-        if (this.theme == Theme.LIGHT) {
-            positiveButton.setTextColor(LightColors.BUTTON.getList(this.positiveColor));
-        } else {
-            positiveButton.setTextColor(DarkColors.BUTTON.getList(this.positiveColor));
-        }
+        positiveButton.setTextColor(getActionTextStateList(this.positiveColor));
 
         invalidateHeightAndMargin(positiveButton, negativeText == null && neutralText == null);
         positiveButton.setTag(POSITIVE);
@@ -263,11 +240,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         neutralButton.setTypeface(mediumFont);
         if (this.neutralText != null) {
             neutralButton.setVisibility(View.VISIBLE);
-            if (this.theme == Theme.LIGHT) {
-                neutralButton.setTextColor(LightColors.BUTTON.getList(0));
-            } else {
-                neutralButton.setTextColor(DarkColors.BUTTON.getList(0));
-            }
+            neutralButton.setTextColor(getActionTextStateList(0));
             neutralButton.setText(this.neutralText);
             invalidateHeightAndMargin(neutralButton, true);
             neutralButton.setTag(NEUTRAL);
@@ -281,11 +254,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         negativeButton.setTypeface(mediumFont);
         if (this.negativeText != null) {
             negativeButton.setVisibility(View.VISIBLE);
-            if (this.theme == Theme.LIGHT) {
-                negativeButton.setTextColor(LightColors.BUTTON.getList(0));
-            } else {
-                negativeButton.setTextColor(DarkColors.BUTTON.getList(0));
-            }
+            negativeButton.setTextColor(getActionTextStateList(0));
             negativeButton.setText(this.negativeText);
             invalidateHeightAndMargin(negativeButton, neutralText == null);
             negativeButton.setTag(NEGATIVE);
@@ -560,60 +529,18 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         void onNeutral();
     }
 
-    static enum LightColors {
-        TITLE("#3C3C3D"), CONTENT("#535353"), ITEM("#535353"), BUTTON("#3C3C3D");
-
-        final String mColor;
-
-        LightColors(String color) {
-            this.mColor = color;
-        }
-
-        public int get() {
-            return Color.parseColor(mColor);
-        }
-
-        public ColorStateList getList(int newPrimaryColor) {
-            if (newPrimaryColor == 0)
-                newPrimaryColor = BUTTON.get();
-            int[][] states = new int[][]{
-                    new int[]{-android.R.attr.state_enabled}, // disabled
-                    new int[]{} // enabled
-            };
-            int[] colors = new int[]{
-                    Utils.adjustAlpha(BUTTON.get(), 0.4f),
-                    newPrimaryColor
-            };
-            return new ColorStateList(states, colors);
-        }
-    }
-
-    static enum DarkColors {
-        TITLE("#FFFFFF"), CONTENT("#EDEDED"), ITEM("#EDEDED"), BUTTON("#FFFFFF");
-
-        final String mColor;
-
-        DarkColors(String color) {
-            this.mColor = color;
-        }
-
-        public int get() {
-            return Color.parseColor(mColor);
-        }
-
-        public ColorStateList getList(int newPrimaryColor) {
-            if (newPrimaryColor == 0)
-                newPrimaryColor = BUTTON.get();
-            int[][] states = new int[][]{
-                    new int[]{-android.R.attr.state_enabled}, // disabled
-                    new int[]{} // enabled
-            };
-            int[] colors = new int[]{
-                    Utils.adjustAlpha(BUTTON.get(), 0.6f),
-                    newPrimaryColor
-            };
-            return new ColorStateList(states, colors);
-        }
+    public ColorStateList getActionTextStateList(int newPrimaryColor) {
+        final int buttonColor = Utils.resolveColor(getContext(), R.attr.button_color);
+        if (newPrimaryColor == 0) newPrimaryColor = buttonColor;
+        int[][] states = new int[][]{
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{} // enabled
+        };
+        int[] colors = new int[]{
+                Utils.adjustAlpha(buttonColor, 0.6f),
+                newPrimaryColor
+        };
+        return new ColorStateList(states, colors);
     }
 
     @Override
