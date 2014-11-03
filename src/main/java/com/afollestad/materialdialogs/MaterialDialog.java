@@ -294,7 +294,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 List<String> selectedTitles = new ArrayList<String>();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
                 for (int i = 0; i < list.getChildCount(); i++) {
-                    RadioButton rb = (RadioButton) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
+                    CheckBox rb = (CheckBox) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
                     if (rb.isChecked()) {
                         selectedIndices.add(i);
                         selectedTitles.add(rb.getText().toString());

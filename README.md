@@ -140,8 +140,10 @@ new MaterialDialog.Builder(this)
 
 Single choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
-display radio buttons next to list items. This also makes it so that an action button has to be pressed,
-tapping a list item won't dismiss the dialog.
+display radio buttons next to list items.
+
+This also makes it so that an action button has to be pressed, tapping a list item won't dismiss the dialog.
+Note that this means the positive action button callback will be overridden if you specify one.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -168,7 +170,9 @@ The result:
 Multiple choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
 display check boxes next to list items, and the callback can return multiple selections.
+
 This also makes it so that an action button has to be pressed, tapping a list item won't dismiss the dialog.
+Note that this means the positive action button callback will be overridden if you specify one.
 
 ```java
 new MaterialDialog.Builder(this)
