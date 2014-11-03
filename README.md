@@ -109,8 +109,9 @@ new MaterialDialog.Builder(this)
 ```
 
 You can choose which one to use based on which actions you make visible, and which actions need to trigger an event.
-If you pass text to an action, it will become visible; you don't need a callback to do that. But the dialog will
-not dismiss when an action is pressed if no callback is set for it.
+If you pass text to an action, it will become visible (not including the positive action which is always visible
+and will default to 'Accept' unless you make the dialog a list dialog).
+You don't need a callback to make actions visible. But the dialog will not dismiss when an action is pressed if no callback is set for it.
 
 ---
 
