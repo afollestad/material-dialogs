@@ -217,7 +217,6 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 params.bottomMargin = 0;
             } else {
                 if (isStacked && !bottom) return;
-                params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
             }
             button.setLayoutParams(params);
         } else {
@@ -227,7 +226,6 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 params.bottomMargin = 0;
             } else {
                 if (isStacked && !bottom) return;
-                params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
             }
             button.setLayoutParams(params);
         }

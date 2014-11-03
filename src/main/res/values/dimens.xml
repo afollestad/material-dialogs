@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="dialog_frame_margin">24dp</dimen>
+    <dimen name="dialog_frame_margin_top">18dp</dimen>
+    <dimen name="dialog_frame_margin_side">24dp</dimen>
 
-    <dimen name="button_height">48dp</dimen>
+
+    <dimen name="button_height">42dp</dimen>
     <dimen name="button_height_customview">56dp</dimen>
 
     <dimen name="title_margin_customview">8dp</dimen>
-    <dimen name="button_frame_margin">16dp</dimen>
+    <dimen name="button_frame_margin_side">16dp</dimen>
+    <dimen name="button_frame_margin_top">8dp</dimen>
+    <dimen name="button_frame_margin_bottom">8dp</dimen>
     <dimen name="button_regular_width">88dp</dimen>
+    <dimen name="button_min_width">56dp</dimen>
+    <dimen name="button_margin">6dp</dimen>
     <dimen name="button_padding">8dp</dimen>
 
     <dimen name="title_textsize">20sp</dimen>

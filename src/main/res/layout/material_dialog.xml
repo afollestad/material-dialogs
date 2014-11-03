@@ -10,20 +10,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dialog_frame_margin"
-        android:paddingBottom="@dimen/dialog_frame_margin"
-        android:paddingLeft="@dimen/dialog_frame_margin"
-        android:paddingRight="@dimen/dialog_frame_margin">
+        android:paddingTop="@dimen/dialog_frame_margin_top"
+        android:paddingLeft="@dimen/dialog_frame_margin_side"
+        android:paddingRight="@dimen/dialog_frame_margin_side">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/button_frame_margin"
             android:textSize="@dimen/title_textsize"
             tools:text="Title" />
 
         <TextView
+            android:paddingTop="@dimen/button_frame_margin_side"
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,16 +42,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dialog_frame_margin"
-            android:paddingRight="@dimen/dialog_frame_margin"
-            android:paddingTop="@dimen/dialog_frame_margin"
-            android:paddingBottom="@dimen/dialog_frame_margin">
+            android:paddingLeft="@dimen/dialog_frame_margin_side"
+            android:paddingRight="@dimen/dialog_frame_margin_side"
+            android:paddingTop="@dimen/dialog_frame_margin_side"
+            android:paddingBottom="@dimen/dialog_frame_margin_side">
 
             <TextView
                 android:id="@+id/titleCustomView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/button_frame_margin"
+                android:layout_marginBottom="@dimen/button_frame_margin_side"
                 android:textSize="@dimen/title_textsize"
                 tools:text="Title"
                 android:paddingBottom="@dimen/title_margin_customview" />
@@ -65,7 +64,7 @@
         android:id="@+id/customViewDivider"
         style="@style/Divider"
         android:visibility="gone"
-        android:paddingTop="@dimen/button_frame_margin" />
+        android:paddingTop="@dimen/button_frame_margin_side" />
 
     <LinearLayout
         android:id="@+id/listFrame"
@@ -73,15 +72,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:paddingLeft="@dimen/dialog_frame_margin"
-        android:paddingRight="@dimen/dialog_frame_margin" />
+        android:paddingLeft="@dimen/dialog_frame_margin_side"
+        android:paddingRight="@dimen/dialog_frame_margin_side" />
 
     <RelativeLayout
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/button_frame_margin"
-        android:paddingRight="@dimen/button_frame_margin">
+        android:paddingTop="@dimen/button_frame_margin_top"
+        android:paddingLeft="@dimen/button_frame_margin_side"
+        android:paddingRight="@dimen/button_frame_margin_side"
+        android:paddingBottom="@dimen/button_frame_margin_bottom">
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNeutral"
@@ -105,8 +106,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/button_frame_margin"
-        android:paddingRight="@dimen/button_frame_margin"
+        android:paddingTop="@dimen/button_frame_margin_top"
+        android:paddingLeft="@dimen/button_frame_margin_side"
+        android:paddingRight="@dimen/button_frame_margin_side"
+        android:paddingBottom="@dimen/button_frame_margin_bottom"
         android:gravity="right">
 
         <com.afollestad.materialdialogs.MaterialButton

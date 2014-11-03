@@ -29,11 +29,15 @@ public class MaterialButton extends TextView {
 
     private void init() {
         setClickable(true);
-        TypedArray a = getContext().getTheme().obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
-        try {
-            setBackgroundCompat(a.getDrawable(0));
-        } finally {
-            a.recycle();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            setBackgroundCompat(getResources().getDrawable(R.drawable.button_selector));
+        }else{
+            TypedArray a = getContext().getTheme().obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
+            try {
+                setBackgroundCompat(a.getDrawable(0));
+            } finally {
+                a.recycle();
+            }
         }
     }
 
