@@ -28,7 +28,6 @@ import com.afollestad.materialdialogs.base.DialogBase;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author Aidan Follestad (afollestad)
  */
