@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private int positiveColor;
     private SimpleCallback callback;
     private ListCallback listCallback;
+    private ListCallback listCallbackSingle;
     private ListCallbackMulti listCallbackMulti;
     private View customView;
     private float buttonHeight;
@@ -69,6 +71,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
+        this.listCallbackSingle = builder.listCallbackSingle;
         this.listCallbackMulti = builder.listCallbackMulti;
         this.positiveText = builder.positiveText;
         this.neutralText = builder.neutralText;
@@ -110,6 +113,15 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         setView(view);
     }
 
+    private void invalidateSingleChoice(int newSelection) {
+        LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
+        for (int i = 0; i < list.getChildCount(); i++) {
+            View v = list.getChildAt(i);
+            RadioButton rb = (RadioButton) ((LinearLayout) v).getChildAt(0);
+            rb.setChecked(newSelection == i);
+        }
+    }
+
     private void invalidateList() {
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
@@ -129,15 +141,16 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         for (int index = 0; index < items.length; index++) {
             View il;
-            if (listCallbackMulti == null) {
-                il = li.inflate(R.layout.dialog_listitem, null);
-                ((TextView) il).setText(items[index]);
+            if (listCallbackSingle != null) {
+                il = li.inflate(R.layout.dialog_listitem_singlechoice, null);
+                RadioButton rb = (RadioButton) ((LinearLayout) il).getChildAt(0);
+                rb.setText(items[index]);
                 if (this.theme == Theme.LIGHT) {
-                    ((TextView) il).setTextColor(LightColors.ITEM.get());
+                    rb.setTextColor(LightColors.ITEM.get());
                 } else {
-                    ((TextView) il).setTextColor(DarkColors.ITEM.get());
+                    rb.setTextColor(DarkColors.ITEM.get());
                 }
-            } else {
+            } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.dialog_listitem_multichoice, null);
                 CheckBox cb = (CheckBox) ((LinearLayout) il).getChildAt(0);
                 cb.setText(items[index]);
@@ -145,6 +158,14 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                     cb.setTextColor(LightColors.ITEM.get());
                 } else {
                     cb.setTextColor(DarkColors.ITEM.get());
+                }
+            } else {
+                il = li.inflate(R.layout.dialog_listitem, null);
+                ((TextView) il).setText(items[index]);
+                if (this.theme == Theme.LIGHT) {
+                    ((TextView) il).setTextColor(LightColors.ITEM.get());
+                } else {
+                    ((TextView) il).setTextColor(DarkColors.ITEM.get());
                 }
             }
             il.setTag(index + ":" + items[index]);
@@ -193,7 +214,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     private void invalidateActions() {
-        if (items != null && listCallbackMulti == null) {
+        if (items != null && listCallbackSingle == null && listCallbackMulti == null) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
@@ -266,14 +287,20 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 dismiss();
                 ((FullCallback) callback).onNeutral();
             }
-        } else if (listCallback != null) {
-            dismiss();
+        } else {
             String[] split = tag.split(":");
             int index = Integer.parseInt(split[0]);
-            listCallback.onSelection(index, split[1]);
-        } else if (listCallbackMulti != null) {
-            CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
-            cb.performClick();
+            if (listCallback != null) {
+                dismiss();
+                listCallback.onSelection(index, split[1]);
+            } else if (listCallbackSingle != null) {
+                RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
+                cb.performClick();
+                invalidateSingleChoice(index);
+            } else if (listCallbackMulti != null) {
+                CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
+                cb.performClick();
+            }
         }
     }
 
@@ -294,6 +321,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         protected int positiveColor;
         protected SimpleCallback callback;
         protected ListCallback listCallback;
+        protected ListCallback listCallbackSingle;
         private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
         protected Alignment titleAlignment = Alignment.LEFT;
@@ -351,12 +379,21 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder itemsCallback(ListCallback callback) {
             this.listCallback = callback;
+            this.listCallbackSingle = null;
             this.listCallbackMulti = null;
             return this;
         }
 
-        public Builder itemsCallbackMulti(ListCallbackMulti callback) {
+        public Builder itemsCallbackSingleChoice(ListCallback callback) {
             this.listCallback = null;
+            this.listCallbackSingle = callback;
+            this.listCallbackMulti = null;
+            return this;
+        }
+
+        public Builder itemsCallbackMultiChoice(ListCallbackMulti callback) {
+            this.listCallback = null;
+            this.listCallbackSingle = null;
             this.listCallbackMulti = callback;
             return this;
         }

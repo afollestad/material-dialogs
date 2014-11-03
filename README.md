@@ -134,17 +134,18 @@ new MaterialDialog.Builder(this)
 
 ---
 
-### Multichoice List Dialogs
+### Single Choice List Dialogs
 
-Multichoice list dialogs are almost identical to regular list dialogs. The only difference is that
-you use `itemsCallbackMulti` to set a callback rather than `itemsCallback`. That signals the dialog to
-display checkboxes next to list items and return multiple selections in the callback.
+Single choice list dialogs are almost identical to regular list dialogs. The only difference is that
+you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
+display radio buttons next to list items. This also makes it so that an action button has to be pressed,
+tapping a list item won't dismiss the dialog.
 
 ```java
 new MaterialDialog.Builder(this)
         .title("Social Networks")
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
-        .itemsCallbackMulti(new MaterialDialog.ListCallbackMulti() {
+        .itemsCallbackSingleChoice(new MaterialDialog.ListCallbackMulti() {
             @Override
             public void onSelection(int which[], String[] text) {
             }
@@ -157,6 +158,33 @@ new MaterialDialog.Builder(this)
 The result:
 
 ![Example 5](/art/example5.png)
+
+---
+
+### Multi Choice List Dialogs
+
+Multiple choice list dialogs are almost identical to regular list dialogs. The only difference is that
+you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
+display check boxes next to list items, and the callback can return multiple selections.
+This also makes it so that an action button has to be pressed, tapping a list item won't dismiss the dialog.
+
+```java
+new MaterialDialog.Builder(this)
+        .title("Social Networks")
+        .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .itemsCallbackMultiChoice(new MaterialDialog.ListCallbackMulti() {
+            @Override
+            public void onSelection(int which[], String[] text) {
+            }
+        })
+        .positiveText("Choose")
+        .build()
+        .show();
+```
+
+The result:
+
+![Example 6](/art/example6.png)
 
 ---
 
@@ -182,10 +210,4 @@ is used on the top, bottom, left, or right of the root view, that's all stock to
 so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
 However, you should avoid making any content that wouldn't belong in a dialog because of its size.
 
-![Example 6](/art/example6.png)
-
----
-
-### Coming Soon
-
-1. Radio list items for selection modes
+![Example 7](/art/example7.png)

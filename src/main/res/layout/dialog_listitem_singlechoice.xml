@@ -10,12 +10,12 @@
     android:clickable="true"
     android:gravity="center_vertical">
 
-    <CheckBox
+    <RadioButton
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:text="Item"
         android:textSize="@dimen/listitem_textsize"
         android:clickable="false"
-        android:background="@null"/>
+        android:background="@null" />
 
 </LinearLayout>
