@@ -43,6 +43,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     private View customView;
     private float buttonHeight;
     private String[] items;
+    private boolean isStacked;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -99,7 +100,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
 
         invalidateList();
-        invalidateActions(false);
+        invalidateActions();
         checkIfStackingNeeded();
         setView(view);
     }
@@ -142,21 +143,22 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
         Paint paint = positiveButton.getPaint();
         float px = mContext.getResources().getDimension(R.dimen.button_regular_width);
-        boolean isStackingNeeded = paint.measureText(positiveButton.getText().toString()) > px;
+        isStacked = paint.measureText(positiveButton.getText().toString()) > px;
         if (this.neutralText != null)
-            isStackingNeeded = isStackingNeeded || paint.measureText(neutralButton.getText().toString()) > px;
+            isStacked = isStacked || paint.measureText(neutralButton.getText().toString()) > px;
         if (this.negativeText != null)
-            isStackingNeeded = isStackingNeeded || paint.measureText(negativeButton.getText().toString()) > px;
-        invalidateActions(isStackingNeeded);
+            isStacked = isStacked || paint.measureText(negativeButton.getText().toString()) > px;
+        invalidateActions();
     }
 
-    private void invalidateHeightAndMargin(View button) {
+    private void invalidateHeightAndMargin(View button, boolean bottom) {
         if (button.getLayoutParams() instanceof LinearLayout.LayoutParams) {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
             params.height = (int) buttonHeight;
             if (customView != null) {
                 params.bottomMargin = 0;
             } else {
+                if (isStacked && !bottom) return;
                 params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
             }
             button.setLayoutParams(params);
@@ -166,13 +168,14 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             if (customView != null) {
                 params.bottomMargin = 0;
             } else {
+                if (isStacked && !bottom) return;
                 params.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
             }
             button.setLayoutParams(params);
         }
     }
 
-    private void invalidateActions(boolean stacked) {
+    private void invalidateActions() {
         if (items != null) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -180,21 +183,21 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return;
         }
 
-        view.findViewById(R.id.buttonDefaultFrame).setVisibility(stacked ? View.GONE : View.VISIBLE);
-        view.findViewById(R.id.buttonStackedFrame).setVisibility(stacked ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.buttonDefaultFrame).setVisibility(isStacked ? View.GONE : View.VISIBLE);
+        view.findViewById(R.id.buttonStackedFrame).setVisibility(isStacked ? View.VISIBLE : View.GONE);
 
         positiveButton = (TextView) view.findViewById(
-                stacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
+                isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
         if (this.positiveText == null)
             this.positiveText = mContext.getString(R.string.accept);
         positiveButton.setText(this.positiveText);
         positiveButton.setTextColor(this.positiveColor);
-        invalidateHeightAndMargin(positiveButton);
+        invalidateHeightAndMargin(positiveButton, negativeText == null && neutralText == null);
         positiveButton.setTag(POSITIVE);
         positiveButton.setOnClickListener(this);
 
         neutralButton = (TextView) view.findViewById(
-                stacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
+                isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
         if (this.neutralText != null) {
             neutralButton.setVisibility(View.VISIBLE);
             if (this.theme == Theme.LIGHT) {
@@ -203,7 +206,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 neutralButton.setTextColor(DarkColors.BUTTON.get());
             }
             neutralButton.setText(this.neutralText);
-            invalidateHeightAndMargin(neutralButton);
+            invalidateHeightAndMargin(neutralButton, true);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
         } else {
@@ -211,7 +214,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
 
         negativeButton = (TextView) view.findViewById(
-                stacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
+                isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
         if (this.negativeText != null) {
             negativeButton.setVisibility(View.VISIBLE);
             if (this.theme == Theme.LIGHT) {
@@ -220,7 +223,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
                 negativeButton.setTextColor(DarkColors.BUTTON.get());
             }
             negativeButton.setText(this.negativeText);
-            invalidateHeightAndMargin(negativeButton);
+            invalidateHeightAndMargin(negativeButton, neutralText == null);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
         } else {
