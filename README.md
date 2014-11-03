@@ -6,7 +6,9 @@ to use Material on pre-Lollipop. This library allows you to use a consistently M
 all versions of Android, along with specific customizations that make it easier to brand the dialog.
 
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
-(here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage):
+(here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage). Note that you can
+always substitute literal strings and string resources for methods that take strings, the same goes
+for color resources (e.g. `titleColor` and `titleColorRes`).
 
 ```java
 new MaterialDialog.Builder(this)
