@@ -409,6 +409,11 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
             return this;
         }
 
+        public Builder content(@StringRes int contentRes, Object... formatArgs) {
+            content(this.context.getString(contentRes, formatArgs));
+            return this;
+        }
+
         public Builder items(@ArrayRes int itemsRes) {
             items(this.context.getResources().getStringArray(itemsRes));
             return this;
