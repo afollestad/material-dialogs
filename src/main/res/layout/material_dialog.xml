@@ -35,37 +35,55 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
         android:paddingLeft="@dimen/button_frame_margin"
         android:paddingRight="@dimen/button_frame_margin"
         android:paddingBottom="@dimen/button_frame_margin">
 
         <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonDefaultNeutral"
+            style="@style/ActionButton"
+            android:layout_alignParentLeft="true" />
+
+        <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNegative"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/decline"
-            android:minWidth="@dimen/button_regular_width"
-            android:textSize="@dimen/button_textsize"
-            android:textAllCaps="true"
-            android:gravity="center"
-            android:padding="@dimen/button_padding" />
+            style="@style/ActionButton"
+            android:layout_toLeftOf="@+id/buttonDefaultPositive" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultPositive"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/accept"
-            android:textColor="@color/material_blue_500"
-            android:minWidth="@dimen/button_regular_width"
-            android:textSize="@dimen/button_textsize"
-            android:textAllCaps="true"
-            android:gravity="center"
-            android:padding="@dimen/button_padding" />
+            style="@style/ActionButton"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonStackedFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/button_frame_margin"
+        android:paddingRight="@dimen/button_frame_margin"
+        android:paddingBottom="@dimen/button_frame_margin"
+        android:gravity="right">
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedPositive"
+            style="@style/ActionButton"
+            android:gravity="center|right" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedNegative"
+            style="@style/ActionButton"
+            android:gravity="center|right" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedNeutral"
+            style="@style/ActionButton"
+            android:gravity="center|right" />
 
     </LinearLayout>
 

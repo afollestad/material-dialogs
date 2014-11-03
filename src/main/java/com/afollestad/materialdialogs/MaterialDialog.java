@@ -2,7 +2,9 @@ package com.afollestad.materialdialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
@@ -21,10 +23,23 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
     private final static String POSITIVE = "POSITIVE";
     private final static String NEGATIVE = "NEGATIVE";
+    private final static String NEUTRAL = "NEUTRAL";
+
+    private Context mContext;
+    private String positiveText;
+    private TextView positiveButton;
+    private String neutralText;
+    private TextView neutralButton;
+    private String negativeText;
+    private TextView negativeButton;
+    private View view;
+    private Theme theme;
+    private int positiveColor;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
-        View view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
+        mContext = builder.context;
+        view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
 
         TextView title = (TextView) view.findViewById(R.id.title);
         title.setText(builder.title);
@@ -45,29 +60,98 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
         }
 
         this.callback = builder.callback;
-        TextView positiveButton = (TextView) view.findViewById(R.id.buttonDefaultPositive);
-        positiveButton.setTextColor(builder.positiveColor);
+        this.listCallback = builder.listCallback;
+        this.positiveText = builder.positiveText;
+        this.neutralText = builder.neutralText;
+        this.negativeText = builder.negativeText;
+        this.theme = builder.theme;
+        this.positiveColor = builder.positiveColor;
+
+        invalidateActions(false);
+        checkIfStackingNeeded();
+        setView(view);
+    }
+
+    private void checkIfStackingNeeded() {
+        if (negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE) {
+            // Stacking isn't necessary if you only have one button
+            return;
+        }
+        Paint paint = positiveButton.getPaint();
+        float px = Utils.convertToPx(mContext, 88);
+        boolean isStackingNeeded = paint.measureText(positiveButton.getText().toString()) > px;
+        if (this.neutralText != null)
+            isStackingNeeded = isStackingNeeded || paint.measureText(neutralButton.getText().toString()) > px;
+        if (this.negativeText != null)
+            isStackingNeeded = isStackingNeeded || paint.measureText(negativeButton.getText().toString()) > px;
+        invalidateActions(isStackingNeeded);
+    }
+
+    private void invalidateActions(boolean stacked) {
+        view.findViewById(R.id.buttonDefaultFrame).setVisibility(stacked ? View.GONE : View.VISIBLE);
+        view.findViewById(R.id.buttonStackedFrame).setVisibility(stacked ? View.VISIBLE : View.GONE);
+
+        positiveButton = (TextView) view.findViewById(
+                stacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
+        if (this.positiveText == null)
+            this.positiveText = mContext.getString(R.string.accept);
+        positiveButton.setText(this.positiveText);
+        positiveButton.setTextColor(this.positiveColor);
         positiveButton.setTag(POSITIVE);
         positiveButton.setOnClickListener(this);
-        if (this.callback != null) {
 
-        }
-
-        TextView negativeButton = (TextView) view.findViewById(R.id.buttonDefaultNegative);
-        negativeButton.setTag(NEGATIVE);
-        negativeButton.setOnClickListener(this);
-        if (builder.theme == Theme.LIGHT) {
-            negativeButton.setTextColor(LightColors.BUTTON.get());
+        neutralButton = (TextView) view.findViewById(
+                stacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
+        if (this.neutralText != null) {
+            neutralButton.setVisibility(View.VISIBLE);
+            if (this.theme == Theme.LIGHT) {
+                neutralButton.setTextColor(LightColors.BUTTON.get());
+            } else {
+                neutralButton.setTextColor(DarkColors.BUTTON.get());
+            }
+            neutralButton.setText(this.neutralText);
+            neutralButton.setTag(NEUTRAL);
+            neutralButton.setOnClickListener(this);
         } else {
-            negativeButton.setTextColor(DarkColors.BUTTON.get());
+            neutralButton.setVisibility(View.GONE);
         }
 
-        setView(view);
+        negativeButton = (TextView) view.findViewById(
+                stacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
+        if (this.negativeText != null) {
+            negativeButton.setVisibility(View.VISIBLE);
+            if (this.theme == Theme.LIGHT) {
+                negativeButton.setTextColor(LightColors.BUTTON.get());
+            } else {
+                negativeButton.setTextColor(DarkColors.BUTTON.get());
+            }
+            negativeButton.setText(this.negativeText);
+            negativeButton.setTag(NEGATIVE);
+            negativeButton.setOnClickListener(this);
+        } else {
+            negativeButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        String tag = (String)v.getTag();
+        String tag = (String) v.getTag();
+        if (tag.equals(POSITIVE)) {
+            if (callback != null) {
+                dismiss();
+                callback.onPositive();
+            }
+        } else if (tag.equals(NEGATIVE)) {
+            if (callback != null && callback instanceof Callback) {
+                dismiss();
+                ((Callback) callback).onNegative();
+            }
+        } else if (tag.equals(NEUTRAL)) {
+            if (callback != null && callback instanceof FullCallback) {
+                dismiss();
+                ((FullCallback) callback).onNeutral();
+            }
+        }
     }
 
     static enum LightColors {
@@ -136,6 +220,7 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
 
         public Builder(@NonNull Activity context) {
             this.context = context;
+            this.positiveText = context.getString(R.string.accept);
             this.positiveColor = context.getResources().getColor(R.color.material_blue_500);
         }
 
