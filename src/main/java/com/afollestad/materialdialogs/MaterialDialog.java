@@ -180,7 +180,8 @@ public class MaterialDialog extends AlertDialog implements View.OnClickListener 
     }
 
     private void checkIfStackingNeeded() {
-        if ((negativeButton.getVisibility() == View.GONE && neutralButton.getVisibility() == View.GONE)) {
+        if (((negativeButton == null || negativeButton.getVisibility() == View.GONE) &&
+                (neutralButton == null || neutralButton.getVisibility() == View.GONE))) {
             // Stacking isn't necessary if you only have one button
             return;
         }
