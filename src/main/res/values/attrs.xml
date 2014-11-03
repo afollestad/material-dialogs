@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MaterialTextView">
+        <attr name="bold" format="boolean" />
+        <attr name="font" format="enum">
+            <enum name="thin" value="0" />
+            <enum name="light" value="1" />
+            <enum name="regular" value="2" />
+            <enum name="medium" value="3" />
+            <enum name="black" value="4" />
+            <enum name="condensed" value="5" />
+            <enum name="condensed_light" value="6" />
+        </attr>
+    </declare-styleable>
+
+</resources>
