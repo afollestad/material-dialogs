@@ -26,6 +26,16 @@
     <string name="googleWifi">Google Wifi</string>
     <string name="connect">Connect</string>
 
+    <string name="about">About</string>
+    <string name="about_body"><![CDATA[
+        material-dialogs, a library  designed by <b>Aidan Follestad</b>.<br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
+    ]]></string>
+
     <string-array name="socialNetworks">
         <item>Twitter</item>
         <item>Google+</item>

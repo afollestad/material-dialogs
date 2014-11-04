@@ -3,9 +3,12 @@ package com.afollestad.materialdialogssample;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -260,5 +263,29 @@ public class MainActivity extends ActionBarActivity {
                 .theme(Theme.DARK)
                 .build()
                 .show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.about) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.about)
+                    .content(Html.fromHtml(getString(R.string.about_body)))
+                    .callback(new MaterialDialog.SimpleCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                        }
+                    })
+                    .build()
+                    .show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
