@@ -19,7 +19,9 @@
         <item name="divider_color">@color/divider_white</item>
     </style>
 
-    <style name="ActionButton">
+    <style name="ActionButton" parent="@style/_ActionButtonParent" />
+
+    <style name="_ActionButtonParent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:text">@string/accept</item>
