@@ -113,18 +113,15 @@
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedPositive"
-            style="@style/ActionButton"
-            android:gravity="center|right" />
+            style="@style/ActionButton" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedNegative"
-            style="@style/ActionButton"
-            android:gravity="center|right" />
+            style="@style/ActionButton" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedNeutral"
-            style="@style/ActionButton"
-            android:gravity="center|right" />
+            style="@style/ActionButton" />
 
     </LinearLayout>
 
