@@ -300,7 +300,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 for (int i = 0; i < list.getChildCount(); i++) {
                     RadioButton rb = (RadioButton) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
                     if (rb.isChecked()) {
-                        listCallbackSingle.onSelection(i, rb.getText().toString());
+                        listCallbackSingle.onSelection(this, i, rb.getText().toString());
                         break;
                     }
                 }
@@ -316,29 +316,29 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                         selectedTitles.add(rb.getText().toString());
                     }
                 }
-                listCallbackMulti.onSelection(
+                listCallbackMulti.onSelection(this,
                         selectedIndices.toArray(new Integer[selectedIndices.size()]),
                         selectedTitles.toArray(new String[selectedTitles.size()]));
             } else if (callback != null) {
                 dismiss();
-                callback.onPositive();
+                callback.onPositive(this);
             }
         } else if (tag.equals(NEGATIVE)) {
             if (callback != null && callback instanceof Callback) {
                 dismiss();
-                ((Callback) callback).onNegative();
+                ((Callback) callback).onNegative(this);
             }
         } else if (tag.equals(NEUTRAL)) {
             if (callback != null && callback instanceof FullCallback) {
                 dismiss();
-                ((FullCallback) callback).onNeutral();
+                ((FullCallback) callback).onNeutral(this);
             }
         } else {
             String[] split = tag.split(":");
             int index = Integer.parseInt(split[0]);
             if (listCallback != null) {
                 dismiss();
-                listCallback.onSelection(index, split[1]);
+                listCallback.onSelection(this, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
                 cb.performClick();
@@ -612,24 +612,24 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
 
     public static interface ListCallback {
-        void onSelection(int which, String text);
+        void onSelection(MaterialDialog dialog, int which, String text);
     }
 
     public static interface ListCallbackMulti {
-        void onSelection(Integer[] which, String[] text);
+        void onSelection(MaterialDialog dialog, Integer[] which, String[] text);
     }
 
     public static interface SimpleCallback {
-        void onPositive();
+        void onPositive(MaterialDialog dialog);
     }
 
     public static interface Callback extends SimpleCallback {
-        void onPositive();
+        void onPositive(MaterialDialog dialog);
 
-        void onNegative();
+        void onNegative(MaterialDialog dialog);
     }
 
     public static interface FullCallback extends Callback {
-        void onNeutral();
+        void onNeutral(MaterialDialog dialog);
     }
 }

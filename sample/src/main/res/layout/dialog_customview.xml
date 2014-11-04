@@ -44,6 +44,7 @@
         android:text="@string/password" />
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/customEntry"
@@ -51,6 +52,7 @@
         android:textColor="#000000" />
 
     <CheckBox
+        android:id="@+id/showPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/customEntry"

@@ -77,33 +77,33 @@ To know when the user selects a button, you set a callback. There's three variat
 new MaterialDialog.Builder(this)
                 .callback(new MaterialDialog.SimpleCallback() {
                     @Override
-                    public void onPositive() {
+                    public void onPositive(MaterialDialog dialog) {
                     }
                 });
 
 new MaterialDialog.Builder(this)
                 .callback(new MaterialDialog.Callback() {
                     @Override
-                    public void onPositive() {
+                    public void onPositive(MaterialDialog dialog) {
                     }
 
                     @Override
-                    public void onNegative() {
+                    public void onNegative(MaterialDialog dialog) {
                     }
                 });
 
 new MaterialDialog.Builder(this)
                 .callback(new MaterialDialog.FullCallback() {
                     @Override
-                    public void onPositive() {
+                    public void onPositive(MaterialDialog dialog) {
                     }
 
                     @Override
-                    public void onNegative() {
+                    public void onNegative(MaterialDialog dialog) {
                     }
 
                     @Override
-                    public void onNeutral() {
+                    public void onNeutral(MaterialDialog dialog) {
                     }
                 });
 ```
@@ -126,7 +126,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(int which, String text) {
+            public void onSelection(MaterialDialog dialog, int which, String text) {
             }
         })
         .build()
@@ -152,7 +152,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackSingleChoice(new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(int which, String text) {
+            public void onSelection(MaterialDialog dialog, int which, String text) {
             }
         })
         .positiveText("Choose")
@@ -181,7 +181,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackMultiChoice(new MaterialDialog.ListCallbackMulti() {
             @Override
-            public void onSelection(Integer[] which, String[] text) {
+            public void onSelection(MaterialDialog dialog, Integer[] which, String[] text) {
             }
         })
         .positiveText("Choose")

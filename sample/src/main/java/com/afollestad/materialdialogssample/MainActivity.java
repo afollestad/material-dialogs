@@ -2,10 +2,17 @@ package com.afollestad.materialdialogssample;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.Alignment;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -121,17 +128,17 @@ public class MainActivity extends ActionBarActivity {
                 .neutralText(R.string.more_info)
                 .callback(new MaterialDialog.FullCallback() {
                     @Override
-                    public void onPositive() {
+                    public void onPositive(MaterialDialog dialog) {
                         Toast.makeText(getApplicationContext(), "Positive!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onNeutral() {
+                    public void onNeutral(MaterialDialog dialog) {
                         Toast.makeText(getApplicationContext(), "Neutral", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onNegative() {
+                    public void onNegative(MaterialDialog dialog) {
                         Toast.makeText(getApplicationContext(), "Negative…", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -145,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(int which, String text) {
+                    public void onSelection(MaterialDialog dialog, int which, String text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -159,7 +166,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallbackSingleChoice(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(int which, String text) {
+                    public void onSelection(MaterialDialog dialog, int which, String text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -174,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallbackMultiChoice(new MaterialDialog.ListCallbackMulti() {
                     @Override
-                    public void onSelection(Integer[] which, String[] text) {
+                    public void onSelection(MaterialDialog dialog, Integer[] which, String[] text) {
                         StringBuilder str = new StringBuilder();
                         for (int i = 0; i < which.length; i++) {
                             str.append(which[i]);
@@ -190,14 +197,55 @@ public class MainActivity extends ActionBarActivity {
                 .show();
     }
 
+    EditText passwordInput;
+    View positiveAction;
+
     private void showCustomView() {
-        new MaterialDialog.Builder(this)
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.googleWifi)
                 .positiveText(R.string.accept)
                 .customView(R.layout.dialog_customview)
                 .positiveText(R.string.connect)
-                .build()
-                .show();
+                .negativeText(android.R.string.cancel)
+                .callback(new MaterialDialog.Callback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Toast.makeText(getApplicationContext(), "Password: " + passwordInput.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                    }
+                }).build();
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
+        passwordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                positiveAction.setEnabled(s.toString().trim().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // Toggling the show password CheckBox will mask or unmask the password input EditText
+        ((CheckBox) dialog.getCustomView().findViewById(R.id.showPassword)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                passwordInput.setInputType(isChecked ?
+                        InputType.TYPE_TEXT_VARIATION_NORMAL :
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        });
+
+        dialog.show();
     }
 
     private void showThemed() {
