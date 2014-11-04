@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Light" parent="android:Theme.Light">
+        <item name="android:actionModeStyle">@style/ActionModeStyle</item>
+
+        <item name="title_color">@color/title_light</item>
+        <item name="content_color">@color/content_light</item>
+        <item name="item_color">@color/item_light</item>
+        <item name="button_color">@color/button_light</item>
+        <item name="divider_color">@color/divider_black</item>
+    </style>
+
+    <style name="Dark" parent="android:Theme.Black">
+        <item name="title_color">@color/title_dark</item>
+        <item name="content_color">@color/content_dark</item>
+        <item name="item_color">@color/item_dark</item>
+        <item name="button_color">@color/button_dark</item>
+        <item name="divider_color">@color/divider_white</item>
+    </style>
+
+    <style name="ActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:text">@string/accept</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
+        <item name="android:textSize">@dimen/button_textsize</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/button_padding</item>
+    </style>
+
+    <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="android:background">#000</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_action_close</item>
+        <item name="android:actionModeCloseDrawable">@drawable/ic_action_close</item>
+    </style>
+
+</resources>

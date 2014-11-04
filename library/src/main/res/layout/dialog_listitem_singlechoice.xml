@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground"
+    android:clickable="true"
+    android:gravity="center_vertical">
+
+    <RadioButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        tools:text="Item"
+        android:minHeight="@dimen/listitem_height"
+        android:textSize="@dimen/listitem_textsize"
+        android:clickable="false"
+        android:background="@null"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="@dimen/button_frame_margin"
+        android:layout_marginRight="@dimen/button_frame_margin" />
+
+
+</LinearLayout>

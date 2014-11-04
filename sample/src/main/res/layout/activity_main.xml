@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/basic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/basic" />
+
+    <Button
+        android:id="@+id/stacked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stacked"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/neutral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/neutral"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/callbacks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/callbacks"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/singleChoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/singleChoice"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/multiChoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multiChoice"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/customView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/customView"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/themed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/themed"
+        android:layout_marginTop="8dp" />
+
+</RelativeLayout>
