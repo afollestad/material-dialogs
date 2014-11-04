@@ -153,6 +153,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
 
+        // When showing list items, less padding is used on the left/right and bottom of the title area
         View title = view.findViewById(R.id.title);
         LinearLayout.LayoutParams titleParams = (LinearLayout.LayoutParams) title.getLayoutParams();
         titleParams.bottomMargin = (int) mContext.getResources().getDimension(R.dimen.title_margin_customview);
@@ -163,6 +164,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         LinearLayout.LayoutParams mainFrameParams = (LinearLayout.LayoutParams) title.getLayoutParams();
         mainFrameParams.leftMargin = dpPadding;
         mainFrameParams.rightMargin = dpPadding;
+        mainFrameParams.topMargin = dpPadding;
         mainFrameParams.bottomMargin = 0;
         mainFrame.setLayoutParams(mainFrameParams);
 
