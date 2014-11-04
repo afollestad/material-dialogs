@@ -16,6 +16,6 @@
     <dimen name="button_textsize">14sp</dimen>
     <dimen name="listitem_textsize">16sp</dimen>
     <dimen name="listitem_height">48dp</dimen>
-    <dimen name="listitem_control_margin">8dp</dimen>
+    <dimen name="list_control_margin">4dp</dimen>
 
 </resources>
