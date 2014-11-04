@@ -36,7 +36,7 @@ positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 Dialogs don't even need a title:
 
-![Example 0](/sample/art/example0.png)
+![Example 0](/sample/art/example_0.png)
 
 ---
 
