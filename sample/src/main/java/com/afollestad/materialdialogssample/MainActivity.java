@@ -223,6 +223,7 @@ public class MainActivity extends ActionBarActivity {
                 }).build();
 
         positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        positiveAction.setEnabled(false); // disabled by default
         passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
