@@ -88,6 +88,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             content.setLinkTextColor(this.positiveColor);
         }
+        if (builder.contentAlignment == Alignment.CENTER) {
+            content.setGravity(Gravity.CENTER_HORIZONTAL);
+        } else if (builder.contentAlignment == Alignment.RIGHT) {
+            content.setGravity(Gravity.RIGHT);
+        }
 
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
@@ -362,6 +367,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected Activity context;
         protected CharSequence title;
         protected Alignment titleAlignment = Alignment.LEFT;
+        protected Alignment contentAlignment = Alignment.LEFT;
         protected int titleColor = -1;
         protected CharSequence content;
         protected String[] items;
@@ -431,6 +437,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder content(@StringRes int contentRes, Object... formatArgs) {
             content(this.context.getString(contentRes, formatArgs));
+            return this;
+        }
+
+        public Builder contentAlignment(Alignment align) {
+            this.contentAlignment = align;
             return this;
         }
 
