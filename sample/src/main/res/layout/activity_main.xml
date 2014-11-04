@@ -21,56 +21,56 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/stacked"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/neutral"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/neutral"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/callbacks"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/callbacks"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/list"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/singleChoice"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/singleChoice"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/multiChoice"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/multiChoice"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/customView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/customView"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/themed"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/themed"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="2dp" />
 
     </LinearLayout>
 
