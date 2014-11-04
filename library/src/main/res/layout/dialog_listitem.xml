@@ -14,7 +14,7 @@
         android:minHeight="@dimen/listitem_height"
         tools:text="Item"
         android:textSize="@dimen/listitem_textsize"
-        android:gravity="left|center_vertical"
+        android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/button_frame_margin"
         android:layout_marginRight="@dimen/button_frame_margin" />
 
