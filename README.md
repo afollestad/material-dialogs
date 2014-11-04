@@ -5,6 +5,12 @@ Material theming on versions of Android below Lollipop. However, AppCompat doesn
 to use Material on pre-Lollipop. This library allows you to use a consistently Material themed dialog on
 all versions of Android, along with specific customizations that make it easier to brand the dialog.
 
+The code you see below is also found in the sample project. You can download a APK of the sample here: 
+
+---
+
+### Basic Dialog
+
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
 (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage). Note that you can
 always substitute literal strings and string resources for methods that take strings, the same goes

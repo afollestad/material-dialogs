@@ -1,9 +1,6 @@
 # Created by https://www.gitignore.io
 
 ### Android ###
-# Built application files
-*.apk
-
 # Files for the Dalvik VM
 *.dex
 
