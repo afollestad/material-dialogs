@@ -57,12 +57,22 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
-        mContext = builder.context;
-        view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
-        customView = builder.customView;
 
-        regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
-        mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
+        this.mContext = builder.context;
+        this.view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
+        this.customView = builder.customView;
+        this.callback = builder.callback;
+        this.listCallback = builder.listCallback;
+        this.listCallbackSingle = builder.listCallbackSingle;
+        this.listCallbackMulti = builder.listCallbackMulti;
+        this.positiveText = builder.positiveText;
+        this.neutralText = builder.neutralText;
+        this.negativeText = builder.negativeText;
+        this.positiveColor = builder.positiveColor;
+        this.items = builder.items;
+        this.setCancelable(builder.cancelable);
+        this.regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
+        this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView content = (TextView) view.findViewById(R.id.content);
@@ -78,19 +88,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             content.setLinkTextColor(this.positiveColor);
         }
-
-
-        this.callback = builder.callback;
-        this.listCallback = builder.listCallback;
-        this.listCallbackSingle = builder.listCallbackSingle;
-        this.listCallbackMulti = builder.listCallbackMulti;
-        this.positiveText = builder.positiveText;
-        this.neutralText = builder.neutralText;
-        this.negativeText = builder.negativeText;
-        this.positiveColor = builder.positiveColor;
-        this.items = builder.items;
-
-        setCancelable(builder.cancelable);
 
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
