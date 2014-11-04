@@ -21,7 +21,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 1](/art/example1.png)
+![Example 1](/sample/art/example1.png)
 
 On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` (which is used on the
 positive action button) to the `colorAccent` attribute of your styles.xml theme.
@@ -42,7 +42,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 2](/art/example2.png)
+![Example 2](/sample/art/example2.png)
 
 ---
 
@@ -65,7 +65,7 @@ new MaterialDialog.Builder(this)
 
 The result on a tablet:
 
-![Example 3](/art/example3.png)
+![Example 3](/sample/art/example3.png)
 
 ---
 
@@ -133,7 +133,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 4](/art/example4.png)
+![Example 4](/sample/art/example4.png)
 
 ---
 
@@ -162,7 +162,7 @@ new MaterialDialog.Builder(this)
 
 The result:
 
-![Example 5](/art/example5.png)
+![Example 5](/sample/art/example5.png)
 
 ---
 
@@ -191,7 +191,7 @@ new MaterialDialog.Builder(this)
 
 The result:
 
-![Example 6](/art/example6.png)
+![Example 6](/sample/art/example6.png)
 
 ---
 
@@ -217,7 +217,7 @@ is used on the top, bottom, left, or right of the root view, that's all stock to
 so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
 However, you should avoid making any content that wouldn't belong in a dialog because of its size.
 
-![Example 7](/art/example7.png)
+![Example 7](/sample/art/example7.png)
 
 ---
 
@@ -245,7 +245,7 @@ new MaterialDialog.Builder(this)
 
 The result:
 
-![Example 8](/art/example8.png)
+![Example 8](/sample/art/example8.png)
 
 To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
 
