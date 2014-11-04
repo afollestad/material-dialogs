@@ -277,6 +277,7 @@ public class MainActivity extends ActionBarActivity {
             new MaterialDialog.Builder(this)
                     .title(R.string.about)
                     .content(Html.fromHtml(getString(R.string.about_body)))
+                    .contentLineSpacing(1.6f)
                     .callback(new MaterialDialog.SimpleCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {

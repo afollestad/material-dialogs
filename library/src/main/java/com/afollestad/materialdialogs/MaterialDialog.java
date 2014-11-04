@@ -72,6 +72,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         body.setVisibility(View.VISIBLE);
         body.setTypeface(regularFont);
         body.setTextColor(Utils.resolveColor(getContext(), R.attr.content_color));
+        body.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
@@ -372,6 +373,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
+        protected float contentLineSpacingMultiplier = 1.0f;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -426,6 +428,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder content(@StringRes int contentRes, Object... formatArgs) {
             content(this.context.getString(contentRes, formatArgs));
+            return this;
+        }
+
+        public Builder contentLineSpacing(float multiplier) {
+            this.contentLineSpacingMultiplier = multiplier;
             return this;
         }
 
