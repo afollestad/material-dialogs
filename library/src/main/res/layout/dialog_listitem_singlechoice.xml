@@ -15,8 +15,7 @@
         android:minHeight="@dimen/listitem_height"
         android:clickable="false"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/button_frame_margin"
-        android:layout_marginRight="@dimen/list_control_margin" />
+        android:layout_marginLeft="@dimen/button_frame_margin" />
 
     <TextView
         android:id="@+id/title"
