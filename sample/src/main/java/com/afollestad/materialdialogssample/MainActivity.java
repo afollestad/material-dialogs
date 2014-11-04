@@ -256,7 +256,7 @@ public class MainActivity extends ActionBarActivity {
                 .negativeText(R.string.decline)
                 .positiveColor(R.color.material_red_500)
                 .titleAlignment(Alignment.CENTER)
-                .titleColor(R.color.material_red_500)
+                .titleColorRes(R.color.material_red_500)
                 .theme(Theme.DARK)
                 .build()
                 .show();
