@@ -257,9 +257,9 @@ public class MainActivity extends ActionBarActivity {
                 .content(R.string.permissionsContent)
                 .positiveText(R.string.accept)
                 .negativeText(R.string.decline)
-                .positiveColorRes(R.color.material_red_500)
+                .positiveColorRes(R.color.material_red_400)
                 .titleAlignment(Alignment.CENTER)
-                .titleColorRes(R.color.material_red_500)
+                .titleColorRes(R.color.material_red_400)
                 .theme(Theme.DARK)
                 .build()
                 .show();
