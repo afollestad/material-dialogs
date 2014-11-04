@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/button_frame_margin"
-                android:textSize="@dimen/title_textsize"
+                android:textSize="@dimen/title_textsize_customview"
                 tools:text="Title"
                 android:paddingBottom="@dimen/title_margin_customview" />
 
