@@ -65,14 +65,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        TextView body = (TextView) view.findViewById(R.id.content);
+        TextView content = (TextView) view.findViewById(R.id.content);
 
-        body.setText(builder.content);
-        body.setMovementMethod(new LinkMovementMethod());
-        body.setVisibility(View.VISIBLE);
-        body.setTypeface(regularFont);
-        body.setTextColor(Utils.resolveColor(getContext(), R.attr.content_color));
-        body.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
+        content.setText(builder.content);
+        content.setMovementMethod(new LinkMovementMethod());
+        content.setVisibility(View.VISIBLE);
+        content.setTypeface(regularFont);
+        content.setTextColor(Utils.resolveColor(getContext(), R.attr.content_color));
+        content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
+        content.setLinkTextColor(this.positiveColor);
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
