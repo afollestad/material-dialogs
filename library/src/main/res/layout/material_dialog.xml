@@ -43,10 +43,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dialog_frame_margin"
-            android:paddingRight="@dimen/dialog_frame_margin"
-            android:paddingTop="@dimen/dialog_frame_margin"
-            android:paddingBottom="@dimen/dialog_frame_margin">
+            android:layout_marginLeft="@dimen/dialog_frame_margin"
+            android:layout_marginRight="@dimen/dialog_frame_margin"
+            android:layout_marginTop="@dimen/dialog_frame_margin"
+            android:layout_marginBottom="@dimen/dialog_frame_margin">
 
             <TextView
                 android:id="@+id/titleCustomView"
