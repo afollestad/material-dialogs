@@ -9,16 +9,24 @@
     android:gravity="center_vertical">
 
     <RadioButton
-        android:layout_width="fill_parent"
+        android:id="@+id/control"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Item"
         android:minHeight="@dimen/listitem_height"
-        android:textSize="@dimen/listitem_textsize"
         android:clickable="false"
         android:background="@null"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/button_frame_margin"
-        android:layout_marginRight="@dimen/button_frame_margin" />
+        android:layout_marginRight="@dimen/listitem_control_margin" />
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/listitem_height"
+        tools:text="Item"
+        android:textSize="@dimen/listitem_textsize"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/button_frame_margin" />
 
 </LinearLayout>

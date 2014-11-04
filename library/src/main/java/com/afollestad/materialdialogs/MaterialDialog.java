@@ -141,7 +141,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
         for (int i = 0; i < list.getChildCount(); i++) {
             View v = list.getChildAt(i);
-            RadioButton rb = (RadioButton) ((LinearLayout) v).getChildAt(0);
+            RadioButton rb = (RadioButton) v.findViewById(R.id.control);
             rb.setChecked(newSelection == i);
         }
     }
@@ -177,20 +177,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             View il;
             if (listCallbackSingle != null) {
                 il = li.inflate(R.layout.dialog_listitem_singlechoice, null);
-                RadioButton rb = (RadioButton) ((LinearLayout) il).getChildAt(0);
-                rb.setText(items[index]);
-                rb.setTextColor(itemColor);
             } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.dialog_listitem_multichoice, null);
-                CheckBox cb = (CheckBox) ((LinearLayout) il).getChildAt(0);
-                cb.setText(items[index]);
-                cb.setTextColor(itemColor);
             } else {
                 il = li.inflate(R.layout.dialog_listitem, null);
-                TextView tv = (TextView) ((LinearLayout) il).getChildAt(0);
-                tv.setText(items[index]);
-                tv.setTextColor(itemColor);
             }
+            TextView tv = (TextView) il.findViewById(R.id.title);
+            tv.setText(items[index]);
+            tv.setTextColor(itemColor);
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
             list.addView(il);
@@ -317,9 +311,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 dismiss();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
                 for (int i = 0; i < list.getChildCount(); i++) {
-                    RadioButton rb = (RadioButton) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
+                    View itemView = list.getChildAt(i);
+                    RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
-                        listCallbackSingle.onSelection(this, i, rb.getText().toString());
+                        listCallbackSingle.onSelection(this, i, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
                         break;
                     }
                 }
@@ -329,10 +324,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 List<String> selectedTitles = new ArrayList<String>();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.listFrame);
                 for (int i = 0; i < list.getChildCount(); i++) {
-                    CheckBox rb = (CheckBox) ((LinearLayout) list.getChildAt(i)).getChildAt(0);
+                    View itemView = list.getChildAt(i);
+                    CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
                         selectedIndices.add(i);
-                        selectedTitles.add(rb.getText().toString());
+                        selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
                     }
                 }
                 listCallbackMulti.onSelection(this,
