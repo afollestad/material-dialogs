@@ -161,7 +161,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         View mainFrame = view.findViewById(R.id.mainFrame);
         int dpPadding = (int) mContext.getResources().getDimension(R.dimen.button_frame_margin);
-        LinearLayout.LayoutParams mainFrameParams = (LinearLayout.LayoutParams) title.getLayoutParams();
+        LinearLayout.LayoutParams mainFrameParams = (LinearLayout.LayoutParams) mainFrame.getLayoutParams();
         mainFrameParams.leftMargin = dpPadding;
         mainFrameParams.rightMargin = dpPadding;
         mainFrameParams.topMargin = dpPadding;
