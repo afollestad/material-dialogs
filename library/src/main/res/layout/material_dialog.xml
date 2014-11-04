@@ -107,8 +107,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:marginLeft="@dimen/button_frame_margin"
-        android:marginRight="@dimen/button_frame_margin"
+        android:layout_marginLeft="@dimen/button_frame_margin"
+        android:layout_marginRight="@dimen/button_frame_margin"
         android:gravity="right">
 
         <com.afollestad.materialdialogs.MaterialButton
