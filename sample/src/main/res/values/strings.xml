@@ -35,6 +35,7 @@
         <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
         <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
     ]]></string>
+    <string name="dismiss">Dismiss</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>

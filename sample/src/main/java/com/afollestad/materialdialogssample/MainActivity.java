@@ -223,7 +223,6 @@ public class MainActivity extends ActionBarActivity {
                 }).build();
 
         positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        positiveAction.setEnabled(false); // disabled by default
         passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -250,6 +249,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         dialog.show();
+        positiveAction.setEnabled(false); // disabled by default
     }
 
     private void showThemed() {
@@ -277,6 +277,7 @@ public class MainActivity extends ActionBarActivity {
         if (item.getItemId() == R.id.about) {
             new MaterialDialog.Builder(this)
                     .title(R.string.about)
+                    .positiveText(R.string.dismiss)
                     .content(Html.fromHtml(getString(R.string.about_body)))
                     .contentLineSpacing(1.6f)
                     .callback(new MaterialDialog.SimpleCallback() {
