@@ -3,10 +3,10 @@
     <string name="app_name">MaterialDialogs</string>
 
     <string name="basic">Basic</string>
-    <string name="stacked">Stacked</string>
-    <string name="neutral">Neutral</string>
+    <string name="stacked">Stacked Buttons</string>
+    <string name="neutral">Neutral Button</string>
     <string name="callbacks">Callbacks</string>
-    <string name="list">List</string>
+    <string name="list">Basic List</string>
     <string name="singleChoice">Single Choice</string>
     <string name="multiChoice">Multi Choice</string>
     <string name="customView">Custom View</string>
