@@ -16,6 +16,5 @@
     <dimen name="button_textsize">14sp</dimen>
     <dimen name="listitem_textsize">16sp</dimen>
     <dimen name="listitem_height">48dp</dimen>
-    <dimen name="title_textsize_customview">22sp</dimen>
 
 </resources>

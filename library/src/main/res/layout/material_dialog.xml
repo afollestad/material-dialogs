@@ -10,10 +10,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dialog_frame_margin"
-        android:paddingBottom="@dimen/button_frame_margin"
-        android:paddingLeft="@dimen/dialog_frame_margin"
-        android:paddingRight="@dimen/dialog_frame_margin">
+        android:layout_marginTop="@dimen/dialog_frame_margin"
+        android:layout_marginBottom="@dimen/button_frame_margin"
+        android:layout_marginLeft="@dimen/dialog_frame_margin"
+        android:layout_marginRight="@dimen/dialog_frame_margin">
 
         <TextView
             android:id="@+id/title"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/button_frame_margin"
-                android:textSize="@dimen/title_textsize_customview"
+                android:textSize="@dimen/title_textsize"
                 tools:text="Title"
                 android:paddingBottom="@dimen/title_margin_customview" />
 
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:visibility="gone"
-        android:paddingTop="@dimen/button_frame_margin" />
+        android:layout_marginTop="@dimen/button_frame_margin" />
 
     <LinearLayout
         android:id="@+id/listFrame"
@@ -79,8 +79,8 @@
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/button_frame_margin"
-        android:paddingRight="@dimen/button_frame_margin">
+        android:layout_marginLeft="@dimen/button_frame_margin"
+        android:layout_marginRight="@dimen/button_frame_margin">
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNeutral"
@@ -107,8 +107,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/button_frame_margin"
-        android:paddingRight="@dimen/button_frame_margin"
+        android:marginLeft="@dimen/button_frame_margin"
+        android:marginRight="@dimen/button_frame_margin"
         android:gravity="right">
 
         <com.afollestad.materialdialogs.MaterialButton
