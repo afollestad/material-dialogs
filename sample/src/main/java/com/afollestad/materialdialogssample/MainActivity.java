@@ -28,6 +28,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.basicNoTitle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBasicNoTitle();
+            }
+        });
+
         findViewById(R.id.basic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +97,15 @@ public class MainActivity extends ActionBarActivity {
                 showThemed();
             }
         });
+    }
+
+    private void showBasicNoTitle() {
+        new MaterialDialog.Builder(this)
+                .content(R.string.shareLocationPrompt)
+                .positiveText(R.string.accept)  // the default is 'Accept', this line could be left out
+                .negativeText(R.string.decline)  // leaving this line out will remove the negative button
+                .build()
+                .show();
     }
 
     private void showBasic() {

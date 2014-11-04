@@ -36,6 +36,8 @@
         <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
     ]]></string>
     <string name="dismiss">Dismiss</string>
+    <string name="basic_notitle">Basic (No Title)</string>
+    <string name="shareLocationPrompt">This app wants to access your location.</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>

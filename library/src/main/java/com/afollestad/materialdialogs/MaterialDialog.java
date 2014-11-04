@@ -110,17 +110,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         // Title is set after it's determined whether to use first title or custom view title
-        title.setText(builder.title);
-        title.setTypeface(mediumFont);
-        if (builder.titleColor != -1) {
-            title.setTextColor(builder.titleColor);
+        if (builder.title == null || builder.title.toString().trim().isEmpty()) {
+            title.setVisibility(View.GONE);
         } else {
-            title.setTextColor(Utils.resolveColor(getContext(), R.attr.title_color));
-        }
-        if (builder.titleAlignment == Alignment.CENTER) {
-            title.setGravity(Gravity.CENTER_HORIZONTAL);
-        } else if (builder.titleAlignment == Alignment.RIGHT) {
-            title.setGravity(Gravity.RIGHT);
+            title.setText(builder.title);
+            title.setTypeface(mediumFont);
+            if (builder.titleColor != -1) {
+                title.setTextColor(builder.titleColor);
+            } else {
+                title.setTextColor(Utils.resolveColor(getContext(), R.attr.title_color));
+            }
+            if (builder.titleAlignment == Alignment.CENTER) {
+                title.setGravity(Gravity.CENTER_HORIZONTAL);
+            } else if (builder.titleAlignment == Alignment.RIGHT) {
+                title.setGravity(Gravity.RIGHT);
+            }
         }
 
         invalidateList();

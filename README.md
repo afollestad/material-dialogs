@@ -34,6 +34,10 @@ new MaterialDialog.Builder(this)
 On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` (which is used on the
 positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
+Dialogs don't even need a title:
+
+![Example 0](/sample/art/example0.png)
+
 ---
 
 ### Stacked Buttons

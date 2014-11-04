@@ -11,6 +11,12 @@
         tools:context=".MainActivity">
 
         <Button
+            android:id="@+id/basicNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/basic_notitle" />
+
+        <Button
             android:id="@+id/basic"
             android:layout_width="match_parent"
             android:layout_height="56dp"
