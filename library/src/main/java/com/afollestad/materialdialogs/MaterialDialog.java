@@ -73,7 +73,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         content.setTypeface(regularFont);
         content.setTextColor(Utils.resolveColor(getContext(), R.attr.content_color));
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
-        content.setLinkTextColor(this.positiveColor);
+        if (this.positiveColor == 0) {
+            content.setLinkTextColor(Utils.resolveColor(getContext(), R.attr.button_color));
+        } else {
+            content.setLinkTextColor(this.positiveColor);
+        }
+
 
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
