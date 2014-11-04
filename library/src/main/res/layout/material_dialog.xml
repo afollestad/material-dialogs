@@ -85,20 +85,17 @@
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNeutral"
             style="@style/ActionButton"
-            android:layout_alignParentLeft="true"
-            android:gravity="left|center_vertical" />
+            android:layout_alignParentLeft="true" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNegative"
             style="@style/ActionButton"
-            android:layout_toLeftOf="@+id/buttonDefaultPositive"
-            android:gravity="right|center_vertical" />
+            android:layout_toLeftOf="@+id/buttonDefaultPositive" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultPositive"
             style="@style/ActionButton"
-            android:layout_alignParentRight="true"
-            android:gravity="right|center_vertical" />
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
