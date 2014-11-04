@@ -5,7 +5,7 @@ Material theming on versions of Android below Lollipop. However, AppCompat doesn
 to use Material on pre-Lollipop. This library allows you to use a consistently Material themed dialog on
 all versions of Android, along with specific customizations that make it easier to brand the dialog.
 
-The code you see below is also found in the sample project. You can download a APK of the sample here: 
+The code you see below is also found in the sample project. You can download a APK of the sample here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
 
 ---
 
