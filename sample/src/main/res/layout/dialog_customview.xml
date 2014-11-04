@@ -49,7 +49,8 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/customEntry"
         android:layout_marginTop="4dp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:inputType="textPassword" />
 
     <CheckBox
         android:id="@+id/showPassword"

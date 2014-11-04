@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -239,9 +240,8 @@ public class MainActivity extends ActionBarActivity {
         ((CheckBox) dialog.getCustomView().findViewById(R.id.showPassword)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                passwordInput.setInputType(isChecked ?
-                        InputType.TYPE_TEXT_VARIATION_NORMAL :
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                passwordInput.setInputType(!isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT);
+                passwordInput.setTransformationMethod(!isChecked ? PasswordTransformationMethod.getInstance() : null);
             }
         });
 
