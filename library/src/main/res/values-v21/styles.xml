@@ -17,4 +17,6 @@
         <item name="divider_color">@color/divider_white</item>
     </style>
 
+    <style name="ActionButton" parent="@style/_ActionButtonParent" />
+
 </resources>
