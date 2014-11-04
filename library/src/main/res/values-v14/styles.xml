@@ -20,7 +20,8 @@
     </style>
 
     <style name="ActionButton" parent="@style/_ActionButtonParent">
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_marginLeft">@dimen/button_padding</item>
+        <item name="android:layout_marginRight">@dimen/button_padding</item>
     </style>
 
 </resources>
