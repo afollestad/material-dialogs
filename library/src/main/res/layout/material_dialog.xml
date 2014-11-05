@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/mainFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_frame_margin"
+        android:layout_marginBottom="@dimen/button_frame_margin"
+        android:layout_marginLeft="@dimen/dialog_frame_margin"
+        android:layout_marginRight="@dimen/dialog_frame_margin">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/button_frame_margin"
+            android:textSize="@dimen/title_textsize"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/content_textsize"
+            tools:text="Content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/customViewScrollParent"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/customViewFrame"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dialog_frame_margin"
+                android:layout_marginRight="@dimen/dialog_frame_margin">
+
+                <TextView
+                    android:id="@+id/titleCustomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dialog_frame_margin"
+                    android:layout_marginBottom="@dimen/title_margin_customview"
+                    android:textSize="@dimen/title_textsize"
+                    tools:text="Title" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/customViewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/listFrameScrollParent"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/listFrame"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonDefaultFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/button_frame_margin"
+        android:layout_marginRight="@dimen/button_frame_margin">
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonDefaultNeutral"
+            style="@style/ActionButton"
+            android:layout_alignParentLeft="true" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonDefaultNegative"
+            style="@style/ActionButton"
+            android:layout_toLeftOf="@+id/buttonDefaultPositive" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonDefaultPositive"
+            style="@style/ActionButton"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonStackedFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/button_frame_margin"
+        android:layout_marginRight="@dimen/button_frame_margin"
+        android:gravity="right">
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedPositive"
+            style="@style/ActionButton" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedNegative"
+            style="@style/ActionButton" />
+
+        <com.afollestad.materialdialogs.MaterialButton
+            android:id="@+id/buttonStackedNeutral"
+            style="@style/ActionButton" />
+
+    </LinearLayout>
+
+</LinearLayout>

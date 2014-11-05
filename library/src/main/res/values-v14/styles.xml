@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Light" parent="android:Theme.Holo.Light">
+        <item name="android:actionModeStyle">@style/ActionModeStyle</item>
+
+        <item name="title_color">@color/title_light</item>
+        <item name="content_color">@color/content_light</item>
+        <item name="item_color">@color/item_light</item>
+        <item name="button_color">@color/button_light</item>
+        <item name="divider_color">@color/divider_black</item>
+    </style>
+
+    <style name="Dark" parent="android:Theme.Holo">
+        <item name="title_color">@color/title_dark</item>
+        <item name="content_color">@color/content_dark</item>
+        <item name="item_color">@color/item_dark</item>
+        <item name="button_color">@color/button_dark</item>
+        <item name="divider_color">@color/divider_white</item>
+    </style>
+
+    <style name="ActionButton" parent="@style/_ActionButtonParent">
+        <item name="android:layout_marginLeft">@dimen/button_padding</item>
+        <item name="android:layout_marginRight">@dimen/button_padding</item>
+    </style>
+
+</resources>

@@ -1,0 +1,49 @@
+<resources>
+
+    <string name="app_name">MaterialDialogs</string>
+
+    <string name="basic">Basic</string>
+    <string name="stacked">Stacked Buttons</string>
+    <string name="neutral">Neutral Button</string>
+    <string name="callbacks">Callbacks</string>
+    <string name="list">Basic List</string>
+    <string name="singleChoice">Single Choice</string>
+    <string name="multiChoice">Multi Choice</string>
+    <string name="customView">Custom View</string>
+    <string name="themed">Themed</string>
+    <string name="signalStrength">Signal strength</string>
+    <string name="excellent">Excellent</string>
+    <string name="security">Security</string>
+    <string name="securityType">802.1x EAP</string>
+    <string name="password">Password</string>
+    <string name="showPassword">Show password</string>
+    <string name="permissions">Permissions</string>
+    <string name="permissionsContent">This app determines your phone\'s location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.</string>
+    <string name="socialNetworks">Social Networks</string>
+    <string name="choose">Choose</string>
+    <string name="speedBoost">Turn on speed boost</string>
+    <string name="noThanks">No thanks</string>
+    <string name="googleWifi">Google Wifi</string>
+    <string name="connect">Connect</string>
+
+    <string name="about">About</string>
+    <string name="about_body"><![CDATA[
+        material-dialogs, a library  designed by <b>Aidan Follestad</b>.<br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
+    ]]></string>
+    <string name="dismiss">Dismiss</string>
+    <string name="basic_notitle">Basic (No Title)</string>
+    <string name="shareLocationPrompt">This app wants to access your location.</string>
+
+    <string-array name="socialNetworks">
+        <item>Twitter</item>
+        <item>Google+</item>
+        <item>Instagram</item>
+        <item>Facebook</item>
+    </string-array>
+
+</resources>

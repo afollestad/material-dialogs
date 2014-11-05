@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customTitle"
+        android:textColor="#80000000"
+        android:text="@string/signalStrength" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customEntry"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:text="@string/excellent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customTitle"
+        android:textColor="#80000000"
+        android:layout_marginTop="18dp"
+        android:text="@string/security" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customEntry"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:text="@string/securityType" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customTitle"
+        android:textColor="#80000000"
+        android:layout_marginTop="18dp"
+        android:text="@string/password" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customEntry"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:inputType="textPassword" />
+
+    <CheckBox
+        android:id="@+id/showPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customEntry"
+        android:textColor="#000000"
+        android:text="@string/showPassword"
+        android:layout_marginTop="18dp" />
+
+</LinearLayout>
