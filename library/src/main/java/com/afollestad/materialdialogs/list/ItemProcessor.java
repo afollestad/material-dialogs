@@ -4,24 +4,46 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.afollestad.materialdialogs.R;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
 public abstract class ItemProcessor {
 
+    private Context context;
     private LayoutInflater li;
+    private final int defaultLayout;
 
     public ItemProcessor(Context context) {
+        this.context = context;
         li = LayoutInflater.from(context);
+        defaultLayout = R.layout.dialog_listitem;
     }
 
-    protected abstract int getLayout();
+    protected final Context getContext() {
+        return context;
+    }
 
-    protected abstract void onViewInflated(View view);
+    /**
+     * Returning 0 will use the default layout.
+     */
+    protected abstract int getLayout(int forIndex);
 
-    public final View inflateItem() {
-        View view = li.inflate(getLayout(), null);
-        onViewInflated(view);
+    /**
+     * Called when the view is inflated and will soon be added to the list. You can setup views in your
+     * list item here.
+     */
+    protected abstract void onViewInflated(int forIndex, String itemText, View view);
+
+    /**
+     * Used by MaterialDialog to inflate a list item view that will be displayed in a list.
+     */
+    public final View inflateItem(int forIndex, String itemText) {
+        int itemLayout = getLayout(forIndex);
+        if (itemLayout == 0) itemLayout = defaultLayout;
+        View view = li.inflate(itemLayout, null);
+        onViewInflated(forIndex, itemText, view);
         return view;
     }
 }

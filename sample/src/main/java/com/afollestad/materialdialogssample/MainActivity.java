@@ -20,7 +20,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
-
+/**
+ * @author Aidan Follestad (afollestad)
+ */
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -70,6 +72,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        findViewById(R.id.longList).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLongList();
+            }
+        });
+
         findViewById(R.id.singleChoice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +90,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 showMultiChoice();
+            }
+        });
+
+        findViewById(R.id.customListItems).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomList();
             }
         });
 
@@ -172,7 +188,21 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    private void showLongList() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.states)
+                .items(R.array.states)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -186,7 +216,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -199,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
-                .itemsCallbackMultiChoice(new Integer[] { 1, 3 }, new MaterialDialog.ListCallbackMulti() {
+                .itemsCallbackMultiChoice(new Integer[]{1, 3}, new MaterialDialog.ListCallbackMulti() {
                     @Override
                     public void onSelection(MaterialDialog dialog, Integer[] which, String[] text) {
                         StringBuilder str = new StringBuilder();
@@ -216,6 +246,22 @@ public class MainActivity extends ActionBarActivity {
                 .build()
                 .show();
     }
+
+    private void showCustomList() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .itemProessor(new ButtonItemProcessor(this))
+                .build()
+                .show();
+    }
+
 
     EditText passwordInput;
     View positiveAction;

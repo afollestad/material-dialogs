@@ -138,7 +138,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(MaterialDialog dialog, int which, String text) {
+            public void onSelection(MaterialDialog dialog, View view, int which, String text) {
             }
         })
         .build()
@@ -146,6 +146,12 @@ new MaterialDialog.Builder(this)
 ```
 
 ![Example 4](/sample/art/example4.png)
+
+---
+
+## Custom List Dialog Item Layouts
+
+The `ItemProcessor` API can be used to use custom list item layouts. See the sample project for an example.
 
 ---
 
@@ -164,7 +170,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(MaterialDialog dialog, int which, String text) {
+            public void onSelection(MaterialDialog dialog, View view, int which, String text) {
             }
         })
         .positiveText("Choose")

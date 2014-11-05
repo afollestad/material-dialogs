@@ -51,6 +51,13 @@
             android:layout_marginTop="2dp" />
 
         <Button
+            android:id="@+id/longList"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/long_list"
+            android:layout_marginTop="2dp" />
+
+        <Button
             android:id="@+id/singleChoice"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -62,6 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/multiChoice"
+            android:layout_marginTop="2dp" />
+
+        <Button
+            android:id="@+id/customListItems"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/custom_list_items"
             android:layout_marginTop="2dp" />
 
         <Button

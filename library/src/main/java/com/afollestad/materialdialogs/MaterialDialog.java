@@ -235,7 +235,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 tv.setTextColor(itemColor);
             } else {
                 if (mItemProcessor != null) {
-                    il = mItemProcessor.inflateItem();
+                    il = mItemProcessor.inflateItem(index, items[index]);
                 } else {
                     il = li.inflate(R.layout.dialog_listitem, null);
                     TextView tv = (TextView) il.findViewById(R.id.title);
@@ -362,7 +362,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     @SuppressLint("WrongViewCast")
                     RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
-                        listCallbackSingle.onSelection(this, i, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                        listCallbackSingle.onSelection(this, v, i, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
                         break;
                     }
                 }
@@ -401,7 +401,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             int index = Integer.parseInt(split[0]);
             if (listCallback != null) {
                 dismiss();
-                listCallback.onSelection(this, index, split[1]);
+                listCallback.onSelection(this, v, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
                 cb.performClick();
@@ -751,7 +751,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
 
     public static interface ListCallback {
-        void onSelection(MaterialDialog dialog, int which, String text);
+        void onSelection(MaterialDialog dialog, View itemView, int which, String text);
     }
 
     public static interface ListCallbackMulti {
