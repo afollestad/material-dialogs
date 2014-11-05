@@ -205,8 +205,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
 
+        final int dialogFrameMargin = (int)mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        setMargin(view.findViewById(R.id.titleCustomView), -1, -1, dialogFrameMargin, dialogFrameMargin);
         setMargin(list, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
