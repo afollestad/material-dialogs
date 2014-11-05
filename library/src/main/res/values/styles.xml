@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Light" parent="android:Theme.Light">
+    <style name="Light" parent="android:Theme.Holo.Light">
         <item name="android:actionModeStyle">@style/ActionModeStyle</item>
 
         <item name="title_color">@color/title_light</item>
@@ -11,7 +11,7 @@
         <item name="divider_color">@color/divider_black</item>
     </style>
 
-    <style name="Dark" parent="android:Theme.Black">
+    <style name="Dark" parent="android:Theme.Holo">
         <item name="title_color">@color/title_dark</item>
         <item name="content_color">@color/content_dark</item>
         <item name="item_color">@color/item_dark</item>
