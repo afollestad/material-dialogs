@@ -22,5 +22,4 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'org.lucasr.dspec:dspec:0.1.1'
 }
