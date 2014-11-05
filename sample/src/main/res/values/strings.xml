@@ -2,6 +2,10 @@
 
     <string name="app_name">MaterialDialogs</string>
 
+    <string name="agree">Agree</string>
+    <string name="disagree">Disagree</string>
+    <string name="more_info">More Info</string>
+
     <string name="basic">Basic</string>
     <string name="stacked">Stacked Buttons</string>
     <string name="neutral">Neutral Button</string>
@@ -17,8 +21,8 @@
     <string name="securityType">802.1x EAP</string>
     <string name="password">Password</string>
     <string name="showPassword">Show password</string>
-    <string name="permissions">Permissions</string>
-    <string name="permissionsContent">This app determines your phone\'s location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.</string>
+    <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
+    <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
     <string name="socialNetworks">Social Networks</string>
     <string name="choose">Choose</string>
     <string name="speedBoost">Turn on speed boost</string>
@@ -44,6 +48,17 @@
         <item>Google+</item>
         <item>Instagram</item>
         <item>Facebook</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
+        <item>Hello</item>
     </string-array>
 
 </resources>

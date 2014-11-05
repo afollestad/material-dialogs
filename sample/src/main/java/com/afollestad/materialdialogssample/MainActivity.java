@@ -102,26 +102,26 @@ public class MainActivity extends ActionBarActivity {
     private void showBasicNoTitle() {
         new MaterialDialog.Builder(this)
                 .content(R.string.shareLocationPrompt)
-                .positiveText(R.string.accept)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.decline)  // leaving this line out will remove the negative button
+                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
+                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
                 .build()
                 .show();
     }
 
     private void showBasic() {
         new MaterialDialog.Builder(this)
-                .title(R.string.permissions)
-                .content(R.string.permissionsContent)
-                .positiveText(R.string.accept)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.decline)  // leaving this line out will remove the negative button
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
+                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
                 .build()
                 .show();
     }
 
     private void showStacked() {
         new MaterialDialog.Builder(this)
-                .title(R.string.permissions)
-                .content(R.string.permissionsContent)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.speedBoost)
                 .negativeText(R.string.noThanks)
                 .build()
@@ -130,10 +130,10 @@ public class MainActivity extends ActionBarActivity {
 
     private void showNeutral() {
         new MaterialDialog.Builder(this)
-                .title(R.string.permissions)
-                .content(R.string.permissionsContent)
-                .positiveText(R.string.accept)
-                .negativeText(R.string.decline)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .neutralText(R.string.more_info)
                 .build()
                 .show();
@@ -141,10 +141,10 @@ public class MainActivity extends ActionBarActivity {
 
     private void showCallbacks() {
         new MaterialDialog.Builder(this)
-                .title(R.string.permissions)
-                .content(R.string.permissionsContent)
-                .positiveText(R.string.accept)
-                .negativeText(R.string.decline)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .neutralText(R.string.more_info)
                 .callback(new MaterialDialog.FullCallback() {
                     @Override
@@ -223,7 +223,7 @@ public class MainActivity extends ActionBarActivity {
     private void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.googleWifi)
-                .positiveText(R.string.accept)
+                .positiveText(R.string.agree)
                 .customView(R.layout.dialog_customview)
                 .positiveText(R.string.connect)
                 .negativeText(android.R.string.cancel)
@@ -270,11 +270,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void showThemed() {
         new MaterialDialog.Builder(this)
-                .title(R.string.permissions)
-                .content(R.string.permissionsContent)
-                .positiveText(R.string.accept)
-                .negativeText(R.string.decline)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .positiveColorRes(R.color.material_red_400)
+                .negativeColorRes(R.color.material_red_400)
                 .titleAlignment(Alignment.CENTER)
                 .titleColorRes(R.color.material_red_400)
                 .theme(Theme.DARK)

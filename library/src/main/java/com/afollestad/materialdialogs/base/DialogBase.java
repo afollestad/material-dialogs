@@ -22,10 +22,6 @@ public class DialogBase extends AlertDialog {
         super(context);
     }
 
-    public static void setHeight(View view, float height) {
-        setMargin(view, -1, -1, -1, -1, (int) height);
-    }
-
     public static void setMargin(View view, int top, int bottom, int left, int right) {
         setMargin(view, top, bottom, left, right, -1);
     }

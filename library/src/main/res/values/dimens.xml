@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- See http://www.google.com/design/spec/components/dialogs.html#dialogs-specs -->
+
     <dimen name="dialog_frame_margin">24dp</dimen>
+    <dimen name="title_margin_bottom">16dp</dimen>
 
-    <dimen name="button_height">36dp</dimen>
-    <dimen name="button_height_customview">56dp</dimen>
-
-    <dimen name="title_margin_customview">24dp</dimen>
-    <dimen name="button_frame_margin">16dp</dimen>
-    <dimen name="button_min_width">56dp</dimen>
-    <dimen name="button_padding">8dp</dimen>
+    <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
+    <dimen name="button_padding_vertical">12dp</dimen>
+    <dimen name="button_padding_horizontal_internal">8dp</dimen>
+    <dimen name="button_padding_horizontal_external">8dp</dimen>
+    <dimen name="button_padding_horizontal_internalexternal">32dp</dimen>
+    <dimen name="button_padding_frame_side">16dp</dimen>
+    <dimen name="button_padding_frame_bottom">8dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="neutral_button_margin">16dp</dimen>
 
     <dimen name="title_textsize">20sp</dimen>
-    <dimen name="content_textsize">16sp</dimen>
+    <dimen name="content_textsize">18sp</dimen>
     <dimen name="button_textsize">14sp</dimen>
     <dimen name="listitem_textsize">16sp</dimen>
     <dimen name="listitem_height">48dp</dimen>
+    <dimen name="listitem_control_margin">16dp</dimen>
 
 </resources>

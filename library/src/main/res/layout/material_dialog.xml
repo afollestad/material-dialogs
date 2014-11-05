@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.afollestad.materialdialogs.views.MeasureCallbackLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialog_frame_margin"
-        android:layout_marginBottom="@dimen/button_frame_margin"
+        android:layout_marginBottom="@dimen/title_margin_bottom"
         android:layout_marginLeft="@dimen/dialog_frame_margin"
         android:layout_marginRight="@dimen/dialog_frame_margin">
 
@@ -19,9 +19,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/button_frame_margin"
+            android:layout_marginBottom="@dimen/title_margin_bottom"
             android:textSize="@dimen/title_textsize"
-            tools:text="Title" />
+            tools:text="Title"
+            android:lineSpacingMultiplier="1.2" />
 
         <TextView
             android:id="@+id/content"
@@ -39,7 +40,8 @@
         android:layout_weight="1"
         android:visibility="gone">
 
-        <ScrollView
+        <com.afollestad.materialdialogs.views.MeasureCallbackScrollView
+            android:id="@+id/customViewScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -56,13 +58,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dialog_frame_margin"
-                    android:layout_marginBottom="@dimen/title_margin_customview"
+                    android:layout_marginBottom="@dimen/title_margin_bottom"
                     android:textSize="@dimen/title_textsize"
                     tools:text="Title" />
 
             </LinearLayout>
 
-        </ScrollView>
+        </com.afollestad.materialdialogs.views.MeasureCallbackScrollView>
 
     </LinearLayout>
 
@@ -72,38 +74,18 @@
         android:layout_height="1dp"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/listFrameScrollParent"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/listFrame"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </ScrollView>
-
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/button_frame_margin"
-        android:layout_marginRight="@dimen/button_frame_margin">
+        android:layout_marginRight="@dimen/button_padding_frame_side"
+        android:layout_marginBottom="@dimen/button_padding_frame_bottom">
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNeutral"
             style="@style/ActionButton"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/neutral_button_margin" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonDefaultNegative"
@@ -122,22 +104,20 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/button_frame_margin"
-        android:layout_marginRight="@dimen/button_frame_margin"
-        android:gravity="right">
+        android:layout_marginBottom="@dimen/button_padding_frame_bottom">
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedPositive"
-            style="@style/ActionButton" />
+            style="@style/ActionButtonStacked" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedNegative"
-            style="@style/ActionButton" />
+            style="@style/ActionButtonStacked" />
 
         <com.afollestad.materialdialogs.MaterialButton
             android:id="@+id/buttonStackedNeutral"
-            style="@style/ActionButton" />
+            style="@style/ActionButtonStacked" />
 
     </LinearLayout>
 
-</LinearLayout>
+</com.afollestad.materialdialogs.views.MeasureCallbackLinearLayout>
