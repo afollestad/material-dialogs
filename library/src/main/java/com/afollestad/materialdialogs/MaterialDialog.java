@@ -26,6 +26,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
+import com.afollestad.materialdialogs.list.ItemProcessor;
 import com.afollestad.materialdialogs.views.MeasureCallbackLinearLayout;
 import com.afollestad.materialdialogs.views.MeasureCallbackScrollView;
 
@@ -59,10 +60,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private int selectedIndex;
     private Integer[] selectedIndices;
     private boolean mMeasuredScrollView;
-
     private Typeface regularFont;
     private Typeface mediumFont;
-
+    private ItemProcessor mItemProcessor;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -87,6 +87,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
+        this.mItemProcessor = builder.itemProcessor;
 
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView content = (TextView) view.findViewById(R.id.content);
@@ -205,7 +206,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
 
-        final int dialogFrameMargin = (int)mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
+        final int dialogFrameMargin = (int) mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         setMargin(view.findViewById(R.id.titleCustomView), -1, -1, dialogFrameMargin, dialogFrameMargin);
@@ -220,18 +221,28 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (selectedIndex > -1) {
                     ((RadioButton) il.findViewById(R.id.control)).setChecked(selectedIndex == index);
                 }
+                TextView tv = (TextView) il.findViewById(R.id.title);
+                tv.setText(items[index]);
+                tv.setTextColor(itemColor);
             } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.dialog_listitem_multichoice, null);
                 if (selectedIndices != null) {
                     if (Arrays.asList(selectedIndices).contains(index))
                         ((CheckBox) il.findViewById(R.id.control)).setChecked(true);
                 }
+                TextView tv = (TextView) il.findViewById(R.id.title);
+                tv.setText(items[index]);
+                tv.setTextColor(itemColor);
             } else {
-                il = li.inflate(R.layout.dialog_listitem, null);
+                if (mItemProcessor != null) {
+                    il = mItemProcessor.inflateItem();
+                } else {
+                    il = li.inflate(R.layout.dialog_listitem, null);
+                    TextView tv = (TextView) il.findViewById(R.id.title);
+                    tv.setText(items[index]);
+                    tv.setTextColor(itemColor);
+                }
             }
-            TextView tv = (TextView) il.findViewById(R.id.title);
-            tv.setText(items[index]);
-            tv.setTextColor(itemColor);
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
             list.addView(il);
@@ -443,6 +454,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected float contentLineSpacingMultiplier = 1.0f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
+        protected ItemProcessor itemProcessor;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -541,6 +553,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             this.listCallback = callback;
             this.listCallbackSingle = null;
             this.listCallbackMulti = null;
+            return this;
+        }
+
+        /**
+         * Sets an item processor used to inflate and customize list items (NOT including single and
+         * multi choice list items).
+         */
+        public Builder itemProessor(ItemProcessor processor) {
+            this.itemProcessor = processor;
             return this;
         }
 
