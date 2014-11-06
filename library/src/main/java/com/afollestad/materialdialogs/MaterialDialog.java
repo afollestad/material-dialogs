@@ -461,7 +461,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         private ListCallbackMulti listCallbackMulti;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
-        protected float contentLineSpacingMultiplier = 1.2f;
+        protected float contentLineSpacingMultiplier = 1.3f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
         protected ItemProcessor itemProcessor;
