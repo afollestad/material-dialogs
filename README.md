@@ -163,7 +163,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-If you want to preselected an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
+If you want to preselect an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
 
 ---
 
@@ -190,7 +190,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-If you want to preselected item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
+If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`.
 
 ---
