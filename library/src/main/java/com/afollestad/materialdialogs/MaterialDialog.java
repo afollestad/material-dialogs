@@ -190,8 +190,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             View v = list.getChildAt(i);
             @SuppressLint("WrongViewCast")
             RadioButton rb = (RadioButton) v.findViewById(R.id.control);
-            if (newSelection != i)
+            if (newSelection != i) {
                 rb.setChecked(false);
+                rb.clearFocus();
+            }
         }
     }
 
