@@ -2,20 +2,19 @@
 <resources>
 
     <style name="Light" parent="android:Theme.Holo.Light">
-        <item name="android:actionModeStyle">@style/ActionModeStyle</item>
-        <item name="title_color">@color/title_light</item>
-        <item name="content_color">@color/content_light</item>
-        <item name="item_color">@color/item_light</item>
-        <item name="button_color">@color/button_light</item>
+        <!--<item name="title_color">@color/title_light</item>-->
+        <!--<item name="content_color">@color/content_light</item>-->
+        <!--<item name="item_color">@color/item_light</item>-->
+        <!--<item name="button_color">@color/button_light</item>-->
         <item name="divider_color">@color/divider_black</item>
         <item name="list_selector">@drawable/dialog_selector</item>
     </style>
 
     <style name="Dark" parent="android:Theme.Holo">
         <item name="title_color">@color/title_dark</item>
-        <item name="content_color">@color/content_dark</item>
-        <item name="item_color">@color/item_dark</item>
-        <item name="button_color">@color/button_dark</item>
+        <!--<item name="content_color">@color/content_dark</item>-->
+        <!--<item name="item_color">@color/item_dark</item>-->
+        <!--<item name="button_color">@color/button_dark</item>-->
         <item name="divider_color">@color/divider_white</item>
         <item name="list_selector">@drawable/dialog_selector_dark</item>
     </style>
@@ -47,11 +46,4 @@
         <item name="android:layout_marginLeft">@dimen/button_padding_horizontal_external</item>
     </style>
 
-    <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
-        <item name="android:background">#000</item>
-        <item name="actionModeCloseDrawable">@drawable/ic_action_close</item>
-        <item name="android:actionModeCloseDrawable">@drawable/ic_action_close</item>
-    </style>
-
-    <dimen name="button_min_width">64dp</dimen>
 </resources>
