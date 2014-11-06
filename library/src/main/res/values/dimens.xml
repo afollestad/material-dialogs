@@ -4,7 +4,7 @@
     <!-- See http://www.google.com/design/spec/components/dialogs.html#dialogs-specs -->
 
     <dimen name="dialog_frame_margin">24dp</dimen>
-    <dimen name="title_frame_margin">16dp</dimen>
+    <dimen name="main_frame_margin">16dp</dimen>
     <dimen name="button_min_width">64dp</dimen>
 
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
