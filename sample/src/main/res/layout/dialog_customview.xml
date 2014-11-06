@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/title_frame_margin"
-    android:paddingBottom="@dimen/dialog_frame_margin">
+    android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"

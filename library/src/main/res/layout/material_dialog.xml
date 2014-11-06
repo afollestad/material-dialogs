@@ -50,6 +50,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dialog_frame_margin"
+                android:paddingBottom="@dimen/dialog_frame_margin"
                 android:layout_marginLeft="@dimen/dialog_frame_margin"
                 android:layout_marginRight="@dimen/dialog_frame_margin">
 
@@ -57,7 +59,6 @@
                     android:id="@+id/titleCustomView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dialog_frame_margin"
                     android:layout_marginBottom="@dimen/title_frame_margin"
                     android:textSize="@dimen/title_textsize"
                     tools:text="Title" />
