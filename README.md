@@ -210,10 +210,11 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. No padding
-is used on the top, bottom, left, or right of the root view, that's all stock to the dialog. Note that
-your custom view's top and bottom margins will be overrided; if your custom view is a ViewGroup (e.g.
-a LinearLayout or RelativeLayout), then the first and last child's top and bottom will be overided.
+Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. You'll see in
+the sample project that you don't need to add padding to the left or right of your custom view, the dialog
+already does that; you only need padding on the top and bottom. Note that your custom view's top and bottom
+margins will be overrided; if your custom view is a ViewGroup (e.g. a LinearLayout or RelativeLayout),
+then the first and last child's top and bottom will be overided.
 
 `MaterialDialog` inserts your view into a `ScrollView` and displays a divider above the action buttons,
 so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
