@@ -96,10 +96,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         content.setMovementMethod(new LinkMovementMethod());
         content.setVisibility(View.VISIBLE);
         content.setTypeface(regularFont);
-        content.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.content_color));
+        content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
         if (this.positiveColor == 0) {
-            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), R.attr.button_color));
+            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
         } else {
             content.setLinkTextColor(this.positiveColor);
         }
@@ -129,7 +129,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             if (builder.titleColor != -1) {
                 title.setTextColor(builder.titleColor);
             } else {
-                title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.title_color));
+                title.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
             }
             if (builder.titleAlignment == Alignment.CENTER) {
                 title.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -215,7 +215,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     customFrame.getPaddingRight(), dialogFrameMargin);
         }
 
-        final int itemColor = DialogUtils.resolveColor(getContext(), R.attr.item_color);
+        final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
         for (int index = 0; index < items.length; index++) {
             View il;
             if (listCallbackSingle != null) {
@@ -685,7 +685,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
 
     private ColorStateList getActionTextStateList(int newPrimaryColor) {
-        final int buttonColor = DialogUtils.resolveColor(getContext(), R.attr.button_color);
+        final int buttonColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
         if (newPrimaryColor == 0) newPrimaryColor = buttonColor;
         int[][] states = new int[][]{
                 new int[]{-android.R.attr.state_enabled}, // disabled

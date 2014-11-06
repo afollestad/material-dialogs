@@ -2,19 +2,19 @@
 <resources>
 
     <style name="Light" parent="android:Theme.Material.Light.Dialog.Alert">
-        <item name="title_color">@color/title_light</item>
-        <item name="content_color">@color/content_light</item>
-        <item name="item_color">@color/item_light</item>
-        <item name="button_color">@color/button_light</item>
+        <!--<item name="title_color">@color/title_light</item>-->
+        <!--<item name="content_color">@color/content_light</item>-->
+        <!--<item name="item_color">@color/item_light</item>-->
+        <!--<item name="button_color">@color/button_light</item>-->
         <item name="divider_color">@color/divider_black</item>
         <item name="list_selector">?android:selectableItemBackground</item>
     </style>
 
     <style name="Dark" parent="android:Theme.Material.Dialog.Alert">
         <item name="title_color">@color/title_dark</item>
-        <item name="content_color">@color/content_dark</item>
-        <item name="item_color">@color/item_dark</item>
-        <item name="button_color">@color/button_dark</item>
+        <!--<item name="content_color">@color/content_dark</item>-->
+        <!--<item name="item_color">@color/item_dark</item>-->
+        <!--<item name="button_color">@color/button_dark</item>-->
         <item name="divider_color">@color/divider_white</item>
         <item name="list_selector">?android:selectableItemBackground</item>
     </style>
