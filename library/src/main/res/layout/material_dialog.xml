@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialog_frame_margin"
-        android:layout_marginBottom="@dimen/title_frame_margin"
+        android:layout_marginBottom="@dimen/main_frame_margin"
         android:layout_marginLeft="@dimen/dialog_frame_margin"
         android:layout_marginRight="@dimen/dialog_frame_margin">
 
@@ -19,7 +19,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/title_frame_margin"
+            android:layout_marginBottom="@dimen/main_frame_margin"
             android:textSize="@dimen/title_textsize"
             tools:text="Title"
             android:lineSpacingMultiplier="1.2" />
@@ -59,7 +59,7 @@
                     android:id="@+id/titleCustomView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/title_frame_margin"
+                    android:layout_marginBottom="@dimen/dialog_frame_margin"
                     android:textSize="@dimen/title_textsize"
                     tools:text="Title" />
 
