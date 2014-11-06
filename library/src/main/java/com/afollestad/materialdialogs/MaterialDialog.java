@@ -377,7 +377,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     @SuppressLint("WrongViewCast")
                     RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
-                        listCallbackSingle.onSelection(this, v, i, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                        listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
                         break;
                     }
                 }
@@ -390,7 +390,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     View itemView = list.getChildAt(i);
                     CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
-                        selectedIndices.add(i);
+                        selectedIndices.add(i - 1);
                         selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
                     }
                 }
