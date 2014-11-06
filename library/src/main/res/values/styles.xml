@@ -8,7 +8,7 @@
         <item name="item_color">@color/item_light</item>
         <item name="button_color">@color/button_light</item>
         <item name="divider_color">@color/divider_black</item>
-        <item name="list_selector">@drawable/list_selector</item>
+        <item name="list_selector">@drawable/dialog_selector</item>
     </style>
 
     <style name="Dark" parent="android:Theme.Holo">
@@ -17,7 +17,7 @@
         <item name="item_color">@color/item_dark</item>
         <item name="button_color">@color/button_dark</item>
         <item name="divider_color">@color/divider_white</item>
-        <item name="list_selector">@drawable/list_selector_dark</item>
+        <item name="list_selector">@drawable/dialog_selector_dark</item>
     </style>
 
     <style name="ActionButtonStacked" parent="@style/ActionButton">
