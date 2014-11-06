@@ -3,8 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dialog_frame_margin"
-    android:paddingBottom="@dimen/dialog_frame_margin">
+    android:paddingBottom="@dimen/dialog_frame_margin"
+    android:background="#EEEEEE">
 
     <TextView
         android:layout_width="wrap_content"
