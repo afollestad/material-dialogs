@@ -19,7 +19,6 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -112,17 +111,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             invalidateCustomViewAssociations();
-            View firstChild = customView;
-            View lastChild = customView;
-            final int frameMargin = (int) mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
-            if (customView instanceof ViewGroup) {
-                ViewGroup group = (ViewGroup) customView;
-                firstChild = group.getChildAt(0);
-                lastChild = group.getChildAt(group.getChildCount() - 1);
-            }
-            if (builder.title == null || builder.title.toString().trim().isEmpty())
-                setMargin(firstChild, frameMargin, -1, -1, -1);
-            setMargin(lastChild, -1, frameMargin, -1, -1);
             ((LinearLayout) view.findViewById(R.id.customViewFrame)).addView(customView);
         } else {
             invalidateCustomViewAssociations();
@@ -215,7 +203,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         LayoutInflater li = LayoutInflater.from(mContext);
 
         if (listCallbackSingle == null && listCallbackMulti == null) {
-            setMargin(view.findViewById(R.id.customViewFrame), -1, dialogFrameMargin, -1, -1);
+            View customFrame = view.findViewById(R.id.customViewFrame);
+            customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
+                    customFrame.getPaddingRight(), dialogFrameMargin);
         }
 
         final int itemColor = DialogUtils.resolveColor(getContext(), R.attr.item_color);
