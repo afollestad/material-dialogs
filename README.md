@@ -34,9 +34,9 @@ positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 ---
 
-### Stacked Buttons
+### Stacked Action Buttons
 
-If you have multiple buttons that together are too wide to fit on one line, the dialog will stack the
+If you have multiple action buttons that together are too wide to fit on one line, the dialog will stack the
 buttons to be vertically orientated.
 
 ```java
@@ -53,7 +53,7 @@ On a tablet, this will be no different that the basic example. On a smaller phon
 
 ---
 
-### Neutral Button
+### Neutral Action Button
 
 You can specify neutral text in addition to the positive and negative text. It will show the neutral
 action on the far left.
@@ -73,7 +73,7 @@ new MaterialDialog.Builder(this)
 
 ### Callbacks
 
-To know when the user selects a button, you set a callback. There's three variations of the callback for the action buttons:
+To know when the user selects an action button, you set a callback. There's three variations of the callback for the action buttons:
 
 ```java
 new MaterialDialog.Builder(this)
