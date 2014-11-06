@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="sample_button_spacing">8dp</dimen>
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+
+</resources>

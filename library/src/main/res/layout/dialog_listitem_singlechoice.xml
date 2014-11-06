@@ -14,7 +14,6 @@
         android:minHeight="@dimen/listitem_height"
         android:clickable="false"
         android:gravity="center_vertical"
-        android:background="@null"
         android:layout_marginLeft="@dimen/dialog_frame_margin"
         android:layout_marginRight="@dimen/listitem_control_margin" />
 
