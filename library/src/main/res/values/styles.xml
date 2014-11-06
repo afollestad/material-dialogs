@@ -35,6 +35,7 @@
         <item name="android:textSize">@dimen/button_textsize</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
 
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:minWidth">@dimen/button_min_width</item>
