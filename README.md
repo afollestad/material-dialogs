@@ -29,14 +29,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 1](/sample/art/example1.png)
-
 On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` (which is used on the
 positive action button) to the `colorAccent` attribute of your styles.xml theme.
-
-Dialogs don't even need a title:
-
-![Example 0](/sample/art/example_0.png)
 
 ---
 
@@ -54,15 +48,12 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-![Example 2](/sample/art/example2.png)
-
 ---
 
 ### Neutral Button
 
-You can specify neutral text in addition to the positive and negative text. On smaller screens, it will
-cause the buttons to be stacked due to limited space. On a larger screen, however, it will show the neutral
-action on the far left as seen on the Design Guidelines (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-actions).
+You can specify neutral text in addition to the positive and negative text. It will show the neutral
+action on the far left.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -74,10 +65,6 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
-
-The result on a tablet:
-
-![Example 3](/sample/art/example3.png)
 
 ---
 
@@ -122,7 +109,7 @@ new MaterialDialog.Builder(this)
 
 You can choose which one to use based on which actions you make visible, and which actions need to trigger an event.
 If you pass text to an action, it will become visible (not including the positive action which is always visible
-and will default to 'Accept' unless you make the dialog a list dialog).
+and will default to 'OK' unless you make the dialog a list dialog).
 You don't need a callback to make actions visible. But the dialog will not dismiss when an action is pressed if no callback is set for it.
 
 ---
@@ -144,8 +131,6 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
-
-![Example 4](/sample/art/example4.png)
 
 ---
 
@@ -178,10 +163,6 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-The result:
-
-![Example 5](/sample/art/example5.png)
-
 If you want to preselected an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
 
 ---
@@ -208,10 +189,6 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
-
-The result:
-
-![Example 6](/sample/art/example6.png)
 
 If you want to preselected item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`.
@@ -242,8 +219,6 @@ a LinearLayout or RelativeLayout), then the first and last child's top and botto
 so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
 However, you should avoid making any content that wouldn't belong in a dialog because of its size.
 
-![Example 7](/sample/art/example7.png)
-
 ---
 
 ### Theming
@@ -268,10 +243,6 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
-
-The result:
-
-![Example 8](/sample/art/example8.png)
 
 To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
 
