@@ -11,7 +11,7 @@
     </style>
 
     <style name="Dark" parent="android:Theme.Material.Dialog.Alert">
-        <item name="title_color">@color/title_dark</item>
+        <!--<item name="title_color">@color/title_dark</item>-->
         <!--<item name="content_color">@color/content_dark</item>-->
         <!--<item name="item_color">@color/item_dark</item>-->
         <!--<item name="button_color">@color/button_dark</item>-->
