@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.base;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.view.View;
@@ -12,11 +13,12 @@ import android.widget.ListView;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class DialogBase extends AlertDialog {
+public class DialogBase extends AlertDialog implements DialogInterface.OnShowListener {
 
     protected final static String POSITIVE = "POSITIVE";
     protected final static String NEGATIVE = "NEGATIVE";
     protected final static String NEUTRAL = "NEUTRAL";
+    private OnShowListener mShowListener;
 
     protected DialogBase(Context context) {
         super(context);
@@ -134,5 +136,20 @@ public class DialogBase extends AlertDialog {
     @Override
     public ListView getListView() {
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
+    }
+
+    @Override
+    public final void setOnShowListener(OnShowListener listener) {
+        mShowListener = listener;
+    }
+
+    protected final void setOnShowListenerInternal() {
+        super.setOnShowListener(this);
+    }
+
+    @Override
+    public void onShow(DialogInterface dialog) {
+        if (mShowListener != null)
+            mShowListener.onShow(dialog);
     }
 }

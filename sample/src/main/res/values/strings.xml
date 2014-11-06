@@ -25,7 +25,7 @@
     <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
     <string name="socialNetworks">Social Networks</string>
     <string name="choose">Choose</string>
-    <string name="speedBoost">Turn on speed boost</string>
+    <string name="speedBoost">Turn on speed boost now!</string>
     <string name="noThanks">No thanks</string>
     <string name="googleWifi">Google Wifi</string>
     <string name="connect">Connect</string>

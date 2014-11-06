@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -138,9 +139,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         invalidateList();
-        if (invalidateActions())
-            checkIfStackingNeeded();
+        invalidateActions();
+        setOnShowListenerInternal();
         setViewInternal(view);
+    }
+
+    @Override
+    public void onShow(DialogInterface dialog) {
+        super.onShow(dialog); // calls any external show listeners
+        checkIfStackingNeeded();
     }
 
     /**
@@ -250,10 +257,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
      */
     private int calculateMaxButtonWidth() {
-        final int dialogWidthDp = (int) mContext.getResources().getDimension(R.dimen.dialog_width);
+        final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
         final int eightDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_horizontal_external);
         final int sixteenDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_frame_side);
-        return (dialogWidthDp - sixteenDp - sixteenDp - eightDp) / 2;
+        return (dialogWidth - sixteenDp - sixteenDp - eightDp) / 2;
     }
 
     /**
