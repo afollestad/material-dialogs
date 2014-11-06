@@ -14,6 +14,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +28,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
 import com.afollestad.materialdialogs.list.ItemProcessor;
-import com.afollestad.materialdialogs.views.MeasureCallbackLinearLayout;
 import com.afollestad.materialdialogs.views.MeasureCallbackScrollView;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackLinearLayout.Callback, MeasureCallbackScrollView.Callback {
+public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
     private Context mContext;
     private CharSequence positiveText;
@@ -60,7 +60,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private int selectedIndex;
     private Integer[] selectedIndices;
     private boolean mMeasuredScrollView;
-    private Typeface regularFont;
     private Typeface mediumFont;
     private ItemProcessor mItemProcessor;
 
@@ -69,7 +68,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         this.mContext = builder.context;
         this.view = LayoutInflater.from(builder.context).inflate(R.layout.material_dialog, null);
-        ((MeasureCallbackLinearLayout) view).setCallback(this);
         this.customView = builder.customView;
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
@@ -83,14 +81,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.neutralColor = builder.neutralColor;
         this.items = builder.items;
         this.setCancelable(builder.cancelable);
-        this.regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
+        final Typeface regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
         this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
         this.mItemProcessor = builder.itemProcessor;
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        TextView content = (TextView) view.findViewById(R.id.content);
+        final TextView content = (TextView) view.findViewById(R.id.content);
 
         content.setText(builder.content);
         content.setMovementMethod(new LinkMovementMethod());
@@ -151,6 +149,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         invalidateList();
         invalidateActions();
+        checkIfStackingNeeded();
         setViewInternal(view);
     }
 
@@ -189,7 +188,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     private void invalidateSingleChoice(int newSelection) {
         newSelection++;
-        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        final LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View v = list.getChildAt(i);
             @SuppressLint("WrongViewCast")
@@ -254,9 +253,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
      */
     private int calculateMaxButtonWidth() {
+        final int dialogWidthDp = (int) mContext.getResources().getDimension(R.dimen.dialog_width);
         final int eightDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_horizontal_external);
         final int sixteenDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_frame_side);
-        return (view.getMeasuredWidth() - sixteenDp - sixteenDp - eightDp) / 2;
+        return (dialogWidthDp - sixteenDp - sixteenDp - eightDp) / 2;
     }
 
     /**
@@ -278,16 +278,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return;
         }
         final int maxWidth = calculateMaxButtonWidth();
+        Log.v("StackingAlgorithm", "Max button width: " + maxWidth);
         final Paint paint = positiveButton.getPaint();
         final int eightDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_horizontal_external);
         final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
+        Log.v("StackingAlgorithm", "Positive button width: " + positiveWidth);
         isStacked = positiveWidth > maxWidth;
         if (!isStacked && this.neutralText != null) {
             final int neutralWidth = (int) paint.measureText(neutralButton.getText().toString()) + (eightDp * 2);
+            Log.v("StackingAlgorithm", "Neutral button width: " + neutralWidth);
             isStacked = neutralWidth > maxWidth;
         }
         if (!isStacked && this.negativeText != null) {
             final int negativeWidth = (int) paint.measureText(negativeButton.getText().toString()) + (eightDp * 2);
+            Log.v("StackingAlgorithm", "Negative button width: " + negativeWidth);
             isStacked = negativeWidth > maxWidth;
         }
         invalidateActions();
@@ -411,11 +415,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 cb.performClick();
             }
         }
-    }
-
-    @Override
-    public void onMeasureLinear(LinearLayout view) {
-        checkIfStackingNeeded();
     }
 
     @Override

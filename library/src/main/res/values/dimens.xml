@@ -22,5 +22,6 @@
     <dimen name="listitem_textsize">16sp</dimen>
     <dimen name="listitem_height">48dp</dimen>
     <dimen name="listitem_control_margin">16dp</dimen>
+    <dimen name="dialog_width">280dp</dimen>
 
 </resources>
