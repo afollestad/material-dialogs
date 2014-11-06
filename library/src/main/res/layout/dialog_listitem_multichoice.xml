@@ -15,7 +15,9 @@
         android:clickable="false"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/dialog_frame_margin"
-        android:layout_marginRight="@dimen/listitem_control_margin" />
+        android:layout_marginRight="@dimen/listitem_control_margin"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/title"

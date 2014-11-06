@@ -190,7 +190,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             View v = list.getChildAt(i);
             @SuppressLint("WrongViewCast")
             RadioButton rb = (RadioButton) v.findViewById(R.id.control);
-            rb.setChecked(newSelection == i);
+            if (newSelection != i)
+                rb.setChecked(false);
         }
     }
 
@@ -204,15 +205,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         final int dialogFrameMargin = (int) mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
-        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
         setMargin(view.findViewById(R.id.titleCustomView), -1, -1, dialogFrameMargin, dialogFrameMargin);
-        setMargin(list, -1, -1, 0, 0);
+        setMargin(customFrame, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
-        if (listCallbackSingle == null && listCallbackMulti == null) {
-            View customFrame = view.findViewById(R.id.customViewFrame);
+        if (listCallbackSingle != null || listCallbackMulti != null) {
+            final int mainFrameMargin = (int) mContext.getResources().getDimension(R.dimen.main_frame_margin);
             customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
-                    customFrame.getPaddingRight(), dialogFrameMargin);
+                    customFrame.getPaddingRight(), mainFrameMargin);
         }
 
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
@@ -221,7 +222,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             if (listCallbackSingle != null) {
                 il = li.inflate(R.layout.dialog_listitem_singlechoice, null);
                 if (selectedIndex > -1) {
-                    ((RadioButton) il.findViewById(R.id.control)).setChecked(selectedIndex == index);
+                    RadioButton control = (RadioButton) il.findViewById(R.id.control);
+                    control.setChecked(selectedIndex == index);
                 }
                 TextView tv = (TextView) il.findViewById(R.id.title);
                 tv.setText(items[index]);
@@ -229,8 +231,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.dialog_listitem_multichoice, null);
                 if (selectedIndices != null) {
-                    if (Arrays.asList(selectedIndices).contains(index))
-                        ((CheckBox) il.findViewById(R.id.control)).setChecked(true);
+                    if (Arrays.asList(selectedIndices).contains(index)) {
+                        CheckBox control = (CheckBox) il.findViewById(R.id.control);
+                        control.setChecked(true);
+                    }
                 }
                 TextView tv = (TextView) il.findViewById(R.id.title);
                 tv.setText(items[index]);
@@ -248,7 +252,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
             il.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.list_selector));
-            list.addView(il);
+            customFrame.addView(il);
         }
     }
 
@@ -416,11 +420,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 listCallback.onSelection(this, v, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
-                cb.performClick();
+                cb.setChecked(!cb.isChecked());
                 invalidateSingleChoice(index);
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
-                cb.performClick();
+                cb.setChecked(!cb.isChecked());
             }
         }
     }
