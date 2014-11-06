@@ -7,7 +7,7 @@ import android.graphics.Color;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class Utils {
+public class DialogUtils {
 
     public static int adjustAlpha(int color, float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
@@ -21,6 +21,15 @@ public class Utils {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getColor(0, 0);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    public static int resolveDrawable(Context context, int attr) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
+        try {
+            return a.getResourceId(0, 0);
         } finally {
             a.recycle();
         }
