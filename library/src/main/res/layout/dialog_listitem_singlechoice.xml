@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:gravity="center_vertical"
-    android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:descendantFocusability="blocksDescendants">
 
     <RadioButton
         android:id="@+id/control"
