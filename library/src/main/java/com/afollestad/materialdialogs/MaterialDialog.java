@@ -759,6 +759,23 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     /**
+     * Hides the positive/neutral/negative action buttons.
+     */
+    public final void hideActions() {
+        hideActions = true;
+        invalidateActions();
+    }
+
+    /**
+     * Shows the positive/neutral/negative action buttons that were previously hidden.
+     */
+    public final void showActions() {
+        hideActions = false;
+        if (invalidateActions())
+            checkIfStackingNeeded();
+    }
+
+    /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
      */
     public final View getCustomView() {

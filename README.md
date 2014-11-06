@@ -278,11 +278,16 @@ dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
 If you want to forcefully hide the action buttons:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .hideActions()
-        .build()
-        .show();
+        .build();
+dialog.show();
+
+// OR
+
+dialog.hideActions();
+dialog.showActions();
 ```
 
 --
