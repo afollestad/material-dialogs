@@ -223,7 +223,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 il = li.inflate(R.layout.dialog_listitem_singlechoice, null);
                 if (selectedIndex > -1) {
                     RadioButton control = (RadioButton) il.findViewById(R.id.control);
-                    control.setChecked(selectedIndex == index);
+                    if (selectedIndex == index) control.setChecked(true);
                 }
                 TextView tv = (TextView) il.findViewById(R.id.title);
                 tv.setText(items[index]);
@@ -389,6 +389,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
                 for (int i = 1; i < list.getChildCount(); i++) {
                     View itemView = list.getChildAt(i);
+                    @SuppressLint("WrongViewCast")
                     CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
                     if (rb.isChecked()) {
                         selectedIndices.add(i - 1);
@@ -420,7 +421,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 listCallback.onSelection(this, v, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
-                cb.setChecked(!cb.isChecked());
+                if (!cb.isChecked())
+                    cb.setChecked(true);
                 invalidateSingleChoice(index);
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
