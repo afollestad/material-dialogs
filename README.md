@@ -275,6 +275,16 @@ MaterialDialog dialog = //... initialization via the builder ...
 dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
 ```
 
+If you want to forcefully hide the action buttons:
+
+```java
+new MaterialDialog.Builder(this)
+        // ... other initialization
+        .hideActions()
+        .build()
+        .show();
+```
+
 --
 
 ### Maven/Gradle Dependency

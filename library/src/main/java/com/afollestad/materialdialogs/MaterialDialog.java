@@ -62,6 +62,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private boolean mMeasuredScrollView;
     private Typeface mediumFont;
     private ItemProcessor mItemProcessor;
+    private boolean hideActions;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -86,6 +87,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
         this.mItemProcessor = builder.itemProcessor;
+        this.hideActions = builder.hideActions;
 
         TextView title = (TextView) view.findViewById(R.id.title);
         final TextView content = (TextView) view.findViewById(R.id.content);
@@ -148,8 +150,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         invalidateList();
-        invalidateActions();
-        checkIfStackingNeeded();
+        if (invalidateActions())
+            checkIfStackingNeeded();
         setViewInternal(view);
     }
 
@@ -306,12 +308,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
      * and sets their properties (such as height, text color, etc.).
      */
-    private void invalidateActions() {
-        if (items != null && listCallbackSingle == null && listCallbackMulti == null) {
+    private boolean invalidateActions() {
+        if (items != null && listCallbackSingle == null && listCallbackMulti == null || hideActions) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
-            return;
+            return false;
         }
 
         if (isStacked) {
@@ -360,6 +362,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         } else {
             negativeButton.setVisibility(View.GONE);
         }
+        return true;
     }
 
     @Override
@@ -462,6 +465,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
         protected ItemProcessor itemProcessor;
+        protected boolean hideActions;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -669,6 +673,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
+            return this;
+        }
+
+        public Builder hideActions() {
+            this.hideActions = true;
             return this;
         }
 
