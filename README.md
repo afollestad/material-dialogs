@@ -36,7 +36,8 @@ positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 ### Stacked Buttons
 
-If the action text is too long, it will stack the buttons as also seen on Google's Material design guidelines.
+If you have multiple buttons that together are too wide to fit on one line, the dialog will stack the
+buttons to be vertically orientated.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -47,6 +48,8 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
+
+On a tablet, this will be no different that the basic example. On a smaller phone, they will stack.
 
 ---
 
