@@ -20,11 +20,11 @@ for color resources (e.g. `titleColor` and `titleColorRes`).
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Permissions")
-        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
+        .title("Use Google's Location Services?")
+        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .theme(Theme.LIGHT)  // the default is light, so you don't need this line
-        .positiveText("Accept)  // the default is 'OK'
-        .negativeText("Decline")  // leaving this line out will remove the negative button
+        .positiveText("Agree")  // the default is 'OK'
+        .negativeText("Disagree")  // leaving this line out will remove the negative button
         .build()
         .show();
 ```
@@ -40,9 +40,9 @@ If the action text is too long, it will stack the buttons as also seen on Google
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Permissions")
-        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
-        .positiveText("Turn on speed boost")
+        .title("Use Google's Location Services?")
+        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+        .positiveText("Turn on speed boost right now!")
         .negativeText("No thanks")
         .build()
         .show();
@@ -57,10 +57,10 @@ action on the far left.
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Permissions")
-        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
-        .positiveText("Accept")
-        .negativeText("Decline")
+        .title("Use Google's Location Services?")
+        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+        .positiveText("Agree")
+        .negativeText("Disagree")
         .neutralText("More info")
         .build()
         .show();
@@ -74,37 +74,37 @@ To know when the user selects a button, you set a callback. There's three variat
 
 ```java
 new MaterialDialog.Builder(this)
-                .callback(new MaterialDialog.SimpleCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                    }
-                });
+        .callback(new MaterialDialog.SimpleCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+            }
+        });
 
 new MaterialDialog.Builder(this)
-                .callback(new MaterialDialog.Callback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                    }
+        .callback(new MaterialDialog.Callback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+            }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                    }
-                });
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            }
+        });
 
 new MaterialDialog.Builder(this)
-                .callback(new MaterialDialog.FullCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                    }
+        .callback(new MaterialDialog.FullCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+            }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                    }
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            }
 
-                    @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                    }
-                });
+            @Override
+            public void onNeutral(MaterialDialog dialog) {
+            }
+        });
 ```
 
 You can choose which one to use based on which actions you make visible, and which actions need to trigger an event.
@@ -202,7 +202,7 @@ Custom views are very easy to implement. To match the dialog show here: http://w
 ```java
 new MaterialDialog.Builder(this)
         .title("Google Wifi")
-        .positiveText("Accept")
+        .positiveText("Agree")
         .customView(R.layout.custom_view)
         .positiveText("Connect")
         .positiveColor(Color.parseColor("#03a9f4"))
@@ -232,10 +232,10 @@ buttons. This library makes theming even easier. Here's a basic example:
 ```java
 final int materialRed500 = Color.parseColor("#D50000");
 new MaterialDialog.Builder(this)
-        .title("Permissions")
-        .content("This app determines your phone's location and shares it with Google in order to serve personalized alerts to you. This allows for a better overall app experience.")
-        .positiveText("Accept")
-        .negativeText("Decline")
+        .title("Use Google's Location Services?")
+        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+        .positiveText("Agree")
+        .negativeText("Disagree")
         .positiveColor(materialRed500)
         .negativeColor(materialRed500)
         .neutralColor(materialRed500)
