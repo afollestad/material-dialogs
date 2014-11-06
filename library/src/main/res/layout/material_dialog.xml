@@ -81,18 +81,18 @@
         android:layout_marginRight="@dimen/button_padding_frame_side"
         android:layout_marginBottom="@dimen/button_padding_frame_bottom">
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonDefaultNeutral"
             style="@style/ActionButton"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/neutral_button_margin" />
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonDefaultNegative"
             style="@style/ActionButton"
             android:layout_toLeftOf="@+id/buttonDefaultPositive" />
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonDefaultPositive"
             style="@style/ActionButton"
             android:layout_alignParentRight="true" />
@@ -106,15 +106,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/button_padding_frame_bottom">
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonStackedPositive"
             style="@style/ActionButtonStacked" />
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonStackedNegative"
             style="@style/ActionButtonStacked" />
 
-        <com.afollestad.materialdialogs.views.MaterialButton
+        <TextView
             android:id="@+id/buttonStackedNeutral"
             style="@style/ActionButtonStacked" />
 
