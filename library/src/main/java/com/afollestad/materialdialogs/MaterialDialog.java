@@ -258,30 +258,30 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
     }
 
-    /**
-     * Max button width = (DialogWidth - 16dp - 16dp - 8dp) / 2
-     * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
-     */
     private int calculateMaxButtonWidth() {
+        /**
+         * Max button width = (DialogWidth - 16dp - 16dp - 8dp) / 2
+         * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
+         */
         final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
         final int eightDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_horizontal_external);
         final int sixteenDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_frame_side);
         return (dialogWidth - sixteenDp - sixteenDp - eightDp) / 2;
     }
 
-    /**
-     * Detects whether or not the custom view or list content can be scrolled.
-     */
     private boolean canCustomViewScroll() {
+        /**
+         * Detects whether or not the custom view or list content can be scrolled.
+         */
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.customViewScroll);
         final int childHeight = view.findViewById(R.id.customViewFrame).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
 
-    /**
-     * Measures the action button's and their text to decide whether or not the button should be stacked.
-     */
     private void checkIfStackingNeeded() {
+        /**
+         * Measures the action button's and their text to decide whether or not the button should be stacked.
+         */
         if (((negativeButton == null || negativeButton.getVisibility() == View.GONE) &&
                 (neutralButton == null || neutralButton.getVisibility() == View.GONE))) {
             // Stacking isn't necessary if you only have one button
@@ -307,11 +307,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateActions();
     }
 
-    /**
-     * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
-     * and sets their properties (such as height, text color, etc.).
-     */
     private boolean invalidateActions() {
+        /**
+         * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
+         * and sets their properties (such as height, text color, etc.).
+         */
         if (items != null && listCallbackSingle == null && listCallbackMulti == null || hideActions) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -575,6 +575,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         /**
          * Sets an item processor used to inflate and customize list items (NOT including single and
          * multi choice list items).
+         *
+         * @param processor The processor to apply to all non single/multi choice list items.
+         * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemProessor(ItemProcessor processor) {
             this.itemProcessor = processor;
@@ -584,6 +587,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         /**
          * Pass anything below 0 (such as -1) for the selected index to leave all options unselected initially.
          * Otherwise pass the index of an item that will be selected initially.
+         *
+         * @param selectedIndex The checkbox index that will be selected initially.
+         * @param callback      The callback that will be called when the presses the positive button.
+         * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemsCallbackSingleChoice(int selectedIndex, ListCallback callback) {
             this.selectedIndex = selectedIndex;
@@ -596,6 +603,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         /**
          * Pass null for the selected indices to leave all options unselected initially. Otherwise pass
          * an array of indices that will be selected initially.
+         *
+         * @param selectedIndices The radio button indices that will be selected initially.
+         * @param callback        The callback that will be called when the presses the positive button.
+         * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, ListCallbackMulti callback) {
             this.selectedIndicies = selectedIndices;
@@ -708,6 +719,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     /**
      * Retrieves the view of an action button, allowing you to modify properties such as whether or not it's enabled.
+     *
+     * @param which The action button of which to get the view for.
+     * @return The view from the dialog's layout representing this action button.
      */
     public final View getActionButton(DialogAction which) {
         if (view == null) return null;
@@ -782,6 +796,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
+     *
+     * @return The custom view that was passed into the Builder.
      */
     public final View getCustomView() {
         return customView;
