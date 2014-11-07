@@ -27,17 +27,26 @@ public abstract class ItemProcessor {
 
     /**
      * Returning 0 will use the default layout.
+     *
+     * @param forIndex The index of the item being inflated.
      */
     protected abstract int getLayout(int forIndex);
 
     /**
      * Called when the view is inflated and will soon be added to the list. You can setup views in your
      * list item here.
+     *
+     * @param forIndex The index of the item being inflated.
+     * @param itemText The text associated with the current item from the array passed into items() from the Builder.
+     * @param view The inflated view for the current item.
      */
     protected abstract void onViewInflated(int forIndex, String itemText, View view);
 
     /**
      * Used by MaterialDialog to inflate a list item view that will be displayed in a list.
+     *
+     * @param forIndex The index of the item being inflated.
+     * @param itemText The text associated with the current item from the array passed into items() from the Builder.
      */
     public final View inflateItem(int forIndex, String itemText) {
         int itemLayout = getLayout(forIndex);

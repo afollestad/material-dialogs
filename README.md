@@ -11,6 +11,19 @@ It's also available on Google Play: https://play.google.com/store/apps/details?i
 
 ---
 
+### Gradle Dependency
+
+Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
+
+```Groovy
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.afollestad.material-dialogs:+'
+}
+```
+
+---
+
 ### Basic Dialog
 
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
@@ -293,9 +306,3 @@ dialog.show();
 dialog.hideActions();
 dialog.showActions();
 ```
-
---
-
-### Maven/Gradle Dependency
-
-Coming soon
