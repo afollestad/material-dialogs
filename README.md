@@ -22,6 +22,10 @@ dependencies {
 }
 ```
 
+Using a plus sign for the version will make sure you always have the latest version. It's likely that
+this library will be updated often to fix and improve things, so it isn't recommended to stay fixed at a
+specific version so that you forget to check for new versions.
+
 ---
 
 ### Basic Dialog
