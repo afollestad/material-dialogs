@@ -11,7 +11,7 @@ It's also available on Google Play: https://play.google.com/store/apps/details?i
 
 ---
 
-### Gradle Dependency
+### Gradle Dependency (jCenter)
 
 Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
 
@@ -20,6 +20,10 @@ dependencies {
     compile 'com.afollestad:material-dialogs:+'
 }
 ```
+
+MAKE SURE you're using the jCenter repository, Android Studio uses this repository by default.
+
+
 
 Using a plus sign for the version will make sure you always have the latest version. It's likely that
 this library will be updated often to fix and improve things, so it isn't recommended to stay fixed at a
