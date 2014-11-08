@@ -374,7 +374,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         String tag = (String) v.getTag();
         if (tag.equals(POSITIVE)) {
             if (listCallbackSingle != null) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
                 for (int i = 1; i < list.getChildCount(); i++) {
                     View itemView = list.getChildAt(i);
@@ -386,7 +386,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     }
                 }
             } else if (listCallbackMulti != null) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 List<Integer> selectedIndices = new ArrayList<Integer>();
                 List<String> selectedTitles = new ArrayList<String>();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
@@ -403,24 +403,24 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                         selectedIndices.toArray(new Integer[selectedIndices.size()]),
                         selectedTitles.toArray(new String[selectedTitles.size()]));
             } else if (callback != null) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 callback.onPositive(this);
             }
         } else if (tag.equals(NEGATIVE)) {
             if (callback != null && callback instanceof Callback) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 ((Callback) callback).onNegative(this);
             }
         } else if (tag.equals(NEUTRAL)) {
             if (callback != null && callback instanceof FullCallback) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 ((FullCallback) callback).onNeutral(this);
             }
         } else {
             String[] split = tag.split(":");
             int index = Integer.parseInt(split[0]);
             if (listCallback != null) {
-                dismiss();
+                if (dismissOnActionPress) dismiss();
                 listCallback.onSelection(this, v, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
