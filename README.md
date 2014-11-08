@@ -309,3 +309,13 @@ dialog.show();
 dialog.hideActions();
 dialog.showActions();
 ```
+
+If you don't want the dialog to automatically be dismissed when an action button is pressed:
+
+```java
+MaterialDialog dialog new MaterialDialog.Builder(this)
+        // ... other initialization
+        .dismissOnActionPress(false)
+        .build()
+        .show();
+```

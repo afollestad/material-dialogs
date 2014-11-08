@@ -63,6 +63,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private Typeface mediumFont;
     private ItemProcessor mItemProcessor;
     private boolean hideActions;
+    private boolean dismissOnActionPress;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -471,6 +472,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Integer[] selectedIndicies = null;
         protected ItemProcessor itemProcessor;
         protected boolean hideActions;
+        protected boolean dismissOnActionPress = true;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -694,6 +696,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder hideActions() {
             this.hideActions = true;
+            return this;
+        }
+
+        /**
+         * This defaults to true. If set to false, the dialog will not automatically be dismissed
+         * when an action button is pressed.
+         *
+         * @param dismiss Whether or not to dismiss the dialog.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder dismissOnActionPress(boolean dismiss) {
+            this.dismissOnActionPress = dismiss;
             return this;
         }
 
