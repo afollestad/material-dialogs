@@ -15,15 +15,13 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:+'
+    compile 'com.afollestad:material-dialogs:0.0.1.2'
 }
 ```
 
 ***Make sure*** you're using the jCenter repository, Android Studio uses this repository by default.
 
-Using a plus sign for the version will make sure you always have the latest version. It's likely that
-this library will be updated often to fix and improve things, so it isn't recommended to stay fixed at a
-specific version so that you forget to check for new versions.
+Check back here frequently for version updates.
 
 ---
 
