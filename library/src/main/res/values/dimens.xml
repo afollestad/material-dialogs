@@ -20,7 +20,7 @@
     <dimen name="title_textsize">20sp</dimen>
     <dimen name="content_textsize">18sp</dimen>
     <dimen name="button_textsize">14sp</dimen>
-    <dimen name="listitem_textsize">16sp</dimen>
+    <dimen name="listitem_textsize">18sp</dimen>
     <dimen name="listitem_height">48dp</dimen>
     <dimen name="listitem_control_margin">16dp</dimen>
 
