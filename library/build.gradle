@@ -29,47 +29,13 @@ dependencies {
     compile 'com.android.support:support-annotations:21.0.0'
 }
 
-//bintray {
-//    apiUrl = "https://api.bintray.net"
-//    user = 'drummer-aidan'
-//    key = '1666f3b048571f2a7a97a0ad006a32fa5630d882'
-//
-//    configurations = ['published'] //When uploading configuration files
-////    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
-////        from 'arbitrary-files'
-////        into 'standalone_files/level1'
-////        rename '(.+)\\.(.+)', '$1-suffix.$2'
-////    }
-//    pkg {
-//        repo = 'maven'
-////        userOrg = 'myorg' //An optional organization name when the repo belongs to one of the user's orgs
-//        name = 'material-dialogs'
-//        desc = 'A library that allows you to use Material design themed dialogs across all versions of Android.'
-//        websiteUrl = 'https://github.com/afollestad/material-dialogs'
-//        issueTrackerUrl = 'https://github.com/afollestad/material-dialogs/issues'
-//        vcsUrl = 'afollestad/material-dialogs'
-//        licenses = ['MIT']
-//        labels = ['android', 'library', 'dialogs', 'material-design']
-//        publicDownloadNumbers = false
-//        // attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
-//        //Optional version descriptor
-//        version {
-//            name = '0.1-Beta'
-//            // desc = 'optional, version-specific description'
-//            vcsTag = '0.1.0'
-//            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
-//            //Optional version-level attributes
-//        }
-//    }
-//}
-
 publish {
     userOrg = 'drummer-aidan'
     groupId = 'com.afollestad'
     artifactId = 'material-dialogs'
-    version = '0.0.1'
+    version = '0.0.1.1'
     description = 'A library for implementing Material design styled dialogs across all versions of Android.'
     website = 'https://github.com/afollestad/material-dialogs'
-    issueTracker = "${website}/issues"   // optional - this is automatically setup for github websites
-    repository = "${website}.git"        // optional - this is automatically setup for github websites
+    issueTracker = "${website}/issues"
+    repository = "${website}.git"
 }
