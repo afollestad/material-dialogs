@@ -207,17 +207,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items == null || items.length == 0) return;
         view.findViewById(R.id.content).setVisibility(View.GONE);
 
-        final int dialogFrameMargin = (int) mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        setMargin(view.findViewById(R.id.titleCustomView), -1, -1, dialogFrameMargin, dialogFrameMargin);
         setMargin(customFrame, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
-        if (listCallbackSingle != null || listCallbackMulti != null) {
-            final int mainFrameMargin = (int) mContext.getResources().getDimension(R.dimen.main_frame_margin);
+        if (listCallbackSingle == null && listCallbackMulti == null) {
             customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
-                    customFrame.getPaddingRight(), mainFrameMargin);
+                    customFrame.getPaddingRight(), 0);
         }
 
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
