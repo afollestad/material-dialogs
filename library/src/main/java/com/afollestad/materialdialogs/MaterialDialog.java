@@ -212,10 +212,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         setMargin(customFrame, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
-        if (listCallbackSingle == null && listCallbackMulti == null) {
-            customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
-                    customFrame.getPaddingRight(), 0);
-        }
+        customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
+                customFrame.getPaddingRight(), 0);
+        final int customFramePadding = (int) mContext.getResources().getDimension(R.dimen.dialog_frame_margin);
+        View title = view.findViewById(R.id.titleCustomView);
+        title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
 
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
         for (int index = 0; index < items.length; index++) {
