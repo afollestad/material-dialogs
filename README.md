@@ -15,7 +15,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.0.1.3'
+    compile 'com.afollestad:material-dialogs:0.0.2'
 }
 ```
 
@@ -124,10 +124,7 @@ new MaterialDialog.Builder(this)
         });
 ```
 
-You can choose which one to use based on which actions you make visible, and which actions need to trigger an event.
-If you pass text to an action, it will become visible (not including the positive action which is always visible
-and will default to 'OK' unless you make the dialog a list dialog).
-You don't need a callback to make actions visible. But the dialog will not dismiss when an action is pressed if no callback is set for it.
+If `autoDismiss` is turned off, then you must manually dismiss the dialog in these callbacks. Auto dismiss is on by default.
 
 ---
 
@@ -148,6 +145,8 @@ new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
+
+If `autoDismiss` is turned off, then you must manually dismiss the dialog in the callback. Auto dismiss is on by default.
 
 ---
 
@@ -181,6 +180,7 @@ new MaterialDialog.Builder(this)
 ```
 
 If you want to preselect an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
+If `autoDismiss` is turned off, then you must manually dismiss the dialog in the callback. Auto dismiss is on by default.
 
 ---
 
@@ -208,7 +208,8 @@ new MaterialDialog.Builder(this)
 ```
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
-For an example, `new Integer[] { 2, 5 }`.
+For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
+dismiss the dialog in the callback. Auto dismiss is on by default.
 
 ---
 
@@ -308,12 +309,13 @@ dialog.hideActions();
 dialog.showActions();
 ```
 
-If you don't want the dialog to automatically be dismissed when an action button is pressed:
+If you don't want the dialog to automatically be dismissed when an action button is pressed or when
+the user selects a list item:
 
 ```java
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
-        .dismissOnActionPress(false)
+        .autoDismiss(false)
         .build()
         .show();
 ```
