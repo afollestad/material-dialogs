@@ -63,7 +63,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private Typeface mediumFont;
     private ItemProcessor mItemProcessor;
     private boolean hideActions;
-    private boolean dismissOnActionPress;
+    private boolean autoDismiss;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.Light : R.style.Dark));
@@ -89,6 +89,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.selectedIndices = builder.selectedIndicies;
         this.mItemProcessor = builder.itemProcessor;
         this.hideActions = builder.hideActions;
+        this.autoDismiss = builder.autoDismiss;
 
         TextView title = (TextView) view.findViewById(R.id.title);
         final TextView content = (TextView) view.findViewById(R.id.content);
@@ -374,7 +375,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         String tag = (String) v.getTag();
         if (tag.equals(POSITIVE)) {
             if (listCallbackSingle != null) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
                 for (int i = 1; i < list.getChildCount(); i++) {
                     View itemView = list.getChildAt(i);
@@ -386,7 +387,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     }
                 }
             } else if (listCallbackMulti != null) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 List<Integer> selectedIndices = new ArrayList<Integer>();
                 List<String> selectedTitles = new ArrayList<String>();
                 LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
@@ -403,24 +404,24 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                         selectedIndices.toArray(new Integer[selectedIndices.size()]),
                         selectedTitles.toArray(new String[selectedTitles.size()]));
             } else if (callback != null) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 callback.onPositive(this);
             }
         } else if (tag.equals(NEGATIVE)) {
             if (callback != null && callback instanceof Callback) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 ((Callback) callback).onNegative(this);
-            }
+            } else if (autoDismiss) dismiss();
         } else if (tag.equals(NEUTRAL)) {
             if (callback != null && callback instanceof FullCallback) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 ((FullCallback) callback).onNeutral(this);
-            }
+            } else if (autoDismiss) dismiss();
         } else {
             String[] split = tag.split(":");
             int index = Integer.parseInt(split[0]);
             if (listCallback != null) {
-                if (dismissOnActionPress) dismiss();
+                if (autoDismiss) dismiss();
                 listCallback.onSelection(this, v, index, split[1]);
             } else if (listCallbackSingle != null) {
                 RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
@@ -430,7 +431,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                 cb.setChecked(!cb.isChecked());
-            }
+            } else if (autoDismiss) dismiss();
         }
     }
 
@@ -472,7 +473,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Integer[] selectedIndicies = null;
         protected ItemProcessor itemProcessor;
         protected boolean hideActions;
-        protected boolean dismissOnActionPress = true;
+        protected boolean autoDismiss = true;
 
         public Builder(@NonNull Activity context) {
             this.context = context;
@@ -701,13 +702,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         /**
          * This defaults to true. If set to false, the dialog will not automatically be dismissed
-         * when an action button is pressed.
+         * when an action button is pressed, and not automatically dismissed when the user selects
+         * a list item.
          *
-         * @param dismiss Whether or not to dismiss the dialog.
+         * @param dismiss Whether or not to dismiss the dialog automatically.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder dismissOnActionPress(boolean dismiss) {
-            this.dismissOnActionPress = dismiss;
+        public Builder autoDismiss(boolean dismiss) {
+            this.autoDismiss = dismiss;
             return this;
         }
 
