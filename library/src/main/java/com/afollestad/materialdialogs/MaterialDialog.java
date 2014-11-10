@@ -589,7 +589,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * @param processor The processor to apply to all non single/multi choice list items.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemProessor(ItemProcessor processor) {
+        public Builder itemProcessor(ItemProcessor processor) {
             this.itemProcessor = processor;
             return this;
         }
