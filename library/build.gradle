@@ -10,12 +10,12 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "0.0.3"
+        versionName "0.0.4"
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            runProguard false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     lintOptions {
@@ -33,7 +33,7 @@ publish {
     userOrg = 'drummer-aidan'
     groupId = 'com.afollestad'
     artifactId = 'material-dialogs'
-    version = '0.0.3'
+    version = '0.0.4'
     description = 'A library for implementing Material design styled dialogs across all versions of Android.'
     website = 'https://github.com/afollestad/material-dialogs'
     issueTracker = "${website}/issues"
