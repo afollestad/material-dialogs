@@ -257,7 +257,7 @@ public class MainActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .itemProessor(new ButtonItemProcessor(this))
+                .itemProcessor(new ButtonItemProcessor(this))
                 .build()
                 .show();
     }
