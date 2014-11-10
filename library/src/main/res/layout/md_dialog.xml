@@ -10,17 +10,17 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dialog_frame_margin"
-        android:layout_marginBottom="@dimen/main_frame_margin"
-        android:layout_marginLeft="@dimen/dialog_frame_margin"
-        android:layout_marginRight="@dimen/dialog_frame_margin">
+        android:layout_marginTop="@dimen/md_dialog_frame_margin"
+        android:layout_marginBottom="@dimen/md_main_frame_margin"
+        android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+        android:layout_marginRight="@dimen/md_dialog_frame_margin">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/main_frame_margin"
-            android:textSize="@dimen/title_textsize"
+            android:layout_marginBottom="@dimen/md_main_frame_margin"
+            android:textSize="@dimen/md_title_textsize"
             tools:text="Title"
             android:lineSpacingMultiplier="1.2" />
 
@@ -28,14 +28,15 @@
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/content_textsize"
+            android:textSize="@dimen/md_content_textsize"
             tools:text="Content" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/customViewScrollParent"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone">
@@ -50,17 +51,17 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dialog_frame_margin"
-                android:paddingBottom="@dimen/dialog_frame_margin"
-                android:layout_marginLeft="@dimen/dialog_frame_margin"
-                android:layout_marginRight="@dimen/dialog_frame_margin">
+                android:paddingTop="@dimen/md_dialog_frame_margin"
+                android:paddingBottom="@dimen/md_dialog_frame_margin"
+                android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+                android:layout_marginRight="@dimen/md_dialog_frame_margin">
 
                 <TextView
                     android:id="@+id/titleCustomView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/main_frame_margin"
-                    android:textSize="@dimen/title_textsize"
+                    android:layout_marginBottom="@dimen/md_main_frame_margin"
+                    android:textSize="@dimen/md_title_textsize"
                     tools:text="Title" />
 
             </LinearLayout>
@@ -79,23 +80,23 @@
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/button_padding_frame_side"
-        android:layout_marginBottom="@dimen/button_padding_frame_bottom">
+        android:layout_marginRight="@dimen/md_button_padding_frame_side"
+        android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
 
         <TextView
             android:id="@+id/buttonDefaultNeutral"
-            style="@style/ActionButton"
+            style="@style/MD_ActionButton"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/neutral_button_margin" />
+            android:layout_marginLeft="@dimen/md_neutral_button_margin" />
 
         <TextView
             android:id="@+id/buttonDefaultNegative"
-            style="@style/ActionButton"
+            style="@style/MD_ActionButton"
             android:layout_toLeftOf="@+id/buttonDefaultPositive" />
 
         <TextView
             android:id="@+id/buttonDefaultPositive"
-            style="@style/ActionButton"
+            style="@style/MD_ActionButton"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>
@@ -105,19 +106,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/button_padding_frame_bottom">
+        android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
 
         <TextView
             android:id="@+id/buttonStackedPositive"
-            style="@style/ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked" />
 
         <TextView
             android:id="@+id/buttonStackedNegative"
-            style="@style/ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked" />
 
         <TextView
             android:id="@+id/buttonStackedNeutral"
-            style="@style/ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked" />
 
     </LinearLayout>
 

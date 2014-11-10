@@ -11,11 +11,11 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/listitem_height"
+        android:minHeight="@dimen/md_listitem_height"
         tools:text="Item"
-        android:textSize="@dimen/listitem_textsize"
+        android:textSize="@dimen/md_listitem_textsize"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dialog_frame_margin"
-        android:layout_marginRight="@dimen/dialog_frame_margin" />
+        android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+        android:layout_marginRight="@dimen/md_dialog_frame_margin" />
 
 </LinearLayout>

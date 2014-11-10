@@ -18,6 +18,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     protected final static String POSITIVE = "POSITIVE";
     protected final static String NEGATIVE = "NEGATIVE";
     protected final static String NEUTRAL = "NEUTRAL";
+    protected final static String COLOR = "COLOR";
     private OnShowListener mShowListener;
 
     protected DialogBase(Context context) {
