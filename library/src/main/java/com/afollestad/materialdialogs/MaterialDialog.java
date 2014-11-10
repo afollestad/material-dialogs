@@ -16,7 +16,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -297,20 +296,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return;
         }
         final int maxWidth = calculateMaxButtonWidth();
-        Log.v("StackingAlgorithm", "Max button width: " + maxWidth);
         final Paint paint = positiveButton.getPaint();
         final int eightDp = (int) mContext.getResources().getDimension(R.dimen.button_padding_horizontal_external);
         final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
-        Log.v("StackingAlgorithm", "Positive button width: " + positiveWidth);
         isStacked = positiveWidth > maxWidth;
         if (!isStacked && this.neutralText != null) {
             final int neutralWidth = (int) paint.measureText(neutralButton.getText().toString()) + (eightDp * 2);
-            Log.v("StackingAlgorithm", "Neutral button width: " + neutralWidth);
             isStacked = neutralWidth > maxWidth;
         }
         if (!isStacked && this.negativeText != null) {
             final int negativeWidth = (int) paint.measureText(negativeButton.getText().toString()) + (eightDp * 2);
-            Log.v("StackingAlgorithm", "Negative button width: " + negativeWidth);
             isStacked = negativeWidth > maxWidth;
         }
         invalidateActions();
