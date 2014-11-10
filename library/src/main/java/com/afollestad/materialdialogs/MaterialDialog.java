@@ -459,9 +459,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (!cb.isChecked())
                     cb.setChecked(true);
                 invalidateSingleChoice(index);
+                if (hideActions) {
+                    // Immediately send the selection callback without dismissing if no action buttons are shown
+                    sendSingleChoiceCallback(v);
+                }
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                 cb.setChecked(!cb.isChecked());
+                if (hideActions) {
+                    // Immediately send the selection callback without dismissing if no action buttons are shown
+                    sendMultichoiceCallback();
+                }
             } else if (autoDismiss) dismiss();
         }
     }
