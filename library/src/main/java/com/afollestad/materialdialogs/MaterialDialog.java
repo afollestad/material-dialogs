@@ -240,6 +240,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
                 customFrame.getPaddingRight(), listPaddingBottom);
 
+        customFrame.removeAllViews();
+        customFrame.addView(title);
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
         for (int index = 0; index < items.length; index++) {
             View il;
