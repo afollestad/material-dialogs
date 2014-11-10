@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Light" parent="android:Theme.Holo.Light">
-        <item name="md_divider">@color/divider_black</item>
-        <item name="md_selector">@drawable/dialog_selector</item>
+    <style name="MD_Light" parent="android:Theme.Holo.Light">
+        <item name="md_divider">@color/md_divider_black</item>
+        <item name="md_selector">@drawable/md_selector</item>
     </style>
 
-    <style name="Dark" parent="android:Theme.Holo">
-        <item name="md_divider">@color/divider_white</item>
-        <item name="md_selector">@drawable/dialog_selector_dark</item>
+    <style name="MD_Dark" parent="android:Theme.Holo">
+        <item name="md_divider">@color/md_divider_white</item>
+        <item name="md_selector">@drawable/md_selector_dark</item>
     </style>
 
-    <style name="ActionButtonStacked" parent="@style/ActionButton">
+    <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">right|center_vertical</item>
 
-        <item name="android:paddingLeft">@dimen/button_padding_horizontal_internalexternal</item>
-        <item name="android:paddingRight">@dimen/button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internalexternal</item>
         <item name="android:layout_marginLeft">0dp</item>
     </style>
 
-    <style name="ActionButton">
+    <style name="MD_ActionButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:text">@android:string/ok</item>
-        <item name="android:textSize">@dimen/button_textsize</item>
+        <item name="android:textSize">@dimen/md_button_textsize</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
 
-        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_height">@dimen/md_button_height</item>
         <item name="android:minWidth">@dimen/button_min_width</item>
 
-        <item name="android:paddingTop">@dimen/button_padding_vertical</item>
-        <item name="android:paddingBottom">@dimen/button_padding_vertical</item>
-        <item name="android:paddingLeft">@dimen/button_padding_horizontal_internal</item>
-        <item name="android:paddingRight">@dimen/button_padding_horizontal_internal</item>
-        <item name="android:layout_marginLeft">@dimen/button_padding_horizontal_external</item>
+        <item name="android:paddingTop">@dimen/md_button_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/md_button_padding_vertical</item>
+        <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internal</item>
+        <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internal</item>
+        <item name="android:layout_marginLeft">@dimen/md_button_padding_horizontal_external</item>
     </style>
 
 </resources>

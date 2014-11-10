@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Light" parent="android:Theme.Material.Light.Dialog.Alert">
-        <item name="md_divider">@color/divider_black</item>
+    <style name="MD_Light" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="md_divider">@color/md_divider_black</item>
         <item name="md_selector">?android:selectableItemBackground</item>
     </style>
 
-    <style name="Dark" parent="android:Theme.Material.Dialog.Alert">
-        <item name="md_divider">@color/divider_white</item>
+    <style name="MD_Dark" parent="android:Theme.Material.Dialog.Alert">
+        <item name="md_divider">@color/md_divider_white</item>
         <item name="md_selector">?android:selectableItemBackground</item>
     </style>
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="title_light">#000000</color>
-    <color name="title_dark">#FFFFFF</color>
+    <color name="md_title_light">#000000</color>
+    <color name="md_title_dark">#FFFFFF</color>
 
     <!--<color name="content_light">#5E5E5E</color>-->
     <!--<color name="content_dark">#EDEDED</color>-->
@@ -11,9 +11,9 @@
     <!--<color name="button_light">#3C3C3D</color>-->
     <!--<color name="button_dark">#FFFFFF</color>-->
 
-    <color name="divider_black">#10000000</color>
-    <color name="divider_white">#10FFFFFF</color>
+    <color name="md_divider_black">#10000000</color>
+    <color name="md_divider_white">#10FFFFFF</color>
 
-    <color name="material_blue_500">#5677fc</color>
+    <color name="md_material_blue_500">#5677fc</color>
 
 </resources>

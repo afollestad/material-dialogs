@@ -18,7 +18,7 @@ public abstract class ItemProcessor {
     public ItemProcessor(Context context) {
         this.context = context;
         li = LayoutInflater.from(context);
-        defaultLayout = R.layout.dialog_listitem;
+        defaultLayout = R.layout.md_listitem;
     }
 
     protected final Context getContext() {
