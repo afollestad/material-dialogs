@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -54,10 +53,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ListCallback listCallback;
     private ListCallback listCallbackSingle;
     private ListCallbackMulti listCallbackMulti;
-    private ColorCallback colorCallback;
     private View customView;
     private String[] items;
-    private int[] colorChooser;
     private boolean isStacked;
     private int selectedIndex;
     private Integer[] selectedIndices;
@@ -121,7 +118,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             invalidateCustomViewAssociations();
         }
 
-        if ((items != null && items.length > 0) || (colorChooser != null && colorChooser.length > 0))
+        if (items != null && items.length > 0)
             title = (TextView) view.findViewById(R.id.titleCustomView);
 
         // Title is set after it's determined whether to use first title or custom view title
@@ -158,7 +155,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Invalidates visibility of views for the presence of a custom view or list content
      */
     private void invalidateCustomViewAssociations() {
-        if (customView != null || (items != null && items.length > 0) || (colorChooser != null && colorChooser.length > 0)) {
+        if (customView != null || (items != null && items.length > 0)) {
             view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
             view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
             if (!mMeasuredScrollView) {
@@ -319,7 +316,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
          * and sets their properties (such as height, text color, etc.).
          */
-        if ((items != null || colorChooser != null) && listCallbackSingle == null &&
+        if (items != null && listCallbackSingle == null &&
                 listCallbackMulti == null || hideActions) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -425,26 +422,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             } else if (autoDismiss) dismiss();
         } else {
             String[] split = tag.split(":");
-            if (split[0].equals(COLOR)) {
-                int index = Integer.parseInt(split[1]);
-                int color = Integer.parseInt(split[2]);
-                if (colorCallback != null)
-                    colorCallback.onColor(index, color);
-            } else {
-                int index = Integer.parseInt(split[0]);
-                if (listCallback != null) {
-                    if (autoDismiss) dismiss();
-                    listCallback.onSelection(this, v, index, split[1]);
-                } else if (listCallbackSingle != null) {
-                    RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
-                    if (!cb.isChecked())
-                        cb.setChecked(true);
-                    invalidateSingleChoice(index);
-                } else if (listCallbackMulti != null) {
-                    CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
-                    cb.setChecked(!cb.isChecked());
-                } else if (autoDismiss) dismiss();
-            }
+            int index = Integer.parseInt(split[0]);
+            if (listCallback != null) {
+                if (autoDismiss) dismiss();
+                listCallback.onSelection(this, v, index, split[1]);
+            } else if (listCallbackSingle != null) {
+                RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
+                if (!cb.isChecked())
+                    cb.setChecked(true);
+                invalidateSingleChoice(index);
+            } else if (listCallbackMulti != null) {
+                CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
+                cb.setChecked(!cb.isChecked());
+            } else if (autoDismiss) dismiss();
         }
     }
 
