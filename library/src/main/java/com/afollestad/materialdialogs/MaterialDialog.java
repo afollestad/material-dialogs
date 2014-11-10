@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -169,6 +170,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 view.findViewById(R.id.customViewDivider).setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
                 setMargin(view.findViewById(R.id.buttonStackedFrame), -1, 0, -1, -1);
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
+                if (items != null && items.length > 0) {
+                    View customFrame = view.findViewById(R.id.customViewFrame);
+                    Resources r = mContext.getResources();
+                    int bottomPadding = view.findViewById(R.id.titleCustomView).getVisibility() == View.VISIBLE ?
+                            (int) r.getDimension(R.dimen.main_frame_margin) : (int) r.getDimension(R.dimen.dialog_frame_margin);
+                    customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
+                            customFrame.getPaddingRight(), bottomPadding);
+                }
             } else {
                 final int bottomMargin = (int) mContext.getResources().getDimension(R.dimen.button_padding_frame_bottom);
                 setMargin(view.findViewById(R.id.buttonStackedFrame), -1, bottomMargin, -1, -1);
