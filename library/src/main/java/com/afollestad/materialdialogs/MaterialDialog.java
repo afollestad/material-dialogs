@@ -60,12 +60,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private Integer[] selectedIndices;
     private boolean mMeasuredScrollView;
     private Typeface mediumFont;
+    private Typeface regularFont;
     private ItemProcessor mItemProcessor;
     private boolean hideActions;
     private boolean autoDismiss;
 
     MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark));
+
+        this.regularFont = builder.regularFont;
+        if (this.regularFont == null)
+            Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
+        this.mediumFont = builder.mediumFont;
+        if (this.mediumFont == null)
+            this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
         this.mContext = builder.context;
         this.view = LayoutInflater.from(builder.context).inflate(R.layout.md_dialog, null);
@@ -82,13 +90,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.neutralColor = builder.neutralColor;
         this.items = builder.items;
         this.setCancelable(builder.cancelable);
-        final Typeface regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
-        this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
         this.mItemProcessor = builder.itemProcessor;
         this.hideActions = builder.hideActions;
         this.autoDismiss = builder.autoDismiss;
+
 
         TextView title = (TextView) view.findViewById(R.id.title);
         final TextView content = (TextView) view.findViewById(R.id.content);
@@ -238,6 +245,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 TextView tv = (TextView) il.findViewById(R.id.title);
                 tv.setText(items[index]);
                 tv.setTextColor(itemColor);
+                tv.setTypeface(regularFont);
             } else if (listCallbackMulti != null) {
                 il = li.inflate(R.layout.md_listitem_multichoice, null);
                 if (selectedIndices != null) {
@@ -249,6 +257,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 TextView tv = (TextView) il.findViewById(R.id.title);
                 tv.setText(items[index]);
                 tv.setTextColor(itemColor);
+                tv.setTypeface(regularFont);
             } else {
                 if (mItemProcessor != null) {
                     il = mItemProcessor.inflateItem(index, items[index]);
@@ -257,6 +266,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     TextView tv = (TextView) il.findViewById(R.id.title);
                     tv.setText(items[index]);
                     tv.setTextColor(itemColor);
+                    tv.setTypeface(regularFont);
                 }
             }
             il.setTag(index + ":" + items[index]);
@@ -477,9 +487,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected ItemProcessor itemProcessor;
         protected boolean hideActions;
         protected boolean autoDismiss = true;
+        protected Typeface regularFont;
+        protected Typeface mediumFont;
 
         public Builder(@NonNull Context context) {
             this.context = context;
+
             this.positiveText = context.getString(android.R.string.ok);
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_500);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -528,6 +541,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder titleColorRes(@ColorRes int colorRes) {
             titleColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        /**
+         * Sets the fonts used in the dialog.
+         *
+         * @param medium  The font used on titles and action buttons.
+         * @param regular The font used everywhere else, like on the content and list items.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder typeface(Typeface medium, Typeface regular) {
+            this.mediumFont = medium;
+            this.regularFont = regular;
             return this;
         }
 
