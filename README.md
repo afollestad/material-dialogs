@@ -319,3 +319,15 @@ MaterialDialog dialog new MaterialDialog.Builder(this)
         .build()
         .show();
 ```
+
+To customize fonts:
+
+```java
+Typeface titleAndActions = // ... initialize
+Typeface contentAndListItems = // ... initialize
+MaterialDialog dialog new MaterialDialog.Builder(this)
+        // ... other initialization
+        .typeface(titleAndActions, contentAndListItems)
+        .build()
+        .show();
+```
