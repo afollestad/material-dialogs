@@ -687,6 +687,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
+        public Builder neutralColorRes(@ColorRes int colorRes) {
+            neutralColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder neutralColor(int color) {
+            this.neutralColor = color;
+            return this;
+        }
+
         public Builder callback(SimpleCallback callback) {
             this.callback = callback;
             return this;
