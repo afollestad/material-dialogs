@@ -2,21 +2,13 @@
 <resources>
 
     <style name="Light" parent="android:Theme.Holo.Light">
-        <!--<item name="title_color">@color/title_light</item>-->
-        <!--<item name="content_color">@color/content_light</item>-->
-        <!--<item name="item_color">@color/item_light</item>-->
-        <!--<item name="button_color">@color/button_light</item>-->
-        <item name="divider_color">@color/divider_black</item>
-        <item name="list_selector">@drawable/dialog_selector</item>
+        <item name="md_divider">@color/divider_black</item>
+        <item name="md_selector">@drawable/dialog_selector</item>
     </style>
 
     <style name="Dark" parent="android:Theme.Holo">
-        <!--<item name="title_color">@color/title_dark</item>-->
-        <!--<item name="content_color">@color/content_dark</item>-->
-        <!--<item name="item_color">@color/item_dark</item>-->
-        <!--<item name="button_color">@color/button_dark</item>-->
-        <item name="divider_color">@color/divider_white</item>
-        <item name="list_selector">@drawable/dialog_selector_dark</item>
+        <item name="md_divider">@color/divider_white</item>
+        <item name="md_selector">@drawable/dialog_selector_dark</item>
     </style>
 
     <style name="ActionButtonStacked" parent="@style/ActionButton">

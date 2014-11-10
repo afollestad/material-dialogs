@@ -166,7 +166,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
             if (canCustomViewScroll()) {
                 view.findViewById(R.id.customViewDivider).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.customViewDivider).setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.divider_color));
+                view.findViewById(R.id.customViewDivider).setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
                 setMargin(view.findViewById(R.id.buttonStackedFrame), -1, 0, -1, -1);
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
             } else {
@@ -253,7 +253,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
             il.setTag(index + ":" + items[index]);
             il.setOnClickListener(this);
-            il.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.list_selector));
+            il.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             customFrame.addView(il);
         }
     }
@@ -334,7 +334,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             this.positiveText = mContext.getString(android.R.string.ok);
         positiveButton.setText(this.positiveText);
         positiveButton.setTextColor(getActionTextStateList(this.positiveColor));
-        positiveButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.list_selector));
+        positiveButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
         positiveButton.setTag(POSITIVE);
         positiveButton.setOnClickListener(this);
 
@@ -344,7 +344,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (this.neutralText != null) {
             neutralButton.setVisibility(View.VISIBLE);
             neutralButton.setTextColor(getActionTextStateList(this.neutralColor));
-            neutralButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.list_selector));
+            neutralButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             neutralButton.setText(this.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
@@ -358,7 +358,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (this.negativeText != null) {
             negativeButton.setVisibility(View.VISIBLE);
             negativeButton.setTextColor(getActionTextStateList(this.negativeColor));
-            negativeButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.list_selector));
+            negativeButton.setBackgroundResource(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             negativeButton.setText(this.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
