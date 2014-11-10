@@ -15,7 +15,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.0.3'
+    compile 'com.afollestad:material-dialogs:0.0.4'
 }
 ```
 
@@ -181,6 +181,7 @@ new MaterialDialog.Builder(this)
 
 If you want to preselect an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
 If `autoDismiss` is turned off, then you must manually dismiss the dialog in the callback. Auto dismiss is on by default.
+When `hideActions` is turned on, the callback will be called everytime you select an item, without the dialog being dismissed.
 
 ---
 
@@ -209,7 +210,8 @@ new MaterialDialog.Builder(this)
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default.
+dismiss the dialog in the callback. Auto dismiss is on by default. When `hideActions` is turned on,
+the callback will be called everytime you select or unselect items, without the dialog being dismissed.
 
 ---
 
@@ -294,7 +296,8 @@ MaterialDialog dialog = //... initialization via the builder ...
 dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
 ```
 
-If you want to forcefully hide the action buttons:
+If you want to forcefully hide the action buttons (this will also result in single choice and multi
+choice selection callbacks being immediately sent as selections are made, without dismissing the dialog):
 
 ```java
 MaterialDialog dialog new MaterialDialog.Builder(this)
