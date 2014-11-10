@@ -461,7 +461,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     public static class Builder {
 
-        protected Activity context;
+        protected Context context;
         protected CharSequence title;
         protected Alignment titleAlignment = Alignment.LEFT;
         protected Alignment contentAlignment = Alignment.LEFT;
@@ -488,7 +488,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected boolean hideActions;
         protected boolean autoDismiss = true;
 
-        public Builder(@NonNull Activity context) {
+        public Builder(@NonNull Context context) {
             this.context = context;
             this.positiveText = context.getString(android.R.string.ok);
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_500);
