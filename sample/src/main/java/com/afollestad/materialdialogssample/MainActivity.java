@@ -221,6 +221,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 })
                 .positiveText(R.string.choose)
+                .hideActions()
                 .build()
                 .show();
     }

@@ -146,7 +146,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
         }
 
-        invalidateList();
         invalidateActions();
         setOnShowListenerInternal();
         setViewInternal(view);
@@ -227,11 +226,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         setMargin(customFrame, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
-        customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
-                customFrame.getPaddingRight(), 0);
         final int customFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_dialog_frame_margin);
+        int listPaddingBottom;
         View title = view.findViewById(R.id.titleCustomView);
-        title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
+        if (title.getVisibility() == View.VISIBLE) {
+            title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
+            listPaddingBottom = customFramePadding;
+        } else {
+            listPaddingBottom = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
+        }
+        if ((listCallbackSingle != null || listCallbackMulti != null) && !hideActions)
+            listPaddingBottom = 0;
+        customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
+                customFrame.getPaddingRight(), listPaddingBottom);
 
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
         for (int index = 0; index < items.length; index++) {
@@ -331,6 +338,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
+            invalidateList();
             return false;
         }
 
@@ -380,7 +388,40 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         } else {
             negativeButton.setVisibility(View.GONE);
         }
+
+        invalidateList();
         return true;
+    }
+
+    private void sendSingleChoiceCallback(View v) {
+        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        for (int i = 1; i < list.getChildCount(); i++) {
+            View itemView = list.getChildAt(i);
+            @SuppressLint("WrongViewCast")
+            RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
+            if (rb.isChecked()) {
+                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                break;
+            }
+        }
+    }
+
+    private void sendMultichoiceCallback() {
+        List<Integer> selectedIndices = new ArrayList<Integer>();
+        List<String> selectedTitles = new ArrayList<String>();
+        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        for (int i = 1; i < list.getChildCount(); i++) {
+            View itemView = list.getChildAt(i);
+            @SuppressLint("WrongViewCast")
+            CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
+            if (rb.isChecked()) {
+                selectedIndices.add(i - 1);
+                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
+            }
+        }
+        listCallbackMulti.onSelection(this,
+                selectedIndices.toArray(new Integer[selectedIndices.size()]),
+                selectedTitles.toArray(new String[selectedTitles.size()]));
     }
 
     @Override
@@ -389,33 +430,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (tag.equals(POSITIVE)) {
             if (listCallbackSingle != null) {
                 if (autoDismiss) dismiss();
-                LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
-                for (int i = 1; i < list.getChildCount(); i++) {
-                    View itemView = list.getChildAt(i);
-                    @SuppressLint("WrongViewCast")
-                    RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
-                    if (rb.isChecked()) {
-                        listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
-                        break;
-                    }
-                }
+                sendSingleChoiceCallback(v);
             } else if (listCallbackMulti != null) {
                 if (autoDismiss) dismiss();
-                List<Integer> selectedIndices = new ArrayList<Integer>();
-                List<String> selectedTitles = new ArrayList<String>();
-                LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
-                for (int i = 1; i < list.getChildCount(); i++) {
-                    View itemView = list.getChildAt(i);
-                    @SuppressLint("WrongViewCast")
-                    CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
-                    if (rb.isChecked()) {
-                        selectedIndices.add(i - 1);
-                        selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
-                    }
-                }
-                listCallbackMulti.onSelection(this,
-                        selectedIndices.toArray(new Integer[selectedIndices.size()]),
-                        selectedTitles.toArray(new String[selectedTitles.size()]));
+                sendMultichoiceCallback();
             } else if (callback != null) {
                 if (autoDismiss) dismiss();
                 callback.onPositive(this);
