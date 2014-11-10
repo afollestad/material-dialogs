@@ -547,8 +547,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         /**
          * Sets the fonts used in the dialog.
          *
-         * @param medium  The font used on titles and action buttons.
-         * @param regular The font used everywhere else, like on the content and list items.
+         * @param medium  The font used on titles and action buttons. Null uses the default.
+         * @param regular The font used everywhere else, like on the content and list items. Null uses the default.
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder typeface(Typeface medium, Typeface regular) {
