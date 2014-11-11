@@ -222,7 +222,6 @@ Custom views are very easy to implement. To match the dialog show here: http://w
 ```java
 new MaterialDialog.Builder(this)
         .title("Google Wifi")
-        .positiveText("Agree")
         .customView(R.layout.custom_view)
         .positiveText("Connect")
         .positiveColor(Color.parseColor("#03a9f4"))
