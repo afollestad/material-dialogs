@@ -24,6 +24,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
+            android:id="@+id/basicLongContent"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/basic_longContent"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
             android:id="@+id/stacked"
             android:layout_width="match_parent"
             android:layout_height="56dp"

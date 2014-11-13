@@ -46,6 +46,8 @@
     <string name="states">States</string>
     <string name="custom_listitem_button">A button!</string>
     <string name="custom_list_items">Custom List Items</string>
+    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae metus nec sapien elementum interdum ac mollis tortor. Nunc porttitor metus placerat orci auctor, sed dictum magna dapibus. Morbi a lacus ante. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin posuere nisl imperdiet lectus elementum accumsan. Etiam lacinia nisi ut nulla fermentum tempus. Integer ornare lacinia diam non maximus. Vestibulum iaculis urna eu elementum scelerisque. Etiam nisl erat, bibendum vitae magna nec, convallis malesuada erat. Cras non porttitor nibh. Pellentesque rhoncus sem luctus felis tincidunt bibendum. Pellentesque vulputate eros at nulla sollicitudin volutpat. Pellentesque laoreet est sit amet erat laoreet, id molestie nulla efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed varius nisl at imperdiet facilisis.</string>
+    <string name="basic_longContent">Basic (Long Content)</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>
