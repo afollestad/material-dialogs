@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -26,10 +27,10 @@ public class DialogUtils {
         }
     }
 
-    public static int resolveDrawable(Context context, int attr) {
+    public static Drawable resolveDrawable(Context context, int attr) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
-            return a.getResourceId(0, 0);
+            return a.getDrawable(0);
         } finally {
             a.recycle();
         }
