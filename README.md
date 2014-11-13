@@ -15,7 +15,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.0.5'
+    compile 'com.afollestad:material-dialogs:0.0.6'
 }
 ```
 
@@ -43,8 +43,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-On Lollipop (API 21), the Material dialog will automatically match the `positiveColor` (which is used on the
-positive action button) to the `colorAccent` attribute of your styles.xml theme.
+On Lollipop (API 21) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
+(which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 ---
 
