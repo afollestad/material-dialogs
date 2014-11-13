@@ -1,7 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
-    private Context mContext;
+    private Activity mContext;
     private CharSequence positiveText;
     private TextView positiveButton;
     private CharSequence neutralText;
@@ -489,7 +489,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     public static class Builder {
 
-        protected Context context;
+        protected Activity context;
         protected CharSequence title;
         protected Alignment titleAlignment = Alignment.LEFT;
         protected Alignment contentAlignment = Alignment.LEFT;
@@ -518,7 +518,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Typeface regularFont;
         protected Typeface mediumFont;
 
-        public Builder(@NonNull Context context) {
+        public Builder(@NonNull Activity context) {
             this.context = context;
 
             this.positiveText = context.getString(android.R.string.ok);
