@@ -439,7 +439,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             } else if (callback != null) {
                 if (autoDismiss) dismiss();
                 callback.onPositive(this);
-            }
+            } else if (autoDismiss) dismiss();
         } else if (tag.equals(NEGATIVE)) {
             if (callback != null && callback instanceof Callback) {
                 if (autoDismiss) dismiss();
