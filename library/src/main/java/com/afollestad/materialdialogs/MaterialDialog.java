@@ -102,7 +102,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         content.setText(builder.content);
         content.setMovementMethod(new LinkMovementMethod());
-        content.setVisibility(View.VISIBLE);
         setTypeface(content, regularFont);
         content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
@@ -192,6 +191,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             view.findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
             view.findViewById(R.id.customViewScrollParent).setVisibility(View.GONE);
             view.findViewById(R.id.customViewDivider).setVisibility(View.GONE);
+            if (!mMeasuredScrollView) {
+                // Wait until it's measured
+                ((MeasureCallbackScrollView) view.findViewById(R.id.contentScrollView)).setCallback(this);
+                return;
+            }
+            if (canContentScroll()) {
+                view.findViewById(R.id.customViewDivider).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.customViewDivider).setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
+                setMargin(view.findViewById(R.id.mainFrame), -1, 0, -1, -1);
+                setMargin(view.findViewById(R.id.buttonStackedFrame), -1, 0, -1, -1);
+                setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
+            }
         }
     }
 
@@ -219,7 +230,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     @SuppressLint("WrongViewCast")
     private void invalidateList() {
         if (items == null || items.length == 0) return;
-        view.findViewById(R.id.content).setVisibility(View.GONE);
+        view.findViewById(R.id.contentScrollView).setVisibility(View.GONE);
 
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
@@ -302,6 +313,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          */
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.customViewScroll);
         final int childHeight = view.findViewById(R.id.customViewFrame).getMeasuredHeight();
+        return scrollView.getMeasuredHeight() < childHeight;
+    }
+
+    private boolean canContentScroll() {
+        /**
+         * Detects whether or not the custom view or list content can be scrolled.
+         */
+        final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
+        final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
 

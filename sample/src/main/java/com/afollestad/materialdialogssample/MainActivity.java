@@ -44,6 +44,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        findViewById(R.id.basicLongContent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBasicLongContent();
+            }
+        });
+
         findViewById(R.id.stacked).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +135,16 @@ public class MainActivity extends ActionBarActivity {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
+                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
+                .build()
+                .show();
+    }
+
+    private void showBasicLongContent() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.loremIpsum)
                 .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
                 .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
                 .build()
