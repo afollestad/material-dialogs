@@ -39,6 +39,8 @@ import java.util.List;
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
     private Activity mContext;
+    private TextView title;
+
     private CharSequence positiveText;
     private TextView positiveButton;
     private CharSequence neutralText;
@@ -97,7 +99,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.autoDismiss = builder.autoDismiss;
 
 
-        TextView title = (TextView) view.findViewById(R.id.title);
+        title = (TextView) view.findViewById(R.id.title);
         final TextView content = (TextView) view.findViewById(R.id.content);
 
         content.setText(builder.content);
@@ -884,6 +886,22 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
         setActionButton(which, mContext.getString(titleRes));
+    }
+
+    /**
+     * Updates the dialog's title.
+     */
+    public final void setTitle(CharSequence title) {
+        this.title.setText(title);
+    }
+
+    public final void setContent(CharSequence content) {
+        ((TextView) view.findViewById(R.id.content)).setText(content);
+    }
+
+    public final void setItems(String[] items) {
+        this.items = items;
+        invalidateList();
     }
 
     /**

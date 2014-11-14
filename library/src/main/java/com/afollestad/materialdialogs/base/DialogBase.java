@@ -71,19 +71,11 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     }
 
     /**
-     * @deprecated Not supported by the Material dialog.
+     * @deprecated Use setContent() instead.
      */
     @Override
     public void setMessage(CharSequence message) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
-    }
-
-    /**
-     * @deprecated Not supported by the Material dialog.
-     */
-    @Override
-    public void setTitle(CharSequence title) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
+        throw new RuntimeException("This method is not supported by the MaterialDialog, use setContent() instead.");
     }
 
     /**
