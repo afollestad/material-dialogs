@@ -223,6 +223,7 @@ public class MainActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
+                .positiveText(android.R.string.ok)
                 .build()
                 .show();
     }
@@ -286,7 +287,6 @@ public class MainActivity extends ActionBarActivity {
     private void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.googleWifi)
-                .positiveText(R.string.agree)
                 .customView(R.layout.dialog_customview)
                 .positiveText(R.string.connect)
                 .negativeText(android.R.string.cancel)
