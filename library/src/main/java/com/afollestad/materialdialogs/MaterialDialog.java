@@ -1,7 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
-    private Activity mContext;
+    private Context mContext;
     private TextView title;
 
     private CharSequence positiveText;
@@ -64,7 +64,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private Typeface mediumFont;
     private Typeface regularFont;
     private ItemProcessor mItemProcessor;
-    private boolean hideActions;
     private boolean autoDismiss;
 
     MaterialDialog(Builder builder) {
@@ -95,9 +94,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
         this.mItemProcessor = builder.itemProcessor;
-        this.hideActions = builder.hideActions;
         this.autoDismiss = builder.autoDismiss;
-
 
         title = (TextView) view.findViewById(R.id.title);
         final TextView content = (TextView) view.findViewById(R.id.content);
@@ -128,6 +125,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         if (items != null && items.length > 0)
             title = (TextView) view.findViewById(R.id.titleCustomView);
+        else if (positiveText == null && customView == null)
+            positiveText = getContext().getString(android.R.string.ok);
 
         // Title is set after it's determined whether to use first title or custom view title
         if (builder.title == null || builder.title.toString().trim().isEmpty()) {
@@ -242,6 +241,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
+        ((ScrollView) view.findViewById(R.id.customViewScroll)).smoothScrollTo(0, 0);
         setMargin(customFrame, -1, -1, 0, 0);
         LayoutInflater li = LayoutInflater.from(mContext);
 
@@ -254,8 +254,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         } else {
             listPaddingBottom = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
         }
-        if ((listCallbackSingle != null || listCallbackMulti != null) && !hideActions)
-            listPaddingBottom = 0;
+        if (positiveText != null) listPaddingBottom = 0;
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
                 customFrame.getPaddingRight(), listPaddingBottom);
 
@@ -363,8 +362,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
          * and sets their properties (such as height, text color, etc.).
          */
-        if (items != null && listCallbackSingle == null &&
-                listCallbackMulti == null || hideActions) {
+        if (positiveText == null) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
@@ -382,19 +380,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         positiveButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
-        setTypeface(positiveButton, mediumFont);
-        if (this.positiveText == null)
-            this.positiveText = mContext.getString(android.R.string.ok);
-        positiveButton.setText(this.positiveText);
-        positiveButton.setTextColor(getActionTextStateList(this.positiveColor));
-        setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
-        positiveButton.setTag(POSITIVE);
-        positiveButton.setOnClickListener(this);
+        if (this.positiveText != null) {
+            setTypeface(positiveButton, mediumFont);
+            positiveButton.setText(this.positiveText);
+            positiveButton.setTextColor(getActionTextStateList(this.positiveColor));
+            setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+            positiveButton.setTag(POSITIVE);
+            positiveButton.setOnClickListener(this);
+        } else {
+            positiveButton.setVisibility(View.GONE);
+        }
 
         neutralButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
-        setTypeface(neutralButton, mediumFont);
         if (this.neutralText != null) {
+            setTypeface(neutralButton, mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
             neutralButton.setTextColor(getActionTextStateList(this.neutralColor));
             setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
@@ -407,8 +407,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         negativeButton = (TextView) view.findViewById(
                 isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
-        setTypeface(negativeButton, mediumFont);
         if (this.negativeText != null) {
+            setTypeface(negativeButton, mediumFont);
             negativeButton.setVisibility(View.VISIBLE);
             negativeButton.setTextColor(getActionTextStateList(this.negativeColor));
             setBackgroundCompat(negativeButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
@@ -489,14 +489,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (!cb.isChecked())
                     cb.setChecked(true);
                 invalidateSingleChoice(index);
-                if (hideActions) {
+                if (positiveText == null) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendSingleChoiceCallback(v);
                 }
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                 cb.setChecked(!cb.isChecked());
-                if (hideActions) {
+                if (positiveText == null) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendMultichoiceCallback();
                 }
@@ -517,7 +517,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     public static class Builder {
 
-        protected Activity context;
+        protected Context context;
         protected CharSequence title;
         protected Alignment titleAlignment = Alignment.LEFT;
         protected Alignment contentAlignment = Alignment.LEFT;
@@ -541,15 +541,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
         protected ItemProcessor itemProcessor;
-        protected boolean hideActions;
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
 
-        public Builder(@NonNull Activity context) {
+        public Builder(@NonNull Context context) {
             this.context = context;
-
-            this.positiveText = context.getString(android.R.string.ok);
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_500);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
@@ -790,11 +787,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
-        public Builder hideActions() {
-            this.hideActions = true;
-            return this;
-        }
-
         /**
          * This defaults to true. If set to false, the dialog will not automatically be dismissed
          * when an action button is pressed, and not automatically dismissed when the user selects
@@ -905,23 +897,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     /**
-     * Hides the positive/neutral/negative action buttons.
-     */
-    public final void hideActions() {
-        hideActions = true;
-        invalidateActions();
-    }
-
-    /**
-     * Shows the positive/neutral/negative action buttons that were previously hidden.
-     */
-    public final void showActions() {
-        hideActions = false;
-        if (invalidateActions())
-            checkIfStackingNeeded();
-    }
-
-    /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
      *
      * @return The custom view that was passed into the Builder.
@@ -951,9 +926,5 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     public static interface FullCallback extends Callback {
         void onNeutral(MaterialDialog dialog);
-    }
-
-    public static interface ColorCallback {
-        void onColor(int index, int color);
     }
 }
