@@ -223,7 +223,6 @@ public class MainActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .positiveText(android.R.string.ok)
                 .build()
                 .show();
     }
