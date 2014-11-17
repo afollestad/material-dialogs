@@ -46,6 +46,27 @@ new MaterialDialog.Builder(this)
 On Lollipop (API 21) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
 (which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
+If the content is long enough, it will become scrollable and a divider will be displayde above the action buttons.
+
+---
+
+### Displaying an Icon
+
+MaterialDialog supports the display of an icon just like the stock AlertDialog; it will go to the left of the title.
+
+```java
+Drawable d = // ... get from somewhere...
+new MaterialDialog.Builder(this)
+        .title("Use Google's Location Services?")
+        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+        .positiveText("Agree")  // the default for textual dialogs (not list or custom view dialogs) is 'OK'
+        .icon(d)
+        .build()
+        .show();
+```
+
+You can substitute a `Drawable` instance of a drawable resource ID or attribute ID.
+
 ---
 
 ### Stacked Action Buttons

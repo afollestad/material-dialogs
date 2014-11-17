@@ -90,30 +90,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
      * @deprecated Not supported by the Material dialog.
      */
     @Override
-    public void setIcon(Drawable icon) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
-    }
-
-    /**
-     * @deprecated Not supported by the Material dialog.
-     */
-    @Override
-    public void setIcon(int resId) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
-    }
-
-    /**
-     * @deprecated Not supported by the Material dialog.
-     */
-    @Override
-    public void setIconAttribute(int attrId) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
-    }
-
-    /**
-     * @deprecated Not supported by the Material dialog.
-     */
-    @Override
     public void setButton(int whichButton, CharSequence text, Message msg) {
         throw new RuntimeException("Use setActionButton(MaterialDialog.Button, CharSequence) instead.");
     }
