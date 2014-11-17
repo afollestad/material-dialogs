@@ -311,11 +311,11 @@ MaterialDialog dialog = //... initialization via the builder ...
 View view = dialog.getCustomView();
 ```
 
-If you want to get a reference to the title textview (e.g. to change visibility):
+If you want to get a reference to the title frame (which contains the icon and title, e.g. to change visibility):
 
 ```java
 MaterialDialog dialog = //... initialization via the builder ...
-TextView title = dialog.getTitleTextView();
+TextView title = dialog.getTitleFrame();
 ```
 
 If you want to get a reference to one of the dialog action buttons (e.g. to enable or disable buttons):
