@@ -8,9 +8,11 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -20,6 +22,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -39,7 +42,9 @@ import java.util.List;
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
     private Context mContext;
+    private ImageView icon;
     private TextView title;
+    private View titleFrame;
 
     private CharSequence positiveText;
     private TextView positiveButton;
@@ -97,6 +102,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.autoDismiss = builder.autoDismiss;
 
         title = (TextView) view.findViewById(R.id.title);
+        icon = (ImageView) view.findViewById(R.id.icon);
+        titleFrame = view.findViewById(R.id.titleFrame);
         final TextView content = (TextView) view.findViewById(R.id.content);
 
         content.setText(builder.content);
@@ -117,10 +124,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
+            icon = (ImageView) view.findViewById(R.id.iconCustomView);
+            titleFrame = view.findViewById(R.id.titleFrameCustomView);
             invalidateCustomViewAssociations();
             ((LinearLayout) view.findViewById(R.id.customViewFrame)).addView(customView);
         } else {
             invalidateCustomViewAssociations();
+        }
+
+        if (builder.icon != null) {
+            icon.setVisibility(View.VISIBLE);
+            icon.setImageDrawable(builder.icon);
+        } else {
+            icon.setVisibility(View.GONE);
         }
 
         if (items != null && items.length > 0)
@@ -130,7 +146,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         // Title is set after it's determined whether to use first title or custom view title
         if (builder.title == null || builder.title.toString().trim().isEmpty()) {
-            title.setVisibility(View.GONE);
+            titleFrame.setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
             setTypeface(title, mediumFont);
@@ -258,8 +274,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
                 customFrame.getPaddingRight(), listPaddingBottom);
 
+        View titleFrame = (View) title.getParent();
         customFrame.removeAllViews();
-        customFrame.addView(title);
+        customFrame.addView(titleFrame);
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
         for (int index = 0; index < items.length; index++) {
             View il;
@@ -544,6 +561,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
+        protected Drawable icon;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -612,6 +630,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder titleColor(int color) {
             this.titleColor = color;
+            return this;
+        }
+
+        public Builder icon(Drawable icon) {
+            this.icon = icon;
+            return this;
+        }
+
+        public Builder icon(@DrawableRes int icon) {
+            this.icon = context.getResources().getDrawable(icon);
+            return this;
+        }
+
+        public Builder iconAttr(int iconAttr) {
+            this.icon = DialogUtils.resolveDrawable(context, iconAttr);
             return this;
         }
 
@@ -850,13 +883,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     /**
-     * Retrieves the title textview of the dialog, allowing you to modify properties such as whether or not it's enabled.
-     *
-     * @return The view from the dialog's layout representing the title textview.
+     * Retrieves the frame view containing the title and icon. You can manually change visibility and retrieve children.
      */
-    public final TextView getTitleTextView() {
-        if (view == null) return null;
-		return title;
+    public final View getTitleFrame() {
+        return titleFrame;
+    }
+
+    /**
+     * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
+     *
+     * @return The custom view that was passed into the Builder.
+     */
+    public final View getCustomView() {
+        return customView;
     }
 
     /**
@@ -897,6 +936,25 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.title.setText(title);
     }
 
+    @Override
+    public void setIcon(int resId) {
+        icon.setImageResource(resId);
+        icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setIcon(Drawable d) {
+        icon.setImageDrawable(d);
+        icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setIconAttribute(int attrId) {
+        Drawable d = DialogUtils.resolveDrawable(mContext, attrId);
+        icon.setImageDrawable(d);
+        icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
+    }
+
     public final void setContent(CharSequence content) {
         ((TextView) view.findViewById(R.id.content)).setText(content);
     }
@@ -904,15 +962,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     public final void setItems(String[] items) {
         this.items = items;
         invalidateList();
-    }
-
-    /**
-     * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
-     *
-     * @return The custom view that was passed into the Builder.
-     */
-    public final View getCustomView() {
-        return customView;
     }
 
 

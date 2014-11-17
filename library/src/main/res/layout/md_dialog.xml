@@ -16,14 +16,30 @@
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
+            android:id="@+id/titleFrame"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/md_main_frame_margin"
-            android:textSize="@dimen/md_title_textsize"
-            tools:text="Title"
-            android:lineSpacingMultiplier="1.2" />
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/md_main_frame_margin">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:layout_marginRight="@dimen/md_icon_margin" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/md_title_textsize"
+                tools:text="Title"
+                android:lineSpacingMultiplier="1.2" />
+
+        </LinearLayout>
 
         <com.afollestad.materialdialogs.views.MeasureCallbackScrollView
             android:id="@+id/contentScrollView"
@@ -64,13 +80,29 @@
                 android:layout_marginLeft="@dimen/md_dialog_frame_margin"
                 android:layout_marginRight="@dimen/md_dialog_frame_margin">
 
-                <TextView
-                    android:id="@+id/titleCustomView"
+                <LinearLayout
+                    android:id="@+id/titleFrameCustomView"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/md_main_frame_margin"
-                    android:textSize="@dimen/md_title_textsize"
-                    tools:text="Title" />
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/md_main_frame_margin">
+
+                    <ImageView
+                        android:id="@+id/iconCustomView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_marginRight="@dimen/md_icon_margin" />
+
+                    <TextView
+                        android:id="@+id/titleCustomView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/md_title_textsize"
+                        tools:text="Title" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
