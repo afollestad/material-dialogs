@@ -850,6 +850,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     /**
+     * Retrieves the title textview of the dialog, allowing you to modify properties such as whether or not it's enabled.
+     *
+     * @return The view from the dialog's layout representing the title textview.
+     */
+    public final TextView getTitleTextView() {
+        if (view == null) return null;
+		return title;
+    }
+
+    /**
      * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
      *
      * @param which The action button to update.
