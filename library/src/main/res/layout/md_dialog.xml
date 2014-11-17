@@ -36,8 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_title_textsize"
-                tools:text="Title"
-                android:lineSpacingMultiplier="1.2" />
+                tools:text="Title" />
 
         </LinearLayout>
 
