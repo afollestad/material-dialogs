@@ -23,6 +23,6 @@
     <dimen name="md_listitem_textsize">18sp</dimen>
     <dimen name="md_listitem_height">48dp</dimen>
     <dimen name="md_listitem_control_margin">16dp</dimen>
-    <dimen name="md_icon_margin">8dp</dimen>
+    <dimen name="md_icon_margin">16dp</dimen>
 
 </resources>
