@@ -263,9 +263,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         final int customFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_dialog_frame_margin);
         int listPaddingBottom;
-        View title = view.findViewById(R.id.titleCustomView);
-        if (title.getVisibility() == View.VISIBLE) {
-            title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
+        View titleFrame = view.findViewById(R.id.titleFrameCustomView);
+        if (titleFrame.getVisibility() == View.VISIBLE) {
+            titleFrame.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
             listPaddingBottom = customFramePadding;
         } else {
             listPaddingBottom = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
@@ -274,7 +274,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
                 customFrame.getPaddingRight(), listPaddingBottom);
 
-        View titleFrame = (View) title.getParent();
         customFrame.removeAllViews();
         customFrame.addView(titleFrame);
         final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
