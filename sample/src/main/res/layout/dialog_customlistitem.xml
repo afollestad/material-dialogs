@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/md_listitem_textsize"
-        android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+        android:layout_marginLeft="@dimen/md_listitem_margin_left"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/button"
         android:layout_centerVertical="true" />

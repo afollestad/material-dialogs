@@ -15,7 +15,7 @@
         tools:text="Item"
         android:textSize="@dimen/md_listitem_textsize"
         android:gravity="center_vertical"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="@dimen/md_listitem_margin_left"
         android:layout_marginRight="@dimen/md_dialog_frame_margin" />
 
 </LinearLayout>
