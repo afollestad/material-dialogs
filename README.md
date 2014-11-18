@@ -15,7 +15,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.0.9'
+    compile 'com.afollestad:material-dialogs:1.0.0'
 }
 ```
 
