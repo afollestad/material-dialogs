@@ -139,6 +139,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             icon.setVisibility(View.GONE);
         }
 
+        if ((negativeText != null || neutralText != null) && positiveText == null)
+            positiveText = getContext().getString(android.R.string.ok);
         if (items != null && items.length > 0)
             title = (TextView) view.findViewById(R.id.titleCustomView);
         else if (positiveText == null && customView == null)
