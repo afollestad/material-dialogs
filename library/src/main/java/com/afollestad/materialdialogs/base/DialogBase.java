@@ -24,8 +24,8 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     protected final static String NEUTRAL = "NEUTRAL";
     private OnShowListener mShowListener;
 
-    protected DialogBase(Context context) {
-        super(context);
+    protected DialogBase(Context context, int theme) {
+        super(context, theme);
     }
 
     public static void setMargin(View view, int top, int bottom, int left, int right) {
