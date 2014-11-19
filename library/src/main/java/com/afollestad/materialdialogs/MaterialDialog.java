@@ -83,7 +83,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         this.mContext = builder.context;
         this.view = LayoutInflater.from(builder.context).inflate(R.layout.md_dialog, null);
-        this.customView = builder.customView;
+        if (builder.customViewId != 0) {
+            // Inflate custom view with themed context
+            this.customView = LayoutInflater.from(getContext()).inflate(builder.customViewId, null);
+        } else {
+            this.customView = builder.customView;
+        }
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
         this.listCallbackSingle = builder.listCallbackSingle;
@@ -547,6 +552,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected CharSequence neutralText;
         protected CharSequence negativeText;
         protected View customView;
+        @LayoutRes protected int customViewId;
         protected int positiveColor;
         protected int negativeColor;
         protected int neutralColor;
@@ -767,8 +773,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         public Builder customView(@LayoutRes int layoutRes) {
-            LayoutInflater li = LayoutInflater.from(this.context);
-            customView(li.inflate(layoutRes, null));
+            this.customViewId = layoutRes;
             return this;
         }
 
