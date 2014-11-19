@@ -17,7 +17,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +40,6 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
-    private Context mContext;
     private ImageView icon;
     private TextView title;
     private View titleFrame;
@@ -72,7 +70,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private boolean autoDismiss;
 
     MaterialDialog(Builder builder) {
-        super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark));
+        super(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark);
+
+        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            setInverseBackgroundForced(true);
+        }
 
         this.regularFont = builder.regularFont;
         if (this.regularFont == null)
@@ -81,8 +83,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (this.mediumFont == null)
             this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
-        this.mContext = builder.context;
-        this.view = LayoutInflater.from(builder.context).inflate(R.layout.md_dialog, null);
+        this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.customView = builder.customView;
         this.callback = builder.callback;
         this.listCallback = builder.listCallback;
@@ -194,7 +195,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
                 if (items != null && items.length > 0) {
                     View customFrame = view.findViewById(R.id.customViewFrame);
-                    Resources r = mContext.getResources();
+                    Resources r = getContext().getResources();
                     int bottomPadding = view.findViewById(R.id.titleCustomView).getVisibility() == View.VISIBLE ?
                             (int) r.getDimension(R.dimen.md_main_frame_margin) : (int) r.getDimension(R.dimen.md_dialog_frame_margin);
                     customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
@@ -202,7 +203,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 }
             } else {
                 view.findViewById(R.id.customViewDivider).setVisibility(View.GONE);
-                final int bottomMargin = (int) mContext.getResources().getDimension(R.dimen.md_button_padding_frame_bottom);
+                final int bottomMargin = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_bottom);
                 setMargin(view.findViewById(R.id.buttonStackedFrame), -1, bottomMargin, -1, -1);
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, bottomMargin, -1, -1);
             }
@@ -221,7 +222,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 setMargin(view.findViewById(R.id.mainFrame), -1, 0, -1, -1);
                 setMargin(view.findViewById(R.id.buttonStackedFrame), -1, 0, -1, -1);
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
-                final int conPadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
+                final int conPadding = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
                 View con = view.findViewById(R.id.content);
                 con.setPadding(con.getPaddingLeft(), 0, con.getPaddingRight(), conPadding);
             } else {
@@ -261,16 +262,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
         ((ScrollView) view.findViewById(R.id.customViewScroll)).smoothScrollTo(0, 0);
         setMargin(customFrame, -1, -1, 0, 0);
-        LayoutInflater li = LayoutInflater.from(mContext);
+        LayoutInflater li = LayoutInflater.from(getContext());
 
-        final int customFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
+        final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
         int listPaddingBottom;
         View title = view.findViewById(R.id.titleCustomView);
         if (title.getVisibility() == View.VISIBLE) {
             title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
             listPaddingBottom = customFramePadding;
         } else {
-            listPaddingBottom = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
+            listPaddingBottom = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
         }
         if (positiveText != null) listPaddingBottom = 0;
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
@@ -328,8 +329,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
          */
         final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
-        final int eightDp = (int) mContext.getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
-        final int sixteenDp = (int) mContext.getResources().getDimension(R.dimen.md_button_padding_frame_side);
+        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
+        final int sixteenDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
         return (dialogWidth - sixteenDp - sixteenDp - eightDp) / 2;
     }
 
@@ -362,7 +363,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
         final int maxWidth = calculateMaxButtonWidth();
         final Paint paint = positiveButton.getPaint();
-        final int eightDp = (int) mContext.getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
+        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
         final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
         isStacked = positiveWidth > maxWidth;
         if (!isStacked && this.neutralText != null) {
@@ -928,7 +929,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * @param titleRes The string resource of the new title of the action button.
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
-        setActionButton(which, mContext.getString(titleRes));
+        setActionButton(which, getContext().getString(titleRes));
     }
 
     /**
@@ -952,7 +953,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     @Override
     public void setIconAttribute(int attrId) {
-        Drawable d = DialogUtils.resolveDrawable(mContext, attrId);
+        Drawable d = DialogUtils.resolveDrawable(getContext(), attrId);
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
