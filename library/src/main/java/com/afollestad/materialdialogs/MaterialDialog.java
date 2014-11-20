@@ -25,6 +25,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -139,16 +140,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             icon.setVisibility(View.GONE);
         }
 
-        if ((negativeText != null || neutralText != null) && positiveText == null)
-            positiveText = getContext().getString(android.R.string.ok);
         if (items != null && items.length > 0)
             title = (TextView) view.findViewById(R.id.titleCustomView);
-        else if (positiveText == null && customView == null)
-            positiveText = getContext().getString(android.R.string.ok);
 
         // Title is set after it's determined whether to use first title or custom view title
         if (builder.title == null || builder.title.toString().trim().isEmpty()) {
             titleFrame.setVisibility(View.GONE);
+            if (customView == null)
+                view.findViewById(R.id.titleFrameCustomView).setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
             setTypeface(title, mediumFont);
@@ -272,7 +271,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         } else {
             listPaddingBottom = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
         }
-        if (positiveText != null) listPaddingBottom = 0;
+        if (hasActionButtons()) listPaddingBottom = 0;
         customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
                 customFrame.getPaddingRight(), listPaddingBottom);
 
@@ -333,33 +332,29 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         return (dialogWidth - sixteenDp - sixteenDp - eightDp) / 2;
     }
 
+    /**
+     * Detects whether or not the custom view or list content can be scrolled.
+     */
     private boolean canCustomViewScroll() {
-        /**
-         * Detects whether or not the custom view or list content can be scrolled.
-         */
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.customViewScroll);
         final int childHeight = view.findViewById(R.id.customViewFrame).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
 
+    /**
+     * Detects whether or not the content TextView can be scrolled.
+     */
     private boolean canContentScroll() {
-        /**
-         * Detects whether or not the custom view or list content can be scrolled.
-         */
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
         final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
 
+    /**
+     * Measures the action button's and their text to decide whether or not the button should be stacked.
+     */
     private void checkIfStackingNeeded() {
-        /**
-         * Measures the action button's and their text to decide whether or not the button should be stacked.
-         */
-        if (((negativeButton == null || negativeButton.getVisibility() == View.GONE) &&
-                (neutralButton == null || neutralButton.getVisibility() == View.GONE))) {
-            // Stacking isn't necessary if you only have one button
-            return;
-        }
+        if (numberOfActionButtons() <= 1) return;
         final int maxWidth = calculateMaxButtonWidth();
         final Paint paint = positiveButton.getPaint();
         final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
@@ -376,12 +371,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateActions();
     }
 
+    /**
+     * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
+     * and sets their properties (such as height, text color, etc.).
+     */
     private boolean invalidateActions() {
-        /**
-         * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
-         * and sets their properties (such as height, text color, etc.).
-         */
-        if (positiveText == null) {
+        if (!hasActionButtons()) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
@@ -434,6 +429,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             negativeButton.setText(this.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
+
+            if (!isStacked) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        (int) getContext().getResources().getDimension(R.dimen.md_button_height));
+                if (this.positiveText != null) {
+                    params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                } else {
+                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                }
+                negativeButton.setLayoutParams(params);
+            }
         } else {
             negativeButton.setVisibility(View.GONE);
         }
@@ -456,8 +463,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<Integer> selectedIndices = new ArrayList<>();
-        List<CharSequence> selectedTitles = new ArrayList<>();
+        List<Integer> selectedIndices = new ArrayList<Integer>();
+        List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View itemView = list.getChildAt(i);
@@ -508,14 +515,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (!cb.isChecked())
                     cb.setChecked(true);
                 invalidateSingleChoice(index);
-                if (positiveText == null) {
+                if (!hasActionButtons()) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendSingleChoiceCallback(v);
                 }
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                 cb.setChecked(!cb.isChecked());
-                if (positiveText == null) {
+                if (!hasActionButtons()) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendMultichoiceCallback();
                 }
@@ -929,6 +936,28 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
         setActionButton(which, getContext().getString(titleRes));
+    }
+
+    /**
+     * Gets whether or not the positive, neutral, or negative action button is visible.
+     *
+     * @return Whether or not 1 or more action buttons is visible.
+     */
+    public final boolean hasActionButtons() {
+        return numberOfActionButtons() > 0;
+    }
+
+    /**
+     * Gets the number of visible action buttons.
+     *
+     * @return 0 through 3, depending on how many should be or are visible.
+     */
+    public final int numberOfActionButtons() {
+        int number = 0;
+        if (positiveText != null) number++;
+        if (neutralText != null) number++;
+        if (negativeText != null) number++;
+        return number;
     }
 
     /**

@@ -1,11 +1,16 @@
 # Material Dialogs
 
-This library was designed to solve a personal problem with my apps, I use AppCompat to use
-Material theming on versions of Android below Lollipop. However, despite being able to theme everything else,
-AppCompat doesn't theme AlertDialogs with Material design. This library allows you to use consistently Material
-themed dialogs on all versions of Android, along with specific customizations that make it easier to brand the dialog.
-
 The code you see below is also found in the sample project. You can download a APK of the sample here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk. The sample's also available on Google Play: https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample.
+
+---
+
+### What's New
+
+###### Version 0.2.0
+
+> 1. Action buttons must be explicitly shown by setting text to them. The buttons will be hidden in any dialog type if no text is passed for them. This also allows you to display neutral or negative action buttons individually without relying on positive text. 
+> 2. List dialogs now use CharSequence arrays rather than String arrays.
+> 3. Other bug fixes are included.
 
 ---
 
@@ -15,7 +20,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.1.2'
+    compile 'com.afollestad:material-dialogs:0.2.0'
 }
 ```
 
@@ -37,8 +42,8 @@ new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .theme(Theme.LIGHT)  // the default is light, so you don't need this line
-        .positiveText("Agree")  // the default for textual dialogs (not list or custom view dialogs) is 'OK'
-        .negativeText("Disagree")  // leaving this line out will remove the negative button
+        .positiveText("Agree")
+        .negativeText("Disagree")
         .build()
         .show();
 ```
@@ -59,7 +64,7 @@ Drawable d = // ... get from somewhere...
 new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")  // the default for textual dialogs (not list or custom view dialogs) is 'OK'
+        .positiveText("Agree")
         .icon(d)
         .build()
         .show();
@@ -237,7 +242,7 @@ new MaterialDialog.Builder(this)
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default. When `positiveText()` is not used, the
+dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
 callback will be called every time you select an item since no action is available to press, without the
 dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
 it to display the action buttons below your list, however this is only useful in some specific cases.
