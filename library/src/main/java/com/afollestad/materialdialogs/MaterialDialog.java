@@ -17,6 +17,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
+    private Context mContext;
     private ImageView icon;
     private TextView title;
     private View titleFrame;
@@ -70,11 +72,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private boolean autoDismiss;
 
     MaterialDialog(Builder builder) {
-        super(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark);
-
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            setInverseBackgroundForced(true);
-        }
+        super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark));
 
         this.regularFont = builder.regularFont;
         if (this.regularFont == null)
@@ -83,6 +81,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (this.mediumFont == null)
             this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
+        this.mContext = builder.context;
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.customView = builder.customView;
         this.callback = builder.callback;
@@ -262,9 +261,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
         ((ScrollView) view.findViewById(R.id.customViewScroll)).smoothScrollTo(0, 0);
         setMargin(customFrame, -1, -1, 0, 0);
-        LayoutInflater li = LayoutInflater.from(getContext());
+        LayoutInflater li = LayoutInflater.from(mContext);
 
-        final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
+        final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
         int listPaddingBottom;
         View title = view.findViewById(R.id.titleCustomView);
         if (title.getVisibility() == View.VISIBLE) {

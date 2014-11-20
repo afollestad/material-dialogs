@@ -5,7 +5,8 @@
 
     <dimen name="md_dialog_frame_margin">24dp</dimen>
     <dimen name="md_main_frame_margin">16dp</dimen>
-    <dimen name="button_min_width">64dp</dimen>
+    <dimen name="md_title_margin_plainlist">8dp</dimen>
+    <dimen name="md_button_min_width">64dp</dimen>
 
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
     <dimen name="md_button_padding_vertical">12dp</dimen>
@@ -24,6 +25,6 @@
     <dimen name="md_listitem_height">48dp</dimen>
     <dimen name="md_listitem_control_margin">16dp</dimen>
     <dimen name="md_icon_margin">16dp</dimen>
-    <dimen name="md_listitem_margin_left">32dp</dimen>
+    <dimen name="md_listitem_margin_left">24dp</dimen>
 
 </resources>
