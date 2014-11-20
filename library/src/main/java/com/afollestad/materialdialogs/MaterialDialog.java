@@ -61,7 +61,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ListCallback listCallbackSingle;
     private ListCallbackMulti listCallbackMulti;
     private View customView;
-    private String[] items;
+    private CharSequence[] items;
     private boolean isStacked;
     private int selectedIndex;
     private Integer[] selectedIndices;
@@ -456,8 +456,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<Integer> selectedIndices = new ArrayList<Integer>();
-        List<String> selectedTitles = new ArrayList<String>();
+        List<Integer> selectedIndices = new ArrayList<>();
+        List<String> selectedTitles = new ArrayList<>();
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View itemView = list.getChildAt(i);
@@ -470,7 +470,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
         listCallbackMulti.onSelection(this,
                 selectedIndices.toArray(new Integer[selectedIndices.size()]),
-                selectedTitles.toArray(new String[selectedTitles.size()]));
+                selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
 
     @Override
@@ -542,7 +542,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Alignment contentAlignment = Alignment.LEFT;
         protected int titleColor = -1;
         protected CharSequence content;
-        protected String[] items;
+        protected CharSequence[] items;
         protected CharSequence positiveText;
         protected CharSequence neutralText;
         protected CharSequence negativeText;
@@ -680,7 +680,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
-        public Builder items(String[] items) {
+        public Builder items(CharSequence[] items) {
             this.items = items;
             return this;
         }
@@ -961,7 +961,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         ((TextView) view.findViewById(R.id.content)).setText(content);
     }
 
-    public final void setItems(String[] items) {
+    public final void setItems(CharSequence[] items) {
         this.items = items;
         invalidateList();
     }
@@ -972,7 +972,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     public static interface ListCallbackMulti {
-        void onSelection(MaterialDialog dialog, Integer[] which, String[] text);
+        void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 
     public static interface SimpleCallback {
