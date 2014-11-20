@@ -4,7 +4,7 @@ The code you see below is also found in the sample project. You can download a A
 
 ---
 
-# What's New
+### What's New
 
 ###### Version 0.2.0
 
