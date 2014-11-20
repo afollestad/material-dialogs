@@ -40,7 +40,7 @@ public abstract class ItemProcessor {
      * @param itemText The text associated with the current item from the array passed into items() from the Builder.
      * @param view The inflated view for the current item.
      */
-    protected abstract void onViewInflated(int forIndex, String itemText, View view);
+    protected abstract void onViewInflated(int forIndex, CharSequence itemText, View view);
 
     /**
      * Used by MaterialDialog to inflate a list item view that will be displayed in a list.
@@ -48,7 +48,7 @@ public abstract class ItemProcessor {
      * @param forIndex The index of the item being inflated.
      * @param itemText The text associated with the current item from the array passed into items() from the Builder.
      */
-    public final View inflateItem(int forIndex, String itemText) {
+    public final View inflateItem(int forIndex, CharSequence itemText) {
         int itemLayout = getLayout(forIndex);
         if (itemLayout == 0) itemLayout = defaultLayout;
         View view = li.inflate(itemLayout, null);
