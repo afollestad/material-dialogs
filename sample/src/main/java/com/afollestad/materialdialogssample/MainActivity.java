@@ -132,8 +132,8 @@ public class MainActivity extends ActionBarActivity {
     private void showBasicNoTitle() {
         new MaterialDialog.Builder(this)
                 .content(R.string.shareLocationPrompt)
-                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .build()
                 .show();
     }
@@ -142,8 +142,8 @@ public class MainActivity extends ActionBarActivity {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
-                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .build()
                 .show();
     }
@@ -152,8 +152,8 @@ public class MainActivity extends ActionBarActivity {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.loremIpsum)
-                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .build()
                 .show();
     }
@@ -163,8 +163,8 @@ public class MainActivity extends ActionBarActivity {
                 .icon(R.drawable.ic_launcher)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
-                .positiveText(R.string.agree)  // the default is 'Accept', this line could be left out
-                .negativeText(R.string.disagree)  // leaving this line out will remove the negative button
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
                 .build()
                 .show();
     }
