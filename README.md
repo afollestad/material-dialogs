@@ -1,11 +1,14 @@
 # Material Dialogs
 
-This library was designed to solve a personal problem with my apps, I use AppCompat to use
-Material theming on versions of Android below Lollipop. However, despite being able to theme everything else,
-AppCompat doesn't theme AlertDialogs with Material design. This library allows you to use consistently Material
-themed dialogs on all versions of Android, along with specific customizations that make it easier to brand the dialog.
-
 The code you see below is also found in the sample project. You can download a APK of the sample here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk. The sample's also available on Google Play: https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample.
+
+---
+
+# What's New
+
+* Version 0.2.0
+
+Action buttons must be explicitly shown by setting text to them. The buttons will be hidden in any dialog type if no text is passed for them. This also allows you to display neutral or negative action buttons individually without relying on positive text.
 
 ---
 
