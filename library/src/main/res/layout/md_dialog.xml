@@ -128,10 +128,10 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/md_neutral_button_margin" />
 
+        <!-- toLeftOf rule added from invalidateActions() -->
         <TextView
             android:id="@+id/buttonDefaultNegative"
-            style="@style/MD_ActionButton"
-            android:layout_toLeftOf="@+id/buttonDefaultPositive" />
+            style="@style/MD_ActionButton" />
 
         <TextView
             android:id="@+id/buttonDefaultPositive"

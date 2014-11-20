@@ -25,6 +25,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -375,7 +376,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * and sets their properties (such as height, text color, etc.).
      */
     private boolean invalidateActions() {
-        if (positiveText == null) {
+        if (!hasActionButtons()) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
@@ -428,6 +429,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             negativeButton.setText(this.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
+
+            if (!isStacked) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        (int) getContext().getResources().getDimension(R.dimen.md_button_height));
+                if (this.positiveText != null) {
+                    params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                } else {
+                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                }
+                negativeButton.setLayoutParams(params);
+            }
         } else {
             negativeButton.setVisibility(View.GONE);
         }
@@ -502,14 +515,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (!cb.isChecked())
                     cb.setChecked(true);
                 invalidateSingleChoice(index);
-                if (positiveText == null) {
+                if (!hasActionButtons()) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendSingleChoiceCallback(v);
                 }
             } else if (listCallbackMulti != null) {
                 CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                 cb.setChecked(!cb.isChecked());
-                if (positiveText == null) {
+                if (!hasActionButtons()) {
                     // Immediately send the selection callback without dismissing if no action buttons are shown
                     sendMultichoiceCallback();
                 }
