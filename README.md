@@ -6,6 +6,10 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.2.1
+
+> A small but important fix to 0.2.0
+
 ###### Version 0.2.0
 
 > 1. Action buttons must be explicitly shown by setting text to them. The buttons will be hidden in any dialog type if no text is passed for them. This also allows you to display neutral or negative action buttons individually without relying on positive text. 
