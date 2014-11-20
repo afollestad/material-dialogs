@@ -223,7 +223,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -237,7 +237,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.states)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -251,7 +251,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -288,7 +288,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
