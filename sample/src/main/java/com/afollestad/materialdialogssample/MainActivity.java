@@ -266,7 +266,7 @@ public class MainActivity extends ActionBarActivity {
                 .items(R.array.socialNetworks)
                 .itemsCallbackMultiChoice(new Integer[]{1, 3}, new MaterialDialog.ListCallbackMulti() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, Integer[] which, String[] text) {
+                    public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         StringBuilder str = new StringBuilder();
                         for (int i = 0; i < which.length; i++) {
                             str.append(which[i]);
