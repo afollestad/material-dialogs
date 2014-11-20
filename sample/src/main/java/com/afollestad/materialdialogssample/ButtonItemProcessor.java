@@ -26,7 +26,7 @@ public class ButtonItemProcessor extends ItemProcessor implements View.OnClickLi
     }
 
     @Override
-    protected void onViewInflated(int forIndex, String itemText, View view) {
+    protected void onViewInflated(int forIndex, CharSequence itemText, View view) {
         ((TextView) view.findViewById(R.id.title)).setText(itemText + " (" + forIndex + ")");
         Button button = (Button) view.findViewById(R.id.button);
         button.setTag(forIndex);

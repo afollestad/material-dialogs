@@ -443,15 +443,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             @SuppressLint("WrongViewCast")
             RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
             if (rb.isChecked()) {
-                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText());
                 break;
             }
         }
     }
 
     private void sendMultichoiceCallback() {
-        List<Integer> selectedIndices = new ArrayList<Integer>();
-        List<String> selectedTitles = new ArrayList<String>();
+        List<Integer> selectedIndices = new ArrayList<>();
+        List<CharSequence> selectedTitles = new ArrayList<>();
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View itemView = list.getChildAt(i);
@@ -459,12 +459,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
             if (rb.isChecked()) {
                 selectedIndices.add(i - 1);
-                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText());
             }
         }
         listCallbackMulti.onSelection(this,
                 selectedIndices.toArray(new Integer[selectedIndices.size()]),
-                selectedTitles.toArray(new String[selectedTitles.size()]));
+                selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
 
     @Override
@@ -977,18 +977,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         ((TextView) view.findViewById(R.id.content)).setText(content);
     }
 
-    public final void setItems(String[] items) {
+    public final void setItems(CharSequence[] items) {
         this.items = items;
         invalidateList();
     }
 
 
     public static interface ListCallback {
-        void onSelection(MaterialDialog dialog, View itemView, int which, String text);
+        void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
     }
 
     public static interface ListCallbackMulti {
-        void onSelection(MaterialDialog dialog, Integer[] which, String[] text);
+        void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 
     public static interface SimpleCallback {

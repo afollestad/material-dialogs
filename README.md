@@ -161,7 +161,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
             }
         })
         .build()
@@ -195,7 +195,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
             @Override
-            public void onSelection(MaterialDialog dialog, View view, int which, String text) {
+            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
             }
         })
         .positiveText("Choose")
@@ -227,7 +227,7 @@ new MaterialDialog.Builder(this)
         .items(new String[]{"Twitter", "Google+", "Instagram", "Facebook"})
         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMulti() {
             @Override
-            public void onSelection(MaterialDialog dialog, Integer[] which, String[] text) {
+            public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
             }
         })
         .positiveText("Choose")
