@@ -37,8 +37,8 @@ new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .theme(Theme.LIGHT)  // the default is light, so you don't need this line
-        .positiveText("Agree")  // the default for textual dialogs (not list or custom view dialogs) is 'OK'
-        .negativeText("Disagree")  // leaving this line out will remove the negative button
+        .positiveText("Agree")
+        .negativeText("Disagree")
         .build()
         .show();
 ```
@@ -59,7 +59,7 @@ Drawable d = // ... get from somewhere...
 new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")  // the default for textual dialogs (not list or custom view dialogs) is 'OK'
+        .positiveText("Agree")
         .icon(d)
         .build()
         .show();
@@ -237,7 +237,7 @@ new MaterialDialog.Builder(this)
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default. When `positiveText()` is not used, the
+dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
 callback will be called every time you select an item since no action is available to press, without the
 dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
 it to display the action buttons below your list, however this is only useful in some specific cases.
