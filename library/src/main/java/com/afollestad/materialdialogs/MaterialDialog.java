@@ -149,6 +149,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         // Title is set after it's determined whether to use first title or custom view title
         if (builder.title == null || builder.title.toString().trim().isEmpty()) {
             titleFrame.setVisibility(View.GONE);
+            if (customView == null)
+                view.findViewById(R.id.titleFrameCustomView).setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
             setTypeface(title, mediumFont);
