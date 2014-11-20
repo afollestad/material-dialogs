@@ -449,7 +449,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             @SuppressLint("WrongViewCast")
             RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
             if (rb.isChecked()) {
-                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText());
                 break;
             }
         }
@@ -457,7 +457,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     private void sendMultichoiceCallback() {
         List<Integer> selectedIndices = new ArrayList<>();
-        List<String> selectedTitles = new ArrayList<>();
+        List<CharSequence> selectedTitles = new ArrayList<>();
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View itemView = list.getChildAt(i);
@@ -465,7 +465,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
             if (rb.isChecked()) {
                 selectedIndices.add(i - 1);
-                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText().toString());
+                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText());
             }
         }
         listCallbackMulti.onSelection(this,
@@ -968,7 +968,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
 
     public static interface ListCallback {
-        void onSelection(MaterialDialog dialog, View itemView, int which, String text);
+        void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
     }
 
     public static interface ListCallbackMulti {
