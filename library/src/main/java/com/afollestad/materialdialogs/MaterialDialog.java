@@ -450,8 +450,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<Integer> selectedIndices = new ArrayList<>();
-        List<CharSequence> selectedTitles = new ArrayList<>();
+        List<Integer> selectedIndices = new ArrayList<Integer>();
+        List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
         LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
         for (int i = 1; i < list.getChildCount(); i++) {
             View itemView = list.getChildAt(i);
