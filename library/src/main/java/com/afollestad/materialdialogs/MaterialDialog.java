@@ -847,6 +847,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         public MaterialDialog build() {
             return new MaterialDialog(this);
         }
+        
+        public MaterialDialog show() {
+            MaterialDialog dialog = new MaterialDialog(this);
+            dialog.show();
+            return dialog;
+        }
     }
 
 
