@@ -1011,8 +1011,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     public static interface Callback extends SimpleCallback {
-        void onPositive(MaterialDialog dialog);
-
         void onNegative(MaterialDialog dialog);
     }
 
