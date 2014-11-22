@@ -6,9 +6,11 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-###### Version 0.2.1
+###### Version 0.3.0
 
-> A small but important fix to 0.2.0
+> 1. MaterialDialogCompat allows easy migration from use of AlertDialog (see README below).
+> 2. Convenience `show()` method in Builder, to skip call to `build()`.
+> 3. Various important fixes from pull requests and the maintainer. 
 
 ###### Version 0.2.0
 
@@ -24,7 +26,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.2.1'
+    compile 'com.afollestad:material-dialogs:0.3'
 }
 ```
 
@@ -56,6 +58,34 @@ On Lollipop (API 21) or if you use AppCompat, the Material dialog will automatic
 (which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 If the content is long enough, it will become scrollable and a divider will be displayde above the action buttons.
+
+---
+
+### Migration from AlertDialogs
+
+If you're migrating old dialogs you could use ```MaterialDialogCompat```. You need change imports and replace ```AlertDialog.Builder``` with ```MaterialDialogCompat.Builder```:
+
+```java
+MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder( context );
+dialogBuilder.setMessage( messageId );
+dialogBuilder.setTitle( titleId );
+dialogBuilder.setNegativeButton( R.string.OK, new DialogInterface.OnClickListener()
+{
+    @Override
+    public void onClick( DialogInterface dialog, int which )
+    {
+        dialog.dismiss();
+        if ( listener != null )
+        {
+            listener.onCancel( dialog );
+        }
+    }
+} );
+
+dialogBuilder.create().show();
+```
+
+But it's highly recommend to use original ```MaterialDialog``` API for new usages.
 
 ---
 
@@ -307,34 +337,6 @@ new MaterialDialog.Builder(this)
 ```
 
 To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
-
----
-
-### Convenience Builder class
-
-If you're migrating old dialogs you could use ```MaterialDialogCompat```. You need change imports and replace ```AlertDialog.Builder``` with ```MaterialDialogCompat.Builder```:
-
-```java
-MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder( context );
-dialogBuilder.setMessage( messageId );
-dialogBuilder.setTitle( titleId );
-dialogBuilder.setNegativeButton( R.string.OK, new DialogInterface.OnClickListener()
-{
-    @Override
-    public void onClick( DialogInterface dialog, int which )
-    {
-        dialog.dismiss();
-        if ( listener != null )
-        {
-            listener.onCancel( dialog );
-        }
-    }
-} );
-
-dialogBuilder.create().show();
-```
-
-But we highly recommend to use original ```MaterialDialog``` API for new classes.
 
 ---
 
