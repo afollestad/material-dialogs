@@ -310,6 +310,34 @@ To see more colors that fit the Material design palette, see this page: http://w
 
 ---
 
+### Convenience Builder class
+
+If you're migrating old dialogs you could use ```MaterialDialogCompat```. You need change imports and replace ```AlertDialog.Builder``` with ```MaterialDialogCompat.Builder```:
+
+```java
+MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder( context );
+dialogBuilder.setMessage( messageId );
+dialogBuilder.setTitle( titleId );
+dialogBuilder.setNegativeButton( R.string.OK, new DialogInterface.OnClickListener()
+{
+    @Override
+    public void onClick( DialogInterface dialog, int which )
+    {
+        dialog.dismiss();
+        if ( listener != null )
+        {
+            listener.onCancel( dialog );
+        }
+    }
+} );
+
+dialogBuilder.create().show();
+```
+
+But we highly recommend to use original ```MaterialDialog``` API for new classes.
+
+---
+
 ### Misc
 
 If you need to access a View in the custom view set to a MaterialDialog, you can use `getCustomView()` of
