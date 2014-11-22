@@ -10,14 +10,14 @@ import android.support.annotation.StringRes;
 import android.view.View;
 
 /**
- * Convenience class for migrating old dialogs code
- * Not all methods are implemented yet
+ * Convenience class for migrating old dialogs code. Not all methods are implemented yet.
  *
- * @deprecated
- *
+ * @deprecated Using MaterialDialog.Builder directly is recommended.
  */
 public class MaterialDialogCompat {
+    
     public static class Builder {
+
         private MaterialDialog.Builder builder;
 
         private DialogInterface.OnClickListener negativeDialogListener;
@@ -95,91 +95,85 @@ public class MaterialDialogCompat {
 
         /**
          * Set a listener to be invoked when the negative button of the dialog is pressed.
-         * @param textId The resource id of the text to display in the negative button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param textId   The resource id of the text to display in the negative button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setNegativeButton(@StringRes int textId,
                                          DialogInterface.OnClickListener listener) {
             builder.negativeText(textId);
             negativeDialogListener = listener;
-
             return this;
         }
 
         /**
          * Set a listener to be invoked when the negative button of the dialog is pressed.
-         * @param text The text to display in the negative button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param text     The text to display in the negative button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setNegativeButton(CharSequence text,
                                          DialogInterface.OnClickListener listener) {
             builder.negativeText(text);
             negativeDialogListener = listener;
-
             return this;
         }
 
         /**
          * Set a listener to be invoked when the positive button of the dialog is pressed.
-         * @param textId The resource id of the text to display in the positive button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param textId   The resource id of the text to display in the positive button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setPositiveButton(@StringRes int textId,
                                          DialogInterface.OnClickListener listener) {
             builder.positiveText(textId);
             positiveDialogListener = listener;
-
             return this;
         }
 
         /**
          * Set a listener to be invoked when the positive button of the dialog is pressed.
-         * @param text The text to display in the positive button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param text     The text to display in the positive button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setPositiveButton(CharSequence text,
                                          DialogInterface.OnClickListener listener) {
             builder.positiveText(text);
             positiveDialogListener = listener;
-
             return this;
         }
 
         /**
          * Set a listener to be invoked when the neutral button of the dialog is pressed.
-         * @param textId The resource id of the text to display in the neutral button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param textId   The resource id of the text to display in the neutral button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setNeutralButton(@StringRes int textId,
                                         DialogInterface.OnClickListener listener) {
             builder.neutralText(textId);
             neutralDialogListener = listener;
-
             return this;
         }
 
         /**
          * Set a listener to be invoked when the neutral button of the dialog is pressed.
-         * @param text The text to display in the neutral button
-         * @param listener The {@link DialogInterface.OnClickListener} to use.
          *
+         * @param text     The text to display in the neutral button
+         * @param listener The {@link DialogInterface.OnClickListener} to use.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder setNeutralButton(CharSequence text,
                                         DialogInterface.OnClickListener listener) {
             builder.neutralText(text);
             neutralDialogListener = listener;
-
             return this;
         }
 
@@ -213,9 +207,7 @@ public class MaterialDialogCompat {
          */
         public Builder setItems(CharSequence[] items, DialogInterface.OnClickListener listener) {
             builder.items(items);
-
             onClickListener = listener;
-
             return this;
         }
 
@@ -228,7 +220,6 @@ public class MaterialDialogCompat {
         public AlertDialog create() {
             addButtonsCallback();
             addItemsCallBack();
-
             return builder.build();
         }
 
