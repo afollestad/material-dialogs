@@ -15,7 +15,7 @@ import android.view.View;
  * @deprecated Using MaterialDialog.Builder directly is recommended.
  */
 public class MaterialDialogCompat {
-    
+
     public static class Builder {
 
         private MaterialDialog.Builder builder;
