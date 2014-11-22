@@ -10,7 +10,7 @@ The code you see below is also found in the sample project. You can download a A
 
 > 1. MaterialDialogCompat allows easy migration from use of AlertDialog (see README below).
 > 2. Convenience `show()` method in Builder, to skip call to `build()`.
-> 3. Various important fixes from pull requests and the maintainer. 
+> 3. Various important fixes from pull requests and the maintainer.
 
 ###### Version 0.2.0
 
