@@ -50,7 +50,6 @@ new MaterialDialog.Builder(this)
         .theme(Theme.LIGHT)  // the default is light, so you don't need this line
         .positiveText("Agree")
         .negativeText("Disagree")
-        .build()
         .show();
 ```
 
@@ -66,26 +65,22 @@ If the content is long enough, it will become scrollable and a divider will be d
 If you're migrating old dialogs you could use ```MaterialDialogCompat```. You need change imports and replace ```AlertDialog.Builder``` with ```MaterialDialogCompat.Builder```:
 
 ```java
-MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder( context );
-dialogBuilder.setMessage( messageId );
-dialogBuilder.setTitle( titleId );
-dialogBuilder.setNegativeButton( R.string.OK, new DialogInterface.OnClickListener()
-{
+MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder(context);
+dialogBuilder.setMessage(messageId);
+dialogBuilder.setTitle(titleId);
+dialogBuilder.setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
     @Override
-    public void onClick( DialogInterface dialog, int which )
-    {
+    public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
-        if ( listener != null )
-        {
-            listener.onCancel( dialog );
+        if (listener != null) {
+            listener.onCancel(dialog);
         }
     }
-} );
-
+});
 dialogBuilder.create().show();
 ```
 
-But it's highly recommend to use original ```MaterialDialog``` API for new usages.
+But it's highly recommended to use original ```MaterialDialog``` API for new usages.
 
 ---
 
@@ -100,7 +95,6 @@ new MaterialDialog.Builder(this)
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .positiveText("Agree")
         .icon(d)
-        .build()
         .show();
 ```
 
@@ -119,7 +113,6 @@ new MaterialDialog.Builder(this)
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .positiveText("Turn on speed boost right now!")
         .negativeText("No thanks")
-        .build()
         .show();
 ```
 
@@ -140,7 +133,6 @@ new MaterialDialog.Builder(this)
         .positiveText("Agree")
         .negativeText("Disagree")
         .neutralText("More info")
-        .build()
         .show();
 ```
 
@@ -203,7 +195,6 @@ new MaterialDialog.Builder(this)
             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
             }
         })
-        .build()
         .show();
 ```
 
@@ -238,7 +229,6 @@ new MaterialDialog.Builder(this)
             }
         })
         .positiveText("Choose")
-        .build()
         .show();
 ```
 
@@ -270,7 +260,6 @@ new MaterialDialog.Builder(this)
             }
         })
         .positiveText("Choose")
-        .build()
         .show();
 ```
 
@@ -332,7 +321,6 @@ new MaterialDialog.Builder(this)
         .titleAlignment(Alignment.CENTER)
         .titleColor(materialRed500)
         .theme(Theme.DARK)
-        .build()
         .show();
 ```
 
@@ -380,7 +368,6 @@ the user selects a list item:
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .autoDismiss(false)
-        .build()
         .show();
 ```
 
@@ -392,6 +379,5 @@ Typeface contentAndListItems = // ... initialize
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .typeface(titleAndActions, contentAndListItems)
-        .build()
         .show();
 ```
