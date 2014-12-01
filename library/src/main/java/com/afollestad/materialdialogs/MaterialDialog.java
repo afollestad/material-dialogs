@@ -72,8 +72,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ItemProcessor mItemProcessor;
     private boolean autoDismiss;
 
+    protected static ContextThemeWrapper getTheme(Builder builder) {
+        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
+        boolean darkTheme = builder.theme == Theme.DARK;
+        try {
+            darkTheme = a.getBoolean(0, false);
+        } finally {
+            a.recycle();
+        }
+        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
+    }
+
     protected MaterialDialog(Builder builder) {
-        super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark));
+        super(getTheme(builder));
 
         this.regularFont = builder.regularFont;
         if (this.regularFont == null)
