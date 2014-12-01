@@ -345,6 +345,9 @@ your Activity themes that makes all dialogs dark.
 </style>
 ```
 
+The action button color is also derived from the `android:colorAccent` attribute of the Material theme,
+or `colorAccent` attribute of the AppCompat Material theme.
+
 ---
 
 ### Misc
