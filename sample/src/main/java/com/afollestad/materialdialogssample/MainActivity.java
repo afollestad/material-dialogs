@@ -312,7 +312,7 @@ public class MainActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .itemProcessor(new ButtonItemProcessor(this))
+                .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
                 .build()
                 .show();
     }
