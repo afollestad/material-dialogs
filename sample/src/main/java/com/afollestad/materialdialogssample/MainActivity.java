@@ -86,6 +86,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        findViewById(R.id.listNoTitle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showListNoTitle();
+            }
+        });
+
         findViewById(R.id.longList).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,6 +228,19 @@ public class MainActivity extends ActionBarActivity {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    private void showListNoTitle() {
+        new MaterialDialog.Builder(this)
+                .items(R.array.states)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
