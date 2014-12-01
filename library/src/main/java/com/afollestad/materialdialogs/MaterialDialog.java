@@ -868,14 +868,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
 
     private ColorStateList getActionTextStateList(int newPrimaryColor) {
-        final int buttonColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
-        if (newPrimaryColor == 0) newPrimaryColor = buttonColor;
+        final int fallBackButtonColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
+        if (newPrimaryColor == 0) newPrimaryColor = fallBackButtonColor;
         int[][] states = new int[][]{
                 new int[]{-android.R.attr.state_enabled}, // disabled
                 new int[]{} // enabled
         };
         int[] colors = new int[]{
-                DialogUtils.adjustAlpha(buttonColor, 0.6f),
+                DialogUtils.adjustAlpha(newPrimaryColor, 0.4f),
                 newPrimaryColor
         };
         return new ColorStateList(states, colors);
