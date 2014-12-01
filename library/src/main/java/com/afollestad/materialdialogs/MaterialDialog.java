@@ -35,7 +35,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
-import com.afollestad.materialdialogs.list.ItemProcessor;
 import com.afollestad.materialdialogs.views.MeasureCallbackScrollView;
 
 import java.util.ArrayList;
@@ -74,7 +73,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private boolean mMeasuredScrollView;
     private Typeface mediumFont;
     private Typeface regularFont;
-    private ItemProcessor mItemProcessor;
     private boolean autoDismiss;
     private ListAdapter adapter;
     private ListType listType;
@@ -118,7 +116,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.setCancelable(builder.cancelable);
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
-        this.mItemProcessor = builder.itemProcessor;
         this.autoDismiss = builder.autoDismiss;
         this.adapter = builder.adapter;
 
@@ -576,7 +573,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected float contentLineSpacingMultiplier = 1.3f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
-        protected ItemProcessor itemProcessor;
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
@@ -707,18 +703,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             this.listCallback = callback;
             this.listCallbackSingle = null;
             this.listCallbackMulti = null;
-            return this;
-        }
-
-        /**
-         * Sets an item processor used to inflate and customize list items (NOT including single and
-         * multi choice list items).
-         *
-         * @param processor The processor to apply to all non single/multi choice list items.
-         * @return The Builder instance so you can chain calls to it.
-         */
-        public Builder itemProcessor(ItemProcessor processor) {
-            this.itemProcessor = processor;
             return this;
         }
 
