@@ -8,6 +8,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.view.View;
+import android.widget.ListAdapter;
 
 /**
  * Convenience class for migrating old dialogs code. Not all methods are implemented yet.
@@ -208,6 +209,16 @@ public class MaterialDialogCompat {
         public Builder setItems(CharSequence[] items, DialogInterface.OnClickListener listener) {
             builder.items(items);
             onClickListener = listener;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder setAdapter(ListAdapter adapter) {
+            builder.adapter = adapter;
             return this;
         }
 
