@@ -318,6 +318,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     } else if (previouslySelected) {
                         selectedIndicesList.remove(Integer.valueOf(position));
                     }
+                } else if (listType == ListType.SINGLE) {
+                    // Keep our selected item up to date
+                    if (selectedIndex != position) {
+                        selectedIndex = position;
+                        ((MaterialDialogAdapter) adapter).notifyDataSetChanged();
+                    }
                 }
 
                 onClick(view);
@@ -465,16 +471,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendSingleChoiceCallback(View v) {
-        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        for (int i = 1; i < list.getChildCount(); i++) {
-            View itemView = list.getChildAt(i);
-            @SuppressLint("WrongViewCast")
-            RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
-            if (rb.isChecked()) {
-                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText());
-                break;
-            }
-        }
+        listCallbackSingle.onSelection(this, v, selectedIndex, items[selectedIndex]);
     }
 
     private void sendMultichoiceCallback() {
