@@ -837,6 +837,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
         public Builder setAdapter(ListAdapter adapter) {
             this.adapter = adapter;
             return this;
