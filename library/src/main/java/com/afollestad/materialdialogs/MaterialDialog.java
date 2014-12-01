@@ -222,11 +222,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 setMargin(view.findViewById(R.id.buttonDefaultFrame), -1, 0, -1, -1);
                 final int conPadding = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
                 View con = view.findViewById(R.id.content);
-                setMargin(con, 0, conPadding, -1, -1);
+                con.setPadding(con.getPaddingLeft(), 0, con.getPaddingRight(), conPadding);
             } else {
                 View con = view.findViewById(R.id.content);
-                setMargin(con, 0, 0, -1, -1);
-
+                con.setPadding(con.getPaddingLeft(), 0, con.getPaddingRight(), 0);
             }
         }
     }
