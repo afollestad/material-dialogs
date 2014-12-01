@@ -72,7 +72,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ItemProcessor mItemProcessor;
     private boolean autoDismiss;
 
-    MaterialDialog(Builder builder) {
+    protected MaterialDialog(Builder builder) {
         super(new ContextThemeWrapper(builder.context, builder.theme == Theme.LIGHT ? R.style.MD_Light : R.style.MD_Dark));
 
         this.regularFont = builder.regularFont;
