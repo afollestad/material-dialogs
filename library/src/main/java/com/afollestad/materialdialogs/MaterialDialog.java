@@ -307,15 +307,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Keep our selected items up to date
-                boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
-                boolean previouslySelected = selectedIndicesList.contains(position);
-                if (isChecked) {
-                    if (!previouslySelected) {
-                        selectedIndicesList.add(position);
+                if (listType == ListType.MULTI) {
+                    // Keep our selected items up to date
+                    boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
+                    boolean previouslySelected = selectedIndicesList.contains(position);
+                    if (isChecked) {
+                        if (!previouslySelected) {
+                            selectedIndicesList.add(position);
+                        }
+                    } else if (previouslySelected) {
+                        selectedIndicesList.remove(Integer.valueOf(position));
                     }
-                } else if (previouslySelected) {
-                    selectedIndicesList.remove(Integer.valueOf(position));
                 }
 
                 onClick(view);
