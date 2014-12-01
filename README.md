@@ -8,7 +8,7 @@ The code you see below is also found in the sample project. You can download a A
 
 ###### Version 0.3.1
 
-> 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the Theming section below.
+> 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the [Global Theming](#global-theming) section below.
 
 ###### Version 0.3.0
 
@@ -337,7 +337,7 @@ To see more colors that fit the Material design palette, see this page: http://w
 If you don't want to manually make calls to `theme()` everytime you construct a dialog, you can put a single attribute in
 your Activity themes that makes all dialogs dark.
 
-``xml
+```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
     <item name="md_dark_theme">true</item>
