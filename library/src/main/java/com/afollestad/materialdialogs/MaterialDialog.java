@@ -842,7 +842,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          *
          * @return This Builder object to allow for chaining of calls to set methods
          */
-        public Builder setAdapter(ListAdapter adapter) {
+        public Builder adapter(ListAdapter adapter) {
             this.adapter = adapter;
             return this;
         }
