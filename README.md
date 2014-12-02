@@ -8,7 +8,8 @@ The code you see below is also found in the sample project. You can download a A
 
 ###### Version 0.3.2
 
-> 1. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)!
+> 1. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
+> 2. Other padding and logic fixes.
 
 ###### Version 0.3.1
 
