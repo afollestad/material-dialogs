@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -36,6 +37,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
+import com.afollestad.materialdialogs.views.MeasureCallbackListView;
 import com.afollestad.materialdialogs.views.MeasureCallbackScrollView;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
+public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback, MeasureCallbackListView.Callback {
 
     private ImageView icon;
     private TextView title;
@@ -165,6 +167,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             listView = (ListView) view.findViewById(R.id.contentListView);
+            ((MeasureCallbackListView) listView).setCallback(this);
 
             if (!adapterProvided) {
                 // Determine list type
@@ -176,9 +179,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 } else {
                     listType = ListType.REGULAR;
                 }
-
                 adapter = new MaterialDialogAdapter(mContext, ListType.getLayoutForType(listType), R.id.title, items);
             }
+
+            adapter.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    listView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            invalidateCustomViewAssociations();
+                        }
+                    });
+                }
+            });
         }
 
         // Title is set after it's determined whether to use first title or custom view title
@@ -210,6 +225,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     public void onShow(DialogInterface dialog) {
         super.onShow(dialog); // calls any external show listeners
         checkIfStackingNeeded();
+        invalidateCustomViewAssociations();
     }
 
     /**
@@ -219,7 +235,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (customView != null || (items != null && items.length > 0) || adapter != null) {
             view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
             view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
-            if (!mMeasuredScrollView) {
+            if (!mMeasuredScrollView && listView == null) {
                 // Wait until it's measured
                 ((MeasureCallbackScrollView) view.findViewById(R.id.customViewScroll)).setCallback(this);
                 return;
@@ -366,6 +382,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Detects whether or not the custom view or list content can be scrolled.
      */
     private boolean canCustomViewScroll() {
+        if (listView != null) {
+            if (listView.getLastVisiblePosition() != -1) {
+                return listView.getLastVisiblePosition() < (listView.getCount() - 1);
+            }
+            return false;
+        }
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.customViewScroll);
         final int childHeight = view.findViewById(R.id.customViewFrame).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
@@ -375,7 +397,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Detects whether or not the content TextView can be scrolled.
      */
     private boolean canContentScroll() {
-        if (listView != null) return true;
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
         final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
@@ -552,6 +573,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             mMeasuredScrollView = true;
             invalidateCustomViewAssociations();
         }
+    }
+
+    @Override
+    public void onMeasureScroll(ListView view) {
+        invalidateCustomViewAssociations();
     }
 
     /**
