@@ -47,11 +47,11 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener, MeasureCallbackScrollView.Callback {
 
-    private Context mContext;
     private ImageView icon;
     private TextView title;
     private View titleFrame;
 
+    private Context mContext;
     private CharSequence positiveText;
     private TextView positiveButton;
     private CharSequence neutralText;
@@ -103,7 +103,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (this.mediumFont == null)
             this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Medium.ttf");
 
-        this.mContext = builder.context;
+        mContext = builder.context;
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.customView = builder.customView;
         this.callback = builder.callback;
@@ -337,15 +337,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             });
         }
 
-        // Setup header view (title and icon) if necessary
-        if (title.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
-            View header = view.findViewById(R.id.titleFrameCustomView);
-            TextView title = (TextView) header.findViewById(R.id.titleCustomView);
+        final int dialogFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_dialog_frame_margin);
+        final int mainFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
+        if (titleFrame.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
             final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
-            title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
+            title.setPadding(customFramePadding, dialogFramePadding, customFramePadding, title.getPaddingBottom());
             View titleFrame = (View) title.getParent();
             customFrame.removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
+        } else {
+            listView.setPadding(listView.getPaddingLeft(), mainFramePadding,
+                    listView.getPaddingRight(), listView.getPaddingBottom());
         }
     }
 
