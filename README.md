@@ -6,6 +6,10 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.3.2
+
+> 1. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)!
+
 ###### Version 0.3.1
 
 > 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the [Global Theming](#global-theming) section below.
