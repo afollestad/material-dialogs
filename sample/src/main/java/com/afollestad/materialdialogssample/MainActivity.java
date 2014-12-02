@@ -307,12 +307,6 @@ public class MainActivity extends ActionBarActivity {
     private void showCustomList() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
-                    }
-                })
                 .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
                 .build();
 
