@@ -136,7 +136,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         setTypeface(content, regularFont);
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
         if (this.positiveColor == 0) {
-            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
+            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
         } else {
             content.setLinkTextColor(this.positiveColor);
         }
@@ -220,7 +220,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (builder.contentColor != -1) {
                 content.setTextColor(builder.contentColor);
             } else {
-                content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
+                content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
             }
 
         invalidateActions();
