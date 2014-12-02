@@ -294,13 +294,6 @@ if (listView != null) {
 dialog.show();
 ```
 
-If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
-For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
-callback will be called every time you select an item since no action is available to press, without the
-dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
-it to display the action buttons below your list, however this is only useful in some specific cases.
-
 ---
 
 ### Custom Views
