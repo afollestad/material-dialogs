@@ -375,6 +375,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Detects whether or not the content TextView can be scrolled.
      */
     private boolean canContentScroll() {
+        if (listView != null) return true;
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
         final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
