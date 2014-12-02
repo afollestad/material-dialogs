@@ -11,7 +11,6 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -100,14 +99,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     @Override
     public void setButton(int whichButton, CharSequence text, OnClickListener listener) {
         throw new RuntimeException("Use setActionButton(MaterialDialog.Button, CharSequence) instead.");
-    }
-
-    /**
-     * @deprecated Not supported by the Material dialog.
-     */
-    @Override
-    public ListView getListView() {
-        throw new RuntimeException("This method is not supported by the MaterialDialog.");
     }
 
     @Override
