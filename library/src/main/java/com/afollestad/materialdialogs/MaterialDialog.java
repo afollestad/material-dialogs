@@ -15,22 +15,27 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
-import com.afollestad.materialdialogs.list.ItemProcessor;
 import com.afollestad.materialdialogs.views.MeasureCallbackScrollView;
 
 import java.util.ArrayList;
@@ -54,6 +59,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private CharSequence negativeText;
     private TextView negativeButton;
     private View view;
+    private ListView listView;
     private int positiveColor;
     private int negativeColor;
     private int neutralColor;
@@ -69,8 +75,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private boolean mMeasuredScrollView;
     private Typeface mediumFont;
     private Typeface regularFont;
-    private ItemProcessor mItemProcessor;
     private boolean autoDismiss;
+    private ListAdapter adapter;
+    private ListType listType;
+    private List<Integer> selectedIndicesList;
 
     protected static ContextThemeWrapper getTheme(Builder builder) {
         TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
@@ -110,8 +118,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.setCancelable(builder.cancelable);
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
-        this.mItemProcessor = builder.itemProcessor;
         this.autoDismiss = builder.autoDismiss;
+        this.adapter = builder.adapter;
 
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
@@ -151,8 +159,25 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             icon.setVisibility(View.GONE);
         }
 
-        if (items != null && items.length > 0)
+        boolean adapterProvided = adapter != null;
+        if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
+            listView = (ListView) view.findViewById(R.id.contentListView);
+
+            if (!adapterProvided) {
+                // Determine list type
+                if (listCallbackSingle != null) {
+                    listType = ListType.SINGLE;
+                } else if (listCallbackMulti != null) {
+                    listType = ListType.MULTI;
+                    selectedIndicesList = new ArrayList<>(Arrays.asList(selectedIndices));
+                } else {
+                    listType = ListType.REGULAR;
+                }
+
+                adapter = new MaterialDialogAdapter(mContext, ListType.getLayoutForType(listType), R.id.title, items);
+            }
+        }
 
         // Title is set after it's determined whether to use first title or custom view title
         if (builder.title == null || builder.title.toString().trim().isEmpty()) {
@@ -189,7 +214,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Invalidates visibility of views for the presence of a custom view or list content
      */
     private void invalidateCustomViewAssociations() {
-        if (customView != null || (items != null && items.length > 0)) {
+        if (customView != null || (items != null && items.length > 0) || adapter != null) {
             view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
             view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
             if (!mMeasuredScrollView) {
@@ -262,73 +287,63 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * Constructs the dialog's list content and sets up click listeners.
      */
-    @SuppressLint("WrongViewCast")
     private void invalidateList() {
-        if (items == null || items.length == 0) return;
+        if ((items == null || items.length == 0) && adapter == null) return;
+
+        // Hide content
         view.findViewById(R.id.contentScrollView).setVisibility(View.GONE);
 
+        // Show custom frame container but hide the scrollview
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.customViewScroll).setVisibility(View.GONE);
+
+        // Setup margins on custom view frame
         LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        ((ScrollView) view.findViewById(R.id.customViewScroll)).smoothScrollTo(0, 0);
         setMargin(customFrame, -1, -1, 0, 0);
-        LayoutInflater li = LayoutInflater.from(mContext);
 
-        final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
-        int listPaddingBottom;
-        View title = view.findViewById(R.id.titleCustomView);
-        if (title.getVisibility() == View.VISIBLE) {
-            title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
-            listPaddingBottom = customFramePadding;
-        } else {
-            listPaddingBottom = (int) getContext().getResources().getDimension(R.dimen.md_main_frame_margin);
-        }
-        if (hasActionButtons()) listPaddingBottom = 0;
-        customFrame.setPadding(customFrame.getPaddingLeft(), customFrame.getPaddingTop(),
-                customFrame.getPaddingRight(), listPaddingBottom);
+        // Set up list with adapter
+        LinearLayout listViewContainer = (LinearLayout) view.findViewById(R.id.list_view_container);
+        listViewContainer.setVisibility(View.VISIBLE);
+        listView.setAdapter(adapter);
+        if (listType != null) {
+            // Only set listener for 1st-party adapter, leave custom adapter implementation to user with getListView()
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        View titleFrame = (View) title.getParent();
-        customFrame.removeAllViews();
-        customFrame.addView(titleFrame);
-        final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
-        for (int index = 0; index < items.length; index++) {
-            View il;
-            if (listCallbackSingle != null) {
-                il = li.inflate(R.layout.md_listitem_singlechoice, null);
-                if (selectedIndex > -1) {
-                    RadioButton control = (RadioButton) il.findViewById(R.id.control);
-                    if (selectedIndex == index) control.setChecked(true);
-                }
-                TextView tv = (TextView) il.findViewById(R.id.title);
-                tv.setText(items[index]);
-                tv.setTextColor(itemColor);
-                setTypeface(tv, regularFont);
-            } else if (listCallbackMulti != null) {
-                il = li.inflate(R.layout.md_listitem_multichoice, null);
-                if (selectedIndices != null) {
-                    if (Arrays.asList(selectedIndices).contains(index)) {
-                        CheckBox control = (CheckBox) il.findViewById(R.id.control);
-                        control.setChecked(true);
+                    if (listType == ListType.MULTI) {
+                        // Keep our selected items up to date
+                        boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
+                        boolean previouslySelected = selectedIndicesList.contains(position);
+                        if (isChecked) {
+                            if (!previouslySelected) {
+                                selectedIndicesList.add(position);
+                            }
+                        } else if (previouslySelected) {
+                            selectedIndicesList.remove(Integer.valueOf(position));
+                        }
+                    } else if (listType == ListType.SINGLE) {
+                        // Keep our selected item up to date
+                        if (selectedIndex != position) {
+                            selectedIndex = position;
+                            ((MaterialDialogAdapter) adapter).notifyDataSetChanged();
+                        }
                     }
+
+                    onClick(view);
                 }
-                TextView tv = (TextView) il.findViewById(R.id.title);
-                tv.setText(items[index]);
-                tv.setTextColor(itemColor);
-                setTypeface(tv, regularFont);
-            } else {
-                if (mItemProcessor != null) {
-                    il = mItemProcessor.inflateItem(index, items[index]);
-                } else {
-                    il = li.inflate(R.layout.md_listitem, null);
-                    TextView tv = (TextView) il.findViewById(R.id.title);
-                    tv.setText(items[index]);
-                    tv.setTextColor(itemColor);
-                    setTypeface(tv, regularFont);
-                }
-            }
-            il.setTag(index + ":" + items[index]);
-            il.setOnClickListener(this);
-            setBackgroundCompat(il, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
-            customFrame.addView(il);
+            });
+        }
+
+        // Setup header view (title and icon) if necessary
+        if (title.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
+            View header = view.findViewById(R.id.titleFrameCustomView);
+            TextView title = (TextView) header.findViewById(R.id.titleCustomView);
+            final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
+            title.setPadding(customFramePadding, title.getPaddingTop(), customFramePadding, title.getPaddingBottom());
+            View titleFrame = (View) title.getParent();
+            customFrame.removeView(titleFrame);
+            listViewContainer.addView(titleFrame, 0);
         }
     }
 
@@ -461,33 +476,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendSingleChoiceCallback(View v) {
-        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        for (int i = 1; i < list.getChildCount(); i++) {
-            View itemView = list.getChildAt(i);
-            @SuppressLint("WrongViewCast")
-            RadioButton rb = (RadioButton) itemView.findViewById(R.id.control);
-            if (rb.isChecked()) {
-                listCallbackSingle.onSelection(this, v, i - 1, ((TextView) itemView.findViewById(R.id.title)).getText());
-                break;
-            }
-        }
+        listCallbackSingle.onSelection(this, v, selectedIndex, items[selectedIndex]);
     }
 
     private void sendMultichoiceCallback() {
-        List<Integer> selectedIndices = new ArrayList<Integer>();
         List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
-        LinearLayout list = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        for (int i = 1; i < list.getChildCount(); i++) {
-            View itemView = list.getChildAt(i);
-            @SuppressLint("WrongViewCast")
-            CheckBox rb = (CheckBox) itemView.findViewById(R.id.control);
-            if (rb.isChecked()) {
-                selectedIndices.add(i - 1);
-                selectedTitles.add(((TextView) itemView.findViewById(R.id.title)).getText());
-            }
+        for (Integer i : selectedIndicesList) {
+            selectedTitles.add(items[i]);
         }
         listCallbackMulti.onSelection(this,
-                selectedIndices.toArray(new Integer[selectedIndices.size()]),
+                selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
                 selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
 
@@ -579,11 +577,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected float contentLineSpacingMultiplier = 1.3f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndicies = null;
-        protected ItemProcessor itemProcessor;
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
         protected Drawable icon;
+        protected ListAdapter adapter;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -709,18 +707,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             this.listCallback = callback;
             this.listCallbackSingle = null;
             this.listCallbackMulti = null;
-            return this;
-        }
-
-        /**
-         * Sets an item processor used to inflate and customize list items (NOT including single and
-         * multi choice list items).
-         *
-         * @param processor The processor to apply to all non single/multi choice list items.
-         * @return The Builder instance so you can chain calls to it.
-         */
-        public Builder itemProcessor(ItemProcessor processor) {
-            this.itemProcessor = processor;
             return this;
         }
 
@@ -852,6 +838,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          */
         public Builder autoDismiss(boolean dismiss) {
             this.autoDismiss = dismiss;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder adapter(ListAdapter adapter) {
+            this.adapter = adapter;
             return this;
         }
 
@@ -1014,6 +1010,81 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateList();
     }
 
+    /**
+     * Use this to customize any list-specific logic for this dialog (OnItemClickListener, OnLongItemClickListener, etc.)
+     *
+     * @returns The ListView instance used by this dialog, or null if not using a list.
+     */
+    @Nullable
+    public ListView getListView() {
+        return listView;
+    }
+
+    private class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
+
+        final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
+
+        public MaterialDialogAdapter(Context context, int resource, int textViewResourceId, CharSequence[] objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @SuppressLint("WrongViewCast")
+        @Override
+        public View getView(final int index, View convertView, ViewGroup parent) {
+            final View view = super.getView(index, convertView, parent);
+            TextView tv = (TextView) view.findViewById(R.id.title);
+
+            switch (listType) {
+                case SINGLE:
+                    RadioButton radio = (RadioButton) view.findViewById(R.id.control);
+                    radio.setChecked(selectedIndex == index);
+                    break;
+                case MULTI:
+                    if (selectedIndices != null) {
+                        CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
+                        checkbox.setChecked(selectedIndicesList.contains(index));
+                    }
+                    break;
+            }
+
+            tv.setText(items[index]);
+            tv.setTextColor(itemColor);
+            setTypeface(tv, regularFont);
+
+            view.setTag(index + ":" + items[index]);
+            setBackgroundCompat(view, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+
+            return view;
+        }
+    }
+
+    private static enum ListType {
+        REGULAR, SINGLE, MULTI;
+
+        public static int getLayoutForType(ListType type) {
+            switch (type) {
+                case REGULAR:
+                    return R.layout.md_listitem;
+                case SINGLE:
+                    return R.layout.md_listitem_singlechoice;
+                case MULTI:
+                    return R.layout.md_listitem_multichoice;
+                default:
+                    // Shouldn't be possible
+                    throw new IllegalArgumentException("Not a valid list type");
+            }
+        }
+    }
 
     public static interface ListCallback {
         void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);

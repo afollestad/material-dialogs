@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:background="?android:selectableItemBackground"
-    android:clickable="true">
+    android:background="?android:selectableItemBackground">
 
     <TextView
         android:id="@+id/title"

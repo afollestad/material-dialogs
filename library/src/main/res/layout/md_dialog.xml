@@ -109,6 +109,25 @@
 
         </com.afollestad.materialdialogs.views.MeasureCallbackScrollView>
 
+        <LinearLayout
+            android:id="@+id/list_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/md_dialog_frame_margin"
+            android:visibility="gone"
+            >
+
+            <ListView
+                android:id="@+id/contentListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/md_dialog_frame_margin"
+                android:scrollbarStyle="outsideOverlay"
+                android:clipToPadding="true"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <View
