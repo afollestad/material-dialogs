@@ -1017,7 +1017,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * Use this to customize any list-specific logic for this dialog (OnItemClickListener, OnLongItemClickListener, etc.)
      *
-     * @returns The ListView instance used by this dialog, or null if not using a list.
+     * @return The ListView instance used by this dialog, or null if not using a list.
      */
     @Nullable
     public ListView getListView() {
