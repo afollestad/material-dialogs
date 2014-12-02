@@ -136,7 +136,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         setTypeface(content, regularFont);
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
         if (this.positiveColor == 0) {
-            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
+            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
         } else {
             content.setLinkTextColor(this.positiveColor);
         }
