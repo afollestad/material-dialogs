@@ -15,6 +15,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
@@ -58,6 +59,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private CharSequence negativeText;
     private TextView negativeButton;
     private View view;
+    private ListView listView;
     private int positiveColor;
     private int negativeColor;
     private int neutralColor;
@@ -157,9 +159,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             icon.setVisibility(View.GONE);
         }
 
-        if (items != null && items.length > 0) {
+        boolean adapterProvided = adapter != null;
+        if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
-            boolean adapterProvided = adapter != null;
+            listView = (ListView) view.findViewById(R.id.contentListView);
 
             if (!adapterProvided) {
                 // Determine list type
@@ -211,7 +214,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Invalidates visibility of views for the presence of a custom view or list content
      */
     private void invalidateCustomViewAssociations() {
-        if (customView != null || (items != null && items.length > 0)) {
+        if (customView != null || (items != null && items.length > 0) || adapter != null) {
             view.findViewById(R.id.mainFrame).setVisibility(View.GONE);
             view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
             if (!mMeasuredScrollView) {
@@ -285,7 +288,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Constructs the dialog's list content and sets up click listeners.
      */
     private void invalidateList() {
-        if (items == null || items.length == 0) return;
+        if ((items == null || items.length == 0) && adapter == null) return;
 
         // Hide content
         view.findViewById(R.id.contentScrollView).setVisibility(View.GONE);
@@ -301,34 +304,36 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         // Set up list with adapter
         LinearLayout listViewContainer = (LinearLayout) view.findViewById(R.id.list_view_container);
         listViewContainer.setVisibility(View.VISIBLE);
-        ListView listView = (ListView) view.findViewById(R.id.contentListView);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (listType != null) {
+            // Only set listener for 1st-party adapter, leave custom adapter implementation to user with getListView()
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (listType == ListType.MULTI) {
-                    // Keep our selected items up to date
-                    boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
-                    boolean previouslySelected = selectedIndicesList.contains(position);
-                    if (isChecked) {
-                        if (!previouslySelected) {
-                            selectedIndicesList.add(position);
+                    if (listType == ListType.MULTI) {
+                        // Keep our selected items up to date
+                        boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
+                        boolean previouslySelected = selectedIndicesList.contains(position);
+                        if (isChecked) {
+                            if (!previouslySelected) {
+                                selectedIndicesList.add(position);
+                            }
+                        } else if (previouslySelected) {
+                            selectedIndicesList.remove(Integer.valueOf(position));
                         }
-                    } else if (previouslySelected) {
-                        selectedIndicesList.remove(Integer.valueOf(position));
+                    } else if (listType == ListType.SINGLE) {
+                        // Keep our selected item up to date
+                        if (selectedIndex != position) {
+                            selectedIndex = position;
+                            ((MaterialDialogAdapter) adapter).notifyDataSetChanged();
+                        }
                     }
-                } else if (listType == ListType.SINGLE) {
-                    // Keep our selected item up to date
-                    if (selectedIndex != position) {
-                        selectedIndex = position;
-                        ((MaterialDialogAdapter) adapter).notifyDataSetChanged();
-                    }
-                }
 
-                onClick(view);
-            }
-        });
+                    onClick(view);
+                }
+            });
+        }
 
         // Setup header view (title and icon) if necessary
         if (title.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
@@ -1003,6 +1008,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     public final void setItems(CharSequence[] items) {
         this.items = items;
         invalidateList();
+    }
+
+    /**
+     * Use this to customize any list-specific logic for this dialog (OnItemClickListener, OnLongItemClickListener, etc.)
+     *
+     * @returns The ListView instance used by this dialog, or null if not using a list.
+     */
+    @Nullable
+    public ListView getListView() {
+        return listView;
     }
 
     private class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
