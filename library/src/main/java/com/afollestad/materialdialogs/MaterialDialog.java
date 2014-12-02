@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -219,6 +220,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateActions();
         setOnShowListenerInternal();
         setViewInternal(view);
+
+        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <=
+            Build.VERSION_CODES.GINGERBREAD_MR1) {
+            setInverseBackgroundForced(true);
+            title.setTextColor(Color.BLACK);
+            content.setTextColor(Color.BLACK);
+        }
     }
 
     @Override
