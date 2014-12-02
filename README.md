@@ -208,12 +208,6 @@ below your list, however this is only useful in some specific cases.
 
 ---
 
-## Custom List Dialog Item Layouts
-
-The `ItemProcessor` API can be used to use custom list item layouts. See the sample project for an example.
-
----
-
 ### Single Choice List Dialogs
 
 Single choice list dialogs are almost identical to regular list dialogs. The only difference is that
@@ -265,6 +259,39 @@ new MaterialDialog.Builder(this)
         })
         .positiveText("Choose")
         .show();
+```
+
+If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
+For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
+dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
+callback will be called every time you select an item since no action is available to press, without the
+dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
+it to display the action buttons below your list, however this is only useful in some specific cases.
+
+---
+
+### Custom List Dialogs
+
+Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
+example how you want your list to work. You also have access to the dialog's list via `getListView()` method.
+
+```java
+MaterialDialog dialog = new MaterialDialog.Builder(this)
+        .title(R.string.socialNetworks)
+        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
+        .build();
+
+ListView listView = dialog.getListView();
+if (listView != null) {
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(MainActivity.this, "Clicked item " + position, Toast.LENGTH_SHORT).show();
+        }
+    });
+}
+
+dialog.show();
 ```
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
