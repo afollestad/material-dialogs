@@ -6,6 +6,11 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.3.3
+
+> 1. Support down to API 8, thanks [Phascinate](https://github.com/Phascinate)
+> 2. Other layout fixes
+
 ###### Version 0.3.2
 
 > 1. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
@@ -35,7 +40,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.3.2'
+    compile 'com.afollestad:material-dialogs:0.3.3'
 }
 ```
 
