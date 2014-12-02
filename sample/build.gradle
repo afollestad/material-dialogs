@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion 14
+        minSdkVersion 8
         targetSdkVersion 21
         versionCode 36
         versionName "0.3.2"
@@ -22,4 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
+    compile 'me.drakeet.materialdialog:library:1.2.2'
+
 }
