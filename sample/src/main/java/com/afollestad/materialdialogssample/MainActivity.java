@@ -10,9 +10,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.Alignment;
@@ -303,18 +305,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void showCustomList() {
-        new MaterialDialog.Builder(this)
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
-                .items(R.array.socialNetworks)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .itemProcessor(new ButtonItemProcessor(this))
-                .build()
-                .show();
+                .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
+                .build();
+
+        ListView listView = dialog.getListView();
+        if (listView != null) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(MainActivity.this, "Clicked item " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        dialog.show();
     }
 
 

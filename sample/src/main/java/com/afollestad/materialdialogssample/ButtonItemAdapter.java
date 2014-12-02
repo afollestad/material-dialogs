@@ -1,0 +1,71 @@
+package com.afollestad.materialdialogssample;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.support.annotation.ArrayRes;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+/**
+ * Simple adapter example for custom items in the dialog
+ */
+public class ButtonItemAdapter extends BaseAdapter implements View.OnClickListener {
+
+    private Toast mToast;
+    private Context mContext;
+    private CharSequence[] mItems;
+
+    public ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
+        this(context, context.getResources().getTextArray(arrayResId));
+    }
+
+    public ButtonItemAdapter(Context context, CharSequence[] items) {
+        this.mContext = context;
+        this.mItems = items;
+    }
+
+    @Override
+    public int getCount() {
+        return mItems.length;
+    }
+
+    @Override
+    public CharSequence getItem(int position) {
+        return mItems[position];
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @SuppressLint("ViewHolder")
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = View.inflate(mContext, R.layout.dialog_customlistitem, null);
+        ((TextView) view.findViewById(R.id.title)).setText(mItems[position] + " (" + position + ")");
+        Button button = (Button) view.findViewById(R.id.button);
+        button.setTag(position);
+        button.setOnClickListener(this);
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Integer index = (Integer) v.getTag();
+        if (mToast != null) mToast.cancel();
+        mToast = Toast.makeText(mContext, "Clicked button " + index, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+}
