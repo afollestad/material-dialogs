@@ -22,7 +22,7 @@ public class MeasureCallbackListView extends ListView {
     }
 
     public static interface Callback {
-        void onMeasureScroll(ListView view);
+        void onMeasureList(ListView view);
     }
 
     private Callback mCallback;
@@ -35,6 +35,6 @@ public class MeasureCallbackListView extends ListView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mCallback != null)
-            mCallback.onMeasureScroll(this);
+            mCallback.onMeasureList(this);
     }
 }
