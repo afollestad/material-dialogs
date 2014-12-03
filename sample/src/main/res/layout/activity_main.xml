@@ -114,6 +114,13 @@
             android:text="@string/themed"
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
+        <Button
+            android:id="@+id/folder_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/folder_chooser"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
     </LinearLayout>
 
 </ScrollView>

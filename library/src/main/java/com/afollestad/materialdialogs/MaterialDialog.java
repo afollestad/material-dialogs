@@ -197,7 +197,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         // Title is set after it's determined whether to use first title or custom view title
-        if (builder.title == null || builder.title.toString().trim().isEmpty()) {
+        if (builder.title == null || builder.title.toString().trim().length() == 0) {
             titleFrame.setVisibility(View.GONE);
             if (customView == null)
                 view.findViewById(R.id.titleFrameCustomView).setVisibility(View.GONE);
@@ -590,7 +590,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     @Override
-    public void onMeasureScroll(ListView view) {
+    public void onMeasureList(ListView view) {
         invalidateCustomViewAssociations();
     }
 
@@ -1062,8 +1062,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     public final void setItems(CharSequence[] items) {
+        if (adapter instanceof MaterialDialogAdapter) {
+            adapter = new MaterialDialogAdapter(mContext, ListType.getLayoutForType(listType), R.id.title, items);
+        } else
+            throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         this.items = items;
-        invalidateList();
+        listView.setAdapter(adapter);
+        invalidateCustomViewAssociations();
     }
 
     /**

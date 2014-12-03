@@ -22,10 +22,12 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import java.io.File;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements FolderSelectorDialog.Callback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 showThemed();
+            }
+        });
+
+        findViewById(R.id.folder_chooser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FolderSelectorDialog().show(MainActivity.this, MainActivity.this);
             }
         });
     }
@@ -414,5 +423,10 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFolderSelection(File folder) {
+        Toast.makeText(this, folder.getAbsolutePath(), Toast.LENGTH_SHORT).show();
     }
 }
