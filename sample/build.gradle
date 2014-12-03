@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 21
-        versionCode 40
+        versionCode 41
         versionName "0.3.4"
     }
     buildTypes {
