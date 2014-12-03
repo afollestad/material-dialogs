@@ -6,15 +6,10 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-###### Version 0.3.4
+###### Version 0.3.3 – 0.3.4
 
 > 1. Crash fix when updating list items after they had previosly been set.
 > 2. The ability to set the content color when constructing a dialog builder.
-
-###### Version 0.3.3
-
-> 1. Support down to API 8, thanks [acappelli](https://github.com/acappelli)
-> 2. Other layout fixes
 
 ###### Version 0.3.2
 
