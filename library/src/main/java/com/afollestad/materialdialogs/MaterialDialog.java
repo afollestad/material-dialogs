@@ -215,20 +215,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 title.setGravity(Gravity.RIGHT);
             }
         }
-        
+
         //Content color is set here.
         if (builder.contentColor != -1) {
-                content.setTextColor(builder.contentColor);
-            } else {
-                content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
-            }
+            content.setTextColor(builder.contentColor);
+        } else {
+            content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
+        }
 
         invalidateActions();
         setOnShowListenerInternal();
         setViewInternal(view);
 
         if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <=
-            Build.VERSION_CODES.GINGERBREAD_MR1) {
+                Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);
@@ -372,8 +372,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (titleFrame.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
             final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
             title.setPadding(customFramePadding, dialogFramePadding, customFramePadding, title.getPaddingBottom());
-            View titleFrame = (View) title.getParent();
-            customFrame.removeView(titleFrame);
+            ViewGroup titleFrame = (ViewGroup) title.getParent();
+            titleFrame.removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
         } else {
             listView.setPadding(listView.getPaddingLeft(), mainFramePadding,
