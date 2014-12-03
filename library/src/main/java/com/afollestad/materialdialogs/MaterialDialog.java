@@ -373,7 +373,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
             title.setPadding(customFramePadding, dialogFramePadding, customFramePadding, title.getPaddingBottom());
             ViewGroup titleFrame = (ViewGroup) title.getParent();
-            titleFrame.removeView(titleFrame);
+            ((ViewGroup) titleFrame.getParent()).removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
         } else {
             listView.setPadding(listView.getPaddingLeft(), mainFramePadding,
