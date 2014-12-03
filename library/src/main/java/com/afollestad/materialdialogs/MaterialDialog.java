@@ -134,7 +134,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         content.setText(builder.content);
         content.setMovementMethod(new LinkMovementMethod());
         setTypeface(content, regularFont);
-        content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
         content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
         if (this.positiveColor == 0) {
             content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
@@ -216,6 +215,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 title.setGravity(Gravity.RIGHT);
             }
         }
+        
+        //Content color is set here.
+        if (builder.contentColor != -1) {
+                content.setTextColor(builder.contentColor);
+            } else {
+                content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
+            }
 
         invalidateActions();
         setOnShowListenerInternal();
@@ -598,6 +604,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Alignment titleAlignment = Alignment.LEFT;
         protected Alignment contentAlignment = Alignment.LEFT;
         protected int titleColor = -1;
+        protected int contentColor = -1;
         protected CharSequence content;
         protected CharSequence[] items;
         protected CharSequence positiveText;
@@ -704,6 +711,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder iconAttr(int iconAttr) {
             this.icon = DialogUtils.resolveDrawable(context, iconAttr);
+            return this;
+        }
+
+        public Builder contentColor(int color) {
+            this.contentColor = color;
+            return this;
+        }
+
+        public Builder contentColorRes(@ColorRes int colorRes) {
+            contentColor(this.context.getResources().getColor(colorRes));
             return this;
         }
 
