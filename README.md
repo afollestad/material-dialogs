@@ -6,9 +6,13 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.3.5
+
+> 1. Bug fixes
+
 ###### Version 0.3.3 – 0.3.4
 
-> 1. Crash fix when updating list items after they had previosly been set.
+> 1. Crash fix when updating list items after they had previously been set.
 > 2. The ability to set the content color when constructing a dialog builder.
 
 ###### Version 0.3.2
@@ -40,7 +44,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.3.4'
+    compile 'com.afollestad:material-dialogs:0.3.5'
 }
 ```
 

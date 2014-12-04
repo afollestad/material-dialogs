@@ -516,7 +516,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendSingleChoiceCallback(View v) {
-        listCallbackSingle.onSelection(this, v, selectedIndex, items[selectedIndex]);
+        CharSequence text = null;
+        if (selectedIndex >= 0) {
+            text = items[selectedIndex];
+        }
+        listCallbackSingle.onSelection(this, v, selectedIndex, text);
     }
 
     private void sendMultichoiceCallback() {
