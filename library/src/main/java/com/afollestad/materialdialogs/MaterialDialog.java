@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -397,10 +398,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     private boolean canCustomViewScroll() {
         if (listView != null) {
-            if (listView.getLastVisiblePosition() != -1) {
-                return listView.getLastVisiblePosition() < (listView.getCount() - 1);
-            }
-            return false;
+            return listView.getLastVisiblePosition() != -1 && listView.getLastVisiblePosition() < (listView.getCount() - 1);
         }
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.customViewScroll);
         final int childHeight = view.findViewById(R.id.customViewFrame).getMeasuredHeight();
@@ -420,20 +418,48 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Measures the action button's and their text to decide whether or not the button should be stacked.
      */
     private void checkIfStackingNeeded() {
-        if (numberOfActionButtons() <= 1) return;
+        if (numberOfActionButtons() <= 1) {
+            Log.v("MD_Stacking", "Less than or equal to 1 button, stacking isn't needed.");
+            return;
+        }
         final int maxWidth = calculateMaxButtonWidth();
+        Log.v("MD_Stacking", "Max button width: " + maxWidth);
         final Paint paint = positiveButton.getPaint();
         final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
-        final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
-        isStacked = positiveWidth > maxWidth;
+        int totalWidth = 0;
+        isStacked = false;
+
+        if (this.positiveText != null) {
+            final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
+            isStacked = positiveWidth > maxWidth;
+            totalWidth += positiveWidth;
+            Log.v("MD_Stacking", "Positive button width: " + positiveWidth);
+        } else {
+            Log.v("MD_Stacking", "No positive button");
+        }
+
         if (!isStacked && this.neutralText != null) {
             final int neutralWidth = (int) paint.measureText(neutralButton.getText().toString()) + (eightDp * 2);
             isStacked = neutralWidth > maxWidth;
+            totalWidth += neutralWidth;
+            Log.v("MD_Stacking", "Neutral button width: " + neutralWidth);
+        } else {
+            Log.v("MD_Stacking", "No neutral button or already stacked");
         }
+
         if (!isStacked && this.negativeText != null) {
             final int negativeWidth = (int) paint.measureText(negativeButton.getText().toString()) + (eightDp * 2);
             isStacked = negativeWidth > maxWidth;
+            totalWidth += negativeWidth;
+            Log.v("MD_Stacking", "Negative button width: " + negativeWidth);
+        } else {
+            Log.v("MD_Stacking", "No negative button or already stacked");
         }
+
+        if (!isStacked && totalWidth > maxWidth) {
+            isStacked = true;
+        }
+
         invalidateActions();
     }
 
