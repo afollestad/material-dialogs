@@ -6,9 +6,10 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-###### Version 0.3.5
+###### Version 0.3.5 – 0.3.6
 
-> 1. Bug fixes
+> 1. Bug fixes.
+> 2. Button stacking algorithm fixes.
 
 ###### Version 0.3.3 – 0.3.4
 
@@ -44,7 +45,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.3.5'
+    compile 'com.afollestad:material-dialogs:0.3.6'
 }
 ```
 
