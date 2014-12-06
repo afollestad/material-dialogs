@@ -117,15 +117,23 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.positiveText = builder.positiveText;
         this.neutralText = builder.neutralText;
         this.negativeText = builder.negativeText;
-        this.positiveColor = builder.positiveColor;
-        this.negativeColor = builder.negativeColor;
-        this.neutralColor = builder.neutralColor;
         this.items = builder.items;
         this.setCancelable(builder.cancelable);
         this.selectedIndex = builder.selectedIndex;
         this.selectedIndices = builder.selectedIndicies;
         this.autoDismiss = builder.autoDismiss;
         this.adapter = builder.adapter;
+
+        this.positiveColor = builder.positiveColor;
+        this.negativeColor = builder.negativeColor;
+        this.neutralColor = builder.neutralColor;
+
+        final int mdAccentColor = DialogUtils.resolveColor(mContext, R.attr.md_accent_color);
+        if (mdAccentColor != 0) {
+            if (this.positiveColor == 0) this.positiveColor = mdAccentColor;
+            if (this.negativeColor == 0) this.negativeColor = mdAccentColor;
+            if (this.neutralColor == 0) this.neutralColor = mdAccentColor;
+        }
 
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
@@ -208,7 +216,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             if (builder.titleColor != -1) {
                 title.setTextColor(builder.titleColor);
             } else {
-                title.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
+                final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
+                title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
             if (builder.titleAlignment == Alignment.CENTER) {
                 title.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -217,19 +226,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
         }
 
-        //Content color is set here.
         if (builder.contentColor != -1) {
             content.setTextColor(builder.contentColor);
         } else {
-            content.setTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary));
+            final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
+            content.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback));
         }
 
         invalidateActions();
         setOnShowListenerInternal();
         setViewInternal(view);
 
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <=
-                Build.VERSION_CODES.GINGERBREAD_MR1) {
+        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);

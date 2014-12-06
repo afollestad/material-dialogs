@@ -6,6 +6,12 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.0
+
+> 1. Yet more bug fixes and improvements throughout
+> 2. Action button selectors have rounded corners
+> 3. More global theming capabilities. Override the accent color used for action buttons, titles, and content from your Activity theme. See the [Global Theming](#global-theming) section below.
+
 ###### Version 0.3.5 – 0.3.6
 
 > 1. Bug fixes.
@@ -31,12 +37,6 @@ The code you see below is also found in the sample project. You can download a A
 > 2. Convenience `show()` method in Builder, to skip call to `build()`.
 > 3. Various important fixes from pull requests and the maintainer.
 
-###### Version 0.2.0
-
-> 1. Action buttons must be explicitly shown by setting text to them. The buttons will be hidden in any dialog type if no text is passed for them. This also allows you to display neutral or negative action buttons individually without relying on positive text. 
-> 2. List dialogs now use CharSequence arrays rather than String arrays.
-> 3. Other bug fixes are included.
-
 ---
 
 ### Gradle Dependency (jCenter)
@@ -45,7 +45,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.3.6'
+    compile 'com.afollestad:material-dialogs:0.4.0'
 }
 ```
 
@@ -359,6 +359,7 @@ new MaterialDialog.Builder(this)
         .neutralColor(materialRed500)
         .titleAlignment(Alignment.CENTER)
         .titleColor(materialRed500)
+        .contentColor(Color.WHITE)
         .theme(Theme.DARK)
         .show();
 ```
@@ -369,13 +370,32 @@ To see more colors that fit the Material design palette, see this page: http://w
 
 ### Global Theming
 
-If you don't want to manually make calls to `theme()` everytime you construct a dialog, you can put a single attribute in
-your Activity themes that makes all dialogs dark.
+By default, the dialog inherits and extracts theme colors from other attributes and theme colors of the app
+or operating system. This behavior can be overridden in your Activity themes:
 
 ```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
+    <!--
+        All dialogs will default to Theme.DARK
+    -->
     <item name="md_dark_theme">true</item>
+
+    <!--
+        By default, the title text is pure black or pure white based on the theme
+    -->
+    <item name="md_title_color">#E91E63</item>
+
+    <!--
+        By default, the content text is derived from the ?android:textColorSecondary OS attribute
+    -->
+    <item name="md_content_color">#9C27B0</item>
+
+    <!--
+        By default, the accent color is derived from the colorAccent attribute of AppCompat or
+        android:colorAccent attribute of the Material theme
+    -->
+    <item name="md_accent_color">#673AB7</item>
 
 </style>
 ```
