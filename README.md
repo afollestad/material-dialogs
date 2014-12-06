@@ -288,7 +288,7 @@ it to display the action buttons below your list, however this is only useful in
 ### Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
-example how you want your list to work. You also have access to the dialog's list via `getListView()` method.
+exactly how you want your list to work. You also have access to the dialog's list via `getListView()` method.
 
 ```java
 MaterialDialog dialog = new MaterialDialog.Builder(this)
