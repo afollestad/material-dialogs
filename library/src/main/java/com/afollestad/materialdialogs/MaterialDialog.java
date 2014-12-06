@@ -1084,10 +1084,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     public final void setItems(CharSequence[] items) {
+        if (adapter == null)
+            throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
         if (adapter instanceof MaterialDialogAdapter) {
             adapter = new MaterialDialogAdapter(mContext, ListType.getLayoutForType(listType), R.id.title, items);
-        } else
+        } else {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
+        }
         this.items = items;
         listView.setAdapter(adapter);
         invalidateCustomViewAssociations();
