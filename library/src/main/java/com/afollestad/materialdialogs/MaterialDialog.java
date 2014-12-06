@@ -426,38 +426,30 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         Log.v("MD_Stacking", "Max button width: " + maxWidth);
         final Paint paint = positiveButton.getPaint();
         final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
-        int totalWidth = 0;
         isStacked = false;
 
         if (this.positiveText != null) {
-            final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + (eightDp * 2);
+            final int positiveWidth = (int) paint.measureText(positiveButton.getText().toString()) + eightDp;
             isStacked = positiveWidth > maxWidth;
-            totalWidth += positiveWidth;
             Log.v("MD_Stacking", "Positive button width: " + positiveWidth);
         } else {
             Log.v("MD_Stacking", "No positive button");
         }
 
         if (!isStacked && this.neutralText != null) {
-            final int neutralWidth = (int) paint.measureText(neutralButton.getText().toString()) + (eightDp * 2);
+            final int neutralWidth = (int) paint.measureText(neutralButton.getText().toString()) + eightDp;
             isStacked = neutralWidth > maxWidth;
-            totalWidth += neutralWidth;
             Log.v("MD_Stacking", "Neutral button width: " + neutralWidth);
         } else {
             Log.v("MD_Stacking", "No neutral button or already stacked");
         }
 
         if (!isStacked && this.negativeText != null) {
-            final int negativeWidth = (int) paint.measureText(negativeButton.getText().toString()) + (eightDp * 2);
+            final int negativeWidth = (int) paint.measureText(negativeButton.getText().toString()) + eightDp;
             isStacked = negativeWidth > maxWidth;
-            totalWidth += negativeWidth;
             Log.v("MD_Stacking", "Negative button width: " + negativeWidth);
         } else {
             Log.v("MD_Stacking", "No negative button or already stacked");
-        }
-
-        if (!isStacked && totalWidth > maxWidth) {
-            isStacked = true;
         }
 
         invalidateActions();
