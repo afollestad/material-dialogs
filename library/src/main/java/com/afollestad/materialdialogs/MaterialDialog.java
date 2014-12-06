@@ -130,9 +130,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         final int mdAccentColor = DialogUtils.resolveColor(mContext, R.attr.md_accent_color);
         if (mdAccentColor != 0) {
-            if (this.positiveColor == 0) this.positiveColor = mdAccentColor;
-            if (this.negativeColor == 0) this.negativeColor = mdAccentColor;
-            if (this.neutralColor == 0) this.neutralColor = mdAccentColor;
+            this.positiveColor = mdAccentColor;
+            this.negativeColor = mdAccentColor;
+            this.neutralColor = mdAccentColor;
         }
 
         title = (TextView) view.findViewById(R.id.title);
