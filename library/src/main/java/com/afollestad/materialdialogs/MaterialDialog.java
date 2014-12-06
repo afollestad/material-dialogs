@@ -1145,7 +1145,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             setTypeface(tv, regularFont);
 
             view.setTag(index + ":" + items[index]);
-            setBackgroundCompat(view, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
 
             return view;
         }

@@ -125,7 +125,7 @@
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:listSelector="@null" />
+                android:listSelector="?md_selector" />
 
         </LinearLayout>
 
