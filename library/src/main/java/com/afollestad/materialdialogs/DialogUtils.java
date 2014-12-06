@@ -19,9 +19,13 @@ public class DialogUtils {
     }
 
     public static int resolveColor(Context context, int attr) {
+        return resolveColor(context, attr, 0);
+    }
+
+    public static int resolveColor(Context context, int attr, int fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
-            return a.getColor(0, 0);
+            return a.getColor(0, fallback);
         } finally {
             a.recycle();
         }

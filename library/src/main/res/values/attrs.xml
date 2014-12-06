@@ -3,6 +3,10 @@
 
     <attr name="md_selector" format="reference" />
     <attr name="md_divider" format="color" />
+
     <attr name="md_dark_theme" format="boolean" />
+    <attr name="md_title_color" format="boolean" />
+    <attr name="md_content_color" format="boolean" />
+    <attr name="md_accent_color" format="boolean" />
 
 </resources>

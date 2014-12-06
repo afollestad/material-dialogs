@@ -394,6 +394,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .negativeColorRes(R.color.material_red_400)
                 .titleAlignment(Alignment.CENTER)
                 .titleColorRes(R.color.material_red_400)
+                .contentColorRes(android.R.color.white)
                 .theme(Theme.DARK)
                 .build()
                 .show();
