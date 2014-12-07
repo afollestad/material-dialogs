@@ -213,7 +213,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             icon.setVisibility(View.VISIBLE);
             icon.setImageDrawable(builder.icon);
         } else {
-            icon.setVisibility(View.GONE);
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_icon);
+            if (d != null) {
+                icon.setVisibility(View.VISIBLE);
+                icon.setImageDrawable(builder.icon);
+            } else {
+                icon.setVisibility(View.GONE);
+            }
         }
 
         // Title is set after it's determined whether to use first title or custom view title
