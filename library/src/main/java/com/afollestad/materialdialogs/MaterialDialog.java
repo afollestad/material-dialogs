@@ -1112,10 +1112,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     private class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
-        final int itemColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
+        final int itemColor;
 
         public MaterialDialogAdapter(Context context, int resource, int textViewResourceId, CharSequence[] objects) {
             super(context, resource, textViewResourceId, objects);
+            final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
+            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, fallback);
         }
 
         @Override
