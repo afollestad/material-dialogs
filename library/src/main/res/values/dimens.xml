@@ -6,7 +6,9 @@
     <dimen name="md_dialog_frame_margin">24dp</dimen>
     <dimen name="md_main_frame_margin">16dp</dimen>
     <dimen name="md_title_margin_plainlist">8dp</dimen>
-    <dimen name="md_button_min_width">64dp</dimen>
+
+    <!-- 64dp + 8dp (left and right insets) -->
+    <dimen name="md_button_min_width">72dp</dimen>
 
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
     <dimen name="md_button_inset_vertical">6dp</dimen>
@@ -15,10 +17,13 @@
     <dimen name="md_button_padding_vertical">4dp</dimen>
 
     <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
-    <dimen name="md_button_padding_frame_side">16dp</dimen>
+
+    <!-- 16dp - 4dp (inset) -->
+    <dimen name="md_button_padding_frame_side">12dp</dimen>
+    <dimen name="md_neutral_button_margin">12dp</dimen>
+
     <dimen name="md_button_padding_frame_bottom">8dp</dimen>
     <dimen name="md_button_height">48dp</dimen>
-    <dimen name="md_neutral_button_margin">16dp</dimen>
 
     <dimen name="md_title_textsize">20sp</dimen>
     <dimen name="md_content_textsize">18sp</dimen>
