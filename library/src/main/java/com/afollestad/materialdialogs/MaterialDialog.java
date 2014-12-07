@@ -175,6 +175,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             listView = (ListView) view.findViewById(R.id.contentListView);
+            listView.setSelector(DialogUtils.resolveDrawable(mContext, R.attr.md_selector));
             ((MeasureCallbackListView) listView).setCallback(this);
 
             if (!adapterProvided) {
