@@ -111,6 +111,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
+        findViewById(R.id.singleChoiceWithIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSingleChoiceWithIcon();
+            }
+        });
+
         findViewById(R.id.multiChoice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,6 +287,22 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
     private void showSingleChoice() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .positiveText(R.string.choose)
+                .build()
+                .show();
+    }
+
+    private void showSingleChoiceWithIcon() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .icon(R.drawable.ic_launcher)
                 .items(R.array.socialNetworks)
                 .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
                     @Override

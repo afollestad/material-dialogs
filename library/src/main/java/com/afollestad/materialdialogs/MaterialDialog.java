@@ -184,6 +184,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         boolean adapterProvided = adapter != null;
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
+            icon = (ImageView) view.findViewById(R.id.iconCustomView);
             listView = (ListView) view.findViewById(R.id.contentListView);
             listView.setSelector(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             ((MeasureCallbackListView) listView).setCallback(this);
@@ -222,6 +223,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 view.findViewById(R.id.titleFrameCustomView).setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
+
+            if (builder.icon != null) {
+                icon.setVisibility(View.VISIBLE);
+                icon.setImageDrawable(builder.icon);
+            } else {
+                icon.setVisibility(View.GONE);
+            }
+
             setTypeface(title, mediumFont);
             if (builder.titleColor != -1) {
                 title.setTextColor(builder.titleColor);
