@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="@dimen/md_button_inset_vertical"
+    android:insetLeft="@dimen/md_button_inset_horizontal"
+    android:insetRight="@dimen/md_button_inset_horizontal"
+    android:insetTop="@dimen/md_button_inset_vertical">
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+        <corners android:radius="@dimen/md_action_corner_radius" />
+        <solid android:color="#404040" />
+        <padding
+            android:bottom="@dimen/md_button_padding_vertical"
+            android:left="@dimen/md_button_padding_horizontal"
+            android:right="@dimen/md_button_padding_horizontal"
+            android:top="@dimen/md_button_padding_vertical" />
+    </shape>
+</inset>
