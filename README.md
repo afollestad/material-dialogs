@@ -6,15 +6,12 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-###### Version 0.4.2
+###### Version 0.4.1 – 0.4.2
 
 > 1. Added `md_item_color` attribute to global theming.
 > 2. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
 > 3. Fixed list item default color on dark dialogs for pre-Lollipop.
-
-###### Version 0.4.1
-
-> 1. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
+> 4. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
 
 ###### Version 0.4.0
 
@@ -32,14 +29,11 @@ The code you see below is also found in the sample project. You can download a A
 > 1. Crash fix when updating list items after they had previously been set.
 > 2. The ability to set the content color when constructing a dialog builder.
 
-###### Version 0.3.2
-
-> 1. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
-> 2. Other padding and logic fixes.
-
-###### Version 0.3.1
+###### Version 0.3.1 – 0.3.2
 
 > 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the [Global Theming](#global-theming) section below.
+> 2. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
+> 3. Other padding and logic fixes.
 
 ###### Version 0.3.0
 
