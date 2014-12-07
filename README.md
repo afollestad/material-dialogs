@@ -6,6 +6,10 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.1
+
+> 1. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
+
 ###### Version 0.4.0
 
 > 1. Yet more bug fixes and improvements throughout
@@ -45,7 +49,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.0'
+    compile 'com.afollestad:material-dialogs:0.4.1'
 }
 ```
 
