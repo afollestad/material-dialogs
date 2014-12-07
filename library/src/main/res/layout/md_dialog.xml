@@ -124,8 +124,7 @@
                 android:scrollbarStyle="outsideOverlay"
                 android:clipToPadding="false"
                 android:divider="@null"
-                android:dividerHeight="0dp"
-                android:listSelector="?md_selector" />
+                android:dividerHeight="0dp" />
 
         </LinearLayout>
 

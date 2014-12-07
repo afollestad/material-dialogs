@@ -6,6 +6,11 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.2
+
+> 1. Added `md_item_color` attribute to global theming.
+> 2. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
+
 ###### Version 0.4.1
 
 > 1. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
