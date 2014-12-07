@@ -174,13 +174,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             invalidateCustomViewAssociations();
         }
 
-        if (builder.icon != null) {
-            icon.setVisibility(View.VISIBLE);
-            icon.setImageDrawable(builder.icon);
-        } else {
-            icon.setVisibility(View.GONE);
-        }
-
         boolean adapterProvided = adapter != null;
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
@@ -214,6 +207,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     });
                 }
             });
+        }
+
+        if (builder.icon != null) {
+            icon.setVisibility(View.VISIBLE);
+            icon.setImageDrawable(builder.icon);
+        } else {
+            icon.setVisibility(View.GONE);
         }
 
         // Title is set after it's determined whether to use first title or custom view title
