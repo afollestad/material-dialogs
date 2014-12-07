@@ -229,6 +229,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 view.findViewById(R.id.titleFrameCustomView).setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
+
+            if (builder.icon != null) {
+                icon.setVisibility(View.VISIBLE);
+                icon.setImageDrawable(builder.icon);
+            } else {
+                icon.setVisibility(View.GONE);
+            }
+
             setTypeface(title, mediumFont);
             if (builder.titleColor != -1) {
                 title.setTextColor(builder.titleColor);

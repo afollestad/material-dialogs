@@ -12,6 +12,7 @@
     <string name="callbacks">Callbacks</string>
     <string name="list">Basic List</string>
     <string name="singleChoice">Single Choice</string>
+    <string name="singleChoiceWithIcon">Single Choice (With Icon)</string>
     <string name="multiChoice">Multi Choice</string>
     <string name="customView">Custom View</string>
     <string name="themed">Themed</string>
