@@ -2,6 +2,7 @@
 <resources>
 
     <attr name="md_selector" format="reference" />
+    <attr name="md_btn_selector" format="reference" />
     <attr name="md_divider" format="color" />
 
     <attr name="md_dark_theme" format="boolean" />

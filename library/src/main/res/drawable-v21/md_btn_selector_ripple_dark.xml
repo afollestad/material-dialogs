@@ -1,6 +1,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?android:colorControlHighlight">
 
-    <item android:drawable="@drawable/md_selector" />
+    <item android:drawable="@drawable/md_btn_selector_dark" />
 
 </ripple>
