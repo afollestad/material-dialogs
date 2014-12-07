@@ -279,6 +279,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
     private void showSingleChoice() {
         new MaterialDialog.Builder(this)
+                .icon(R.drawable.ic_launcher)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
                 .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
