@@ -54,6 +54,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private TextView title;
     private View titleFrame;
 
+    private int contentColor;
     private Context mContext;
     private CharSequence positiveText;
     private TextView positiveButton;
@@ -154,6 +155,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             content.setGravity(Gravity.RIGHT);
         }
 
+        if (builder.contentColor != -1) {
+            this.contentColor = builder.contentColor;
+            content.setTextColor(this.contentColor);
+        } else {
+            final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
+            this.contentColor = DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback);
+            content.setTextColor(contentColor);
+        }
+
         if (customView != null) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             icon = (ImageView) view.findViewById(R.id.iconCustomView);
@@ -175,7 +185,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             listView = (ListView) view.findViewById(R.id.contentListView);
-            listView.setSelector(DialogUtils.resolveDrawable(mContext, R.attr.md_selector));
+            listView.setSelector(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             ((MeasureCallbackListView) listView).setCallback(this);
 
             if (!adapterProvided) {
@@ -224,13 +234,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             } else if (builder.titleAlignment == Alignment.RIGHT) {
                 title.setGravity(Gravity.RIGHT);
             }
-        }
-
-        if (builder.contentColor != -1) {
-            content.setTextColor(builder.contentColor);
-        } else {
-            final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
-            content.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback));
         }
 
         invalidateActions();
@@ -1079,7 +1082,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     @Override
     public void setIconAttribute(int attrId) {
-        Drawable d = DialogUtils.resolveDrawable(getContext(), attrId);
+        Drawable d = DialogUtils.resolveDrawable(mContext, attrId);
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
@@ -1117,8 +1120,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public MaterialDialogAdapter(Context context, int resource, int textViewResourceId, CharSequence[] objects) {
             super(context, resource, textViewResourceId, objects);
-            final int fallback = DialogUtils.resolveColor(context, android.R.attr.textColorSecondary);
-            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, fallback);
+            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, contentColor);
         }
 
         @Override

@@ -32,9 +32,16 @@ public class DialogUtils {
     }
 
     public static Drawable resolveDrawable(Context context, int attr) {
+        return resolveDrawable(context, attr, null);
+    }
+
+    public static Drawable resolveDrawable(Context context, int attr, Drawable fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
-            return a.getDrawable(0);
+            Drawable d = a.getDrawable(0);
+            if (d == null && fallback != null)
+                d = fallback;
+            return d;
         } finally {
             a.recycle();
         }
