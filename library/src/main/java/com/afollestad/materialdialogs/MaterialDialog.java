@@ -216,7 +216,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             Drawable d = DialogUtils.resolveDrawable(mContext, R.attr.md_icon);
             if (d != null) {
                 icon.setVisibility(View.VISIBLE);
-                icon.setImageDrawable(builder.icon);
+                icon.setImageDrawable(d);
             } else {
                 icon.setVisibility(View.GONE);
             }
