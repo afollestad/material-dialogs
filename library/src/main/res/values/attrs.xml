@@ -9,5 +9,6 @@
     <attr name="md_title_color" format="color" />
     <attr name="md_content_color" format="color" />
     <attr name="md_accent_color" format="color" />
+    <attr name="md_item_color" format="color" />
 
 </resources>

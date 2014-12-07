@@ -401,6 +401,11 @@ or operating system. This behavior can be overridden in your Activity themes:
     -->
     <item name="md_accent_color">#673AB7</item>
 
+    <!--
+        By default, the list item text color is derived from the ?android:textColorSecondary OS attribute
+    -->
+    <item name="md_item_color">#9C27B0</item>
+
 </style>
 ```
 
