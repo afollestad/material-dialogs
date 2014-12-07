@@ -10,6 +10,7 @@ The code you see below is also found in the sample project. You can download a A
 
 > 1. Added `md_item_color` attribute to global theming.
 > 2. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
+> 3. Fixed list item default color on dark dialogs for pre-Lollipop.
 
 ###### Version 0.4.1
 
