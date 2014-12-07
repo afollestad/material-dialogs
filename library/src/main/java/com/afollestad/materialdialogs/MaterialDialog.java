@@ -396,7 +396,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
          */
         final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
-        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
+        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal);
         final int sixteenDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
         return (dialogWidth - sixteenDp - sixteenDp - eightDp) / 2;
     }
@@ -433,7 +433,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         final int maxWidth = calculateMaxButtonWidth();
         Log.v("MD_Stacking", "Max button width: " + maxWidth);
         final Paint paint = positiveButton.getPaint();
-        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal_external);
+        final int eightDp = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_horizontal);
         isStacked = false;
 
         if (this.positiveText != null) {
@@ -490,7 +490,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             setTypeface(positiveButton, mediumFont);
             positiveButton.setText(this.positiveText);
             positiveButton.setTextColor(getActionTextStateList(this.positiveColor));
-            setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+            setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
         } else {
@@ -503,7 +503,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             setTypeface(neutralButton, mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
             neutralButton.setTextColor(getActionTextStateList(this.neutralColor));
-            setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+            setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
             neutralButton.setText(this.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
@@ -517,7 +517,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             setTypeface(negativeButton, mediumFont);
             negativeButton.setVisibility(View.VISIBLE);
             negativeButton.setTextColor(getActionTextStateList(this.negativeColor));
-            setBackgroundCompat(negativeButton, DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+            setBackgroundCompat(negativeButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
             negativeButton.setText(this.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
