@@ -6,6 +6,12 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.3
+
+> 1. Added `md_icon` attribute to global theming.
+> 2. Major padding/margin fixes for using an icon with list dialogs.
+> 3. Other small fixes.
+
 ###### Version 0.4.1 – 0.4.2
 
 > 1. Added `md_item_color` attribute to global theming.
