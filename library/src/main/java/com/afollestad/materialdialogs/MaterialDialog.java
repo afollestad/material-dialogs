@@ -178,6 +178,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (items != null && items.length > 0 || adapterProvided) {
             title = (TextView) view.findViewById(R.id.titleCustomView);
             icon = (ImageView) view.findViewById(R.id.iconCustomView);
+            titleFrame = view.findViewById(R.id.titleFrameCustomView);
             listView = (ListView) view.findViewById(R.id.contentListView);
             listView.setSelector(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
             ((MeasureCallbackListView) listView).setCallback(this);
@@ -348,14 +349,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         view.findViewById(R.id.customViewScrollParent).setVisibility(View.VISIBLE);
         view.findViewById(R.id.customViewScroll).setVisibility(View.GONE);
 
-        // Setup margins on custom view frame
-        LinearLayout customFrame = (LinearLayout) view.findViewById(R.id.customViewFrame);
-        setMargin(customFrame, -1, -1, 0, 0);
-
         // Set up list with adapter
         LinearLayout listViewContainer = (LinearLayout) view.findViewById(R.id.list_view_container);
         listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(adapter);
+
         if (listType != null) {
             // Only set listener for 1st-party adapter, leave custom adapter implementation to user with getListView()
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -389,9 +387,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         final int dialogFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_dialog_frame_margin);
         final int mainFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
         if (titleFrame.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
-            final int customFramePadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
-            title.setPadding(customFramePadding, dialogFramePadding, customFramePadding, title.getPaddingBottom());
-            ViewGroup titleFrame = (ViewGroup) title.getParent();
+            int bottomPadding = mainFramePadding;
+            if(icon.getVisibility() == View.VISIBLE)
+                bottomPadding = (int)getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
+            setMargin(titleFrame, dialogFramePadding, bottomPadding, dialogFramePadding, dialogFramePadding);
             ((ViewGroup) titleFrame.getParent()).removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
         } else {
