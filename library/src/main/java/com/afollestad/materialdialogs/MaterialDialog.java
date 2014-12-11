@@ -388,8 +388,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         final int mainFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
         if (titleFrame.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
             int bottomPadding = mainFramePadding;
-            if(icon.getVisibility() == View.VISIBLE)
-                bottomPadding = (int)getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
+            if (icon.getVisibility() == View.VISIBLE)
+                bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
             setMargin(titleFrame, dialogFramePadding, bottomPadding, dialogFramePadding, dialogFramePadding);
             ((ViewGroup) titleFrame.getParent()).removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
@@ -664,6 +664,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Typeface mediumFont;
         protected Drawable icon;
         protected ListAdapter adapter;
+        private OnDismissListener dismissListener;
+        private OnCancelListener cancelListener;
+        private OnShowListener showListener;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -943,12 +946,37 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
+        public Builder showListener(OnShowListener listener) {
+            this.showListener = listener;
+            return this;
+        }
+
+        public Builder dismissListener(OnDismissListener listener) {
+            this.dismissListener = listener;
+            return this;
+        }
+
+        public Builder cancelListener(OnCancelListener listener) {
+            this.cancelListener = listener;
+            return this;
+        }
+
         public MaterialDialog build() {
-            return new MaterialDialog(this);
+            MaterialDialog dialog = new MaterialDialog(this);
+            if (this.showListener != null) {
+                dialog.setOnShowListener(this.showListener);
+            }
+            if (this.cancelListener != null) {
+                dialog.setOnCancelListener(this.cancelListener);
+            }
+            if (this.dismissListener != null) {
+                dialog.setOnDismissListener(this.dismissListener);
+            }
+            return dialog;
         }
 
         public MaterialDialog show() {
-            MaterialDialog dialog = new MaterialDialog(this);
+            MaterialDialog dialog = build();
             dialog.show();
             return dialog;
         }

@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogssample;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -139,6 +140,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
+        findViewById(R.id.showCancelDismiss).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShowCancelDismissCallbacks();
+            }
+        });
+
         findViewById(R.id.folder_chooser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +160,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
-                .build()
                 .show();
     }
 
@@ -162,7 +169,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
-                .build()
                 .show();
     }
 
@@ -172,7 +178,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.loremIpsum)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
-                .build()
                 .show();
     }
 
@@ -183,7 +188,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
-                .build()
                 .show();
     }
 
@@ -193,7 +197,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.speedBoost)
                 .negativeText(R.string.noThanks)
-                .build()
                 .show();
     }
 
@@ -204,7 +207,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
                 .neutralText(R.string.more_info)
-                .build()
                 .show();
     }
 
@@ -231,7 +233,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         Toast.makeText(getApplicationContext(), "Negative…", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .build()
                 .show();
     }
 
@@ -245,7 +246,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .build()
                 .show();
     }
 
@@ -258,7 +258,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .build()
                 .show();
     }
 
@@ -273,7 +272,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     }
                 })
                 .positiveText(android.R.string.ok)
-                .build()
                 .show();
     }
 
@@ -288,7 +286,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     }
                 })
                 .positiveText(R.string.choose)
-                .build()
                 .show();
     }
 
@@ -310,7 +307,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     }
                 })
                 .positiveText(R.string.choose)
-                .build()
+
                 .show();
     }
 
@@ -396,7 +393,34 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .theme(Theme.DARK)
-                .build()
+                .show();
+    }
+
+    private void showShowCancelDismissCallbacks() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
+                .neutralText(R.string.more_info)
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "onShow", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .cancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "onCancel", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .dismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "onDismiss", Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .show();
     }
 
@@ -414,11 +438,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     .positiveText(R.string.dismiss)
                     .content(Html.fromHtml(getString(R.string.about_body)))
                     .contentLineSpacing(1.6f)
-                    .callback(new MaterialDialog.SimpleCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                        }
-                    })
                     .build()
                     .show();
             return true;

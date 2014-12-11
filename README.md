@@ -6,6 +6,11 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.4
+
+> 1. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
+> 2. Added `dismiss`, `cancel`, and `show` listener methods to the `Builder`.
+
 ###### Version 0.4.3
 
 > 1. Added `md_icon` attribute to global theming.
@@ -55,7 +60,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.3'
+    compile 'com.afollestad:material-dialogs:0.4.4'
 }
 ```
 
@@ -76,7 +81,6 @@ for color resources (e.g. `titleColor` and `titleColorRes`).
 new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .theme(Theme.LIGHT)  // the default is light, so you don't need this line
         .positiveText("Agree")
         .negativeText("Disagree")
         .show();
@@ -423,6 +427,17 @@ or operating system. This behavior can be overridden in your Activity themes:
 The action button color is also derived from the `android:colorAccent` attribute of the Material theme,
 or `colorAccent` attribute of the AppCompat Material theme as seen in the sample project. Manually setting
 the color will override that behavior.
+
+---
+
+### Show, Cancel, and Dismiss Callbacks
+
+You can directly setup show/cancel/dismiss listeners from the `Builder` rather than on the resulting
+`MaterialDialog` instance:
+
+```java
+
+```
 
 ---
 

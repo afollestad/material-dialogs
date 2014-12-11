@@ -51,6 +51,7 @@
     <string name="basic_icon">Basic (Icon)</string>
     <string name="basic_list_notitle">Basic List (No Title)</string>
     <string name="folder_chooser">Folder Chooser</string>
+    <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>
