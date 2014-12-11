@@ -115,6 +115,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
+            android:id="@+id/showCancelDismiss"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/showCancelDismissCallbacks"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
             android:id="@+id/folder_chooser"
             android:layout_width="match_parent"
             android:layout_height="56dp"
