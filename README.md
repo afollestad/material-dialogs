@@ -11,18 +11,14 @@ The code you see below is also found in the sample project. You can download a A
 > 1. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
 > 2. Added `dismiss`, `cancel`, and `show` listener methods to the `Builder`.
 
-###### Version 0.4.3
-
-> 1. Added `md_icon` attribute to global theming.
-> 2. Major padding/margin fixes for using an icon with list dialogs.
-> 3. Other small fixes.
-
-###### Version 0.4.1 – 0.4.2
+###### Version 0.4.1 – 0.4.3
 
 > 1. Added `md_item_color` attribute to global theming.
-> 2. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
-> 3. Fixed list item default color on dark dialogs for pre-Lollipop.
-> 4. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
+> 2. Added `md_icon` attribute to global theming.
+> 3. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
+> 4. Fixed list item default color on dark dialogs for pre-Lollipop.
+> 5. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
+> 6. Major padding/margin fixes for using an icon with list dialogs.
 
 ###### Version 0.4.0
 
@@ -35,16 +31,13 @@ The code you see below is also found in the sample project. You can download a A
 > 1. Bug fixes.
 > 2. Button stacking algorithm fixes.
 
-###### Version 0.3.3 – 0.3.4
-
-> 1. Crash fix when updating list items after they had previously been set.
-> 2. The ability to set the content color when constructing a dialog builder.
-
-###### Version 0.3.1 – 0.3.2
+###### Version 0.3.1 – 0.3.4
 
 > 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the [Global Theming](#global-theming) section below.
 > 2. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
 > 3. Other padding and logic fixes.
+> 4. Crash fix when updating list items after they had previously been set.
+> 5. The ability to set the content color when constructing a dialog builder.
 
 ###### Version 0.3.0
 
