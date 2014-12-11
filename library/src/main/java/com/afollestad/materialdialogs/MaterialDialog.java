@@ -102,10 +102,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         this.regularFont = builder.regularFont;
         if (this.regularFont == null)
-            this.regularFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "fonts/Roboto-Regular.ttf");
+            this.regularFont = TypefaceHelper.get(getContext(), "Roboto-Regular");
         this.mediumFont = builder.mediumFont;
         if (this.mediumFont == null)
-            this.mediumFont = Typeface.createFromAsset(getContext().getResources().getAssets(), "fonts/Roboto-Medium.ttf");
+            this.mediumFont = TypefaceHelper.get(getContext(), "Roboto-Medium");
 
         mContext = builder.context;
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
