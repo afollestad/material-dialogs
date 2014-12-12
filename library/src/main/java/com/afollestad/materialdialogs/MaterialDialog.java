@@ -120,7 +120,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.items = builder.items;
         this.setCancelable(builder.cancelable);
         this.selectedIndex = builder.selectedIndex;
-        this.selectedIndices = builder.selectedIndicies;
+        this.selectedIndices = builder.selectedIndices;
         this.autoDismiss = builder.autoDismiss;
         this.adapter = builder.adapter;
 
@@ -189,7 +189,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     listType = ListType.SINGLE;
                 } else if (listCallbackMulti != null) {
                     listType = ListType.MULTI;
-                    selectedIndicesList = new ArrayList<>(Arrays.asList(selectedIndices));
+                    if (selectedIndices != null) {
+                        selectedIndicesList = new ArrayList<>(Arrays.asList(selectedIndices));
+                    } else {
+                        selectedIndicesList = new ArrayList<>();
+                    }
                 } else {
                     listType = ListType.REGULAR;
                 }
@@ -658,7 +662,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected boolean cancelable = true;
         protected float contentLineSpacingMultiplier = 1.3f;
         protected int selectedIndex = -1;
-        protected Integer[] selectedIndicies = null;
+        protected Integer[] selectedIndices = null;
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
@@ -830,7 +834,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, ListCallbackMulti callback) {
-            this.selectedIndicies = selectedIndices;
+            this.selectedIndices = selectedIndices;
             this.listCallback = null;
             this.listCallbackSingle = null;
             this.listCallbackMulti = callback;
