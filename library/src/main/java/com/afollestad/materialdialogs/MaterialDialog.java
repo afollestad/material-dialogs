@@ -71,6 +71,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ListCallback listCallback;
     private ListCallback listCallbackSingle;
     private ListCallbackMulti listCallbackMulti;
+    private AdapterView.OnItemClickListener itemClicklistener;
     private View customView;
     private CharSequence[] items;
     private boolean isStacked;
@@ -123,6 +124,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.selectedIndices = builder.selectedIndices;
         this.autoDismiss = builder.autoDismiss;
         this.adapter = builder.adapter;
+        this.itemClicklistener = builder.itemClicklistener;
 
         this.positiveColor = builder.positiveColor;
         this.negativeColor = builder.negativeColor;
@@ -358,7 +360,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(adapter);
 
-        if (listType != null) {
+        if (itemClicklistener != null) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (autoDismiss) dismiss();
+                        itemClicklistener.onItemClick(parent, view, position, id);
+                    }
+                });
+        } else if (listType != null) {
             // Only set listener for 1st-party adapter, leave custom adapter implementation to user with getListView()
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -668,6 +678,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Typeface mediumFont;
         protected Drawable icon;
         protected ListAdapter adapter;
+        public AdapterView.OnItemClickListener itemClicklistener;
         private OnDismissListener dismissListener;
         private OnCancelListener cancelListener;
         private OnShowListener showListener;
@@ -947,6 +958,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          */
         public Builder adapter(ListAdapter adapter) {
             this.adapter = adapter;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link AdapterView.OnItemClickListener} for the dialog's list
+         *
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder itemClickListener(AdapterView.OnItemClickListener listener) {
+            this.itemClicklistener = listener;
             return this;
         }
 
