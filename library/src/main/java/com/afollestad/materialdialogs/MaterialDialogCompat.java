@@ -10,6 +10,10 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ListAdapter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Convenience class for migrating old dialogs code. Not all methods are implemented yet.
  *
@@ -281,5 +285,95 @@ public class MaterialDialogCompat {
                 });
             }
         }
-    }
+
+		/**
+		 * Set a custom view resource to be the contents of the Dialog.
+		 *
+		 * @param view	The view to use as the contents of the Dialog.
+		 * @return This
+		 */
+		public Builder setView(View view) {
+			builder.customView(view);
+			return this;
+		}
+
+		/**
+		 * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
+		 *
+		 * @param items	the text of the items to be displayed in the list.
+		 * @param checkedItems	specifies which items are checked. It should be null in which case no items are checked. If non null it must be exactly the same length as the array of items.
+		 * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
+		 * @return This
+		 */
+		public Builder setMultiChoiceItems(String[] items, final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
+			builder.items(items);
+
+			/* Convert old style array of booleans-per-index to new list of indices */
+			ArrayList<Integer> selectedIndices = new ArrayList<>();
+			for(int i = 0; i < checkedItems.length; i++) {
+				if(checkedItems[i]) {
+					selectedIndices.add(i);
+				}
+			}
+			Integer selectedIndicesArr[] = new Integer[selectedIndices.size()];
+			selectedIndices.toArray(selectedIndicesArr);
+			builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
+				@Override
+				public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+					/* which is a list of selected indices */
+					List<Integer> whichList = Arrays.asList(which);
+					for(int i = 0; i < checkedItems.length; i++) {
+						/* save old state */
+						boolean oldChecked = checkedItems[i];
+						/* Record new state */
+						checkedItems[i] = whichList.contains(i);
+						/* Fire the listener if it changed */
+						if(oldChecked != checkedItems[i]) {
+							listener.onClick(dialog, i, checkedItems[i]);
+						}
+					}
+				}
+			});
+			return this;
+		}
+
+		/**
+		 * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
+		 *
+		 * @param items	the items to be displayed.
+		 * @param checkedItem	specifies which item is checked. If -1 no items are checked.
+		 * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.
+		 * @return This
+		 */
+		public Builder setSingleChoiceItems(String[] items, int checkedItem, final DialogInterface.OnClickListener listener) {
+			builder.items(items);
+			builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
+				@Override
+				public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+					listener.onClick(dialog, which);
+				}
+			});
+			return this;
+		}
+
+		/**
+		 * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
+		 *
+		 * @param itemsId	the resource id of an array i.e. R.array.foo
+		 * @param checkedItem	specifies which item is checked. If -1 no items are checked.
+		 * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.
+		 * @return This
+		 */
+		public Builder setSingleChoiceItems(int itemsId, int checkedItem, final DialogInterface.OnClickListener listener) {
+			builder.items(itemsId);
+
+			builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
+				@Override
+				public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+					listener.onClick(dialog, which);
+				}
+			});
+			return this;
+		}
+	}
 }
