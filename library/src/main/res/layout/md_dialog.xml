@@ -143,18 +143,18 @@
         android:layout_marginRight="@dimen/md_button_padding_frame_side"
         android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
 
-        <TextView
+        <Button
             android:id="@+id/buttonDefaultNeutral"
             style="@style/MD_ActionButton"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/md_neutral_button_margin" />
 
         <!-- toLeftOf rule added from invalidateActions() -->
-        <TextView
+        <Button
             android:id="@+id/buttonDefaultNegative"
             style="@style/MD_ActionButton" />
 
-        <TextView
+        <Button
             android:id="@+id/buttonDefaultPositive"
             style="@style/MD_ActionButton"
             android:layout_alignParentRight="true" />
@@ -168,15 +168,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
 
-        <TextView
+        <Button
             android:id="@+id/buttonStackedPositive"
             style="@style/MD_ActionButtonStacked" />
 
-        <TextView
+        <Button
             android:id="@+id/buttonStackedNegative"
             style="@style/MD_ActionButtonStacked" />
 
-        <TextView
+        <Button
             android:id="@+id/buttonStackedNeutral"
             style="@style/MD_ActionButtonStacked" />
 

@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -995,26 +996,43 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * @param which The action button of which to get the view for.
      * @return The view from the dialog's layout representing this action button.
      */
-    public final View getActionButton(DialogAction which) {
+    public final Button getActionButton(DialogAction which) {
         if (view == null) return null;
         if (isStacked) {
             switch (which) {
                 default:
-                    return view.findViewById(R.id.buttonStackedPositive);
+                    return (Button) view.findViewById(R.id.buttonStackedPositive);
                 case NEUTRAL:
-                    return view.findViewById(R.id.buttonStackedNeutral);
+                    return (Button) view.findViewById(R.id.buttonStackedNeutral);
                 case NEGATIVE:
-                    return view.findViewById(R.id.buttonStackedNegative);
+                    return (Button) view.findViewById(R.id.buttonStackedNegative);
             }
         } else {
             switch (which) {
                 default:
-                    return view.findViewById(R.id.buttonDefaultPositive);
+                    return (Button) view.findViewById(R.id.buttonDefaultPositive);
                 case NEUTRAL:
-                    return view.findViewById(R.id.buttonDefaultNeutral);
+                    return (Button) view.findViewById(R.id.buttonDefaultNeutral);
                 case NEGATIVE:
-                    return view.findViewById(R.id.buttonDefaultNegative);
+                    return (Button) view.findViewById(R.id.buttonDefaultNegative);
             }
+        }
+    }
+
+    /**
+     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
+     */
+    @Override
+    public Button getButton(int whichButton) {
+        switch (whichButton) {
+            case BUTTON_POSITIVE:
+                return getActionButton(DialogAction.POSITIVE);
+            case BUTTON_NEUTRAL:
+                return getActionButton(DialogAction.NEUTRAL);
+            case BUTTON_NEGATIVE:
+                return getActionButton(DialogAction.NEGATIVE);
+            default:
+                return null;
         }
     }
 
