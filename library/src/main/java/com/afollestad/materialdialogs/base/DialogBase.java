@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -39,14 +38,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         if (right > -1) params.rightMargin = right;
         if (height > -1) params.height = height;
         view.setLayoutParams(params);
-    }
-
-    /**
-     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     */
-    @Override
-    public Button getButton(int whichButton) {
-        throw new RuntimeException("Use getActionButton(MaterialDialog.Button) instead.");
     }
 
     /**
