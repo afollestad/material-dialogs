@@ -8,8 +8,8 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 49
-        versionName "0.4.4"
+        versionCode 50
+        versionName "0.4.5"
     }
     buildTypes {
 //        release {

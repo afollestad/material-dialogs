@@ -6,6 +6,13 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.5
+
+> 1. Crash fix for Huawei devices
+> 2. Removed some unnecessary logging.
+> 3. New methods in `MaterialDialogCompat.Builder`
+> 4. Other crash fixes and improvements.
+
 ###### Version 0.4.4
 
 > 1. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
@@ -53,7 +60,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.4'
+    compile 'com.afollestad:material-dialogs:0.4.5'
 }
 ```
 
