@@ -299,6 +299,58 @@ it to display the action buttons below your list, however this is only useful in
 
 ---
 
+### Comprehensive Listener APIs
+
+There are many listeners available, and they can all be used independently to give you fine-grained control
+over the behavior of the dialog.
+
+```java
+new MaterialDialog.Builder(this)
+        .title(R.string.complex)
+        .positiveText("Yes")
+        .negativeText("No")
+        .neutralText("Maybe")
+        .items(R.array.socialNetworks)
+        .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                Toast.makeText(MainActivity.this, "Clicked " + text, Toast.LENGTH_SHORT).show();
+            }
+        })
+        .callback(new MaterialDialog.FullCallback() {
+            @Override
+            public void onNeutral(MaterialDialog dialog) {
+                Toast.makeText(MainActivity.this, "Maybe", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+                Toast.makeText(MainActivity.this, "No", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
+            }
+        })
+        .cancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+            }
+        })
+        .show();
+```
+
+If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
+For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
+dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
+callback will be called every time you select an item since no action is available to press, without the
+dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
+it to display the action buttons below your list, however this is only useful in some specific cases.
+
+---
+
 ### Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
