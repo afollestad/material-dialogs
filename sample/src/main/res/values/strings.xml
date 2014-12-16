@@ -13,6 +13,7 @@
     <string name="list">Basic List</string>
     <string name="singleChoice">Single Choice</string>
     <string name="multiChoice">Multi Choice</string>
+    <string name="complex">Complex Listeners</string>
     <string name="customView">Custom View</string>
     <string name="themed">Themed</string>
     <string name="signalStrength">Signal strength</string>
