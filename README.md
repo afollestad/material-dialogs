@@ -6,6 +6,11 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.6
+
+> 1. Some fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
+> 2. The ability to force the action buttons to be stacked (see the [Misc.](#misc) section).
+
 ###### Version 0.4.5
 
 > 1. Crash fix for Huawei devices
@@ -60,7 +65,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.5'
+    compile 'com.afollestad:material-dialogs:0.4.6'
 }
 ```
 
@@ -299,49 +304,6 @@ it to display the action buttons below your list, however this is only useful in
 
 ---
 
-### Comprehensive Listener APIs
-
-There are many listeners available, and they can all be used independently to give you fine-grained control
-over the behavior of the dialog.
-
-```java
-new MaterialDialog.Builder(this)
-        .title(R.string.complex)
-        .positiveText("Yes")
-        .negativeText("No")
-        .neutralText("Maybe")
-        .items(R.array.socialNetworks)
-        .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                Toast.makeText(MainActivity.this, "Clicked " + text, Toast.LENGTH_SHORT).show();
-            }
-        })
-        .callback(new MaterialDialog.FullCallback() {
-            @Override
-            public void onNeutral(MaterialDialog dialog) {
-                Toast.makeText(MainActivity.this, "Maybe", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNegative(MaterialDialog dialog) {
-                Toast.makeText(MainActivity.this, "No", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-                Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
-            }
-        })
-        .cancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
-            }
-        })
-        .show();
-```
-
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
 dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
@@ -488,7 +450,26 @@ You can directly setup show/cancel/dismiss listeners from the `Builder` rather t
 `MaterialDialog` instance:
 
 ```java
-
+new MaterialDialog.Builder(this)
+    .title("Use Google's Location Services?")
+    .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+    .positiveText("Agree")
+    .showListener(new DialogInterface.OnShowListener() {
+        @Override
+        public void onShow(DialogInterface dialog) {
+        }
+    })
+    .cancelListener(new DialogInterface.OnCancelListener() {
+        @Override
+        public void onCancel(DialogInterface dialog) {
+        }
+    })
+    .dismissListener(new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+        }
+    })
+    .show();
 ```
 
 ---
@@ -544,5 +525,14 @@ Typeface contentAndListItems = // ... initialize
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .typeface(titleAndActions, contentAndListItems)
+        .show();
+```
+
+If you want to force the dialog action buttons to be stacked (override the stacking algorithm):
+
+```java
+MaterialDialog dialog new MaterialDialog.Builder(this)
+        // ... other initialization
+        .forceStacking(true)
         .show();
 ```

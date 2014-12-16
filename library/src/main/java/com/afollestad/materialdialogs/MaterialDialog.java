@@ -83,6 +83,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private ListAdapter adapter;
     private ListType listType;
     private List<Integer> selectedIndicesList;
+    private boolean forceStacking;
 
     protected static ContextThemeWrapper getTheme(Builder builder) {
         TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
@@ -440,7 +441,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private void checkIfStackingNeeded() {
         if (numberOfActionButtons() <= 1) {
             return;
+        } else if (forceStacking) {
+            isStacked = true;
+            invalidateActions();
+            return;
         }
+
         final int maxWidth = calculateMaxButtonWidth();
         isStacked = false;
 
@@ -652,6 +658,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         private OnDismissListener dismissListener;
         private OnCancelListener cancelListener;
         private OnShowListener showListener;
+        protected boolean forceStacking;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -943,6 +950,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder cancelListener(OnCancelListener listener) {
             this.cancelListener = listener;
+            return this;
+        }
+
+        public Builder forceStacking(boolean stacked) {
+            this.forceStacking = stacked;
             return this;
         }
 
