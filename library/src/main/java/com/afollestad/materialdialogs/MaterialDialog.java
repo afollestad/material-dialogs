@@ -561,52 +561,44 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     @Override
     public final void onClick(View v) {
         String tag = (String) v.getTag();
-        if (tag.equals(POSITIVE)) {
-            if (listCallbackSingle != null) {
+        switch (tag) {
+            case POSITIVE:
+                if (callback != null) {
+                    callback.onPositive(this);
+                }
                 if (autoDismiss) dismiss();
-                sendSingleChoiceCallback(v);
-            } else if (listCallbackMulti != null) {
+                break;
+            case NEGATIVE:
+                if (callback != null && callback instanceof Callback) {
+                    ((Callback) callback).onNegative(this);
+                }
                 if (autoDismiss) dismiss();
-                sendMultichoiceCallback();
-            } else if (callback != null) {
+                break;
+            case NEUTRAL:
+                if (callback != null && callback instanceof FullCallback) {
+                    ((FullCallback) callback).onNeutral(this);
+                }
                 if (autoDismiss) dismiss();
-                callback.onPositive(this);
-            } else if (autoDismiss) dismiss();
-        } else if (tag.equals(NEGATIVE)) {
-            if (callback != null && callback instanceof Callback) {
-                if (autoDismiss) dismiss();
-                ((Callback) callback).onNegative(this);
-            } else if (autoDismiss) dismiss();
-        } else if (tag.equals(NEUTRAL)) {
-            if (callback != null && callback instanceof FullCallback) {
-                if (autoDismiss) dismiss();
-                ((FullCallback) callback).onNeutral(this);
-            } else if (autoDismiss) dismiss();
-        } else {
-            String[] split = tag.split(":");
-            int index = Integer.parseInt(split[0]);
-            if (listCallback != null) {
-                if (autoDismiss) dismiss();
-                listCallback.onSelection(this, v, index, split[1]);
-            } else if (listCallbackSingle != null) {
-                RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
-                if (!cb.isChecked())
-                    cb.setChecked(true);
-                invalidateSingleChoice(index);
-                if (positiveText == null) {
-                    // Immediately send the selection callback if no positive button is shown
+                break;
+            default:
+                String[] split = tag.split(":");
+                int index = Integer.parseInt(split[0]);
+                if (listCallback != null) {
+                    if (autoDismiss) dismiss();
+                    listCallback.onSelection(this, v, index, split[1]);
+                } else if (listCallbackSingle != null) {
+                    RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
+                    if (!cb.isChecked())
+                        cb.setChecked(true);
+                    invalidateSingleChoice(index);
                     if (autoDismiss) dismiss();
                     sendSingleChoiceCallback(v);
-                }
-            } else if (listCallbackMulti != null) {
-                CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
-                cb.setChecked(!cb.isChecked());
-                if (positiveText == null) {
-                    // Immediately send the selection callback if no positive button is shown
-                    if (autoDismiss) dismiss();
+                } else if (listCallbackMulti != null) {
+                    CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
+                    cb.setChecked(!cb.isChecked());
                     sendMultichoiceCallback();
-                }
-            } else if (autoDismiss) dismiss();
+                } else if (autoDismiss) dismiss();
+                break;
         }
     }
 
