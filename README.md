@@ -178,18 +178,20 @@ new MaterialDialog.Builder(this)
 
 ### Callbacks
 
-To know when the user selects an action button, you set a callback. There's three variations of the callback for the action buttons:
+To know when the user selects an action button, you set a callback. To do this, use the `ButtonCallback`
+class and override its `onPositive()`, `onNegative()`, or `onNeutral()` methods as needed. The advantage
+to this is that you can override button functionality *À la carte*, so no need to stub empty methods.
 
 ```java
 new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.SimpleCallback() {
+        .callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
             }
         });
 
 new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.Callback() {
+        .callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
             }
@@ -200,7 +202,7 @@ new MaterialDialog.Builder(this)
         });
 
 new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.FullCallback() {
+        .callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
             }

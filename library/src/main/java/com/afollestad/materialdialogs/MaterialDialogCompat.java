@@ -261,7 +261,7 @@ public class MaterialDialogCompat {
 
         private void addButtonsCallback() {
             if (positiveDialogListener != null || negativeDialogListener != null) {
-                builder.callback(new MaterialDialog.FullCallback() {
+                builder.callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
                         if (neutralDialogListener != null) {

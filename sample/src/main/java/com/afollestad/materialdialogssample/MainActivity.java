@@ -224,7 +224,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
                 .neutralText(R.string.more_info)
-                .callback(new MaterialDialog.FullCallback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         Toast.makeText(getApplicationContext(), "Positive!", Toast.LENGTH_SHORT).show();
@@ -331,7 +331,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         Toast.makeText(MainActivity.this, "Clicked " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .callback(new MaterialDialog.FullCallback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
                         Toast.makeText(MainActivity.this, "Maybe", Toast.LENGTH_SHORT).show();
@@ -385,7 +385,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .customView(R.layout.dialog_customview)
                 .positiveText(R.string.connect)
                 .negativeText(android.R.string.cancel)
-                .callback(new MaterialDialog.Callback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         Toast.makeText(getApplicationContext(), "Password: " + passwordInput.getText().toString(), Toast.LENGTH_SHORT).show();
