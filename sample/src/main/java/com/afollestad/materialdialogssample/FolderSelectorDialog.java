@@ -18,12 +18,23 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class FolderSelectorDialog extends DialogFragment implements MaterialDialog.ListCallback, MaterialDialog.Callback {
+public class FolderSelectorDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
     File parentFolder;
     File[] parentContents;
     boolean canGoUp = true;
     Callback mCallback;
+    MaterialDialog.ButtonCallback mButtonCallback = new MaterialDialog.ButtonCallback() {
+        @Override
+        public void onPositive(MaterialDialog materialDialog) {
+            materialDialog.dismiss();
+            mCallback.onFolderSelection(parentFolder);
+        }
+        @Override
+        public void onNegative(MaterialDialog materialDialog) {
+            materialDialog.dismiss();
+        }
+    };
 
     public static interface Callback {
         void onFolderSelection(File folder);
@@ -58,7 +69,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
                 .title(parentFolder.getAbsolutePath())
                 .items(getContentsArray())
                 .itemsCallback(this)
-                .callback(this)
+                .callback(mButtonCallback)
                 .autoDismiss(false)
                 .positiveText(R.string.choose)
                 .negativeText(android.R.string.cancel)
@@ -80,21 +91,12 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         dialog.setItems(getContentsArray());
     }
 
-    @Override
-    public void onPositive(MaterialDialog materialDialog) {
-        materialDialog.dismiss();
-        mCallback.onFolderSelection(parentFolder);
-    }
-
     public void show(Activity context, Callback callback) {
         mCallback = callback;
         show(context.getFragmentManager(), "FOLDER_SELECTOR");
     }
 
-    @Override
-    public void onNegative(MaterialDialog materialDialog) {
-        materialDialog.dismiss();
-    }
+
 
     public static class FolderSorter implements Comparator<File> {
         @Override
