@@ -17,6 +17,12 @@
             android:text="@string/basic_notitle" />
 
         <Button
+            android:id="@+id/basicNoTitleNoButtons"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/basic_notitle_nobuttons" />
+
+        <Button
             android:id="@+id/basic"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -105,6 +111,20 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/customView"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/customViewWithoutScrollViewWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/customViewWithoutScrollViewWrapper"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/customWebView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/webView"
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/md_content_vertical_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customTitle"
+            android:textColor="#80000000"
+            android:text="@string/signalStrength" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customEntry"
+            android:layout_marginTop="4dp"
+            android:textColor="#000000"
+            android:text="@string/excellent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customTitle"
+            android:textColor="#80000000"
+            android:layout_marginTop="18dp"
+            android:text="@string/security" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customEntry"
+            android:layout_marginTop="4dp"
+            android:textColor="#000000"
+            android:text="@string/securityType" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customTitle"
+            android:textColor="#80000000"
+            android:layout_marginTop="18dp"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customEntry"
+            android:layout_marginTop="4dp"
+            android:textColor="#000000"
+            android:inputType="textPassword" />
+
+        <CheckBox
+            android:id="@+id/showPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/customEntry"
+            android:textColor="#000000"
+            android:text="@string/showPassword"
+            android:layout_marginTop="18dp" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin"
+        android:paddingBottom="@dimen/md_content_vertical_padding"
+        android:text="Let's make this long enough to cause the dialog to scroll by default.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nunc id enim mattis ullamcorper. Phasellus vel pulvinar enim. Sed mattis arcu nisl, sit amet porta risus consequat a. Curabitur quis sapien feugiat, sagittis arcu sed, porttitor justo. Curabitur viverra odio a nibh egestas, at vestibulum tellus bibendum. Phasellus in venenatis elit, in varius mi. Duis ut tristique nibh. Sed augue nibh, accumsan vel augue eget, accumsan iaculis magna. Fusce eu laoreet ipsum. Curabitur eget urna quis tortor faucibus pellentesque. Aliquam interdum urna libero, in tempus quam ultrices vitae. Donec imperdiet nibh in arcu consectetur, quis euismod tellus porttitor. In hac habitasse platea dictumst. Proin id urna et sapien semper hendrerit." />
+
+    </ScrollView>
+</LinearLayout>

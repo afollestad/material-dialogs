@@ -27,19 +27,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         super(context);
     }
 
-    public static void setMargin(View view, int top, int bottom, int left, int right) {
-        setMargin(view, top, bottom, left, right, -1);
-    }
-
-    public static void setMargin(View view, int top, int bottom, int left, int right, int height) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        if (top > -1) params.topMargin = top;
-        if (bottom > -1) params.bottomMargin = bottom;
-        if (left > -1) params.leftMargin = left;
-        if (right > -1) params.rightMargin = right;
-        if (height > -1) params.height = height;
-        view.setLayoutParams(params);
-    }
 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.

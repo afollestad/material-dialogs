@@ -11,6 +11,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -39,6 +40,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             @Override
             public void onClick(View v) {
                 showBasicNoTitle();
+            }
+        });
+
+        findViewById(R.id.basicNoTitleNoButtons).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBasicNoTitleNoButtons();
             }
         });
 
@@ -133,6 +141,21 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
+        findViewById(R.id.customViewWithoutScrollViewWrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomViewWithoutScrollViewWrapper();
+            }
+        });
+
+
+        findViewById(R.id.customWebView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomWebView();
+            }
+        });
+
         findViewById(R.id.themed).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +183,12 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
+                .show();
+    }
+
+    private void showBasicNoTitleNoButtons() {
+        new MaterialDialog.Builder(this)
+                .content(R.string.shareLocationPrompt)
                 .show();
     }
 
@@ -379,6 +408,64 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
+    }
+
+    private void showCustomViewWithoutScrollViewWrapper() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.googleWifi)
+                .customViewRaw(R.layout.dialog_customview_with_own_scrollview_and_padding)
+                .positiveText(R.string.connect)
+                .negativeText(android.R.string.cancel)
+                .callback(new MaterialDialog.Callback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Toast.makeText(getApplicationContext(), "Password: " + passwordInput.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                    }
+                }).build();
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
+        passwordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                positiveAction.setEnabled(s.toString().trim().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // Toggling the show password CheckBox will mask or unmask the password input EditText
+        ((CheckBox) dialog.getCustomView().findViewById(R.id.showPassword)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                passwordInput.setInputType(!isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT);
+                passwordInput.setTransformationMethod(!isChecked ? PasswordTransformationMethod.getInstance() : null);
+            }
+        });
+
+        dialog.show();
+        positiveAction.setEnabled(false); // disabled by default
+    }
+
+    private void showCustomWebView() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.webView)
+                .customView(R.layout.dialog_customview_webview)
+                .positiveText(android.R.string.ok)
+                .build();
+        WebView webView = (WebView) dialog.getCustomView().findViewById(R.id.webview);
+        webView.loadUrl("file:///android_asset/webview.html");
+        dialog.show();
     }
 
     private void showThemed() {

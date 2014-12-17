@@ -61,4 +61,9 @@
         android:text="@string/showPassword"
         android:layout_marginTop="18dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="Let's make this long enough to cause the dialog to scroll by default.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu nunc id enim mattis ullamcorper. Phasellus vel pulvinar enim. Sed mattis arcu nisl, sit amet porta risus consequat a. Curabitur quis sapien feugiat, sagittis arcu sed, porttitor justo. Curabitur viverra odio a nibh egestas, at vestibulum tellus bibendum. Phasellus in venenatis elit, in varius mi. Duis ut tristique nibh. Sed augue nibh, accumsan vel augue eget, accumsan iaculis magna. Fusce eu laoreet ipsum. Curabitur eget urna quis tortor faucibus pellentesque. Aliquam interdum urna libero, in tempus quam ultrices vitae. Donec imperdiet nibh in arcu consectetur, quis euismod tellus porttitor. In hac habitasse platea dictumst. Proin id urna et sapien semper hendrerit." />
 </LinearLayout>

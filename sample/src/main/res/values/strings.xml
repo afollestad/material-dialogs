@@ -14,6 +14,9 @@
     <string name="singleChoice">Single Choice</string>
     <string name="multiChoice">Multi Choice</string>
     <string name="customView">Custom View</string>
+    <string name="customViewWithoutScrollViewWrapper">Custom View (No ScrollView Wrapper)</string>
+    <string name="webView">WebView</string>
+
     <string name="themed">Themed</string>
     <string name="signalStrength">Signal strength</string>
     <string name="excellent">Excellent</string>
@@ -21,7 +24,7 @@
     <string name="securityType">802.1x EAP</string>
     <string name="password">Password</string>
     <string name="showPassword">Show password</string>
-    <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
+    <string name="useGoogleLocationServices">Use Google\'s location services?</string>
     <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
     <string name="socialNetworks">Social Networks</string>
     <string name="choose">Choose</string>
@@ -41,6 +44,7 @@
     ]]></string>
     <string name="dismiss">Dismiss</string>
     <string name="basic_notitle">Basic (No Title)</string>
+    <string name="basic_notitle_nobuttons">Basic (No Title, No Buttons)</string>
     <string name="shareLocationPrompt">This app wants to access your location.</string>
     <string name="basic_list_long">Basic Long List</string>
     <string name="states">States</string>
@@ -58,6 +62,11 @@
         <item>Google+</item>
         <item>Instagram</item>
         <item>Facebook</item>
+        <item>MySpace</item>
+        <item>Orkut</item>
+        <item>Buzz</item>
+        <item>Ping</item>
+        <item>Livejournal</item>
     </string-array>
 
     <string-array name="states">
