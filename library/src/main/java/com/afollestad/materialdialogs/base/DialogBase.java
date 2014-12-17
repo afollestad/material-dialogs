@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -27,14 +26,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         super(context);
     }
 
-
-    /**
-     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     */
-    @Override
-    public Button getButton(int whichButton) {
-        throw new RuntimeException("Use getActionButton(MaterialDialog.Button) instead.");
-    }
 
     /**
      * @deprecated Not supported by the Material dialog.

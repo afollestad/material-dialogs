@@ -6,6 +6,18 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.6
+
+> 1. Some fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
+> 2. The ability to force the action buttons to be stacked (see the [Misc.](#misc) section).
+
+###### Version 0.4.5
+
+> 1. Crash fix for Huawei devices
+> 2. Removed some unnecessary logging.
+> 3. New methods in `MaterialDialogCompat.Builder`
+> 4. Other crash fixes and improvements.
+
 ###### Version 0.4.4
 
 > 1. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
@@ -53,7 +65,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.4'
+    compile 'com.afollestad:material-dialogs:0.4.6'
 }
 ```
 
@@ -292,6 +304,15 @@ it to display the action buttons below your list, however this is only useful in
 
 ---
 
+If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
+For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
+dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
+callback will be called every time you select an item since no action is available to press, without the
+dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
+it to display the action buttons below your list, however this is only useful in some specific cases.
+
+---
+
 ### Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
@@ -429,7 +450,26 @@ You can directly setup show/cancel/dismiss listeners from the `Builder` rather t
 `MaterialDialog` instance:
 
 ```java
-
+new MaterialDialog.Builder(this)
+    .title("Use Google's Location Services?")
+    .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
+    .positiveText("Agree")
+    .showListener(new DialogInterface.OnShowListener() {
+        @Override
+        public void onShow(DialogInterface dialog) {
+        }
+    })
+    .cancelListener(new DialogInterface.OnCancelListener() {
+        @Override
+        public void onCancel(DialogInterface dialog) {
+        }
+    })
+    .dismissListener(new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+        }
+    })
+    .show();
 ```
 
 ---
@@ -485,5 +525,14 @@ Typeface contentAndListItems = // ... initialize
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .typeface(titleAndActions, contentAndListItems)
+        .show();
+```
+
+If you want to force the dialog action buttons to be stacked (override the stacking algorithm):
+
+```java
+MaterialDialog dialog new MaterialDialog.Builder(this)
+        // ... other initialization
+        .forceStacking(true)
         .show();
 ```

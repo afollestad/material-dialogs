@@ -100,6 +100,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
+            android:id="@+id/complex"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/complex"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
             android:id="@+id/customListItems"
             android:layout_width="match_parent"
             android:layout_height="56dp"
