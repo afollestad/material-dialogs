@@ -1162,6 +1162,33 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         return listView;
     }
 
+    /**
+     * Convenience method for getting the currently selected index of a single choice list
+     *
+     * @return Currently selected index of a single choice list, or -1 if not showing a single choice list
+     */
+    public int getSelectedIndex() {
+        if (listCallbackSingle != null) {
+            return selectedIndex;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Convenience method for getting the currently selected indices of a multi choice list
+     *
+     * @return Currently selected index of a multi choice list, or null if not showing a multi choice list
+     */
+    @Nullable
+    public Integer[] getSelectedIndices() {
+        if (listCallbackMulti != null) {
+            return selectedIndices;
+        } else {
+            return null;
+        }
+    }
+
     private class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
         final int itemColor;
