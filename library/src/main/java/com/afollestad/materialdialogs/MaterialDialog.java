@@ -67,7 +67,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private int positiveColor;
     private int negativeColor;
     private int neutralColor;
-    private SimpleCallback callback;
+    private ButtonCallback callback;
     private ListCallback listCallback;
     private ListCallback listCallbackSingle;
     private ListCallbackMulti listCallbackMulti;
@@ -575,14 +575,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (autoDismiss) dismiss();
                 break;
             case NEGATIVE:
-                if (callback != null && callback instanceof Callback) {
-                    ((Callback) callback).onNegative(this);
+                if (callback != null) {
+                    callback.onNegative(this);
                 }
                 if (autoDismiss) dismiss();
                 break;
             case NEUTRAL:
-                if (callback != null && callback instanceof FullCallback) {
-                    ((FullCallback) callback).onNeutral(this);
+                if (callback != null) {
+                    callback.onNeutral(this);
                 }
                 if (autoDismiss) dismiss();
                 break;
@@ -641,7 +641,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected int positiveColor;
         protected int negativeColor;
         protected int neutralColor;
-        protected SimpleCallback callback;
+        protected ButtonCallback callback;
         protected ListCallback listCallback;
         protected ListCallback listCallbackSingle;
         protected ListCallbackMulti listCallbackMulti;
@@ -900,7 +900,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
-        public Builder callback(SimpleCallback callback) {
+        public Builder callback(ButtonCallback callback) {
             this.callback = callback;
             return this;
         }
@@ -1236,15 +1236,45 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 
-    public static interface SimpleCallback {
-        void onPositive(MaterialDialog dialog);
+    /**
+     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
+     */
+    public abstract static class SimpleCallback extends ButtonCallback {
+        @Override
+        public abstract void onPositive(MaterialDialog dialog);
     }
 
-    public static interface Callback extends SimpleCallback {
-        void onNegative(MaterialDialog dialog);
+    /**
+     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
+     */
+    public abstract static class Callback extends SimpleCallback {
+        @Override
+        public abstract void onNegative(MaterialDialog dialog);
     }
 
-    public static interface FullCallback extends Callback {
-        void onNeutral(MaterialDialog dialog);
+    /**
+     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
+     */
+    public abstract static class FullCallback extends Callback {
+        @Override
+        public abstract void onNeutral(MaterialDialog dialog);
+    }
+
+    /**
+     * Override these as needed, so no needing to sub empty methods from an interface
+     */
+    public static class ButtonCallback {
+
+        public void onPositive(MaterialDialog dialog) {
+
+        }
+
+        public void onNegative(MaterialDialog dialog) {
+
+        }
+
+        public void onNeutral(MaterialDialog dialog) {
+
+        }
     }
 }
