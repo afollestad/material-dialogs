@@ -31,6 +31,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:text">@android:string/ok</item>
         <item name="android:textSize">@dimen/md_button_textsize</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
