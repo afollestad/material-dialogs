@@ -1183,11 +1183,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     @Nullable
     public Integer[] getSelectedIndices() {
         if (listCallbackMulti != null) {
-            Integer[] returnedIndicies = new Integer[selectedIndicesList.size()];
-            for (int i = 0; i < selectedIndicesList.size(); i++) {
-                returnedIndicies[i] = selectedIndicesList.get(i);
-            }
-            return returnedIndicies;
+            return selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]);
         } else {
             return null;
         }
