@@ -1183,7 +1183,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     @Nullable
     public Integer[] getSelectedIndices() {
         if (listCallbackMulti != null) {
-            return selectedIndices;
+            return selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]);
         } else {
             return null;
         }
@@ -1290,7 +1290,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * Override these as needed, so no needing to sub empty methods from an interface
      */
-    public static class ButtonCallback {
+    public static abstract class ButtonCallback {
 
         public void onPositive(MaterialDialog dialog) {
 
@@ -1302,6 +1302,35 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public void onNeutral(MaterialDialog dialog) {
 
+        }
+
+        public ButtonCallback() {
+            super();
+        }
+
+        @Override
+        protected final Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
+
+        @Override
+        public final boolean equals(Object o) {
+            return super.equals(o);
+        }
+
+        @Override
+        protected final void finalize() throws Throwable {
+            super.finalize();
+        }
+
+        @Override
+        public final int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public final String toString() {
+            return super.toString();
         }
     }
 }
