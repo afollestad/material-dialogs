@@ -28,7 +28,7 @@ import java.io.File;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends ActionBarActivity implements FolderSelectorDialog.Callback {
+public class MainActivity extends ActionBarActivity implements FolderSelectorDialog.FolderSelectCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         findViewById(R.id.folder_chooser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FolderSelectorDialog().show(MainActivity.this, MainActivity.this);
+                new FolderSelectorDialog().show(MainActivity.this);
             }
         });
     }
