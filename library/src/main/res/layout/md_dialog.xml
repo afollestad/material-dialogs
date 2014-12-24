@@ -10,10 +10,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_dialog_frame_margin"
-        android:layout_marginBottom="@dimen/md_main_frame_margin"
-        android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-        android:layout_marginRight="@dimen/md_dialog_frame_margin"
         android:layout_weight="1">
 
         <LinearLayout
@@ -22,7 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginBottom="@dimen/md_main_frame_margin">
+            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+            android:layout_marginTop="@dimen/md_dialog_frame_margin"
+            android:layout_marginRight="@dimen/md_dialog_frame_margin"
+            android:layout_marginBottom="@dimen/md_title_frame_margin_bottom"
+            >
 
             <ImageView
                 android:id="@+id/icon"
@@ -36,104 +36,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_title_textsize"
-                tools:text="Title" />
+                tools:text="Title"
+                />
 
         </LinearLayout>
 
-        <com.afollestad.materialdialogs.views.MeasureCallbackScrollView
+        <View
+            android:id="@+id/titleBarDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="-1dp"
+            android:visibility="gone" />
+
+        <ScrollView
             android:id="@+id/contentScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false">
-
+            android:visibility="gone"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/md_content_vertical_padding"
+            android:paddingBottom="@dimen/md_content_vertical_padding"
+            >
             <TextView
                 android:id="@+id/content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_content_textsize"
+                android:paddingLeft="@dimen/md_dialog_frame_margin"
+                android:paddingRight="@dimen/md_dialog_frame_margin"
                 tools:text="Content" />
 
-        </com.afollestad.materialdialogs.views.MeasureCallbackScrollView>
+        </ScrollView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/customViewScrollParent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone">
-
-        <com.afollestad.materialdialogs.views.MeasureCallbackScrollView
-            android:id="@+id/customViewScroll"
+        <FrameLayout
+            android:id="@+id/contentListViewFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false">
-
-            <LinearLayout
-                android:id="@+id/customViewFrame"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/md_dialog_frame_margin"
-                android:paddingBottom="@dimen/md_dialog_frame_margin"
-                android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-                android:layout_marginRight="@dimen/md_dialog_frame_margin">
-
-                <LinearLayout
-                    android:id="@+id/titleFrameCustomView"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="@dimen/md_main_frame_margin">
-
-                    <ImageView
-                        android:id="@+id/iconCustomView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:layout_marginRight="@dimen/md_icon_margin" />
-
-                    <TextView
-                        android:id="@+id/titleCustomView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/md_title_textsize"
-                        tools:text="Title" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.afollestad.materialdialogs.views.MeasureCallbackScrollView>
-
-        <LinearLayout
-            android:id="@+id/list_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:visibility="gone">
 
-            <com.afollestad.materialdialogs.views.MeasureCallbackListView
+            <ListView
                 android:id="@+id/contentListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/md_main_frame_margin"
+                android:paddingTop="@dimen/md_content_vertical_padding"
+                android:paddingBottom="@dimen/md_content_vertical_padding"
                 android:scrollbarStyle="outsideOverlay"
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="0dp" />
 
-        </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/customViewFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/customViewDivider"
+        android:id="@+id/buttonBarDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="-1dp"
         android:visibility="gone" />
 
     <RelativeLayout
@@ -141,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/md_button_padding_frame_side"
-        android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
+        android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
         <Button
             android:id="@+id/buttonDefaultNeutral"
@@ -166,7 +132,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
+        android:layout_marginTop="@dimen/md_button_frame_vertical_padding"
+        android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
         <Button
             android:id="@+id/buttonStackedPositive"
