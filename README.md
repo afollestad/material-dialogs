@@ -6,6 +6,13 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.7
+
+> 1. Yet more fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
+> 2. Note that the 3 variations of the action callbacks are deprecated and replaced with the single `ButtonCallback` interface.
+> 3. A fix for action button text styling on Lollipop, thanks [plusCubed](https://github.com/plusCubed)!
+> 4. Other fixes and improvements.
+
 ###### Version 0.4.6
 
 > 1. Some fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
@@ -65,7 +72,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.6'
+    compile 'com.afollestad:material-dialogs:0.4.7'
 }
 ```
 
