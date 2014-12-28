@@ -400,7 +400,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             ((ViewGroup) titleFrame.getParent()).removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
         } else {
-            listView.setPadding(listView.getPaddingLeft(), mainFramePadding,
+            listView.setPadding(listView.getPaddingLeft(), 0,
                     listView.getPaddingRight(), listView.getPaddingBottom());
         }
     }
