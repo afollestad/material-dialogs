@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:background="@drawable/md_selector">
+    android:background="@drawable/md_selector"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/title"

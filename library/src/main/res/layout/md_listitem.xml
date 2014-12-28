@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/title"
@@ -17,7 +17,6 @@
         android:layout_marginLeft="@dimen/md_listitem_margin_left"
         android:layout_marginStart="@dimen/md_listitem_margin_left"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
-        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
-        />
+        android:layout_marginEnd="@dimen/md_dialog_frame_margin" />
 
 </LinearLayout>

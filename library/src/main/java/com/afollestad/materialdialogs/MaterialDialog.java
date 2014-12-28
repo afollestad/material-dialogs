@@ -255,6 +255,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
         }
 
+        if (builder.showListener != null) {
+            setOnShowListener(builder.showListener);
+        }
+        if (builder.cancelListener != null) {
+            setOnCancelListener(builder.cancelListener);
+        }
+        if (builder.dismissListener != null) {
+            setOnDismissListener(builder.dismissListener);
+        }
+
+
         invalidateActions();
         setOnShowListenerInternal();
         setViewInternal(view);
@@ -558,7 +569,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
+        List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
             selectedTitles.add(items[i]);
         }
@@ -666,9 +677,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Typeface mediumFont;
         protected Drawable icon;
         protected ListAdapter adapter;
-        private OnDismissListener dismissListener;
-        private OnCancelListener cancelListener;
-        private OnShowListener showListener;
+        protected OnDismissListener dismissListener;
+        protected OnCancelListener cancelListener;
+        protected OnShowListener showListener;
         protected boolean forceStacking;
 
         public Builder(@NonNull Context context) {
@@ -970,17 +981,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         public MaterialDialog build() {
-            MaterialDialog dialog = new MaterialDialog(this);
-            if (this.showListener != null) {
-                dialog.setOnShowListener(this.showListener);
-            }
-            if (this.cancelListener != null) {
-                dialog.setOnCancelListener(this.cancelListener);
-            }
-            if (this.dismissListener != null) {
-                dialog.setOnDismissListener(this.dismissListener);
-            }
-            return dialog;
+            return new MaterialDialog(this);
         }
 
         public MaterialDialog show() {
