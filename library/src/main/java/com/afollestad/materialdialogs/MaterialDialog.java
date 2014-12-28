@@ -54,6 +54,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private TextView title;
     private View titleFrame;
 
+    private final int defaultItemColor;
     private int contentColor;
     private Context mContext;
     private CharSequence positiveText;
@@ -164,6 +165,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
             this.contentColor = DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback);
             content.setTextColor(contentColor);
+        }
+
+        if(builder.theme == Theme.LIGHT) {
+            defaultItemColor = Color.BLACK;
+        } else {
+            defaultItemColor = Color.WHITE;
         }
 
         if (customView != null) {
@@ -1201,7 +1208,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public MaterialDialogAdapter(Context context, int resource, int textViewResourceId, CharSequence[] objects) {
             super(context, resource, textViewResourceId, objects);
-            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, contentColor);
+            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, defaultItemColor);
         }
 
         @Override
