@@ -11,11 +11,8 @@ android {
         versionCode 53
         versionName "0.4.8"
     }
-    buildTypes {
-//        release {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+    lintOptions {
+        abortOnError false
     }
 }
 
