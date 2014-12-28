@@ -11,8 +11,11 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/md_listitem_textsize"
         android:layout_marginLeft="@dimen/md_listitem_margin_left"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/button"
+        android:layout_toStartOf="@+id/button"
         android:layout_centerVertical="true" />
 
     <Button
@@ -20,8 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
+        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
         android:text="@string/custom_listitem_button"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp" />
