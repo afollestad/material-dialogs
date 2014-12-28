@@ -154,7 +154,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (builder.contentAlignment == Alignment.CENTER) {
             content.setGravity(Gravity.CENTER_HORIZONTAL);
         } else if (builder.contentAlignment == Alignment.RIGHT) {
-            content.setGravity(Gravity.RIGHT);
+            content.setGravity(Gravity.END);
         }
 
         if (builder.contentColor != -1) {
@@ -246,7 +246,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             if (builder.titleAlignment == Alignment.CENTER) {
                 title.setGravity(Gravity.CENTER_HORIZONTAL);
             } else if (builder.titleAlignment == Alignment.RIGHT) {
-                title.setGravity(Gravity.RIGHT);
+                title.setGravity(Gravity.END);
             }
         }
 

@@ -13,7 +13,9 @@
         android:layout_marginTop="@dimen/md_dialog_frame_margin"
         android:layout_marginBottom="@dimen/md_main_frame_margin"
         android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+        android:layout_marginStart="@dimen/md_dialog_frame_margin"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
+        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
         android:layout_weight="1">
 
         <LinearLayout
@@ -22,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layoutDirection="locale"
             android:layout_marginBottom="@dimen/md_main_frame_margin">
 
             <ImageView
@@ -29,7 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:layout_marginRight="@dimen/md_icon_margin" />
+                android:layout_marginRight="@dimen/md_icon_margin"
+                android:layout_marginEnd="@dimen/md_icon_margin"
+                />
 
             <TextView
                 android:id="@+id/title"
@@ -79,6 +84,7 @@
                 android:paddingTop="@dimen/md_dialog_frame_margin"
                 android:paddingBottom="@dimen/md_dialog_frame_margin"
                 android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+                android:layout_marginStart="@dimen/md_dialog_frame_margin"
                 android:layout_marginRight="@dimen/md_dialog_frame_margin">
 
                 <LinearLayout
@@ -87,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layoutDirection="locale"
                     android:layout_marginBottom="@dimen/md_main_frame_margin">
 
                     <ImageView
@@ -94,7 +101,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
-                        android:layout_marginRight="@dimen/md_icon_margin" />
+                        android:layout_marginRight="@dimen/md_icon_margin"
+                        android:layout_marginEnd="@dimen/md_icon_margin"
+                        />
 
                     <TextView
                         android:id="@+id/titleCustomView"
@@ -140,13 +149,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/md_button_padding_frame_side"
+        android:layout_marginEnd="@dimen/md_button_padding_frame_side"
         android:layout_marginBottom="@dimen/md_button_padding_frame_bottom">
 
         <Button
             android:id="@+id/buttonDefaultNeutral"
             style="@style/MD_ActionButton"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/md_neutral_button_margin" />
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/md_neutral_button_margin"
+            android:layout_marginStart="@dimen/md_neutral_button_margin"
+            />
 
         <!-- toLeftOf rule added from invalidateActions() -->
         <Button
@@ -156,7 +169,9 @@
         <Button
             android:id="@+id/buttonDefaultPositive"
             style="@style/MD_ActionButton"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            />
 
     </RelativeLayout>
 
