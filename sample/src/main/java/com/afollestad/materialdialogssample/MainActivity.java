@@ -292,7 +292,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .positiveText(R.string.choose)
+//                .positiveText(R.string.choose)
                 .show();
     }
 

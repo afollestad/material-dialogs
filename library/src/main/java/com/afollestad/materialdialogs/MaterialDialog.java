@@ -391,11 +391,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         final int dialogFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_dialog_frame_margin);
-        final int mainFramePadding = (int) mContext.getResources().getDimension(R.dimen.md_main_frame_margin);
         if (titleFrame.getVisibility() == View.VISIBLE || icon.getVisibility() == View.VISIBLE) {
-            int bottomPadding = mainFramePadding;
-            if (icon.getVisibility() == View.VISIBLE)
-                bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
+            int bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_title_margin_plainlist);
             setMargin(titleFrame, dialogFramePadding, bottomPadding, dialogFramePadding, dialogFramePadding);
             ((ViewGroup) titleFrame.getParent()).removeView(titleFrame);
             listViewContainer.addView(titleFrame, 0);
@@ -569,43 +566,51 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     public final void onClick(View v) {
         String tag = (String) v.getTag();
         switch (tag) {
-            case POSITIVE:
-                if (callback != null) {
+            case POSITIVE: {
+                if (callback != null)
                     callback.onPositive(this);
-                }
+                if (listCallbackSingle != null)
+                    sendSingleChoiceCallback(v);
+                if (listCallbackMulti != null)
+                    sendMultichoiceCallback();
                 if (autoDismiss) dismiss();
                 break;
-            case NEGATIVE:
-                if (callback != null) {
+            }
+            case NEGATIVE: {
+                if (callback != null)
                     callback.onNegative(this);
-                }
                 if (autoDismiss) dismiss();
                 break;
-            case NEUTRAL:
-                if (callback != null) {
+            }
+            case NEUTRAL: {
+                if (callback != null)
                     callback.onNeutral(this);
-                }
                 if (autoDismiss) dismiss();
                 break;
-            default:
+            }
+            default: {
                 String[] split = tag.split(":");
                 int index = Integer.parseInt(split[0]);
                 if (listCallback != null) {
-                    if (autoDismiss) dismiss();
-                    listCallback.onSelection(this, v, index, split[1]);
+                    if (autoDismiss) {
+                        dismiss();
+                        listCallback.onSelection(this, v, index, split[1]);
+                    }
                 } else if (listCallbackSingle != null) {
                     RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
                     if (!cb.isChecked())
                         cb.setChecked(true);
                     invalidateSingleChoice(index);
-                    if (autoDismiss) dismiss();
-                    sendSingleChoiceCallback(v);
+                    if (autoDismiss && positiveText == null) {
+                        dismiss();
+                        sendSingleChoiceCallback(v);
+                    }
                 } else if (listCallbackMulti != null) {
                     CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                     cb.setChecked(!cb.isChecked());
-                    sendMultichoiceCallback();
                 } else if (autoDismiss) dismiss();
                 break;
+            }
         }
     }
 
