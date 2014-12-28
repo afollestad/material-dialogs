@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <style name="MD_Light" parent="Theme_Light_Dialog">
@@ -11,7 +10,6 @@
         <item name="md_divider">@color/md_divider_white</item>
         <item name="md_selector">@drawable/md_selector_dark</item>
         <item name="md_btn_selector">@drawable/md_btn_selector_dark</item>
-
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -20,12 +18,12 @@
     <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">end|center_vertical</item>
-
         <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
-        <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal</item>
-        <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal
+        </item>
+        <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internalexternal
+        </item>
         <item name="android:paddingEnd">@dimen/md_button_padding_horizontal_internalexternal</item>
-
         <item name="android:layout_marginLeft">0dp</item>
         <item name="android:layout_marginStart">0dp</item>
     </style>
@@ -38,10 +36,8 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
-
         <item name="android:layout_height">@dimen/md_button_height</item>
         <item name="android:minWidth">@dimen/md_button_min_width</item>
-
     </style>
 
     <!-- Light dialog theme for devices prior Honeycomb -->

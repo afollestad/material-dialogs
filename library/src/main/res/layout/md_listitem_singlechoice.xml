@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RadioButton
         android:id="@+id/control"
@@ -30,7 +30,6 @@
         android:textSize="@dimen/md_listitem_textsize"
         android:gravity="center_vertical"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
-        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
-        />
+        android:layout_marginEnd="@dimen/md_dialog_frame_margin" />
 
 </LinearLayout>
