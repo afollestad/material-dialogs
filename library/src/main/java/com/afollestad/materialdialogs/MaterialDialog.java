@@ -563,7 +563,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
+        List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
             selectedTitles.add(items[i]);
         }
