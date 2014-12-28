@@ -124,6 +124,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         this.selectedIndices = builder.selectedIndices;
         this.autoDismiss = builder.autoDismiss;
         this.adapter = builder.adapter;
+        this.forceStacking = builder.forceStacking;
 
         this.positiveColor = builder.positiveColor;
         this.negativeColor = builder.negativeColor;
