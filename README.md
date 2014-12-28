@@ -6,6 +6,12 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.4.8
+
+> 1. Improvements for padding in list dialogs.
+> 2. Fixed the `forceStacking` option.
+> 3. Single choice dialogs will wait to send selection callbacks until positive action button is pressed, if the positive action button is set.
+
 ###### Version 0.4.7
 
 > 1. Yet more fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
@@ -41,28 +47,9 @@ The code you see below is also found in the sample project. You can download a A
 
 ###### Version 0.4.0
 
-> 1. Yet more bug fixes and improvements throughout
+> 1. Bug fixes and improvements throughout
 > 2. Action button selectors have rounded corners
 > 3. More global theming capabilities. Override the accent color used for action buttons, titles, and content from your Activity theme. See the [Global Theming](#global-theming) section below.
-
-###### Version 0.3.5 – 0.3.6
-
-> 1. Bug fixes.
-> 2. Button stacking algorithm fixes.
-
-###### Version 0.3.1 – 0.3.4
-
-> 1. Global theming! A single attribute can be added to your Activity theme to make all dialogs dark. See the [Global Theming](#global-theming) section below.
-> 2. Large performance improvements for list dialogs, thanks [hzsweers](https://github.com/hzsweers)! The item processor API was switched with custom list adapters, see the sample for an example.
-> 3. Other padding and logic fixes.
-> 4. Crash fix when updating list items after they had previously been set.
-> 5. The ability to set the content color when constructing a dialog builder.
-
-###### Version 0.3.0
-
-> 1. `MaterialDialogCompat` allows easy migration from use of `AlertDialog` (see below).
-> 2. Convenience `show()` method in Builder, to skip call to `build()`.
-> 3. Various important fixes from pull requests and the maintainer.
 
 ---
 
@@ -72,7 +59,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.7'
+    compile 'com.afollestad:material-dialogs:0.4.8'
 }
 ```
 
