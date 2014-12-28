@@ -6,11 +6,13 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-###### Version 0.4.8
+###### Version 0.4.8 – 0.4.9
 
 > 1. Improvements for padding in list dialogs.
 > 2. Fixed the `forceStacking` option.
 > 3. Single choice dialogs will wait to send selection callbacks until positive action button is pressed, if the positive action button is set.
+> 4. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/146
+> 5. List items use pure black or white text depending on theme by default, rather than the former gray-ish color.
 
 ###### Version 0.4.7
 
@@ -59,7 +61,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.8'
+    compile 'com.afollestad:material-dialogs:0.4.9'
 }
 ```
 
