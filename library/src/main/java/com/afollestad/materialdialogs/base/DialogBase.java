@@ -43,6 +43,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Not supported by the Material dialog.
      */
+    @Deprecated
     @Override
     public void setView(View view) {
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
@@ -55,6 +56,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Not supported by the Material dialog.
      */
+    @Deprecated
     @Override
     public void setView(View view, int viewSpacingLeft, int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
@@ -63,6 +65,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Use setContent() instead.
      */
+    @Deprecated
     @Override
     public void setMessage(CharSequence message) {
         throw new RuntimeException("This method is not supported by the MaterialDialog, use setContent() instead.");
@@ -71,6 +74,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Not supported by the Material dialog.
      */
+    @Deprecated
     @Override
     public void setCustomTitle(View customTitleView) {
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
@@ -79,6 +83,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Not supported by the Material dialog.
      */
+    @Deprecated
     @Override
     public void setButton(int whichButton, CharSequence text, Message msg) {
         throw new RuntimeException("Use setActionButton(MaterialDialog.Button, CharSequence) instead.");
@@ -87,6 +92,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     /**
      * @deprecated Not supported by the Material dialog.
      */
+    @Deprecated
     @Override
     public void setButton(int whichButton, CharSequence text, OnClickListener listener) {
         throw new RuntimeException("Use setActionButton(MaterialDialog.Button, CharSequence) instead.");

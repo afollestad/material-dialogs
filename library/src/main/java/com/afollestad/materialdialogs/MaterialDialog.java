@@ -1037,6 +1037,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
      */
+    @Deprecated
     @Override
     public Button getButton(int whichButton) {
         switch (whichButton) {
@@ -1277,6 +1278,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
+    @Deprecated
     public abstract static class SimpleCallback extends ButtonCallback {
         @Override
         public abstract void onPositive(MaterialDialog dialog);
@@ -1285,6 +1287,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
+    @Deprecated
     public abstract static class Callback extends SimpleCallback {
         @Override
         public abstract void onNegative(MaterialDialog dialog);
@@ -1293,6 +1296,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
+    @Deprecated
     public abstract static class FullCallback extends Callback {
         @Override
         public abstract void onNeutral(MaterialDialog dialog);
