@@ -153,8 +153,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
         if (builder.contentAlignment == Alignment.CENTER) {
             content.setGravity(Gravity.CENTER_HORIZONTAL);
-        } else if (builder.contentAlignment == Alignment.RIGHT) {
-            content.setGravity(Gravity.RIGHT);
+        } else if (builder.contentAlignment == Alignment.END) {
+            content.setGravity(Gravity.START);
         }
 
         if (builder.contentColor != -1) {
@@ -250,8 +250,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             }
             if (builder.titleAlignment == Alignment.CENTER) {
                 title.setGravity(Gravity.CENTER_HORIZONTAL);
-            } else if (builder.titleAlignment == Alignment.RIGHT) {
-                title.setGravity(Gravity.RIGHT);
+            } else if (builder.titleAlignment == Alignment.END) {
+                title.setGravity(Gravity.END);
             }
         }
 
@@ -639,8 +639,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         protected Context context;
         protected CharSequence title;
-        protected Alignment titleAlignment = Alignment.LEFT;
-        protected Alignment contentAlignment = Alignment.LEFT;
+        protected Alignment titleAlignment = Alignment.START;
+        protected Alignment contentAlignment = Alignment.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
