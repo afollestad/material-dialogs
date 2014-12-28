@@ -55,7 +55,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     private View titleFrame;
 
     private final int defaultItemColor;
-    private int contentColor;
     private Context mContext;
     private CharSequence positiveText;
     private TextView positiveButton;
@@ -155,19 +154,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (builder.contentAlignment == Alignment.CENTER) {
             content.setGravity(Gravity.CENTER_HORIZONTAL);
         } else if (builder.contentAlignment == Alignment.RIGHT) {
-            content.setGravity(Gravity.END);
+            content.setGravity(Gravity.RIGHT);
         }
 
         if (builder.contentColor != -1) {
-            this.contentColor = builder.contentColor;
-            content.setTextColor(this.contentColor);
+            content.setTextColor(builder.contentColor);
         } else {
             final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
-            this.contentColor = DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback);
+            final int contentColor = DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback);
             content.setTextColor(contentColor);
         }
 
-        if(builder.theme == Theme.LIGHT) {
+        if (builder.theme == Theme.LIGHT) {
             defaultItemColor = Color.BLACK;
         } else {
             defaultItemColor = Color.WHITE;
@@ -253,7 +251,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             if (builder.titleAlignment == Alignment.CENTER) {
                 title.setGravity(Gravity.CENTER_HORIZONTAL);
             } else if (builder.titleAlignment == Alignment.RIGHT) {
-                title.setGravity(Gravity.END);
+                title.setGravity(Gravity.RIGHT);
             }
         }
 
@@ -265,16 +263,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);
-        }
-
-        if (builder.showListener != null) {
-            setOnShowListener(builder.showListener);
-        }
-        if (builder.cancelListener != null) {
-            setOnCancelListener(builder.cancelListener);
-        }
-        if (builder.dismissListener != null) {
-            setOnDismissListener(builder.dismissListener);
         }
     }
 
@@ -570,7 +558,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     }
 
     private void sendMultichoiceCallback() {
-        List<CharSequence> selectedTitles = new ArrayList<>();
+        List<CharSequence> selectedTitles = new ArrayList<CharSequence>();
         for (Integer i : selectedIndicesList) {
             selectedTitles.add(items[i]);
         }
@@ -678,9 +666,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected Typeface mediumFont;
         protected Drawable icon;
         protected ListAdapter adapter;
-        protected OnDismissListener dismissListener;
-        protected OnCancelListener cancelListener;
-        protected OnShowListener showListener;
+        private OnDismissListener dismissListener;
+        private OnCancelListener cancelListener;
+        private OnShowListener showListener;
         protected boolean forceStacking;
 
         public Builder(@NonNull Context context) {
@@ -982,7 +970,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
 
         public MaterialDialog build() {
-            return new MaterialDialog(this);
+            MaterialDialog dialog = new MaterialDialog(this);
+            if (this.showListener != null) {
+                dialog.setOnShowListener(this.showListener);
+            }
+            if (this.cancelListener != null) {
+                dialog.setOnCancelListener(this.cancelListener);
+            }
+            if (this.dismissListener != null) {
+                dialog.setOnDismissListener(this.dismissListener);
+            }
+            return dialog;
         }
 
         public MaterialDialog show() {
@@ -1279,7 +1277,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
-    @Deprecated
     public abstract static class SimpleCallback extends ButtonCallback {
         @Override
         public abstract void onPositive(MaterialDialog dialog);
@@ -1288,7 +1285,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
-    @Deprecated
     public abstract static class Callback extends SimpleCallback {
         @Override
         public abstract void onNegative(MaterialDialog dialog);
@@ -1297,7 +1293,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
      */
-    @Deprecated
     public abstract static class FullCallback extends Callback {
         @Override
         public abstract void onNeutral(MaterialDialog dialog);
