@@ -343,27 +343,24 @@ dialog.show();
 Custom views are very easy to implement. To match the dialog show here: http://www.google.com/design/spec/components/dialogs.html#dialogs-behavior
 
 ```java
+boolean wrapInScrollView = true;
 new MaterialDialog.Builder(this)
         .title("Google Wifi")
-        .customView(R.layout.custom_view)
+        .customView(R.layout.custom_view, wrapInScrollView)
         .positiveText("Connect")
         .positiveColor(Color.parseColor("#03a9f4"))
         .build()
         .show();
 ```
 
-Where `custom_view.xml` contains a LinearLayout of TextViews, an EditText, and a CheckBox. You'll see in
-the sample project that you don't need to add padding to the edges of your custom view, the dialog
-already does that. Note that your custom view's top and bottom
-margins will be overrided; if your custom view is a ViewGroup (e.g. a LinearLayout or RelativeLayout),
-then the first and last child's top and bottom will be overided.
+If `wrapInScrollView` is true, then the library will place your custom view inside of a ScrollView for you.
+This allows users to scroll your custom view if necessary (small screens, long content, etc.). However, there are cases
+when you don't want that behavior. This mostly consists of cases when you'd have a ScrollView in your custom layout,
+including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project contains examples of using both true
+ and false for this parameter.
 
-`MaterialDialog` inserts your view into a `ScrollView` and displays a divider above the action buttons,
-so don't wrap your custom view in a scroll view and don't worry about it being too long or needing a divider.
-However, you should avoid making any content that wouldn't belong in a dialog because of its size.
-
-You can pass `positiveText()` or the other action buttons to the builder to force it to display the action buttons
-below your list, however this is only useful in some specific cases.
+Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
+you're responsible for using padding values that look good with your content.
 
 ---
 

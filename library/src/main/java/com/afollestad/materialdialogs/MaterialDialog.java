@@ -139,7 +139,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             customViewFrame = frame;
             View innerView = mBuilder.customView;
 
-            if (mBuilder.customViewScroll) {
+            if (mBuilder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    overscroll glow without clipping */
                 Resources r = getContext().getResources();
@@ -746,7 +746,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         OnCancelListener cancelListener;
         OnShowListener showListener;
         boolean forceStacking;
-        boolean customViewScroll;
+        boolean wrapCustomViewInScroll;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -947,13 +947,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        /**
-         * Use {@link #customView(int, boolean)} instead.
-         *
-         * @param layoutRes
-         * @return
-         */
-        @Deprecated
         public Builder customView(@LayoutRes int layoutRes) {
             return customView(layoutRes, true);
         }
@@ -961,24 +954,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
             LayoutInflater li = LayoutInflater.from(this.context);
             customView(li.inflate(layoutRes, null));
-            this.customViewScroll = wrapInScrollView;
+            this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
         }
 
-        /**
-         * Use {@link #customView(android.view.View, boolean)} instead.
-         *
-         * @param view
-         * @return
-         */
-        @Deprecated
         public Builder customView(View view) {
             return customView(view, true);
         }
 
         public Builder customView(View view, boolean wrapInScrollView) {
             this.customView = view;
-            this.customViewScroll = wrapInScrollView;
+            this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
         }
 
