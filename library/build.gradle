@@ -9,7 +9,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
-        versionName "0.4.9"
+        versionName "0.5.0"
     }
     lintOptions {
         abortOnError false
@@ -26,7 +26,7 @@ publish {
     userOrg = 'drummer-aidan'
     groupId = 'com.afollestad'
     artifactId = 'material-dialogs'
-    version = '0.4.9'
+    version = '0.5.0'
     description = 'A library for implementing Material design styled dialogs across all versions of Android.'
     website = 'https://github.com/afollestad/material-dialogs'
     issueTracker = "${website}/issues"

@@ -6,6 +6,12 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
+###### Version 0.5.0
+
+> 1. The ability to choose whether or not custom views are placed inside of a ScrollView (the second parameter of `customView()` in the `Builder`).
+> 2. Various padding improvements.
+> 3. Small bug fixes.
+
 ###### Version 0.4.8 – 0.4.9
 
 > 1. Improvements for padding in list dialogs.
@@ -14,29 +20,22 @@ The code you see below is also found in the sample project. You can download a A
 > 4. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/146
 > 5. List items use pure black or white text depending on theme by default, rather than the former gray-ish color.
 
-###### Version 0.4.7
+###### Version 0.4.6 – 0.4.7
 
-> 1. Yet more fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
+> 1. Yet more fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers).
 > 2. Note that the 3 variations of the action callbacks are deprecated and replaced with the single `ButtonCallback` interface.
 > 3. A fix for action button text styling on Lollipop, thanks [plusCubed](https://github.com/plusCubed)!
 > 4. Other fixes and improvements.
+> 5. The ability to force the action buttons to be stacked (see the [Misc.](#misc) section).
 
-###### Version 0.4.6
-
-> 1. Some fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers), see the [pull request here](https://github.com/afollestad/material-dialogs/pull/124).
-> 2. The ability to force the action buttons to be stacked (see the [Misc.](#misc) section).
-
-###### Version 0.4.5
+###### Version 0.4.4 – 0.4.5
 
 > 1. Crash fix for Huawei devices
 > 2. Removed some unnecessary logging.
 > 3. New methods in `MaterialDialogCompat.Builder`
 > 4. Other crash fixes and improvements.
-
-###### Version 0.4.4
-
-> 1. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
-> 2. Added `dismiss`, `cancel`, and `show` listener methods to the `Builder`.
+> 5. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
+> 6. Added `dismiss`, `cancel`, and `show` listener methods to the `Builder`.
 
 ###### Version 0.4.1 – 0.4.3
 
@@ -51,7 +50,7 @@ The code you see below is also found in the sample project. You can download a A
 
 > 1. Bug fixes and improvements throughout
 > 2. Action button selectors have rounded corners
-> 3. More global theming capabilities. Override the accent color used for action buttons, titles, and content from your Activity theme. See the [Global Theming](#global-theming) section below.
+> 3. Global theming capabilities. Override the accent color used for action buttons, titles, and content from your Activity theme. See the [Global Theming](#global-theming) section below.
 
 ---
 
@@ -61,7 +60,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.4.9'
+    compile 'com.afollestad:material-dialogs:0.5.0'
 }
 ```
 
