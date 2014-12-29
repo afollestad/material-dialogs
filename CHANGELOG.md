@@ -1,5 +1,14 @@
-Changelog
-=========
+# Changelog
+
+###### Version 0.5.1
+
+> Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
+>
+> 1. Support for setting key listener in the `Builder`.
+> 2. More RTL layout improvements, use of `Alignment` enum replaced with the regular Gravity constants.
+> 3. Updates to `MaterialDialogCompat`.
+> 4. The ability to invoke the multi choice callback every time a checkbox is checked/unchecked, rather than waiting until the positive action button is pressed (if it's there). `alwaysCallMultiChoiceCallback()` method added to the `Builder`.
+> 5. Other various improvements, see the pull request from the link above for details.
 
 ###### Version 0.5.0
 

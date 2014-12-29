@@ -6,53 +6,17 @@ The code you see below is also found in the sample project. You can download a A
 
 ### What's New
 
-For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md)
+For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
-###### Version 0.5.0
+###### Version 0.5.1
 
-> 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help! See the [Custom Views](https://github.com/afollestad/material-dialogs#custom-views) section for more details, see the sample project for an example in action.
-> 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs. A top divider is also used when there's scrollable content.
-> 3. Other bug fixes and improvements throughout.
-
-###### Version 0.4.8 – 0.4.9
-
-> 1. Improvements for padding in list dialogs.
-> 2. Fixed the `forceStacking` option.
-> 3. Single choice dialogs will wait to send selection callbacks until positive action button is pressed, if the positive action button is set.
-> 4. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/146
-> 5. List items use pure black or white text depending on theme by default, rather than the former gray-ish color.
-
-###### Version 0.4.6 – 0.4.7
-
-> 1. Yet more fixes thanks to a pull request from [hzsweers](https://github.com/hzsweers).
-> 2. Note that the 3 variations of the action callbacks are deprecated and replaced with the single `ButtonCallback` interface.
-> 3. A fix for action button text styling on Lollipop, thanks [plusCubed](https://github.com/plusCubed)!
-> 4. Other fixes and improvements.
-> 5. The ability to force the action buttons to be stacked (see the [Misc.](#misc) section).
-
-###### Version 0.4.4 – 0.4.5
-
-> 1. Crash fix for Huawei devices
-> 2. Removed some unnecessary logging.
-> 3. New methods in `MaterialDialogCompat.Builder`
-> 4. Other crash fixes and improvements.
-> 5. Memory management improvements for Typefaces (thanks [Kevin Barry](https://github.com/teslacoil) of Nova Launcher!)
-> 6. Added `dismiss`, `cancel`, and `show` listener methods to the `Builder`.
-
-###### Version 0.4.1 – 0.4.3
-
-> 1. Added `md_item_color` attribute to global theming.
-> 2. Added `md_icon` attribute to global theming.
-> 3. Fixed a crash bug on pre-Lollipop devices related to list dialogs.
-> 4. Fixed list item default color on dark dialogs for pre-Lollipop.
-> 5. Fixes to action button insets, and the stacking algorithm. Thanks [plusCubed](https://github.com/plusCubed)!
-> 6. Major padding/margin fixes for using an icon with list dialogs.
-
-###### Version 0.4.0
-
-> 1. Bug fixes and improvements throughout
-> 2. Action button selectors have rounded corners
-> 3. Global theming capabilities. Override the accent color used for action buttons, titles, and content from your Activity theme. See the [Global Theming](#global-theming) section below.
+> Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
+>
+> 1. Support for setting key listener in the `Builder`.
+> 2. More RTL layout improvements, use of `Alignment` enum replaced with the regular Gravity constants.
+> 3. Updates to `MaterialDialogCompat`.
+> 4. The ability to invoke the multi choice callback every time a checkbox is checked/unchecked, rather than waiting until the positive action button is pressed (if it's there). `alwaysCallMultiChoiceCallback()` method added to the `Builder`.
+> 5. Other various improvements, see the pull request from the link above for details.
 
 ---
 
@@ -62,7 +26,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.0'
+    compile 'com.afollestad:material-dialogs:0.5.1'
 }
 ```
 
