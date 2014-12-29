@@ -4,11 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +101,16 @@ public class MaterialDialogCompat {
          */
         public Builder setIcon(Drawable icon) {
             builder.icon(icon);
+            return this;
+        }
+
+        /**
+         * Set the attribute ID of the {@link android.graphics.drawable.Drawable} to be used in the title (e.g. android.R.attr.dialogicon)
+         *
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder setIconAttribute(@AttrRes int attrId) {
+            builder.iconAttr(attrId);
             return this;
         }
 
@@ -293,9 +309,24 @@ public class MaterialDialogCompat {
 		 * @return This
 		 */
 		public Builder setView(View view) {
-			builder.customView(view);
+            boolean wrapInScrollView = !(view instanceof ScrollView || view instanceof AdapterView || view instanceof WebView);
+            builder.customView(view, wrapInScrollView);
 			return this;
 		}
+
+        /**
+         * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
+         *
+         * @param itemsId   A resource ID for the items (e.g. R.array.my_items)
+         * @param checkedItems	specifies which items are checked. It should be null in which case no items are checked. If non null it must be exactly the same length as the array of items.
+         * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
+         * @return This
+         */
+        public Builder setMultiChoiceItems(@ArrayRes int itemsId, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
+            builder.items(itemsId);
+            setUpMultiChoiceCallback(checkedItems, listener);
+            return this;
+        }
 
 		/**
 		 * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
@@ -305,37 +336,45 @@ public class MaterialDialogCompat {
 		 * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
 		 * @return This
 		 */
-		public Builder setMultiChoiceItems(String[] items, final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
+		public Builder setMultiChoiceItems(String[] items, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
 			builder.items(items);
-
-			/* Convert old style array of booleans-per-index to new list of indices */
-			ArrayList<Integer> selectedIndices = new ArrayList<>();
-			for(int i = 0; i < checkedItems.length; i++) {
-				if(checkedItems[i]) {
-					selectedIndices.add(i);
-				}
-			}
-			Integer selectedIndicesArr[] = new Integer[selectedIndices.size()];
-			selectedIndices.toArray(selectedIndicesArr);
-			builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
-				@Override
-				public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-					/* which is a list of selected indices */
-					List<Integer> whichList = Arrays.asList(which);
-					for(int i = 0; i < checkedItems.length; i++) {
-						/* save old state */
-						boolean oldChecked = checkedItems[i];
-						/* Record new state */
-						checkedItems[i] = whichList.contains(i);
-						/* Fire the listener if it changed */
-						if(oldChecked != checkedItems[i]) {
-							listener.onClick(dialog, i, checkedItems[i]);
-						}
-					}
-				}
-			});
+            setUpMultiChoiceCallback(checkedItems, listener);
 			return this;
 		}
+
+        private void setUpMultiChoiceCallback(@Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
+            Integer selectedIndicesArr[] = null;
+			/* Convert old style array of booleans-per-index to new list of indices */
+            if (checkedItems != null) {
+                ArrayList<Integer> selectedIndices = new ArrayList<>();
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        selectedIndices.add(i);
+                    }
+                }
+                selectedIndicesArr = selectedIndices.toArray(new Integer[selectedIndices.size()]);
+            }
+
+            builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
+                @Override
+                public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+					/* which is a list of selected indices */
+                    List<Integer> whichList = Arrays.asList(which);
+                    if (checkedItems != null) {
+                        for(int i = 0; i < checkedItems.length; i++) {
+                            /* save old state */
+                            boolean oldChecked = checkedItems[i];
+                            /* Record new state */
+                            checkedItems[i] = whichList.contains(i);
+                            /* Fire the listener if it changed */
+                            if(oldChecked != checkedItems[i]) {
+                                listener.onClick(dialog, i, checkedItems[i]);
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
 		/**
 		 * Set a list of items to be displayed in the dialog as the content, you will be notified of the selected item via the supplied listener.
@@ -364,9 +403,8 @@ public class MaterialDialogCompat {
 		 * @param listener	notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.
 		 * @return This
 		 */
-		public Builder setSingleChoiceItems(int itemsId, int checkedItem, final DialogInterface.OnClickListener listener) {
+		public Builder setSingleChoiceItems(@ArrayRes int itemsId, int checkedItem, final DialogInterface.OnClickListener listener) {
 			builder.items(itemsId);
-
 			builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
 				@Override
 				public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
@@ -375,5 +413,25 @@ public class MaterialDialogCompat {
 			});
 			return this;
 		}
+
+        public Builder setOnCancelListener(DialogInterface.OnCancelListener listener) {
+            builder.cancelListener(listener);
+            return this;
+        }
+
+        public Builder setOnDismissListener(DialogInterface.OnDismissListener listener) {
+            builder.dismissListener(listener);
+            return this;
+        }
+
+        public Builder setOnShowListener(DialogInterface.OnShowListener listener) {
+            builder.showListener(listener);
+            return this;
+        }
+
+        public Builder setOnKeyListener(DialogInterface.OnKeyListener listener) {
+            builder.keyListener(listener);
+            return this;
+        }
 	}
 }
