@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="md_title_light">#000000</color>
-    <color name="md_title_dark">#FFFFFF</color>
-
     <!--<color name="content_light">#5E5E5E</color>-->
     <!--<color name="content_dark">#EDEDED</color>-->
     <!--<color name="item_light">#535353</color>-->
