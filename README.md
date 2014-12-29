@@ -18,6 +18,20 @@ For the full history, see the [Changelog](https://github.com/afollestad/material
 > 4. The ability to invoke the multi choice callback every time a checkbox is checked/unchecked, rather than waiting until the positive action button is pressed (if it's there). `alwaysCallMultiChoiceCallback()` method added to the `Builder`.
 > 5. Other various improvements, see the pull request from the link above for details.
 
+###### Version 0.5.0
+
+> 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help! See the [Custom Views](https://github.com/afollestad/material-dialogs#custom-views) section for more details, see the sample project for an example in action.
+> 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs. A top divider is also used when there's scrollable content.
+> 3. Other bug fixes and improvements throughout.
+
+###### Version 0.4.8 – 0.4.9
+
+> 1. Improvements for padding in list dialogs.
+> 2. Fixed the `forceStacking` option.
+> 3. Single choice dialogs will wait to send selection callbacks until positive action button is pressed, if the positive action button is set.
+> 4. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/146
+> 5. List items use pure black or white text depending on theme by default, rather than the former gray-ish color.
+
 ---
 
 ### Gradle Dependency (jCenter)
