@@ -67,6 +67,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected Button neutralButton;
     protected Button negativeButton;
     protected boolean isStacked;
+    protected boolean alwaysCallMultiChoiceCallback;
     protected final int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
@@ -197,6 +198,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     } else {
                         selectedIndicesList = new ArrayList<>();
                     }
+                    alwaysCallMultiChoiceCallback = builder.alwaysCallMultiChoiceCallback;
                 } else {
                     listType = ListType.REGULAR;
                 }
@@ -727,6 +729,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 } else if (mBuilder.listCallbackMulti != null) {
                     CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                     cb.setChecked(!cb.isChecked());
+                    if (alwaysCallMultiChoiceCallback) {
+                        sendMultichoiceCallback();
+                    }
                 } else if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -757,6 +762,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListCallback listCallback;
         protected ListCallback listCallbackSingle;
         protected ListCallbackMulti listCallbackMulti;
+        protected boolean alwaysCallMultiChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
         protected float contentLineSpacingMultiplier = 1.3f;
@@ -940,6 +946,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             this.listCallback = null;
             this.listCallbackSingle = null;
             this.listCallbackMulti = callback;
+            return this;
+        }
+
+        /**
+         * By default, the multi choice callback is only called when the user clicks the positive button
+         * or if there are no buttons. Call this to force it to always call on item clicks even if the
+         * positive button exists.
+         */
+        public Builder alwaysCallMultiChoiceCallback() {
+            this.alwaysCallMultiChoiceCallback = true;
             return this;
         }
 
