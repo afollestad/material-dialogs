@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -13,6 +14,7 @@ import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,6 +51,9 @@ import java.util.List;
  * @author Aidan Follestad (afollestad)
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
+
+    @IntDef({Gravity.START, Gravity.CENTER_HORIZONTAL, Gravity.END})
+    public @interface GravityInt {}
 
     protected View view;
     protected ListView listView;
@@ -113,10 +118,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             content.setLinkTextColor(mBuilder.positiveColor);
         }
-        if (builder.contentAlignment == Alignment.CENTER) {
-            content.setGravity(Gravity.CENTER_HORIZONTAL);
-        } else if (builder.contentAlignment == Alignment.END) {
-            content.setGravity(Gravity.START);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            //noinspection ResourceType
+            title.setTextAlignment(gravityToAlignment(builder.titleGravity));
+        } else {
+            title.setGravity(builder.titleGravity);
         }
 
         if (builder.contentColor != -1) {
@@ -222,10 +229,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
                 title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
-            if (builder.titleAlignment == Alignment.CENTER) {
-                title.setGravity(Gravity.CENTER_HORIZONTAL);
-            } else if (builder.titleAlignment == Alignment.END) {
-                title.setGravity(Gravity.END);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                content.setTextAlignment(gravityToAlignment(builder.contentGravity));
+            } else {
+                content.setGravity(builder.contentGravity);
             }
         }
 
@@ -261,6 +270,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private static int gravityToAlignment(@GravityInt int gravity) {
+        switch (gravity) {
+            case Gravity.START:
+                return View.TEXT_ALIGNMENT_VIEW_START;
+            case Gravity.CENTER_HORIZONTAL:
+                return View.TEXT_ALIGNMENT_CENTER;
+            case Gravity.END:
+                return View.TEXT_ALIGNMENT_VIEW_END;
+            default:
+                return View.TEXT_ALIGNMENT_VIEW_START;
         }
     }
 
@@ -717,8 +740,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         protected Context context;
         protected CharSequence title;
-        protected Alignment titleAlignment = Alignment.START;
-        protected Alignment contentAlignment = Alignment.START;
+        protected @GravityInt int titleGravity = Gravity.START;
+        protected @GravityInt int contentGravity = Gravity.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -793,8 +816,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder titleAlignment(Alignment align) {
-            this.titleAlignment = align;
+        public Builder titleGravity(@GravityInt int gravity) {
+            this.titleGravity = gravity;
             return this;
         }
 
@@ -861,8 +884,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder contentAlignment(Alignment align) {
-            this.contentAlignment = align;
+        public Builder contentGravity(@GravityInt int gravity) {
+            this.contentGravity = gravity;
             return this;
         }
 
