@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class DialogUtils {
+class DialogUtils {
 
     public static int adjustAlpha(int color, float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
@@ -35,7 +35,7 @@ public class DialogUtils {
         return resolveDrawable(context, attr, null);
     }
 
-    public static Drawable resolveDrawable(Context context, int attr, Drawable fallback) {
+    private static Drawable resolveDrawable(Context context, int attr, Drawable fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             Drawable d = a.getDrawable(0);
