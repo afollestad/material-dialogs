@@ -687,10 +687,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 String[] split = tag.split(":");
                 int index = Integer.parseInt(split[0]);
                 if (mBuilder.listCallback != null) {
-                    if (mBuilder.autoDismiss) {
+                    if (mBuilder.autoDismiss)
                         dismiss();
-                        mBuilder.listCallback.onSelection(this, v, index, split[1]);
-                    }
+                    mBuilder.listCallback.onSelection(this, v, index, split[1]);
                 } else if (mBuilder.listCallbackSingle != null) {
                     RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
                     if (!cb.isChecked())
