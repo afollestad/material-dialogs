@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -860,7 +861,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder iconAttr(int iconAttr) {
+        public Builder iconAttr(@AttrRes int iconAttr) {
             this.icon = DialogUtils.resolveDrawable(context, iconAttr);
             return this;
         }
@@ -901,7 +902,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         public Builder items(@ArrayRes int itemsRes) {
-            items(this.context.getResources().getStringArray(itemsRes));
+            items(this.context.getResources().getTextArray(itemsRes));
             return this;
         }
 
