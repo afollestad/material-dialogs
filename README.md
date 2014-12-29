@@ -8,8 +8,8 @@ The code you see below is also found in the sample project. You can download a A
 
 ###### Version 0.5.0
 
-> 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help!
-> 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs.
+> 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help! See the [Custom Views](https://github.com/afollestad/material-dialogs#custom-views) section for more details.
+> 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs. A top divider is also used when there's scrollable content.
 > 3. Other bug fixes and improvements throughout.
 
 ###### Version 0.4.8 – 0.4.9
@@ -107,9 +107,6 @@ dialogBuilder.setNegativeButton(R.string.OK, new DialogInterface.OnClickListener
     @Override
     public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
-        if (listener != null) {
-            listener.onCancel(dialog);
-        }
     }
 });
 dialogBuilder.create().show();
@@ -133,7 +130,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-You can substitute a `Drawable` instance of a drawable resource ID or attribute ID.
+You can substitute a `Drawable` instance for a drawable resource ID or attribute ID, which is recommended.
 
 ---
 
@@ -151,8 +148,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-If you have multiple action buttons, and together they're too long to fit on one line, the dialog will stack
- the buttons automatically.
+You can also force the dialog to stack its buttons with the `forceStacking()` method of the `Builder`.
 
 ---
 
@@ -247,9 +243,6 @@ Single choice list dialogs are almost identical to regular list dialogs. The onl
 you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
 display radio buttons next to list items.
 
-This also makes it so that an action button has to be pressed, tapping a list item won't dismiss the dialog.
-Note that this means the positive action button callback will be overridden if you specify one.
-
 ```java
 new MaterialDialog.Builder(this)
         .title("Social Networks")
@@ -278,9 +271,6 @@ Multiple choice list dialogs are almost identical to regular list dialogs. The o
 you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
 display check boxes next to list items, and the callback can return multiple selections.
 
-This also makes it so that an action button has to be pressed, tapping a list item won't dismiss the dialog.
-Note that this means the positive action button callback will be overridden if you specify one.
-
 ```java
 new MaterialDialog.Builder(this)
         .title("Social Networks")
@@ -293,15 +283,6 @@ new MaterialDialog.Builder(this)
         .positiveText("Choose")
         .show();
 ```
-
-If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
-For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
-callback will be called every time you select an item since no action is available to press, without the
-dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
-it to display the action buttons below your list, however this is only useful in some specific cases.
-
----
 
 If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
 For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
@@ -340,7 +321,7 @@ dialog.show();
 
 ### Custom Views
 
-Custom views are very easy to implement. To match the dialog show here: http://www.google.com/design/spec/components/dialogs.html#dialogs-behavior
+Custom views are very easy to implement.
 
 ```java
 boolean wrapInScrollView = true;
@@ -521,14 +502,5 @@ Typeface contentAndListItems = // ... initialize
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .typeface(titleAndActions, contentAndListItems)
-        .show();
-```
-
-If you want to force the dialog action buttons to be stacked (override the stacking algorithm):
-
-```java
-MaterialDialog dialog new MaterialDialog.Builder(this)
-        // ... other initialization
-        .forceStacking(true)
         .show();
 ```
