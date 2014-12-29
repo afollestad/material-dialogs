@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -11,8 +12,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,6 +53,9 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
+    @IntDef({Gravity.START, Gravity.CENTER_HORIZONTAL, Gravity.END})
+    public @interface GravityInt {}
+
     protected View view;
     protected ListView listView;
     protected ImageView icon;
@@ -62,6 +68,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected Button neutralButton;
     protected Button negativeButton;
     protected boolean isStacked;
+    protected boolean alwaysCallMultiChoiceCallback;
     protected final int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
@@ -113,10 +120,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             content.setLinkTextColor(mBuilder.positiveColor);
         }
-        if (builder.contentAlignment == Alignment.CENTER) {
-            content.setGravity(Gravity.CENTER_HORIZONTAL);
-        } else if (builder.contentAlignment == Alignment.END) {
-            content.setGravity(Gravity.START);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            //noinspection ResourceType
+            title.setTextAlignment(gravityToAlignment(builder.titleGravity));
+        } else {
+            title.setGravity(builder.titleGravity);
         }
 
         if (builder.contentColor != -1) {
@@ -190,6 +199,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     } else {
                         selectedIndicesList = new ArrayList<>();
                     }
+                    alwaysCallMultiChoiceCallback = builder.alwaysCallMultiChoiceCallback;
                 } else {
                     listType = ListType.REGULAR;
                 }
@@ -222,10 +232,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
                 title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
-            if (builder.titleAlignment == Alignment.CENTER) {
-                title.setGravity(Gravity.CENTER_HORIZONTAL);
-            } else if (builder.titleAlignment == Alignment.END) {
-                title.setGravity(Gravity.END);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                content.setTextAlignment(gravityToAlignment(builder.contentGravity));
+            } else {
+                content.setGravity(builder.contentGravity);
             }
         }
 
@@ -237,6 +249,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
         if (builder.dismissListener != null) {
             setOnDismissListener(builder.dismissListener);
+        }
+        if (builder.keyListener != null) {
+            setOnKeyListener(builder.keyListener);
         }
 
         updateFramePadding();
@@ -258,6 +273,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private static int gravityToAlignment(@GravityInt int gravity) {
+        switch (gravity) {
+            case Gravity.START:
+                return View.TEXT_ALIGNMENT_VIEW_START;
+            case Gravity.CENTER_HORIZONTAL:
+                return View.TEXT_ALIGNMENT_CENTER;
+            case Gravity.END:
+                return View.TEXT_ALIGNMENT_VIEW_END;
+            default:
+                return View.TEXT_ALIGNMENT_VIEW_START;
         }
     }
 
@@ -701,6 +730,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 } else if (mBuilder.listCallbackMulti != null) {
                     CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                     cb.setChecked(!cb.isChecked());
+                    if (alwaysCallMultiChoiceCallback) {
+                        sendMultichoiceCallback();
+                    }
                 } else if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -714,8 +746,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         protected Context context;
         protected CharSequence title;
-        protected Alignment titleAlignment = Alignment.START;
-        protected Alignment contentAlignment = Alignment.START;
+        protected @GravityInt int titleGravity = Gravity.START;
+        protected @GravityInt int contentGravity = Gravity.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -731,6 +763,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListCallback listCallback;
         protected ListCallback listCallbackSingle;
         protected ListCallbackMulti listCallbackMulti;
+        protected boolean alwaysCallMultiChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
         protected float contentLineSpacingMultiplier = 1.3f;
@@ -743,6 +776,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListAdapter adapter;
         protected OnDismissListener dismissListener;
         protected OnCancelListener cancelListener;
+        protected OnKeyListener keyListener;
         protected OnShowListener showListener;
         protected boolean forceStacking;
         protected boolean wrapCustomViewInScroll;
@@ -789,8 +823,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder titleAlignment(Alignment align) {
-            this.titleAlignment = align;
+        public Builder titleGravity(@GravityInt int gravity) {
+            this.titleGravity = gravity;
             return this;
         }
 
@@ -827,7 +861,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder iconAttr(int iconAttr) {
+        public Builder iconAttr(@AttrRes int iconAttr) {
             this.icon = DialogUtils.resolveDrawable(context, iconAttr);
             return this;
         }
@@ -857,8 +891,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder contentAlignment(Alignment align) {
-            this.contentAlignment = align;
+        public Builder contentGravity(@GravityInt int gravity) {
+            this.contentGravity = gravity;
             return this;
         }
 
@@ -868,7 +902,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         public Builder items(@ArrayRes int itemsRes) {
-            items(this.context.getResources().getStringArray(itemsRes));
+            items(this.context.getResources().getTextArray(itemsRes));
             return this;
         }
 
@@ -913,6 +947,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             this.listCallback = null;
             this.listCallbackSingle = null;
             this.listCallbackMulti = callback;
+            return this;
+        }
+
+        /**
+         * By default, the multi choice callback is only called when the user clicks the positive button
+         * or if there are no buttons. Call this to force it to always call on item clicks even if the
+         * positive button exists.
+         */
+        public Builder alwaysCallMultiChoiceCallback() {
+            this.alwaysCallMultiChoiceCallback = true;
             return this;
         }
 
@@ -1053,6 +1097,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder cancelListener(OnCancelListener listener) {
             this.cancelListener = listener;
+            return this;
+        }
+
+        public Builder keyListener(OnKeyListener listener) {
+            this.keyListener = listener;
             return this;
         }
 
