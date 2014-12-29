@@ -8,7 +8,7 @@ The code you see below is also found in the sample project. You can download a A
 
 ###### Version 0.5.0
 
-> 1. The ability to choose whether or not custom views are placed inside of a ScrollView (the second parameter of `customView()` in the `Builder`).
+> 1. The ability to choose whether or not custom views are placed inside of a ScrollView (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help!
 > 2. Various padding improvements.
 > 3. Small bug fixes.
 
