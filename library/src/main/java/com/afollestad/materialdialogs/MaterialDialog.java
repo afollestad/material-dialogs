@@ -238,6 +238,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (builder.dismissListener != null) {
             setOnDismissListener(builder.dismissListener);
         }
+        if (builder.keyListener != null) {
+            setOnKeyListener(builder.keyListener);
+        }
 
         updateFramePadding();
         invalidateActions();
@@ -743,6 +746,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListAdapter adapter;
         protected OnDismissListener dismissListener;
         protected OnCancelListener cancelListener;
+        protected OnKeyListener keyListener;
         protected OnShowListener showListener;
         protected boolean forceStacking;
         protected boolean wrapCustomViewInScroll;
@@ -1053,6 +1057,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder cancelListener(OnCancelListener listener) {
             this.cancelListener = listener;
+            return this;
+        }
+
+        public Builder keyListener(OnKeyListener listener) {
+            this.keyListener = listener;
             return this;
         }
 
