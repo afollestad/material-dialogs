@@ -328,10 +328,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             contentScrollView.setVisibility(View.VISIBLE);
             boolean canScroll = canContentScroll();
-            final int contentVerticalPadding = (int) mBuilder.context.getResources()
-                    .getDimension(R.dimen.md_title_frame_margin_bottom);
-            content.setPadding(contentHorizontalPadding, contentVerticalPadding,
-                    contentHorizontalPadding, contentVerticalPadding);
+            if (canScroll) {
+                final int contentVerticalPadding = (int) mBuilder.context.getResources()
+                        .getDimension(R.dimen.md_title_frame_margin_bottom);
+                content.setPadding(contentHorizontalPadding, contentVerticalPadding,
+                        contentHorizontalPadding, contentVerticalPadding);
+            }
             setDividerVisibility(canScroll, canScroll);
         }
     }
