@@ -9,7 +9,7 @@
         android:id="@+id/mainFrame"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -18,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-            android:layout_marginTop="@dimen/md_dialog_frame_margin"
-            android:layout_marginRight="@dimen/md_dialog_frame_margin"
-            android:layout_marginBottom="@dimen/md_title_frame_margin_bottom">
+            android:paddingLeft="@dimen/md_dialog_frame_margin"
+            android:paddingTop="@dimen/md_dialog_frame_margin"
+            android:paddingRight="@dimen/md_dialog_frame_margin"
+            android:paddingBottom="@dimen/md_title_frame_margin_bottom">
 
             <ImageView
                 android:id="@+id/icon"
@@ -42,6 +42,7 @@
             android:id="@+id/titleBarDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="@dimen/md_content_vertical_padding"
             android:layout_marginBottom="-1dp"
             android:visibility="gone" />
 
@@ -49,7 +50,9 @@
             android:id="@+id/contentScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/md_content_vertical_padding">
 
             <TextView
                 android:id="@+id/content"
@@ -69,10 +72,7 @@
                 android:id="@+id/contentListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/md_content_vertical_padding"
-                android:paddingBottom="@dimen/md_content_vertical_padding"
                 android:scrollbarStyle="outsideOverlay"
-                android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="0dp" />
         </FrameLayout>
@@ -101,7 +101,9 @@
             android:id="@+id/buttonDefaultNeutral"
             style="@style/MD_ActionButton"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/md_neutral_button_margin" />
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/md_neutral_button_margin"
+            android:layout_marginStart="@dimen/md_neutral_button_margin" />
         <!-- toLeftOf rule added from invalidateActions() -->
         <Button
             android:id="@+id/buttonDefaultNegative"
@@ -110,7 +112,8 @@
         <Button
             android:id="@+id/buttonDefaultPositive"
             style="@style/MD_ActionButton"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <LinearLayout

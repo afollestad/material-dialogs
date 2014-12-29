@@ -120,13 +120,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
-        findViewById(R.id.complex).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showComplexListeners();
-            }
-        });
-
         findViewById(R.id.customListItems).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +205,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.speedBoost)
                 .negativeText(R.string.noThanks)
+                .forceStacking(true)  // this generally should not be forced, but is used for demo purposes
                 .show();
     }
 
@@ -323,44 +317,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 })
                 .positiveText(R.string.choose)
 
-                .show();
-    }
-
-    private void showComplexListeners() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.complex)
-                .positiveText("Yes")
-                .negativeText("No")
-                .neutralText("Maybe")
-                .items(R.array.socialNetworks)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        Toast.makeText(MainActivity.this, "Clicked " + text, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        Toast.makeText(MainActivity.this, "Maybe", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        Toast.makeText(MainActivity.this, "No", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .cancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
-                    }
-                })
                 .show();
     }
 
