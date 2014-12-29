@@ -311,6 +311,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return;
         }
         View contentScrollView = view.findViewById(R.id.contentScrollView);
+        TextView content = (TextView) view.findViewById(R.id.content);
+        final int contentHorizontalPadding = (int) mBuilder.context.getResources().getDimension(R.dimen.md_dialog_frame_margin);
+        content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
+
         if (mBuilder.customView != null) {
             contentScrollView.setVisibility(View.GONE);
             customViewFrame.setVisibility(View.VISIBLE);
@@ -324,6 +328,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             contentScrollView.setVisibility(View.VISIBLE);
             boolean canScroll = canContentScroll();
+            final int contentVerticalPadding = (int) mBuilder.context.getResources()
+                    .getDimension(R.dimen.md_title_frame_margin_bottom);
+            content.setPadding(contentHorizontalPadding, contentVerticalPadding,
+                    contentHorizontalPadding, contentVerticalPadding);
             setDividerVisibility(canScroll, canScroll);
         }
     }
@@ -1226,6 +1234,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     public final void setContent(CharSequence content) {
         ((TextView) view.findViewById(R.id.content)).setText(content);
+        invalidateCustomViewAssociations(); // invalidates padding in content area scroll (if needed)
     }
 
     public final void setItems(CharSequence[] items) {

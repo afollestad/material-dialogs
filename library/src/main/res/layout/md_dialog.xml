@@ -56,8 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_content_textsize"
-                android:paddingLeft="@dimen/md_dialog_frame_margin"
-                android:paddingRight="@dimen/md_dialog_frame_margin"
                 tools:text="Content" />
         </ScrollView>
 
