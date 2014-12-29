@@ -11,6 +11,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -137,6 +138,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             @Override
             public void onClick(View v) {
                 showCustomView();
+            }
+        });
+
+        findViewById(R.id.customView_noScroll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomWebView();
             }
         });
 
@@ -382,7 +390,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
     private void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.googleWifi)
-                .customView(R.layout.dialog_customview)
+                .customView(R.layout.dialog_customview, true)
                 .positiveText(R.string.connect)
                 .negativeText(android.R.string.cancel)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -424,6 +432,17 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
+    }
+
+    private void showCustomWebView() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.changelog)
+                .customView(R.layout.dialog_webview, false)
+                .positiveText(android.R.string.ok)
+                .build();
+        WebView webView = (WebView) dialog.getCustomView().findViewById(R.id.webview);
+        webView.loadUrl("file:///android_asset/webview.html");
+        dialog.show();
     }
 
     private void showThemed() {

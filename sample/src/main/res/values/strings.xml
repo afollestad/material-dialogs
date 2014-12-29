@@ -53,6 +53,10 @@
     <string name="basic_list_notitle">Basic List (No Title)</string>
     <string name="folder_chooser">Folder Chooser</string>
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
+    <string name="changelog">Changelog</string>
+    <string name="customView_noScroll">Custom View (No ScrollView)</string>
+    <string name="ssid">SSID</string>
+    <string name="ssidLit">Material Dialogs</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>

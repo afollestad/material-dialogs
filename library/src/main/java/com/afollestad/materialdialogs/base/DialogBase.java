@@ -26,18 +26,19 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         super(context);
     }
 
-    protected static void setMargin(View view, int top, int bottom, int left, int right) {
-        setMargin(view, top, bottom, left, right, -1);
-    }
-
-    private static void setMargin(View view, int top, int bottom, int left, int right, int height) {
+    protected void setVerticalMargins(View view, int topMargin, int bottomMargin) {
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        if (top > -1) params.topMargin = top;
-        if (bottom > -1) params.bottomMargin = bottom;
-        if (left > -1) params.leftMargin = left;
-        if (right > -1) params.rightMargin = right;
-        if (height > -1) params.height = height;
-        view.setLayoutParams(params);
+        boolean changed = false;
+        if (topMargin > -1 && params.topMargin != topMargin) {
+            params.topMargin = topMargin;
+            changed = true;
+        }
+        if (bottomMargin > -1 && params.bottomMargin != bottomMargin) {
+            params.bottomMargin = bottomMargin;
+            changed = true;
+        }
+        if (changed)
+            view.setLayoutParams(params);
     }
 
     /**
