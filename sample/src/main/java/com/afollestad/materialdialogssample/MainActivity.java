@@ -409,7 +409,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .negativeText(R.string.disagree)
                 .positiveColorRes(R.color.material_red_400)
                 .negativeColorRes(R.color.material_red_400)
-                .titleGravity(Gravity.CENTER_HORIZONTAL)
+                .titleGravity(MaterialDialog.CENTER)
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .theme(Theme.DARK)

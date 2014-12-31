@@ -53,8 +53,12 @@ import java.util.List;
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
-    @IntDef({Gravity.START, Gravity.CENTER_HORIZONTAL, Gravity.END})
+    @IntDef({START, CENTER, END})
     public @interface GravityInt {}
+
+    public static final int START = 0;
+    public static final int CENTER = 1;
+    public static final int END = 2;
 
     protected View view;
     protected ListView listView;
@@ -125,7 +129,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             //noinspection ResourceType
             title.setTextAlignment(gravityToAlignment(builder.titleGravity));
         } else {
-            title.setGravity(builder.titleGravity);
+            title.setGravity(gravityIntToGravity(builder.titleGravity));
         }
 
         if (builder.contentColor != -1) {
@@ -237,7 +241,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 //noinspection ResourceType
                 content.setTextAlignment(gravityToAlignment(builder.contentGravity));
             } else {
-                content.setGravity(builder.contentGravity);
+                content.setGravity(gravityIntToGravity(builder.contentGravity));
             }
         }
 
@@ -276,14 +280,27 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
+    private static int gravityIntToGravity(@GravityInt int gravity) {
+        switch (gravity) {
+            case START:
+                return Gravity.START;
+            case CENTER:
+                return Gravity.CENTER_HORIZONTAL;
+            case END:
+                return Gravity.END;
+            default:
+                return Gravity.START;
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private static int gravityToAlignment(@GravityInt int gravity) {
         switch (gravity) {
-            case Gravity.START:
+            case START:
                 return View.TEXT_ALIGNMENT_VIEW_START;
-            case Gravity.CENTER_HORIZONTAL:
+            case CENTER:
                 return View.TEXT_ALIGNMENT_CENTER;
-            case Gravity.END:
+            case END:
                 return View.TEXT_ALIGNMENT_VIEW_END;
             default:
                 return View.TEXT_ALIGNMENT_VIEW_START;
