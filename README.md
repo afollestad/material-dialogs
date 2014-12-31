@@ -8,6 +8,10 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
+###### Version 0.5.2
+
+> 1. Some quick fixes for the constants used with the various gravity methods (e.g. `titleGravity()`).
+
 ###### Version 0.5.1
 
 > Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
@@ -32,7 +36,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.1'
+    compile 'com.afollestad:material-dialogs:0.5.2'
 }
 ```
 
