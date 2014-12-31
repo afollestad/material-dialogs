@@ -1,5 +1,9 @@
 # Changelog
 
+###### Version 0.5.2
+
+> 1. Some quick fixes for the constants used with the various gravity methods (e.g. `titleGravity()`).
+
 ###### Version 0.5.1
 
 > Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
