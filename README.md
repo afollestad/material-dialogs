@@ -376,20 +376,21 @@ or operating system. This behavior can be overridden in your Activity themes:
     <!-- By default, the list item text color is derived from the ?android:textColorSecondary OS attribute. -->
     <item name="md_item_color">#9C27B0</item>
 
+
     <!-- All dialogs will be able to use more custom attributes. -->
     <item name="md_custom_theme">true</item>
 
     <!-- [Custom Theme Only] By default, the background color is pure black or pure white based on the theme. -->
-    <item name="md_bg_color"></item>
+    <item name="md_bg_color">#673AB7</item>
 
     <!-- [Custom Theme Only] By default, the divider color is derived based on the theme.-->
-    <item name="md_divider_color"></item>
+    <item name="md_divider_color">#673AB7</item>
 
     <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
-    <item name="md_selector"></item>
+    <item name="md_selector">@drawable/selector</item>
 
     <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
-    <item name="md_btn_selector"></item>
+    <item name="md_btn_selector">@drawable/selector</item>
 
 </style>
 ```
