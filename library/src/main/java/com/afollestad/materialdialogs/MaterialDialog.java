@@ -54,7 +54,8 @@ import java.util.List;
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     @IntDef({START, CENTER, END})
-    public @interface GravityInt {}
+    public @interface GravityInt {
+    }
 
     public static final int START = 0;
     public static final int CENTER = 1;
@@ -78,16 +79,28 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected List<Integer> selectedIndicesList;
 
     private static ContextThemeWrapper getTheme(Builder builder) {
-        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
-        boolean darkTheme = builder.theme == Theme.DARK;
-        if (!darkTheme) {
+        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_custom_theme, R.attr.md_dark_theme});
+
+        boolean customTheme = builder.theme == Theme.CUSTOM;
+        if (!customTheme) {
             try {
-                darkTheme = a.getBoolean(0, false);
+                customTheme = a.getBoolean(0, false);
             } finally {
                 a.recycle();
             }
         }
-        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
+
+        boolean darkTheme = builder.theme == Theme.DARK;
+        if (!darkTheme) {
+            try {
+                darkTheme = a.getBoolean(1, false);
+            } finally {
+                a.recycle();
+            }
+        }
+        return new ContextThemeWrapper(builder.context, customTheme ?
+                darkTheme ? R.style.MD_Dark_Base : R.style.MD_Light_Base :
+                darkTheme ? R.style.MD_Dark : R.style.MD_Light);
     }
 
     @SuppressLint("InflateParams")
@@ -646,7 +659,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(neutralButton, mBuilder.mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
             neutralButton.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-            setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
+            setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(),
+                    isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
             neutralButton.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
@@ -763,8 +777,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         protected Context context;
         protected CharSequence title;
-        protected @GravityInt int titleGravity = Gravity.START;
-        protected @GravityInt int contentGravity = Gravity.START;
+        protected
+        @GravityInt
+        int titleGravity = Gravity.START;
+        protected
+        @GravityInt
+        int contentGravity = Gravity.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;

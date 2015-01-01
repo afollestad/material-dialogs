@@ -50,9 +50,9 @@
             android:id="@+id/contentScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/md_content_vertical_padding"
             android:visibility="gone"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/md_content_vertical_padding">
+            android:clipToPadding="false">
 
             <TextView
                 android:id="@+id/content"

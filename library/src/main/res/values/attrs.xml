@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <attr name="md_selector" format="reference" />
-    <attr name="md_btn_selector" format="reference" />
-    <attr name="md_divider" format="color" />
-
     <attr name="md_dark_theme" format="boolean" />
+    <attr name="md_icon" format="reference" />
     <attr name="md_title_color" format="color" />
     <attr name="md_content_color" format="color" />
     <attr name="md_accent_color" format="color" />
     <attr name="md_item_color" format="color" />
-    <attr name="md_icon" format="reference" />
+
+    <attr name="md_custom_theme" format="boolean" />
+    <attr name="md_bg" format="color" />
+    <attr name="md_divider" format="color" />
+    <attr name="md_selector" format="reference" />
+    <attr name="md_btn_selector" format="reference" />
 
 </resources>

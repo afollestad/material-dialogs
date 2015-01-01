@@ -357,36 +357,33 @@ or operating system. This behavior can be overridden in your Activity themes:
 ```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-    <!--
-        All dialogs will default to Theme.DARK.
-    -->
+    <!-- All dialogs will default to Theme.DARK. -->
     <item name="md_dark_theme">true</item>
 
-    <!--
-        Applies an icon to all dialogs.
-    -->
-    <item name="md_dark_theme">true</item>
+    <!-- Applies an icon to all dialogs. -->
+    <item name="md_icon">@drawable/app_icon</item>
 
-    <!--
-        By default, the title text is pure black or pure white based on the theme.
-    -->
+    <!-- By default, the title text is pure black or pure white based on the theme. -->
     <item name="md_title_color">#E91E63</item>
 
-    <!--
-        By default, the content text is derived from the ?android:textColorSecondary OS attribute.
-    -->
+    <!-- By default, the content text is derived from the ?android:textColorSecondary OS attribute. -->
     <item name="md_content_color">#9C27B0</item>
 
-    <!--
-        By default, the accent color is derived from the colorAccent attribute of AppCompat or
-        android:colorAccent attribute of the Material theme.
-    -->
+    <!-- By default, the accent color is derived from the colorAccent attribute of AppCompat or -->
+    <!-- android:colorAccent attribute of the Material theme. -->
     <item name="md_accent_color">#673AB7</item>
 
-    <!--
-        By default, the list item text color is derived from the ?android:textColorSecondary OS attribute.
-    -->
+    <!-- By default, the list item text color is derived from the ?android:textColorSecondary OS attribute. -->
     <item name="md_item_color">#9C27B0</item>
+
+    <!-- All dialogs will be used more custom attributes. -->
+    <item name="md_custom_theme">true</item>
+
+    <!-- All dialogs will be used more custom attributes. -->
+    <item name="md_bg"></item>
+    <item name="md_divider"></item>
+    <item name="md_selector"></item>
+    <item name="md_btn_selector"></item>
 
 </style>
 ```
