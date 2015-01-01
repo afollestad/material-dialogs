@@ -785,6 +785,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         int contentGravity = Gravity.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
+        protected int backgroundColor = -1;
+        protected int dividerColor = -1;
         protected CharSequence content;
         protected CharSequence[] items;
         protected CharSequence positiveText;
@@ -808,6 +810,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected Typeface regularFont;
         protected Typeface mediumFont;
         protected Drawable icon;
+        protected Drawable selector;
+        protected Drawable btnSelector;
         protected ListAdapter adapter;
         protected OnDismissListener dismissListener;
         protected OnCancelListener cancelListener;
@@ -863,11 +867,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder titleColorRes(@ColorRes int colorRes) {
-            titleColor(this.context.getResources().getColor(colorRes));
-            return this;
-        }
-
         /**
          * Sets the fonts used in the dialog.
          *
@@ -881,8 +880,23 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        public Builder backgroundColor(int color) {
+            this.backgroundColor = color;
+            return this;
+        }
+
+        public Builder backgroundColorRes(@ColorRes int colorRes) {
+            backgroundColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
         public Builder titleColor(int color) {
             this.titleColor = color;
+            return this;
+        }
+
+        public Builder titleColorRes(@ColorRes int colorRes) {
+            titleColor(this.context.getResources().getColor(colorRes));
             return this;
         }
 
@@ -898,6 +912,36 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder iconAttr(@AttrRes int iconAttr) {
             this.icon = DialogUtils.resolveDrawable(context, iconAttr);
+            return this;
+        }
+
+        public Builder selector(Drawable selector) {
+            this.selector = selector;
+            return this;
+        }
+
+        public Builder selector(@DrawableRes int selector) {
+            this.selector = context.getResources().getDrawable(selector);
+            return this;
+        }
+
+        public Builder selectorAttr(@AttrRes int selectorAttr) {
+            this.selector = DialogUtils.resolveDrawable(context, selectorAttr);
+            return this;
+        }
+
+        public Builder btnSelector(Drawable btnSelector) {
+            this.btnSelector = btnSelector;
+            return this;
+        }
+
+        public Builder btnSelector(@DrawableRes int btnSelector) {
+            this.btnSelector = context.getResources().getDrawable(btnSelector);
+            return this;
+        }
+
+        public Builder btnSelectorAttr(@AttrRes int btnSelectorAttr) {
+            this.btnSelector = DialogUtils.resolveDrawable(context, btnSelectorAttr);
             return this;
         }
 
