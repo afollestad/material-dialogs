@@ -81,10 +81,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     private static ContextThemeWrapper getTheme(Builder builder) {
         TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_custom_theme, R.attr.md_dark_theme});
 
-        boolean customTheme = builder.theme == Theme.CUSTOM;
-        if (!customTheme) {
+        boolean baseTheme = builder.theme == Theme.LIGHT_BASE || builder.theme == Theme.DARK_BASE;
+        if (!baseTheme) {
             try {
-                customTheme = a.getBoolean(0, false);
+                baseTheme = a.getBoolean(0, false);
             } finally {
                 a.recycle();
             }
@@ -98,7 +98,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 a.recycle();
             }
         }
-        return new ContextThemeWrapper(builder.context, customTheme ?
+        return new ContextThemeWrapper(builder.context, baseTheme ?
                 darkTheme ? R.style.MD_Dark_Base : R.style.MD_Light_Base :
                 darkTheme ? R.style.MD_Dark : R.style.MD_Light);
     }
