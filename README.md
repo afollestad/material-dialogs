@@ -379,16 +379,16 @@ or operating system. This behavior can be overridden in your Activity themes:
     <!-- All dialogs will be able to use more custom attributes. -->
     <item name="md_custom_theme">true</item>
 
-    <!-- [Custom Theme Only] Dialog background color. By default, the background color is derived based on the theme. -->
+    <!-- [Custom Theme Only] By default, the background color is pure black or pure white based on the theme. -->
     <item name="md_bg_color"></item>
 
-    <!-- [Custom Theme Only] Dialog background color. By default, the divider color is derived based on the theme.-->
+    <!-- [Custom Theme Only] By default, the divider color is derived based on the theme.-->
     <item name="md_divider_color"></item>
 
-    <!-- [Custom Theme Only] Dialog background color. By default, the selector background is derived based on the theme.-->
+    <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
     <item name="md_selector"></item>
 
-    <!-- [Custom Theme Only] Dialog background color. By default, the selector background is derived based on the theme.-->
+    <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
     <item name="md_btn_selector"></item>
 
 </style>
