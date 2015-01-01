@@ -915,33 +915,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder selector(Drawable selector) {
-            this.selector = selector;
+        public Builder dividerColor(int color) {
+            this.dividerColor = color;
             return this;
         }
 
-        public Builder selector(@DrawableRes int selector) {
-            this.selector = context.getResources().getDrawable(selector);
-            return this;
-        }
-
-        public Builder selectorAttr(@AttrRes int selectorAttr) {
-            this.selector = DialogUtils.resolveDrawable(context, selectorAttr);
-            return this;
-        }
-
-        public Builder btnSelector(Drawable btnSelector) {
-            this.btnSelector = btnSelector;
-            return this;
-        }
-
-        public Builder btnSelector(@DrawableRes int btnSelector) {
-            this.btnSelector = context.getResources().getDrawable(btnSelector);
-            return this;
-        }
-
-        public Builder btnSelectorAttr(@AttrRes int btnSelectorAttr) {
-            this.btnSelector = DialogUtils.resolveDrawable(context, btnSelectorAttr);
+        public Builder dividerColorRes(@ColorRes int colorRes) {
+            dividerColor(this.context.getResources().getColor(colorRes));
             return this;
         }
 
@@ -1123,6 +1103,36 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder neutralColor(int color) {
             this.neutralColor = color;
+            return this;
+        }
+
+        public Builder selector(Drawable selector) {
+            this.selector = selector;
+            return this;
+        }
+
+        public Builder selector(@DrawableRes int selector) {
+            this.selector = context.getResources().getDrawable(selector);
+            return this;
+        }
+
+        public Builder selectorAttr(@AttrRes int selectorAttr) {
+            this.selector = DialogUtils.resolveDrawable(context, selectorAttr);
+            return this;
+        }
+
+        public Builder btnSelector(Drawable btnSelector) {
+            this.btnSelector = btnSelector;
+            return this;
+        }
+
+        public Builder btnSelector(@DrawableRes int btnSelector) {
+            this.btnSelector = context.getResources().getDrawable(btnSelector);
+            return this;
+        }
+
+        public Builder btnSelectorAttr(@AttrRes int btnSelectorAttr) {
+            this.btnSelector = DialogUtils.resolveDrawable(context, btnSelectorAttr);
             return this;
         }
 
