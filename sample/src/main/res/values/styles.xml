@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/material_indigo_500</item>
         <item name="colorPrimaryDark">@color/material_indigo_600</item>
         <item name="colorAccent">@color/material_pink_500</item>
+
+        <!--Testing Global Theme-->
+        <!--<item name="md_dark_theme">true</item>-->
+        <!--<item name="md_custom_theme">true</item>-->
+        <!--<item name="md_selector">@drawable/md_btn_selector</item>-->
+        <!--<item name="md_btn_selector">@drawable/md_btn_selector</item>-->
     </style>
 
 </resources>
