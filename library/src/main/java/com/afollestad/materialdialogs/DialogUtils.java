@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.view.View;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -45,5 +47,12 @@ class DialogUtils {
         } finally {
             a.recycle();
         }
+    }
+
+    public static void setBackground(View view, Drawable d) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            view.setBackgroundDrawable(d);
+        else
+            view.setBackground(d);
     }
 }

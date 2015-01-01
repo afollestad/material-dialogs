@@ -116,7 +116,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
 
-        final int mdAccentColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_accent_color);
+        int mdBackgroundColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_bg_color);
+        if (mdBackgroundColor != 0)
+            mBuilder.backgroundColor = mdBackgroundColor;
+
+        if (mBuilder.backgroundColor != 0)
+            view.setBackgroundColor(mBuilder.backgroundColor);
+
+        int mdAccentColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_accent_color);
         if (mdAccentColor != 0) {
             mBuilder.positiveColor = mdAccentColor;
             mBuilder.negativeColor = mdAccentColor;
@@ -415,7 +422,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         View titleBarDivider = view.findViewById(R.id.titleBarDivider);
         if (topVisible) {
             titleBarDivider.setVisibility(View.VISIBLE);
-            titleBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
+            titleBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider_color));
         } else {
             titleBarDivider.setVisibility(View.GONE);
         }
@@ -423,7 +430,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         View buttonBarDivider = view.findViewById(R.id.buttonBarDivider);
         if (bottomVisible) {
             buttonBarDivider.setVisibility(View.VISIBLE);
-            buttonBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
+            buttonBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider_color));
             setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), 0, 0);
             setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), 0, 0);
         } else {

@@ -9,8 +9,8 @@
         <!--Testing Global Theme-->
         <item name="md_dark_theme">true</item>
         <item name="md_custom_theme">true</item>
-        <item name="md_bg">@color/material_indigo_500</item>
-        <item name="md_divider">@color/material_pink_500</item>
+        <!--<item name="md_bg_color">@color/material_indigo_500</item>-->
+        <item name="md_divider_color">@color/material_pink_500</item>
         <item name="md_selector">@drawable/md_btn_selector</item>
         <item name="md_btn_selector">@drawable/md_btn_selector</item>
     </style>

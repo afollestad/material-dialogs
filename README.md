@@ -380,10 +380,10 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_custom_theme">true</item>
 
     <!-- [Custom Theme Only] Dialog background color. By default, the background color is derived based on the theme. -->
-    <item name="md_bg"></item>
+    <item name="md_bg_color"></item>
 
     <!-- [Custom Theme Only] Dialog background color. By default, the divider color is derived based on the theme.-->
-    <item name="md_divider"></item>
+    <item name="md_divider_color"></item>
 
     <!-- [Custom Theme Only] Dialog background color. By default, the selector background is derived based on the theme.-->
     <item name="md_selector"></item>

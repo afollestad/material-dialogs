@@ -8,8 +8,8 @@
     <attr name="md_item_color" format="color" />
 
     <attr name="md_custom_theme" format="boolean" />
-    <attr name="md_bg" format="color" />
-    <attr name="md_divider" format="color" />
+    <attr name="md_bg_color" format="color" />
+    <attr name="md_divider_color" format="color" />
     <attr name="md_selector" format="reference" />
     <attr name="md_btn_selector" format="reference" />
 

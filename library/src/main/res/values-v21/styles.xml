@@ -4,7 +4,7 @@
     <style name="MD_Light_Base" parent="android:Theme.Material.Light.Dialog.Alert" />
 
     <style name="MD_Light" parent="MD_Light_Base">
-        <item name="md_divider">@color/md_divider_black</item>
+        <item name="md_divider_color">@color/md_divider_black</item>
         <item name="md_selector">?android:selectableItemBackground</item>
         <item name="md_btn_selector">@drawable/md_btn_selector_ripple</item>
     </style>
@@ -12,7 +12,7 @@
     <style name="MD_Dark_Base" parent="android:Theme.Material.Dialog.Alert" />
 
     <style name="MD_Dark" parent="MD_Dark_Base">
-        <item name="md_divider">@color/md_divider_white</item>
+        <item name="md_divider_color">@color/md_divider_white</item>
         <item name="md_selector">?android:selectableItemBackground</item>
         <item name="md_btn_selector">@drawable/md_btn_selector_ripple_dark</item>
     </style>
