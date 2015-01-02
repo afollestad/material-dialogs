@@ -228,7 +228,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setTextColor(contentColor);
         }
 
-        if (builder.theme == Theme.LIGHT) {
+        if (builder.theme == Theme.LIGHT
+                || builder.theme == Theme.LIGHT_BASE) {
             defaultItemColor = Color.BLACK;
         } else {
             defaultItemColor = Color.WHITE;
@@ -361,7 +362,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     }
                 });
 
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+        if ((builder.theme == Theme.LIGHT || builder.theme == Theme.LIGHT_BASE)
+                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
             content.setTextColor(Color.BLACK);
