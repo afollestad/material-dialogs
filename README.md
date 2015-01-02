@@ -335,9 +335,13 @@ new MaterialDialog.Builder(this)
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .positiveText("Agree")
         .negativeText("Disagree")
+        .backgroundColor(materialWhite500)
+        .dividerColor(materialRed500)
         .positiveColor(materialRed500)
         .negativeColor(materialRed500)
         .neutralColor(materialRed500)
+        .selector(R.drawable.selector)
+        .btnSelector(R.drawable.btn_selector)
         .titleGravity(Gravity.CENTER_HORIZONTAL)
         .titleColor(materialRed500)
         .contentColor(Color.WHITE)
@@ -360,11 +364,17 @@ or operating system. This behavior can be overridden in your Activity themes:
     <!-- All dialogs will default to Theme.DARK. -->
     <item name="md_dark_theme">true</item>
 
+    <!-- By default, the background color is pure black or pure white based on the theme. -->
+    <item name="md_bg_color">#673AB7</item>
+
     <!-- Applies an icon to all dialogs. -->
     <item name="md_icon">@drawable/app_icon</item>
 
     <!-- By default, the title text is pure black or pure white based on the theme. -->
     <item name="md_title_color">#E91E63</item>
+
+    <!-- By default, the divider color is derived based on the theme.-->
+    <item name="md_divider_color">#673AB7</item>
 
     <!-- By default, the content text is derived from the ?android:textColorSecondary OS attribute. -->
     <item name="md_content_color">#9C27B0</item>
@@ -376,20 +386,10 @@ or operating system. This behavior can be overridden in your Activity themes:
     <!-- By default, the list item text color is derived from the ?android:textColorSecondary OS attribute. -->
     <item name="md_item_color">#9C27B0</item>
 
-
-    <!-- All dialogs will be able to use more custom attributes. -->
-    <item name="md_custom_theme">true</item>
-
-    <!-- [Custom Theme Only] By default, the background color is pure black or pure white based on the theme. -->
-    <item name="md_bg_color">#673AB7</item>
-
-    <!-- [Custom Theme Only] By default, the divider color is derived based on the theme.-->
-    <item name="md_divider_color">#673AB7</item>
-
-    <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
+    <!-- By default, the selector background is derived based on the theme.-->
     <item name="md_selector">@drawable/selector</item>
 
-    <!-- [Custom Theme Only] By default, the selector background is derived based on the theme.-->
+    <!-- By default, the selector background is derived based on the theme.-->
     <item name="md_btn_selector">@drawable/selector</item>
 
 </style>

@@ -79,38 +79,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected List<Integer> selectedIndicesList;
 
     private static ContextThemeWrapper getTheme(Builder builder) {
-        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_custom_theme, R.attr.md_dark_theme});
-
-        boolean baseTheme = builder.theme == Theme.LIGHT_BASE || builder.theme == Theme.DARK_BASE;
-        if (!baseTheme) {
-            try {
-                baseTheme = a.getBoolean(0, false);
-            } finally {
-                a.recycle();
-            }
-        }
+        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
 
         boolean darkTheme = builder.theme == Theme.DARK;
         if (!darkTheme) {
             try {
-                darkTheme = a.getBoolean(1, false);
+                darkTheme = a.getBoolean(0, false);
             } finally {
                 a.recycle();
             }
         }
 
-        if (baseTheme && darkTheme)
-            builder.theme = Theme.DARK_BASE;
-        else if (baseTheme)
-            builder.theme = Theme.LIGHT_BASE;
-        else if (darkTheme)
-            builder.theme = Theme.DARK;
-        else
-            builder.theme = Theme.LIGHT;
-
-        return new ContextThemeWrapper(builder.context, baseTheme ?
-                darkTheme ? R.style.MD_Dark_Base : R.style.MD_Light_Base :
-                darkTheme ? R.style.MD_Dark : R.style.MD_Light);
+        builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
+        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
     }
 
     @SuppressLint("InflateParams")
@@ -126,69 +107,55 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
 
-        if (mBuilder.theme == Theme.LIGHT_BASE || mBuilder.theme == Theme.DARK_BASE) {
-            if (mBuilder.backgroundColor == -1)
-                mBuilder.backgroundColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_bg_color);
+        if (mBuilder.backgroundColor == -1)
+            mBuilder.backgroundColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_bg_color);
 
-            if (mBuilder.backgroundColor != 0)
-                view.setBackgroundColor(mBuilder.backgroundColor);
-        }
+        if (mBuilder.backgroundColor != 0)
+            view.setBackgroundColor(mBuilder.backgroundColor);
 
         if (mBuilder.dividerColor == -1)
             mBuilder.dividerColor = DialogUtils.resolveColor(getContext(), R.attr.md_divider_color);
 
-        switch (mBuilder.theme) {
-            case LIGHT_BASE:
-                if (mBuilder.dividerColor != 0)
+        if (mBuilder.dividerColor == 0) {
+            switch (mBuilder.theme) {
+                case LIGHT:
+                    mBuilder.dividerColor = getContext().getResources().getColor(R.color.md_divider_black);
                     break;
-            case LIGHT:
-                mBuilder.dividerColor = getContext().getResources().getColor(R.color.md_divider_black);
-                break;
-            case DARK_BASE:
-                if (mBuilder.dividerColor != 0)
+                case DARK:
+                default:
+                    mBuilder.dividerColor = getContext().getResources().getColor(R.color.md_divider_white);
                     break;
-            case DARK:
-            default:
-                mBuilder.dividerColor = getContext().getResources().getColor(R.color.md_divider_white);
-                break;
+            }
         }
 
         if (mBuilder.selector == -1)
             mBuilder.selector = DialogUtils.resolveResourceId(getContext(), R.attr.md_selector);
 
-        switch (mBuilder.theme) {
-            case LIGHT_BASE:
-                if (mBuilder.selector != 0)
+        if (mBuilder.selector == 0) {
+            switch (mBuilder.theme) {
+                case LIGHT:
+                    mBuilder.selector = R.drawable.md_selector;
                     break;
-            case LIGHT:
-                mBuilder.selector = R.drawable.md_selector;
-                break;
-            case DARK_BASE:
-                if (mBuilder.selector != 0)
+                case DARK:
+                default:
+                    mBuilder.selector = R.drawable.md_selector_dark;
                     break;
-            case DARK:
-            default:
-                mBuilder.selector = R.drawable.md_selector_dark;
-                break;
+            }
         }
 
         if (mBuilder.btnSelector == -1)
             mBuilder.btnSelector = DialogUtils.resolveResourceId(getContext(), R.attr.md_btn_selector);
 
-        switch (mBuilder.theme) {
-            case LIGHT_BASE:
-                if (mBuilder.btnSelector != 0)
+        if (mBuilder.btnSelector == 0) {
+            switch (mBuilder.theme) {
+                case LIGHT:
+                    mBuilder.btnSelector = R.drawable.md_btn_selector;
                     break;
-            case LIGHT:
-                mBuilder.btnSelector = R.drawable.md_btn_selector;
-                break;
-            case DARK_BASE:
-                if (mBuilder.btnSelector != 0)
+                case DARK:
+                default:
+                    mBuilder.btnSelector = R.drawable.md_btn_selector_dark;
                     break;
-            case DARK:
-            default:
-                mBuilder.btnSelector = R.drawable.md_btn_selector_dark;
-                break;
+            }
         }
 
         int mdAccentColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_accent_color);
@@ -228,8 +195,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setTextColor(contentColor);
         }
 
-        if (builder.theme == Theme.LIGHT
-                || builder.theme == Theme.LIGHT_BASE) {
+        if (builder.theme == Theme.LIGHT) {
             defaultItemColor = Color.BLACK;
         } else {
             defaultItemColor = Color.WHITE;
@@ -362,7 +328,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     }
                 });
 
-        if ((builder.theme == Theme.LIGHT || builder.theme == Theme.LIGHT_BASE)
+        if ((builder.theme == Theme.LIGHT)
                 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
             title.setTextColor(Color.BLACK);
