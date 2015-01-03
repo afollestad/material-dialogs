@@ -108,10 +108,17 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
-            android:id="@+id/customView_noScroll"
+            android:id="@+id/customView_webView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="@string/customView_noScroll"
+            android:text="@string/customView_webView"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/customView_colorChooser"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/customView_colorChooser"
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button

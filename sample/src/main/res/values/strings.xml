@@ -53,9 +53,11 @@
     <string name="folder_chooser">Folder Chooser</string>
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
     <string name="changelog">Changelog</string>
-    <string name="customView_noScroll">Custom View (No ScrollView)</string>
+    <string name="customView_webView">Custom View No Scroll (Changelog)</string>
+    <string name="customView_colorChooser">Custom View No Scroll (Color Chooser)</string>
     <string name="ssid">SSID</string>
     <string name="ssidLit">Material Dialogs</string>
+    <string name="color_chooser">Color Chooser</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>
