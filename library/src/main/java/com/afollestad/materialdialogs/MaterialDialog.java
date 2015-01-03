@@ -57,16 +57,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     public @interface GravityInt {
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static final int START = 0;
+    @SuppressWarnings("WeakerAccess")
     public static final int CENTER = 1;
+    @SuppressWarnings("WeakerAccess")
     public static final int END = 2;
 
-    protected View view;
+    protected final View view;
+    protected final Builder mBuilder;
     protected ListView listView;
     protected ImageView icon;
     protected TextView title;
     protected View titleFrame;
-    protected Builder mBuilder;
     protected FrameLayout customViewFrame;
 
     protected Button positiveButton;
@@ -84,6 +87,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (!darkTheme) {
             try {
                 darkTheme = a.getBoolean(0, false);
+                builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
             } finally {
                 a.recycle();
             }
@@ -549,14 +553,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (lv.getLastVisiblePosition() == -1)
             return false;
         /* We scroll if the last item is not visible */
-        boolean lastItemVisible = lv.getLastVisiblePosition() == lv.getCount() - 1;
-
-        if (lastItemVisible) {
-            /* or the last item's bottom is beyond our own bottom */
-            return lv.getChildAt(lv.getChildCount() - 1).getBottom() >
-                    lv.getHeight() - lv.getPaddingBottom();
-        }
-        return true;
+        final boolean lastItemVisible = lv.getLastVisiblePosition() == lv.getCount() - 1;
+        return !lastItemVisible || lv.getChildAt(lv.getChildCount() - 1).getBottom() > lv.getHeight() - lv.getPaddingBottom();
     }
 
     private boolean canListViewScroll() {
@@ -772,7 +770,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      */
     public static class Builder {
 
-        protected Context context;
+        protected final Context context;
         protected CharSequence title;
         protected
         @GravityInt

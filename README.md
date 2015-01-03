@@ -8,11 +8,11 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
-###### Version 0.5.2
+###### Version 0.5.3 (NOT READY YET)
 
-> 1. Some quick fixes for the constants used with the various gravity methods (e.g. `titleGravity()`).
+> 1. Global theming attributes for dialog background color and divider color. See the (Global Theming section)[https://github.com/afollestad/material-dialogs#global-theming].
 
-###### Version 0.5.1
+###### Version 0.5.1 - 0.5.2
 
 > Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
 >

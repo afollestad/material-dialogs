@@ -1,6 +1,6 @@
-<resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="activity_horizontal_margin" tools:ignore="UnusedResources">16dp</dimen>
+    <dimen name="activity_vertical_margin" tools:ignore="UnusedResources">16dp</dimen>
     <dimen name="customTitle">14sp</dimen>
     <dimen name="customEntry">18sp</dimen>
     <dimen name="sample_button_spacing">2dp</dimen>

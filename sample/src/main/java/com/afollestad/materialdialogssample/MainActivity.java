@@ -339,8 +339,8 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
     }
 
 
-    EditText passwordInput;
-    View positiveAction;
+    private EditText passwordInput;
+    private View positiveAction;
 
     private void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)

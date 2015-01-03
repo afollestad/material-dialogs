@@ -3,29 +3,27 @@ package com.afollestad.materialdialogssample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.ArrayRes;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Simple adapter example for custom items in the dialog
  */
-public class ButtonItemAdapter extends BaseAdapter implements View.OnClickListener {
+class ButtonItemAdapter extends BaseAdapter implements View.OnClickListener {
 
     private Toast mToast;
-    private Context mContext;
-    private CharSequence[] mItems;
+    private final Context mContext;
+    private final CharSequence[] mItems;
 
     public ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
         this(context, context.getResources().getTextArray(arrayResId));
     }
 
-    public ButtonItemAdapter(Context context, CharSequence[] items) {
+    private ButtonItemAdapter(Context context, CharSequence[] items) {
         this.mContext = context;
         this.mItems = items;
     }
