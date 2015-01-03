@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -72,9 +73,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected View titleFrame;
     protected FrameLayout customViewFrame;
 
-    protected Button positiveButton;
-    protected Button neutralButton;
-    protected Button negativeButton;
+    protected View positiveButton;
+    protected View neutralButton;
+    protected View negativeButton;
     protected boolean isStacked;
     protected boolean alwaysCallMultiChoiceCallback;
     protected final int defaultItemColor;
@@ -631,12 +632,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
         }
 
-        positiveButton = (Button) view.findViewById(
+        positiveButton = view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
         if (mBuilder.positiveText != null) {
-            setTypeface(positiveButton, mBuilder.mediumFont);
-            positiveButton.setText(mBuilder.positiveText);
-            positiveButton.setTextColor(getActionTextStateList(mBuilder.positiveColor));
+            TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
+            setTypeface(positiveTextView, mBuilder.mediumFont);
+            positiveTextView.setText(mBuilder.positiveText);
+            positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
             setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(),
                     isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
             positiveButton.setTag(POSITIVE);
@@ -645,29 +647,31 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             positiveButton.setVisibility(View.GONE);
         }
 
-        neutralButton = (Button) view.findViewById(
+        neutralButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
         if (mBuilder.neutralText != null) {
-            setTypeface(neutralButton, mBuilder.mediumFont);
+            TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
+            setTypeface(neutralTextView, mBuilder.mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
-            neutralButton.setTextColor(getActionTextStateList(mBuilder.neutralColor));
+            neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
             setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
-            neutralButton.setText(mBuilder.neutralText);
+            neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
         } else {
             neutralButton.setVisibility(View.GONE);
         }
 
-        negativeButton = (Button) view.findViewById(
+        negativeButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
         if (mBuilder.negativeText != null) {
-            setTypeface(negativeButton, mBuilder.mediumFont);
+            TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
+            setTypeface(negativeTextView, mBuilder.mediumFont);
             negativeButton.setVisibility(View.VISIBLE);
-            negativeButton.setTextColor(getActionTextStateList(mBuilder.negativeColor));
+            negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
             setBackgroundCompat(negativeButton, DialogUtils.resolveDrawable(getContext(),
                     isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
-            negativeButton.setText(mBuilder.negativeText);
+            negativeTextView.setText(mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
 
@@ -1193,44 +1197,44 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      * @param which The action button of which to get the view for.
      * @return The view from the dialog's layout representing this action button.
      */
-    public final Button getActionButton(DialogAction which) {
-        if (view == null) return null;
+    public final View getActionButton(DialogAction which) {
         if (isStacked) {
             switch (which) {
                 default:
-                    return (Button) view.findViewById(R.id.buttonStackedPositive);
+                    return view.findViewById(R.id.buttonStackedPositive);
                 case NEUTRAL:
-                    return (Button) view.findViewById(R.id.buttonStackedNeutral);
+                    return view.findViewById(R.id.buttonStackedNeutral);
                 case NEGATIVE:
-                    return (Button) view.findViewById(R.id.buttonStackedNegative);
+                    return view.findViewById(R.id.buttonStackedNegative);
             }
         } else {
             switch (which) {
                 default:
-                    return (Button) view.findViewById(R.id.buttonDefaultPositive);
+                    return view.findViewById(R.id.buttonDefaultPositive);
                 case NEUTRAL:
-                    return (Button) view.findViewById(R.id.buttonDefaultNeutral);
+                    return view.findViewById(R.id.buttonDefaultNeutral);
                 case NEGATIVE:
-                    return (Button) view.findViewById(R.id.buttonDefaultNegative);
+                    return view.findViewById(R.id.buttonDefaultNegative);
             }
         }
     }
 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
+     *
+     * This will not return buttons that are actually in the layout itself, since the layout doesn't
+     * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
+     * stock OS requires this method in order to detect visible buttons.
      */
     @Deprecated
     @Override
     public Button getButton(int whichButton) {
-        switch (whichButton) {
-            case BUTTON_POSITIVE:
-                return getActionButton(DialogAction.POSITIVE);
-            case BUTTON_NEUTRAL:
-                return getActionButton(DialogAction.NEUTRAL);
-            case BUTTON_NEGATIVE:
-                return getActionButton(DialogAction.NEGATIVE);
-            default:
-                return null;
+        if (whichButton == AlertDialog.BUTTON_POSITIVE) {
+            return mBuilder.positiveText != null ? new Button(getContext()) : null;
+        } else if (whichButton == AlertDialog.BUTTON_NEUTRAL) {
+            return mBuilder.neutralText != null ? new Button(getContext()) : null;
+        } else {
+            return mBuilder.negativeText != null ? new Button(getContext()) : null;
         }
     }
 
