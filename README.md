@@ -388,6 +388,13 @@ or operating system. This behavior can be overridden in your Activity themes:
     -->
     <item name="md_item_color">#9C27B0</item>
 
+    <!-- This overrides the default dark or light dialog background color. Note that if you use
+        a dark color here, you should set md_dark_theme to true so text and selectors look visible -->
+    <item name="md_background_color">#37474F</item>
+
+    <!-- This overrides the color used for the top and bottom dividers used when content is scrollable -->
+    <item name="md_divider_color">#E91E63</item>
+
 </style>
 ```
 

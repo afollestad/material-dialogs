@@ -8,7 +8,6 @@ import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -412,6 +411,8 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .titleGravity(MaterialDialog.CENTER)
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
+                .backgroundColorRes(R.color.material_blue_grey_800)
+                .dividerColorRes(R.color.material_pink_500)
                 .theme(Theme.DARK)
                 .show();
     }
