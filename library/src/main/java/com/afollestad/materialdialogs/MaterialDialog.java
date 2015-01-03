@@ -1193,6 +1193,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     /**
      * Retrieves the view of an action button, allowing you to modify properties such as whether or not it's enabled.
+     * Use {@link #setActionButton(DialogAction, int)} to change text, since the view returned here is not
+     * the view that displays text.
      *
      * @param which The action button of which to get the view for.
      * @return The view from the dialog's layout representing this action button.
@@ -1221,7 +1223,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     *
+     * <p/>
      * This will not return buttons that are actually in the layout itself, since the layout doesn't
      * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
      * stock OS requires this method in order to detect visible buttons.

@@ -8,9 +8,11 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
-###### Version 0.5.3 (NOT READY YET)
+###### Version 0.5.3
 
 > 1. Global theming attributes for dialog background color and divider color. See the (Global Theming section)[https://github.com/afollestad/material-dialogs#global-theming].
+> 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
+> 3. Other bug fixes.
 
 ###### Version 0.5.1 - 0.5.2
 
@@ -36,7 +38,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.2'
+    compile 'com.afollestad:material-dialogs:0.5.3'
 }
 ```
 
