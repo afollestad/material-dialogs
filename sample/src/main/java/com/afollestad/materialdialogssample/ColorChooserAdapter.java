@@ -67,6 +67,9 @@ public class ColorChooserAdapter extends RecyclerView.Adapter<ColorChooserAdapte
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             holder.mColorView.setBackground(circle);
         else holder.mColorView.setBackgroundDrawable(circle);
+
+        // TODO add circular ripple selector over the colored circles here
+        // TODO add activated state to circles, check mark similar to Today Calendar's color chooser
     }
 
     @Override
