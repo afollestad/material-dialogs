@@ -54,7 +54,8 @@ import java.util.List;
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     @IntDef({START, CENTER, END})
-    public @interface GravityInt {}
+    public @interface GravityInt {
+    }
 
     public static final int START = 0;
     public static final int CENTER = 1;
@@ -102,6 +103,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
+
+        if (mBuilder.backgroundColor == 0)
+            mBuilder.backgroundColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_background_color);
+        if (mBuilder.backgroundColor != 0)
+            this.view.setBackgroundColor(mBuilder.backgroundColor);
 
         final int mdAccentColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_accent_color);
         if (mdAccentColor != 0) {
@@ -399,10 +405,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         topVisible = topVisible && titleFrame.getVisibility() == View.VISIBLE;
         bottomVisible = bottomVisible && hasActionButtons();
 
+        if (mBuilder.dividerColor == 0)
+            mBuilder.dividerColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_divider_color);
+        if (mBuilder.dividerColor == 0)
+            mBuilder.dividerColor = DialogUtils.resolveColor(getContext(), R.attr.md_divider);
+
         View titleBarDivider = view.findViewById(R.id.titleBarDivider);
         if (topVisible) {
             titleBarDivider.setVisibility(View.VISIBLE);
-            titleBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
+            titleBarDivider.setBackgroundColor(mBuilder.dividerColor);
         } else {
             titleBarDivider.setVisibility(View.GONE);
         }
@@ -410,7 +421,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         View buttonBarDivider = view.findViewById(R.id.buttonBarDivider);
         if (bottomVisible) {
             buttonBarDivider.setVisibility(View.VISIBLE);
-            buttonBarDivider.setBackgroundColor(DialogUtils.resolveColor(getContext(), R.attr.md_divider));
+            buttonBarDivider.setBackgroundColor(mBuilder.dividerColor);
             setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), 0, 0);
             setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), 0, 0);
         } else {
@@ -763,8 +774,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         protected Context context;
         protected CharSequence title;
-        protected @GravityInt int titleGravity = Gravity.START;
-        protected @GravityInt int contentGravity = Gravity.START;
+        protected
+        @GravityInt
+        int titleGravity = Gravity.START;
+        protected
+        @GravityInt
+        int contentGravity = Gravity.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -797,6 +812,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected OnShowListener showListener;
         protected boolean forceStacking;
         protected boolean wrapCustomViewInScroll;
+        protected int dividerColor;
+        protected int backgroundColor;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -988,8 +1005,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         public Builder neutralText(@StringRes int neutralRes) {
-            neutralText(this.context.getString(neutralRes));
-            return this;
+            return neutralText(this.context.getString(neutralRes));
         }
 
         public Builder neutralText(CharSequence message) {
@@ -998,8 +1014,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         public Builder negativeText(@StringRes int negativeRes) {
-            negativeText(this.context.getString(negativeRes));
-            return this;
+            return negativeText(this.context.getString(negativeRes));
         }
 
         public Builder negativeText(CharSequence message) {
@@ -1055,12 +1070,29 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         public Builder neutralColorRes(@ColorRes int colorRes) {
-            neutralColor(this.context.getResources().getColor(colorRes));
-            return this;
+            return neutralColor(this.context.getResources().getColor(colorRes));
         }
 
         public Builder neutralColor(int color) {
             this.neutralColor = color;
+            return this;
+        }
+
+        public Builder dividerColorRes(@ColorRes int colorRes) {
+            return dividerColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder dividerColor(int color) {
+            this.dividerColor = color;
+            return this;
+        }
+
+        public Builder backgroundColorRes(@ColorRes int colorRes) {
+            return backgroundColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder backgroundColor(int color) {
+            this.backgroundColor = color;
             return this;
         }
 
