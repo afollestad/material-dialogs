@@ -3,12 +3,18 @@ package com.afollestad.materialdialogssample;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -16,12 +22,22 @@ import com.afollestad.materialdialogs.MaterialDialog;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ColorChooserDialog extends DialogFragment {
+public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
 
     private Callback mCallback;
+    private int[] mColors;
+
+    @Override
+    public void onClick(View v) {
+        if (v.getTag() != null) {
+            Integer index = (Integer) v.getTag();
+            mCallback.onColorSelection(index, mColors[index], shiftColor(mColors[index]));
+            dismiss();
+        }
+    }
 
     public static interface Callback {
-        void onColorSelection(int primary);
+        void onColorSelection(int index, int color, int darker);
     }
 
     public ColorChooserDialog() {
@@ -35,25 +51,71 @@ public class ColorChooserDialog extends DialogFragment {
                 .customView(R.layout.dialog_color_chooser, false)
                 .build();
 
-        TypedArray ta = getActivity().getResources().obtainTypedArray(R.array.material_colors_500);
-        int[] mColors = new int[ta.length()];
+        final TypedArray ta = getActivity().getResources().obtainTypedArray(R.array.material_colors_500);
+        mColors = new int[ta.length()];
         for (int i = 0; i < ta.length(); i++)
             mColors[i] = ta.getColor(i, 0);
         ta.recycle();
-        GridLayout list = (GridLayout) dialog.getCustomView().findViewById(R.id.grid);
+        final GridLayout list = (GridLayout) dialog.getCustomView().findViewById(R.id.grid);
+        final int preselect = getArguments().getInt("preselect", -1);
+
         for (int i = 0; i < list.getChildCount(); i++) {
-            View child = list.getChildAt(i);
-            ShapeDrawable circle = new ShapeDrawable(new OvalShape());
-            circle.getPaint().setColor(mColors[i]);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                child.setBackground(circle);
-            else child.setBackgroundDrawable(circle);
+            FrameLayout child = (FrameLayout) list.getChildAt(i);
+            child.setTag(i);
+            child.setOnClickListener(this);
+            child.getChildAt(0).setVisibility(preselect == i ? View.VISIBLE : View.GONE);
+
+            Drawable selector = createSelector(mColors[i]);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                int[][] states = new int[][]{
+                        new int[]{-android.R.attr.state_pressed},
+                        new int[]{android.R.attr.state_pressed}
+                };
+                int[] colors = new int[]{
+                        shiftColor(mColors[i]),
+                        mColors[i]
+                };
+                ColorStateList rippleColors = new ColorStateList(states, colors);
+                setBackgroundCompat(child, new RippleDrawable(rippleColors, selector, null));
+            } else {
+                setBackgroundCompat(child, selector);
+            }
+
+
         }
         return dialog;
     }
 
-    public void show(Activity context, Callback callback) {
+    private void setBackgroundCompat(View view, Drawable d) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+            view.setBackground(d);
+        else view.setBackgroundDrawable(d);
+    }
+
+    private int shiftColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.9f; // value component
+        return Color.HSVToColor(hsv);
+    }
+
+    private Drawable createSelector(int color) {
+        ShapeDrawable coloredCircle = new ShapeDrawable(new OvalShape());
+        coloredCircle.getPaint().setColor(color);
+        ShapeDrawable darkerCircle = new ShapeDrawable(new OvalShape());
+        darkerCircle.getPaint().setColor(shiftColor(color));
+
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        stateListDrawable.addState(new int[]{-android.R.attr.state_pressed}, coloredCircle);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, darkerCircle);
+        return stateListDrawable;
+    }
+
+    public void show(Activity context, int preselect, Callback callback) {
         mCallback = callback;
+        Bundle args = new Bundle();
+        args.putInt("preselect", preselect);
+        setArguments(args);
         show(context.getFragmentManager(), "COLOR_SELECTOR");
     }
 }
