@@ -8,6 +8,7 @@
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
     <dimen name="md_button_inset_vertical">6dp</dimen>
     <dimen name="md_button_inset_horizontal">4dp</dimen>
+    <dimen name="md_button_textpadding_horizontal">1dp</dimen>
     <dimen name="md_button_padding_horizontal">8dp</dimen>
     <dimen name="md_button_padding_vertical">4dp</dimen>
     <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
