@@ -133,10 +133,17 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
-        findViewById(R.id.customView_noScroll).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.customView_webView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCustomWebView();
+            }
+        });
+
+        findViewById(R.id.customView_colorChooser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomColorChooser();
             }
         });
 
@@ -398,6 +405,15 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         WebView webView = (WebView) dialog.getCustomView().findViewById(R.id.webview);
         webView.loadUrl("file:///android_asset/webview.html");
         dialog.show();
+    }
+
+    private void showCustomColorChooser() {
+        new ColorChooserDialog().show(this, new ColorChooserDialog.Callback() {
+            @Override
+            public void onColorSelection(int primary) {
+
+            }
+        });
     }
 
     private void showThemed() {
