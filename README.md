@@ -12,7 +12,7 @@ For the full history, see the [Changelog](https://github.com/afollestad/material
 
 > 1. Global theming attributes for dialog background color and divider color. See the [Global Theming section](https://github.com/afollestad/material-dialogs#global-theming).
 > 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
->       These changes mean the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
+>       One thing to come from this is the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
 > 3. Other bug fixes.
 
 ###### Version 0.5.1 - 0.5.2
@@ -377,14 +377,13 @@ or operating system. This behavior can be overridden in your Activity themes:
 
     <!--
         By default, the content text is derived from the
-            ?android:textColorSecondary OS attribute.
+        ?android:textColorSecondary OS attribute.
     -->
     <item name="md_content_color">#9C27B0</item>
 
     <!--
-        By default, the accent color is derived from the colorAccent
-            attribute of AppCompat or android:colorAccent attribute
-            of the Material theme.
+        By default, the accent color is derived from the colorAccent attribute of
+            AppCompat or android:colorAccent attribute of the Material theme.
     -->
     <item name="md_accent_color">#673AB7</item>
 
@@ -394,13 +393,16 @@ or operating system. This behavior can be overridden in your Activity themes:
     -->
     <item name="md_item_color">#9C27B0</item>
 
-    <!-- This overrides the default dark or light dialog background
-            color. Note that if you use a dark color here, you should set
-            md_dark_theme to true so text and selectors look visible -->
+    <!-- This overrides the default dark or light dialog background color.
+            Note that if you use a dark color here, you should set md_dark_theme to
+            true so text and selectors look visible
+    -->
     <item name="md_background_color">#37474F</item>
 
-    <!-- This overrides the color used for the top and bottom
-            dividers used when content is scrollable -->
+    <!--
+        This overrides the color used for the top and bottom dividers used when
+        content is scrollable
+    -->
     <item name="md_divider_color">#E91E63</item>
 
 </style>
