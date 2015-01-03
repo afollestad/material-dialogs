@@ -3,7 +3,7 @@
 ###### Version 0.5.4
 
 > 1. Fixes for positioning of negative button (bug that came up with the previous update that improved RTL support).
-> 2. Fix for multichoice dialogs not checked states correctly if no preselection is used.
+> 2. Fix for multichoice dialogs not keeping checked states correctly if no preselection is used.
 > 3. New color chooser dialog in the sample project, feel free to use it in your apps!
 > 4. Support for detection if a RecyclerView custom view is scrollable. Note that the stock RecyclerView LayoutManagers do not support using wrap_content as height correctly, so RecyclerViews in dialogs will take up the max dialog height.
 > 5. Other small fixes.
