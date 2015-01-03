@@ -719,7 +719,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     }
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        params.addRule(RelativeLayout.ALIGN_PARENT_START);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
                     } else {
                         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     }
@@ -1458,11 +1458,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     break;
                 }
                 case MULTI: {
-                    if (mBuilder.selectedIndices != null) {
-                        @SuppressLint("CutPasteId")
-                        CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
-                        checkbox.setChecked(selectedIndicesList.contains(index));
-                    }
+                    @SuppressLint("CutPasteId")
+                    CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
+                    checkbox.setChecked(selectedIndicesList.contains(index));
                     break;
                 }
             }
