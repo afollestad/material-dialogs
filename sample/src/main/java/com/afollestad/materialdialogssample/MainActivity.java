@@ -1,6 +1,8 @@
 package com.afollestad.materialdialogssample;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -407,11 +409,16 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         dialog.show();
     }
 
-    private void showCustomColorChooser() {
-        new ColorChooserDialog().show(this, new ColorChooserDialog.Callback() {
-            @Override
-            public void onColorSelection(int primary) {
+    static int selectedColorIndex = -1;
 
+    private void showCustomColorChooser() {
+        new ColorChooserDialog().show(this, selectedColorIndex, new ColorChooserDialog.Callback() {
+            @Override
+            public void onColorSelection(int index, int color, int darker) {
+                selectedColorIndex = index;
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    getWindow().setStatusBarColor(darker);
             }
         });
     }

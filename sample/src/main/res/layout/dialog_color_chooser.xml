@@ -13,109 +13,288 @@
         android:rowCount="5"
         android:orientation="vertical"
         tools:ignore="UselessParent"
-        android:paddingTop="4dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="20dp"
         android:clipToPadding="false">
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="4dp" />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
 
-        <View
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            tools:background="#000">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_check"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
     </GridLayout>
 
