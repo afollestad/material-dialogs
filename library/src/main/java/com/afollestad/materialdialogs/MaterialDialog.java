@@ -994,6 +994,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * By default, the multi choice callback is only called when the user clicks the positive button
          * or if there are no buttons. Call this to force it to always call on item clicks even if the
          * positive button exists.
+         *
+         * @return The Builder instance so you can chain calls to it.
          */
         public Builder alwaysCallMultiChoiceCallback() {
             this.alwaysCallMultiChoiceCallback = true;
@@ -1223,7 +1225,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     * <p/>
+     *
      * This will not return buttons that are actually in the layout itself, since the layout doesn't
      * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
      * stock OS requires this method in order to detect visible buttons.
