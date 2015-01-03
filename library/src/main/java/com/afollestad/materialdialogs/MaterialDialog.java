@@ -581,7 +581,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             GridLayoutManager glm = (GridLayoutManager) lm;
             lastVisible = glm.findLastVisibleItemPosition();
         } else {
-            throw new NotImplementedException("MaterialDialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
+            throw new NotImplementedException("Material Dialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
         }
 
         if (lastVisible == -1)
