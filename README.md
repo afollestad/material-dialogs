@@ -383,19 +383,20 @@ or operating system. This behavior can be overridden in your Activity themes:
 
     <!--
         By default, the accent color is derived from the colorAccent attribute of
-            AppCompat or android:colorAccent attribute of the Material theme.
+        AppCompat or android:colorAccent attribute of the Material theme.
     -->
     <item name="md_accent_color">#673AB7</item>
 
     <!--
         By default, the list item text color is black for the light
-            theme and white for the dark theme.
+        theme and white for the dark theme.
     -->
     <item name="md_item_color">#9C27B0</item>
 
-    <!-- This overrides the default dark or light dialog background color.
-            Note that if you use a dark color here, you should set md_dark_theme to
-            true so text and selectors look visible
+    <!--
+        This overrides the default dark or light dialog background color.
+        Note that if you use a dark color here, you should set md_dark_theme to
+        true so text and selectors look visible
     -->
     <item name="md_background_color">#37474F</item>
 
