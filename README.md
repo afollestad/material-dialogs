@@ -361,7 +361,7 @@ or operating system. This behavior can be overridden in your Activity themes:
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
     <!--
-        All dialogs will default to Theme.DARK.
+        All dialogs will default to Theme.DARK with this set to true.
     -->
     <item name="md_dark_theme">true</item>
 
@@ -371,7 +371,7 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_dark_theme">true</item>
 
     <!--
-        By default, the title text is pure black or pure white based on the theme.
+        By default, the title text is black or white based on the theme.
     -->
     <item name="md_title_color">#E91E63</item>
 
@@ -387,7 +387,7 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_accent_color">#673AB7</item>
 
     <!--
-        By default, the list item text color is derived from the ?android:textColorSecondary OS attribute.
+        By default, the list item text color is black for the light theme and white for the dark theme.
     -->
     <item name="md_item_color">#9C27B0</item>
 
