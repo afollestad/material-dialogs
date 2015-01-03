@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:layout_marginRight="@dimen/md_icon_margin"
-                android:layout_marginEnd="@dimen/md_icon_margin"/>
+                android:layout_marginEnd="@dimen/md_icon_margin" />
 
             <TextView
                 android:id="@+id/title"
@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_content_textsize"
                 tools:text="Content" />
+
         </ScrollView>
 
         <FrameLayout
@@ -82,6 +83,7 @@
             android:id="@+id/customViewFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <View
@@ -99,23 +101,48 @@
         android:layout_marginEnd="@dimen/md_button_padding_frame_side"
         android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
-        <Button
+        <FrameLayout
             android:id="@+id/buttonDefaultNeutral"
             style="@style/MD_ActionButton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="@dimen/md_neutral_button_margin"
-            android:layout_marginStart="@dimen/md_neutral_button_margin" />
-        <!-- toLeftOf rule added from invalidateActions() -->
-        <Button
-            android:id="@+id/buttonDefaultNegative"
-            style="@style/MD_ActionButton" />
+            android:layout_marginStart="@dimen/md_neutral_button_margin">
 
-        <Button
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Neutral"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/buttonDefaultNegative"
+            style="@style/MD_ActionButton">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Negative"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/buttonDefaultPositive"
             style="@style/MD_ActionButton"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Positive"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -126,16 +153,42 @@
         android:layout_marginTop="@dimen/md_button_frame_vertical_padding"
         android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
-        <Button
+        <FrameLayout
             android:id="@+id/buttonStackedPositive"
-            style="@style/MD_ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked">
 
-        <Button
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Positive"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/buttonStackedNegative"
-            style="@style/MD_ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked">
 
-        <Button
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Negative"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/buttonStackedNeutral"
-            style="@style/MD_ActionButtonStacked" />
+            style="@style/MD_ActionButtonStacked">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Neutral"
+                style="@style/MD_ActionButton.Text" />
+
+        </FrameLayout>
+
     </LinearLayout>
+
 </LinearLayout>

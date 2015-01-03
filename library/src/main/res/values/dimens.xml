@@ -5,7 +5,7 @@
     <dimen name="md_title_frame_margin_bottom">16dp</dimen>
     <dimen name="md_title_frame_margin_bottom_list">4dp</dimen>
     <!-- 64dp + 8dp (left and right insets) -->
-    <dimen name="md_button_min_width">72dp</dimen>
+    <dimen name="md_button_min_width">48dp</dimen>
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
     <dimen name="md_button_inset_vertical">6dp</dimen>
     <dimen name="md_button_inset_horizontal">4dp</dimen>
