@@ -17,7 +17,7 @@
 
     <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:gravity">start|center_vertical</item>
         <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
         <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal
         </item>
