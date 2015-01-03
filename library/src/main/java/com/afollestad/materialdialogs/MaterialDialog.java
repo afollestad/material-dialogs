@@ -687,7 +687,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     }
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        params.addRule(RelativeLayout.ALIGN_PARENT_START);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
                     } else {
                         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     }
