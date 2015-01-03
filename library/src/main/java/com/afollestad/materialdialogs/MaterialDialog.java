@@ -21,6 +21,9 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -530,7 +533,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return canAdapterViewScroll((AdapterView) view);
         } else if (view instanceof WebView) {
             return canWebViewScroll((WebView) view);
-//          } TODO else if RecyclerView {
+        } else if (view instanceof RecyclerView) {
+            return canRecyclerViewScroll((RecyclerView) view);
         } else {
             if (atBottom) {
                 return canViewOrChildScroll(getBottomView((ViewGroup) view), true);
@@ -558,6 +562,34 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         return canAdapterViewScroll(listView);
     }
 
+
+    public static class NotImplementedException extends Error {
+        public NotImplementedException(String message) {
+            super(message);
+        }
+    }
+
+    private static boolean canRecyclerViewScroll(RecyclerView rv) {
+        final RecyclerView.LayoutManager lm = rv.getLayoutManager();
+        final int count = rv.getAdapter().getItemCount();
+        int lastVisible;
+
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+            lastVisible = llm.findLastVisibleItemPosition();
+        } else if (lm instanceof GridLayoutManager) {
+            GridLayoutManager glm = (GridLayoutManager) lm;
+            lastVisible = glm.findLastVisibleItemPosition();
+        } else {
+            throw new NotImplementedException("MaterialDialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
+        }
+
+        if (lastVisible == -1)
+            return false;
+        /* We scroll if the last item is not visible */
+        final boolean lastItemVisible = lastVisible == count - 1;
+        return !lastItemVisible || rv.getChildAt(rv.getChildCount() - 1).getBottom() > rv.getHeight() - rv.getPaddingBottom();
+    }
 
     /**
      * Detects whether or not the content TextView can be scrolled.
@@ -1225,7 +1257,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     /**
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     *
+     * <p/>
      * This will not return buttons that are actually in the layout itself, since the layout doesn't
      * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
      * stock OS requires this method in order to detect visible buttons.
