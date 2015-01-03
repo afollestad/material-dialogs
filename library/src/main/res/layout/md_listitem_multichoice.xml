@@ -2,7 +2,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+    android:gravity="center_vertical|start"
     android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,6 +14,7 @@
         android:minHeight="@dimen/md_listitem_height"
         android:clickable="false"
         android:gravity="center_vertical"
+        android:layout_gravity="start"
         android:layout_marginLeft="@dimen/md_dialog_frame_margin"
         android:layout_marginStart="@dimen/md_dialog_frame_margin"
         android:layout_marginRight="@dimen/md_listitem_control_margin"
@@ -23,12 +24,13 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/md_listitem_height"
         tools:text="Item"
         android:textSize="@dimen/md_listitem_textsize"
         android:gravity="center_vertical"
+        android:layout_gravity="start"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
         android:layout_marginEnd="@dimen/md_dialog_frame_margin" />
 

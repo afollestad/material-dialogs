@@ -2,18 +2,19 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+    android:gravity="center_vertical|start"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/md_listitem_height"
         tools:text="Item"
         android:textSize="@dimen/md_listitem_textsize"
         android:gravity="center_vertical"
+        android:layout_gravity="start"
         android:layout_marginLeft="@dimen/md_listitem_margin_left"
         android:layout_marginStart="@dimen/md_listitem_margin_left"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"

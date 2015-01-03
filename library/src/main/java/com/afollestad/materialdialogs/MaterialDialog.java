@@ -292,8 +292,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     private static int gravityIntToGravity(@GravityInt int gravity) {
         switch (gravity) {
-            case START:
-                return Gravity.START;
             case CENTER:
                 return Gravity.CENTER_HORIZONTAL;
             case END:
@@ -306,8 +304,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private static int gravityToAlignment(@GravityInt int gravity) {
         switch (gravity) {
-            case START:
-                return View.TEXT_ALIGNMENT_VIEW_START;
             case CENTER:
                 return View.TEXT_ALIGNMENT_CENTER;
             case END:
@@ -680,9 +676,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         (int) getContext().getResources().getDimension(R.dimen.md_button_height));
                 if (mBuilder.positiveText != null) {
-                    params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
+                    } else {
+                        params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                    }
                 } else {
-                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        params.addRule(RelativeLayout.ALIGN_PARENT_START);
+                    } else {
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    }
                 }
                 negativeButton.setLayoutParams(params);
             }
@@ -1408,12 +1412,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
             switch (listType) {
                 case SINGLE: {
+                    @SuppressLint("CutPasteId")
                     RadioButton radio = (RadioButton) view.findViewById(R.id.control);
                     radio.setChecked(mBuilder.selectedIndex == index);
                     break;
                 }
                 case MULTI: {
                     if (mBuilder.selectedIndices != null) {
+                        @SuppressLint("CutPasteId")
                         CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
                         checkbox.setChecked(selectedIndicesList.contains(index));
                     }
