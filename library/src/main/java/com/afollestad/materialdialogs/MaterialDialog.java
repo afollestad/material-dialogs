@@ -1426,11 +1426,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     break;
                 }
                 case MULTI: {
-                    if (mBuilder.selectedIndices != null) {
-                        @SuppressLint("CutPasteId")
-                        CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
-                        checkbox.setChecked(selectedIndicesList.contains(index));
-                    }
+                    @SuppressLint("CutPasteId")
+                    CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
+                    checkbox.setChecked(selectedIndicesList.contains(index));
                     break;
                 }
             }
