@@ -29,7 +29,7 @@ public class MaterialDialogCompat {
 
     public static class Builder {
 
-        private MaterialDialog.Builder builder;
+        private final MaterialDialog.Builder builder;
 
         private DialogInterface.OnClickListener negativeDialogListener;
         private DialogInterface.OnClickListener positiveDialogListener;

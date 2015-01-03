@@ -28,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:layout_marginRight="@dimen/md_icon_margin" />
+                android:layout_marginRight="@dimen/md_icon_margin"
+                android:layout_marginEnd="@dimen/md_icon_margin"/>
 
             <TextView
                 android:id="@+id/title"
@@ -95,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/md_button_padding_frame_side"
+        android:layout_marginEnd="@dimen/md_button_padding_frame_side"
         android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
         <Button

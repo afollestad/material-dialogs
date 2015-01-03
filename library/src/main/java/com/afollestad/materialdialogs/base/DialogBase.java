@@ -116,6 +116,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
 
     protected void setBackgroundCompat(View view, Drawable d) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            //noinspection deprecation
             view.setBackgroundDrawable(d);
         } else {
             view.setBackground(d);
