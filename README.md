@@ -8,6 +8,16 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
+###### Version 0.5.4
+
+> 1. Fixes for positioning of negative button (bug that came up with the previous update that improved RTL support).
+> 2. Fix for multichoice dialogs not checked states correctly if no preselection is used.
+> 3. New color chooser dialog in the sample project, feel free to use it in your apps!
+> 4. Support for detection if a RecyclerView custom view is scrollable. Note that the stock RecyclerView LayoutManagers do not support using wrap_content as height correctly, so RecyclerViews in dialogs will take up the max dialog height.
+> 5. Other small fixes.
+>
+> Thanks to those who help me out with pull requests, also!
+
 ###### Version 0.5.3
 
 > 1. Global theming attributes for dialog background color and divider color. See the [Global Theming section](https://github.com/afollestad/material-dialogs#global-theming).
@@ -40,7 +50,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.3'
+    compile 'com.afollestad:material-dialogs:0.5.4'
 }
 ```
 

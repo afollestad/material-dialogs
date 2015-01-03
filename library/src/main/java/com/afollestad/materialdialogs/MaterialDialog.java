@@ -1256,11 +1256,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     /**
-     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     * <p/>
      * This will not return buttons that are actually in the layout itself, since the layout doesn't
      * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
      * stock OS requires this method in order to detect visible buttons.
+     *
+     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
      */
     @Deprecated
     @Override

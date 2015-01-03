@@ -1,5 +1,15 @@
 # Changelog
 
+###### Version 0.5.4
+
+> 1. Fixes for positioning of negative button (bug that came up with the previous update that improved RTL support).
+> 2. Fix for multichoice dialogs not checked states correctly if no preselection is used.
+> 3. New color chooser dialog in the sample project, feel free to use it in your apps!
+> 4. Support for detection if a RecyclerView custom view is scrollable. Note that the stock RecyclerView LayoutManagers do not support using wrap_content as height correctly, so RecyclerViews in dialogs will take up the max dialog height.
+> 5. Other small fixes.
+>
+> Thanks to those who help me out with pull requests, also!
+
 ###### Version 0.5.3
 
 > 1. Global theming attributes for dialog background color and divider color. See the [Global Theming section](https://github.com/afollestad/material-dialogs#global-theming).
@@ -7,6 +17,8 @@
 > 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
 >       One thing to come from this is the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
 > 3. Other bug fixes.
+
+
 
 ###### Version 0.5.1 - 0.5.2
 
