@@ -2,7 +2,7 @@
 
 ###### Version 0.5.3
 
-> 1. Global theming attributes for dialog background color and divider color. See the (Global Theming section)[https://github.com/afollestad/material-dialogs#global-theming].
+> 1. Global theming attributes for dialog background color and divider color. See the [Global Theming section](https://github.com/afollestad/material-dialogs#global-theming).
 > 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
 >       These changes mean the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
 > 3. Other bug fixes.
