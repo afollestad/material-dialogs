@@ -1,13 +1,13 @@
 # Changelog
 
-###### Version 0.5.5 - 0.5.6
+###### Version 0.5.5 - 0.5.7
 
 > 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.
 > 2. Added `accentColor` and `accentColorRes` methods as a convenience method to the three methods `positiveColor`, `negativeColor`, and `neutralColor` (and their 'res' variants).
 > 3. Added `ThemeSingleton`, for internal use only right now unless you really think your app needs it. Used for dynamic global theming (changing at/after runtime).
 > 4. In the Builder, the `icon` method for a drawable resource ID was renamed to `iconRes` for consistency.
 >
-> Quick fix in 0.5.6.
+> Quick fix in 0.5.6, fixed title gravity in 0.5.7.
 
 ###### Version 0.5.4
 
