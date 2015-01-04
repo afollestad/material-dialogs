@@ -154,7 +154,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setTextColor(contentColor);
         }
 
-        if (builder.itemColor != -1) {
+        if (builder.itemColor != 0) {
             defaultItemColor = builder.itemColor;
         } else if (builder.theme == Theme.LIGHT) {
             defaultItemColor = Color.BLACK;
@@ -893,19 +893,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             if (ThemeSingleton.get(false) == null) return;
             ThemeSingleton s = ThemeSingleton.get();
             theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
-            if (s.titleColor != -1)
+            if (s.titleColor != 0)
                 titleColor(s.titleColor);
-            if (s.contentColor != -1)
+            if (s.contentColor != 0)
                 contentColor(s.contentColor);
-            if (s.accentColor != -1)
+            if (s.accentColor != 0)
                 accentColor(s.accentColor);
-            if (s.itemColor != -1)
+            if (s.itemColor != 0)
                 itemColor(s.itemColor);
             if (s.icon != null)
                 icon(s.icon);
-            if (s.backgroundColor != -1)
+            if (s.backgroundColor != 0)
                 backgroundColor(s.backgroundColor);
-            if (s.dividerColor != -1)
+            if (s.dividerColor != 0)
                 dividerColor(s.dividerColor);
         }
 

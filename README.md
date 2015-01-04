@@ -8,12 +8,14 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
-###### Version 0.5.5
+###### Version 0.5.5 - 0.5.6
 
 > 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.
 > 2. Added `accentColor` and `accentColorRes` methods as a convenience method to the three methods `positiveColor`, `negativeColor`, and `neutralColor` (and their 'res' variants).
 > 3. Added `ThemeSingleton`, for internal use only right now unless you really think your app needs it. Used for dynamic global theming (changing at/after runtime).
 > 4. In the Builder, the `icon` method for a drawable resource ID was renamed to `iconRes` for consistency.
+>
+> Quick fix in 0.5.6.
 
 ###### Version 0.5.4
 
@@ -57,7 +59,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.5'
+    compile 'com.afollestad:material-dialogs:0.5.6'
 }
 ```
 

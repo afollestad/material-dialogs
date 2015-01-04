@@ -29,11 +29,11 @@ public class ThemeSingleton {
 //    <attr name="md_divider_color" format="color" />
 
     public boolean darkTheme = false;
-    public int titleColor = -1;
-    public int contentColor = -1;
-    public int accentColor = -1;
-    public int itemColor = -1;
+    public int titleColor = 0;
+    public int contentColor = 0;
+    public int accentColor = 0;
+    public int itemColor = 0;
     public Drawable icon = null;
-    public int backgroundColor = -1;
-    public int dividerColor = -1;
+    public int backgroundColor = 0;
+    public int dividerColor = 0;
 }
