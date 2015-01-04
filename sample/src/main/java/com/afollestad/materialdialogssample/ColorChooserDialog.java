@@ -51,7 +51,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 .customView(R.layout.dialog_color_chooser, false)
                 .build();
 
-        final TypedArray ta = getActivity().getResources().obtainTypedArray(R.array.material_colors_500);
+        final TypedArray ta = getActivity().getResources().obtainTypedArray(R.array.colors);
         mColors = new int[ta.length()];
         for (int i = 0; i < ta.length(); i++)
             mColors[i] = ta.getColor(i, 0);
