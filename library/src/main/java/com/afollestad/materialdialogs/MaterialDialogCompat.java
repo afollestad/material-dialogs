@@ -59,7 +59,7 @@ public class MaterialDialogCompat {
         }
 
         public Builder setIcon(@DrawableRes int iconId) {
-            builder.icon(iconId);
+            builder.iconRes(iconId);
             return this;
         }
 
