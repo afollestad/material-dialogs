@@ -154,7 +154,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setTextColor(contentColor);
         }
 
-        if (builder.theme == Theme.LIGHT) {
+        if (builder.itemColor != -1) {
+            defaultItemColor = builder.itemColor;
+        } else if (builder.theme == Theme.LIGHT) {
             defaultItemColor = Color.BLACK;
         } else {
             defaultItemColor = Color.WHITE;
@@ -852,6 +854,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected boolean wrapCustomViewInScroll;
         protected int dividerColor;
         protected int backgroundColor;
+        protected int itemColor;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -883,6 +886,27 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     a.recycle();
                 }
             }
+            checkSingleton();
+        }
+
+        private void checkSingleton() {
+            if (ThemeSingleton.get(false) == null) return;
+            ThemeSingleton s = ThemeSingleton.get();
+            theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
+            if (s.titleColor != -1)
+                titleColorRes(s.titleColor);
+            if (s.contentColor != -1)
+                contentColorRes(s.contentColor);
+            if (s.accentColor != -1)
+                accentColorRes(s.accentColor);
+            if (s.itemColor != -1)
+                itemColorRes(s.itemColor);
+            if (s.icon != -1)
+                iconRes(s.icon);
+            if (s.backgroundColor != -1)
+                backgroundColorRes(s.backgroundColor);
+            if (s.dividerColor != -1)
+                dividerColorRes(s.dividerColor);
         }
 
         public Builder title(@StringRes int titleRes) {
@@ -928,7 +952,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder icon(@DrawableRes int icon) {
+        public Builder iconRes(@DrawableRes int icon) {
             this.icon = context.getResources().getDrawable(icon);
             return this;
         }
@@ -1118,6 +1142,29 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        /**
+         * Convience method for setting the positive, neutral, and negative color all at once.
+         *
+         * @param colorRes The new color resource to use.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder accentColorRes(@ColorRes int colorRes) {
+            return accentColor(this.context.getResources().getColor(colorRes));
+        }
+
+        /**
+         * Convience method for setting the positive, neutral, and negative color all at once.
+         *
+         * @param color The new color to use.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder accentColor(int color) {
+            this.positiveColor = color;
+            this.negativeColor = color;
+            this.neutralColor = color;
+            return this;
+        }
+
         public Builder dividerColorRes(@ColorRes int colorRes) {
             return dividerColor(this.context.getResources().getColor(colorRes));
         }
@@ -1133,6 +1180,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder backgroundColor(int color) {
             this.backgroundColor = color;
+            return this;
+        }
+
+        public Builder itemColorRes(@ColorRes int colorRes) {
+            return itemColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder itemColor(int color) {
+            this.itemColor = color;
             return this;
         }
 
