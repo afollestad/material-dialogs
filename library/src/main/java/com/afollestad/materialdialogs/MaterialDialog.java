@@ -894,19 +894,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             ThemeSingleton s = ThemeSingleton.get();
             theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
             if (s.titleColor != -1)
-                titleColorRes(s.titleColor);
+                titleColor(s.titleColor);
             if (s.contentColor != -1)
-                contentColorRes(s.contentColor);
+                contentColor(s.contentColor);
             if (s.accentColor != -1)
-                accentColorRes(s.accentColor);
+                accentColor(s.accentColor);
             if (s.itemColor != -1)
-                itemColorRes(s.itemColor);
-            if (s.icon != -1)
-                iconRes(s.icon);
+                itemColor(s.itemColor);
+            if (s.icon != null)
+                icon(s.icon);
             if (s.backgroundColor != -1)
-                backgroundColorRes(s.backgroundColor);
+                backgroundColor(s.backgroundColor);
             if (s.dividerColor != -1)
-                dividerColorRes(s.dividerColor);
+                dividerColor(s.dividerColor);
         }
 
         public Builder title(@StringRes int titleRes) {
