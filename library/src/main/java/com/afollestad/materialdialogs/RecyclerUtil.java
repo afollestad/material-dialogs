@@ -3,9 +3,13 @@ package com.afollestad.materialdialogs;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 public class RecyclerUtil {
-    static boolean canRecyclerViewScroll(RecyclerView rv) {
+    static boolean canRecyclerViewScroll(View view) {
+
+        RecyclerView rv = (RecyclerView) view;
+
         final RecyclerView.LayoutManager lm = rv.getLayoutManager();
         final int count = rv.getAdapter().getItemCount();
         int lastVisible;
@@ -25,5 +29,9 @@ public class RecyclerUtil {
         /* We scroll if the last item is not visible */
         final boolean lastItemVisible = lastVisible == count - 1;
         return !lastItemVisible || rv.getChildAt(rv.getChildCount() - 1).getBottom() > rv.getHeight() - rv.getPaddingBottom();
+    }
+
+    static boolean isRecyclerView(View view) {
+        return view instanceof RecyclerView;
     }
 }

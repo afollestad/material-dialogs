@@ -20,7 +20,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -522,7 +521,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else if (view instanceof WebView) {
             return canWebViewScroll((WebView) view);
         } else if (isRecyclerView(view)) {
-            return RecyclerUtil.canRecyclerViewScroll((RecyclerView) view);
+            return RecyclerUtil.canRecyclerViewScroll(view);
         } else {
             if (atBottom) {
                 return canViewOrChildScroll(getBottomView((ViewGroup) view), true);
@@ -538,7 +537,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             Class.forName("android.support.v7.widget.RecyclerView");
 
             // We got here, so now we can safely check
-            isRecyclerView = view instanceof RecyclerView;
+            isRecyclerView = RecyclerUtil.isRecyclerView(view);
         } catch (ClassNotFoundException ignored) {}
 
         return isRecyclerView;
