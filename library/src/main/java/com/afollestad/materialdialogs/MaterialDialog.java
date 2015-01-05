@@ -16,13 +16,10 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
@@ -56,17 +53,6 @@ import java.util.List;
  * @author Aidan Follestad (afollestad)
  */
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
-
-    @IntDef({START, CENTER, END})
-    public @interface GravityInt {
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public static final int START = 0;
-    @SuppressWarnings("WeakerAccess")
-    public static final int CENTER = 1;
-    @SuppressWarnings("WeakerAccess")
-    public static final int END = 2;
 
     protected final View view;
     protected final Builder mBuilder;
@@ -296,7 +282,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
-    private static int gravityIntToGravity(@GravityInt int gravity) {
+    private static int gravityIntToGravity(GravityEnum gravity) {
         switch (gravity) {
             case CENTER:
                 return Gravity.CENTER_HORIZONTAL;
@@ -308,7 +294,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static int gravityToAlignment(@GravityInt int gravity) {
+    private static int gravityToAlignment(GravityEnum gravity) {
         switch (gravity) {
             case CENTER:
                 return View.TEXT_ALIGNMENT_CENTER;
@@ -803,12 +789,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         protected final Context context;
         protected CharSequence title;
-        protected
-        @GravityInt
-        int titleGravity = Gravity.START;
-        protected
-        @GravityInt
-        int contentGravity = Gravity.START;
+        protected GravityEnum titleGravity = GravityEnum.START;
+        protected GravityEnum contentGravity = GravityEnum.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -908,7 +890,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder titleGravity(@GravityInt int gravity) {
+        public Builder titleGravity(GravityEnum gravity) {
             this.titleGravity = gravity;
             return this;
         }
@@ -976,7 +958,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder contentGravity(@GravityInt int gravity) {
+        public Builder contentGravity(GravityEnum gravity) {
             this.contentGravity = gravity;
             return this;
         }
@@ -1536,6 +1518,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     throw new IllegalArgumentException("Not a valid list type");
             }
         }
+    }
+
+    public static enum GravityEnum {
+        START, CENTER, END
     }
 
     public static interface ListCallback {
