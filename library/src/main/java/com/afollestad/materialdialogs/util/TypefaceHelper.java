@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs;
+package com.afollestad.materialdialogs.util;
 
 import android.content.Context;
 import android.graphics.Typeface;

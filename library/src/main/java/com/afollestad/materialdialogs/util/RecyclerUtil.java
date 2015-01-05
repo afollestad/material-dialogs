@@ -1,12 +1,15 @@
-package com.afollestad.materialdialogs;
+package com.afollestad.materialdialogs.util;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 public class RecyclerUtil {
-    static boolean canRecyclerViewScroll(View view) {
+
+    public static boolean canRecyclerViewScroll(View view) {
 
         RecyclerView rv = (RecyclerView) view;
 
@@ -31,7 +34,7 @@ public class RecyclerUtil {
         return !lastItemVisible || rv.getChildAt(rv.getChildCount() - 1).getBottom() > rv.getHeight() - rv.getPaddingBottom();
     }
 
-    static boolean isRecyclerView(View view) {
+    public static boolean isRecyclerView(View view) {
         return view instanceof RecyclerView;
     }
 }

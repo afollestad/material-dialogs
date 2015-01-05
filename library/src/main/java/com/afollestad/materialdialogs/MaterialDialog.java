@@ -43,6 +43,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
+import com.afollestad.materialdialogs.util.DialogUtils;
+import com.afollestad.materialdialogs.util.RecyclerUtil;
+import com.afollestad.materialdialogs.util.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1517,10 +1520,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     throw new IllegalArgumentException("Not a valid list type");
             }
         }
-    }
-
-    public static enum GravityEnum {
-        START, CENTER, END
     }
 
     public static interface ListCallback {
