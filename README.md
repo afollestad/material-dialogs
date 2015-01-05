@@ -8,6 +8,13 @@ The code you see below is also found in the sample project. You can download a A
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
+###### Version 0.5.8
+
+> 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167
+>
+> IntDefs cannot safely be used in AARs, so we're back to using a enum (`GravityEnum`) for the various gravity methods.
+> The RecyclerView dependency is also now provided, so it's not a required dependency but it's supported.
+
 ###### Version 0.5.5 - 0.5.7
 
 > 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.
@@ -59,7 +66,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Groovy
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.7'
+    compile 'com.afollestad:material-dialogs:0.5.8'
 }
 ```
 

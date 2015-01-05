@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs;
+package com.afollestad.materialdialogs.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 /**
  * @author Aidan Follestad (afollestad)
  */
-class DialogUtils {
+public class DialogUtils {
 
     public static int adjustAlpha(int color, float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);

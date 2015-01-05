@@ -8,8 +8,8 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 62
-        versionName "0.5.7"
+        versionCode 63
+        versionName "0.5.8"
     }
     lintOptions {
         abortOnError false

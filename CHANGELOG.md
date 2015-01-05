@@ -1,5 +1,12 @@
 # Changelog
 
+###### Version 0.5.8
+
+> 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167
+>
+> IntDefs cannot safely be used in AARs, so we're back to using a enum (`GravityEnum`) for the various gravity methods.
+> The RecyclerView dependency is also now provided, so it's not a required dependency but it's supported.
+
 ###### Version 0.5.5 - 0.5.7
 
 > 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.

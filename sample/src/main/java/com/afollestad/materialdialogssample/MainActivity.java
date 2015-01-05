@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -431,7 +432,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .negativeText(R.string.disagree)
                 .positiveColorRes(R.color.material_red_400)
                 .negativeColorRes(R.color.material_red_400)
-                .titleGravity(MaterialDialog.GravityEnum.CENTER)
+                .titleGravity(GravityEnum.CENTER)
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .backgroundColorRes(R.color.material_blue_grey_800)
