@@ -535,8 +535,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return canAdapterViewScroll((AdapterView) view);
         } else if (view instanceof WebView) {
             return canWebViewScroll((WebView) view);
-        } else if (view instanceof RecyclerView) {
-            return canRecyclerViewScroll((RecyclerView) view);
+        } else if (isRecyclerView(view)) {
+            return RecyclerUtil.canRecyclerViewScroll((RecyclerView) view);
         } else {
             if (atBottom) {
                 return canViewOrChildScroll(getBottomView((ViewGroup) view), true);
@@ -546,6 +546,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
+    private static boolean isRecyclerView(View view) {
+        boolean isRecyclerView = false;
+        try {
+            Class.forName("android.support.v7.widget.RecyclerView");
+
+            // We got here, so now we can safely check
+            isRecyclerView = view instanceof RecyclerView;
+        } catch (ClassNotFoundException ignored) {}
+
+        return isRecyclerView;
+    }
 
     private static boolean canWebViewScroll(WebView view) {
         return view.getMeasuredHeight() > view.getContentHeight();
@@ -569,28 +580,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public NotImplementedException(String message) {
             super(message);
         }
-    }
-
-    private static boolean canRecyclerViewScroll(RecyclerView rv) {
-        final RecyclerView.LayoutManager lm = rv.getLayoutManager();
-        final int count = rv.getAdapter().getItemCount();
-        int lastVisible;
-
-        if (lm instanceof LinearLayoutManager) {
-            LinearLayoutManager llm = (LinearLayoutManager) lm;
-            lastVisible = llm.findLastVisibleItemPosition();
-        } else if (lm instanceof GridLayoutManager) {
-            GridLayoutManager glm = (GridLayoutManager) lm;
-            lastVisible = glm.findLastVisibleItemPosition();
-        } else {
-            throw new NotImplementedException("Material Dialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
-        }
-
-        if (lastVisible == -1)
-            return false;
-        /* We scroll if the last item is not visible */
-        final boolean lastItemVisible = lastVisible == count - 1;
-        return !lastItemVisible || rv.getChildAt(rv.getChildCount() - 1).getBottom() > rv.getHeight() - rv.getPaddingBottom();
     }
 
     /**
