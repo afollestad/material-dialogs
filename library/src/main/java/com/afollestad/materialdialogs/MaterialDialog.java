@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -421,9 +422,23 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             Resources r = getContext().getResources();
             buttonBarDivider.setVisibility(View.GONE);
+
             final int bottomMargin = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
-            setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), bottomMargin, bottomMargin);
-            setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), bottomMargin, bottomMargin);
+
+            /* Only enable the bottom margin if our available window space can hold the margin,
+               we don't want to enable this and cause the content to scroll, which is bad
+               experience itself but it also causes a vibrating window as this will keep getting
+               enabled/disabled over and over again.
+             */
+            Rect maxWindowFrame = new Rect();
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(maxWindowFrame);
+            int currentHeight = getWindow().getDecorView().getMeasuredHeight();
+            if (currentHeight + bottomMargin < maxWindowFrame.height()) {
+                setVerticalMargins(view.findViewById(R.id.buttonStackedFrame),
+                        bottomMargin, bottomMargin);
+                setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame),
+                        bottomMargin, bottomMargin);
+            }
         }
     }
 
