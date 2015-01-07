@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
@@ -1254,6 +1255,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void show() {
+        if(Looper.myLooper() != Looper.getMainLooper())
+            throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
+        super.show();
+    }
 
     private ColorStateList getActionTextStateList(int newPrimaryColor) {
         final int fallBackButtonColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
