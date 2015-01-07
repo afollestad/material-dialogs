@@ -1,5 +1,9 @@
 # Changelog
 
+###### Version 0.5.9
+
+> 1. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
+
 ###### Version 0.5.8
 
 > 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167

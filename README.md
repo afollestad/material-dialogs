@@ -4,9 +4,31 @@ The code you see below is also found in the sample project. You can download a A
 
 ---
 
+### Gradle Dependency (jCenter)
+
+Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
+
+```Groovy
+dependencies {
+    compile 'com.afollestad:material-dialogs:0.5.9'
+}
+```
+
+[ ![Download](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs/_latestVersion)
+
+***Make sure*** you're using the jCenter repository, Android Studio uses this repository by default.
+
+Check back here frequently for version updates.
+
+---
+
 ### What's New
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
+
+###### Version 0.5.9
+
+> 1. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
 
 ###### Version 0.5.8
 
@@ -57,24 +79,6 @@ For the full history, see the [Changelog](https://github.com/afollestad/material
 > 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help! See the [Custom Views](https://github.com/afollestad/material-dialogs#custom-views) section for more details, see the sample project for an example in action.
 > 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs. A top divider is also used when there's scrollable content.
 > 3. Other bug fixes and improvements throughout.
-
----
-
-### Gradle Dependency (jCenter)
-
-Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
-
-```Groovy
-dependencies {
-    compile 'com.afollestad:material-dialogs:0.5.8'
-}
-```
-
-[ ![Download](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs/_latestVersion)
-
-***Make sure*** you're using the jCenter repository, Android Studio uses this repository by default.
-
-Check back here frequently for version updates.
 
 ---
 
