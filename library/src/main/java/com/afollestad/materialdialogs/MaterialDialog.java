@@ -70,6 +70,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected View negativeButton;
     protected boolean isStacked;
     protected boolean alwaysCallMultiChoiceCallback;
+    protected boolean alwaysCallSingleChoiceCallback;
     protected final int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
@@ -201,6 +202,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 // Determine list type
                 if (mBuilder.listCallbackSingle != null) {
                     listType = ListType.SINGLE;
+                    alwaysCallSingleChoiceCallback = builder.alwaysCallSingleChoiceCallback;
                 } else if (mBuilder.listCallbackMulti != null) {
                     listType = ListType.MULTI;
                     if (mBuilder.selectedIndices != null) {
@@ -786,6 +788,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
                         dismiss();
                         sendSingleChoiceCallback(v);
+                    } else if (alwaysCallSingleChoiceCallback) {
+                        sendSingleChoiceCallback(v);
                     }
                 } else if (mBuilder.listCallbackMulti != null) {
                     CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
@@ -824,6 +828,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListCallback listCallbackSingle;
         protected ListCallbackMulti listCallbackMulti;
         protected boolean alwaysCallMultiChoiceCallback = false;
+        protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
         protected float contentLineSpacingMultiplier = 1.3f;
@@ -1015,6 +1020,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             this.listCallback = null;
             this.listCallbackSingle = callback;
             this.listCallbackMulti = null;
+            return this;
+        }
+
+        /**
+         * By default, the single choice callback is only called when the user clicks the positive button
+         * or if there are no buttons. Call this to force it to always call on item clicks even if the
+         * positive button exists.
+         *
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder alwaysCallSingleChoiceCallback() {
+            this.alwaysCallSingleChoiceCallback = true;
             return this;
         }
 
