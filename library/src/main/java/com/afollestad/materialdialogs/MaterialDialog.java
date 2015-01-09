@@ -559,7 +559,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
             // We got here, so now we can safely check
             isRecyclerView = RecyclerUtil.isRecyclerView(view);
-        } catch (ClassNotFoundException ignored) {}
+        } catch (ClassNotFoundException ignored) {
+        }
 
         return isRecyclerView;
     }
@@ -640,6 +641,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         invalidateActions();
     }
 
+    private Drawable getButtonSelector() {
+        if (isStacked) {
+            Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
+            if (custom != null) return custom;
+        } else {
+            Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
+            if (custom != null) return custom;
+        }
+        return DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector);
+    }
+
     /**
      * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
      * and sets their properties (such as height, text color, etc.).
@@ -668,8 +680,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(positiveTextView, mBuilder.mediumFont);
             positiveTextView.setText(mBuilder.positiveText);
             positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
-            setBackgroundCompat(positiveButton, DialogUtils.resolveDrawable(getContext(),
-                    isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
+            setBackgroundCompat(positiveButton, getButtonSelector());
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
         } else {
@@ -683,7 +694,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(neutralTextView, mBuilder.mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
             neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-            setBackgroundCompat(neutralButton, DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
+            setBackgroundCompat(neutralButton, getButtonSelector());
             neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
@@ -698,16 +709,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(negativeTextView, mBuilder.mediumFont);
             negativeButton.setVisibility(View.VISIBLE);
             negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
-            setBackgroundCompat(negativeButton, DialogUtils.resolveDrawable(getContext(),
-                    isStacked ? R.attr.md_selector : R.attr.md_btn_selector));
+            setBackgroundCompat(negativeButton, getButtonSelector());
             negativeTextView.setText(mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
 
             if (!isStacked) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        (int) getContext().getResources().getDimension(R.dimen.md_button_height));
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
                 if (mBuilder.positiveText != null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                         params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
@@ -849,6 +858,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected int dividerColor;
         protected int backgroundColor;
         protected int itemColor;
+        protected Drawable selector;
+        protected Drawable btnSelector;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -901,6 +912,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 backgroundColor(s.backgroundColor);
             if (s.dividerColor != 0)
                 dividerColor(s.dividerColor);
+            if (s.selector != null)
+                selector(s.selector);
+            if (s.btnSelector != null)
+                btnSelector(s.btnSelector);
         }
 
         public Builder title(@StringRes int titleRes) {
@@ -1092,6 +1107,24 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        public Builder selectorRes(@DrawableRes int selectorRes) {
+            return selector(this.context.getResources().getDrawable(selectorRes));
+        }
+
+        public Builder selector(Drawable selector) {
+            this.selector = selector;
+            return this;
+        }
+
+        public Builder btnSelectorRes(@DrawableRes int selectorRes) {
+            return btnSelector(this.context.getResources().getDrawable(selectorRes));
+        }
+
+        public Builder btnSelector(Drawable selector) {
+            this.btnSelector = selector;
+            return this;
+        }
+
         /**
          * Use {@link #customView(int, boolean)} instead.
          */
@@ -1274,7 +1307,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     @Override
     public void show() {
-        if(Looper.myLooper() != Looper.getMainLooper())
+        if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
         super.show();
     }
@@ -1517,7 +1550,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public View getView(final int index, View convertView, ViewGroup parent) {
             final View view = super.getView(index, convertView, parent);
             TextView tv = (TextView) view.findViewById(R.id.title);
-
             switch (listType) {
                 case SINGLE: {
                     @SuppressLint("CutPasteId")
@@ -1532,13 +1564,15 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     break;
                 }
             }
-
             tv.setText(mBuilder.items[index]);
             tv.setTextColor(itemColor);
             setTypeface(tv, mBuilder.regularFont);
-
             view.setTag(index + ":" + mBuilder.items[index]);
 
+            Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
+            if (d == null)
+                d = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+            setBackgroundCompat(view, d);
             return view;
         }
     }

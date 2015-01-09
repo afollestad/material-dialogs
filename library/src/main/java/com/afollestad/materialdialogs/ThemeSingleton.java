@@ -19,15 +19,6 @@ public class ThemeSingleton {
         return get(true);
     }
 
-//    <attr name="md_dark_theme" format="boolean" />
-//    <attr name="md_title_color" format="color" />
-//    <attr name="md_content_color" format="color" />
-//    <attr name="md_accent_color" format="color" />
-//    <attr name="md_item_color" format="color" />
-//    <attr name="md_icon" format="reference" />
-//    <attr name="md_background_color" format="color" />
-//    <attr name="md_divider_color" format="color" />
-
     public boolean darkTheme = false;
     public int titleColor = 0;
     public int contentColor = 0;
@@ -36,4 +27,6 @@ public class ThemeSingleton {
     public Drawable icon = null;
     public int backgroundColor = 0;
     public int dividerColor = 0;
+    public Drawable selector;
+    public Drawable btnSelector;
 }
