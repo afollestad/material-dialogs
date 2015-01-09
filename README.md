@@ -439,6 +439,16 @@ or operating system. This behavior can be overridden in your Activity themes:
     -->
     <item name="md_divider_color">#E91E63</item>
 
+    <!--
+        This overrides the selector used on list items and stacked action buttons
+    -->
+    <item name="md_selector">@drawable/selector</item>
+
+    <!--
+        This overrides the selector used on action buttons
+    -->
+    <item name="md_btn_selector">@drawable/selector</item>
+
 </style>
 ```
 
