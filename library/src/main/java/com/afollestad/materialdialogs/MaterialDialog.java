@@ -643,9 +643,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     private Drawable getButtonSelector() {
         if (isStacked) {
+            if (mBuilder.selector != null)
+                return mBuilder.selector;
             Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
             if (custom != null) return custom;
         } else {
+            if (mBuilder.btnSelector != null)
+                return mBuilder.btnSelector;
             Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
             if (custom != null) return custom;
         }
@@ -1569,9 +1573,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(tv, mBuilder.regularFont);
             view.setTag(index + ":" + mBuilder.items[index]);
 
-            Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
-            if (d == null)
-                d = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+            Drawable d = mBuilder.selector;
+            if (d == null) {
+                d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
+                if (d == null)
+                    d = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+            }
             setBackgroundCompat(view, d);
             return view;
         }
