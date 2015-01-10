@@ -573,9 +573,22 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         /* Force it to layout it's children */
         if (lv.getLastVisiblePosition() == -1)
             return false;
-        /* We scroll if the last item is not visible */
-        final boolean lastItemVisible = lv.getLastVisiblePosition() == lv.getCount() - 1;
-        return !lastItemVisible || lv.getChildAt(lv.getChildCount() - 1).getBottom() > lv.getHeight() - lv.getPaddingBottom();
+
+        /* We can scroll if the first or last item is not visible */
+        boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
+        boolean lastItemVisible = lv.getLastVisiblePosition() == lv.getCount() - 1;
+
+        if (firstItemVisible && lastItemVisible) {
+            /* Or the first item's top is above or own top */
+            if (lv.getChildAt(0).getTop() < lv.getPaddingTop())
+                return true;
+
+            /* or the last item's bottom is beyond our own bottom */
+            return lv.getChildAt(lv.getChildCount() - 1).getBottom() >
+                    lv.getHeight() - lv.getPaddingBottom();
+        }
+
+        return true;
     }
 
     private boolean canListViewScroll() {
