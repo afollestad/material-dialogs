@@ -43,7 +43,7 @@ For the full history, see the [Changelog](https://github.com/afollestad/material
 >
 > 2. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
 
-###### Version 0.5.5 - 0.5.7
+###### Version 0.5.5 – 0.5.7
 
 > 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.
 > 2. Added `accentColor` and `accentColorRes` methods as a convenience method to the three methods `positiveColor`, `negativeColor`, and `neutralColor` (and their 'res' variants).
