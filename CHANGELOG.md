@@ -4,7 +4,7 @@
 
 > 1. Another pull request from [Kevin Barry](https://github.com/teslacoil) that fixes the "vibrating window" effect.
 > 2. The ability to enable the single choice callback to be called everytime a checkbox is checked, rather than when the positive action is pressed; this matches up with the multi-choice variation. Thanks [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/170
-> 3. The ability to override the selectors for action buttons and list items, through `Builder` methods and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
+> 3. The ability to override the selectors for action buttons and list items, through `Builder` methods (e.g. `selector` and `btnSelector`, along with the res variants) and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
 > 4. An exception is now throw
 
 ###### Version 0.5.9
