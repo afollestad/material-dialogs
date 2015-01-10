@@ -7,16 +7,14 @@
 > 3. The ability to override the selectors for action buttons and list items, through `Builder` methods (e.g. `selector` and `btnSelector`, along with the res variants) and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
 > 4. An exception is now throw
 
-###### Version 0.5.9
-
-> 1. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
-
-###### Version 0.5.8
+###### Version 0.5.8 – 0.5.9
 
 > 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167
 >
 > IntDefs cannot safely be used in AARs, so we're back to using a enum (`GravityEnum`) for the various gravity methods.
 > The RecyclerView dependency is also now provided, so it's not a required dependency but it's supported.
+>
+> 2. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
 
 ###### Version 0.5.5 - 0.5.7
 
@@ -44,8 +42,6 @@
 > 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
 >       One thing to come from this is the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
 > 3. Other bug fixes.
-
-
 
 ###### Version 0.5.1 - 0.5.2
 

@@ -34,16 +34,14 @@ For the full history, see the [Changelog](https://github.com/afollestad/material
 > 3. The ability to override the selectors for action buttons and list items, through `Builder` methods (e.g. `selector` and `btnSelector`, along with the res variants) and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
 > 4. An exception is now thrown if you attempt to show a dialog on a non-UI thread, which will help those who accidentally do so avoid issues.
 
-###### Version 0.5.9
-
-> 1. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
-
-###### Version 0.5.8
+###### Version 0.5.8 – 0.5.9
 
 > 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167
 >
 > IntDefs cannot safely be used in AARs, so we're back to using a enum (`GravityEnum`) for the various gravity methods.
 > The RecyclerView dependency is also now provided, so it's not a required dependency but it's supported.
+>
+> 2. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
 
 ###### Version 0.5.5 - 0.5.7
 
