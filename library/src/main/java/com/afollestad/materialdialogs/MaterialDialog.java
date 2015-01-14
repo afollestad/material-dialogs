@@ -197,7 +197,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         boolean adapterProvided = mBuilder.adapter != null;
         if (mBuilder.items != null && mBuilder.items.length > 0 || adapterProvided) {
             listView = (ListView) view.findViewById(R.id.contentListView);
-            listView.setSelector(DialogUtils.resolveDrawable(getContext(), R.attr.md_selector));
+            listView.setSelector(getSelector());
 
             if (!adapterProvided) {
                 // Determine list type
@@ -654,19 +654,45 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         invalidateActions();
     }
 
+    protected Drawable mSelectorCache;
+    protected Drawable mBtnSelectorCache;
+
+    private Drawable getSelector() {
+        if (mSelectorCache == null) {
+            if (mBuilder.selector != null) {
+                // Check if builder set the selector
+                mSelectorCache = mBuilder.selector;
+            } else {
+                // If not, try to get it from the user's global theme
+                mSelectorCache = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
+            }
+            if (mSelectorCache == null) {
+                // If it's still null, get the default selector
+                mSelectorCache = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+            }
+        }
+        return mSelectorCache;
+    }
+
     private Drawable getButtonSelector() {
         if (isStacked) {
-            if (mBuilder.selector != null)
-                return mBuilder.selector;
-            Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
-            if (custom != null) return custom;
+            return getSelector();
         } else {
-            if (mBuilder.btnSelector != null)
-                return mBuilder.btnSelector;
-            Drawable custom = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
-            if (custom != null) return custom;
+            if (mBtnSelectorCache == null) {
+                if (mBuilder.btnSelector != null) {
+                    // Check if builder set the selector
+                    mBtnSelectorCache = mBuilder.btnSelector;
+                } else {
+                    // If not, try to get it from the user's global theme
+                    mBtnSelectorCache = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
+                }
+                if (mBtnSelectorCache == null) {
+                    // If it's still null, get the default selector
+                    mBtnSelectorCache = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_selector);
+                }
+            }
+            return mBtnSelectorCache;
         }
-        return DialogUtils.resolveDrawable(getContext(), isStacked ? R.attr.md_selector : R.attr.md_btn_selector);
     }
 
     /**
@@ -1586,13 +1612,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(tv, mBuilder.regularFont);
             view.setTag(index + ":" + mBuilder.items[index]);
 
-            Drawable d = mBuilder.selector;
-            if (d == null) {
-                d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
-                if (d == null)
-                    d = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
-            }
-            setBackgroundCompat(view, d);
+            setBackgroundCompat(view, getSelector());
             return view;
         }
     }

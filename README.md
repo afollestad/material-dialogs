@@ -8,7 +8,7 @@ The code you see below is also found in the sample project. You can download a A
 
 Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
 
-```Groovy
+```Gradle
 dependencies {
     compile 'com.afollestad:material-dialogs:0.6.0'
 }
@@ -26,65 +26,12 @@ Check back here frequently for version updates.
 
 For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
 
-
 ###### Version 0.6.0
 
 > 1. Another pull request from [Kevin Barry](https://github.com/teslacoil) that fixes the "vibrating window" effect.
 > 2. The ability to enable the single choice callback to be called everytime a checkbox is checked, rather than when the positive action is pressed; this matches up with the multi-choice variation. Thanks [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/170
 > 3. The ability to override the selectors for action buttons and list items, through `Builder` methods (e.g. `selector` and `btnSelector`, along with the res variants) and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
 > 4. An exception is now thrown if you attempt to show a dialog on a non-UI thread, which will help those who accidentally do so avoid issues.
-
-###### Version 0.5.8 – 0.5.9
-
-> 1. Pull request from [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/167
->
-> IntDefs cannot safely be used in AARs, so we're back to using a enum (`GravityEnum`) for the various gravity methods.
-> The RecyclerView dependency is also now provided, so it's not a required dependency but it's supported.
->
-> 2. Pull request from [Kevin Barry](https://github.com/teslacoil) that makes some very important, mostly visual, improvements/fixes: https://github.com/afollestad/material-dialogs/pull/169
-
-###### Version 0.5.5 – 0.5.7
-
-> 1. Added `itemColor` and `itemColorRes` methods to the Builder for changing default list item color.
-> 2. Added `accentColor` and `accentColorRes` methods as a convenience method to the three methods `positiveColor`, `negativeColor`, and `neutralColor` (and their 'res' variants).
-> 3. Added `ThemeSingleton`, for internal use only right now unless you really think your app needs it. Used for dynamic global theming (changing at/after runtime).
-> 4. In the Builder, the `icon` method for a drawable resource ID was renamed to `iconRes` for consistency.
->
-> Quick fix in 0.5.6, fixed title gravity in 0.5.7.
-
-###### Version 0.5.4
-
-> 1. Fixes for positioning of negative button (bug that came up with the previous update that improved RTL support).
-> 2. Fix for multichoice dialogs not keeping checked states correctly if no preselection is used.
-> 3. New color chooser dialog in the sample project, feel free to use it in your apps!
-> 4. Support for detection if a RecyclerView custom view is scrollable. Note that the stock RecyclerView LayoutManagers do not support using wrap_content as height correctly, so RecyclerViews in dialogs will take up the max dialog height.
-> 5. Other small fixes.
->
-> Thanks to those who help me out with pull requests, also!
-
-###### Version 0.5.3
-
-> 1. Global theming attributes for dialog background color and divider color. See the [Global Theming section](https://github.com/afollestad/material-dialogs#global-theming).
-> 2. These attributes can be set through the `Builder` too (`dividerColor`, `dividerColorRes`, `backgroundColor`, `backgroundColorRes`).
-> 2. Lots and lots of improvements for RTL support! This includes the title, list content, and action buttons in RTL layout mode (API 17 and above only).
->       One thing to come from this is the action buttons are no longer actual `Button` instances, they're text views wrapped in frame layouts in order to make gravity work correctly.
-> 3. Other bug fixes.
-
-###### Version 0.5.1 - 0.5.2
-
-> Lots of fixes from [hzsweers](https://github.com/hzsweers)'s pull request! https://github.com/afollestad/material-dialogs/pull/149
->
-> 1. Support for setting key listener in the `Builder`.
-> 2. More RTL layout improvements, use of `Alignment` enum replaced with the regular Gravity constants.
-> 3. Updates to `MaterialDialogCompat`.
-> 4. The ability to invoke the multi choice callback every time a checkbox is checked/unchecked, rather than waiting until the positive action button is pressed (if it's there). `alwaysCallMultiChoiceCallback()` method added to the `Builder`.
-> 5. Other various improvements, see the pull request from the link above for details.
-
-###### Version 0.5.0
-
-> 1. The ability to choose whether or not custom views are placed inside of a `ScrollView` (the second parameter of `customView()` in the `Builder`). This is heavily based off a pull request by [Kevin Barry](https://github.com/teslacoil), thanks for your help! See the [Custom Views](https://github.com/afollestad/material-dialogs#custom-views) section for more details, see the sample project for an example in action.
-> 2. An enormous amount of fixes for padding and spacing throughout the different types of dialogs. A top divider is also used when there's scrollable content.
-> 3. Other bug fixes and improvements throughout.
 
 ---
 
@@ -369,20 +316,21 @@ title divider. Lollipop has improved even more, with no colors in the dialog by 
 buttons. This library makes theming even easier. Here's a basic example:
 
 ```java
-final int materialRed500 = Color.parseColor("#D50000");
 new MaterialDialog.Builder(this)
         .title("Use Google's Location Services?")
         .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
         .positiveText("Agree")
         .negativeText("Disagree")
-        .positiveColor(materialRed500)
-        .negativeColor(materialRed500)
-        .neutralColor(materialRed500)
-        .titleGravity(Gravity.CENTER_HORIZONTAL)
-        .titleColor(materialRed500)
+        .positiveColorRes(R.color.material_red_500)
+        .negativeColorRes(R.color.material_red_500)
+        .neutralColorRes(R.color.material_red_500)
+        .titleGravity(GravityEnum.CENTER_HORIZONTAL)
+        .titleColor(R.color.material_red_500)
         .contentColor(Color.WHITE)
         .dividerColorRes(R.color.material_pink_500)
         .backgroundColorRes(R.color.material_blue_grey_800)
+        .btnSelectorRes(R.drawable.custom_btn_selector)
+        .selectorRes(R.drawable.custom_list_and_stackedbtn_selector)
         .theme(Theme.DARK)
         .show();
 ```
