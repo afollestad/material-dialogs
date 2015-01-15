@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.afollestad.materialdialogs.ThemeSingleton;
 
 import java.io.File;
 
@@ -418,6 +419,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             public void onColorSelection(int index, int color, int darker) {
                 selectedColorIndex = index;
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+                ThemeSingleton.get().accentColor = color;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                     getWindow().setStatusBarColor(darker);
             }
