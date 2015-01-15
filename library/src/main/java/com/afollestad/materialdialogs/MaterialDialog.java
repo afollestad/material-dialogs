@@ -610,7 +610,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
-    
+
     /**
      * Measures the action button's and their text to decide whether or not the button should be stacked.
      */
@@ -622,31 +622,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             invalidateActions();
             return;
         }
-
         isStacked = false;
         int buttonsWidth = 0;
-
-        if (mBuilder.positiveText != null) {
+        if (mBuilder.positiveText != null)
             buttonsWidth += positiveButton.getWidth();
-        }
-
-        if (mBuilder.neutralText != null) {
+        if (mBuilder.neutralText != null)
             buttonsWidth += neutralButton.getWidth();
-        }
-
-        if (mBuilder.negativeText != null) {
+        if (mBuilder.negativeText != null)
             buttonsWidth += negativeButton.getWidth();
-        }
-
         final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
         final int margins = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
-
         final int effectiveDialogWidth = dialogWidth - 2 * margins;
-
-        if (buttonsWidth>effectiveDialogWidth) {
-            isStacked = true;
-        }
-
+        isStacked = buttonsWidth > effectiveDialogWidth;
         invalidateActions();
     }
 
