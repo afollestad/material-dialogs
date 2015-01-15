@@ -610,17 +610,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
-
-    private int calculateMaxButtonWidth() {
-        /**
-         * Max button width = (DialogWidth - Side margins) / [Number of buttons]
-         * From: http://www.google.com/design/spec/components/dialogs.html#dialogs-specs
-         */
-        final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
-        final int margins = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
-        return (dialogWidth - 2 * margins) / numberOfActionButtons();
-    }
-
+    
     /**
      * Measures the action button's and their text to decide whether or not the button should be stacked.
      */
@@ -633,22 +623,28 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return;
         }
 
-        final int maxWidth = calculateMaxButtonWidth();
         isStacked = false;
+        int buttonsWidth = 0;
 
         if (mBuilder.positiveText != null) {
-            final int positiveWidth = positiveButton.getWidth();
-            isStacked = positiveWidth > maxWidth;
+            buttonsWidth += positiveButton.getWidth();
         }
 
-        if (!isStacked && mBuilder.neutralText != null) {
-            final int neutralWidth = neutralButton.getWidth();
-            isStacked = neutralWidth > maxWidth;
+        if (mBuilder.neutralText != null) {
+            buttonsWidth += neutralButton.getWidth();
         }
 
-        if (!isStacked && mBuilder.negativeText != null) {
-            final int negativeWidth = negativeButton.getWidth();
-            isStacked = negativeWidth > maxWidth;
+        if (mBuilder.negativeText != null) {
+            buttonsWidth += negativeButton.getWidth();
+        }
+
+        final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
+        final int margins = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
+
+        final int effectiveDialogWidth = dialogWidth - 2 * margins;
+
+        if (buttonsWidth>effectiveDialogWidth) {
+            isStacked = true;
         }
 
         invalidateActions();
