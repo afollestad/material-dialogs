@@ -624,16 +624,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
         isStacked = false;
         int buttonsWidth = 0;
-        if (mBuilder.positiveText != null)
-            buttonsWidth += positiveButton.getWidth();
-        if (mBuilder.neutralText != null)
-            buttonsWidth += neutralButton.getWidth();
-        if (mBuilder.negativeText != null)
-            buttonsWidth += negativeButton.getWidth();
-        final int dialogWidth = getWindow().getDecorView().getMeasuredWidth();
-        final int margins = (int) getContext().getResources().getDimension(R.dimen.md_button_padding_frame_side);
-        final int effectiveDialogWidth = dialogWidth - 2 * margins;
-        isStacked = buttonsWidth > effectiveDialogWidth;
+        if (mBuilder.positiveText != null) buttonsWidth += positiveButton.getWidth();
+        if (mBuilder.neutralText != null) buttonsWidth += neutralButton.getWidth();
+        if (mBuilder.negativeText != null) buttonsWidth += negativeButton.getWidth();
+
+        final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getWidth();
+        isStacked = buttonsWidth > buttonFrameWidth;
         invalidateActions();
     }
 
