@@ -31,14 +31,9 @@ dependencies {
 
 ### What's New
 
-For the full history, see the [Changelog](https://github.com/afollestad/material-dialogs/blob/master/CHANGELOG.md).
+See the project's Releases page for a list of versions with their changelogs.
 
-###### Version 0.6.0
-
-> 1. Another pull request from [Kevin Barry](https://github.com/teslacoil) that fixes the "vibrating window" effect.
-> 2. The ability to enable the single choice callback to be called everytime a checkbox is checked, rather than when the positive action is pressed; this matches up with the multi-choice variation. Thanks [hzsweers](https://github.com/hzsweers): https://github.com/afollestad/material-dialogs/pull/170
-> 3. The ability to override the selectors for action buttons and list items, through `Builder` methods (e.g. `selector` and `btnSelector`, along with the res variants) and [global theming](https://github.com/afollestad/material-dialogs#global-theming).
-> 4. An exception is now thrown if you attempt to show a dialog on a non-UI thread, which will help those who accidentally do so avoid issues.
+ <a href="https://github.com/afollestad/material-dialogs/releases" style="padding: 20px 20px; background: #2196F3; color: #FFF; text-decoration: none;">View Releases</a>
 
 ---
 
