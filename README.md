@@ -11,6 +11,8 @@ It's also on Google Play:
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
+Having the sample project installed is a good way to be notified of new releases.
+
 ---
 
 ### Gradle Dependency (jCenter)
