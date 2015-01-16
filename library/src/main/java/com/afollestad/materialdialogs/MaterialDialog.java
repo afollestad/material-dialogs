@@ -633,44 +633,41 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         invalidateActions();
     }
 
-    protected Drawable mSelectorCache;
-    protected Drawable mBtnSelectorCache;
-
     private Drawable getSelector() {
-        if (mSelectorCache == null) {
-            if (mBuilder.selector != null) {
-                // Check if builder set the selector
-                mSelectorCache = mBuilder.selector;
-            } else {
-                // If not, try to get it from the user's global theme
-                mSelectorCache = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
-            }
-            if (mSelectorCache == null) {
-                // If it's still null, get the default selector
-                mSelectorCache = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
-            }
+        Drawable selector = null;
+        if (mBuilder.selector != null) {
+            // Check if builder set the selector
+            selector = mBuilder.selector;
+        } else {
+            // If not, try to get it from the user's global theme
+            selector = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
         }
-        return mSelectorCache;
+        if (selector == null) {
+            // If it's still null, get the default selector
+            selector = DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+        }
+
+        return selector;
     }
 
     private Drawable getButtonSelector() {
         if (isStacked) {
             return getSelector();
         } else {
-            if (mBtnSelectorCache == null) {
-                if (mBuilder.btnSelector != null) {
-                    // Check if builder set the selector
-                    mBtnSelectorCache = mBuilder.btnSelector;
-                } else {
-                    // If not, try to get it from the user's global theme
-                    mBtnSelectorCache = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
-                }
-                if (mBtnSelectorCache == null) {
-                    // If it's still null, get the default selector
-                    mBtnSelectorCache = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_selector);
-                }
+            Drawable buttonSelector = null;
+            if (mBuilder.btnSelector != null) {
+                // Check if builder set the selector
+                buttonSelector = mBuilder.btnSelector;
+            } else {
+                // If not, try to get it from the user's global theme
+                buttonSelector = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
             }
-            return mBtnSelectorCache;
+            if (buttonSelector == null) {
+                // If it's still null, get the default selector
+                buttonSelector = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_selector);
+            }
+
+            return buttonSelector;
         }
     }
 
