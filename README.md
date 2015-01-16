@@ -27,10 +27,6 @@ dependencies {
 
 [ ![Download](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs/_latestVersion)
 
-***Make sure*** you're using the jCenter repository, Android Studio uses this repository by default.
-
-Check back here frequently for version updates.
-
 ---
 
 ### What's New
