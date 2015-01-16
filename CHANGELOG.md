@@ -1,5 +1,9 @@
 # Changelog
 
+###### Version 0.6.1
+
+> 1. Two pull requests from [mariusmuja](https://github.com/mariusmuja), which improve the button stacking algorithm and improve some other logic: https://github.com/afollestad/material-dialogs/pull/190, and https://github.com/afollestad/material-dialogs/pull/193.
+
 ###### Version 0.6.0
 
 > 1. Another pull request from [Kevin Barry](https://github.com/teslacoil) that fixes the "vibrating window" effect.
