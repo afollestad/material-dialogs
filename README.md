@@ -1,6 +1,15 @@
 # Material Dialogs
 
-The code you see below is also found in the sample project. You can download a APK of the sample here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk. The sample's also available on Google Play: https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample.
+### Sample Project
+
+You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
+
+It's also on Google Play:
+
+<a href="https://play.google.com/store/apps/details?id=https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+</a>
 
 ---
 
