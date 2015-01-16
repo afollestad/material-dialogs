@@ -33,7 +33,9 @@ dependencies {
 
 See the project's Releases page for a list of versions with their changelogs.
 
- <a href="https://github.com/afollestad/material-dialogs/releases" style="padding: 20px 20px; background: #2196F3; color: #FFF; text-decoration: none;">View Releases</a>
+http://dabuttonfactory.com/b.png?t=Your%20text%20here&f=sans-serif-Bold&ts=24&tc=ffffff&c=5&bgt=unicolored&bgc=1e88e5&hp=20&vp=11
+
+[ ![View Releases](http://dabuttonfactory.com/b.png?t=View%20Releases&f=sans-serif-Bold&ts=24&tc=ffffff&c=5&bgt=unicolored&bgc=1e88e5&hp=20&vp=11) ](https://github.com/afollestad/material-dialogs/releases)
 
 ---
 
