@@ -1561,7 +1561,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     /**
-     * Convenience method for getting the currently selected index of a single choice list
+     * Convenience method for getting the currently selected index of a single choice list.
      *
      * @return Currently selected index of a single choice list, or -1 if not showing a single choice list
      */
@@ -1584,6 +1584,43 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Convenience method for setting the currently selected index of a single choice list.
+     * This only works if you are not using a custom adapter; if you're using a custom adapter,
+     * an IllegalStateException is thrown.
+     * <p/>
+     * Note that this does not call the respective single choice callback.
+     *
+     * @param index The index of the list item to check.
+     */
+    public void setSelectedIndex(int index) {
+        mBuilder.selectedIndex = index;
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+        } else {
+            throw new IllegalStateException("You can only use setSelectedIndex() with the default adapter implementation.");
+        }
+    }
+
+    /**
+     * Convenience method for setting the currently selected indices of a multi choice list.
+     * This only works if you are not using a custom adapter; if you're using a custom adapter,
+     * an IllegalStateException is thrown.
+     * <p/>
+     * Note that this does not call the respective multi choice callback.
+     *
+     * @param indices The indices of the list items to check.
+     */
+    public void setSelectedIndices(Integer[] indices) {
+        mBuilder.selectedIndices = indices;
+        selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+        } else {
+            throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
     }
 
