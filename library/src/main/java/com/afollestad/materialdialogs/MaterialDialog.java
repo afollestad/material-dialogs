@@ -1590,9 +1590,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     /**
      * Convenience method for setting the currently selected index of a single choice list.
      * This only works if you are not using a custom adapter; if you're using a custom adapter,
-     * an IllegalStateException is thrown.
-     * <p/>
-     * Note that this does not call the respective single choice callback.
+     * an IllegalStateException is thrown. Note that this does not call the respective single choice callback.
      *
      * @param index The index of the list item to check.
      */
@@ -1608,9 +1606,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     /**
      * Convenience method for setting the currently selected indices of a multi choice list.
      * This only works if you are not using a custom adapter; if you're using a custom adapter,
-     * an IllegalStateException is thrown.
-     * <p/>
-     * Note that this does not call the respective multi choice callback.
+     * an IllegalStateException is thrown. Note that this does not call the respective multi choice callback.
      *
      * @param indices The indices of the list items to check.
      */
