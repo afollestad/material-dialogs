@@ -157,11 +157,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             if (mBuilder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    overscroll glow without clipping */
-                Resources r = getContext().getResources();
-                int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-                innerView.setPadding(frameMargin, 0, frameMargin, 0);
+                final Resources r = getContext().getResources();
+                final int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
-                ScrollView sv = new ScrollView(getContext());
+                final ScrollView sv = new ScrollView(getContext());
                 int paddingTop;
                 int paddingBottom;
                 if (titleFrame.getVisibility() != View.GONE)
@@ -174,7 +173,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 else
                     paddingBottom = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
-                sv.setPadding(0, paddingTop, 0, paddingBottom);
+                sv.setPadding(frameMargin, paddingTop, frameMargin, paddingBottom);
                 sv.setClipToPadding(false);
                 sv.addView(innerView,
                         new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
