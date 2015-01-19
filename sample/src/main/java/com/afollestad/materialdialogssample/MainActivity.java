@@ -318,16 +318,15 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         StringBuilder str = new StringBuilder();
                         for (int i = 0; i < which.length; i++) {
+                            if (i > 0) str.append('\n');
                             str.append(which[i]);
                             str.append(": ");
                             str.append(text[i]);
-                            str.append('\n');
                         }
                         Toast.makeText(getApplicationContext(), str.toString(), Toast.LENGTH_LONG).show();
                     }
                 })
                 .positiveText(R.string.choose)
-
                 .show();
     }
 

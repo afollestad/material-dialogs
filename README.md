@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.1.1'
+    compile 'com.afollestad:material-dialogs:0.6.1.2'
 }
 ```
 
@@ -221,6 +221,8 @@ new MaterialDialog.Builder(this)
 ```
 
 If you want to preselect an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
+Later, you can update the selected index using `setSelectedIndex(int)` on the `MaterialDialog` instance,
+if you're not using a custom adapter.
 
 If you do not set a positive action button using `positiveText()`, the dialog will automatically call
 the single choice callback when user presses the positive action button. The dialog will also dismiss itself,
@@ -246,12 +248,13 @@ new MaterialDialog.Builder(this)
             public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
             }
         })
-        .positiveText("Choose")
+        .positiveText(R.string.choose)
         .show();
 ```
 
 If you want to preselect any items, pass an array of indices (resource or literal) in place of null
-in `itemsCallbackMultiChoice()`.
+in `itemsCallbackMultiChoice()`. Later, you can update the selected indices using `setSelectedIndices(Integer[])`
+on the `MaterialDialog` instance, if you're not using a custom adapter.
 
 If you do not set a positive action button using `positiveText()`, the dialog will automatically call
 the multi choice callback when user presses the positive action button. The dialog will also dismiss itself,
