@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogssample;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -419,7 +420,9 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             public void onColorSelection(int index, int color, int darker) {
                 selectedColorIndex = index;
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-                ThemeSingleton.get().accentColor = color;
+                ThemeSingleton.get().positiveColor = color;
+                ThemeSingleton.get().neutralColor = color;
+                ThemeSingleton.get().negativeColor = color;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                     getWindow().setStatusBarColor(darker);
             }
@@ -439,6 +442,9 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .contentColorRes(android.R.color.white)
                 .backgroundColorRes(R.color.material_blue_grey_800)
                 .dividerColorRes(R.color.material_pink_500)
+                .btnSelector(R.drawable.md_btn_selector_custom, DialogAction.POSITIVE)
+                .positiveColor(Color.WHITE)
+                .negativeColorAttr(android.R.attr.textColorSecondaryInverse)
                 .theme(Theme.DARK)
                 .show();
     }
