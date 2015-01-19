@@ -70,8 +70,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected View neutralButton;
     protected View negativeButton;
     protected boolean isStacked;
-    protected boolean alwaysCallMultiChoiceCallback;
-    protected boolean alwaysCallSingleChoiceCallback;
     protected final int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
@@ -108,12 +106,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (mBuilder.backgroundColor != 0)
             this.view.setBackgroundColor(mBuilder.backgroundColor);
 
-        final int mdAccentColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_accent_color);
-        if (mdAccentColor != 0) {
-            mBuilder.positiveColor = mdAccentColor;
-            mBuilder.negativeColor = mdAccentColor;
-            mBuilder.neutralColor = mdAccentColor;
-        }
+        mBuilder.positiveColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_positive_color, mBuilder.positiveColor);
+        mBuilder.neutralColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_negative_color, mBuilder.neutralColor);
+        mBuilder.negativeColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_neutral_color, mBuilder.negativeColor);
 
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
@@ -197,13 +192,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         boolean adapterProvided = mBuilder.adapter != null;
         if (mBuilder.items != null && mBuilder.items.length > 0 || adapterProvided) {
             listView = (ListView) view.findViewById(R.id.contentListView);
-            listView.setSelector(getSelector());
+            listView.setSelector(getListSelector());
 
             if (!adapterProvided) {
                 // Determine list type
                 if (mBuilder.listCallbackSingle != null) {
                     listType = ListType.SINGLE;
-                    alwaysCallSingleChoiceCallback = builder.alwaysCallSingleChoiceCallback;
                 } else if (mBuilder.listCallbackMulti != null) {
                     listType = ListType.MULTI;
                     if (mBuilder.selectedIndices != null) {
@@ -211,7 +205,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     } else {
                         selectedIndicesList = new ArrayList<>();
                     }
-                    alwaysCallMultiChoiceCallback = builder.alwaysCallMultiChoiceCallback;
                 } else {
                     listType = ListType.REGULAR;
                 }
@@ -633,33 +626,45 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         invalidateActions();
     }
 
-    private Drawable getSelector() {
-        if (mBuilder.selector != null) {
-            // Check if builder set the selector
-            return mBuilder.selector;
-        } else {
-            // If not, try to get it from the user's global theme
-            Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_selector);
-            if (d != null) return d;
-        }
-        // If it's still null, get the default selector
-        return DialogUtils.resolveDrawable(getContext(), R.attr.md_selector);
+    private Drawable getListSelector() {
+        if (mBuilder.listSelector != 0)
+            return mBuilder.context.getResources().getDrawable(mBuilder.listSelector);
+        final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
+        if (d != null) return d;
+        return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
     }
 
-    private Drawable getButtonSelector() {
+    private Drawable getButtonSelector(DialogAction which) {
         if (isStacked) {
-            return getSelector();
+            if (mBuilder.btnSelectorStacked != 0)
+                return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorStacked);
+            final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_stacked_selector);
+            if (d != null) return d;
+            return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
         } else {
-            if (mBuilder.btnSelector != null) {
-                // Check if builder set the selector
-                return mBuilder.btnSelector;
-            } else {
-                // If not, try to get it from the user's global theme
-                Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_selector);
-                if (d != null) return d;
+            switch (which) {
+                default: {
+                    if (mBuilder.btnSelectorPositive != 0)
+                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorPositive);
+                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
+                    if (d != null) return d;
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+                }
+                case NEUTRAL: {
+                    if (mBuilder.btnSelectorNeutral != 0)
+                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorNeutral);
+                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
+                    if (d != null) return d;
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+                }
+                case NEGATIVE: {
+                    if (mBuilder.btnSelectorNegative != 0)
+                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorNegative);
+                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
+                    if (d != null) return d;
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+                }
             }
-            // If it's still null, get the default selector
-            return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_selector);
         }
     }
 
@@ -691,7 +696,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(positiveTextView, mBuilder.mediumFont);
             positiveTextView.setText(mBuilder.positiveText);
             positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
-            setBackgroundCompat(positiveButton, getButtonSelector());
+            setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
         } else {
@@ -705,7 +710,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(neutralTextView, mBuilder.mediumFont);
             neutralButton.setVisibility(View.VISIBLE);
             neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-            setBackgroundCompat(neutralButton, getButtonSelector());
+            setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
             neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
@@ -720,7 +725,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setTypeface(negativeTextView, mBuilder.mediumFont);
             negativeButton.setVisibility(View.VISIBLE);
             negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
-            setBackgroundCompat(negativeButton, getButtonSelector());
+            setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
             negativeTextView.setText(mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
@@ -809,13 +814,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
                         dismiss();
                         sendSingleChoiceCallback(v);
-                    } else if (alwaysCallSingleChoiceCallback) {
+                    } else if (mBuilder.alwaysCallSingleChoiceCallback) {
                         sendSingleChoiceCallback(v);
                     }
                 } else if (mBuilder.listCallbackMulti != null) {
                     CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
                     cb.setChecked(!cb.isChecked());
-                    if (alwaysCallMultiChoiceCallback) {
+                    if (mBuilder.alwaysCallMultiChoiceCallback) {
                         sendMultichoiceCallback();
                     }
                 } else if (mBuilder.autoDismiss) dismiss();
@@ -869,12 +874,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected int dividerColor;
         protected int backgroundColor;
         protected int itemColor;
-        protected Drawable selector;
-        protected Drawable btnSelector;
+
+        @DrawableRes
+        protected int listSelector;
+        @DrawableRes
+        protected int btnSelectorStacked;
+        @DrawableRes
+        protected int btnSelectorPositive;
+        @DrawableRes
+        protected int btnSelectorNeutral;
+        @DrawableRes
+        protected int btnSelectorNegative;
 
         public Builder(@NonNull Context context) {
             this.context = context;
-            final int materialBlue = context.getResources().getColor(R.color.md_material_blue_500);
+            final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
                 try {
@@ -910,23 +924,33 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             ThemeSingleton s = ThemeSingleton.get();
             theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
             if (s.titleColor != 0)
-                titleColor(s.titleColor);
+                this.titleColor = s.titleColor;
             if (s.contentColor != 0)
-                contentColor(s.contentColor);
-            if (s.accentColor != 0)
-                accentColor(s.accentColor);
+                this.contentColor = s.contentColor;
+            if (s.positiveColor != 0)
+                this.positiveColor = s.positiveColor;
+            if (s.neutralColor != 0)
+                this.neutralColor = s.neutralColor;
+            if (s.negativeColor != 0)
+                this.negativeColor = s.negativeColor;
             if (s.itemColor != 0)
-                itemColor(s.itemColor);
+                this.itemColor = s.itemColor;
             if (s.icon != null)
-                icon(s.icon);
+                this.icon = s.icon;
             if (s.backgroundColor != 0)
-                backgroundColor(s.backgroundColor);
+                this.backgroundColor = s.backgroundColor;
             if (s.dividerColor != 0)
-                dividerColor(s.dividerColor);
-            if (s.selector != null)
-                selector(s.selector);
-            if (s.btnSelector != null)
-                btnSelector(s.btnSelector);
+                this.dividerColor = s.dividerColor;
+            if (s.btnSelectorStacked != 0)
+                this.btnSelectorStacked = s.btnSelectorStacked;
+            if (s.listSelector != 0)
+                this.listSelector = s.listSelector;
+            if (s.btnSelectorPositive != 0)
+                this.btnSelectorPositive = s.btnSelectorPositive;
+            if (s.btnSelectorNeutral != 0)
+                this.btnSelectorNeutral = s.btnSelectorNeutral;
+            if (s.btnSelectorNegative != 0)
+                this.btnSelectorNegative = s.btnSelectorNegative;
         }
 
         public Builder title(@StringRes int titleRes) {
@@ -944,8 +968,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        public Builder titleColor(int color) {
+            this.titleColor = color;
+            return this;
+        }
+
         public Builder titleColorRes(@ColorRes int colorRes) {
             titleColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder titleColorAttr(@AttrRes int colorAttr) {
+            titleColor(DialogUtils.resolveColor(this.context, colorAttr));
             return this;
         }
 
@@ -959,11 +993,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public Builder typeface(Typeface medium, Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
-            return this;
-        }
-
-        public Builder titleColor(int color) {
-            this.titleColor = color;
             return this;
         }
 
@@ -989,6 +1018,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder contentColorRes(@ColorRes int colorRes) {
             contentColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder contentColorAttr(@AttrRes int colorAttr) {
+            contentColor(DialogUtils.resolveColor(this.context, colorAttr));
             return this;
         }
 
@@ -1118,21 +1152,35 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder selectorRes(@DrawableRes int selectorRes) {
-            return selector(this.context.getResources().getDrawable(selectorRes));
-        }
-
-        public Builder selector(Drawable selector) {
-            this.selector = selector;
+        public Builder listSelector(@DrawableRes int selectorRes) {
+            this.listSelector = selectorRes;
             return this;
         }
 
-        public Builder btnSelectorRes(@DrawableRes int selectorRes) {
-            return btnSelector(this.context.getResources().getDrawable(selectorRes));
+        public Builder btnSelectorStacked(@DrawableRes int selectorRes) {
+            this.btnSelectorStacked = selectorRes;
+            return this;
         }
 
-        public Builder btnSelector(Drawable selector) {
-            this.btnSelector = selector;
+        public Builder btnSelector(@DrawableRes int selectorRes) {
+            this.btnSelectorPositive = selectorRes;
+            this.btnSelectorNeutral = selectorRes;
+            this.btnSelectorNegative = selectorRes;
+            return this;
+        }
+
+        public Builder btnSelector(@DrawableRes int selectorRes, DialogAction which) {
+            switch (which) {
+                default:
+                    this.btnSelectorPositive = selectorRes;
+                    break;
+                case NEUTRAL:
+                    this.btnSelectorNeutral = selectorRes;
+                    break;
+                case NEGATIVE:
+                    this.btnSelectorNegative = selectorRes;
+                    break;
+            }
             return this;
         }
 
@@ -1163,18 +1211,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder positiveColorRes(@ColorRes int colorRes) {
-            positiveColor(this.context.getResources().getColor(colorRes));
-            return this;
-        }
-
         public Builder positiveColor(int color) {
             this.positiveColor = color;
             return this;
         }
 
-        public Builder negativeColorRes(@ColorRes int colorRes) {
-            negativeColor(this.context.getResources().getColor(colorRes));
+        public Builder positiveColorRes(@ColorRes int colorRes) {
+            positiveColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder positiveColorAttr(@AttrRes int colorAttr) {
+            positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
             return this;
         }
 
@@ -1183,8 +1231,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder neutralColorRes(@ColorRes int colorRes) {
-            return neutralColor(this.context.getResources().getColor(colorRes));
+        public Builder negativeColorRes(@ColorRes int colorRes) {
+            negativeColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder negativeColorAttr(@AttrRes int colorAttr) {
+            negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return this;
         }
 
         public Builder neutralColor(int color) {
@@ -1192,31 +1246,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        /**
-         * Convience method for setting the positive, neutral, and negative color all at once.
-         *
-         * @param colorRes The new color resource to use.
-         * @return An instance of the Builder so calls can be chained.
-         */
-        public Builder accentColorRes(@ColorRes int colorRes) {
-            return accentColor(this.context.getResources().getColor(colorRes));
+        public Builder neutralColorRes(@ColorRes int colorRes) {
+            return neutralColor(this.context.getResources().getColor(colorRes));
         }
 
-        /**
-         * Convience method for setting the positive, neutral, and negative color all at once.
-         *
-         * @param color The new color to use.
-         * @return An instance of the Builder so calls can be chained.
-         */
-        public Builder accentColor(int color) {
-            this.positiveColor = color;
-            this.negativeColor = color;
-            this.neutralColor = color;
-            return this;
-        }
-
-        public Builder dividerColorRes(@ColorRes int colorRes) {
-            return dividerColor(this.context.getResources().getColor(colorRes));
+        public Builder neutralColorAttr(@AttrRes int colorAttr) {
+            return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder dividerColor(int color) {
@@ -1224,8 +1259,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder backgroundColorRes(@ColorRes int colorRes) {
-            return backgroundColor(this.context.getResources().getColor(colorRes));
+        public Builder dividerColorRes(@ColorRes int colorRes) {
+            return dividerColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder dividerColorAttr(@AttrRes int colorAttr) {
+            return dividerColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder backgroundColor(int color) {
@@ -1233,13 +1272,25 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder itemColorRes(@ColorRes int colorRes) {
-            return itemColor(this.context.getResources().getColor(colorRes));
+        public Builder backgroundColorRes(@ColorRes int colorRes) {
+            return backgroundColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder backgroundColorAttr(@AttrRes int colorAttr) {
+            return backgroundColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder itemColor(int color) {
             this.itemColor = color;
             return this;
+        }
+
+        public Builder itemColorRes(@ColorRes int colorRes) {
+            return itemColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder itemColorAttr(@AttrRes int colorAttr) {
+            return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder callback(ButtonCallback callback) {
@@ -1579,8 +1630,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             tv.setTextColor(itemColor);
             setTypeface(tv, mBuilder.regularFont);
             view.setTag(index + ":" + mBuilder.items[index]);
-
-            setBackgroundCompat(view, getSelector());
             return view;
         }
     }

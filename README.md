@@ -46,17 +46,17 @@ for color resources (e.g. `titleColor` and `titleColorRes`).
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Use Google's Location Services?")
-        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")
-        .negativeText("Disagree")
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.agree)
+        .negativeText(R.string.disagree)
         .show();
 ```
 
 On Lollipop (API 21) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
 (which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
-If the content is long enough, it will become scrollable and a divider will be displayde above the action buttons.
+If the content is long enough, it will become scrollable and a divider will be displayed above the action buttons.
 
 ---
 
@@ -86,16 +86,13 @@ But it's highly recommended to use original ```MaterialDialog``` API for new usa
 MaterialDialog supports the display of an icon just like the stock AlertDialog; it will go to the left of the title.
 
 ```java
-Drawable d = // ... get from somewhere...
 new MaterialDialog.Builder(this)
-        .title("Use Google's Location Services?")
-        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")
-        .icon(d)
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.agree)
+        .icon(R.drawable.icon)
         .show();
 ```
-
-You can substitute a `Drawable` instance for a drawable resource ID or attribute ID, which is recommended.
 
 ---
 
@@ -106,10 +103,10 @@ buttons to be vertically orientated.
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Use Google's Location Services?")
-        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Turn on speed boost right now!")
-        .negativeText("No thanks")
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.longer_positive)
+        .negativeText(R.string.negative)
         .show();
 ```
 
@@ -124,11 +121,11 @@ action on the far left.
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Use Google's Location Services?")
-        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")
-        .negativeText("Disagree")
-        .neutralText("More info")
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.agree)
+        .negativeText(R.string.disagree)
+        .neutralText(R.string.more_info)
         .show();
 ```
 
@@ -186,8 +183,8 @@ also very simple.
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Social Networks")
-        .items(new CharSequence[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .title(R.string.title)
+        .items(R.array.items)
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
@@ -210,23 +207,25 @@ display radio buttons next to list items.
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Social Networks")
-        .items(new CharSequence[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .title(R.string.title)
+        .items(R.array.items)
         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
             }
         })
-        .positiveText("Choose")
+        .positiveText(R.string.choose)
         .show();
 ```
 
 If you want to preselect an item, pass an index 0 or greater in place of -1 in `itemsCallbackSingleChoice()`.
-If `autoDismiss` is turned off, then you must manually dismiss the dialog in the callback. Auto dismiss is on by default.
-When `positiveText()` is not used, the callback will be called every time you select an item since no action is
-available to press, without the dialog being dismissed. You can pass `positiveText()` or the other action
-buttons to the builder to force it to display the action buttons below your list, however this is only
-useful in some specific cases.
+
+If you do not set a positive action button using `positiveText()`, the dialog will automatically call
+the single choice callback when user presses the positive action button. The dialog will also dismiss itself,
+unless auto dismiss is turned off.
+
+If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
+every time the user selects an item.
 
 ---
 
@@ -238,8 +237,8 @@ display check boxes next to list items, and the callback can return multiple sel
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Social Networks")
-        .items(new CharSequence[]{"Twitter", "Google+", "Instagram", "Facebook"})
+        .title(R.string.title)
+        .items(R.array.items)
         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMulti() {
             @Override
             public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
@@ -249,12 +248,15 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-If you want to preselect item(s), pass an array of indices in place of null in `itemsCallbackSingleChoice()`.
-For an example, `new Integer[] { 2, 5 }`. If `autoDismiss` is turned off, then you must manually
-dismiss the dialog in the callback. Auto dismiss is on by default. When action buttons are not added, the
-callback will be called every time you select an item since no action is available to press, without the
-dialog being dismissed. You can pass `positiveText()` or the other action buttons to the builder to force
-it to display the action buttons below your list, however this is only useful in some specific cases.
+If you want to preselect any items, pass an array of indices (resource or literal) in place of null
+in `itemsCallbackMultiChoice()`.
+
+If you do not set a positive action button using `positiveText()`, the dialog will automatically call
+the multi choice callback when user presses the positive action button. The dialog will also dismiss itself,
+unless auto dismiss is turned off.
+
+If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
+every time the user selects an item.
 
 ---
 
@@ -291,10 +293,9 @@ Custom views are very easy to implement.
 ```java
 boolean wrapInScrollView = true;
 new MaterialDialog.Builder(this)
-        .title("Google Wifi")
+        .title(R.string.title)
         .customView(R.layout.custom_view, wrapInScrollView)
-        .positiveText("Connect")
-        .positiveColor(Color.parseColor("#03a9f4"))
+        .positiveText(R.string.positive)
         .build()
         .show();
 ```
@@ -319,20 +320,25 @@ buttons. This library makes theming even easier. Here's a basic example:
 
 ```java
 new MaterialDialog.Builder(this)
-        .title("Use Google's Location Services?")
-        .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
-        .positiveText("Agree")
-        .negativeText("Disagree")
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.positive)
+        .neutralText(R.string.neutral)
+        .negativeText(R.string.negative)
         .positiveColorRes(R.color.material_red_500)
+        .neutralColorRes(R.color.material_red_500)
         .negativeColorRes(R.color.material_red_500)
         .neutralColorRes(R.color.material_red_500)
         .titleGravity(GravityEnum.CENTER_HORIZONTAL)
-        .titleColor(R.color.material_red_500)
-        .contentColor(Color.WHITE)
+        .contentGravity(GravityEnum.CENTER_HORIZONTAL)
+        .titleColorRes(R.color.material_red_500)
+        .contentColorRes(Color.WHITE)
         .dividerColorRes(R.color.material_pink_500)
         .backgroundColorRes(R.color.material_blue_grey_800)
-        .btnSelectorRes(R.drawable.custom_btn_selector)
-        .selectorRes(R.drawable.custom_list_and_stackedbtn_selector)
+        .btnSelectorStacked(R.drawable.custom_btn_selector_stacked)
+        .btnSelector(R.drawable.custom_btn_selector)
+        .btnSelector(R.drawable.custom_btn_selector_primary, DialogAction.POSITIVE)
+        .listSelector(R.drawable.custom_list_and_stackedbtn_selector)
         .theme(Theme.DARK)
         .show();
 ```
@@ -355,26 +361,51 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_dark_theme">true</item>
 
     <!--
-        Applies an icon to all dialogs.
+        This overrides the default dark or light dialog background color.
+        Note that if you use a dark color here, you should set md_dark_theme to
+        true so text and selectors look visible
     -->
-    <item name="md_dark_theme">true</item>
+    <item name="md_background_color">#37474F</item>
 
     <!--
-        By default, the title text is black or white based on the theme.
+        Applies an icon next to the title in all dialogs.
+    -->
+    <item name="md_icon">@drawable/ic_launcher</item>
+
+    <!--
+        By default, the title text color is derived from the
+        ?android:textColorPrimary system attribute.
     -->
     <item name="md_title_color">#E91E63</item>
 
+
     <!--
-        By default, the content text is derived from the
-        ?android:textColorSecondary OS attribute.
+        By default, the content text color is derived from the
+        ?android:textColorSecondary system attribute.
     -->
     <item name="md_content_color">#9C27B0</item>
 
+
     <!--
-        By default, the accent color is derived from the colorAccent attribute of
-        AppCompat or android:colorAccent attribute of the Material theme.
+        By default, the positive action text color is derived
+        from the colorAccent attribute of AppCompat or android:colorAccent
+        attribute of the Material theme.
     -->
-    <item name="md_accent_color">#673AB7</item>
+    <item name="md_positive_color">#673AB7</item>
+
+    <!--
+        By default, the positive action text color is derived
+        from the colorAccent attribute of AppCompat or android:colorAccent
+        attribute of the Material theme.
+    -->
+    <item name="md_neutral_color">#673AB7</item>
+
+    <!--
+        By default, the positive action text color is derived
+        from the colorAccent attribute of AppCompat or android:colorAccent
+        attribute of the Material theme.
+    -->
+    <item name="md_negative_color">#673AB7</item>
 
     <!--
         By default, the list item text color is black for the light
@@ -383,27 +414,35 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_item_color">#9C27B0</item>
 
     <!--
-        This overrides the default dark or light dialog background color.
-        Note that if you use a dark color here, you should set md_dark_theme to
-        true so text and selectors look visible
-    -->
-    <item name="md_background_color">#37474F</item>
-
-    <!--
         This overrides the color used for the top and bottom dividers used when
         content is scrollable
     -->
     <item name="md_divider_color">#E91E63</item>
 
     <!--
-        This overrides the selector used on list items and stacked action buttons
+        This overrides the selector used on list items.
     -->
-    <item name="md_selector">@drawable/selector</item>
+    <item name="md_list_selector">@drawable/selector</item>
 
     <!--
-        This overrides the selector used on action buttons
+        This overrides the selector used on stacked action buttons.
     -->
-    <item name="md_btn_selector">@drawable/selector</item>
+    <item name="md_btn_stacked_selector">@drawable/selector</item>
+
+    <!--
+        This overrides the background selector used on the positive action button.
+    -->
+    <item name="md_btn_positive_selector">@drawable/selector</item>
+
+    <!--
+        This overrides the background selector used on the neutral action button.
+    -->
+    <item name="md_btn_neutral_selector">@drawable/selector</item>
+
+    <!--
+        This overrides the background selector used on the negative action button.
+    -->
+    <item name="md_btn_negative_selector">@drawable/selector</item>
 
 </style>
 ```

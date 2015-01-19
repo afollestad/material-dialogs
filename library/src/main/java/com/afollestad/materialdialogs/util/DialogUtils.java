@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.AttrRes;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -18,11 +19,11 @@ public class DialogUtils {
         return Color.argb(alpha, red, green, blue);
     }
 
-    public static int resolveColor(Context context, int attr) {
+    public static int resolveColor(Context context, @AttrRes int attr) {
         return resolveColor(context, attr, 0);
     }
 
-    public static int resolveColor(Context context, int attr, int fallback) {
+    public static int resolveColor(Context context, @AttrRes int attr, int fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getColor(0, fallback);
@@ -31,11 +32,11 @@ public class DialogUtils {
         }
     }
 
-    public static Drawable resolveDrawable(Context context, int attr) {
+    public static Drawable resolveDrawable(Context context, @AttrRes int attr) {
         return resolveDrawable(context, attr, null);
     }
 
-    private static Drawable resolveDrawable(Context context, int attr, Drawable fallback) {
+    private static Drawable resolveDrawable(Context context, @AttrRes int attr, Drawable fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             Drawable d = a.getDrawable(0);

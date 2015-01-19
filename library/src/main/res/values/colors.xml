@@ -11,6 +11,7 @@
     <color name="md_divider_black">#10000000</color>
     <color name="md_divider_white">#10FFFFFF</color>
 
-    <color name="md_material_blue_500">#5677fc</color>
+    <color name="md_material_blue_600">#1E88E5</color>
+    <color name="md_material_blue_800">#1565C0</color>
 
 </resources>

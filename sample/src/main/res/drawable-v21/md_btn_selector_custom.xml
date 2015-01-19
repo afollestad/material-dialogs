@@ -1,0 +1,6 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/md_material_blue_600">
+
+    <item android:drawable="@drawable/md_btn_selector_custom_holo" />
+
+</ripple>

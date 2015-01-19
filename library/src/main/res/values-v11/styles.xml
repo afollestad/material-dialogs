@@ -3,16 +3,22 @@
 
     <style name="MD_Light" parent="android:Theme.Holo.Light.Dialog">
         <item name="md_divider">@color/md_divider_black</item>
-        <item name="md_selector">@drawable/md_selector</item>
-        <item name="md_btn_selector">@drawable/md_btn_selector</item>
+        <item name="md_list_selector">@drawable/md_selector</item>
+        <item name="md_btn_stacked_selector">@drawable/md_selector</item>
+        <item name="md_btn_positive_selector">@drawable/md_btn_selector</item>
+        <item name="md_btn_neutral_selector">@drawable/md_btn_selector</item>
+        <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
 
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="MD_Dark" parent="android:Theme.Holo.Dialog">
         <item name="md_divider">@color/md_divider_white</item>
-        <item name="md_selector">@drawable/md_selector_dark</item>
-        <item name="md_btn_selector">@drawable/md_btn_selector_dark</item>
+        <item name="md_list_selector">@drawable/md_selector</item>
+        <item name="md_btn_stacked_selector">@drawable/md_selector</item>
+        <item name="md_btn_positive_selector">@drawable/md_btn_selector_dark</item>
+        <item name="md_btn_neutral_selector">@drawable/md_btn_selector_dark</item>
+        <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
 
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
