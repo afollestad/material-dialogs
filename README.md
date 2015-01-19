@@ -1,5 +1,7 @@
 # Material Dialogs
 
+![Screenshots](https://github.com/afollestad/material-dialogs/tree/master/art/md_screenshots.jpg)
+
 ### Sample Project
 
 You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
