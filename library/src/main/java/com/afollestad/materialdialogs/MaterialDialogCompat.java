@@ -80,7 +80,7 @@ public class MaterialDialogCompat {
             return this;
         }
 
-        public Builder setNegativeButton(CharSequence text,
+        public Builder setNegativeButton(@NonNull CharSequence text,
                                          DialogInterface.OnClickListener listener) {
             builder.negativeText(text);
             negativeDialogListener = listener;
@@ -94,7 +94,7 @@ public class MaterialDialogCompat {
             return this;
         }
 
-        public Builder setPositiveButton(CharSequence text,
+        public Builder setPositiveButton(@NonNull CharSequence text,
                                          DialogInterface.OnClickListener listener) {
             builder.positiveText(text);
             positiveDialogListener = listener;
@@ -108,7 +108,7 @@ public class MaterialDialogCompat {
             return this;
         }
 
-        public Builder setNeutralButton(CharSequence text,
+        public Builder setNeutralButton(@NonNull CharSequence text,
                                         DialogInterface.OnClickListener listener) {
             builder.neutralText(text);
             neutralDialogListener = listener;
@@ -120,13 +120,13 @@ public class MaterialDialogCompat {
             return this;
         }
 
-        public Builder setItems(int itemsId, final DialogInterface.OnClickListener listener) {
+        public Builder setItems(@ArrayRes int itemsId, final DialogInterface.OnClickListener listener) {
             builder.items(itemsId);
             onClickListener = listener;
             return this;
         }
 
-        public Builder setItems(CharSequence[] items, DialogInterface.OnClickListener listener) {
+        public Builder setItems(@NonNull CharSequence[] items, DialogInterface.OnClickListener listener) {
             builder.items(items);
             onClickListener = listener;
             return this;
@@ -187,7 +187,7 @@ public class MaterialDialogCompat {
             }
         }
 
-        public Builder setView(View view) {
+        public Builder setView(@NonNull View view) {
             builder.customView(view, false);
             return this;
         }
@@ -214,7 +214,7 @@ public class MaterialDialogCompat {
          * @param listener     notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
          * @return This
          */
-        public Builder setMultiChoiceItems(String[] items, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
+        public Builder setMultiChoiceItems(@NonNull String[] items, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
             builder.items(items);
             setUpMultiChoiceCallback(checkedItems, listener);
             return this;
@@ -262,7 +262,7 @@ public class MaterialDialogCompat {
          * @param listener    notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.
          * @return This
          */
-        public Builder setSingleChoiceItems(String[] items, int checkedItem, final DialogInterface.OnClickListener listener) {
+        public Builder setSingleChoiceItems(@NonNull String[] items, int checkedItem, final DialogInterface.OnClickListener listener) {
             builder.items(items);
             builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
                 @Override
@@ -292,22 +292,22 @@ public class MaterialDialogCompat {
             return this;
         }
 
-        public Builder setOnCancelListener(DialogInterface.OnCancelListener listener) {
+        public Builder setOnCancelListener(@NonNull DialogInterface.OnCancelListener listener) {
             builder.cancelListener(listener);
             return this;
         }
 
-        public Builder setOnDismissListener(DialogInterface.OnDismissListener listener) {
+        public Builder setOnDismissListener(@NonNull DialogInterface.OnDismissListener listener) {
             builder.dismissListener(listener);
             return this;
         }
 
-        public Builder setOnShowListener(DialogInterface.OnShowListener listener) {
+        public Builder setOnShowListener(@NonNull DialogInterface.OnShowListener listener) {
             builder.showListener(listener);
             return this;
         }
 
-        public Builder setOnKeyListener(DialogInterface.OnKeyListener listener) {
+        public Builder setOnKeyListener(@NonNull DialogInterface.OnKeyListener listener) {
             builder.keyListener(listener);
             return this;
         }
