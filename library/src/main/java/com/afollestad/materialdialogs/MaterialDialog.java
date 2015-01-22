@@ -617,9 +617,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         isStacked = false;
         int buttonsWidth = 0;
 
-        positiveButton.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
-        neutralButton.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
-        negativeButton.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
+        positiveButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        neutralButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        negativeButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
         if (mBuilder.positiveText != null) buttonsWidth += positiveButton.getMeasuredWidth();
         if (mBuilder.neutralText != null) buttonsWidth += neutralButton.getMeasuredWidth();
@@ -962,12 +962,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder title(CharSequence title) {
+        public Builder title(@NonNull CharSequence title) {
             this.title = title;
             return this;
         }
 
-        public Builder titleGravity(GravityEnum gravity) {
+        public Builder titleGravity(@NonNull GravityEnum gravity) {
             this.titleGravity = gravity;
             return this;
         }
@@ -994,13 +994,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * @param regular The font used everywhere else, like on the content and list items. Null uses the default.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder typeface(Typeface medium, Typeface regular) {
+        public Builder typeface(@NonNull Typeface medium, @NonNull Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
             return this;
         }
 
-        public Builder icon(Drawable icon) {
+        public Builder icon(@NonNull Drawable icon) {
             this.icon = icon;
             return this;
         }
@@ -1045,7 +1045,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder contentGravity(GravityEnum gravity) {
+        public Builder contentGravity(@NonNull GravityEnum gravity) {
             this.contentGravity = gravity;
             return this;
         }
@@ -1060,12 +1060,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder items(CharSequence[] items) {
+        public Builder items(@NonNull CharSequence[] items) {
             this.items = items;
             return this;
         }
 
-        public Builder itemsCallback(ListCallback callback) {
+        public Builder itemsCallback(@NonNull ListCallback callback) {
             this.listCallback = callback;
             this.listCallbackSingle = null;
             this.listCallbackMulti = null;
@@ -1080,7 +1080,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * @param callback      The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackSingleChoice(int selectedIndex, ListCallback callback) {
+        public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallback callback) {
             this.selectedIndex = selectedIndex;
             this.listCallback = null;
             this.listCallbackSingle = callback;
@@ -1108,7 +1108,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * @param callback        The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, ListCallbackMulti callback) {
+        public Builder itemsCallbackMultiChoice(@NonNull Integer[] selectedIndices, @NonNull ListCallbackMulti callback) {
             this.selectedIndices = selectedIndices;
             this.listCallback = null;
             this.listCallbackSingle = null;
@@ -1133,7 +1133,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder positiveText(CharSequence message) {
+        public Builder positiveText(@NonNull CharSequence message) {
             this.positiveText = message;
             return this;
         }
@@ -1142,7 +1142,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return neutralText(this.context.getString(neutralRes));
         }
 
-        public Builder neutralText(CharSequence message) {
+        public Builder neutralText(@NonNull CharSequence message) {
             this.neutralText = message;
             return this;
         }
@@ -1151,7 +1151,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return negativeText(this.context.getString(negativeRes));
         }
 
-        public Builder negativeText(CharSequence message) {
+        public Builder negativeText(@NonNull CharSequence message) {
             this.negativeText = message;
             return this;
         }
@@ -1173,7 +1173,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
-        public Builder btnSelector(@DrawableRes int selectorRes, DialogAction which) {
+        public Builder btnSelector(@DrawableRes int selectorRes, @NonNull DialogAction which) {
             switch (which) {
                 default:
                     this.btnSelectorPositive = selectorRes;
@@ -1205,11 +1205,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * Use {@link #customView(android.view.View, boolean)} instead.
          */
         @Deprecated
-        public Builder customView(View view) {
+        public Builder customView(@NonNull View view) {
             return customView(view, true);
         }
 
-        public Builder customView(View view, boolean wrapInScrollView) {
+        public Builder customView(@NonNull View view, boolean wrapInScrollView) {
             this.customView = view;
             this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
@@ -1297,12 +1297,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
-        public Builder callback(ButtonCallback callback) {
+        public Builder callback(@NonNull ButtonCallback callback) {
             this.callback = callback;
             return this;
         }
 
-        public Builder theme(Theme theme) {
+        public Builder theme(@NonNull Theme theme) {
             this.theme = theme;
             return this;
         }
@@ -1330,27 +1330,27 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          *
          * @return This Builder object to allow for chaining of calls to set methods
          */
-        public Builder adapter(ListAdapter adapter) {
+        public Builder adapter(@NonNull ListAdapter adapter) {
             this.adapter = adapter;
             return this;
         }
 
-        public Builder showListener(OnShowListener listener) {
+        public Builder showListener(@NonNull OnShowListener listener) {
             this.showListener = listener;
             return this;
         }
 
-        public Builder dismissListener(OnDismissListener listener) {
+        public Builder dismissListener(@NonNull OnDismissListener listener) {
             this.dismissListener = listener;
             return this;
         }
 
-        public Builder cancelListener(OnCancelListener listener) {
+        public Builder cancelListener(@NonNull OnCancelListener listener) {
             this.cancelListener = listener;
             return this;
         }
 
-        public Builder keyListener(OnKeyListener listener) {
+        public Builder keyListener(@NonNull OnKeyListener listener) {
             this.keyListener = listener;
             return this;
         }
@@ -1400,7 +1400,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      * @param which The action button of which to get the view for.
      * @return The view from the dialog's layout representing this action button.
      */
-    public final View getActionButton(DialogAction which) {
+    public final View getActionButton(@NonNull DialogAction which) {
         if (isStacked) {
             switch (which) {
                 default:
@@ -1463,7 +1463,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      * @param which The action button to update.
      * @param title The new title of the action button.
      */
-    public final void setActionButton(DialogAction which, CharSequence title) {
+    public final void setActionButton(@NonNull DialogAction which, CharSequence title) {
         switch (which) {
             default:
                 mBuilder.positiveText = title;
@@ -1513,24 +1513,24 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     /**
      * Updates the dialog's title.
      */
-    public final void setTitle(CharSequence title) {
+    public final void setTitle(@NonNull CharSequence title) {
         this.title.setText(title);
     }
 
     @Override
-    public void setIcon(int resId) {
+    public void setIcon(@DrawableRes int resId) {
         icon.setImageResource(resId);
         icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void setIcon(Drawable d) {
+    public void setIcon(@NonNull Drawable d) {
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void setIconAttribute(int attrId) {
+    public void setIconAttribute(@AttrRes int attrId) {
         Drawable d = DialogUtils.resolveDrawable(mBuilder.context, attrId);
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
@@ -1615,7 +1615,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      *
      * @param indices The indices of the list items to check.
      */
-    public void setSelectedIndices(Integer[] indices) {
+    public void setSelectedIndices(@NonNull Integer[] indices) {
         mBuilder.selectedIndices = indices;
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
