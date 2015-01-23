@@ -174,11 +174,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 else
                     paddingBottom = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
-                sv.setPadding(frameMargin, paddingTop, frameMargin, paddingBottom);
+                sv.setPadding(0, paddingTop, 0, paddingBottom);
                 sv.setClipToPadding(false);
-                sv.addView(innerView,
+
+                ScrollView.LayoutParams innerViewLayoutParams=
                         new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT));
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+                innerViewLayoutParams.setMargins(frameMargin, 0, frameMargin, 0);
+                sv.addView(innerView, innerViewLayoutParams);
 
                 innerView = sv;
             }
