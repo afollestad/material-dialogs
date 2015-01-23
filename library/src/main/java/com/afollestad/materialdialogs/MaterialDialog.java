@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -1432,6 +1433,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     @Deprecated
     @Override
     public Button getButton(int whichButton) {
+        Log.w("MaterialDialog", "Warning: getButton() is a deprecated method that does not return valid references to action buttons.");
         if (whichButton == AlertDialog.BUTTON_POSITIVE) {
             return mBuilder.positiveText != null ? new Button(getContext()) : null;
         } else if (whichButton == AlertDialog.BUTTON_NEUTRAL) {
@@ -1695,33 +1697,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     public static interface ListCallbackMulti {
         void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
-    }
-
-    /**
-     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
-     */
-    @Deprecated
-    public abstract static class SimpleCallback extends ButtonCallback {
-        @Override
-        public abstract void onPositive(MaterialDialog dialog);
-    }
-
-    /**
-     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
-     */
-    @Deprecated
-    public abstract static class Callback extends SimpleCallback {
-        @Override
-        public abstract void onNegative(MaterialDialog dialog);
-    }
-
-    /**
-     * @deprecated Use the new {@link com.afollestad.materialdialogs.MaterialDialog.ButtonCallback}
-     */
-    @Deprecated
-    public abstract static class FullCallback extends Callback {
-        @Override
-        public abstract void onNeutral(MaterialDialog dialog);
     }
 
     /**
