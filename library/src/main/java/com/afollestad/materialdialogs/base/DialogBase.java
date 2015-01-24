@@ -124,6 +124,7 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     }
 
     protected void setTypeface(TextView text, Typeface t) {
+        if (t == null) return;
         int flags = text.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
         text.setPaintFlags(flags);
         text.setTypeface(t);

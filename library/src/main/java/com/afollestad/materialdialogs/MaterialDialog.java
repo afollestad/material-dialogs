@@ -94,11 +94,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         super(getTheme(builder));
         mBuilder = builder;
 
-        if (mBuilder.regularFont == null)
-            mBuilder.regularFont = TypefaceHelper.get(getContext(), "Roboto-Regular");
-        if (mBuilder.mediumFont == null)
-            mBuilder.mediumFont = TypefaceHelper.get(getContext(), "Roboto-Medium");
-
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
 
@@ -177,7 +172,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 sv.setPadding(0, paddingTop, 0, paddingBottom);
                 sv.setClipToPadding(false);
 
-                ScrollView.LayoutParams innerViewLayoutParams=
+                ScrollView.LayoutParams innerViewLayoutParams =
                         new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT);
                 innerViewLayoutParams.setMargins(frameMargin, 0, frameMargin, 0);
@@ -992,15 +987,34 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         /**
-         * Sets the fonts used in the dialog.
+         * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
+         * to avoid duplicate Typeface allocations and high memory usage.
          *
-         * @param medium  The font used on titles and action buttons. Null uses the default.
-         * @param regular The font used everywhere else, like on the content and list items. Null uses the default.
+         * @param medium  The font used on titles and action buttons. Null uses device default.
+         * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
          * @return The Builder instance so you can chain calls to it.
+         * @deprecated It's recommended that you use {@link #typeface(String, String)} instead, to avoid duplicate Typeface allocations and high memory usage.
          */
-        public Builder typeface(@NonNull Typeface medium, @NonNull Typeface regular) {
+        @Deprecated
+        public Builder typeface(Typeface medium, Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
+            return this;
+        }
+
+        /**
+         * Sets the fonts used in the dialog, by file names. This also uses TypefaceHelper in order
+         * to avoid any un-needed allocations (it recycles typefaces for you).
+         *
+         * @param medium  The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium].ttf
+         * @param regular The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular].ttf
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder typeface(String medium, String regular) {
+            if (medium != null)
+                this.mediumFont = TypefaceHelper.get(this.context, medium);
+            if (regular != null)
+                this.regularFont = TypefaceHelper.get(this.context, regular);
             return this;
         }
 
