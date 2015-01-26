@@ -316,6 +316,24 @@ you're responsible for using padding values that look good with your content.
 
 ---
 
+### Typefaces
+
+By default, the library will use the Roboto Medium font for the dialog title and action buttons on Lollipop. Below
+Lollipop, Roboto Regular will be used with a bold style for the dialog title and action buttons due to Roboto Medium
+not being available as a system font. Note that Roboto is only a system font on devices that implement it as such,
+a lot of LG devices and Samsung devices that are not Nexus devices use handwriting-style fonts.
+
+If you want this default behavior to be avoided, you can make a call to `disableDefaultFonts()` when
+using the `Builder`. This library will not apply any styling and everything will use the regular system font.
+
+If you want to explicitly use custom fonts, you can make a call to `typeface(String, String)` when
+using the `Builder`. This will pull fonts from TTF files in your project's `assets` folder. For an example,
+if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets`, you would call `typeface("Roboto", "Roboto-Light")`.
+Note that no extension is used in the name. This method will also handle recycling Typefaces via the `TypefaceHelper` which
+you can use in your own project to avoid duplicate allocations.
+
+---
+
 ### Theming
 
 Before Lollipop, theming AlertDialogs was basically impossible without using reflection and custom drawables.
@@ -528,16 +546,5 @@ the user selects a list item:
 MaterialDialog dialog new MaterialDialog.Builder(this)
         // ... other initialization
         .autoDismiss(false)
-        .show();
-```
-
-To customize fonts:
-
-```java
-Typeface titleAndActions = // ... initialize
-Typeface contentAndListItems = // ... initialize
-MaterialDialog dialog new MaterialDialog.Builder(this)
-        // ... other initialization
-        .typeface(titleAndActions, contentAndListItems)
         .show();
 ```
