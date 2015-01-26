@@ -318,13 +318,14 @@ you're responsible for using padding values that look good with your content.
 
 ### Typefaces
 
-By default, the library will use the Roboto Medium font for the dialog title and action buttons on Lollipop. Below
-Lollipop, Roboto Regular will be used with a bold style for the dialog title and action buttons due to Roboto Medium
-not being available as a system font. Note that Roboto is only a system font on devices that implement it as such,
-a lot of LG devices and Samsung devices that are not Nexus devices use handwriting-style fonts.
+By default, Material Dialogs will use the Roboto Medium font for the dialog title and action buttons on Lollipop. Below
+Lollipop, Roboto Regular with a bold style will be used in place of Roboto Medium (due to Roboto Medium
+not being available as a system font until Lollipop). Note that Roboto is only a system font on devices that
+implement it as such; a lot of LG devices and Samsung devices that are not Nexus devices use handwriting-style fonts.
 
 If you want this default behavior to be avoided, you can make a call to `disableDefaultFonts()` when
-using the `Builder`. This library will not apply any styling and everything will use the regular system font.
+using the `Builder`. This will result in the library not applying and medium or bold styling, and everything
+will use the regular system font.
 
 If you want to explicitly use custom fonts, you can make a call to `typeface(String, String)` when
 using the `Builder`. This will pull fonts from TTF files in your project's `assets` folder. For an example,
