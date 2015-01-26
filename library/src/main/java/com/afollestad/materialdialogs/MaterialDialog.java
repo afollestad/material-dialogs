@@ -94,12 +94,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         super(getTheme(builder));
         mBuilder = builder;
 
-        if (!mBuilder.useCustomFonts && mBuilder.mediumFont == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mBuilder.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
-            } else {
-                mBuilder.mediumFont = Typeface.create("sans-serif", Typeface.BOLD);
-            }
+        if (!mBuilder.useCustomFonts) {
+            if (mBuilder.mediumFont == null)
+                mBuilder.mediumFont = TypefaceHelper.get(getContext(), "Roboto-Medium");
+            if (mBuilder.regularFont == null)
+                mBuilder.regularFont = TypefaceHelper.get(getContext(), "Roboto-Regular");
         }
 
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
