@@ -1543,7 +1543,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     @Override
-    public void setIcon(@NonNull Drawable d) {
+    public void setIcon(Drawable d) {
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
@@ -1702,7 +1702,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 case MULTI:
                     return R.layout.md_listitem_multichoice;
                 default:
-                    // Shouldn't be possible
                     throw new IllegalArgumentException("Not a valid list type");
             }
         }
