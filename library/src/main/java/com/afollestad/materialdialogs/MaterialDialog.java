@@ -94,6 +94,14 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         super(getTheme(builder));
         mBuilder = builder;
 
+        if (!mBuilder.useCustomFonts && mBuilder.mediumFont == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mBuilder.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+            } else {
+                mBuilder.mediumFont = Typeface.create("sans-serif", Typeface.BOLD);
+            }
+        }
+
         this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
 
@@ -866,6 +874,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
+        protected boolean useCustomFonts;
         protected Drawable icon;
         protected ListAdapter adapter;
         protected OnDismissListener dismissListener;
@@ -987,6 +996,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
 
         /**
+         * Disable usage of the default fonts. This is automatically set by
+         * {@link #typeface(String, String)} and {@link #typeface(Typeface, Typeface)}.
+         *
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder disableDefaultFonts() {
+            this.useCustomFonts = true;
+            return this;
+        }
+
+        /**
          * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
          * to avoid duplicate Typeface allocations and high memory usage.
          *
@@ -999,6 +1019,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public Builder typeface(Typeface medium, Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
+            this.useCustomFonts = true;
             return this;
         }
 
@@ -1015,6 +1036,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 this.mediumFont = TypefaceHelper.get(this.context, medium);
             if (regular != null)
                 this.regularFont = TypefaceHelper.get(this.context, regular);
+            this.useCustomFonts = true;
             return this;
         }
 
