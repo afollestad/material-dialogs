@@ -318,8 +318,8 @@ you're responsible for using padding values that look good with your content.
 
 ### Typefaces
 
-By default, Material Dialogs will use the Roboto Medium font for the dialog title and action buttons,
-and Roboto Regular for content, list items, etc. This is done so using the font assets included in this library,
+By default, Material Dialogs will use the `Roboto Medium` font for the dialog title and action buttons,
+and `Roboto Regular` for content, list items, etc. This is done so using the font assets included in this library,
 so these fonts will be used even on Samsung devices that by default use weird handwriting typefaces.
 
 If you want this default behavior to be avoided, you can make a call to `disableDefaultFonts()` when
