@@ -1012,9 +1012,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * @param medium  The font used on titles and action buttons. Null uses device default.
          * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
          * @return The Builder instance so you can chain calls to it.
-         * @deprecated It's recommended that you use {@link #typeface(String, String)} instead, to avoid duplicate Typeface allocations and high memory usage.
          */
-        @Deprecated
         public Builder typeface(Typeface medium, Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
