@@ -35,7 +35,7 @@
     <style name="MD_ActionButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/md_button_height</item>
-        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:focusable">true</item>
     </style>
 
@@ -43,7 +43,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/md_button_textsize</item>
         <item name="android:singleLine">true</item>
-        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:gravity">center</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:background">@null</item>
