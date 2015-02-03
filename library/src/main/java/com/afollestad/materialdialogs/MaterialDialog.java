@@ -135,7 +135,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             title.setGravity(gravityIntToGravity(builder.titleGravity));
         }
 
-        if (builder.contentColor != -1) {
+        if (builder.contentColorSet) {
             content.setTextColor(builder.contentColor);
         } else {
             final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
@@ -143,7 +143,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setTextColor(contentColor);
         }
 
-        if (builder.itemColor != 0) {
+        if (builder.itemColorSet) {
             defaultItemColor = builder.itemColor;
         } else if (builder.theme == Theme.LIGHT) {
             defaultItemColor = Color.BLACK;
@@ -910,6 +910,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected int backgroundColor;
         protected int itemColor;
 
+        // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
+        // So this is a decent solution to this problem.
+        protected boolean titleColorSet;
+        protected boolean contentColorSet;
+        protected boolean itemColorSet;
+
         @DrawableRes
         protected int listSelector;
         @DrawableRes
@@ -1005,6 +1011,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder titleColor(int color) {
             this.titleColor = color;
+            this.titleColorSet = true;
             return this;
         }
 
@@ -1078,6 +1085,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder contentColor(int color) {
             this.contentColor = color;
+            this.contentColorSet = true;
             return this;
         }
 
@@ -1358,6 +1366,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder itemColor(int color) {
             this.itemColor = color;
+            this.itemColorSet = true;
             return this;
         }
 
