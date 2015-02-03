@@ -159,7 +159,7 @@
             style="@style/MD_ActionButtonStacked">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Positive"
                 style="@style/MD_ActionButton.Text" />
@@ -171,7 +171,7 @@
             style="@style/MD_ActionButtonStacked">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Negative"
                 style="@style/MD_ActionButton.Text" />
@@ -183,7 +183,7 @@
             style="@style/MD_ActionButtonStacked">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Neutral"
                 style="@style/MD_ActionButton.Text" />

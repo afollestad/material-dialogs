@@ -711,6 +711,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                positiveTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+            } else {
+                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            }
         } else {
             positiveButton.setVisibility(View.GONE);
         }
@@ -726,6 +733,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                neutralTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+            } else {
+                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            }
         } else {
             neutralButton.setVisibility(View.GONE);
         }
@@ -741,6 +755,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             negativeTextView.setText(mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                negativeTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+            } else {
+                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            }
 
             if (!isStacked) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -850,6 +871,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected CharSequence title;
         protected GravityEnum titleGravity = GravityEnum.START;
         protected GravityEnum contentGravity = GravityEnum.START;
+        protected GravityEnum btnStackedGravity = GravityEnum.END;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -1224,6 +1246,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     this.btnSelectorNegative = selectorRes;
                     break;
             }
+            return this;
+        }
+
+        /**
+         * Sets the gravity used for the text in stacked action buttons. By default, it's #{@link GravityEnum#END}.
+         *
+         * @param gravity The gravity to use.
+         * @return The Builder instance so calls can be chained.
+         */
+        public Builder btnStackedGravity(@NonNull GravityEnum gravity) {
+            this.btnStackedGravity = gravity;
             return this;
         }
 
