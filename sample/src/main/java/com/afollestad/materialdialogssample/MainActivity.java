@@ -188,6 +188,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
+                .autoDismiss(false)
                 .show();
     }
 
