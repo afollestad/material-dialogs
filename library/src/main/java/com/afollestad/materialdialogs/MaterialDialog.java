@@ -236,7 +236,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         } else {
             title.setText(builder.title);
             setTypeface(title, mBuilder.mediumFont);
-            if (builder.titleColor != -1) {
+            if (builder.titleColorSet) {
                 title.setTextColor(builder.titleColor);
             } else {
                 final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
@@ -281,9 +281,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
-            if (builder.titleColor == -1)
+            if (!builder.titleColorSet)
                 title.setTextColor(Color.BLACK);
-            if (builder.contentColor == -1)
+            if (!builder.contentColorSet)
                 content.setTextColor(Color.BLACK);
         }
     }
