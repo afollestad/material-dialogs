@@ -281,8 +281,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             setInverseBackgroundForced(true);
-            title.setTextColor(Color.BLACK);
-            content.setTextColor(Color.BLACK);
+            if (builder.titleColor == -1)
+                title.setTextColor(Color.BLACK);
+            if (builder.contentColor == -1)
+                content.setTextColor(Color.BLACK);
         }
     }
 
