@@ -712,11 +712,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //noinspection ResourceType
-                positiveTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-            } else {
-                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            if (isStacked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    positiveTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+                } else {
+                    positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                }
             }
         } else {
             positiveButton.setVisibility(View.GONE);
@@ -734,11 +736,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //noinspection ResourceType
-                neutralTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-            } else {
-                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            if (isStacked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    neutralTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+                } else {
+                    neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                }
             }
         } else {
             neutralButton.setVisibility(View.GONE);
@@ -755,13 +759,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             negativeTextView.setText(mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //noinspection ResourceType
-                negativeTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-            } else {
-                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-            }
 
             if (!isStacked) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -780,6 +777,13 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     }
                 }
                 negativeButton.setLayoutParams(params);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    negativeTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
+                } else {
+                    negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                }
             }
         } else {
             negativeButton.setVisibility(View.GONE);
