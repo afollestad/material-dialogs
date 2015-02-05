@@ -1,6 +1,6 @@
 # Material Dialogs
 
-![Screenshots](https://github.com/afollestad/material-dialogs/blob/master/art/md_screenshots.jpg)
+![Screenshots](https://github.com/afollestad/material-dialogs/blob/master/art/screenshots.jpg)
 
 ### Sample Project
 
