@@ -194,6 +194,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             invalidateCustomViewAssociations();
         }
 
+        if (mBuilder.listCallbackMulti != null)
+            selectedIndicesList = new ArrayList<>();
+
         boolean adapterProvided = mBuilder.adapter != null;
         if (mBuilder.items != null && mBuilder.items.length > 0 || adapterProvided) {
             listView = (ListView) view.findViewById(R.id.contentListView);
@@ -207,8 +210,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     listType = ListType.MULTI;
                     if (mBuilder.selectedIndices != null) {
                         selectedIndicesList = new ArrayList<>(Arrays.asList(mBuilder.selectedIndices));
-                    } else {
-                        selectedIndicesList = new ArrayList<>();
                     }
                 } else {
                     listType = ListType.REGULAR;
