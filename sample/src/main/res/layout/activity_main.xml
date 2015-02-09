@@ -142,6 +142,13 @@
             android:text="@string/folder_chooser"
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
+        <Button
+            android:id="@+id/preference_dialogs"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/Preference_Dialog"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
     </LinearLayout>
 
 </ScrollView>

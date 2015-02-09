@@ -25,4 +25,11 @@
         <item>#FF5722</item>
     </array>
 
+    <string-array name="preference_values">
+        <item>Twitter</item>
+        <item>Google</item>
+        <item>Instagram</item>
+        <item>Facebook</item>
+    </string-array>
+
 </resources>
