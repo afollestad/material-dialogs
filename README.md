@@ -1,4 +1,3 @@
-
 # Material Dialogs
 
 ![Screenshots](https://github.com/afollestad/material-dialogs/blob/master/art/screenshots.png)
@@ -33,8 +32,6 @@ dependencies {
 ---
 
 ### What's New
-
-This is a fork of the main progect that adds a couple of preference dialogs
 
 See the project's Releases page for a list of versions with their changelogs.
 
