@@ -34,5 +34,4 @@
     <dimen name="md_icon_margin">16dp</dimen>
     <dimen name="md_listitem_margin_left">24dp</dimen>
     <dimen name="md_action_corner_radius">2dp</dimen>
-
 </resources>
