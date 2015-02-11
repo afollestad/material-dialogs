@@ -20,9 +20,8 @@
         </activity>
 
         <activity
-            android:name=".MaterialPreferenceActivity"
-            android:label="@string/title_activity_preference" >
-        </activity>
+            android:name=".PreferenceActivity"
+            android:label="@string/preference_dialogs" />
 
     </application>
 

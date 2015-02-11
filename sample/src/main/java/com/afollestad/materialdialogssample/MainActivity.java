@@ -177,7 +177,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MaterialPreferenceActivity.class));
+                startActivity(new Intent(getApplicationContext(),PreferenceActivity.class));
             }
         });
     }

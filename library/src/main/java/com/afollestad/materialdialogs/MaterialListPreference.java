@@ -9,8 +9,11 @@ import android.view.View;
 
 /**
  * Adapted from http://stackoverflow.com/a/27429926/1247248
+ *
+ * @author Marc Holder Kluver (marchold)
  */
 public class MaterialListPreference extends ListPreference {
+
     private MaterialDialog.Builder mBuilder;
     private Context context;
 
@@ -26,35 +29,34 @@ public class MaterialListPreference extends ListPreference {
 
     @Override
     protected void showDialog(Bundle state) {
-        mBuilder = new MaterialDialog.Builder(context);
-        mBuilder.title(getTitle());
-        mBuilder.icon(getDialogIcon());
-        mBuilder.positiveText(null);
-        mBuilder.negativeText(getNegativeButtonText());
-        mBuilder.items(getEntries());
-        mBuilder.itemsCallback(new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                onClick(null, DialogInterface.BUTTON_POSITIVE);
-                dialog.dismiss();
+        mBuilder = new MaterialDialog.Builder(context)
+                .title(getTitle())
+                .icon(getDialogIcon())
+                .positiveText(getPositiveButtonText())
+                .negativeText(getNegativeButtonText())
+                .items(getEntries())
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        onClick(null, DialogInterface.BUTTON_POSITIVE);
+                        dialog.dismiss();
 
-                if (which >= 0 && getEntryValues() != null) {
-                    String value = getEntryValues()[which].toString();
-                    if (callChangeListener(value))
-                        setValue(value);
-                }
-            }
-        });
+                        if (which >= 0 && getEntryValues() != null) {
+                            String value = getEntryValues()[which].toString();
+                            if (callChangeListener(value))
+                                setValue(value);
+                        }
+                    }
+                });
 
         final View contentView = onCreateDialogView();
         if (contentView != null) {
             onBindDialogView(contentView);
-            mBuilder.customView(contentView);
-        }
-        else
+            mBuilder.customView(contentView, false);
+        } else {
             mBuilder.content(getDialogMessage());
+        }
 
         mBuilder.show();
     }
-
 }

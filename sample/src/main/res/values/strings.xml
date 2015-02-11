@@ -125,7 +125,11 @@
         <item>Wyoming</item>
     </string-array>
 
-    <string name="title_activity_preference">PreferenceActivity</string>
-    <string name="Preference_Dialog">Preference Dialog</string>
+    <string name="preference_dialogs">Preference Dialogs</string>
+    <string name="list_pref_title">Material List Preference</string>
+    <string name="list_pref_desc">This is an example of a list preference that automatically uses Material Dialogs to show the list dialog.</string>
+    <string name="edittext_pref_title">Material EditText Preference</string>
+    <string name="edittext_pref_desc">This is an example of an EditText preference that automatically uses Material Dialogs to show the input dialog.</string>
+    <string name="edittext_pref_dialogtitle">Enter a Name</string>
 
 </resources>
