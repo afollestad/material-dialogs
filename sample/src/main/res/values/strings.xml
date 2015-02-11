@@ -125,4 +125,7 @@
         <item>Wyoming</item>
     </string-array>
 
+    <string name="title_activity_preference">PreferenceActivity</string>
+    <string name="Preference_Dialog">Preference Dialog</string>
+
 </resources>
