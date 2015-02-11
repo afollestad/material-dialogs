@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogssample;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -170,6 +171,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             @Override
             public void onClick(View v) {
                 new FolderSelectorDialog().show(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MaterialPreferenceActivity.class));
             }
         });
     }

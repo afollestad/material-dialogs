@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.afollestad.materialdialogs.MaterialListPreference
+        android:key="unused_key1"
+        android:entries="@array/preference_values"
+        android:entryValues="@array/preference_values"
+        android:title="Material List Preference" />
+
+    <com.afollestad.materialdialogs.MaterialEditTextPreference
+        android:key="unused_key2"
+        android:title="Material Edit Text Preference"
+        android:inputType="textPersonName"
+        android:dialogTitle="Enter a Name" />
+
+</PreferenceScreen>

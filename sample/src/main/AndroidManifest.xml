@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MaterialPreferenceActivity"
+            android:label="@string/title_activity_preference" >
+        </activity>
+
     </application>
 
 </manifest>
