@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.2.3'
+    compile 'com.afollestad:material-dialogs:0.6.2.4'
 }
 ```
 
@@ -504,6 +504,15 @@ new MaterialDialog.Builder(this)
     })
     .show();
 ```
+
+---
+
+### Preference Dialogs
+
+Android's `EditTextPreference` and `ListPreference` allow you to associate a preference activity's settings
+with user input that's received through typing or selection. Material Dialogs includes a `MaterialEditTextPreference`
+and `MaterialListPreference` class that can be used in your preferences XML to automatically use Material-themed
+dialogs. See the sample project for details.
 
 ---
 
