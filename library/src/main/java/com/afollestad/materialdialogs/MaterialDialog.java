@@ -110,8 +110,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             this.view.setBackgroundColor(mBuilder.backgroundColor);
 
         mBuilder.positiveColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_positive_color, mBuilder.positiveColor);
-        mBuilder.neutralColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_negative_color, mBuilder.neutralColor);
-        mBuilder.negativeColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_neutral_color, mBuilder.negativeColor);
+        mBuilder.neutralColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_neutral_color, mBuilder.neutralColor);
+        mBuilder.negativeColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_negative_color, mBuilder.negativeColor);
 
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
