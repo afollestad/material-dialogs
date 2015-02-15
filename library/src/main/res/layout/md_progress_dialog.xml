@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="NewApi,RtlSymmetry,UnusedAttribute">
+
+    <TextView
+        android:id="@android:id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/md_content_textsize"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        tools:text="Message"
+        android:layout_gravity="center_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@android:id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:progressBarStyleHorizontal"
+            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+            android:layout_marginStart="@dimen/md_dialog_frame_margin"
+            android:layout_marginBottom="@dimen/md_dialog_frame_margin"
+            android:layout_toLeftOf="@+id/label"
+            android:layout_toStartOf="@+id/label"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:minWidth="36dp"
+            android:layout_height="wrap_content"
+            tools:text="100%"
+            android:textSize="14sp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="end"
+            android:textAlignment="viewEnd"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

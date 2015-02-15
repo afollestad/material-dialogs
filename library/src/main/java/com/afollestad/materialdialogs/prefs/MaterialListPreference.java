@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs;
+package com.afollestad.materialdialogs.prefs;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 /**
  * Adapted from http://stackoverflow.com/a/27429926/1247248
@@ -29,21 +31,30 @@ public class MaterialListPreference extends ListPreference {
 
     @Override
     protected void showDialog(Bundle state) {
+        int preselect = -1;
+        if (getEntryValues() != null) {
+            for (int i = 0; i < getEntryValues().length; i++) {
+                if (getValue() != null && getValue().equals(getEntryValues()[i])) {
+                    preselect = i;
+                    break;
+                }
+            }
+        }
+
         mBuilder = new MaterialDialog.Builder(context)
                 .title(getTitle())
                 .icon(getDialogIcon())
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
-                .itemsCallback(new MaterialDialog.ListCallback() {
+                .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
-
                         if (which >= 0 && getEntryValues() != null) {
                             String value = getEntryValues()[which].toString();
-                            if (callChangeListener(value))
+                            if (callChangeListener(value) && isPersistent())
                                 setValue(value);
                         }
                     }

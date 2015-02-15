@@ -174,10 +174,24 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
+        findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressDialog(false);
+            }
+        });
+
+        findViewById(R.id.progress2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressDialog(true);
+            }
+        });
+
         findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PreferenceActivity.class));
+                startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
             }
         });
     }
@@ -482,6 +496,53 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     }
                 })
                 .show();
+    }
+
+    public void showProgressDialog(boolean indeterminate) {
+        if (indeterminate) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.progress_dialog)
+                    .content(R.string.please_wait)
+                    .progress(true, 0)
+                    .show();
+        } else {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.progress_dialog)
+                    .content(R.string.please_wait)
+                    .progress(false, 150)
+                    .showListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            final MaterialDialog dialog = (MaterialDialog) dialogInterface;
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    while (dialog.getCurrentProgress() != dialog.getMaxProgress()) {
+                                        if (dialog.isCancelled())
+                                            break;
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                            break;
+                                        }
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.incrementProgress(1);
+                                            }
+                                        });
+                                    }
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.setContent(getString(R.string.done));
+                                        }
+                                    });
+                                }
+                            }).start();
+                        }
+                    }).show();
+        }
     }
 
     @Override

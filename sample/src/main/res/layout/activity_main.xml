@@ -143,6 +143,20 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
+            android:id="@+id/progress1"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/progress_dialog"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/progress2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/progress_dialog_indeterminate"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
             android:id="@+id/preference_dialogs"
             android:layout_width="match_parent"
             android:layout_height="56dp"
