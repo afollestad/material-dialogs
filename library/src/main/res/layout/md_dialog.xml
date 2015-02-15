@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:layout_marginRight="@dimen/md_icon_margin"
-                android:layout_marginEnd="@dimen/md_icon_margin" />
+                android:layout_marginEnd="@dimen/md_icon_margin"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/title"
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_title_textsize"
                 tools:text="Title" />
+
         </LinearLayout>
 
         <View

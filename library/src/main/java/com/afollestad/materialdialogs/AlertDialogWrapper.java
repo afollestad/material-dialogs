@@ -13,6 +13,8 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ListAdapter;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
 /**
  * Convenience class for migrating old dialogs code. Not all methods are implemented yet. Using MaterialDialog.Builder directly is recommended.
  */
-public class MaterialDialogCompat {
+public class AlertDialogWrapper {
 
     public static class Builder {
 

@@ -40,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -66,6 +67,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected TextView title;
     protected View titleFrame;
     protected FrameLayout customViewFrame;
+    protected ProgressBar mProgress;
+    protected TextView mProgressLabel;
+    protected TextView content;
 
     protected View positiveButton;
     protected View neutralButton;
@@ -101,7 +105,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 mBuilder.regularFont = TypefaceHelper.get(getContext(), "Roboto-Regular");
         }
 
-        this.view = LayoutInflater.from(getContext()).inflate(R.layout.md_dialog, null);
+        final LayoutInflater inflater = LayoutInflater.from(mBuilder.context);
+        this.view = inflater.inflate(R.layout.md_dialog, null);
         this.setCancelable(builder.cancelable);
 
         if (mBuilder.backgroundColor == 0)
@@ -116,7 +121,27 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
         titleFrame = view.findViewById(R.id.titleFrame);
-        final TextView content = (TextView) view.findViewById(R.id.content);
+        content = (TextView) view.findViewById(R.id.content);
+
+        if (mBuilder.mIndeterminateProgress || mBuilder.mProgress > -2) {
+            mBuilder.customView = inflater.inflate(mBuilder.mIndeterminateProgress ? R.layout.md_progress_dialog_indeterminate
+                    : R.layout.md_progress_dialog, (ViewGroup) this.view, false);
+            mProgress = (ProgressBar) mBuilder.customView.findViewById(android.R.id.progress);
+            content = (TextView) mBuilder.customView.findViewById(android.R.id.message);
+            if (!mBuilder.mIndeterminateProgress) {
+                mProgress.setProgress(0);
+                mProgress.setMax(mBuilder.mProgressMax);
+                mProgressLabel = (TextView) mBuilder.customView.findViewById(R.id.label);
+                mProgressLabel.setText("0%");
+            }
+            int bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_dialog_frame_margin);
+            int topPadding = builder.title == null ? bottomPadding
+                    : (int) getContext().getResources().getDimension(R.dimen.md_progressdialog_paddingwithtitle);
+            mBuilder.customView.setPadding(mBuilder.customView.getPaddingLeft(),
+                    topPadding,
+                    mBuilder.customView.getPaddingRight(),
+                    bottomPadding);
+        }
 
         content.setText(builder.content);
         content.setMovementMethod(new LinkMovementMethod());
@@ -232,7 +257,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             }
         }
 
-        if (builder.title == null || builder.title.toString().trim().length() == 0) {
+        if (builder.title == null) {
             titleFrame.setVisibility(View.GONE);
         } else {
             title.setText(builder.title);
@@ -358,7 +383,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return;
         }
         View contentScrollView = view.findViewById(R.id.contentScrollView);
-        TextView content = (TextView) view.findViewById(R.id.content);
         final int contentHorizontalPadding = (int) mBuilder.context.getResources()
                 .getDimension(R.dimen.md_dialog_frame_margin);
         content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
@@ -608,7 +632,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      */
     private boolean canContentScroll() {
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
-        final int childHeight = view.findViewById(R.id.content).getMeasuredHeight();
+        final int childHeight = content.getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
 
@@ -914,6 +938,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected int dividerColor;
         protected int backgroundColor;
         protected int itemColor;
+        protected boolean mIndeterminateProgress;
+        protected int mProgress = -2;
+        protected int mProgressMax = 0;
 
         // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
         // So this is a decent solution to this problem.
@@ -1300,6 +1327,25 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        /**
+         * Makes this dialog a progress dialog.
+         *
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder progress(boolean indeterminate, int max) {
+            if (indeterminate) {
+                this.mIndeterminateProgress = true;
+                this.mProgress = -2;
+            } else {
+                this.mIndeterminateProgress = false;
+                this.mProgress = -1;
+                this.mProgressMax = max;
+            }
+            return this;
+        }
+
         public Builder positiveColor(int color) {
             this.positiveColor = color;
             return this;
@@ -1624,7 +1670,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     public final void setContent(CharSequence content) {
-        ((TextView) view.findViewById(R.id.content)).setText(content);
+        this.content.setText(content);
         invalidateCustomViewAssociations(); // invalidates padding in content area scroll (if needed)
     }
 
@@ -1640,6 +1686,36 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         mBuilder.items = items;
         listView.setAdapter(mBuilder.adapter);
         invalidateCustomViewAssociations();
+    }
+
+    public final int getCurrentProgress() {
+        if (mProgress == null) return -1;
+        return mProgress.getProgress();
+    }
+
+    public final void incrementProgress(int by) {
+        if (mBuilder.mProgress <= -2)
+            throw new IllegalStateException("Cannot use incrementProgress() on this dialog.");
+        setProgress(getCurrentProgress() + by);
+    }
+
+    public final void setProgress(int progress) {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
+        else if (mBuilder.mProgress <= -2)
+            throw new IllegalStateException("Cannot use setProgress() on this dialog.");
+        mProgress.setProgress(progress);
+        int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+        mProgressLabel.setText(percentage + "%");
+    }
+
+    public final int getMaxProgress() {
+        if (mProgress == null) return -1;
+        return mProgress.getMax();
+    }
+
+    public final boolean isCancelled() {
+        return !isShowing();
     }
 
     /**

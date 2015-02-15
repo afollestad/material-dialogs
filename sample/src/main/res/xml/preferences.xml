@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.afollestad.materialdialogs.MaterialListPreference
+    <com.afollestad.materialdialogs.prefs.MaterialListPreference
         android:key="unused_key1"
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
         android:title="@string/list_pref_title"
         android:summary="@string/list_pref_desc"
-        android:persistent="false"
+        android:persistent="true"
         android:layout="@layout/preference_custom" />
 
-    <com.afollestad.materialdialogs.MaterialEditTextPreference
+    <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
         android:key="unused_key2"
         android:title="@string/edittext_pref_title"
         android:summary="@string/edittext_pref_desc"
         android:inputType="textPersonName"
         android:dialogTitle="@string/edittext_pref_dialogtitle"
-        android:persistent="false"
+        android:persistent="true"
         android:layout="@layout/preference_custom" />
 
 </PreferenceScreen>

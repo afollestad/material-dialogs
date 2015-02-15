@@ -64,10 +64,10 @@ If the content is long enough, it will become scrollable and a divider will be d
 
 ### Migration from AlertDialogs
 
-If you're migrating old dialogs you could use ```MaterialDialogCompat```. You need change imports and replace ```AlertDialog.Builder``` with ```MaterialDialogCompat.Builder```:
+If you're migrating old dialogs you could use ```AlertDialogWrapper```. You need change imports and replace ```AlertDialog.Builder``` with ```AlertDialogWrapper.Builder```:
 
 ```java
-MaterialDialogCompat.Builder dialogBuilder = new MaterialDialogCompat.Builder(context);
+AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(context);
 dialogBuilder.setMessage(messageId);
 dialogBuilder.setTitle(titleId);
 dialogBuilder.setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
@@ -504,6 +504,58 @@ new MaterialDialog.Builder(this)
     })
     .show();
 ```
+
+---
+
+### Progress Dialogs
+
+This library allows you to display progress dialogs with Material design that even use your app's
+accent color to color the progress bars (if you use AppCompat to theme your app, or the Material theme on Lollipop).
+
+###### Indeterminate Progress Dialogs
+
+This will display the classic progress dialog with a spinning circle, see the sample project to see it in action:
+
+```java
+new MaterialDialog.Builder(this)
+    .title(R.string.progress_dialog)
+    .content(R.string.please_wait)
+    .progress(true, 0)
+    .show();
+```
+
+###### Seeker Progress Dialogs
+
+If a dialog is not indeterminate, it displays a horizontal progress bar that increases up until a max value.
+The comments in the code explain what this does.
+
+```java
+// Create and show a non-indeterminate dialog with a max value of 150
+MaterialDialog dialog = new MaterialDialog.Builder(this)
+    .title(R.string.progress_dialog)
+    .content(R.string.please_wait)
+    .progress(false, 150)
+    .show();
+
+// Loop until the dialog's progress value reaches the max (150)
+while (dialog.getCurrentProgress() != dialog.getMaxProgress()) {
+    // If the progress dialog is cancelled (the user closes it before it's done), break the loop
+    if (dialog.isCancelled()) break;
+    // Wait 50 milliseconds to simulate doing work that requires progress
+    try {
+        Thread.sleep(50);
+    } catch (InterruptedException e) {
+        break;
+    }
+    // Increment the dialog's progress by 1 after sleeping for 50ms
+    dialog.incrementProgress(1);
+}
+
+// When the loop exits, set the dialog content to a string that equals "Done"
+dialog.setContent(getString(R.string.done));
+```
+
+See the sample project for this dialog in action, with the addition of threading.
 
 ---
 
