@@ -31,20 +31,11 @@ public class MaterialListPreference extends ListPreference {
 
     @Override
     protected void showDialog(Bundle state) {
-        int preselect = -1;
-        if (getEntryValues() != null) {
-            for (int i = 0; i < getEntryValues().length; i++) {
-                if (getValue() != null && getValue().equals(getEntryValues()[i])) {
-                    preselect = i;
-                    break;
-                }
-            }
-        }
+        int preselect = findIndexOfValue(getValue());
 
         mBuilder = new MaterialDialog.Builder(context)
                 .title(getTitle())
                 .icon(getDialogIcon())
-                .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
                 .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallback() {
