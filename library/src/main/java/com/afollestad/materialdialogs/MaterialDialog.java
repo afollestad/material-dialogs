@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -128,6 +129,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                     : R.layout.md_progress_dialog, (ViewGroup) this.view, false);
             mProgress = (ProgressBar) mBuilder.customView.findViewById(android.R.id.progress);
             content = (TextView) mBuilder.customView.findViewById(android.R.id.message);
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                Drawable indDraw = mProgress.getIndeterminateDrawable();
+                if (indDraw != null) {
+                    indDraw.setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
+                    mProgress.setIndeterminateDrawable(indDraw);
+                }
+                Drawable regDraw = mProgress.getProgressDrawable();
+                if (regDraw != null) {
+                    regDraw.setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
+                    mProgress.setProgressDrawable(regDraw);
+                }
+            }
+
             if (!mBuilder.mIndeterminateProgress) {
                 mProgress.setProgress(0);
                 mProgress.setMax(mBuilder.mProgressMax);
@@ -909,6 +924,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected CharSequence neutralText;
         protected CharSequence negativeText;
         protected View customView;
+        protected int accentColor;
         protected int positiveColor;
         protected int negativeColor;
         protected int neutralColor;
@@ -965,10 +981,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
                 try {
-                    this.positiveColor = a.getColor(0, materialBlue);
-                    this.negativeColor = a.getColor(0, materialBlue);
-                    this.neutralColor = a.getColor(0, materialBlue);
+                    this.accentColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.accentColor;
+                    this.negativeColor = this.accentColor;
+                    this.neutralColor = this.accentColor;
                 } catch (Exception e) {
+                    this.accentColor = materialBlue;
                     this.positiveColor = materialBlue;
                     this.negativeColor = materialBlue;
                     this.neutralColor = materialBlue;
@@ -978,10 +996,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             } else {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
                 try {
-                    this.positiveColor = a.getColor(0, materialBlue);
-                    this.negativeColor = a.getColor(0, materialBlue);
-                    this.neutralColor = a.getColor(0, materialBlue);
+                    this.accentColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.accentColor;
+                    this.negativeColor = this.accentColor;
+                    this.neutralColor = this.accentColor;
                 } catch (Exception e) {
+                    this.accentColor = materialBlue;
                     this.positiveColor = materialBlue;
                     this.negativeColor = materialBlue;
                     this.neutralColor = materialBlue;
