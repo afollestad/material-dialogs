@@ -126,7 +126,7 @@ public class AlertDialogWrapper {
             return this;
         }
 
-        public Builder setItems(@NonNull CharSequence[] items, DialogInterface.OnClickListener listener) {
+        public Builder setItems(CharSequence[] items, DialogInterface.OnClickListener listener) {
             builder.items(items);
             onClickListener = listener;
             return this;

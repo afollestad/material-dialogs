@@ -1209,7 +1209,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          * @param callback        The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackMultiChoice(@NonNull Integer[] selectedIndices, @NonNull ListCallbackMulti callback) {
+        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMulti callback) {
             this.selectedIndices = selectedIndices;
             this.listCallback = null;
             this.listCallbackSingle = null;
