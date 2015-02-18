@@ -1737,6 +1737,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         mProgress.setMax(max);
     }
 
+    public final boolean isIndeterminateProgress() {
+        return mBuilder.mIndeterminateProgress;
+    }
+
     public final int getMaxProgress() {
         if (mProgress == null) return -1;
         return mProgress.getMax();
