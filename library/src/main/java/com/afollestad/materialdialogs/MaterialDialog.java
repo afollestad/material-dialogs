@@ -195,7 +195,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    overscroll glow without clipping */
                 final Resources r = getContext().getResources();
-                final int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+                final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
                 final ScrollView sv = new ScrollView(getContext());
                 int paddingTop;
@@ -213,12 +213,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 sv.setPadding(0, paddingTop, 0, paddingBottom);
                 sv.setClipToPadding(false);
 
-                ScrollView.LayoutParams innerViewLayoutParams =
-                        new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                innerViewLayoutParams.setMargins(frameMargin, 0, frameMargin, 0);
-                sv.addView(innerView, innerViewLayoutParams);
-
+                innerView.setPadding(framePadding, 0, framePadding, 0);
+                sv.addView(innerView, new ScrollView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
                 innerView = sv;
             }
 
@@ -342,16 +340,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      */
     private void updateFramePadding() {
         Resources r = getContext().getResources();
-        int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+        int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
         View contentScrollView = view.findViewById(R.id.contentScrollView);
         int paddingTop = contentScrollView.getPaddingTop();
         int paddingBottom = contentScrollView.getPaddingBottom();
 
         if (!hasActionButtons())
-            paddingBottom = frameMargin;
+            paddingBottom = framePadding;
         if (titleFrame.getVisibility() == View.GONE)
-            paddingTop = frameMargin;
+            paddingTop = framePadding;
 
         contentScrollView.setPadding(contentScrollView.getPaddingLeft(), paddingTop,
                 contentScrollView.getPaddingRight(), paddingBottom);
