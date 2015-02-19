@@ -1729,6 +1729,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         mProgressLabel.setText(percentage + "%");
     }
 
+    public final void setMaxProgress(int max) {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
+        else if (mBuilder.mProgress <= -2)
+            throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
+        mProgress.setMax(max);
+    }
+
+    public final boolean isIndeterminateProgress() {
+        return mBuilder.mIndeterminateProgress;
+    }
+
     public final int getMaxProgress() {
         if (mProgress == null) return -1;
         return mProgress.getMax();
