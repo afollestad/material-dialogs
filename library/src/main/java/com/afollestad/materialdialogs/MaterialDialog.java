@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -168,12 +167,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setLinkTextColor(mBuilder.positiveColor);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            //noinspection ResourceType
-            title.setTextAlignment(gravityToAlignment(builder.titleGravity));
-        } else {
-            title.setGravity(gravityIntToGravity(builder.titleGravity));
-        }
+        title.setGravity(gravityIntToGravity(builder.titleGravity));
 
         if (builder.contentColorSet) {
             content.setTextColor(builder.contentColor);
@@ -284,12 +278,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //noinspection ResourceType
-                content.setTextAlignment(gravityToAlignment(builder.contentGravity));
-            } else {
-                content.setGravity(gravityIntToGravity(builder.contentGravity));
-            }
+            content.setGravity(gravityIntToGravity(builder.contentGravity));
         }
 
         if (builder.showListener != null) {
@@ -337,18 +326,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 return Gravity.END;
             default:
                 return Gravity.START;
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static int gravityToAlignment(GravityEnum gravity) {
-        switch (gravity) {
-            case CENTER:
-                return View.TEXT_ALIGNMENT_CENTER;
-            case END:
-                return View.TEXT_ALIGNMENT_VIEW_END;
-            default:
-                return View.TEXT_ALIGNMENT_VIEW_START;
         }
     }
 
@@ -753,12 +730,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             positiveButton.setOnClickListener(this);
 
             if (isStacked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    positiveTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
                     positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
             }
         } else {
             positiveButton.setVisibility(View.GONE);
@@ -777,12 +749,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             neutralButton.setOnClickListener(this);
 
             if (isStacked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    neutralTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
                     neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
             }
         } else {
             neutralButton.setVisibility(View.GONE);
@@ -818,12 +785,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 }
                 negativeButton.setLayoutParams(params);
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    negativeTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
                     negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
             }
         } else {
             negativeButton.setVisibility(View.GONE);
