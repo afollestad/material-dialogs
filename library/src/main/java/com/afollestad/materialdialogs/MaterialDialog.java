@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -168,12 +167,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             content.setLinkTextColor(mBuilder.positiveColor);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            //noinspection ResourceType
-            title.setTextAlignment(gravityToAlignment(builder.titleGravity));
-        } else {
-            title.setGravity(gravityIntToGravity(builder.titleGravity));
-        }
+        title.setGravity(gravityIntToGravity(builder.titleGravity));
 
         if (builder.contentColorSet) {
             content.setTextColor(builder.contentColor);
@@ -201,7 +195,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    overscroll glow without clipping */
                 final Resources r = getContext().getResources();
-                final int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+                final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
                 final ScrollView sv = new ScrollView(getContext());
                 int paddingTop;
@@ -219,12 +213,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 sv.setPadding(0, paddingTop, 0, paddingBottom);
                 sv.setClipToPadding(false);
 
-                ScrollView.LayoutParams innerViewLayoutParams =
-                        new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                innerViewLayoutParams.setMargins(frameMargin, 0, frameMargin, 0);
-                sv.addView(innerView, innerViewLayoutParams);
-
+                innerView.setPadding(framePadding, 0, framePadding, 0);
+                sv.addView(innerView, new ScrollView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
                 innerView = sv;
             }
 
@@ -283,13 +275,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
                 title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //noinspection ResourceType
-                content.setTextAlignment(gravityToAlignment(builder.contentGravity));
-            } else {
-                content.setGravity(gravityIntToGravity(builder.contentGravity));
-            }
+            content.setGravity(gravityIntToGravity(builder.contentGravity));
         }
 
         if (builder.showListener != null) {
@@ -340,18 +326,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static int gravityToAlignment(GravityEnum gravity) {
-        switch (gravity) {
-            case CENTER:
-                return View.TEXT_ALIGNMENT_CENTER;
-            case END:
-                return View.TEXT_ALIGNMENT_VIEW_END;
-            default:
-                return View.TEXT_ALIGNMENT_VIEW_START;
-        }
-    }
-
     @Override
     public void onShow(DialogInterface dialog) {
         super.onShow(dialog); // calls any external show listeners
@@ -366,16 +340,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
      */
     private void updateFramePadding() {
         Resources r = getContext().getResources();
-        int frameMargin = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+        int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
         View contentScrollView = view.findViewById(R.id.contentScrollView);
         int paddingTop = contentScrollView.getPaddingTop();
         int paddingBottom = contentScrollView.getPaddingBottom();
 
         if (!hasActionButtons())
-            paddingBottom = frameMargin;
+            paddingBottom = framePadding;
         if (titleFrame.getVisibility() == View.GONE)
-            paddingTop = frameMargin;
+            paddingTop = framePadding;
 
         contentScrollView.setPadding(contentScrollView.getPaddingLeft(), paddingTop,
                 contentScrollView.getPaddingRight(), paddingBottom);
@@ -751,15 +725,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
-
-            if (isStacked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    positiveTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
-                    positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
-            }
+            if (isStacked)
+                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
         } else {
             positiveButton.setVisibility(View.GONE);
         }
@@ -775,15 +742,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
-
-            if (isStacked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    neutralTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
-                    neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
-            }
+            if (isStacked)
+                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
         } else {
             neutralButton.setVisibility(View.GONE);
         }
@@ -818,12 +778,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 }
                 negativeButton.setLayoutParams(params);
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    negativeTextView.setTextAlignment(gravityToAlignment(mBuilder.btnStackedGravity));
-                } else {
-                    negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-                }
+                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
             }
         } else {
             negativeButton.setVisibility(View.GONE);
