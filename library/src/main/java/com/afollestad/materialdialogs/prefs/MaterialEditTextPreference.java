@@ -76,7 +76,7 @@ public class MaterialEditTextPreference extends EditTextPreference
 
 		// Set up our builder
 		Builder mBuilder = new MaterialDialog.Builder(getContext())
-				.title(getTitle())
+				.title(getDialogTitle())
 				.icon(getDialogIcon())
 				.positiveText(getPositiveButtonText())
 				.negativeText(getNegativeButtonText())
