@@ -19,4 +19,14 @@
         android:persistent="true"
         android:layout="@layout/preference_custom" />
 
+    <com.afollestad.materialdialogs.prefs.MaterialYesNoPreference
+        android:key="@string/yesno_pref_key"
+        android:title="@string/yesno_pref_title"
+        android:summary="@string/yesno_pref_desc"
+        android:dialogTitle="@string/yesno_pref_dialogtitle"
+        android:dialogMessage="@string/yesno_pref_dialogmessage"
+        android:persistent="true"
+        android:positiveButtonText="@string/yesno_pref_positive_text"
+        android:layout="@layout/preference_custom" />
+
 </PreferenceScreen>
