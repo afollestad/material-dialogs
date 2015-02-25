@@ -34,7 +34,7 @@ public class MaterialListPreference extends ListPreference {
         int preselect = findIndexOfValue(getValue());
 
         mBuilder = new MaterialDialog.Builder(context)
-                .title(getTitle())
+                .title(getDialogTitle())
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
