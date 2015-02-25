@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
  */
 public class MaterialListPreference extends ListPreference {
 
-    private MaterialDialog.Builder mBuilder;
     private Context context;
 
     public MaterialListPreference(Context context) {
@@ -32,8 +31,7 @@ public class MaterialListPreference extends ListPreference {
     @Override
     protected void showDialog(Bundle state) {
         int preselect = findIndexOfValue(getValue());
-
-        mBuilder = new MaterialDialog.Builder(context)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
@@ -54,11 +52,11 @@ public class MaterialListPreference extends ListPreference {
         final View contentView = onCreateDialogView();
         if (contentView != null) {
             onBindDialogView(contentView);
-            mBuilder.customView(contentView, false);
+            builder.customView(contentView, false);
         } else {
-            mBuilder.content(getDialogMessage());
+            builder.content(getDialogMessage());
         }
 
-        mBuilder.show();
+        builder.show();
     }
 }
