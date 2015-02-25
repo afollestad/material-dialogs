@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.afollestad.materialdialogs.R;
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
  * @author Marc Holder Kluver (marchold), Mark Sutherland (msutherland4807)
  */
 public class MaterialEditTextPreference extends EditTextPreference {
+
     private int mColor = 0;
     private EditText mEditText;
 
@@ -37,14 +38,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        // Find the accent color for the EditText background (underline)
-        if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
-            TypedValue value = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-            mColor = value.data;
-        }
-
+        if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
+            mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
         mEditText = super.getEditText();
     }
 
