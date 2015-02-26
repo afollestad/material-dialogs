@@ -135,5 +135,6 @@
     <string name="progress_dialog">Progress Dialog</string>
     <string name="please_wait">Please wait…</string>
     <string name="done">Done!</string>
+    <string name="optional_dialog_message">This is an optional dialog message.</string>
 
 </resources>
