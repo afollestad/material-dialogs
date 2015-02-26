@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -612,6 +613,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     public static class NotImplementedException extends Error {
         public NotImplementedException(String message) {
+            super(message);
+        }
+    }
+
+    public static class DialogException extends WindowManager.BadTokenException {
+        public DialogException(String message) {
             super(message);
         }
     }
@@ -1482,7 +1489,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     public void show() {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
-        super.show();
+        try {
+            super.show();
+        } catch (WindowManager.BadTokenException e) {
+            throw new DialogException("Bad window token, you cannot show a dialog before an Activity is created or after it's hidden.");
+        }
     }
 
     private ColorStateList getActionTextStateList(int newPrimaryColor) {
