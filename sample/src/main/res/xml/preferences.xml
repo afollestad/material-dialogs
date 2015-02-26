@@ -16,6 +16,7 @@
         android:summary="@string/edittext_pref_desc"
         android:inputType="textPersonName"
         android:dialogTitle="@string/edittext_pref_dialogtitle"
+        android:dialogMessage="@string/optional_dialog_message"
         android:persistent="true"
         android:layout="@layout/preference_custom" />
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,11 +8,22 @@
     android:paddingLeft="@dimen/md_dialog_frame_margin"
     android:paddingRight="@dimen/md_dialog_frame_margin">
 
+    <TextView
+        android:id="@android:id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        tools:text="Dialog message"
+        android:paddingBottom="12dp" />
+
     <EditText
         android:id="@android:id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:singleLine="true" />
+        android:singleLine="true"
+        tools:hint="Input area" />
 
-</FrameLayout>
+</LinearLayout>

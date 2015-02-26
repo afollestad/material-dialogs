@@ -6,8 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.support.annotation.NonNull;
+import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
@@ -26,21 +25,28 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 /**
  * @author Marc Holder Kluver (marchold), Mark Sutherland (msutherland4807)
  */
-public class MaterialEditTextPreference extends EditTextPreference {
+public class MaterialEditTextPreference extends DialogPreference {
 
     private int mColor = 0;
     private EditText mEditText;
 
-    @Override
     public EditText getEditText() {
         return mEditText;
+    }
+
+    public void setText(String text) {
+        final boolean wasBlocking = shouldDisableDependents();
+        persistString(text);
+        final boolean isBlocking = shouldDisableDependents();
+        if (isBlocking != wasBlocking) {
+            notifyDependencyChange(isBlocking);
+        }
     }
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
             mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
-        mEditText = super.getEditText();
     }
 
     public MaterialEditTextPreference(Context context) {
@@ -65,8 +71,15 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .content(getDialogMessage());
 
         // Create our layout, put the EditText inside, then add to dialog
-        FrameLayout layout = (FrameLayout) LayoutInflater.from(context).inflate(R.layout.md_input_dialog, null);
-        onBindDialogView(layout);
+        ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.md_input_dialog, null);
+        mEditText = (EditText) layout.findViewById(android.R.id.edit);
+        TextView message = (TextView) layout.findViewById(android.R.id.message);
+        if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
+            message.setVisibility(View.VISIBLE);
+            message.setText(getDialogMessage());
+        } else {
+            message.setVisibility(View.GONE);
+        }
         mBuilder.customView(layout, false);
 
         // Create the dialog
@@ -79,20 +92,6 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
         mDialog.setOnDismissListener(this);
         mDialog.show();
-    }
-
-    /**
-     * Adds the EditText widget of this preference to the dialog's view.
-     * <p/>
-     * Overridden from EditTextPreference so we don't go searching for internal
-     * Android layouts
-     */
-    @Override
-    protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
-        ViewGroup viewGroup = (ViewGroup) dialogView;
-        viewGroup.removeAllViews();
-        viewGroup.addView(editText, ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     /**
