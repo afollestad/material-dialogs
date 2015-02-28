@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 80
-        versionName "0.6.3.2"
+        versionName "0.6.3.3"
     }
     lintOptions {
         abortOnError false
