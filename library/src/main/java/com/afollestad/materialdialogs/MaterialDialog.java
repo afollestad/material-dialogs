@@ -384,7 +384,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             boolean bottomScroll = canViewOrChildScroll(customViewFrame.getChildAt(0), true);
             setDividerVisibility(topScroll, bottomScroll);
         } else if ((mBuilder.items != null && mBuilder.items.length > 0) || mBuilder.adapter != null) {
-            contentScrollView.setVisibility(mBuilder.content != null ? View.VISIBLE : View.GONE);
+            contentScrollView.setVisibility(mBuilder.content != null
+                    && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
             boolean canScroll = titleFrame.getVisibility() == View.VISIBLE &&
                     (canListViewScroll() || canContentScroll());
             setDividerVisibility(canScroll, canScroll);
@@ -469,7 +470,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return;
 
         // Hide content
-        view.findViewById(R.id.contentScrollView).setVisibility(mBuilder.content != null ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.contentScrollView).setVisibility(mBuilder.content != null
+                && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.customViewFrame).setVisibility(View.GONE);
 
         // Set up list with adapter
