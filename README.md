@@ -369,6 +369,9 @@ new MaterialDialog.Builder(this)
 
 To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
 
+***An important note related to using custom action button selectors***: make sure your selector drawable references
+inset drawables like the default ones do, this is important for correct action button padding.
+
 ---
 
 ### Global Theming
