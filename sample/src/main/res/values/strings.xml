@@ -131,6 +131,7 @@
     <string name="edittext_pref_title">Material EditText Preference</string>
     <string name="edittext_pref_desc">This is an example of an EditText preference that automatically uses Material Dialogs to show the input dialog.</string>
     <string name="edittext_pref_dialogtitle">Enter a Name</string>
+    <string name="edittext_pref_optionalvalue">Default value</string>
     <string name="progress_dialog_indeterminate">Progress Dialog (Indeterminate)</string>
     <string name="progress_dialog">Progress Dialog</string>
     <string name="please_wait">Please wait…</string>

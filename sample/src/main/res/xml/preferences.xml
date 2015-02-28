@@ -18,6 +18,7 @@
         android:dialogTitle="@string/edittext_pref_dialogtitle"
         android:dialogMessage="@string/optional_dialog_message"
         android:persistent="true"
+        android:defaultValue="@string/edittext_pref_optionalvalue"
         android:layout="@layout/preference_custom" />
 
 </PreferenceScreen>
