@@ -15,13 +15,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -196,14 +194,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
             }
         });
-
-        EditText view = new EditText(this);
-        view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        new MaterialDialog.Builder(this)
-                .title("Test")
-                .customView(view, true)
-                .positiveText(android.R.string.ok)
-                .show();
     }
 
     private void showBasicNoTitle() {
