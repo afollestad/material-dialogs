@@ -36,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -211,10 +212,17 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 else
                     paddingBottom = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
-                sv.setPadding(0, paddingTop, 0, paddingBottom);
                 sv.setClipToPadding(false);
 
-                innerView.setPadding(framePadding, 0, framePadding, 0);
+                if (innerView instanceof EditText) {
+                    // Setting padding to an EditText causes visual errors, set it to the parent instead
+                    sv.setPadding(framePadding, paddingTop, framePadding, paddingBottom);
+                } else {
+                    // Setting padding to scroll view pushes the scroll bars out, don't do it if not necessary (like above)
+                    sv.setPadding(0, paddingTop, 0, paddingBottom);
+                    innerView.setPadding(framePadding, 0, framePadding, 0);
+                }
+
                 sv.addView(innerView, new ScrollView.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
