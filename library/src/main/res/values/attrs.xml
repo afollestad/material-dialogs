@@ -9,6 +9,9 @@
     <attr name="md_background_color" format="color" />
 
     <attr name="md_icon" format="reference" />
+    <attr name="md_icon_max_size" format="dimension" />
+    <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
+
     <attr name="md_title_color" format="color" />
     <attr name="md_content_color" format="color" />
 
