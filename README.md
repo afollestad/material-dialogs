@@ -96,7 +96,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-You can limit the maximum size of the icon through the `limitIconToDefaultSize()` or `maxIconSize(int size)` builder method.
+You can limit the maximum size of the icon using the `limitIconToDefaultSize()`, `maxIconSize(int size)`,
+ or `maxIconSizeRes(int sizeRes)` Builder methods.
 
 ---
 
