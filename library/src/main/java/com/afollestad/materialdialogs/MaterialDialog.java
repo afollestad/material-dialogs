@@ -1516,7 +1516,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public MaterialDialog build() {
             if ((content == null || content.toString().trim().length() == 0) &&
-                    title != null && (items == null || items.length == 0) && customView == null) {
+                    title != null && (items == null || items.length == 0) &&
+                    customView == null && adapter == null) {
                 this.content = this.title;
                 this.title = null;
             }
