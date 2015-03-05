@@ -96,6 +96,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
+You can limit the maximum size of the icon through the `limitIconToDefaultSize()` or `maxIconSize(int size)` builder method.
+
 ---
 
 ### Stacked Action Buttons
@@ -398,6 +400,16 @@ or operating system. This behavior can be overridden in your Activity themes:
         Applies an icon next to the title in all dialogs.
     -->
     <item name="md_icon">@drawable/ic_launcher</item>
+  
+    <!--
+        Limit icon to a max size.
+    -->
+    <attr name="md_icon_max_size" format="dimension" />
+    
+    <!--
+        Limit the icon to a default max size (32dp).
+    -->
+    <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
 
     <!--
         By default, the title text color is derived from the
