@@ -204,10 +204,10 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             }
         });
 
-        findViewById(R.id.input_view_with_default).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.input_view_with_watcher).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInputViewWithDefaultDialog();
+                showInputViewWithWatcherDialog();
             }
         });
 
@@ -586,20 +586,34 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .show();
     }
 
-    public void showInputViewWithDefaultDialog() {
+    public void showInputViewWithWatcherDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input_view_dialog_title)
-                .content(R.string.input_view_dialog_message)
                 .showInputView()
+                .content(R.string.input_view_dialog_message)
                 .defaultInputText(R.string.input_view_dialog_default)
-                .positiveText(R.string.input_view_dialog_positive)
-                .negativeText(R.string.input_view_dialog_negative)
+                .inputTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        Toast.makeText(getApplicationContext(), "onTextChanged: " + s, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                })
                 .inputTextCallback(new TextInputCallback() {
                     @Override
                     public void onTextEntered(MaterialDialog dialog, String text) {
                         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
                     }
                 })
+                .positiveText(R.string.input_view_dialog_positive)
+                .negativeText(R.string.input_view_dialog_negative)
                 .build()
                 .show();
     }

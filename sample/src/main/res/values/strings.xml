@@ -141,6 +141,7 @@
     <string name="input_view_dialog">Input view</string>
     <string name="input_view_dialog_with_default">Input view (with default)</string>
     <string name="input_view_dialog_with_message">Input view (with content)</string>
+    <string name="input_view_dialog_with_watcher">Input view (with watcher)</string>
     <string name="input_view_dialog_with_validate">Input view (validation)</string>
     <string name="input_view_dialog_title">Contact details</string>
     <string name="input_view_dialog_message">Please enter your name</string>
