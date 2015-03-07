@@ -13,6 +13,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
@@ -23,6 +25,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -73,6 +77,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected ProgressBar mProgress;
     protected TextView mProgressLabel;
     protected TextView content;
+    protected EditText inputView;
+    protected View inputViewFrame;
+    protected TextView inputViewError;
 
     protected View positiveButton;
     protected View neutralButton;
@@ -125,6 +132,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         icon = (ImageView) view.findViewById(R.id.icon);
         titleFrame = view.findViewById(R.id.titleFrame);
         content = (TextView) view.findViewById(R.id.content);
+        inputView = (EditText) view.findViewById(R.id.inputView);
+        inputViewFrame = view.findViewById(R.id.inputViewFrame);
+        inputViewError = (TextView) view.findViewById(R.id.inputViewError);
 
         if (mBuilder.mIndeterminateProgress || mBuilder.mProgress > -2) {
             mBuilder.customView = inflater.inflate(mBuilder.mIndeterminateProgress ? R.layout.md_progress_dialog_indeterminate
@@ -186,6 +196,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             defaultItemColor = Color.BLACK;
         } else {
             defaultItemColor = Color.WHITE;
+        }
+
+        if (mBuilder.showInputView) {
+            inputViewFrame.setVisibility(View.VISIBLE);
+            inputView.setText(mBuilder.defaultInputText);
+            if (!TextUtils.isEmpty(mBuilder.defaultInputText)) {
+                inputView.setSelection(mBuilder.defaultInputText.length());
+            }
+            if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
+                inputView.getBackground().setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
+            }
+            if (mBuilder.inputTextChangedListener != null) {
+                inputView.addTextChangedListener(mBuilder.inputTextChangedListener);
+            }
+            inputView.setHint(mBuilder.inputViewHint);
         }
 
         if (mBuilder.customView != null) {
@@ -401,7 +426,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         View contentScrollView = view.findViewById(R.id.contentScrollView);
         final int contentHorizontalPadding = (int) mBuilder.context.getResources()
                 .getDimension(R.dimen.md_dialog_frame_margin);
-        content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
 
         if (mBuilder.customView != null) {
             contentScrollView.setVisibility(View.GONE);
@@ -842,18 +866,51 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
 
+    private boolean validateInputText() {
+        String textEntered = inputView.getText().toString();
+        if (mBuilder.inputTextValidator.isValid(textEntered)) {
+            setInputViewIsValid();
+            return true;
+        } else {
+            setInputViewInError();
+            return false;
+        }
+    }
+
+    private void setInputViewIsValid() {
+        inputViewError.setVisibility(View.INVISIBLE);
+    }
+
+    private void setInputViewInError() {
+        if (mBuilder.invalidInputUsePopupErrorStyle) {
+            inputView.setError(mBuilder.invalidInputTextErrorMessage);
+        } else {
+            inputViewError.setText(mBuilder.invalidInputTextErrorMessage);
+            inputViewError.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void sendTextEnteredCallbackIfPresent() {
+        if (mBuilder.inputTextCallback != null) {
+            mBuilder.inputTextCallback.onTextEntered(this, inputView.getText().toString());
+        }
+    }
+
     @Override
     public final void onClick(View v) {
         String tag = (String) v.getTag();
         switch (tag) {
             case POSITIVE: {
-                if (mBuilder.callback != null)
-                    mBuilder.callback.onPositive(this);
-                if (mBuilder.listCallbackSingle != null)
-                    sendSingleChoiceCallback(v);
-                if (mBuilder.listCallbackMulti != null)
-                    sendMultichoiceCallback();
-                if (mBuilder.autoDismiss) dismiss();
+                if (!mBuilder.showInputView || mBuilder.inputTextValidator == null || validateInputText()) {
+                    if (mBuilder.callback != null)
+                        mBuilder.callback.onPositive(this);
+                    if (mBuilder.listCallbackSingle != null)
+                        sendSingleChoiceCallback(v);
+                    if (mBuilder.listCallbackMulti != null)
+                        sendMultichoiceCallback();
+                    sendTextEnteredCallbackIfPresent();
+                    if (mBuilder.autoDismiss) dismiss();
+                }
                 break;
             }
             case NEGATIVE: {
@@ -914,6 +971,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected CharSequence positiveText;
         protected CharSequence neutralText;
         protected CharSequence negativeText;
+        protected boolean showInputView;
+        protected String inputViewHint;
+        protected String defaultInputText;
         protected View customView;
         protected int accentColor;
         protected int positiveColor;
@@ -950,6 +1010,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected boolean mIndeterminateProgress;
         protected int mProgress = -2;
         protected int mProgressMax = 0;
+        protected DialogInputValidator inputTextValidator;
+        protected boolean invalidInputUsePopupErrorStyle;
+        protected String invalidInputTextErrorMessage;
+        protected TextWatcher inputTextChangedListener;
+        protected TextInputCallback inputTextCallback;
 
         // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
         // So this is a decent solution to this problem.
@@ -1270,6 +1335,29 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             return this;
         }
 
+        public Builder showInputView() {
+            this.showInputView = true;
+            return this;
+        }
+
+        public Builder inputViewHint(String hint) {
+            this.inputViewHint = hint;
+            return this;
+        }
+
+        public Builder inputViewHint(int hintRes) {
+            return inputViewHint(this.context.getString(hintRes));
+        }
+
+        public Builder defaultInputText(String defaultInputText) {
+            this.defaultInputText = defaultInputText;
+            return this;
+        }
+
+        public Builder defaultInputText(int defaultInputTextRes) {
+            return defaultInputText(this.context.getString(defaultInputTextRes));
+        }
+
         public Builder listSelector(@DrawableRes int selectorRes) {
             this.listSelector = selectorRes;
             return this;
@@ -1516,6 +1604,43 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public Builder forceStacking(boolean stacked) {
             this.forceStacking = stacked;
+            return this;
+        }
+
+        public Builder inputTextValidator(DialogInputValidator validator, String errorMessage) {
+            this.inputTextValidator = validator;
+            return this;
+        }
+
+        public Builder inputTextValidator(DialogInputValidator validator, int errorMessageRes) {
+            this.inputTextValidator = validator;
+            return this;
+        }
+
+        public Builder useInputTextIsPresentValidator(String errorMessage) {
+            this.inputTextValidator = new InputTextIsPresentValidator();
+            this.invalidInputTextErrorMessage = errorMessage;
+            return this;
+        }
+
+        public Builder useInputTextIsPresentValidator(int errorMessageRes) {
+            this.inputTextValidator = new InputTextIsPresentValidator();
+            this.invalidInputTextErrorMessage = this.context.getString(errorMessageRes);
+            return this;
+        }
+
+        public Builder invalidInputUsePopupErrorStyle() {
+            this.invalidInputUsePopupErrorStyle = true;
+            return this;
+        }
+
+        public Builder inputTextChangedListener(TextWatcher textWatcher) {
+            this.inputTextChangedListener = textWatcher;
+            return this;
+        }
+
+        public Builder inputTextCallback(TextInputCallback callback) {
+            this.inputTextCallback = callback;
             return this;
         }
 
@@ -1950,5 +2075,20 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public final String toString() {
             return super.toString();
         }
+    }
+
+    public interface DialogInputValidator {
+        boolean isValid(String inputText);
+    }
+
+    public static class InputTextIsPresentValidator implements DialogInputValidator {
+        @Override
+        public boolean isValid(String inputText) {
+            return !TextUtils.isEmpty(inputText);
+        }
+    }
+
+    public static interface TextInputCallback {
+        void onTextEntered(MaterialDialog dialog, String text);
     }
 }

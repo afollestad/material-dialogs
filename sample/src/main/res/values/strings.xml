@@ -138,4 +138,17 @@
     <string name="done">Done!</string>
     <string name="optional_dialog_message">This is an optional dialog message.</string>
 
+    <string name="input_view_dialog">Input view</string>
+    <string name="input_view_dialog_with_default">Input view (with default)</string>
+    <string name="input_view_dialog_with_message">Input view (with content)</string>
+    <string name="input_view_dialog_with_watcher">Input view (with watcher)</string>
+    <string name="input_view_dialog_with_validate">Input view (validation)</string>
+    <string name="input_view_dialog_title">Contact details</string>
+    <string name="input_view_dialog_message">Please enter your name</string>
+    <string name="input_view_dialog_hint">Your name</string>
+    <string name="input_view_dialog_default">Previous name</string>
+    <string name="input_view_dialog_positive">Update</string>
+    <string name="input_view_dialog_negative">Cancel</string>
+    <string name="input_view_dialog_missing">Please enter your name</string>
+
 </resources>
