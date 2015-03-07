@@ -233,6 +233,7 @@ public class AlertDialogWrapper {
                 selectedIndicesArr = selectedIndices.toArray(new Integer[selectedIndices.size()]);
             }
 
+            builder.alwaysCallMultiChoiceCallback();
             builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
                 @Override
                 public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
