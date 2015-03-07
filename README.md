@@ -574,6 +574,37 @@ See the sample project for this dialog in action, with the addition of threading
 
 ---
 
+### Text Input Dialogs
+
+You can display an EditText in the dialog, to allow for text input.
+
+```java
+new MaterialDialog.Builder(this)
+        .title(R.string.input_view_dialog_title)
+        .showInputView()
+        .inputViewHint(R.string.input_view_dialog_hint)
+        .positiveText(R.string.input_view_dialog_positive)
+        .negativeText(R.string.input_view_dialog_negative)
+        .inputTextCallback(new TextInputCallback() {
+            @Override
+            public void onTextEntered(MaterialDialog dialog, String text) {
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        })
+        .build()
+        .show();
+```
+
+There are various Builder methods you can use to customise the EditText:
+* `inputViewHint` - set the hint
+* `defaultInputText` - pre-fill the EditText with the specified text
+* `inputTextValidator` - provide a validator for when the positive button is pressed
+* `inputTextChangedListener` - listener for when the text changes
+* `inputTextCallback` - callback that reports the entered text when the positive button is pressed
+* `invalidInputUsePopupErrorStyle` - display the invalid input error in the standard EditText error popup
+
+---
+
 ### Preference Dialogs
 
 Android's `EditTextPreference` and `ListPreference` allow you to associate a preference activity's settings
