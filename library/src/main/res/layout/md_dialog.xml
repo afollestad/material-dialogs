@@ -62,9 +62,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_content_textsize"
+                android:paddingLeft="@dimen/md_dialog_frame_margin"
+                android:paddingRight="@dimen/md_dialog_frame_margin"
                 tools:text="Content" />
 
         </ScrollView>
+
+        <EditText
+            android:id="@+id/inputView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:singleLine="true"
+            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+            android:layout_marginRight="@dimen/md_dialog_frame_margin"
+            android:visibility="gone"
+            tools:hint="Input area" />
 
         <FrameLayout
             android:id="@+id/contentListViewFrame"

@@ -15,6 +15,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.TextInputCallback;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.ThemeSingleton;
 
@@ -192,6 +194,27 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+            }
+        });
+
+        findViewById(R.id.input_view).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputViewDialog();
+            }
+        });
+
+        findViewById(R.id.input_view_with_default).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputViewWithDefaultDialog();
+            }
+        });
+
+        findViewById(R.id.input_view_with_validation).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputViewWithValidateDialog();
             }
         });
     }
@@ -544,6 +567,52 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         }
                     }).show();
         }
+    }
+
+    public void showInputViewDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input_view_dialog_title)
+                .showInputView()
+                .inputViewHint(R.string.input_view_dialog_hint)
+                .positiveText(R.string.input_view_dialog_positive)
+                .negativeText(R.string.input_view_dialog_negative)
+                .inputTextCallback(new TextInputCallback() {
+                    @Override
+                    public void onTextEntered(MaterialDialog dialog, String text) {
+                        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    public void showInputViewWithDefaultDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input_view_dialog_title)
+                .content(R.string.input_view_dialog_message)
+                .showInputView()
+                .defaultInputText(R.string.input_view_dialog_default)
+                .positiveText(R.string.input_view_dialog_positive)
+                .negativeText(R.string.input_view_dialog_negative)
+                .inputTextCallback(new TextInputCallback() {
+                    @Override
+                    public void onTextEntered(MaterialDialog dialog, String text) {
+                        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    public void showInputViewWithValidateDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input_view_dialog_title)
+                .showInputView()
+                .useInputTextIsPresentValidator(R.string.input_view_dialog_missing)
+                .positiveText(R.string.input_view_dialog_positive)
+                .negativeText(R.string.input_view_dialog_negative)
+                .build()
+                .show();
     }
 
     @Override

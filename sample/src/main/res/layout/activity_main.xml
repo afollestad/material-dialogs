@@ -163,6 +163,34 @@
             android:text="@string/preference_dialogs"
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
+        <Button
+            android:id="@+id/input_view"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/input_view_dialog"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/input_view_with_default"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/input_view_dialog_with_default"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/input_view_with_message"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/input_view_dialog_with_message"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
+            android:id="@+id/input_view_with_validation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/input_view_dialog_with_validate"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
     </LinearLayout>
 
 </ScrollView>
