@@ -874,17 +874,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     }
 
     private void setInputViewIsValid() {
-        inputView.getBackground().clearColorFilter();
         inputViewError.setVisibility(View.INVISIBLE);
     }
 
     private void setInputViewInError() {
-        int color = mBuilder.context.getResources().getColor(R.color.md_error_color);
-        inputView.getBackground().clearColorFilter();
-        inputView.clearFocus();
-        inputView.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        inputViewError.setText(mBuilder.invalidInputTextErrorMessage);
-        inputViewError.setVisibility(View.VISIBLE);
+        if (mBuilder.invalidInputUsePopupErrorStyle) {
+            inputView.setError(mBuilder.invalidInputTextErrorMessage);
+        } else {
+            inputViewError.setText(mBuilder.invalidInputTextErrorMessage);
+            inputViewError.setVisibility(View.VISIBLE);
+        }
     }
 
     private void sendTextEnteredCallbackIfPresent() {
@@ -1008,6 +1007,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected int mProgress = -2;
         protected int mProgressMax = 0;
         protected DialogInputValidator inputTextValidator;
+        protected boolean invalidInputUsePopupErrorStyle;
         protected String invalidInputTextErrorMessage;
         protected TextWatcher inputTextChangedListener;
         protected TextInputCallback inputTextCallback;
@@ -1618,6 +1618,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public Builder useInputTextIsPresentValidator(int errorMessageRes) {
             this.inputTextValidator = new InputTextIsPresentValidator();
             this.invalidInputTextErrorMessage = this.context.getString(errorMessageRes);
+            return this;
+        }
+
+        public Builder invalidInputUsePopupErrorStyle() {
+            this.invalidInputUsePopupErrorStyle = true;
             return this;
         }
 
