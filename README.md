@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.3.4'
+    compile 'com.afollestad:material-dialogs:0.6.3.5'
 }
 ```
 
@@ -96,7 +96,8 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-You can limit the maximum size of the icon through the `limitIconToDefaultSize()` or `maxIconSize(int size)` builder method.
+You can limit the maximum size of the icon using the `limitIconToDefaultSize()`, `maxIconSize(int size)`,
+ or `maxIconSizeRes(int sizeRes)` Builder methods.
 
 ---
 
