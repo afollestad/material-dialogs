@@ -200,6 +200,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         if (mBuilder.showInputView) {
             inputViewFrame.setVisibility(View.VISIBLE);
             inputView.setText(mBuilder.defaultInputText);
+            if (!TextUtils.isEmpty(mBuilder.defaultInputText)) {
+                inputView.setSelection(mBuilder.defaultInputText.length());
+            }
             if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
                 inputView.getBackground().setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
             }
