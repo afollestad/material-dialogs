@@ -39,4 +39,6 @@
 
     <dimen name="md_progressdialog_paddingwithtitle">4dp</dimen>
 
+    <dimen name="md_input_text_error_padding">8dp</dimen>
+
 </resources>

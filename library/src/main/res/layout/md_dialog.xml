@@ -68,16 +68,35 @@
 
         </ScrollView>
 
-        <EditText
-            android:id="@+id/inputView"
+        <LinearLayout
+            android:id="@+id/inputViewFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:singleLine="true"
-            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-            android:layout_marginRight="@dimen/md_dialog_frame_margin"
-            android:visibility="gone"
-            tools:hint="Input area" />
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/md_dialog_frame_margin"
+            android:paddingRight="@dimen/md_dialog_frame_margin"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/inputView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:singleLine="true"
+                tools:hint="Input area" />
+
+            <TextView
+                android:id="@+id/inputViewError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/md_button_textsize"
+                android:textColor="@color/md_error_color"
+                android:paddingLeft="@dimen/md_button_padding_horizontal"
+                android:layout_marginTop="@dimen/md_button_padding_vertical"
+                android:visibility="invisible"
+                tools:text="Content" />
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/contentListViewFrame"

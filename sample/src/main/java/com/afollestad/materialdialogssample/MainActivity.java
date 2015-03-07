@@ -625,6 +625,12 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .useInputTextIsPresentValidator(R.string.input_view_dialog_missing)
                 .positiveText(R.string.input_view_dialog_positive)
                 .negativeText(R.string.input_view_dialog_negative)
+                .inputTextCallback(new TextInputCallback() {
+                    @Override
+                    public void onTextEntered(MaterialDialog dialog, String text) {
+                        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .build()
                 .show();
     }
