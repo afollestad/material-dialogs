@@ -2,7 +2,7 @@
     <!-- See http://www.google.com/design/spec/components/dialogs.html#dialogs-specs -->
     <!-- Margin around the dialog, excluding the button bar -->
     <dimen name="md_dialog_frame_margin">24dp</dimen>
-    <dimen name="md_title_frame_margin_bottom">8dp</dimen>
+    <dimen name="md_title_frame_margin_bottom">16dp</dimen>
     <dimen name="md_title_frame_margin_bottom_list">4dp</dimen>
     <dimen name="md_button_min_width">42dp</dimen>
     <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
@@ -23,7 +23,7 @@
 
              Splitting makes it easier to have consistent padding against the dividers.
     -->
-    <dimen name="md_content_vertical_padding">16dp</dimen>
+    <dimen name="md_content_vertical_padding">8dp</dimen>
     <dimen name="md_button_frame_vertical_padding">8dp</dimen>
     <dimen name="md_button_height">48dp</dimen>
     <dimen name="md_title_textsize">20sp</dimen>

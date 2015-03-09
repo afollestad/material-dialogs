@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="-1dp"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/buttonDefaultFrame"
@@ -153,6 +153,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_button_frame_vertical_padding"
         android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
 
         <FrameLayout

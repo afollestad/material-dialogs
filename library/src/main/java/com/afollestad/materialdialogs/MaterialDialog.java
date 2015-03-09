@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -80,8 +81,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected final int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
-
-    private int lastDialogHeight;
 
     private static ContextThemeWrapper getTheme(Builder builder) {
         TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
@@ -328,7 +327,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        invalidateCustomViewAssociations();
+                        if (view.getMeasuredWidth() > 0) {
+                            invalidateCustomViewAssociations();
+                        }
                     }
                 });
 
@@ -455,23 +456,35 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             titleBarDivider.setVisibility(View.VISIBLE);
             titleBarDivider.setBackgroundColor(mBuilder.dividerColor);
         } else {
-            titleBarDivider.setVisibility(View.INVISIBLE);
+            titleBarDivider.setVisibility(View.GONE);
         }
 
         View buttonBarDivider = view.findViewById(R.id.buttonBarDivider);
         if (bottomVisible) {
             buttonBarDivider.setVisibility(View.VISIBLE);
             buttonBarDivider.setBackgroundColor(mBuilder.dividerColor);
-
-            setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), -1, 0);
-            setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), -1, 0);
+            setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), 0, 0);
+            setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), 0, 0);
         } else {
-            buttonBarDivider.setVisibility(View.INVISIBLE);
-
             Resources r = getContext().getResources();
+            buttonBarDivider.setVisibility(View.GONE);
+
             final int bottomMargin = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
-            setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), -1, bottomMargin);
-            setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), -1, bottomMargin);
+
+            /* Only enable the bottom margin if our available window space can hold the margin,
+               we don't want to enable this and cause the content to scroll, which is bad
+               experience itself but it also causes a vibrating window as this will keep getting
+               enabled/disabled over and over again.
+             */
+            Rect maxWindowFrame = new Rect();
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(maxWindowFrame);
+            int currentHeight = getWindow().getDecorView().getMeasuredHeight();
+            if (currentHeight + bottomMargin < maxWindowFrame.height()) {
+                setVerticalMargins(view.findViewById(R.id.buttonStackedFrame),
+                        bottomMargin, bottomMargin);
+                setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame),
+                        bottomMargin, bottomMargin);
+            }
         }
     }
 
@@ -1508,8 +1521,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
         public MaterialDialog build() {
             if ((content == null || content.toString().trim().length() == 0) &&
-                    title != null && (items == null || items.length == 0) &&
-                    customView == null && adapter == null) {
+                    title != null && (items == null || items.length == 0) && customView == null) {
                 this.content = this.title;
                 this.title = null;
             }
