@@ -220,11 +220,6 @@ public class AlertDialogWrapper {
             return this;
         }
 
-        public Builder alwaysCallMultiChoiceCallback() {
-            builder.alwaysCallMultiChoiceCallback();
-            return this;
-        }
-
         private void setUpMultiChoiceCallback(@Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
             Integer selectedIndicesArr[] = null;
             /* Convert old style array of booleans-per-index to new list of indices */
@@ -238,6 +233,7 @@ public class AlertDialogWrapper {
                 selectedIndicesArr = selectedIndices.toArray(new Integer[selectedIndices.size()]);
             }
 
+            builder.alwaysCallMultiChoiceCallback();
             builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
                 @Override
                 public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
