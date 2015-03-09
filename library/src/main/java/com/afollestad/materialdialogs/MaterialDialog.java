@@ -81,8 +81,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
 
-    private int lastDialogHeight;
-
     private static ContextThemeWrapper getTheme(Builder builder) {
         TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
         boolean darkTheme = builder.theme == Theme.DARK;
