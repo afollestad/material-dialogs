@@ -197,7 +197,7 @@ public class AlertDialogWrapper {
          *
          * @param itemsId      A resource ID for the items (e.g. R.array.my_items)
          * @param checkedItems specifies which items are checked. It should be null in which case no items are checked. If non null it must be exactly the same length as the array of items.
-         * @param listener     notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.       * @return
+         * @param listener     notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
          * @return This
          */
         public Builder setMultiChoiceItems(@ArrayRes int itemsId, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
@@ -211,7 +211,7 @@ public class AlertDialogWrapper {
          *
          * @param items        the text of the items to be displayed in the list.
          * @param checkedItems specifies which items are checked. It should be null in which case no items are checked. If non null it must be exactly the same length as the array of items.
-         * @param listener     notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.       * @return
+         * @param listener     notified when an item on the list is clicked. The dialog will not be dismissed when an item is clicked. It will only be dismissed if clicked on a button, if no buttons are supplied it's up to the user to dismiss the dialog.		 * @return
          * @return This
          */
         public Builder setMultiChoiceItems(@NonNull String[] items, @Nullable final boolean[] checkedItems, final DialogInterface.OnMultiChoiceClickListener listener) {
