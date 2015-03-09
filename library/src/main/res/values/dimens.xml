@@ -15,14 +15,6 @@
     <!-- 16dp - 4dp (inset) -->
     <dimen name="md_button_padding_frame_side">12dp</dimen>
     <dimen name="md_neutral_button_margin">12dp</dimen>
-    <!--
-            Applied to content scrollview/listview and customview, the spec calls for 16dp between the
-             bottom of the content and the top of the button bar, we split this between the two for
-             ease of layouts and adjustments. Likewise the spec implies 16dp between the title and
-             content and we split that as well.
-
-             Splitting makes it easier to have consistent padding against the dividers.
-    -->
     <dimen name="md_content_vertical_padding">16dp</dimen>
     <dimen name="md_button_frame_vertical_padding">8dp</dimen>
     <dimen name="md_button_height">48dp</dimen>
