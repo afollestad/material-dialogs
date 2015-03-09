@@ -273,23 +273,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             }
         }
 
-        int maxIconSize = builder.maxIconSize;
-        if (maxIconSize == -1) {
-            maxIconSize = DialogUtils.resolveDimension(mBuilder.context, R.attr.md_icon_max_size);
-        }
-
-        boolean limitIconToDefaultSize = DialogUtils.resolveBoolean(mBuilder.context, R.attr.md_icon_limit_icon_to_default_size);
-        if (builder.limitIconToDefaultSize || limitIconToDefaultSize) {
-            maxIconSize = mBuilder.context.getResources().getDimensionPixelSize(R.dimen.md_icon_max_size);
-        }
-
-        if (maxIconSize > -1) {
-            icon.setAdjustViewBounds(true);
-            icon.setMaxHeight(maxIconSize);
-            icon.setMaxWidth(maxIconSize);
-            icon.requestLayout();
-        }
-
         if (builder.title == null) {
             titleFrame.setVisibility(View.GONE);
         } else {
@@ -934,8 +917,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected Typeface mediumFont;
         protected boolean useCustomFonts;
         protected Drawable icon;
-        protected boolean limitIconToDefaultSize;
-        protected int maxIconSize = -1;
         protected ListAdapter adapter;
         protected OnDismissListener dismissListener;
         protected OnCancelListener cancelListener;
@@ -1476,16 +1457,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
          */
         public Builder adapter(@NonNull ListAdapter adapter) {
             this.adapter = adapter;
-            return this;
-        }
-
-        public Builder limitIconToDefaultSize() {
-            this.limitIconToDefaultSize = true;
-            return this;
-        }
-
-        public Builder maxIconSize(int maxIconSize) {
-            this.maxIconSize = maxIconSize;
             return this;
         }
 

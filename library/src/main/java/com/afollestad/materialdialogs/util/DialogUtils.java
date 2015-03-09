@@ -47,26 +47,4 @@ public class DialogUtils {
             a.recycle();
         }
     }
-
-    public static int resolveDimension(Context context, @AttrRes int attr) {
-        return resolveDimension(context, attr, -1);
-    }
-
-    public static int resolveDimension(Context context, @AttrRes int attr, int fallback) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
-        try {
-            return a.getDimensionPixelSize(0, fallback);
-        } finally {
-            a.recycle();
-        }
-    }
-
-    public static boolean resolveBoolean(Context context, @AttrRes int attr) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
-        try {
-            return a.getBoolean(0, false);
-        } finally {
-            a.recycle();
-        }
-    }
 }
