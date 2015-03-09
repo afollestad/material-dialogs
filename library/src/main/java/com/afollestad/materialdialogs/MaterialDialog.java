@@ -17,7 +17,6 @@ import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -279,8 +278,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
             maxIconSize = DialogUtils.resolveDimension(mBuilder.context, R.attr.md_icon_max_size);
         }
 
-        if (builder.limitIconToDefaultSize ||
-                DialogUtils.resolveBoolean(mBuilder.context, R.attr.md_icon_limit_icon_to_default_size)) {
+        boolean limitIconToDefaultSize = DialogUtils.resolveBoolean(mBuilder.context, R.attr.md_icon_limit_icon_to_default_size);
+        if (builder.limitIconToDefaultSize || limitIconToDefaultSize) {
             maxIconSize = mBuilder.context.getResources().getDimensionPixelSize(R.dimen.md_icon_max_size);
         }
 
@@ -1488,10 +1487,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         public Builder maxIconSize(int maxIconSize) {
             this.maxIconSize = maxIconSize;
             return this;
-        }
-
-        public Builder maxIconSizeRes(@DimenRes int maxIconSizeRes) {
-            return maxIconSize((int) this.context.getResources().getDimension(maxIconSizeRes));
         }
 
         public Builder showListener(@NonNull OnShowListener listener) {
