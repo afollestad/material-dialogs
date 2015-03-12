@@ -24,7 +24,7 @@ import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
- * @author Marc Holder Kluver (marchold), Mark Sutherland (msutherland4807)
+ * @author Marc Holder Kluver (marchold), Mark Sutherland (msutherland4807), Aidan Follestad (afollestad)
  */
 public class MaterialEditTextPreference extends DialogPreference {
 
@@ -36,7 +36,7 @@ public class MaterialEditTextPreference extends DialogPreference {
         return mEditText;
     }
 
-    public void setValue(String value){
+    public void setValue(String value) {
         mValue = value;
     }
 

@@ -10,9 +10,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 /**
- * Adapted from http://stackoverflow.com/a/27429926/1247248
- *
- * @author Marc Holder Kluver (marchold)
+ * @author Marc Holder Kluver (marchold), Aidan Follestad (afollestad)
  */
 public class MaterialListPreference extends ListPreference {
 
