@@ -84,7 +84,7 @@ public class MaterialEditTextPreference extends DialogPreference {
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
             message.setVisibility(View.VISIBLE);
-            message.setText(getDialogMessage());
+            message.append(getDialogMessage());
         } else {
             message.setVisibility(View.GONE);
         }
