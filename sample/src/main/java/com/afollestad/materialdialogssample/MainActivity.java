@@ -16,11 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -354,22 +352,16 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
     }
 
     private void showCustomList() {
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
+        new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
-                .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
-                .build();
-
-        ListView listView = dialog.getListView();
-        if (listView != null) {
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(MainActivity.this, "Clicked item " + position, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        dialog.show();
+                .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
+                        new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                                Toast.makeText(MainActivity.this, "Clicked item " + which, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                .show();
     }
 
 

@@ -271,23 +271,28 @@ every time the user selects an item.
 ### Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
-exactly how you want your list to work. You also have access to the dialog's list via `getListView()` method.
+exactly how you want your list to work.
+
+```java
+new MaterialDialog.Builder(this)
+        .title(R.string.socialNetworks)
+        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
+        .itemsCallback(new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+            }
+        }).show();
+```
+
+If you need access to the `ListView`, you can use the `MaterialDialog` instance.
 
 ```java
 MaterialDialog dialog = new MaterialDialog.Builder(this)
-        .title(R.string.socialNetworks)
-        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
+        ...
         .build();
 
-ListView listView = dialog.getListView();
-if (listView != null) {
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(MainActivity.this, "Clicked item " + position, Toast.LENGTH_SHORT).show();
-        }
-    });
-}
+ListView list = dialog.getListView();
+// Do something with it
 
 dialog.show();
 ```

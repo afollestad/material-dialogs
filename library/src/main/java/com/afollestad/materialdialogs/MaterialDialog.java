@@ -61,7 +61,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends DialogBase implements View.OnClickListener {
+public class MaterialDialog extends DialogBase implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     protected final View view;
     protected final Builder mBuilder;
@@ -504,37 +504,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         FrameLayout listViewContainer = (FrameLayout) view.findViewById(R.id.contentListViewFrame);
         listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(mBuilder.adapter);
-
-        if (listType != null) {
-            // Only set listener for 1st-party adapter, leave custom adapter implementation to user with getListView()
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    if (listType == ListType.MULTI) {
-                        // Keep our selected items up to date
-                        boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
-                        boolean previouslySelected = selectedIndicesList.contains(position);
-                        if (isChecked) {
-                            if (!previouslySelected) {
-                                selectedIndicesList.add(position);
-                            }
-                        } else if (previouslySelected) {
-                            selectedIndicesList.remove(Integer.valueOf(position));
-                        }
-                    } else if (listType == ListType.SINGLE) {
-                        // Keep our selected item up to date
-                        if (mBuilder.selectedIndex != position) {
-                            mBuilder.selectedIndex = position;
-                            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
-                        }
-                    }
-
-                    onClick(view);
-                }
-            });
-        }
-
+        listView.setOnItemClickListener(this);
     }
 
     /**
@@ -639,6 +609,39 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         return canAdapterViewScroll(listView);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (listType != null) {
+            // MaterialDialogAdapter, used for built-in adapters
+            if (listType == ListType.MULTI) {
+                // Keep our selected items up to date
+                boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
+                boolean previouslySelected = selectedIndicesList.contains(position);
+                if (isChecked) {
+                    if (!previouslySelected) {
+                        selectedIndicesList.add(position);
+                    }
+                } else if (previouslySelected) {
+                    selectedIndicesList.remove(Integer.valueOf(position));
+                }
+            } else if (listType == ListType.SINGLE) {
+                // Keep our selected item up to date
+                if (mBuilder.selectedIndex != position) {
+                    mBuilder.selectedIndex = position;
+                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+                }
+            }
+            onClick(view);
+        } else {
+            // Custom adapter
+            if (mBuilder.listCallbackCustom != null) {
+                CharSequence text = null;
+                if (view instanceof TextView)
+                    text = ((TextView) view).getText();
+                mBuilder.listCallbackCustom.onSelection(this, view, position, text);
+            }
+        }
+    }
 
     public static class NotImplementedException extends Error {
         public NotImplementedException(String message) {
@@ -923,6 +926,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         protected ListCallback listCallback;
         protected ListCallback listCallbackSingle;
         protected ListCallbackMulti listCallbackMulti;
+        protected ListCallback listCallbackCustom;
         protected boolean alwaysCallMultiChoiceCallback = false;
         protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
@@ -1473,10 +1477,26 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         /**
          * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
          *
+         * @param adapter The adapter to set to the list.
          * @return This Builder object to allow for chaining of calls to set methods
+         * @deprecated Use {@link #adapter(ListAdapter, ListCallback)} instead.
          */
+        @Deprecated
         public Builder adapter(@NonNull ListAdapter adapter) {
             this.adapter = adapter;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @param adapter  The adapter to set to the list.
+         * @param callback The callback invoked when an item in the list is selected.
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder adapter(@NonNull ListAdapter adapter, ListCallback callback) {
+            this.adapter = adapter;
+            this.listCallbackCustom = callback;
             return this;
         }
 
@@ -1883,7 +1903,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
-    private static enum ListType {
+    private enum ListType {
         REGULAR, SINGLE, MULTI;
 
         public static int getLayoutForType(ListType type) {
@@ -1900,11 +1920,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener {
         }
     }
 
-    public static interface ListCallback {
+    public interface ListCallback {
         void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
     }
 
-    public static interface ListCallbackMulti {
+    public interface ListCallbackMulti {
         void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 

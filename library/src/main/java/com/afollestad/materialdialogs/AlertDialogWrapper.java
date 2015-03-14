@@ -13,8 +13,6 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ListAdapter;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +31,7 @@ public class AlertDialogWrapper {
         private DialogInterface.OnClickListener neutralDialogListener;
 
         private DialogInterface.OnClickListener onClickListener;
+        private DialogInterface.OnClickListener onClickListenerAdapter;
 
         public Builder(@NonNull Context context) {
             builder = new MaterialDialog.Builder(context);
@@ -120,7 +119,7 @@ public class AlertDialogWrapper {
             return this;
         }
 
-        public Builder setItems(@ArrayRes int itemsId, final DialogInterface.OnClickListener listener) {
+        public Builder setItems(@ArrayRes int itemsId, DialogInterface.OnClickListener listener) {
             builder.items(itemsId);
             onClickListener = listener;
             return this;
@@ -132,14 +131,35 @@ public class AlertDialogWrapper {
             return this;
         }
 
+        /**
+         * @param adapter The adapter to set.
+         * @return An instance of the Builder for chaining.
+         * @deprecated Use {@link #setAdapter(ListAdapter, DialogInterface.OnClickListener)} instead.
+         */
+        @Deprecated
         public Builder setAdapter(ListAdapter adapter) {
+            return setAdapter(adapter, null);
+        }
+
+        /**
+         * @param adapter  The adapter to set.
+         * @param listener The listener called when list items are clicked.
+         * @return An instance of the Builder for chaining.
+         */
+        public Builder setAdapter(ListAdapter adapter, final DialogInterface.OnClickListener listener) {
             builder.adapter = adapter;
+            builder.listCallbackCustom = new MaterialDialog.ListCallback() {
+                @Override
+                public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                    listener.onClick(dialog, which);
+                }
+            };
             return this;
         }
 
         public AlertDialog create() {
             addButtonsCallback();
-            addItemsCallBack();
+            addListCallbacks();
             return builder.build();
         }
 
@@ -149,7 +169,7 @@ public class AlertDialogWrapper {
             return dialog;
         }
 
-        private void addItemsCallBack() {
+        private void addListCallbacks() {
             if (onClickListener != null) {
                 builder.itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
