@@ -504,7 +504,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         FrameLayout listViewContainer = (FrameLayout) view.findViewById(R.id.contentListViewFrame);
         listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(mBuilder.adapter);
-        if (mBuilder.listCallbackCustom != null)
+        if (listType != null || mBuilder.listCallbackCustom != null)
             listView.setOnItemClickListener(this);
     }
 
