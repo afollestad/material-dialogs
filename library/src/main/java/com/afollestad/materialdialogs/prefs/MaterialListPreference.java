@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
@@ -18,12 +19,18 @@ public class MaterialListPreference extends ListPreference {
 
     public MaterialListPreference(Context context) {
         super(context);
-        this.context = context;
+        init(context);
     }
 
     public MaterialListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context) {
         this.context = context;
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
+            setWidgetLayoutResource(0);
     }
 
     @Override
