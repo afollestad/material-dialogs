@@ -19,6 +19,7 @@
         android:layout_marginStart="@dimen/md_dialog_frame_margin"
         android:layout_marginRight="@dimen/md_listitem_control_margin"
         android:layout_marginEnd="@dimen/md_listitem_control_margin"
+        android:background="@null"
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
