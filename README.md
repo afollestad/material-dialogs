@@ -280,12 +280,14 @@ exactly how you want your list to work.
 ```java
 new MaterialDialog.Builder(this)
         .title(R.string.socialNetworks)
-        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks))
-        .itemsCallback(new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-            }
-        }).show();
+        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
+                new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        Toast.makeText(MainActivity.this, "Clicked item " + which, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        .show();
 ```
 
 If you need access to the `ListView`, you can use the `MaterialDialog` instance.
