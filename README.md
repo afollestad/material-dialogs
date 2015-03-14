@@ -71,16 +71,15 @@ If the content is long enough, it will become scrollable and a divider will be d
 If you're migrating old dialogs you could use ```AlertDialogWrapper```. You need change imports and replace ```AlertDialog.Builder``` with ```AlertDialogWrapper.Builder```:
 
 ```java
-AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(context);
-dialogBuilder.setMessage(messageId);
-dialogBuilder.setTitle(titleId);
-dialogBuilder.setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-    }
-});
-dialogBuilder.create().show();
+new AlertDialogWrapper.Builder(this)
+    .setTitle(R.string.title)
+    .setMessage(R.string.message)
+    .setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+        }
+    }).show();
 ```
 
 But it's highly recommended to use original ```MaterialDialog``` API for new usages.
