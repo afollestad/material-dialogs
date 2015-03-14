@@ -504,7 +504,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         FrameLayout listViewContainer = (FrameLayout) view.findViewById(R.id.contentListViewFrame);
         listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(mBuilder.adapter);
-        listView.setOnItemClickListener(this);
+        if (mBuilder.listCallbackCustom != null)
+            listView.setOnItemClickListener(this);
     }
 
     /**
@@ -632,14 +633,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 }
             }
             onClick(view);
-        } else {
+        } else if (mBuilder.listCallbackCustom != null) {
             // Custom adapter
-            if (mBuilder.listCallbackCustom != null) {
-                CharSequence text = null;
-                if (view instanceof TextView)
-                    text = ((TextView) view).getText();
-                mBuilder.listCallbackCustom.onSelection(this, view, position, text);
-            }
+            CharSequence text = null;
+            if (view instanceof TextView)
+                text = ((TextView) view).getText();
+            mBuilder.listCallbackCustom.onSelection(this, view, position, text);
         }
     }
 
