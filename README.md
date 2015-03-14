@@ -289,7 +289,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-If you need access to the `ListView`, you can use the `MaterialDialog` instance.
+If you need access to the `ListView`, you can use the `MaterialDialog` instance:
 
 ```java
 MaterialDialog dialog = new MaterialDialog.Builder(this)
@@ -301,6 +301,8 @@ ListView list = dialog.getListView();
 
 dialog.show();
 ```
+
+Note that you don't need to be using a custom adapter in order to access the `ListView`, it's there for single/multi choice dialogs, regular list dialogs, etc.
 
 ---
 
