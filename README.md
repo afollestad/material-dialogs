@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.3.5'
+    compile 'com.afollestad:material-dialogs:0.6.4.0'
 }
 ```
 
@@ -40,6 +40,10 @@ See the project's Releases page for a list of versions with their changelogs.
 ---
 
 ### Basic Dialog
+
+First of all, note that `MaterialDialog` extends `DialogBase`, which extends `AlertDialog`. While
+a very small number of the stock methods are purposely deprecated and don't work, you have access
+to methods such as `dismiss()`, `setTitle()`, `setIcon()`, etc. Alternatives are discussed below.
 
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
 (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage). Note that you can
