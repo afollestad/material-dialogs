@@ -10,6 +10,15 @@
         android:persistent="true"
         android:layout="@layout/preference_custom" />
 
+    <com.afollestad.materialdialogs.prefs.MaterialMultiSelectListPreference
+        android:key="unused_key3"
+        android:entries="@array/preference_values"
+        android:entryValues="@array/preference_values"
+        android:title="@string/multilist_pref_title"
+        android:summary="@string/multilist_pref_desc"
+        android:persistent="true"
+        android:layout="@layout/preference_custom" />
+
     <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
         android:key="unused_key2"
         android:title="@string/edittext_pref_title"
