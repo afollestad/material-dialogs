@@ -503,7 +503,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                     .title(R.string.progress_dialog)
                     .content(R.string.please_wait)
                     .contentGravity(GravityEnum.CENTER)
-                    .progress(false, 150)
+                    .progress(false, 150, true)
                     .showListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(DialogInterface dialogInterface) {

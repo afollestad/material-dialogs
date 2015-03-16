@@ -72,6 +72,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     protected FrameLayout customViewFrame;
     protected ProgressBar mProgress;
     protected TextView mProgressLabel;
+    protected TextView mProgressMinMax;
     protected TextView content;
 
     protected View positiveButton;
@@ -149,6 +150,16 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 mProgress.setProgress(0);
                 mProgress.setMax(mBuilder.mProgressMax);
                 mProgressLabel = (TextView) mBuilder.customView.findViewById(R.id.label);
+                mProgressMinMax = (TextView) mBuilder.customView.findViewById(R.id.minMax);
+                if (mBuilder.mShowMinMax) {
+                    mProgressMinMax.setVisibility(View.VISIBLE);
+                    mProgressMinMax.setText("0/" + mBuilder.mProgressMax);
+                    ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mProgress.getLayoutParams();
+                    lp.leftMargin = 0;
+                    lp.rightMargin = 0;
+                } else {
+                    mProgressMinMax.setVisibility(View.GONE);
+                }
                 mProgressLabel.setText("0%");
             }
             int bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_dialog_frame_margin);
@@ -951,6 +962,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected int backgroundColor;
         protected int itemColor;
         protected boolean mIndeterminateProgress;
+        protected boolean mShowMinMax;
         protected int mProgress = -2;
         protected int mProgressMax = 0;
 
@@ -1362,6 +1374,19 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             return this;
         }
 
+        /**
+         * Makes this dialog a progress dialog.
+         *
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
+         * @param showMinMax    For determinate dialogs, the min and max will be displayed to the left (start) of the progress bar, e.g. 50/100.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder progress(boolean indeterminate, int max, boolean showMinMax) {
+            this.mShowMinMax = showMinMax;
+            return progress(indeterminate, max);
+        }
+
         public Builder positiveColor(int color) {
             this.positiveColor = color;
             return this;
@@ -1763,6 +1788,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         mProgress.setProgress(progress);
         int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
         mProgressLabel.setText(percentage + "%");
+        if (mProgressMinMax != null)
+            mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
     }
 
     public final void setMaxProgress(int max) {
