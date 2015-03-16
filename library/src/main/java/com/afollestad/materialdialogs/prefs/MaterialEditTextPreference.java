@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -53,6 +54,7 @@ public class MaterialEditTextPreference extends DialogPreference {
         super(context, attrs);
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
             mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
+        mEditText = new EditText(context, attrs);
     }
 
     public MaterialEditTextPreference(Context context) {
@@ -73,9 +75,10 @@ public class MaterialEditTextPreference extends DialogPreference {
                 .content(getDialogMessage());
 
         // Create our layout, put the EditText inside, then add to dialog
-        ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.md_input_dialog, null);
-        mEditText = (EditText) layout.findViewById(android.R.id.edit);
+        ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.md_input_dialog_stub, null);
         mEditText.setText(mValue);
+        layout.addView(mEditText, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         // Color our EditText if need be. Lollipop does it by default
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)

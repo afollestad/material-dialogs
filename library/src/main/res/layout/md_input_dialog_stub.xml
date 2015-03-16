@@ -18,12 +18,4 @@
         tools:text="Dialog message"
         android:paddingBottom="12dp" />
 
-    <EditText
-        android:id="@android:id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:singleLine="true"
-        tools:hint="Input area" />
-
 </LinearLayout>
