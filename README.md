@@ -551,17 +551,19 @@ new MaterialDialog.Builder(this)
     .show();
 ```
 
-###### Seeker Progress Dialogs
+###### Determinate (Seek Bar) Progress Dialogs
 
 If a dialog is not indeterminate, it displays a horizontal progress bar that increases up until a max value.
 The comments in the code explain what this does.
 
 ```java
 // Create and show a non-indeterminate dialog with a max value of 150
+// If the showMinMax parameter is true, a min/max ratio will be shown to the left of the seek bar.
+boolean showMinMax = true;
 MaterialDialog dialog = new MaterialDialog.Builder(this)
     .title(R.string.progress_dialog)
     .content(R.string.please_wait)
-    .progress(false, 150)
+    .progress(false, 150, showMinMax)
     .show();
 
 // Loop until the dialog's progress value reaches the max (150)
@@ -588,9 +590,9 @@ See the sample project for this dialog in action, with the addition of threading
 
 ### Preference Dialogs
 
-Android's `EditTextPreference` and `ListPreference` allow you to associate a preference activity's settings
-with user input that's received through typing or selection. Material Dialogs includes a `MaterialEditTextPreference`
-and `MaterialListPreference` class that can be used in your preferences XML to automatically use Material-themed
+Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference` allow you to associate a preference activity's settings
+with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
+`MaterialListPreference`, and `MaterialMultiSelectListPreference` classes that can be used in your preferences XML to automatically use Material-themed
 dialogs. See the sample project for details.
 
 ---
