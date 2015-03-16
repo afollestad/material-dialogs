@@ -11,7 +11,7 @@
         android:layout="@layout/preference_custom" />
 
     <com.afollestad.materialdialogs.prefs.MaterialMultiSelectListPreference
-        android:key="unused_key3"
+        android:key="unused_key4"
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
         android:title="@string/multilist_pref_title"
