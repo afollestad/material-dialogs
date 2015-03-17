@@ -7,7 +7,10 @@ import android.graphics.PorterDuff;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,29 +28,34 @@ import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
- * @author Marc Holder Kluver (marchold), Mark Sutherland (msutherland4807), Aidan Follestad (afollestad)
+ * @author Aidan Follestad (afollestad)
  */
 public class MaterialEditTextPreference extends DialogPreference {
 
     private int mColor = 0;
     private EditText mEditText;
-    private String mValue;
+    private String mText;
 
     public EditText getEditText() {
         return mEditText;
     }
 
     public void setValue(String value) {
-        mValue = value;
+        mText = value;
     }
 
     public void setText(String text) {
+        setValue(text);
         final boolean wasBlocking = shouldDisableDependents();
         persistString(text);
         final boolean isBlocking = shouldDisableDependents();
         if (isBlocking != wasBlocking) {
             notifyDependencyChange(isBlocking);
         }
+    }
+
+    public String getText() {
+        return mText;
     }
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
@@ -63,9 +71,6 @@ public class MaterialEditTextPreference extends DialogPreference {
 
     @Override
     protected void showDialog(Bundle state) {
-        Context context = getContext();
-
-        // Set up our builder
         Builder mBuilder = new MaterialDialog.Builder(getContext())
                 .title(getDialogTitle())
                 .icon(getDialogIcon())
@@ -74,15 +79,15 @@ public class MaterialEditTextPreference extends DialogPreference {
                 .callback(callback)
                 .content(getDialogMessage());
 
-        // Create our layout, put the EditText inside, then add to dialog
-        ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.md_input_dialog_stub, null);
-        mEditText.append(mValue);
+        ViewGroup layout = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.md_input_dialog_stub, null);
+        mEditText.setText("");
+        mEditText.append(mText);
+
         if (mEditText.getParent() != null)
             ((ViewGroup) mEditText.getParent()).removeView(mEditText);
         layout.addView(mEditText, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // Color our EditText if need be. Lollipop does it by default
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
             mEditText.getBackground().setColorFilter(mColor, PorterDuff.Mode.SRC_ATOP);
 
@@ -95,12 +100,9 @@ public class MaterialEditTextPreference extends DialogPreference {
         }
         mBuilder.customView(layout, false);
 
-        // Create the dialog
         MaterialDialog mDialog = mBuilder.build();
         if (state != null)
             mDialog.onRestoreInstanceState(state);
-
-        // Show soft keyboard
         requestInputMethod(mDialog);
 
         mDialog.setOnDismissListener(this);
@@ -136,11 +138,67 @@ public class MaterialEditTextPreference extends DialogPreference {
         return a.getString(index);
     }
 
-    /**
-     * Called on initialization, defaultValue populated only if onGetDefaultValue is overriden
-     */
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         setValue(restorePersistedValue ? getPersistedString("") : defaultValue.toString());
+    }
+
+    // Instance saving code taken from the stock EditTextPreference code
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Parcelable superState = super.onSaveInstanceState();
+        if (isPersistent()) {
+            // No need to save instance state since it's persistent
+            return superState;
+        }
+
+        final SavedState myState = new SavedState(superState);
+        myState.text = getText();
+        return myState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state == null || !state.getClass().equals(SavedState.class)) {
+            // Didn't save state for us in onSaveInstanceState
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState myState = (SavedState) state;
+        super.onRestoreInstanceState(myState.getSuperState());
+        setText(myState.text);
+    }
+
+    private static class SavedState extends BaseSavedState {
+
+        String text;
+
+        public SavedState(Parcel source) {
+            super(source);
+            text = source.readString();
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeString(text);
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 }
