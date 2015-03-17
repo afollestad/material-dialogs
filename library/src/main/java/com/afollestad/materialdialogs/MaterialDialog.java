@@ -181,7 +181,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             content.setLinkTextColor(mBuilder.positiveColor);
         }
 
-        title.setGravity(gravityIntToGravity(builder.titleGravity));
+        content.setGravity(gravityIntToGravity(builder.contentGravity));
 
         if (builder.contentColorSet) {
             content.setTextColor(builder.contentColor);
@@ -313,7 +313,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
                 title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
             }
-            content.setGravity(gravityIntToGravity(builder.contentGravity));
+            title.setGravity(gravityIntToGravity(builder.titleGravity));
         }
 
         if (builder.showListener != null) {
