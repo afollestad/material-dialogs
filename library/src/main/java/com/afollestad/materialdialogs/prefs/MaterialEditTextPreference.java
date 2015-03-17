@@ -40,12 +40,8 @@ public class MaterialEditTextPreference extends DialogPreference {
         return mEditText;
     }
 
-    public void setValue(String value) {
-        mText = value;
-    }
-
     public void setText(String text) {
-        setValue(text);
+        mText = text;
         final boolean wasBlocking = shouldDisableDependents();
         persistString(text);
         final boolean isBlocking = shouldDisableDependents();
@@ -140,7 +136,7 @@ public class MaterialEditTextPreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        setValue(restorePersistedValue ? getPersistedString("") : defaultValue.toString());
+        mText = restorePersistedValue ? getPersistedString("") : defaultValue.toString();
     }
 
     // Instance saving code taken from the stock EditTextPreference code

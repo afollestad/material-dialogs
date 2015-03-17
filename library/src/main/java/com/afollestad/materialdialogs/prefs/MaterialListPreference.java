@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 public class MaterialListPreference extends ListPreference {
 
     private Context context;
+    private MaterialDialog mDialog;
 
     public MaterialListPreference(Context context) {
         super(context);
@@ -31,6 +32,12 @@ public class MaterialListPreference extends ListPreference {
         this.context = context;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
             setWidgetLayoutResource(0);
+    }
+
+    @Override
+    public void setEntries(CharSequence[] entries) {
+        super.setEntries(entries);
+        mDialog.setItems(entries);
     }
 
     @Override
@@ -63,6 +70,6 @@ public class MaterialListPreference extends ListPreference {
             builder.content(getDialogMessage());
         }
 
-        builder.show();
+        mDialog = builder.show();
     }
 }
