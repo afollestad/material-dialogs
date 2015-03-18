@@ -29,9 +29,7 @@ public class AlertDialogWrapper {
         private DialogInterface.OnClickListener negativeDialogListener;
         private DialogInterface.OnClickListener positiveDialogListener;
         private DialogInterface.OnClickListener neutralDialogListener;
-
         private DialogInterface.OnClickListener onClickListener;
-        private DialogInterface.OnClickListener onClickListenerAdapter;
 
         public Builder(@NonNull Context context) {
             builder = new MaterialDialog.Builder(context);
