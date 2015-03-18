@@ -1,5 +1,5 @@
 package com.afollestad.materialdialogs;
 
 public enum GravityEnum {
-    START, CENTER, END
+    START, CENTER, END, RIGHT, LEFT
 }
