@@ -12,7 +12,9 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class only works on Honeycomb (API 11) and above.
@@ -23,6 +25,7 @@ import java.util.List;
 public class MaterialMultiSelectListPreference extends MultiSelectListPreference {
 
     private Context context;
+    private MaterialDialog mDialog;
 
     public MaterialMultiSelectListPreference(Context context) {
         this(context, null);
@@ -31,6 +34,13 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
     public MaterialMultiSelectListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+    }
+
+    @Override
+    public void setEntries(CharSequence[] entries) {
+        super.setEntries(entries);
+        if (mDialog != null)
+            mDialog.setItems(entries);
     }
 
     private void init(Context context) {
@@ -56,6 +66,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                     public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
+                        final Set<String> values = new HashSet<>();
+                        for (CharSequence s : text)
+                            values.add((String) s);
+                        if (callChangeListener(values))
+                            setValues(values);
                     }
                 })
                 .dismissListener(this);
@@ -68,6 +83,6 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             builder.content(getDialogMessage());
         }
 
-        builder.show();
+        mDialog = builder.show();
     }
 }

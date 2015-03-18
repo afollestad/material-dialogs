@@ -37,7 +37,8 @@ public class MaterialListPreference extends ListPreference {
     @Override
     public void setEntries(CharSequence[] entries) {
         super.setEntries(entries);
-        mDialog.setItems(entries);
+        if (mDialog != null)
+            mDialog.setItems(entries);
     }
 
     @Override
