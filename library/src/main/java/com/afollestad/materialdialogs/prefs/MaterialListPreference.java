@@ -42,6 +42,11 @@ public class MaterialListPreference extends ListPreference {
 
     @Override
     protected void showDialog(Bundle state) {
+        if (getEntries() == null || getEntryValues() == null) {
+            throw new IllegalStateException(
+                    "ListPreference requires an entries array and an entryValues array.");
+        }
+
         int preselect = findIndexOfValue(getValue());
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
