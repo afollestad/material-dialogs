@@ -7,10 +7,7 @@ import android.graphics.PorterDuff;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.preference.DialogPreference;
-import android.support.annotation.NonNull;
+import android.preference.EditTextPreference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -31,16 +28,18 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialEditTextPreference extends DialogPreference {
+public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
     private EditText mEditText;
     private String mText;
 
+    @Override
     public EditText getEditText() {
         return mEditText;
     }
 
+    @Override
     public void setText(String text) {
         mText = text;
         final boolean wasBlocking = shouldDisableDependents();
@@ -51,6 +50,7 @@ public class MaterialEditTextPreference extends DialogPreference {
         }
     }
 
+    @Override
     public String getText() {
         return mText;
     }
@@ -144,64 +144,5 @@ public class MaterialEditTextPreference extends DialogPreference {
     @Override
     public boolean shouldDisableDependents() {
         return TextUtils.isEmpty(mText) || super.shouldDisableDependents();
-    }
-
-    // Instance saving code taken from the stock EditTextPreference code
-
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        final Parcelable superState = super.onSaveInstanceState();
-        if (isPersistent()) {
-            // No need to save instance state since it's persistent
-            return superState;
-        }
-
-        final SavedState myState = new SavedState(superState);
-        myState.text = getText();
-        return myState;
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        if (state == null || !state.getClass().equals(SavedState.class)) {
-            // Didn't save state for us in onSaveInstanceState
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        SavedState myState = (SavedState) state;
-        super.onRestoreInstanceState(myState.getSuperState());
-        setText(myState.text);
-    }
-
-    private static class SavedState extends BaseSavedState {
-
-        String text;
-
-        public SavedState(Parcel source) {
-            super(source);
-            text = source.readString();
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeString(text);
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
     }
 }
