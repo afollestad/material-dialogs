@@ -11,6 +11,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,7 @@ public class MaterialEditTextPreference extends DialogPreference {
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
             mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
         mEditText = new EditText(context, attrs);
+        mEditText.setId(com.android.internal.R.id.edit);
     }
 
     public MaterialEditTextPreference(Context context) {
@@ -135,8 +137,13 @@ public class MaterialEditTextPreference extends DialogPreference {
     }
 
     @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        mText = restorePersistedValue ? getPersistedString("") : defaultValue.toString();
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+        setText(restoreValue ? getPersistedString(mText) : (String) defaultValue);
+    }
+
+    @Override
+    public boolean shouldDisableDependents() {
+        return TextUtils.isEmpty(mText) || super.shouldDisableDependents();
     }
 
     // Instance saving code taken from the stock EditTextPreference code
