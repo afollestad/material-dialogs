@@ -359,6 +359,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 return Gravity.CENTER_HORIZONTAL;
             case END:
                 return Gravity.END;
+            case RIGHT:
+                return Gravity.RIGHT;
+            case LEFT:
+                return Gravity.LEFT;
             default:
                 return Gravity.START;
         }
