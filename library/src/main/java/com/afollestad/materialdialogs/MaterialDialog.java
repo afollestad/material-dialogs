@@ -362,6 +362,10 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
                     return Gravity.RIGHT;
                 return Gravity.END;
+            case RIGHT:
+                return Gravity.RIGHT;
+            case LEFT:
+                return Gravity.LEFT;
             default:
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
                     return Gravity.LEFT;
