@@ -353,13 +353,18 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
     }
 
+    @SuppressLint("RtlHardcoded")
     private static int gravityIntToGravity(GravityEnum gravity) {
         switch (gravity) {
             case CENTER:
                 return Gravity.CENTER_HORIZONTAL;
             case END:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    return Gravity.RIGHT;
                 return Gravity.END;
             default:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    return Gravity.LEFT;
                 return Gravity.START;
         }
     }
