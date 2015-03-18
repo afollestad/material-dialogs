@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,7 +22,7 @@ import java.util.Set;
  * @author Aidan Follestad (afollestad)
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MaterialMultiSelectListPreference extends ListPreference {
+public class MaterialMultiSelectListPreference extends MultiSelectListPreference {
 
     private Context context;
 
