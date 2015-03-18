@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.afollestad.materialdialogs.prefs.MaterialListPreference
-        android:key="unused_key1"
+        android:key="unused_key01"
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
         android:title="@string/list_pref_title"
@@ -11,7 +11,7 @@
         android:layout="@layout/preference_custom" />
 
     <com.afollestad.materialdialogs.prefs.MaterialMultiSelectListPreference
-        android:key="unused_key4"
+        android:key="unused_key02"
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
         android:title="@string/multilist_pref_title"
@@ -20,7 +20,7 @@
         android:layout="@layout/preference_custom" />
 
     <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
-        android:key="unused_key2"
+        android:key="unused_key03"
         android:title="@string/edittext_pref_title"
         android:summary="@string/edittext_pref_desc"
         android:inputType="textPersonName"

@@ -2,17 +2,17 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -31,40 +31,35 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
-    private EditText mEditText;
-    private String mText;
-
-    @Override
-    public EditText getEditText() {
-        return mEditText;
-    }
-
-    @Override
-    public void setText(String text) {
-        mText = text;
-        final boolean wasBlocking = shouldDisableDependents();
-        persistString(text);
-        final boolean isBlocking = shouldDisableDependents();
-        if (isBlocking != wasBlocking) {
-            notifyDependencyChange(isBlocking);
-        }
-    }
-
-    @Override
-    public String getText() {
-        return mText;
-    }
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
             mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
-        mEditText = new EditText(context, attrs);
-        mEditText.setId(com.android.internal.R.id.edit);
     }
 
     public MaterialEditTextPreference(Context context) {
         this(context, null);
+    }
+
+    @Override
+    protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
+        if (editText.getParent() != null)
+            ((ViewGroup) getEditText().getParent()).removeView(editText);
+        ((ViewGroup) dialogView).addView(editText, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+
+    @Override
+    protected void onBindDialogView(@NonNull View view) {
+        getEditText().setText("");
+        getEditText().append(getText());
+        ViewParent oldParent = getEditText().getParent();
+        if (oldParent != view) {
+            if (oldParent != null)
+                ((ViewGroup) oldParent).removeView(getEditText());
+            onAddEditTextToDialogView(view, getEditText());
+        }
     }
 
     @Override
@@ -77,17 +72,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .callback(callback)
                 .content(getDialogMessage());
 
-        ViewGroup layout = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.md_input_dialog_stub, null);
-        mEditText.setText("");
-        mEditText.append(mText);
-
-        if (mEditText.getParent() != null)
-            ((ViewGroup) mEditText.getParent()).removeView(mEditText);
-        layout.addView(mEditText, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_input_dialog_stub, null);
+        onBindDialogView(layout);
 
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
-            mEditText.getBackground().setColorFilter(mColor, PorterDuff.Mode.SRC_ATOP);
+            getEditText().getBackground().setColorFilter(mColor, PorterDuff.Mode.SRC_ATOP);
 
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
@@ -114,7 +103,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     private final ButtonCallback callback = new ButtonCallback() {
         @Override
         public void onPositive(MaterialDialog dialog) {
-            String value = mEditText.getText().toString();
+            String value = getEditText().getText().toString();
             if (callChangeListener(value) && isPersistent())
                 setText(value);
         }
@@ -126,23 +115,5 @@ public class MaterialEditTextPreference extends EditTextPreference {
     private void requestInputMethod(Dialog dialog) {
         Window window = dialog.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    }
-
-    /**
-     * Called when the default value attribute needs to be read
-     */
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getString(index);
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setText(restoreValue ? getPersistedString(mText) : (String) defaultValue);
-    }
-
-    @Override
-    public boolean shouldDisableDependents() {
-        return TextUtils.isEmpty(mText) || super.shouldDisableDependents();
     }
 }
