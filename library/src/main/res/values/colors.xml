@@ -8,6 +8,9 @@
     <!--<color name="button_light">#3C3C3D</color>-->
     <!--<color name="button_dark">#FFFFFF</color>-->
 
+    <color name="md_btn_selected">#33969696</color>
+    <color name="md_btn_selected_dark">#40CBCBCB</color>
+
     <color name="md_divider_black">#10000000</color>
     <color name="md_divider_white">#10FFFFFF</color>
 

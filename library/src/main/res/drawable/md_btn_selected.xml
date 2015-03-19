@@ -7,7 +7,7 @@
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
         android:shape="rectangle">
         <corners android:radius="@dimen/md_action_corner_radius" />
-        <solid android:color="#E5E5E5" />
+        <solid android:color="@color/md_btn_selected" />
         <padding
             android:bottom="@dimen/md_button_padding_vertical"
             android:left="@dimen/md_button_padding_horizontal"
