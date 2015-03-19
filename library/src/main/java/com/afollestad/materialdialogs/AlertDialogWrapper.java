@@ -34,6 +34,11 @@ public class AlertDialogWrapper {
         public Builder(@NonNull Context context) {
             builder = new MaterialDialog.Builder(context);
         }
+        
+        public Builder autoDismiss(boolean dismiss) {
+            builder.autoDismiss(dismiss);
+            return this;
+        }
 
         public Builder setMessage(@StringRes int messageId) {
             builder.content(messageId);
