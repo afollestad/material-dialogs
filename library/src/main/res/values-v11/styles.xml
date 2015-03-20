@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MD_Light" parent="android:Theme.Holo.Light.Dialog">
+    <style name="MD_Light" parent="Theme.AppCompat.Light.Dialog">
         <item name="md_divider">@color/md_divider_black</item>
         <item name="md_list_selector">@drawable/md_selector</item>
         <item name="md_btn_stacked_selector">@drawable/md_selector</item>
@@ -12,7 +12,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="MD_Dark" parent="android:Theme.Holo.Dialog">
+    <style name="MD_Dark" parent="Theme.AppCompat.Dialog">
         <item name="md_divider">@color/md_divider_white</item>
         <item name="md_list_selector">@drawable/md_selector_dark</item>
         <item name="md_btn_stacked_selector">@drawable/md_selector_dark</item>

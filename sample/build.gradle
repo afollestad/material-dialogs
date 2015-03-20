@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion 14
+        minSdkVersion 9
         targetSdkVersion 22
-        versionCode 89
-        versionName "0.6.4.6"
+        versionCode 90
+        versionName "0.6.4.7"
     }
     lintOptions {
         abortOnError false

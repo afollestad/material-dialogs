@@ -9,7 +9,7 @@
         <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
     </style>
 
-    <style name="MD_Dark" parent="android:Theme.Dialog">
+    <style name="MD_Dark" parent="Theme.AppCompat.Dialog">
         <item name="md_divider">@color/md_divider_white</item>
         <item name="md_list_selector">@drawable/md_selector_dark</item>
         <item name="md_btn_stacked_selector">@drawable/md_selector_dark</item>
@@ -54,7 +54,7 @@
     </style>
 
     <!-- Light dialog theme for devices prior Honeycomb -->
-    <style name="Theme_Light_Dialog" parent="android:Theme.Light">
+    <style name="Theme_Light_Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
