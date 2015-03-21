@@ -52,8 +52,12 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
     @Override
     protected void showDialog(Bundle state) {
         List<Integer> indicies = new ArrayList<>();
-        for (String s : getValues())
-            indicies.add(findIndexOfValue(s));
+        for (String s : getValues()) {
+            int index = findIndexOfValue(s);
+            if(index >= 0) {
+                indicies.add(findIndexOfValue(s));
+            }
+        }
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
                 .content(getDialogMessage())
