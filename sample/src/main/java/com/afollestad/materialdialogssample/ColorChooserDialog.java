@@ -1,8 +1,6 @@
 package com.afollestad.materialdialogssample;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -13,6 +11,8 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
@@ -36,7 +36,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
     }
 
-    public static interface Callback {
+    public interface Callback {
         void onColorSelection(int index, int color, int darker);
     }
 
@@ -111,11 +111,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return stateListDrawable;
     }
 
-    public void show(Activity context, int preselect, Callback callback) {
+    public void show(ActionBarActivity context, int preselect, Callback callback) {
         mCallback = callback;
         Bundle args = new Bundle();
         args.putInt("preselect", preselect);
         setArguments(args);
-        show(context.getFragmentManager(), "COLOR_SELECTOR");
+        show(context.getSupportFragmentManager(), "COLOR_SELECTOR");
     }
 }

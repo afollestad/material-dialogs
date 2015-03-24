@@ -1,10 +1,12 @@
 package com.afollestad.materialdialogssample;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
+@SuppressLint("NewApi")
 public class PreferenceActivity extends ActionBarActivity {
 
     public static class SettingsFragment extends PreferenceFragment {
@@ -20,7 +22,7 @@ public class PreferenceActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preference_activity_custom);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
     }
 
     @Override

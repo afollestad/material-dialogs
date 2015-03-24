@@ -2,9 +2,10 @@ package com.afollestad.materialdialogssample;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -99,10 +100,9 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         mCallback = (FolderSelectCallback) activity;
     }
 
-    public void show(Activity context) {
-        show(context.getFragmentManager(), "FOLDER_SELECTOR");
+    public void show(ActionBarActivity context) {
+        show(context.getSupportFragmentManager(), "FOLDER_SELECTOR");
     }
-
 
     private static class FolderSorter implements Comparator<File> {
         @Override
