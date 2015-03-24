@@ -72,13 +72,17 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
+            <!-- Top padding cancelled out in code if there's a title -->
             <ListView
                 android:id="@+id/contentListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarStyle="outsideOverlay"
                 android:divider="@null"
-                android:dividerHeight="0dp" />
+                android:dividerHeight="0dp"
+                android:clipToPadding="false"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" />
 
         </FrameLayout>
 

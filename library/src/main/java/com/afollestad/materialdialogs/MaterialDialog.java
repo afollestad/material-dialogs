@@ -256,6 +256,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             listView = (ListView) view.findViewById(R.id.contentListView);
             listView.setSelector(getListSelector());
 
+            if (mBuilder.title != null) {
+                // Cancel out top padding if there's a title
+                listView.setPadding(listView.getPaddingLeft(), 0,
+                        listView.getPaddingRight(), listView.getPaddingBottom());
+            }
+
             if (!adapterProvided) {
                 // Determine list type
                 if (mBuilder.listCallbackSingleChoice != null) {

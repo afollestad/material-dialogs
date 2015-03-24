@@ -315,7 +315,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
     private void showListNoTitle() {
         new MaterialDialog.Builder(this)
-                .items(R.array.states)
+                .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
