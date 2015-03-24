@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.Html;
@@ -33,6 +34,21 @@ import java.io.File;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends ActionBarActivity implements FolderSelectorDialog.FolderSelectCallback {
+
+    private Toast mToast;
+
+    private void showToast(String message) {
+        if (mToast != null) {
+            mToast.cancel();
+            mToast = null;
+        }
+        mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+    private void showToast(@StringRes int message) {
+        showToast(getString(message));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +136,13 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
             @Override
             public void onClick(View v) {
                 showMultiChoice();
+            }
+        });
+
+        findViewById(R.id.multiChoiceLimited).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMultiChoiceLimited();
             }
         });
 
@@ -261,17 +284,17 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        Toast.makeText(getApplicationContext(), "Positive!", Toast.LENGTH_SHORT).show();
+                        showToast("Positive!");
                     }
 
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
-                        Toast.makeText(getApplicationContext(), "Neutral", Toast.LENGTH_SHORT).show();
+                        showToast("Neutral");
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
-                        Toast.makeText(getApplicationContext(), "Negative…", Toast.LENGTH_SHORT).show();
+                        showToast("Negative…");
                     }
                 })
                 .show();
@@ -284,7 +307,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                        showToast(which + ": " + text);
                     }
                 })
                 .show();
@@ -296,7 +319,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                        showToast(which + ": " + text);
                     }
                 })
                 .show();
@@ -309,7 +332,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                        showToast(which + ": " + text);
                     }
                 })
                 .positiveText(android.R.string.ok)
@@ -320,10 +343,11 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
-                .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallback() {
+                .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(getApplicationContext(), which + ": " + text, Toast.LENGTH_SHORT).show();
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                        return true; // allow selection
                     }
                 })
                 .positiveText(R.string.choose)
@@ -334,9 +358,9 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
-                .itemsCallbackMultiChoice(new Integer[]{1, 3}, new MaterialDialog.ListCallbackMulti() {
+                .itemsCallbackMultiChoice(new Integer[]{1, 3}, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         StringBuilder str = new StringBuilder();
                         for (int i = 0; i < which.length; i++) {
                             if (i > 0) str.append('\n');
@@ -344,10 +368,31 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                             str.append(": ");
                             str.append(text[i]);
                         }
-                        Toast.makeText(getApplicationContext(), str.toString(), Toast.LENGTH_LONG).show();
+                        showToast(str.toString());
+                        return true; // allow selection
                     }
                 })
                 .positiveText(R.string.choose)
+                .show();
+    }
+
+
+    private void showMultiChoiceLimited() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallbackMultiChoice(new Integer[]{1}, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        boolean allowSelection = which.length <= 2; // limit selection to 2, the new selection is included in the which array
+                        if (!allowSelection) {
+                            showToast(R.string.selection_limit_reached);
+                        }
+                        return allowSelection;
+                    }
+                })
+                .positiveText(R.string.dismiss)
+                .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if selection is still allowed
                 .show();
     }
 
@@ -358,7 +403,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                Toast.makeText(MainActivity.this, "Clicked item " + which, Toast.LENGTH_SHORT).show();
+                                showToast("Clicked item " + which);
                             }
                         })
                 .show();
@@ -377,7 +422,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        Toast.makeText(getApplicationContext(), "Password: " + passwordInput.getText().toString(), Toast.LENGTH_SHORT).show();
+                        showToast("Password: " + passwordInput.getText().toString());
                     }
 
                     @Override
@@ -473,19 +518,19 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                 .showListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialog) {
-                        Toast.makeText(getApplicationContext(), "onShow", Toast.LENGTH_SHORT).show();
+                        showToast("onShow");
                     }
                 })
                 .cancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        Toast.makeText(getApplicationContext(), "onCancel", Toast.LENGTH_SHORT).show();
+                        showToast("onCancel");
                     }
                 })
                 .dismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        Toast.makeText(getApplicationContext(), "onDismiss", Toast.LENGTH_SHORT).show();
+                        showToast("onDismiss");
                     }
                 })
                 .show();
@@ -562,6 +607,6 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
     @Override
     public void onFolderSelection(File folder) {
-        Toast.makeText(this, folder.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        showToast(folder.getAbsolutePath());
     }
 }

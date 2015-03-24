@@ -65,9 +65,9 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                 .negativeText(getNegativeButtonText())
                 .positiveText(getPositiveButtonText())
                 .items(getEntries())
-                .itemsCallbackMultiChoice(indicies.toArray(new Integer[indicies.size()]), new MaterialDialog.ListCallbackMulti() {
+                .itemsCallbackMultiChoice(indicies.toArray(new Integer[indicies.size()]), new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
                         final Set<String> values = new HashSet<>();
@@ -75,6 +75,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                             values.add((String) s);
                         if (callChangeListener(values))
                             setValues(values);
+                        return true;
                     }
                 })
                 .dismissListener(this);

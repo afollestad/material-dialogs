@@ -55,9 +55,9 @@ public class MaterialListPreference extends ListPreference {
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
-                .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallback() {
+                .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
                         if (which >= 0 && getEntryValues() != null) {
@@ -65,6 +65,7 @@ public class MaterialListPreference extends ListPreference {
                             if (callChangeListener(value) && isPersistent())
                                 setValue(value);
                         }
+                        return true;
                     }
                 });
 

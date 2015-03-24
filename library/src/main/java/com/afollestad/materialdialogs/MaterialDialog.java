@@ -56,6 +56,7 @@ import com.afollestad.materialdialogs.util.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -247,7 +248,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             invalidateCustomViewAssociations();
         }
 
-        if (mBuilder.listCallbackMulti != null)
+        if (mBuilder.listCallbackMultiChoice != null)
             selectedIndicesList = new ArrayList<>();
 
         boolean adapterProvided = mBuilder.adapter != null;
@@ -257,9 +258,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
             if (!adapterProvided) {
                 // Determine list type
-                if (mBuilder.listCallbackSingle != null) {
+                if (mBuilder.listCallbackSingleChoice != null) {
                     listType = ListType.SINGLE;
-                } else if (mBuilder.listCallbackMulti != null) {
+                } else if (mBuilder.listCallbackMultiChoice != null) {
                     listType = ListType.MULTI;
                     if (mBuilder.selectedIndices != null) {
                         selectedIndicesList = new ArrayList<>(Arrays.asList(mBuilder.selectedIndices));
@@ -628,33 +629,68 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (listType != null) {
-            // MaterialDialogAdapter, used for built-in adapters
-            if (listType == ListType.MULTI) {
-                // Keep our selected items up to date
-                boolean isChecked = !((CheckBox) view.findViewById(R.id.control)).isChecked();  // Inverted because the view's click listener is called before the check is toggled
-                boolean previouslySelected = selectedIndicesList.contains(position);
-                if (isChecked) {
-                    if (!previouslySelected) {
-                        selectedIndicesList.add(position);
-                    }
-                } else if (previouslySelected) {
-                    selectedIndicesList.remove(Integer.valueOf(position));
-                }
-            } else if (listType == ListType.SINGLE) {
-                // Keep our selected item up to date
-                if (mBuilder.selectedIndex != position) {
-                    mBuilder.selectedIndex = position;
-                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
-                }
-            }
-            onClick(view);
-        } else if (mBuilder.listCallbackCustom != null) {
+        if (mBuilder.listCallbackCustom != null) {
             // Custom adapter
             CharSequence text = null;
             if (view instanceof TextView)
                 text = ((TextView) view).getText();
             mBuilder.listCallbackCustom.onSelection(this, view, position, text);
+        } else if (listType == null || listType == ListType.REGULAR) {
+            // Default adapter, non choice mode
+            if (mBuilder.autoDismiss) {
+                // If auto dismiss is enabled, dismiss the dialog when a list item is selected
+                dismiss();
+            }
+            mBuilder.listCallback.onSelection(this, view, position, mBuilder.items[position]);
+        } else {
+            // Default adapter, choice mode
+            if (listType == ListType.MULTI) {
+                final boolean shouldBeChecked = !selectedIndicesList.contains(Integer.valueOf(position));
+                final CheckBox cb = (CheckBox) ((LinearLayout) view).getChildAt(0);
+                if (shouldBeChecked) {
+                    // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
+                    selectedIndicesList.add(position);
+                    if (mBuilder.alwaysCallMultiChoiceCallback) {
+                        // If the checkbox wasn't previously selected, and the callback returns true, add it to the states and check it
+                        if (sendMultichoiceCallback()) {
+                            cb.setChecked(true);
+                        } else {
+                            // The callback cancelled selection, remove it from the states
+                            selectedIndicesList.remove(Integer.valueOf(position));
+                        }
+                    } else {
+                        // The callback was not used to check if selection is allowed, just select it
+                        cb.setChecked(true);
+                    }
+                } else {
+                    // The checkbox was unchecked
+                    selectedIndicesList.remove(Integer.valueOf(position));
+                    cb.setChecked(false);
+                }
+            } else if (listType == ListType.SINGLE) {
+                boolean allowSelection = true;
+                if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
+                    // If auto dismiss is enabled, and no action button is visible to approve the selection, dismiss the dialog
+                    dismiss();
+                    // Don't allow the selection to be updated since the dialog is being dismissed anyways
+                    allowSelection = false;
+                    sendSingleChoiceCallback(view);
+                } else if (mBuilder.alwaysCallSingleChoiceCallback) {
+                    int oldSelected = mBuilder.selectedIndex;
+                    // Temporarily set the new index so the callback uses the right one
+                    mBuilder.selectedIndex = position;
+                    // Only allow the radio button to be checked if the callback returns true
+                    allowSelection = sendSingleChoiceCallback(view);
+                    // Restore the old selected index, so the state is updated below
+                    mBuilder.selectedIndex = oldSelected;
+                }
+                // Update the checked states
+                if (allowSelection && mBuilder.selectedIndex != position) {
+                    mBuilder.selectedIndex = position;
+                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+                }
+            }
+
         }
     }
 
@@ -842,20 +878,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         return true;
     }
 
-    private void sendSingleChoiceCallback(View v) {
+    private boolean sendSingleChoiceCallback(View v) {
         CharSequence text = null;
         if (mBuilder.selectedIndex >= 0) {
             text = mBuilder.items[mBuilder.selectedIndex];
         }
-        mBuilder.listCallbackSingle.onSelection(this, v, mBuilder.selectedIndex, text);
+        return mBuilder.listCallbackSingleChoice.onSelection(this, v, mBuilder.selectedIndex, text);
     }
 
-    private void sendMultichoiceCallback() {
+    private boolean sendMultichoiceCallback() {
+        Collections.sort(selectedIndicesList); // make sure the indicies are in order
         List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
             selectedTitles.add(mBuilder.items[i]);
         }
-        mBuilder.listCallbackMulti.onSelection(this,
+        return mBuilder.listCallbackMultiChoice.onSelection(this,
                 selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
                 selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
@@ -867,9 +904,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
             case POSITIVE: {
                 if (mBuilder.callback != null)
                     mBuilder.callback.onPositive(this);
-                if (mBuilder.listCallbackSingle != null)
+                if (mBuilder.listCallbackSingleChoice != null)
                     sendSingleChoiceCallback(v);
-                if (mBuilder.listCallbackMulti != null)
+                if (mBuilder.listCallbackMultiChoice != null)
                     sendMultichoiceCallback();
                 if (mBuilder.autoDismiss) dismiss();
                 break;
@@ -884,32 +921,6 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 if (mBuilder.callback != null)
                     mBuilder.callback.onNeutral(this);
                 if (mBuilder.autoDismiss) dismiss();
-                break;
-            }
-            default: {
-                String[] split = tag.split(":");
-                int index = Integer.parseInt(split[0]);
-                if (mBuilder.listCallback != null) {
-                    if (mBuilder.autoDismiss)
-                        dismiss();
-                    mBuilder.listCallback.onSelection(this, v, index, split[1]);
-                } else if (mBuilder.listCallbackSingle != null) {
-                    RadioButton cb = (RadioButton) ((LinearLayout) v).getChildAt(0);
-                    if (!cb.isChecked())
-                        cb.setChecked(true);
-                    if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
-                        dismiss();
-                        sendSingleChoiceCallback(v);
-                    } else if (mBuilder.alwaysCallSingleChoiceCallback) {
-                        sendSingleChoiceCallback(v);
-                    }
-                } else if (mBuilder.listCallbackMulti != null) {
-                    CheckBox cb = (CheckBox) ((LinearLayout) v).getChildAt(0);
-                    cb.setChecked(!cb.isChecked());
-                    if (mBuilder.alwaysCallMultiChoiceCallback) {
-                        sendMultichoiceCallback();
-                    }
-                } else if (mBuilder.autoDismiss) dismiss();
                 break;
             }
         }
@@ -939,8 +950,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         protected int neutralColor;
         protected ButtonCallback callback;
         protected ListCallback listCallback;
-        protected ListCallback listCallbackSingle;
-        protected ListCallbackMulti listCallbackMulti;
+        protected ListCallbackSingleChoice listCallbackSingleChoice;
+        protected ListCallbackMultiChoice listCallbackMultiChoice;
         protected ListCallback listCallbackCustom;
         protected boolean alwaysCallMultiChoiceCallback = false;
         protected boolean alwaysCallSingleChoiceCallback = false;
@@ -1201,8 +1212,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
 
         public Builder itemsCallback(@NonNull ListCallback callback) {
             this.listCallback = callback;
-            this.listCallbackSingle = null;
-            this.listCallbackMulti = null;
+            this.listCallbackSingleChoice = null;
+            this.listCallbackMultiChoice = null;
             return this;
         }
 
@@ -1214,11 +1225,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * @param callback      The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallback callback) {
+        public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallbackSingleChoice callback) {
             this.selectedIndex = selectedIndex;
             this.listCallback = null;
-            this.listCallbackSingle = callback;
-            this.listCallbackMulti = null;
+            this.listCallbackSingleChoice = callback;
+            this.listCallbackMultiChoice = null;
             return this;
         }
 
@@ -1242,11 +1253,11 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
          * @param callback        The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMulti callback) {
+        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
             this.selectedIndices = selectedIndices;
             this.listCallback = null;
-            this.listCallbackSingle = null;
-            this.listCallbackMulti = callback;
+            this.listCallbackSingleChoice = null;
+            this.listCallbackMultiChoice = callback;
             return this;
         }
 
@@ -1834,7 +1845,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * @return Currently selected index of a single choice list, or -1 if not showing a single choice list
      */
     public int getSelectedIndex() {
-        if (mBuilder.listCallbackSingle != null) {
+        if (mBuilder.listCallbackSingleChoice != null) {
             return mBuilder.selectedIndex;
         } else {
             return -1;
@@ -1848,7 +1859,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     @Nullable
     public Integer[] getSelectedIndices() {
-        if (mBuilder.listCallbackMulti != null) {
+        if (mBuilder.listCallbackMultiChoice != null) {
             return selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]);
         } else {
             return null;
@@ -1951,12 +1962,41 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
     }
 
+    /**
+     * A callback used for regular list dialogs.
+     */
     public interface ListCallback {
         void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
     }
 
-    public interface ListCallbackMulti {
-        void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
+    /**
+     * A callback used for multi choice (check box) list dialogs.
+     */
+    public interface ListCallbackSingleChoice {
+        /**
+         * Return true to allow the radio button to be checked, if the alwaysCallSingleChoice() option is used.
+         *
+         * @param dialog The dialog of which a list item was selected.
+         * @param which  The index of the item that was selected.
+         * @param text   The text of the  item that was selected.
+         * @return True to allow the radio button to be selected.
+         */
+        boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
+    }
+
+    /**
+     * A callback used for multi choice (check box) list dialogs.
+     */
+    public interface ListCallbackMultiChoice {
+        /**
+         * Return true to allow the check box to be checked, if the alwaysCallSingleChoice() option is used.
+         *
+         * @param dialog The dialog of which a list item was selected.
+         * @param which  The indices of the items that were selected.
+         * @param text   The text of the items that were selected.
+         * @return True to allow the checkbox to be selected.
+         */
+        boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 
     /**

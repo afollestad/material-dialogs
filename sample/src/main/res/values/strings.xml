@@ -139,5 +139,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="done">Done!</string>
     <string name="optional_dialog_message">This is an optional dialog message.</string>
+    <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
+    <string name="selection_limit_reached">Selection limit reached!</string>
 
 </resources>

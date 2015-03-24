@@ -39,7 +39,7 @@ public class AlertDialogWrapper {
             builder.autoDismiss(dismiss);
             return this;
         }
-        
+
         public Builder setMessage(@StringRes int messageId) {
             builder.content(messageId);
             return this;
@@ -243,6 +243,11 @@ public class AlertDialogWrapper {
             return this;
         }
 
+        public Builder alwaysCallSingleChoiceCallback() {
+            builder.alwaysCallSingleChoiceCallback();
+            return this;
+        }
+
         public Builder alwaysCallMultiChoiceCallback() {
             builder.alwaysCallMultiChoiceCallback();
             return this;
@@ -261,9 +266,9 @@ public class AlertDialogWrapper {
                 selectedIndicesArr = selectedIndices.toArray(new Integer[selectedIndices.size()]);
             }
 
-            builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMulti() {
+            builder.itemsCallbackMultiChoice(selectedIndicesArr, new MaterialDialog.ListCallbackMultiChoice() {
                 @Override
-                public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                     /* which is a list of selected indices */
                     List<Integer> whichList = Arrays.asList(which);
                     if (checkedItems != null) {
@@ -278,6 +283,7 @@ public class AlertDialogWrapper {
                             }
                         }
                     }
+                    return true;
                 }
             });
         }
@@ -292,10 +298,11 @@ public class AlertDialogWrapper {
          */
         public Builder setSingleChoiceItems(@NonNull String[] items, int checkedItem, final DialogInterface.OnClickListener listener) {
             builder.items(items);
-            builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
+            builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallbackSingleChoice() {
                 @Override
-                public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                     listener.onClick(dialog, which);
+                    return true;
                 }
             });
             return this;
@@ -311,10 +318,11 @@ public class AlertDialogWrapper {
          */
         public Builder setSingleChoiceItems(@ArrayRes int itemsId, int checkedItem, final DialogInterface.OnClickListener listener) {
             builder.items(itemsId);
-            builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallback() {
+            builder.itemsCallbackSingleChoice(checkedItem, new MaterialDialog.ListCallbackSingleChoice() {
                 @Override
-                public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                     listener.onClick(dialog, which);
+                    return true;
                 }
             });
             return this;
