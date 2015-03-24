@@ -55,11 +55,11 @@ public class MaterialListPreference extends ListPreference {
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
+                .autoDismiss(true) // immediately close the dialog after selection
                 .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
-                        dialog.dismiss();
                         if (which >= 0 && getEntryValues() != null) {
                             String value = getEntryValues()[which].toString();
                             if (callChangeListener(value) && isPersistent())

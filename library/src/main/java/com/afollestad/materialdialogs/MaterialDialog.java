@@ -686,6 +686,8 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                     dismiss();
                     // Don't allow the selection to be updated since the dialog is being dismissed anyways
                     allowSelection = false;
+                    // Update selected index and send callback
+                    mBuilder.selectedIndex = position;
                     sendSingleChoiceCallback(view);
                 } else if (mBuilder.alwaysCallSingleChoiceCallback) {
                     int oldSelected = mBuilder.selectedIndex;
