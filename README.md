@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.4.7'
+    compile 'com.afollestad:material-dialogs:0.6.5.0'
 }
 ```
 
@@ -217,9 +217,14 @@ display radio buttons next to list items.
 new MaterialDialog.Builder(this)
         .title(R.string.title)
         .items(R.array.items)
-        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
+        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
-            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                /**
+                 * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
+                 * returning false here won't allow the newly selected radio button to actually be selected.
+                 **/
+                return true;
             }
         })
         .positiveText(R.string.choose)
@@ -249,9 +254,15 @@ display check boxes next to list items, and the callback can return multiple sel
 new MaterialDialog.Builder(this)
         .title(R.string.title)
         .items(R.array.items)
-        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMulti() {
+        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
             @Override
-            public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                /**
+                 * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
+                 * returning false here won't allow the newly selected check box to actually be selected.
+                 * See the limited multi choice dialog example in the sample project for details.
+                 **/
+                 return true;
             }
         })
         .positiveText(R.string.choose)
