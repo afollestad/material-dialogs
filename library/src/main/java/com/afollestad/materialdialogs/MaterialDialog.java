@@ -261,6 +261,12 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
                 listView.setPadding(listView.getPaddingLeft(), 0,
                         listView.getPaddingRight(), listView.getPaddingBottom());
             }
+            if (hasActionButtons()) {
+                // No bottom padding if there's action buttons
+                listView.setPadding(listView.getPaddingLeft(), 0,
+                        listView.getPaddingRight(), 0);
+            }
+
 
             if (!adapterProvided) {
                 // Determine list type
