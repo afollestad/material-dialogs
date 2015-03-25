@@ -356,7 +356,8 @@ If you want to explicitly use custom fonts, you can make a call to `typeface(Str
 using the `Builder`. This will pull fonts from TTF files in your project's `assets` folder. For example,
 if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets/fonts`, you would call `typeface("Roboto", "Roboto-Light")`.
 Note that no extension is used in the name. This method will also handle recycling Typefaces via the `TypefaceHelper` which
-you can use in your own project to avoid duplicate allocations.
+you can use in your own project to avoid duplicate allocations. If you want to load other Tyepface files that
+aren't ttf files, you can use the `typeface(Typeface, Typeface)` Builder method.
 
 ---
 
