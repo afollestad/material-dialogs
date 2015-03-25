@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -78,5 +79,17 @@ public class MaterialListPreference extends ListPreference {
         }
 
         mDialog = builder.show();
+    }
+
+    @Override
+    public void setValue(String value) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            super.setValue(value);
+        } else {
+            String oldValue = getValue();
+            super.setValue(value);
+            if (!TextUtils.equals(value, oldValue))
+                notifyChanged();
+        }
     }
 }

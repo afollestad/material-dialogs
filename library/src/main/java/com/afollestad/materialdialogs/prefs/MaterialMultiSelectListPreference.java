@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -51,12 +52,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
     @Override
     protected void showDialog(Bundle state) {
-        List<Integer> indicies = new ArrayList<>();
+        List<Integer> indices = new ArrayList<>();
         for (String s : getValues()) {
             int index = findIndexOfValue(s);
-            if(index >= 0) {
-                indicies.add(findIndexOfValue(s));
-            }
+            if (index >= 0)
+                indices.add(findIndexOfValue(s));
         }
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
@@ -65,7 +65,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                 .negativeText(getNegativeButtonText())
                 .positiveText(getPositiveButtonText())
                 .items(getEntries())
-                .itemsCallbackMultiChoice(indicies.toArray(new Integer[indicies.size()]), new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackMultiChoice(indices.toArray(new Integer[indices.size()]), new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
