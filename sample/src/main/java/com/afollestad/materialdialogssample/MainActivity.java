@@ -372,6 +372,7 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
                         return true; // allow selection
                     }
                 })
+                .alwaysCallMultiChoiceCallback()
                 .positiveText(R.string.choose)
                 .show();
     }
