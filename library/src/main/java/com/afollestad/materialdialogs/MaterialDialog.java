@@ -416,7 +416,8 @@ public class MaterialDialog extends DialogBase implements
                     // The checkbox was unchecked
                     selectedIndicesList.remove(Integer.valueOf(position));
                     cb.setChecked(false);
-                    sendMultichoiceCallback();
+                    if (mBuilder.alwaysCallMultiChoiceCallback)
+                        sendMultichoiceCallback();
                 }
             } else if (listType == ListType.SINGLE) {
                 boolean allowSelection = true;
