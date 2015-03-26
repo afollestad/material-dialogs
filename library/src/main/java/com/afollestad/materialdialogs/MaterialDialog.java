@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -62,7 +63,8 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialDialog extends DialogBase implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MaterialDialog extends DialogBase implements
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     protected final View view;
     protected final Builder mBuilder;
@@ -80,294 +82,21 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     protected View neutralButton;
     protected View negativeButton;
     protected boolean isStacked;
-    protected final int defaultItemColor;
+    protected int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
 
-    private static ContextThemeWrapper getTheme(Builder builder) {
-        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
-        boolean darkTheme = builder.theme == Theme.DARK;
-        if (!darkTheme) {
-            try {
-                darkTheme = a.getBoolean(0, false);
-                builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
-            } finally {
-                a.recycle();
-            }
-        }
-        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
-    }
-
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
-        super(getTheme(builder));
+        super(DialogInit.getTheme(builder));
         mBuilder = builder;
-
-        if (!mBuilder.useCustomFonts) {
-            if (mBuilder.mediumFont == null)
-                mBuilder.mediumFont = TypefaceHelper.get(getContext(), "Roboto-Medium");
-            if (mBuilder.regularFont == null)
-                mBuilder.regularFont = TypefaceHelper.get(getContext(), "Roboto-Regular");
-        }
-
         final LayoutInflater inflater = LayoutInflater.from(mBuilder.context);
-        this.view = inflater.inflate(R.layout.md_dialog, null);
-        this.setCancelable(builder.cancelable);
-
-        if (mBuilder.backgroundColor == 0)
-            mBuilder.backgroundColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_background_color);
-        if (mBuilder.backgroundColor != 0)
-            this.view.setBackgroundColor(mBuilder.backgroundColor);
-
-        mBuilder.positiveColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_positive_color, mBuilder.positiveColor);
-        mBuilder.neutralColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_neutral_color, mBuilder.neutralColor);
-        mBuilder.negativeColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_negative_color, mBuilder.negativeColor);
-
-        title = (TextView) view.findViewById(R.id.title);
-        icon = (ImageView) view.findViewById(R.id.icon);
-        titleFrame = view.findViewById(R.id.titleFrame);
-        content = (TextView) view.findViewById(R.id.content);
-
-        if (mBuilder.mIndeterminateProgress || mBuilder.mProgress > -2) {
-            mBuilder.customView = inflater.inflate(mBuilder.mIndeterminateProgress ? R.layout.md_progress_dialog_indeterminate
-                    : R.layout.md_progress_dialog, (ViewGroup) this.view, false);
-            mProgress = (ProgressBar) mBuilder.customView.findViewById(android.R.id.progress);
-            content = (TextView) mBuilder.customView.findViewById(android.R.id.message);
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                Drawable indDraw = mProgress.getIndeterminateDrawable();
-                if (indDraw != null) {
-                    indDraw.setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
-                    mProgress.setIndeterminateDrawable(indDraw);
-                }
-                Drawable regDraw = mProgress.getProgressDrawable();
-                if (regDraw != null) {
-                    regDraw.setColorFilter(mBuilder.accentColor, PorterDuff.Mode.SRC_ATOP);
-                    mProgress.setProgressDrawable(regDraw);
-                }
-            }
-
-            if (!mBuilder.mIndeterminateProgress) {
-                mProgress.setProgress(0);
-                mProgress.setMax(mBuilder.mProgressMax);
-                mProgressLabel = (TextView) mBuilder.customView.findViewById(R.id.label);
-                mProgressMinMax = (TextView) mBuilder.customView.findViewById(R.id.minMax);
-                if (mBuilder.mShowMinMax) {
-                    mProgressMinMax.setVisibility(View.VISIBLE);
-                    mProgressMinMax.setText("0/" + mBuilder.mProgressMax);
-                    ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mProgress.getLayoutParams();
-                    lp.leftMargin = 0;
-                    lp.rightMargin = 0;
-                } else {
-                    mProgressMinMax.setVisibility(View.GONE);
-                }
-                mProgressLabel.setText("0%");
-            }
-            int bottomPadding = (int) getContext().getResources().getDimension(R.dimen.md_dialog_frame_margin);
-            int topPadding = builder.title == null ? bottomPadding
-                    : (int) getContext().getResources().getDimension(R.dimen.md_progressdialog_paddingwithtitle);
-            mBuilder.customView.setPadding(mBuilder.customView.getPaddingLeft(),
-                    topPadding,
-                    mBuilder.customView.getPaddingRight(),
-                    bottomPadding);
-        }
-
-        content.setText(builder.content);
-        content.setMovementMethod(new LinkMovementMethod());
-        setTypeface(content, mBuilder.regularFont);
-        content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
-        if (mBuilder.positiveColor == 0) {
-            content.setLinkTextColor(DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary));
-        } else {
-            content.setLinkTextColor(mBuilder.positiveColor);
-        }
-
-        content.setGravity(gravityIntToGravity(builder.contentGravity));
-
-        if (builder.contentColorSet) {
-            content.setTextColor(builder.contentColor);
-        } else {
-            final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary);
-            final int contentColor = DialogUtils.resolveColor(getContext(), R.attr.md_content_color, fallback);
-            content.setTextColor(contentColor);
-        }
-
-        if (builder.itemColorSet) {
-            defaultItemColor = builder.itemColor;
-        } else if (builder.theme == Theme.LIGHT) {
-            defaultItemColor = Color.BLACK;
-        } else {
-            defaultItemColor = Color.WHITE;
-        }
-
-        if (mBuilder.customView != null) {
-            invalidateCustomViewAssociations();
-            FrameLayout frame = (FrameLayout) view.findViewById(R.id.customViewFrame);
-            customViewFrame = frame;
-            View innerView = mBuilder.customView;
-
-            if (mBuilder.wrapCustomViewInScroll) {
-                /* Apply the frame padding to the content, this allows the ScrollView to draw it's
-                   overscroll glow without clipping */
-                final Resources r = getContext().getResources();
-                final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-
-                final ScrollView sv = new ScrollView(getContext());
-                int paddingTop;
-                int paddingBottom;
-                if (titleFrame.getVisibility() != View.GONE)
-                    paddingTop = r.getDimensionPixelSize(R.dimen.md_content_vertical_padding);
-                else
-                    paddingTop = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-
-                if (hasActionButtons())
-                    paddingBottom = r.getDimensionPixelSize(R.dimen.md_content_vertical_padding);
-                else
-                    paddingBottom = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-
-                sv.setClipToPadding(false);
-
-                if (innerView instanceof EditText) {
-                    // Setting padding to an EditText causes visual errors, set it to the parent instead
-                    sv.setPadding(framePadding, paddingTop, framePadding, paddingBottom);
-                } else {
-                    // Setting padding to scroll view pushes the scroll bars out, don't do it if not necessary (like above)
-                    sv.setPadding(0, paddingTop, 0, paddingBottom);
-                    innerView.setPadding(framePadding, 0, framePadding, 0);
-                }
-
-                sv.addView(innerView, new ScrollView.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                innerView = sv;
-            }
-
-            frame.addView(innerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-        } else {
-            invalidateCustomViewAssociations();
-        }
-
-        if (mBuilder.listCallbackMultiChoice != null)
-            selectedIndicesList = new ArrayList<>();
-
-        boolean adapterProvided = mBuilder.adapter != null;
-        if (mBuilder.items != null && mBuilder.items.length > 0 || adapterProvided) {
-            listView = (ListView) view.findViewById(R.id.contentListView);
-            listView.setSelector(getListSelector());
-
-            if (mBuilder.title != null) {
-                // Cancel out top padding if there's a title
-                listView.setPadding(listView.getPaddingLeft(), 0,
-                        listView.getPaddingRight(), listView.getPaddingBottom());
-            }
-            if (hasActionButtons()) {
-                // No bottom padding if there's action buttons
-                listView.setPadding(listView.getPaddingLeft(), 0,
-                        listView.getPaddingRight(), 0);
-            }
-
-
-            if (!adapterProvided) {
-                // Determine list type
-                if (mBuilder.listCallbackSingleChoice != null) {
-                    listType = ListType.SINGLE;
-                } else if (mBuilder.listCallbackMultiChoice != null) {
-                    listType = ListType.MULTI;
-                    if (mBuilder.selectedIndices != null) {
-                        selectedIndicesList = new ArrayList<>(Arrays.asList(mBuilder.selectedIndices));
-                    }
-                } else {
-                    listType = ListType.REGULAR;
-                }
-                mBuilder.adapter = new MaterialDialogAdapter(mBuilder.context,
-                        ListType.getLayoutForType(listType), R.id.title, mBuilder.items);
-            }
-        }
-
-        if (builder.icon != null) {
-            icon.setVisibility(View.VISIBLE);
-            icon.setImageDrawable(builder.icon);
-        } else {
-            Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_icon);
-            if (d != null) {
-                icon.setVisibility(View.VISIBLE);
-                icon.setImageDrawable(d);
-            } else {
-                icon.setVisibility(View.GONE);
-            }
-        }
-
-        int maxIconSize = builder.maxIconSize;
-        if (maxIconSize == -1) {
-            maxIconSize = DialogUtils.resolveDimension(mBuilder.context, R.attr.md_icon_max_size);
-        }
-
-        if (builder.limitIconToDefaultSize ||
-                DialogUtils.resolveBoolean(mBuilder.context, R.attr.md_icon_limit_icon_to_default_size)) {
-            maxIconSize = mBuilder.context.getResources().getDimensionPixelSize(R.dimen.md_icon_max_size);
-        }
-
-        if (maxIconSize > -1) {
-            icon.setAdjustViewBounds(true);
-            icon.setMaxHeight(maxIconSize);
-            icon.setMaxWidth(maxIconSize);
-            icon.requestLayout();
-        }
-
-        if (builder.title == null) {
-            titleFrame.setVisibility(View.GONE);
-        } else {
-            title.setText(builder.title);
-            setTypeface(title, mBuilder.mediumFont);
-            if (builder.titleColorSet) {
-                title.setTextColor(builder.titleColor);
-            } else {
-                final int fallback = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
-                title.setTextColor(DialogUtils.resolveColor(getContext(), R.attr.md_title_color, fallback));
-            }
-            title.setGravity(gravityIntToGravity(builder.titleGravity));
-        }
-
-        if (builder.showListener != null) {
-            setOnShowListener(builder.showListener);
-        }
-        if (builder.cancelListener != null) {
-            setOnCancelListener(builder.cancelListener);
-        }
-        if (builder.dismissListener != null) {
-            setOnDismissListener(builder.dismissListener);
-        }
-        if (builder.keyListener != null) {
-            setOnKeyListener(builder.keyListener);
-        }
-
-        updateFramePadding();
-        invalidateActions();
-        setOnShowListenerInternal();
-        setViewInternal(view);
-
-        view.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        if (view.getMeasuredWidth() > 0) {
-                            invalidateCustomViewAssociations();
-                        }
-                    }
-                });
-
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            setInverseBackgroundForced(true);
-            if (!builder.titleColorSet)
-                title.setTextColor(Color.BLACK);
-            if (!builder.contentColorSet)
-                content.setTextColor(Color.BLACK);
-        }
+        this.view = inflater.inflate(DialogInit.getInflateLayout(builder), null);
+        DialogInit.init(this);
     }
 
     @SuppressLint("RtlHardcoded")
-    private static int gravityIntToGravity(GravityEnum gravity) {
+    protected static int gravityIntToGravity(GravityEnum gravity) {
         switch (gravity) {
             case CENTER:
                 return Gravity.CENTER_HORIZONTAL;
@@ -389,26 +118,33 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateCustomViewAssociations();
     }
 
+    protected final void setTypeface(TextView text, Typeface t) {
+        if (t == null) return;
+        int flags = text.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
+        text.setPaintFlags(flags);
+        text.setTypeface(t);
+    }
+
     /**
      * To account for scrolling content and overscroll glows, the frame padding/margins sometimes
      * must be set on inner views. This is dependent on the visibility of the title bar and action
      * buttons. This method determines where the padding or margins are needed and applies them.
      */
-    private void updateFramePadding() {
+    protected final void updateFramePadding() {
         Resources r = getContext().getResources();
         int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
 
         View contentScrollView = view.findViewById(R.id.contentScrollView);
-        int paddingTop = contentScrollView.getPaddingTop();
-        int paddingBottom = contentScrollView.getPaddingBottom();
-
-        if (!hasActionButtons())
-            paddingBottom = framePadding;
-        if (titleFrame.getVisibility() == View.GONE)
-            paddingTop = framePadding;
-
-        contentScrollView.setPadding(contentScrollView.getPaddingLeft(), paddingTop,
-                contentScrollView.getPaddingRight(), paddingBottom);
+        if (contentScrollView != null) {
+            int paddingTop = contentScrollView.getPaddingTop();
+            int paddingBottom = contentScrollView.getPaddingBottom();
+            if (!hasActionButtons())
+                paddingBottom = framePadding;
+            if (titleFrame.getVisibility() == View.GONE)
+                paddingTop = framePadding;
+            contentScrollView.setPadding(contentScrollView.getPaddingLeft(), paddingTop,
+                    contentScrollView.getPaddingRight(), paddingBottom);
+        }
 
         if (listView != null) {
             // Padding below title is reduced for divider.
@@ -423,35 +159,39 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
     /**
      * Invalidates visibility of views for the presence of a custom view or list content
      */
-    private void invalidateCustomViewAssociations() {
+    protected final void invalidateCustomViewAssociations() {
         if (view.getMeasuredWidth() == 0) {
             return;
         }
         View contentScrollView = view.findViewById(R.id.contentScrollView);
         final int contentHorizontalPadding = (int) mBuilder.context.getResources()
                 .getDimension(R.dimen.md_dialog_frame_margin);
-        content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
+        if (content != null)
+            content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
 
         if (mBuilder.customView != null) {
-            contentScrollView.setVisibility(View.GONE);
-            customViewFrame.setVisibility(View.VISIBLE);
             boolean topScroll = canViewOrChildScroll(customViewFrame.getChildAt(0), false);
             boolean bottomScroll = canViewOrChildScroll(customViewFrame.getChildAt(0), true);
             setDividerVisibility(topScroll, bottomScroll);
         } else if ((mBuilder.items != null && mBuilder.items.length > 0) || mBuilder.adapter != null) {
-            contentScrollView.setVisibility(mBuilder.content != null
-                    && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
+            if (contentScrollView != null) {
+                contentScrollView.setVisibility(mBuilder.content != null
+                        && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
+            }
             boolean canScroll = titleFrame.getVisibility() == View.VISIBLE &&
                     (canListViewScroll() || canContentScroll());
             setDividerVisibility(canScroll, canScroll);
         } else {
-            contentScrollView.setVisibility(View.VISIBLE);
+            if (contentScrollView != null)
+                contentScrollView.setVisibility(View.VISIBLE);
             boolean canScroll = canContentScroll();
             if (canScroll) {
-                final int contentVerticalPadding = (int) mBuilder.context.getResources()
-                        .getDimension(R.dimen.md_title_frame_margin_bottom);
-                content.setPadding(contentHorizontalPadding, contentVerticalPadding,
-                        contentHorizontalPadding, contentVerticalPadding);
+                if (content != null) {
+                    final int contentVerticalPadding = (int) mBuilder.context.getResources()
+                            .getDimension(R.dimen.md_title_frame_margin_bottom);
+                    content.setPadding(contentHorizontalPadding, contentVerticalPadding,
+                            contentHorizontalPadding, contentVerticalPadding);
+                }
 
                 // Same effect as when there's a ListView. Padding below title is reduced for divider.
                 final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
@@ -527,11 +267,9 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         // Hide content
         view.findViewById(R.id.contentScrollView).setVisibility(mBuilder.content != null
                 && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
-        view.findViewById(R.id.customViewFrame).setVisibility(View.GONE);
 
         // Set up list with adapter
         FrameLayout listViewContainer = (FrameLayout) view.findViewById(R.id.contentListViewFrame);
-        listViewContainer.setVisibility(View.VISIBLE);
         listView.setAdapter(mBuilder.adapter);
         if (listType != null || mBuilder.listCallbackCustom != null)
             listView.setOnItemClickListener(this);
@@ -725,6 +463,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      */
     private boolean canContentScroll() {
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
+        if (scrollView == null) return false;
         final int childHeight = content.getMeasuredHeight();
         return scrollView.getMeasuredHeight() < childHeight;
     }
@@ -756,7 +495,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         invalidateActions();
     }
 
-    private Drawable getListSelector() {
+    protected final Drawable getListSelector() {
         if (mBuilder.listSelector != 0)
             return mBuilder.context.getResources().getDrawable(mBuilder.listSelector);
         final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
@@ -802,7 +541,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
      * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
      * and sets their properties (such as height, text color, etc.).
      */
-    private boolean invalidateActions() {
+    protected final boolean invalidateActions() {
         if (!hasActionButtons()) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -1789,7 +1528,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
         if (mBuilder.adapter instanceof MaterialDialogAdapter) {
-            mBuilder.adapter = new MaterialDialogAdapter(mBuilder.context,
+            mBuilder.adapter = new MaterialDialogAdapter(this,
                     ListType.getLayoutForType(listType), R.id.title, items);
         } else {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
@@ -1913,53 +1652,7 @@ public class MaterialDialog extends DialogBase implements View.OnClickListener, 
         }
     }
 
-    private class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
-
-        final int itemColor;
-
-        public MaterialDialogAdapter(Context context, int resource, int textViewResourceId, CharSequence[] objects) {
-            super(context, resource, textViewResourceId, objects);
-            itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, defaultItemColor);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @SuppressLint("WrongViewCast")
-        @Override
-        public View getView(final int index, View convertView, ViewGroup parent) {
-            final View view = super.getView(index, convertView, parent);
-            TextView tv = (TextView) view.findViewById(R.id.title);
-            switch (listType) {
-                case SINGLE: {
-                    @SuppressLint("CutPasteId")
-                    RadioButton radio = (RadioButton) view.findViewById(R.id.control);
-                    radio.setChecked(mBuilder.selectedIndex == index);
-                    break;
-                }
-                case MULTI: {
-                    @SuppressLint("CutPasteId")
-                    CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
-                    checkbox.setChecked(selectedIndicesList.contains(index));
-                    break;
-                }
-            }
-            tv.setText(mBuilder.items[index]);
-            tv.setTextColor(itemColor);
-            setTypeface(tv, mBuilder.regularFont);
-            view.setTag(index + ":" + mBuilder.items[index]);
-            return view;
-        }
-    }
-
-    private enum ListType {
+    protected enum ListType {
         REGULAR, SINGLE, MULTI;
 
         public static int getLayoutForType(ListType type) {

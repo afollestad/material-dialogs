@@ -104,7 +104,11 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         mShowListener = listener;
     }
 
-    protected final void setOnShowListenerInternal() {
+    public final void _setViewInternal(View view) {
+        super.setView(view);
+    }
+
+    public final void _setOnShowListenerInternal() {
         super.setOnShowListener(this);
     }
 
@@ -121,12 +125,5 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         } else {
             view.setBackground(d);
         }
-    }
-
-    protected void setTypeface(TextView text, Typeface t) {
-        if (t == null) return;
-        int flags = text.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
-        text.setPaintFlags(flags);
-        text.setTypeface(t);
     }
 }

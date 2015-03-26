@@ -1,0 +1,33 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/mainFrame"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <include layout="@layout/md_stub_titleframe" />
+
+        <View
+            android:id="@+id/titleBarDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/md_content_vertical_padding"
+            android:layout_marginBottom="-1dp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/customViewFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <include layout="@layout/md_stub_actionbuttons" />
+
+</LinearLayout>

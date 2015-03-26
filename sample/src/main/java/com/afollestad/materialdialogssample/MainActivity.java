@@ -538,14 +538,16 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
 
     public void showProgressDialog(boolean indeterminate) {
         if (indeterminate) {
+//            .title(R.string.progress_dialog)
             new MaterialDialog.Builder(this)
-                    .title(R.string.progress_dialog)
+
                     .content(R.string.please_wait)
                     .progress(true, 0)
                     .show();
         } else {
+//            .title(R.string.progress_dialog)
             new MaterialDialog.Builder(this)
-                    .title(R.string.progress_dialog)
+
                     .content(R.string.please_wait)
                     .contentGravity(GravityEnum.CENTER)
                     .progress(false, 150, true)

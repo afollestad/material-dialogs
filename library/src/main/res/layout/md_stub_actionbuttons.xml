@@ -1,97 +1,5 @@
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <LinearLayout
-        android:id="@+id/mainFrame"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:id="@+id/titleFrame"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/md_dialog_frame_margin"
-            android:paddingTop="@dimen/md_dialog_frame_margin"
-            android:paddingRight="@dimen/md_dialog_frame_margin"
-            android:paddingBottom="@dimen/md_title_frame_margin_bottom">
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:layout_marginRight="@dimen/md_icon_margin"
-                android:layout_marginEnd="@dimen/md_icon_margin"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/md_title_textsize"
-                tools:text="Title" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/titleBarDivider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/md_content_vertical_padding"
-            android:layout_marginBottom="-1dp"
-            android:visibility="gone" />
-
-        <ScrollView
-            android:id="@+id/contentScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/md_content_vertical_padding">
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/md_content_textsize"
-                tools:text="Content" />
-
-        </ScrollView>
-
-        <FrameLayout
-            android:id="@+id/contentListViewFrame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <!-- Top padding cancelled out in code if there's a title -->
-            <ListView
-                android:id="@+id/contentListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbarStyle="outsideOverlay"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:clipToPadding="false"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/customViewFrame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
     <View
         android:id="@+id/buttonBarDivider"
@@ -198,4 +106,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</merge>
