@@ -272,7 +272,7 @@ class DialogInit {
             dialog.setInverseBackgroundForced(true);
             if (!builder.titleColorSet)
                 dialog.title.setTextColor(Color.BLACK);
-            if (!builder.contentColorSet)
+            if (!builder.contentColorSet && dialog.content != null)
                 dialog.content.setTextColor(Color.BLACK);
         }
     }

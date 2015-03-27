@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,13 +7,13 @@
     android:gravity="center_horizontal"
     tools:ignore="ContentDescription">
 
-    <GridLayout
+    <android.support.v7.widget.GridLayout
         android:id="@+id/grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:rowCount="5"
-        android:orientation="vertical"
+        app:columnCount="4"
+        app:rowCount="5"
+        app:orientation="vertical"
         tools:ignore="UselessParent"
         android:paddingBottom="20dp"
         android:clipToPadding="false">
@@ -297,6 +298,6 @@
 
         </FrameLayout>
 
-    </GridLayout>
+    </android.support.v7.widget.GridLayout>
 
 </LinearLayout>
