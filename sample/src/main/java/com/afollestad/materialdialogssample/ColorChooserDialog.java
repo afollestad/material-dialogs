@@ -15,7 +15,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
+import android.support.v7.widget.GridLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
