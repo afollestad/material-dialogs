@@ -33,7 +33,8 @@ import java.io.File;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends ActionBarActivity implements FolderSelectorDialog.FolderSelectCallback {
+public class MainActivity extends ActionBarActivity implements
+        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback {
 
     private Toast mToast;
 
@@ -475,18 +476,18 @@ public class MainActivity extends ActionBarActivity implements FolderSelectorDia
     static int selectedColorIndex = -1;
 
     private void showCustomColorChooser() {
-        new ColorChooserDialog().show(this, selectedColorIndex, new ColorChooserDialog.Callback() {
-            @Override
-            public void onColorSelection(int index, int color, int darker) {
-                selectedColorIndex = index;
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-                ThemeSingleton.get().positiveColor = color;
-                ThemeSingleton.get().neutralColor = color;
-                ThemeSingleton.get().negativeColor = color;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    getWindow().setStatusBarColor(darker);
-            }
-        });
+        new ColorChooserDialog().show(this, selectedColorIndex);
+    }
+
+    @Override
+    public void onColorSelection(int index, int color, int darker) {
+        selectedColorIndex = index;
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        ThemeSingleton.get().positiveColor = color;
+        ThemeSingleton.get().neutralColor = color;
+        ThemeSingleton.get().negativeColor = color;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getWindow().setStatusBarColor(darker);
     }
 
     private void showThemed() {

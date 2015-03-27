@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogssample;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -111,8 +112,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return stateListDrawable;
     }
 
-    public void show(ActionBarActivity context, int preselect, Callback callback) {
-        mCallback = callback;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof Callback))
+            throw new RuntimeException("The Activity must implement Callback to be used by ColorChooserDialog.");
+        mCallback = (Callback) activity;
+    }
+
+    public void show(ActionBarActivity context, int preselect) {
         Bundle args = new Bundle();
         args.putInt("preselect", preselect);
         setArguments(args);
