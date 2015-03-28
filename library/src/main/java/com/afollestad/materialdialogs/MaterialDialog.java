@@ -22,6 +22,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -315,6 +316,8 @@ public class MaterialDialog extends DialogBase implements
      */
     @Nullable
     private static View getBottomView(ViewGroup viewGroup) {
+        if (viewGroup == null)
+            return null;
         View bottomView = null;
         for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
             View child = viewGroup.getChildAt(i);
@@ -328,6 +331,8 @@ public class MaterialDialog extends DialogBase implements
 
     @Nullable
     private static View getTopView(ViewGroup viewGroup) {
+        if (viewGroup == null)
+            return null;
         View topView = null;
         for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
             View child = viewGroup.getChildAt(i);
@@ -340,7 +345,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private static boolean canViewOrChildScroll(View view, boolean atBottom) {
-        /* Is the bottom view something that scrolls? */
+        if (view == null)
+            return false;
         if (view instanceof ScrollView) {
             ScrollView sv = (ScrollView) view;
             if (sv.getChildCount() == 0)
@@ -351,7 +357,7 @@ public class MaterialDialog extends DialogBase implements
             return canAdapterViewScroll((AdapterView) view);
         } else if (view instanceof WebView) {
             return canWebViewScroll((WebView) view);
-        } else if (isRecyclerView(view)) {
+        } else if (view instanceof RecyclerView) {
             return RecyclerUtil.canRecyclerViewScroll(view);
         } else {
             if (atBottom) {
@@ -360,19 +366,6 @@ public class MaterialDialog extends DialogBase implements
                 return canViewOrChildScroll(getTopView((ViewGroup) view), false);
             }
         }
-    }
-
-    private static boolean isRecyclerView(View view) {
-        boolean isRecyclerView = false;
-        try {
-            Class.forName("android.support.v7.widget.RecyclerView");
-
-            // We got here, so now we can safely check
-            isRecyclerView = RecyclerUtil.isRecyclerView(view);
-        } catch (ClassNotFoundException ignored) {
-        }
-
-        return isRecyclerView;
     }
 
     private static boolean canWebViewScroll(WebView view) {
