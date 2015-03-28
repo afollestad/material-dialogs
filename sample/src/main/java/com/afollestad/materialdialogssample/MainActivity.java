@@ -213,7 +213,10 @@ public class MainActivity extends ActionBarActivity implements
         findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1)
+                    startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+                else
+                    startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
             }
         });
     }
