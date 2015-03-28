@@ -26,6 +26,10 @@
             android:name=".PreferenceActivity"
             android:label="@string/preference_dialogs" />
 
+        <activity
+            android:name=".PreferenceActivityCompat"
+            android:label="@string/preference_dialogs" />
+
     </application>
 
 </manifest>
