@@ -23,7 +23,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.6.1'
+    compile 'com.afollestad:material-dialogs:0.6.6.2'
 }
 ```
 
@@ -72,14 +72,14 @@ If you're migrating old dialogs you could use ```AlertDialogWrapper```. You need
 
 ```java
 new AlertDialogWrapper.Builder(this)
-    .setTitle(R.string.title)
-    .setMessage(R.string.message)
-    .setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();
-        }
-    }).show();
+        .setTitle(R.string.title)
+        .setMessage(R.string.message)
+        .setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
 ```
 
 But it's highly recommended to use original ```MaterialDialog``` API for new usages.
