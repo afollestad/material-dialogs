@@ -257,6 +257,7 @@ class DialogInit {
         dialog.invalidateActions();
         dialog._setOnShowListenerInternal();
         dialog._setViewInternal(dialog.view);
+        dialog.checkIfListInitScroll();
         dialog.view.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -313,7 +314,7 @@ class DialogInit {
                 dialog.mProgressLabel.setText("0%");
             }
 
-            if(builder.title == null) {
+            if (builder.title == null) {
                 // Redistribute main frame's bottom padding to the top padding if there's no title
                 final View mainFrame = dialog.view.findViewById(R.id.mainFrame);
                 mainFrame.setPadding(mainFrame.getPaddingLeft(),

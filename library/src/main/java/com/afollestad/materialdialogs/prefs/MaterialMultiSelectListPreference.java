@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 

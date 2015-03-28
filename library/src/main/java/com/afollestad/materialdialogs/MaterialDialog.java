@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -24,9 +22,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,17 +31,14 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -125,6 +118,45 @@ public class MaterialDialog extends DialogBase implements
         text.setTypeface(t);
     }
 
+    protected final void checkIfListInitScroll() {
+        if (listView == null)
+            return;
+        listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                    listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                else
+                    listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if (listType == ListType.SINGLE || listType == ListType.MULTI) {
+                    int selectedIndex;
+                    if (listType == ListType.SINGLE)
+                        selectedIndex = mBuilder.selectedIndex;
+                    else {
+                        List<Integer> indicesList = Arrays.asList(mBuilder.selectedIndices);
+                        Collections.sort(indicesList);
+                        selectedIndex = indicesList.get(0);
+                    }
+                    if (listView.getLastVisiblePosition() < selectedIndex) {
+                        final int totalVisible = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
+                        // Scroll so that the selected index appears in the middle (vertically) of the ListView
+                        int scrollIndex = selectedIndex - (totalVisible / 2);
+                        if (scrollIndex < 0) scrollIndex = 0;
+                        final int fScrollIndex = scrollIndex;
+                        listView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listView.requestFocus();
+                                listView.setSelection(fScrollIndex);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     /**
      * To account for scrolling content and overscroll glows, the frame padding/margins sometimes
      * must be set on inner views. This is dependent on the visibility of the title bar and action
@@ -147,7 +179,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         if (listView != null) {
-            // Padding below title is reduced for divider.
+// Padding below title is reduced for divider.
             final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
             titleFrame.setPadding(titleFrame.getPaddingLeft(),
                     titleFrame.getPaddingTop(),
@@ -193,7 +225,7 @@ public class MaterialDialog extends DialogBase implements
                             contentHorizontalPadding, contentVerticalPadding);
                 }
 
-                // Same effect as when there's a ListView. Padding below title is reduced for divider.
+// Same effect as when there's a ListView. Padding below title is reduced for divider.
                 final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
                 titleFrame.setPadding(titleFrame.getPaddingLeft(),
                         titleFrame.getPaddingTop(),
@@ -269,7 +301,6 @@ public class MaterialDialog extends DialogBase implements
                 && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
 
         // Set up list with adapter
-        FrameLayout listViewContainer = (FrameLayout) view.findViewById(R.id.contentListViewFrame);
         listView.setAdapter(mBuilder.adapter);
         if (listType != null || mBuilder.listCallbackCustom != null)
             listView.setOnItemClickListener(this);
@@ -309,10 +340,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private static boolean canViewOrChildScroll(View view, boolean atBottom) {
-        if (view == null || !(view instanceof ViewGroup)) {
-            return false;
-        }
-            /* Is the bottom view something that scrolls? */
+        /* Is the bottom view something that scrolls? */
         if (view instanceof ScrollView) {
             ScrollView sv = (ScrollView) view;
             if (sv.getChildCount() == 0)
