@@ -70,8 +70,9 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
                         final Set<String> values = new HashSet<>();
-                        for (CharSequence s : text)
-                            values.add((String) s);
+                        for(int i:which){
+                            values.add(getEntryValues()[i].toString());
+                        }
                         if (callChangeListener(values))
                             setValues(values);
                         return true;
