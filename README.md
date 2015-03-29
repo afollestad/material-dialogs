@@ -13,7 +13,8 @@ It's also on Google Play:
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-Having the sample project installed is a good way to be notified of new releases.
+Having the sample project installed is a good way to be notified of new releases. Although Watching this 
+repository will allow GitHub to email you whenever I publish a release.
 
 ---
 
@@ -23,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.6.2'
+    compile 'com.afollestad:material-dialogs:0.6.6.3'
 }
 ```
 
@@ -36,6 +37,8 @@ dependencies {
 See the project's Releases page for a list of versions with their changelogs.
 
 [ ![View Releases](http://dabuttonfactory.com/b.png?t=View%20Releases&f=sans-serif-Bold&ts=14&tc=ffffff&c=5&bgt=unicolored&bgc=1466A7&hp=20&vp=11) ](https://github.com/afollestad/material-dialogs/releases)
+
+If you Watch this repository, GitHub will send you an email every time I publish an update.
 
 ---
 
