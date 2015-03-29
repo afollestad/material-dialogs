@@ -257,15 +257,17 @@ display check boxes next to list items, and the callback can return multiple sel
 new MaterialDialog.Builder(this)
         .title(R.string.title)
         .items(R.array.items)
-        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMulti() {
             @Override
-            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+            public void onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                 /**
                  * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
                  * returning false here won't allow the newly selected check box to actually be selected.
                  * See the limited multi choice dialog example in the sample project for details.
+                 * update: Not anymore!
+                 * return true;
                  **/
-                 return true;
+                 
             }
         })
         .positiveText(R.string.choose)
