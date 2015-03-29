@@ -132,9 +132,13 @@ public class MaterialDialog extends DialogBase implements
 
                 if (listType == ListType.SINGLE || listType == ListType.MULTI) {
                     int selectedIndex;
-                    if (listType == ListType.SINGLE)
+                    if (listType == ListType.SINGLE) {
+                        if (mBuilder.selectedIndex < 0)
+                            return;
                         selectedIndex = mBuilder.selectedIndex;
-                    else {
+                    } else {
+                        if (mBuilder.selectedIndices == null || mBuilder.selectedIndices.length == 0)
+                            return;
                         List<Integer> indicesList = Arrays.asList(mBuilder.selectedIndices);
                         Collections.sort(indicesList);
                         selectedIndex = indicesList.get(0);
@@ -471,17 +475,17 @@ public class MaterialDialog extends DialogBase implements
         }
     }
 
-public static class NotImplementedException extends Error {
-    public NotImplementedException(String message) {
-        super(message);
+    public static class NotImplementedException extends Error {
+        public NotImplementedException(String message) {
+            super(message);
+        }
     }
-}
 
-public static class DialogException extends WindowManager.BadTokenException {
-    public DialogException(String message) {
-        super(message);
+    public static class DialogException extends WindowManager.BadTokenException {
+        public DialogException(String message) {
+            super(message);
+        }
     }
-}
 
     /**
      * Detects whether or not the content TextView can be scrolled.
@@ -704,675 +708,675 @@ public static class DialogException extends WindowManager.BadTokenException {
         }
     }
 
-/**
- * The class used to construct a MaterialDialog.
- */
-public static class Builder {
+    /**
+     * The class used to construct a MaterialDialog.
+     */
+    public static class Builder {
 
-    protected final Context context;
-    protected CharSequence title;
-    protected GravityEnum titleGravity = GravityEnum.START;
-    protected GravityEnum contentGravity = GravityEnum.START;
-    protected GravityEnum btnStackedGravity = GravityEnum.END;
-    protected int titleColor = -1;
-    protected int contentColor = -1;
-    protected CharSequence content;
-    protected CharSequence[] items;
-    protected CharSequence positiveText;
-    protected CharSequence neutralText;
-    protected CharSequence negativeText;
-    protected View customView;
-    protected int accentColor;
-    protected int positiveColor;
-    protected int negativeColor;
-    protected int neutralColor;
-    protected ButtonCallback callback;
-    protected ListCallback listCallback;
-    protected ListCallbackSingleChoice listCallbackSingleChoice;
-    protected ListCallbackMultiChoice listCallbackMultiChoice;
-    protected ListCallback listCallbackCustom;
-    protected boolean alwaysCallMultiChoiceCallback = false;
-    protected boolean alwaysCallSingleChoiceCallback = false;
-    protected Theme theme = Theme.LIGHT;
-    protected boolean cancelable = true;
-    protected float contentLineSpacingMultiplier = 1.3f;
-    protected int selectedIndex = -1;
-    protected Integer[] selectedIndices = null;
-    protected boolean autoDismiss = true;
-    protected Typeface regularFont;
-    protected Typeface mediumFont;
-    protected boolean useCustomFonts;
-    protected Drawable icon;
-    protected boolean limitIconToDefaultSize;
-    protected int maxIconSize = -1;
-    protected ListAdapter adapter;
-    protected OnDismissListener dismissListener;
-    protected OnCancelListener cancelListener;
-    protected OnKeyListener keyListener;
-    protected OnShowListener showListener;
-    protected boolean forceStacking;
-    protected boolean wrapCustomViewInScroll;
-    protected int dividerColor;
-    protected int backgroundColor;
-    protected int itemColor;
-    protected boolean mIndeterminateProgress;
-    protected boolean mShowMinMax;
-    protected int mProgress = -2;
-    protected int mProgressMax = 0;
+        protected final Context context;
+        protected CharSequence title;
+        protected GravityEnum titleGravity = GravityEnum.START;
+        protected GravityEnum contentGravity = GravityEnum.START;
+        protected GravityEnum btnStackedGravity = GravityEnum.END;
+        protected int titleColor = -1;
+        protected int contentColor = -1;
+        protected CharSequence content;
+        protected CharSequence[] items;
+        protected CharSequence positiveText;
+        protected CharSequence neutralText;
+        protected CharSequence negativeText;
+        protected View customView;
+        protected int accentColor;
+        protected int positiveColor;
+        protected int negativeColor;
+        protected int neutralColor;
+        protected ButtonCallback callback;
+        protected ListCallback listCallback;
+        protected ListCallbackSingleChoice listCallbackSingleChoice;
+        protected ListCallbackMultiChoice listCallbackMultiChoice;
+        protected ListCallback listCallbackCustom;
+        protected boolean alwaysCallMultiChoiceCallback = false;
+        protected boolean alwaysCallSingleChoiceCallback = false;
+        protected Theme theme = Theme.LIGHT;
+        protected boolean cancelable = true;
+        protected float contentLineSpacingMultiplier = 1.3f;
+        protected int selectedIndex = -1;
+        protected Integer[] selectedIndices = null;
+        protected boolean autoDismiss = true;
+        protected Typeface regularFont;
+        protected Typeface mediumFont;
+        protected boolean useCustomFonts;
+        protected Drawable icon;
+        protected boolean limitIconToDefaultSize;
+        protected int maxIconSize = -1;
+        protected ListAdapter adapter;
+        protected OnDismissListener dismissListener;
+        protected OnCancelListener cancelListener;
+        protected OnKeyListener keyListener;
+        protected OnShowListener showListener;
+        protected boolean forceStacking;
+        protected boolean wrapCustomViewInScroll;
+        protected int dividerColor;
+        protected int backgroundColor;
+        protected int itemColor;
+        protected boolean mIndeterminateProgress;
+        protected boolean mShowMinMax;
+        protected int mProgress = -2;
+        protected int mProgressMax = 0;
 
-    // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
-    // So this is a decent solution to this problem.
-    protected boolean titleColorSet;
-    protected boolean contentColorSet;
-    protected boolean itemColorSet;
+        // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
+        // So this is a decent solution to this problem.
+        protected boolean titleColorSet;
+        protected boolean contentColorSet;
+        protected boolean itemColorSet;
 
-    @DrawableRes
-    protected int listSelector;
-    @DrawableRes
-    protected int btnSelectorStacked;
-    @DrawableRes
-    protected int btnSelectorPositive;
-    @DrawableRes
-    protected int btnSelectorNeutral;
-    @DrawableRes
-    protected int btnSelectorNegative;
+        @DrawableRes
+        protected int listSelector;
+        @DrawableRes
+        protected int btnSelectorStacked;
+        @DrawableRes
+        protected int btnSelectorPositive;
+        @DrawableRes
+        protected int btnSelectorNeutral;
+        @DrawableRes
+        protected int btnSelectorNegative;
 
-    public Builder(@NonNull Context context) {
-        this.context = context;
-        final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
-            try {
-                this.accentColor = a.getColor(0, materialBlue);
-                this.positiveColor = this.accentColor;
-                this.negativeColor = this.accentColor;
-                this.neutralColor = this.accentColor;
-            } catch (Exception e) {
-                this.accentColor = materialBlue;
-                this.positiveColor = materialBlue;
-                this.negativeColor = materialBlue;
-                this.neutralColor = materialBlue;
-            } finally {
-                a.recycle();
+        public Builder(@NonNull Context context) {
+            this.context = context;
+            final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
+                try {
+                    this.accentColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.accentColor;
+                    this.negativeColor = this.accentColor;
+                    this.neutralColor = this.accentColor;
+                } catch (Exception e) {
+                    this.accentColor = materialBlue;
+                    this.positiveColor = materialBlue;
+                    this.negativeColor = materialBlue;
+                    this.neutralColor = materialBlue;
+                } finally {
+                    a.recycle();
+                }
+            } else {
+                TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
+                try {
+                    this.accentColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.accentColor;
+                    this.negativeColor = this.accentColor;
+                    this.neutralColor = this.accentColor;
+                } catch (Exception e) {
+                    this.accentColor = materialBlue;
+                    this.positiveColor = materialBlue;
+                    this.negativeColor = materialBlue;
+                    this.neutralColor = materialBlue;
+                } finally {
+                    a.recycle();
+                }
             }
-        } else {
-            TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
-            try {
-                this.accentColor = a.getColor(0, materialBlue);
-                this.positiveColor = this.accentColor;
-                this.negativeColor = this.accentColor;
-                this.neutralColor = this.accentColor;
-            } catch (Exception e) {
-                this.accentColor = materialBlue;
-                this.positiveColor = materialBlue;
-                this.negativeColor = materialBlue;
-                this.neutralColor = materialBlue;
-            } finally {
-                a.recycle();
+            checkSingleton();
+        }
+
+        private void checkSingleton() {
+            if (ThemeSingleton.get(false) == null) return;
+            ThemeSingleton s = ThemeSingleton.get();
+            theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
+            if (s.titleColor != 0)
+                this.titleColor = s.titleColor;
+            if (s.contentColor != 0)
+                this.contentColor = s.contentColor;
+            if (s.positiveColor != 0)
+                this.positiveColor = s.positiveColor;
+            if (s.neutralColor != 0)
+                this.neutralColor = s.neutralColor;
+            if (s.negativeColor != 0)
+                this.negativeColor = s.negativeColor;
+            if (s.itemColor != 0)
+                this.itemColor = s.itemColor;
+            if (s.icon != null)
+                this.icon = s.icon;
+            if (s.backgroundColor != 0)
+                this.backgroundColor = s.backgroundColor;
+            if (s.dividerColor != 0)
+                this.dividerColor = s.dividerColor;
+            if (s.btnSelectorStacked != 0)
+                this.btnSelectorStacked = s.btnSelectorStacked;
+            if (s.listSelector != 0)
+                this.listSelector = s.listSelector;
+            if (s.btnSelectorPositive != 0)
+                this.btnSelectorPositive = s.btnSelectorPositive;
+            if (s.btnSelectorNeutral != 0)
+                this.btnSelectorNeutral = s.btnSelectorNeutral;
+            if (s.btnSelectorNegative != 0)
+                this.btnSelectorNegative = s.btnSelectorNegative;
+        }
+
+        public Builder title(@StringRes int titleRes) {
+            title(this.context.getString(titleRes));
+            return this;
+        }
+
+        public Builder title(@NonNull CharSequence title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder titleGravity(@NonNull GravityEnum gravity) {
+            this.titleGravity = gravity;
+            return this;
+        }
+
+        public Builder titleColor(int color) {
+            this.titleColor = color;
+            this.titleColorSet = true;
+            return this;
+        }
+
+        public Builder titleColorRes(@ColorRes int colorRes) {
+            titleColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder titleColorAttr(@AttrRes int colorAttr) {
+            titleColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return this;
+        }
+
+        /**
+         * Disable usage of the default fonts. This is automatically set by
+         * {@link #typeface(String, String)} and {@link #typeface(Typeface, Typeface)}.
+         *
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder disableDefaultFonts() {
+            this.useCustomFonts = true;
+            return this;
+        }
+
+        /**
+         * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
+         * to avoid duplicate Typeface allocations and high memory usage.
+         *
+         * @param medium  The font used on titles and action buttons. Null uses device default.
+         * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder typeface(Typeface medium, Typeface regular) {
+            this.mediumFont = medium;
+            this.regularFont = regular;
+            this.useCustomFonts = true;
+            return this;
+        }
+
+        /**
+         * Sets the fonts used in the dialog, by file names. This also uses TypefaceHelper in order
+         * to avoid any un-needed allocations (it recycles typefaces for you).
+         *
+         * @param medium  The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium].ttf
+         * @param regular The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular].ttf
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder typeface(String medium, String regular) {
+            if (medium != null)
+                this.mediumFont = TypefaceHelper.get(this.context, medium);
+            if (regular != null)
+                this.regularFont = TypefaceHelper.get(this.context, regular);
+            this.useCustomFonts = true;
+            return this;
+        }
+
+        public Builder icon(@NonNull Drawable icon) {
+            this.icon = icon;
+            return this;
+        }
+
+        public Builder iconRes(@DrawableRes int icon) {
+            this.icon = context.getResources().getDrawable(icon);
+            return this;
+        }
+
+        public Builder iconAttr(@AttrRes int iconAttr) {
+            this.icon = DialogUtils.resolveDrawable(context, iconAttr);
+            return this;
+        }
+
+        public Builder contentColor(int color) {
+            this.contentColor = color;
+            this.contentColorSet = true;
+            return this;
+        }
+
+        public Builder contentColorRes(@ColorRes int colorRes) {
+            contentColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder contentColorAttr(@AttrRes int colorAttr) {
+            contentColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return this;
+        }
+
+        public Builder content(@StringRes int contentRes) {
+            content(this.context.getString(contentRes));
+            return this;
+        }
+
+        public Builder content(CharSequence content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder content(@StringRes int contentRes, Object... formatArgs) {
+            content(this.context.getString(contentRes, formatArgs));
+            return this;
+        }
+
+        public Builder contentGravity(@NonNull GravityEnum gravity) {
+            this.contentGravity = gravity;
+            return this;
+        }
+
+        public Builder contentLineSpacing(float multiplier) {
+            this.contentLineSpacingMultiplier = multiplier;
+            return this;
+        }
+
+        public Builder items(@ArrayRes int itemsRes) {
+            items(this.context.getResources().getTextArray(itemsRes));
+            return this;
+        }
+
+        public Builder items(@NonNull CharSequence[] items) {
+            this.items = items;
+            return this;
+        }
+
+        public Builder itemsCallback(@NonNull ListCallback callback) {
+            this.listCallback = callback;
+            this.listCallbackSingleChoice = null;
+            this.listCallbackMultiChoice = null;
+            return this;
+        }
+
+        /**
+         * Pass anything below 0 (such as -1) for the selected index to leave all options unselected initially.
+         * Otherwise pass the index of an item that will be selected initially.
+         *
+         * @param selectedIndex The checkbox index that will be selected initially.
+         * @param callback      The callback that will be called when the presses the positive button.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallbackSingleChoice callback) {
+            this.selectedIndex = selectedIndex;
+            this.listCallback = null;
+            this.listCallbackSingleChoice = callback;
+            this.listCallbackMultiChoice = null;
+            return this;
+        }
+
+        /**
+         * By default, the single choice callback is only called when the user clicks the positive button
+         * or if there are no buttons. Call this to force it to always call on item clicks even if the
+         * positive button exists.
+         *
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder alwaysCallSingleChoiceCallback() {
+            this.alwaysCallSingleChoiceCallback = true;
+            return this;
+        }
+
+        /**
+         * Pass null for the selected indices to leave all options unselected initially. Otherwise pass
+         * an array of indices that will be selected initially.
+         *
+         * @param selectedIndices The radio button indices that will be selected initially.
+         * @param callback        The callback that will be called when the presses the positive button.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
+            this.selectedIndices = selectedIndices;
+            this.listCallback = null;
+            this.listCallbackSingleChoice = null;
+            this.listCallbackMultiChoice = callback;
+            return this;
+        }
+
+        /**
+         * By default, the multi choice callback is only called when the user clicks the positive button
+         * or if there are no buttons. Call this to force it to always call on item clicks even if the
+         * positive button exists.
+         *
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder alwaysCallMultiChoiceCallback() {
+            this.alwaysCallMultiChoiceCallback = true;
+            return this;
+        }
+
+        public Builder positiveText(@StringRes int postiveRes) {
+            positiveText(this.context.getString(postiveRes));
+            return this;
+        }
+
+        public Builder positiveText(@NonNull CharSequence message) {
+            this.positiveText = message;
+            return this;
+        }
+
+        public Builder neutralText(@StringRes int neutralRes) {
+            return neutralText(this.context.getString(neutralRes));
+        }
+
+        public Builder neutralText(@NonNull CharSequence message) {
+            this.neutralText = message;
+            return this;
+        }
+
+        public Builder negativeText(@StringRes int negativeRes) {
+            return negativeText(this.context.getString(negativeRes));
+        }
+
+        public Builder negativeText(@NonNull CharSequence message) {
+            this.negativeText = message;
+            return this;
+        }
+
+        public Builder listSelector(@DrawableRes int selectorRes) {
+            this.listSelector = selectorRes;
+            return this;
+        }
+
+        public Builder btnSelectorStacked(@DrawableRes int selectorRes) {
+            this.btnSelectorStacked = selectorRes;
+            return this;
+        }
+
+        public Builder btnSelector(@DrawableRes int selectorRes) {
+            this.btnSelectorPositive = selectorRes;
+            this.btnSelectorNeutral = selectorRes;
+            this.btnSelectorNegative = selectorRes;
+            return this;
+        }
+
+        public Builder btnSelector(@DrawableRes int selectorRes, @NonNull DialogAction which) {
+            switch (which) {
+                default:
+                    this.btnSelectorPositive = selectorRes;
+                    break;
+                case NEUTRAL:
+                    this.btnSelectorNeutral = selectorRes;
+                    break;
+                case NEGATIVE:
+                    this.btnSelectorNegative = selectorRes;
+                    break;
             }
+            return this;
         }
-        checkSingleton();
-    }
 
-    private void checkSingleton() {
-        if (ThemeSingleton.get(false) == null) return;
-        ThemeSingleton s = ThemeSingleton.get();
-        theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
-        if (s.titleColor != 0)
-            this.titleColor = s.titleColor;
-        if (s.contentColor != 0)
-            this.contentColor = s.contentColor;
-        if (s.positiveColor != 0)
-            this.positiveColor = s.positiveColor;
-        if (s.neutralColor != 0)
-            this.neutralColor = s.neutralColor;
-        if (s.negativeColor != 0)
-            this.negativeColor = s.negativeColor;
-        if (s.itemColor != 0)
-            this.itemColor = s.itemColor;
-        if (s.icon != null)
-            this.icon = s.icon;
-        if (s.backgroundColor != 0)
-            this.backgroundColor = s.backgroundColor;
-        if (s.dividerColor != 0)
-            this.dividerColor = s.dividerColor;
-        if (s.btnSelectorStacked != 0)
-            this.btnSelectorStacked = s.btnSelectorStacked;
-        if (s.listSelector != 0)
-            this.listSelector = s.listSelector;
-        if (s.btnSelectorPositive != 0)
-            this.btnSelectorPositive = s.btnSelectorPositive;
-        if (s.btnSelectorNeutral != 0)
-            this.btnSelectorNeutral = s.btnSelectorNeutral;
-        if (s.btnSelectorNegative != 0)
-            this.btnSelectorNegative = s.btnSelectorNegative;
-    }
-
-    public Builder title(@StringRes int titleRes) {
-        title(this.context.getString(titleRes));
-        return this;
-    }
-
-    public Builder title(@NonNull CharSequence title) {
-        this.title = title;
-        return this;
-    }
-
-    public Builder titleGravity(@NonNull GravityEnum gravity) {
-        this.titleGravity = gravity;
-        return this;
-    }
-
-    public Builder titleColor(int color) {
-        this.titleColor = color;
-        this.titleColorSet = true;
-        return this;
-    }
-
-    public Builder titleColorRes(@ColorRes int colorRes) {
-        titleColor(this.context.getResources().getColor(colorRes));
-        return this;
-    }
-
-    public Builder titleColorAttr(@AttrRes int colorAttr) {
-        titleColor(DialogUtils.resolveColor(this.context, colorAttr));
-        return this;
-    }
-
-    /**
-     * Disable usage of the default fonts. This is automatically set by
-     * {@link #typeface(String, String)} and {@link #typeface(Typeface, Typeface)}.
-     *
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder disableDefaultFonts() {
-        this.useCustomFonts = true;
-        return this;
-    }
-
-    /**
-     * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
-     * to avoid duplicate Typeface allocations and high memory usage.
-     *
-     * @param medium  The font used on titles and action buttons. Null uses device default.
-     * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder typeface(Typeface medium, Typeface regular) {
-        this.mediumFont = medium;
-        this.regularFont = regular;
-        this.useCustomFonts = true;
-        return this;
-    }
-
-    /**
-     * Sets the fonts used in the dialog, by file names. This also uses TypefaceHelper in order
-     * to avoid any un-needed allocations (it recycles typefaces for you).
-     *
-     * @param medium  The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium].ttf
-     * @param regular The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular].ttf
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder typeface(String medium, String regular) {
-        if (medium != null)
-            this.mediumFont = TypefaceHelper.get(this.context, medium);
-        if (regular != null)
-            this.regularFont = TypefaceHelper.get(this.context, regular);
-        this.useCustomFonts = true;
-        return this;
-    }
-
-    public Builder icon(@NonNull Drawable icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    public Builder iconRes(@DrawableRes int icon) {
-        this.icon = context.getResources().getDrawable(icon);
-        return this;
-    }
-
-    public Builder iconAttr(@AttrRes int iconAttr) {
-        this.icon = DialogUtils.resolveDrawable(context, iconAttr);
-        return this;
-    }
-
-    public Builder contentColor(int color) {
-        this.contentColor = color;
-        this.contentColorSet = true;
-        return this;
-    }
-
-    public Builder contentColorRes(@ColorRes int colorRes) {
-        contentColor(this.context.getResources().getColor(colorRes));
-        return this;
-    }
-
-    public Builder contentColorAttr(@AttrRes int colorAttr) {
-        contentColor(DialogUtils.resolveColor(this.context, colorAttr));
-        return this;
-    }
-
-    public Builder content(@StringRes int contentRes) {
-        content(this.context.getString(contentRes));
-        return this;
-    }
-
-    public Builder content(CharSequence content) {
-        this.content = content;
-        return this;
-    }
-
-    public Builder content(@StringRes int contentRes, Object... formatArgs) {
-        content(this.context.getString(contentRes, formatArgs));
-        return this;
-    }
-
-    public Builder contentGravity(@NonNull GravityEnum gravity) {
-        this.contentGravity = gravity;
-        return this;
-    }
-
-    public Builder contentLineSpacing(float multiplier) {
-        this.contentLineSpacingMultiplier = multiplier;
-        return this;
-    }
-
-    public Builder items(@ArrayRes int itemsRes) {
-        items(this.context.getResources().getTextArray(itemsRes));
-        return this;
-    }
-
-    public Builder items(@NonNull CharSequence[] items) {
-        this.items = items;
-        return this;
-    }
-
-    public Builder itemsCallback(@NonNull ListCallback callback) {
-        this.listCallback = callback;
-        this.listCallbackSingleChoice = null;
-        this.listCallbackMultiChoice = null;
-        return this;
-    }
-
-    /**
-     * Pass anything below 0 (such as -1) for the selected index to leave all options unselected initially.
-     * Otherwise pass the index of an item that will be selected initially.
-     *
-     * @param selectedIndex The checkbox index that will be selected initially.
-     * @param callback      The callback that will be called when the presses the positive button.
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallbackSingleChoice callback) {
-        this.selectedIndex = selectedIndex;
-        this.listCallback = null;
-        this.listCallbackSingleChoice = callback;
-        this.listCallbackMultiChoice = null;
-        return this;
-    }
-
-    /**
-     * By default, the single choice callback is only called when the user clicks the positive button
-     * or if there are no buttons. Call this to force it to always call on item clicks even if the
-     * positive button exists.
-     *
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder alwaysCallSingleChoiceCallback() {
-        this.alwaysCallSingleChoiceCallback = true;
-        return this;
-    }
-
-    /**
-     * Pass null for the selected indices to leave all options unselected initially. Otherwise pass
-     * an array of indices that will be selected initially.
-     *
-     * @param selectedIndices The radio button indices that will be selected initially.
-     * @param callback        The callback that will be called when the presses the positive button.
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
-        this.selectedIndices = selectedIndices;
-        this.listCallback = null;
-        this.listCallbackSingleChoice = null;
-        this.listCallbackMultiChoice = callback;
-        return this;
-    }
-
-    /**
-     * By default, the multi choice callback is only called when the user clicks the positive button
-     * or if there are no buttons. Call this to force it to always call on item clicks even if the
-     * positive button exists.
-     *
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder alwaysCallMultiChoiceCallback() {
-        this.alwaysCallMultiChoiceCallback = true;
-        return this;
-    }
-
-    public Builder positiveText(@StringRes int postiveRes) {
-        positiveText(this.context.getString(postiveRes));
-        return this;
-    }
-
-    public Builder positiveText(@NonNull CharSequence message) {
-        this.positiveText = message;
-        return this;
-    }
-
-    public Builder neutralText(@StringRes int neutralRes) {
-        return neutralText(this.context.getString(neutralRes));
-    }
-
-    public Builder neutralText(@NonNull CharSequence message) {
-        this.neutralText = message;
-        return this;
-    }
-
-    public Builder negativeText(@StringRes int negativeRes) {
-        return negativeText(this.context.getString(negativeRes));
-    }
-
-    public Builder negativeText(@NonNull CharSequence message) {
-        this.negativeText = message;
-        return this;
-    }
-
-    public Builder listSelector(@DrawableRes int selectorRes) {
-        this.listSelector = selectorRes;
-        return this;
-    }
-
-    public Builder btnSelectorStacked(@DrawableRes int selectorRes) {
-        this.btnSelectorStacked = selectorRes;
-        return this;
-    }
-
-    public Builder btnSelector(@DrawableRes int selectorRes) {
-        this.btnSelectorPositive = selectorRes;
-        this.btnSelectorNeutral = selectorRes;
-        this.btnSelectorNegative = selectorRes;
-        return this;
-    }
-
-    public Builder btnSelector(@DrawableRes int selectorRes, @NonNull DialogAction which) {
-        switch (which) {
-            default:
-                this.btnSelectorPositive = selectorRes;
-                break;
-            case NEUTRAL:
-                this.btnSelectorNeutral = selectorRes;
-                break;
-            case NEGATIVE:
-                this.btnSelectorNegative = selectorRes;
-                break;
+        /**
+         * Sets the gravity used for the text in stacked action buttons. By default, it's #{@link GravityEnum#END}.
+         *
+         * @param gravity The gravity to use.
+         * @return The Builder instance so calls can be chained.
+         */
+        public Builder btnStackedGravity(@NonNull GravityEnum gravity) {
+            this.btnStackedGravity = gravity;
+            return this;
         }
-        return this;
-    }
 
-    /**
-     * Sets the gravity used for the text in stacked action buttons. By default, it's #{@link GravityEnum#END}.
-     *
-     * @param gravity The gravity to use.
-     * @return The Builder instance so calls can be chained.
-     */
-    public Builder btnStackedGravity(@NonNull GravityEnum gravity) {
-        this.btnStackedGravity = gravity;
-        return this;
-    }
-
-    /**
-     * Use {@link #customView(int, boolean)} instead.
-     */
-    @Deprecated
-    public Builder customView(@LayoutRes int layoutRes) {
-        return customView(layoutRes, true);
-    }
-
-    public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
-        LayoutInflater li = LayoutInflater.from(this.context);
-        return customView(li.inflate(layoutRes, null), wrapInScrollView);
-    }
-
-    /**
-     * Use {@link #customView(android.view.View, boolean)} instead.
-     */
-    @Deprecated
-    public Builder customView(@NonNull View view) {
-        return customView(view, true);
-    }
-
-    public Builder customView(@NonNull View view, boolean wrapInScrollView) {
-        this.customView = view;
-        this.wrapCustomViewInScroll = wrapInScrollView;
-        return this;
-    }
-
-    /**
-     * Makes this dialog a progress dialog.
-     *
-     * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
-     * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
-     * @return An instance of the Builder so calls can be chained.
-     */
-    public Builder progress(boolean indeterminate, int max) {
-        if (indeterminate) {
-            this.mIndeterminateProgress = true;
-            this.mProgress = -2;
-        } else {
-            this.mIndeterminateProgress = false;
-            this.mProgress = -1;
-            this.mProgressMax = max;
+        /**
+         * Use {@link #customView(int, boolean)} instead.
+         */
+        @Deprecated
+        public Builder customView(@LayoutRes int layoutRes) {
+            return customView(layoutRes, true);
         }
-        return this;
-    }
 
-    /**
-     * Makes this dialog a progress dialog.
-     *
-     * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
-     * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
-     * @param showMinMax    For determinate dialogs, the min and max will be displayed to the left (start) of the progress bar, e.g. 50/100.
-     * @return An instance of the Builder so calls can be chained.
-     */
-    public Builder progress(boolean indeterminate, int max, boolean showMinMax) {
-        this.mShowMinMax = showMinMax;
-        return progress(indeterminate, max);
-    }
-
-    public Builder positiveColor(int color) {
-        this.positiveColor = color;
-        return this;
-    }
-
-    public Builder positiveColorRes(@ColorRes int colorRes) {
-        positiveColor(this.context.getResources().getColor(colorRes));
-        return this;
-    }
-
-    public Builder positiveColorAttr(@AttrRes int colorAttr) {
-        positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
-        return this;
-    }
-
-    public Builder negativeColor(int color) {
-        this.negativeColor = color;
-        return this;
-    }
-
-    public Builder negativeColorRes(@ColorRes int colorRes) {
-        negativeColor(this.context.getResources().getColor(colorRes));
-        return this;
-    }
-
-    public Builder negativeColorAttr(@AttrRes int colorAttr) {
-        negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
-        return this;
-    }
-
-    public Builder neutralColor(int color) {
-        this.neutralColor = color;
-        return this;
-    }
-
-    public Builder neutralColorRes(@ColorRes int colorRes) {
-        return neutralColor(this.context.getResources().getColor(colorRes));
-    }
-
-    public Builder neutralColorAttr(@AttrRes int colorAttr) {
-        return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
-    }
-
-    public Builder dividerColor(int color) {
-        this.dividerColor = color;
-        return this;
-    }
-
-    public Builder dividerColorRes(@ColorRes int colorRes) {
-        return dividerColor(this.context.getResources().getColor(colorRes));
-    }
-
-    public Builder dividerColorAttr(@AttrRes int colorAttr) {
-        return dividerColor(DialogUtils.resolveColor(this.context, colorAttr));
-    }
-
-    public Builder backgroundColor(int color) {
-        this.backgroundColor = color;
-        return this;
-    }
-
-    public Builder backgroundColorRes(@ColorRes int colorRes) {
-        return backgroundColor(this.context.getResources().getColor(colorRes));
-    }
-
-    public Builder backgroundColorAttr(@AttrRes int colorAttr) {
-        return backgroundColor(DialogUtils.resolveColor(this.context, colorAttr));
-    }
-
-    public Builder itemColor(int color) {
-        this.itemColor = color;
-        this.itemColorSet = true;
-        return this;
-    }
-
-    public Builder itemColorRes(@ColorRes int colorRes) {
-        return itemColor(this.context.getResources().getColor(colorRes));
-    }
-
-    public Builder itemColorAttr(@AttrRes int colorAttr) {
-        return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
-    }
-
-    public Builder callback(@NonNull ButtonCallback callback) {
-        this.callback = callback;
-        return this;
-    }
-
-    public Builder theme(@NonNull Theme theme) {
-        this.theme = theme;
-        return this;
-    }
-
-    public Builder cancelable(boolean cancelable) {
-        this.cancelable = cancelable;
-        return this;
-    }
-
-    /**
-     * This defaults to true. If set to false, the dialog will not automatically be dismissed
-     * when an action button is pressed, and not automatically dismissed when the user selects
-     * a list item.
-     *
-     * @param dismiss Whether or not to dismiss the dialog automatically.
-     * @return The Builder instance so you can chain calls to it.
-     */
-    public Builder autoDismiss(boolean dismiss) {
-        this.autoDismiss = dismiss;
-        return this;
-    }
-
-    /**
-     * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
-     *
-     * @param adapter The adapter to set to the list.
-     * @return This Builder object to allow for chaining of calls to set methods
-     * @deprecated Use {@link #adapter(ListAdapter, ListCallback)} instead.
-     */
-    @Deprecated
-    public Builder adapter(@NonNull ListAdapter adapter) {
-        this.adapter = adapter;
-        return this;
-    }
-
-    /**
-     * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
-     *
-     * @param adapter  The adapter to set to the list.
-     * @param callback The callback invoked when an item in the list is selected.
-     * @return This Builder object to allow for chaining of calls to set methods
-     */
-    public Builder adapter(@NonNull ListAdapter adapter, ListCallback callback) {
-        this.adapter = adapter;
-        this.listCallbackCustom = callback;
-        return this;
-    }
-
-    public Builder limitIconToDefaultSize() {
-        this.limitIconToDefaultSize = true;
-        return this;
-    }
-
-    public Builder maxIconSize(int maxIconSize) {
-        this.maxIconSize = maxIconSize;
-        return this;
-    }
-
-    public Builder maxIconSizeRes(@DimenRes int maxIconSizeRes) {
-        return maxIconSize((int) this.context.getResources().getDimension(maxIconSizeRes));
-    }
-
-    public Builder showListener(@NonNull OnShowListener listener) {
-        this.showListener = listener;
-        return this;
-    }
-
-    public Builder dismissListener(@NonNull OnDismissListener listener) {
-        this.dismissListener = listener;
-        return this;
-    }
-
-    public Builder cancelListener(@NonNull OnCancelListener listener) {
-        this.cancelListener = listener;
-        return this;
-    }
-
-    public Builder keyListener(@NonNull OnKeyListener listener) {
-        this.keyListener = listener;
-        return this;
-    }
-
-    public Builder forceStacking(boolean stacked) {
-        this.forceStacking = stacked;
-        return this;
-    }
-
-    public MaterialDialog build() {
-        if ((content == null || content.toString().trim().length() == 0) &&
-                title != null && (items == null || items.length == 0) &&
-                customView == null && adapter == null) {
-            this.content = this.title;
-            this.title = null;
+        public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
+            LayoutInflater li = LayoutInflater.from(this.context);
+            return customView(li.inflate(layoutRes, null), wrapInScrollView);
         }
-        return new MaterialDialog(this);
-    }
 
-    public MaterialDialog show() {
-        MaterialDialog dialog = build();
-        dialog.show();
-        return dialog;
+        /**
+         * Use {@link #customView(android.view.View, boolean)} instead.
+         */
+        @Deprecated
+        public Builder customView(@NonNull View view) {
+            return customView(view, true);
+        }
+
+        public Builder customView(@NonNull View view, boolean wrapInScrollView) {
+            this.customView = view;
+            this.wrapCustomViewInScroll = wrapInScrollView;
+            return this;
+        }
+
+        /**
+         * Makes this dialog a progress dialog.
+         *
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder progress(boolean indeterminate, int max) {
+            if (indeterminate) {
+                this.mIndeterminateProgress = true;
+                this.mProgress = -2;
+            } else {
+                this.mIndeterminateProgress = false;
+                this.mProgress = -1;
+                this.mProgressMax = max;
+            }
+            return this;
+        }
+
+        /**
+         * Makes this dialog a progress dialog.
+         *
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
+         * @param showMinMax    For determinate dialogs, the min and max will be displayed to the left (start) of the progress bar, e.g. 50/100.
+         * @return An instance of the Builder so calls can be chained.
+         */
+        public Builder progress(boolean indeterminate, int max, boolean showMinMax) {
+            this.mShowMinMax = showMinMax;
+            return progress(indeterminate, max);
+        }
+
+        public Builder positiveColor(int color) {
+            this.positiveColor = color;
+            return this;
+        }
+
+        public Builder positiveColorRes(@ColorRes int colorRes) {
+            positiveColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder positiveColorAttr(@AttrRes int colorAttr) {
+            positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return this;
+        }
+
+        public Builder negativeColor(int color) {
+            this.negativeColor = color;
+            return this;
+        }
+
+        public Builder negativeColorRes(@ColorRes int colorRes) {
+            negativeColor(this.context.getResources().getColor(colorRes));
+            return this;
+        }
+
+        public Builder negativeColorAttr(@AttrRes int colorAttr) {
+            negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return this;
+        }
+
+        public Builder neutralColor(int color) {
+            this.neutralColor = color;
+            return this;
+        }
+
+        public Builder neutralColorRes(@ColorRes int colorRes) {
+            return neutralColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder neutralColorAttr(@AttrRes int colorAttr) {
+            return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        public Builder dividerColor(int color) {
+            this.dividerColor = color;
+            return this;
+        }
+
+        public Builder dividerColorRes(@ColorRes int colorRes) {
+            return dividerColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder dividerColorAttr(@AttrRes int colorAttr) {
+            return dividerColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        public Builder backgroundColor(int color) {
+            this.backgroundColor = color;
+            return this;
+        }
+
+        public Builder backgroundColorRes(@ColorRes int colorRes) {
+            return backgroundColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder backgroundColorAttr(@AttrRes int colorAttr) {
+            return backgroundColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        public Builder itemColor(int color) {
+            this.itemColor = color;
+            this.itemColorSet = true;
+            return this;
+        }
+
+        public Builder itemColorRes(@ColorRes int colorRes) {
+            return itemColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder itemColorAttr(@AttrRes int colorAttr) {
+            return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        public Builder callback(@NonNull ButtonCallback callback) {
+            this.callback = callback;
+            return this;
+        }
+
+        public Builder theme(@NonNull Theme theme) {
+            this.theme = theme;
+            return this;
+        }
+
+        public Builder cancelable(boolean cancelable) {
+            this.cancelable = cancelable;
+            return this;
+        }
+
+        /**
+         * This defaults to true. If set to false, the dialog will not automatically be dismissed
+         * when an action button is pressed, and not automatically dismissed when the user selects
+         * a list item.
+         *
+         * @param dismiss Whether or not to dismiss the dialog automatically.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder autoDismiss(boolean dismiss) {
+            this.autoDismiss = dismiss;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @param adapter The adapter to set to the list.
+         * @return This Builder object to allow for chaining of calls to set methods
+         * @deprecated Use {@link #adapter(ListAdapter, ListCallback)} instead.
+         */
+        @Deprecated
+        public Builder adapter(@NonNull ListAdapter adapter) {
+            this.adapter = adapter;
+            return this;
+        }
+
+        /**
+         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         *
+         * @param adapter  The adapter to set to the list.
+         * @param callback The callback invoked when an item in the list is selected.
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder adapter(@NonNull ListAdapter adapter, ListCallback callback) {
+            this.adapter = adapter;
+            this.listCallbackCustom = callback;
+            return this;
+        }
+
+        public Builder limitIconToDefaultSize() {
+            this.limitIconToDefaultSize = true;
+            return this;
+        }
+
+        public Builder maxIconSize(int maxIconSize) {
+            this.maxIconSize = maxIconSize;
+            return this;
+        }
+
+        public Builder maxIconSizeRes(@DimenRes int maxIconSizeRes) {
+            return maxIconSize((int) this.context.getResources().getDimension(maxIconSizeRes));
+        }
+
+        public Builder showListener(@NonNull OnShowListener listener) {
+            this.showListener = listener;
+            return this;
+        }
+
+        public Builder dismissListener(@NonNull OnDismissListener listener) {
+            this.dismissListener = listener;
+            return this;
+        }
+
+        public Builder cancelListener(@NonNull OnCancelListener listener) {
+            this.cancelListener = listener;
+            return this;
+        }
+
+        public Builder keyListener(@NonNull OnKeyListener listener) {
+            this.keyListener = listener;
+            return this;
+        }
+
+        public Builder forceStacking(boolean stacked) {
+            this.forceStacking = stacked;
+            return this;
+        }
+
+        public MaterialDialog build() {
+            if ((content == null || content.toString().trim().length() == 0) &&
+                    title != null && (items == null || items.length == 0) &&
+                    customView == null && adapter == null) {
+                this.content = this.title;
+                this.title = null;
+            }
+            return new MaterialDialog(this);
+        }
+
+        public MaterialDialog show() {
+            MaterialDialog dialog = build();
+            dialog.show();
+            return dialog;
+        }
     }
-}
 
     @Override
     public void show() {
@@ -1677,101 +1681,101 @@ public static class Builder {
         }
     }
 
-protected enum ListType {
-    REGULAR, SINGLE, MULTI;
+    protected enum ListType {
+        REGULAR, SINGLE, MULTI;
 
-    public static int getLayoutForType(ListType type) {
-        switch (type) {
-            case REGULAR:
-                return R.layout.md_listitem;
-            case SINGLE:
-                return R.layout.md_listitem_singlechoice;
-            case MULTI:
-                return R.layout.md_listitem_multichoice;
-            default:
-                throw new IllegalArgumentException("Not a valid list type");
+        public static int getLayoutForType(ListType type) {
+            switch (type) {
+                case REGULAR:
+                    return R.layout.md_listitem;
+                case SINGLE:
+                    return R.layout.md_listitem_singlechoice;
+                case MULTI:
+                    return R.layout.md_listitem_multichoice;
+                default:
+                    throw new IllegalArgumentException("Not a valid list type");
+            }
         }
     }
-}
 
-/**
- * A callback used for regular list dialogs.
- */
-public interface ListCallback {
-    void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
-}
-
-/**
- * A callback used for multi choice (check box) list dialogs.
- */
-public interface ListCallbackSingleChoice {
     /**
-     * Return true to allow the radio button to be checked, if the alwaysCallSingleChoice() option is used.
-     *
-     * @param dialog The dialog of which a list item was selected.
-     * @param which  The index of the item that was selected.
-     * @param text   The text of the  item that was selected.
-     * @return True to allow the radio button to be selected.
+     * A callback used for regular list dialogs.
      */
-    boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
-}
+    public interface ListCallback {
+        void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
+    }
 
-/**
- * A callback used for multi choice (check box) list dialogs.
- */
-public interface ListCallbackMultiChoice {
     /**
-     * Return true to allow the check box to be checked, if the alwaysCallSingleChoice() option is used.
-     *
-     * @param dialog The dialog of which a list item was selected.
-     * @param which  The indices of the items that were selected.
-     * @param text   The text of the items that were selected.
-     * @return True to allow the checkbox to be selected.
+     * A callback used for multi choice (check box) list dialogs.
      */
-    boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
-}
-
-/**
- * Override these as needed, so no needing to sub empty methods from an interface
- */
-public static abstract class ButtonCallback {
-
-    public void onPositive(MaterialDialog dialog) {
+    public interface ListCallbackSingleChoice {
+        /**
+         * Return true to allow the radio button to be checked, if the alwaysCallSingleChoice() option is used.
+         *
+         * @param dialog The dialog of which a list item was selected.
+         * @param which  The index of the item that was selected.
+         * @param text   The text of the  item that was selected.
+         * @return True to allow the radio button to be selected.
+         */
+        boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
     }
 
-    public void onNegative(MaterialDialog dialog) {
+    /**
+     * A callback used for multi choice (check box) list dialogs.
+     */
+    public interface ListCallbackMultiChoice {
+        /**
+         * Return true to allow the check box to be checked, if the alwaysCallSingleChoice() option is used.
+         *
+         * @param dialog The dialog of which a list item was selected.
+         * @param which  The indices of the items that were selected.
+         * @param text   The text of the items that were selected.
+         * @return True to allow the checkbox to be selected.
+         */
+        boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text);
     }
 
-    public void onNeutral(MaterialDialog dialog) {
-    }
+    /**
+     * Override these as needed, so no needing to sub empty methods from an interface
+     */
+    public static abstract class ButtonCallback {
 
-    public ButtonCallback() {
-        super();
-    }
+        public void onPositive(MaterialDialog dialog) {
+        }
 
-    @Override
-    protected final Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+        public void onNegative(MaterialDialog dialog) {
+        }
 
-    @Override
-    public final boolean equals(Object o) {
-        return super.equals(o);
-    }
+        public void onNeutral(MaterialDialog dialog) {
+        }
 
-    @Override
-    protected final void finalize() throws Throwable {
-        super.finalize();
-    }
+        public ButtonCallback() {
+            super();
+        }
 
-    @Override
-    public final int hashCode() {
-        return super.hashCode();
-    }
+        @Override
+        protected final Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
 
-    @Override
-    public final String toString() {
-        return super.toString();
+        @Override
+        public final boolean equals(Object o) {
+            return super.equals(o);
+        }
+
+        @Override
+        protected final void finalize() throws Throwable {
+            super.finalize();
+        }
+
+        @Override
+        public final int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public final String toString() {
+            return super.toString();
+        }
     }
-}
 }
