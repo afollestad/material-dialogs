@@ -91,6 +91,16 @@ class DialogInit {
         dialog.content = (TextView) dialog.view.findViewById(R.id.content);
         dialog.listView = (ListView) dialog.view.findViewById(R.id.contentListView);
 
+        // Button views initially used by checkIfStackingNeeded()
+        dialog.positiveButton = dialog.view.findViewById(R.id.buttonDefaultPositive);
+        dialog.neutralButton = dialog.view.findViewById(R.id.buttonDefaultNeutral);
+        dialog.negativeButton = dialog.view.findViewById(R.id.buttonDefaultNegative);
+
+        // Set up the initial visibility of action buttons based on whether or not text was set
+        dialog.positiveButton.setVisibility(builder.positiveText != null ? View.VISIBLE : View.GONE);
+        dialog.neutralButton.setVisibility(builder.neutralText != null ? View.VISIBLE : View.GONE);
+        dialog.negativeButton.setVisibility(builder.negativeText != null ? View.VISIBLE : View.GONE);
+
         // Setup icon
         if (builder.icon != null) {
             dialog.icon.setVisibility(View.VISIBLE);
@@ -256,7 +266,6 @@ class DialogInit {
 
         // Other internal initialization
         dialog.updateFramePadding();
-        dialog.invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
         dialog._setOnShowListenerInternal();
         dialog._setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();

@@ -73,9 +73,9 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
 
-    private View positiveButton;
-    private View neutralButton;
-    private View negativeButton;
+    protected View positiveButton;
+    protected View neutralButton;
+    protected View negativeButton;
     protected boolean isStacked;
     protected int defaultItemColor;
     protected ListType listType;
@@ -233,7 +233,7 @@ public class MaterialDialog extends DialogBase implements
                             contentHorizontalPadding, contentVerticalPadding);
                 }
 
-// Same effect as when there's a ListView. Padding below title is reduced for divider.
+                // Same effect as when there's a ListView. Padding below title is reduced for divider.
                 final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
                 titleFrame.setPadding(titleFrame.getPaddingLeft(),
                         titleFrame.getPaddingTop(),
@@ -508,23 +508,29 @@ public class MaterialDialog extends DialogBase implements
             return;
         } else if (mBuilder.forceStacking) {
             isStacked = true;
-            invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
-            return;
+        } else {
+            isStacked = false;
+            int buttonsWidth = 0;
+
+            positiveButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            neutralButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            negativeButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+
+            if (mBuilder.positiveText != null) buttonsWidth += positiveButton.getMeasuredWidth();
+            if (mBuilder.neutralText != null) buttonsWidth += neutralButton.getMeasuredWidth();
+            if (mBuilder.negativeText != null) buttonsWidth += negativeButton.getMeasuredWidth();
+
+            final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getWidth();
+            isStacked = buttonsWidth > buttonFrameWidth;
         }
-        isStacked = false;
-        int buttonsWidth = 0;
 
-        positiveButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        neutralButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        negativeButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-
-        if (mBuilder.positiveText != null) buttonsWidth += positiveButton.getMeasuredWidth();
-        if (mBuilder.neutralText != null) buttonsWidth += neutralButton.getMeasuredWidth();
-        if (mBuilder.negativeText != null) buttonsWidth += negativeButton.getMeasuredWidth();
-
-        final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getWidth();
-        isStacked = buttonsWidth > buttonFrameWidth;
-        invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
+        if (isStacked) {
+            // Since isStacked is now true, invalidate the initial visibilityy states of the action button views
+            positiveButton.setVisibility(mBuilder.positiveText != null ? View.VISIBLE : View.GONE);
+            neutralButton.setVisibility(mBuilder.neutralText != null ? View.VISIBLE : View.GONE);
+            negativeButton.setVisibility(mBuilder.negativeText != null ? View.VISIBLE : View.GONE);
+        }
+        invalidateActions();
     }
 
     protected final Drawable getListSelector() {
@@ -573,7 +579,7 @@ public class MaterialDialog extends DialogBase implements
      * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
      * and sets their properties (such as height, text color, etc.).
      */
-    protected final boolean invalidateActions(int mask) {
+    public final boolean invalidateActions() {
         if (!hasActionButtons()) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -592,76 +598,62 @@ public class MaterialDialog extends DialogBase implements
 
         positiveButton = view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
-        if ((mask & DialogActionMask.POSITIVE) == DialogActionMask.POSITIVE) {
-            if (mBuilder.positiveText != null) {
-                TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
-                setTypeface(positiveTextView, mBuilder.mediumFont);
-                positiveTextView.setText(mBuilder.positiveText);
-                positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
-                setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
-                positiveButton.setTag(POSITIVE);
-                positiveButton.setOnClickListener(this);
-                if (isStacked)
-                    positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-            } else {
-                positiveButton.setVisibility(View.GONE);
-            }
+        if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
+            TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
+            setTypeface(positiveTextView, mBuilder.mediumFont);
+            positiveTextView.setText(mBuilder.positiveText);
+            positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
+            setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
+            positiveButton.setTag(POSITIVE);
+            positiveButton.setOnClickListener(this);
+            if (isStacked)
+                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
         }
 
         neutralButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
-        if ((mask & DialogActionMask.NEUTRAL) == DialogActionMask.NEUTRAL) {
-            if (mBuilder.neutralText != null) {
-                TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
-                setTypeface(neutralTextView, mBuilder.mediumFont);
-                neutralButton.setVisibility(View.VISIBLE);
-                neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-                setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
-                neutralTextView.setText(mBuilder.neutralText);
-                neutralButton.setTag(NEUTRAL);
-                neutralButton.setOnClickListener(this);
-                if (isStacked)
-                    neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-            } else {
-                neutralButton.setVisibility(View.GONE);
-            }
+        if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE) {
+            TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
+            setTypeface(neutralTextView, mBuilder.mediumFont);
+            neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
+            setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
+            neutralTextView.setText(mBuilder.neutralText);
+            neutralButton.setTag(NEUTRAL);
+            neutralButton.setOnClickListener(this);
+            if (isStacked)
+                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
         }
 
         negativeButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
-        if ((mask & DialogActionMask.NEGATIVE) == DialogActionMask.NEGATIVE) {
-            if (mBuilder.negativeText != null) {
-                TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
-                setTypeface(negativeTextView, mBuilder.mediumFont);
-                negativeButton.setVisibility(View.VISIBLE);
-                negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
-                setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
-                negativeTextView.setText(mBuilder.negativeText);
-                negativeButton.setTag(NEGATIVE);
-                negativeButton.setOnClickListener(this);
+        if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE) {
+            TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
+            setTypeface(negativeTextView, mBuilder.mediumFont);
+            negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
+            setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
+            negativeTextView.setText(mBuilder.negativeText);
+            negativeButton.setTag(NEGATIVE);
+            negativeButton.setOnClickListener(this);
 
-                if (!isStacked) {
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
-                    if (mBuilder.positiveText != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
-                        } else {
-                            params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
-                        }
+            if (!isStacked) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
+                if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
                     } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                        } else {
-                            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                        }
+                        params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
                     }
-                    negativeButton.setLayoutParams(params);
                 } else {
-                    negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    } else {
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    }
                 }
+                negativeButton.setLayoutParams(params);
             } else {
-                negativeButton.setVisibility(View.GONE);
+                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
             }
         }
 
@@ -1458,28 +1450,27 @@ public class MaterialDialog extends DialogBase implements
 
     /**
      * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
+     * Setting an action button's text to null is a shortcut for hiding it, too.
      *
      * @param which The action button to update.
      * @param title The new title of the action button.
      */
     public final void setActionButton(@NonNull DialogAction which, CharSequence title) {
         switch (which) {
-            default: {
+            default:
                 mBuilder.positiveText = title;
-                invalidateActions(DialogActionMask.POSITIVE);
+                if (title == null) positiveButton.setVisibility(View.GONE);
                 break;
-            }
-            case NEUTRAL: {
+            case NEUTRAL:
                 mBuilder.neutralText = title;
-                invalidateActions(DialogActionMask.NEUTRAL);
+                if (title == null) neutralButton.setVisibility(View.GONE);
                 break;
-            }
-            case NEGATIVE: {
+            case NEGATIVE:
                 mBuilder.negativeText = title;
-                invalidateActions(DialogActionMask.NEGATIVE);
+                if (title == null) negativeButton.setVisibility(View.GONE);
                 break;
-            }
         }
+        invalidateActions();
     }
 
     /**
@@ -1508,9 +1499,12 @@ public class MaterialDialog extends DialogBase implements
      */
     public final int numberOfActionButtons() {
         int number = 0;
-        if (mBuilder.positiveText != null) number++;
-        if (mBuilder.neutralText != null) number++;
-        if (mBuilder.negativeText != null) number++;
+        if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE)
+            number++;
+        if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE)
+            number++;
+        if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE)
+            number++;
         return number;
     }
 
