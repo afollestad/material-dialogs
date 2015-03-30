@@ -298,16 +298,11 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Constructs the dialog's list content and sets up click listeners.
+     * Sets the dialog ListView's adapter and it's item click listener.
      */
-    private void invalidateList() {
+    protected final void invalidateList() {
         if ((mBuilder.items == null || mBuilder.items.length == 0) && mBuilder.adapter == null)
             return;
-
-        // Hide content
-        view.findViewById(R.id.contentScrollView).setVisibility(mBuilder.content != null
-                && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
-
         // Set up list with adapter
         listView.setAdapter(mBuilder.adapter);
         if (listType != null || mBuilder.listCallbackCustom != null)
@@ -505,6 +500,8 @@ public class MaterialDialog extends DialogBase implements
      */
     private void checkIfStackingNeeded() {
         if (numberOfActionButtons() <= 1) {
+            // Invalidating makes sure all button frames are hidden
+            invalidateActions();
             return;
         } else if (mBuilder.forceStacking) {
             isStacked = true;
@@ -579,8 +576,6 @@ public class MaterialDialog extends DialogBase implements
      * Invalidates the positive/neutral/negative action buttons. Hides the action button frames if
      * no action buttons are visible. Updates the action button references based on whether stacking
      * is enabled. Sets up text color, selectors, and other properties of visible action buttons.
-     *
-     * Also causes an invalidation of the dialog list.
      */
     public final boolean invalidateActions() {
         if (!hasActionButtons()) {
@@ -659,8 +654,6 @@ public class MaterialDialog extends DialogBase implements
                 negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
             }
         }
-
-        invalidateList();
         return true;
     }
 
