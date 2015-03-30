@@ -20,12 +20,13 @@ public class RecyclerUtil {
         if (lm instanceof LinearLayoutManager) {
             LinearLayoutManager llm = (LinearLayoutManager) lm;
             lastVisible = llm.findLastVisibleItemPosition();
-        } else if (lm instanceof GridLayoutManager) {
-            GridLayoutManager glm = (GridLayoutManager) lm;
-            lastVisible = glm.findLastVisibleItemPosition();
-        } else {
-            throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
-        }
+        } else //noinspection ConstantConditions
+            if (lm instanceof GridLayoutManager) {
+                GridLayoutManager glm = (GridLayoutManager) lm;
+                lastVisible = glm.findLastVisibleItemPosition();
+            } else {
+                throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager and GridLayoutManager. Please report any new layout managers.");
+            }
 
         if (lastVisible == -1)
             return false;

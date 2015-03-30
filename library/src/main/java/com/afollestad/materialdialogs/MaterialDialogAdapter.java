@@ -12,8 +12,8 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 
 class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
-    final int itemColor;
-    final MaterialDialog dialog;
+    private final int itemColor;
+    private final MaterialDialog dialog;
 
     public MaterialDialogAdapter(MaterialDialog dialog, int resource, int textViewResourceId, CharSequence[] objects) {
         super(dialog.mBuilder.context, resource, textViewResourceId, objects);

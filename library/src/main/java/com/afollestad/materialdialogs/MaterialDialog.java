@@ -22,6 +22,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -72,9 +73,9 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
 
-    protected View positiveButton;
-    protected View neutralButton;
-    protected View negativeButton;
+    private View positiveButton;
+    private View neutralButton;
+    private View negativeButton;
     protected boolean isStacked;
     protected int defaultItemColor;
     protected ListType listType;
@@ -125,10 +126,12 @@ public class MaterialDialog extends DialogBase implements
         listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    //noinspection deprecation
                     listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                else
+                } else {
                     listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
 
                 if (listType == ListType.SINGLE || listType == ListType.MULTI) {
                     int selectedIndex;
@@ -476,13 +479,13 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public static class NotImplementedException extends Error {
-        public NotImplementedException(String message) {
+        public NotImplementedException(@SuppressWarnings("SameParameterValue") String message) {
             super(message);
         }
     }
 
     public static class DialogException extends WindowManager.BadTokenException {
-        public DialogException(String message) {
+        public DialogException(@SuppressWarnings("SameParameterValue") String message) {
             super(message);
         }
     }
@@ -526,7 +529,7 @@ public class MaterialDialog extends DialogBase implements
 
     protected final Drawable getListSelector() {
         if (mBuilder.listSelector != 0)
-            return mBuilder.context.getResources().getDrawable(mBuilder.listSelector);
+            return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.listSelector, null);
         final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
         if (d != null) return d;
         return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
@@ -535,7 +538,7 @@ public class MaterialDialog extends DialogBase implements
     private Drawable getButtonSelector(DialogAction which) {
         if (isStacked) {
             if (mBuilder.btnSelectorStacked != 0)
-                return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorStacked);
+                return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorStacked, null);
             final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_stacked_selector);
             if (d != null) return d;
             return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
@@ -543,21 +546,21 @@ public class MaterialDialog extends DialogBase implements
             switch (which) {
                 default: {
                     if (mBuilder.btnSelectorPositive != 0)
-                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorPositive);
+                        ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
                     return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
                 }
                 case NEUTRAL: {
                     if (mBuilder.btnSelectorNeutral != 0)
-                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorNeutral);
+                        ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
                     return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
                 }
                 case NEGATIVE: {
                     if (mBuilder.btnSelectorNegative != 0)
-                        return mBuilder.context.getResources().getDrawable(mBuilder.btnSelectorNegative);
+                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNegative, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
                     return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
@@ -938,7 +941,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder iconRes(@DrawableRes int icon) {
-            this.icon = context.getResources().getDrawable(icon);
+            this.icon = ResourcesCompat.getDrawable(context.getResources(), icon, null);
             return this;
         }
 
@@ -1467,6 +1470,13 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
+     * Retrieves the view representing the dialog as a whole. Be careful with this.
+     */
+    public final View getView() {
+        return view;
+    }
+
+    /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
      *
      * @return The custom view that was passed into the Builder.
@@ -1628,7 +1638,8 @@ public class MaterialDialog extends DialogBase implements
      * @return The ListView instance used by this dialog, or null if not using a list.
      */
     @Nullable
-    public ListView getListView() {
+    @Override
+    public final ListView getListView() {
         return listView;
     }
 

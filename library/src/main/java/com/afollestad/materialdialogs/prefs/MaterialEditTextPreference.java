@@ -70,6 +70,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .callback(callback)
+                .dismissListener(this)
                 .content(getDialogMessage());
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_input, null);
@@ -92,7 +93,6 @@ public class MaterialEditTextPreference extends EditTextPreference {
             mDialog.onRestoreInstanceState(state);
         requestInputMethod(mDialog);
 
-        mDialog.setOnDismissListener(this);
         mDialog.show();
     }
 

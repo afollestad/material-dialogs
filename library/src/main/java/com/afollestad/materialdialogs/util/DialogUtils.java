@@ -11,7 +11,7 @@ import android.support.annotation.AttrRes;
  */
 public class DialogUtils {
 
-    public static int adjustAlpha(int color, float factor) {
+    public static int adjustAlpha(int color, @SuppressWarnings("SameParameterValue") float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
         int red = Color.red(color);
         int green = Color.green(color);
@@ -36,7 +36,7 @@ public class DialogUtils {
         return resolveDrawable(context, attr, null);
     }
 
-    private static Drawable resolveDrawable(Context context, @AttrRes int attr, Drawable fallback) {
+    private static Drawable resolveDrawable(Context context, @AttrRes int attr, @SuppressWarnings("SameParameterValue") Drawable fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             Drawable d = a.getDrawable(0);
@@ -52,7 +52,7 @@ public class DialogUtils {
         return resolveDimension(context, attr, -1);
     }
 
-    public static int resolveDimension(Context context, @AttrRes int attr, int fallback) {
+    private static int resolveDimension(Context context, @AttrRes int attr, int fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getDimensionPixelSize(0, fallback);
