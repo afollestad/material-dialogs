@@ -576,8 +576,11 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
-     * and sets their properties (such as height, text color, etc.).
+     * Invalidates the positive/neutral/negative action buttons. Hides the action button frames if
+     * no action buttons are visible. Updates the action button references based on whether stacking
+     * is enabled. Sets up text color, selectors, and other properties of visible action buttons.
+     *
+     * Also causes an invalidation of the dialog list.
      */
     public final boolean invalidateActions() {
         if (!hasActionButtons()) {
