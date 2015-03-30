@@ -254,7 +254,7 @@ class DialogInit {
 
         // Other internal initialization
         dialog.updateFramePadding();
-        dialog.invalidateActions();
+        dialog.invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
         dialog._setOnShowListenerInternal();
         dialog._setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();

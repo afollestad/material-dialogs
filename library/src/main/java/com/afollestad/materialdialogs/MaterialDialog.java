@@ -505,7 +505,7 @@ public class MaterialDialog extends DialogBase implements
             return;
         } else if (mBuilder.forceStacking) {
             isStacked = true;
-            invalidateActions();
+            invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
             return;
         }
         isStacked = false;
@@ -521,7 +521,7 @@ public class MaterialDialog extends DialogBase implements
 
         final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getWidth();
         isStacked = buttonsWidth > buttonFrameWidth;
-        invalidateActions();
+        invalidateActions(DialogActionMask.POSITIVE | DialogActionMask.NEUTRAL | DialogActionMask.NEGATIVE);
     }
 
     protected final Drawable getListSelector() {
@@ -570,7 +570,7 @@ public class MaterialDialog extends DialogBase implements
      * Invalidates the positive/neutral/negative action buttons. Decides whether they should be visible
      * and sets their properties (such as height, text color, etc.).
      */
-    protected final boolean invalidateActions() {
+    protected final boolean invalidateActions(int mask) {
         if (!hasActionButtons()) {
             // If the dialog is a plain list dialog, no buttons are shown.
             view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
@@ -589,71 +589,77 @@ public class MaterialDialog extends DialogBase implements
 
         positiveButton = view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
-        if (mBuilder.positiveText != null) {
-            TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
-            setTypeface(positiveTextView, mBuilder.mediumFont);
-            positiveTextView.setText(mBuilder.positiveText);
-            positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
-            setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
-            positiveButton.setTag(POSITIVE);
-            positiveButton.setOnClickListener(this);
-            if (isStacked)
-                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-        } else {
-            positiveButton.setVisibility(View.GONE);
+        if ((mask & DialogActionMask.POSITIVE) == DialogActionMask.POSITIVE) {
+            if (mBuilder.positiveText != null) {
+                TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
+                setTypeface(positiveTextView, mBuilder.mediumFont);
+                positiveTextView.setText(mBuilder.positiveText);
+                positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
+                setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
+                positiveButton.setTag(POSITIVE);
+                positiveButton.setOnClickListener(this);
+                if (isStacked)
+                    positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            } else {
+                positiveButton.setVisibility(View.GONE);
+            }
         }
 
         neutralButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
-        if (mBuilder.neutralText != null) {
-            TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
-            setTypeface(neutralTextView, mBuilder.mediumFont);
-            neutralButton.setVisibility(View.VISIBLE);
-            neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-            setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
-            neutralTextView.setText(mBuilder.neutralText);
-            neutralButton.setTag(NEUTRAL);
-            neutralButton.setOnClickListener(this);
-            if (isStacked)
-                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
-        } else {
-            neutralButton.setVisibility(View.GONE);
+        if ((mask & DialogActionMask.NEUTRAL) == DialogActionMask.NEUTRAL) {
+            if (mBuilder.neutralText != null) {
+                TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
+                setTypeface(neutralTextView, mBuilder.mediumFont);
+                neutralButton.setVisibility(View.VISIBLE);
+                neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
+                setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
+                neutralTextView.setText(mBuilder.neutralText);
+                neutralButton.setTag(NEUTRAL);
+                neutralButton.setOnClickListener(this);
+                if (isStacked)
+                    neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+            } else {
+                neutralButton.setVisibility(View.GONE);
+            }
         }
 
         negativeButton = view.findViewById(
                 isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
-        if (mBuilder.negativeText != null) {
-            TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
-            setTypeface(negativeTextView, mBuilder.mediumFont);
-            negativeButton.setVisibility(View.VISIBLE);
-            negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
-            setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
-            negativeTextView.setText(mBuilder.negativeText);
-            negativeButton.setTag(NEGATIVE);
-            negativeButton.setOnClickListener(this);
+        if ((mask & DialogActionMask.NEGATIVE) == DialogActionMask.NEGATIVE) {
+            if (mBuilder.negativeText != null) {
+                TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
+                setTypeface(negativeTextView, mBuilder.mediumFont);
+                negativeButton.setVisibility(View.VISIBLE);
+                negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
+                setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
+                negativeTextView.setText(mBuilder.negativeText);
+                negativeButton.setTag(NEGATIVE);
+                negativeButton.setOnClickListener(this);
 
-            if (!isStacked) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
-                if (mBuilder.positiveText != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
+                if (!isStacked) {
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
+                    if (mBuilder.positiveText != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
+                        } else {
+                            params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                        }
                     } else {
-                        params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                        } else {
+                            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        }
                     }
+                    negativeButton.setLayoutParams(params);
                 } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                    } else {
-                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    }
+                    negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
                 }
-                negativeButton.setLayoutParams(params);
             } else {
-                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                negativeButton.setVisibility(View.GONE);
             }
-        } else {
-            negativeButton.setVisibility(View.GONE);
         }
 
         invalidateList();
@@ -1477,17 +1483,22 @@ public class MaterialDialog extends DialogBase implements
      */
     public final void setActionButton(@NonNull DialogAction which, CharSequence title) {
         switch (which) {
-            default:
+            default: {
                 mBuilder.positiveText = title;
+                invalidateActions(DialogActionMask.POSITIVE);
                 break;
-            case NEUTRAL:
+            }
+            case NEUTRAL: {
                 mBuilder.neutralText = title;
+                invalidateActions(DialogActionMask.NEUTRAL);
                 break;
-            case NEGATIVE:
+            }
+            case NEGATIVE: {
                 mBuilder.negativeText = title;
+                invalidateActions(DialogActionMask.NEGATIVE);
                 break;
+            }
         }
-        invalidateActions();
     }
 
     /**
