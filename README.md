@@ -342,6 +342,8 @@ including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project
 Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
 you're responsible for using padding values that look good with your content.
 
+###### Later Access
+
 If you need to access a View in the custom view after the dialog is built, you can use `getCustomView()` of
 `MaterialDialog`. This is especially useful if you pass a layout resource to the `Builder`, the dialog will
 handle the view inflation for you.
@@ -372,7 +374,7 @@ aren't ttf files, you can use the `typeface(Typeface, Typeface)` Builder method.
 
 ---
 
-### Getting and Setting Action Buttons After Showing
+### Getting and Setting Action Buttons
 
 If you want to get a reference to one of the dialog action buttons after the dialog is built and shown (e.g. to enable or disable buttons):
 
