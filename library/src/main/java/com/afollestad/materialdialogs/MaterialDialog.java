@@ -546,14 +546,14 @@ public class MaterialDialog extends DialogBase implements
             switch (which) {
                 default: {
                     if (mBuilder.btnSelectorPositive != 0)
-                        ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
+                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
                     return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
                 }
                 case NEUTRAL: {
                     if (mBuilder.btnSelectorNeutral != 0)
-                        ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
+                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
                     return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
