@@ -330,7 +330,6 @@ new MaterialDialog.Builder(this)
         .title(R.string.title)
         .customView(R.layout.custom_view, wrapInScrollView)
         .positiveText(R.string.positive)
-        .build()
         .show();
 ```
 
