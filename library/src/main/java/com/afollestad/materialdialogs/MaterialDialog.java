@@ -524,13 +524,13 @@ public class MaterialDialog extends DialogBase implements
             isStacked = buttonsWidth > buttonFrameWidth;
         }
 
+        invalidateActions();
         if (isStacked) {
             // Since isStacked is now true, invalidate the initial visibility states of the action button views
             positiveButton.setVisibility(mBuilder.positiveText != null ? View.VISIBLE : View.GONE);
             neutralButton.setVisibility(mBuilder.neutralText != null ? View.VISIBLE : View.GONE);
             negativeButton.setVisibility(mBuilder.negativeText != null ? View.VISIBLE : View.GONE);
         }
-        invalidateActions();
     }
 
     protected final Drawable getListSelector() {
