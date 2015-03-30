@@ -1135,25 +1135,9 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        /**
-         * Use {@link #customView(int, boolean)} instead.
-         */
-        @Deprecated
-        public Builder customView(@LayoutRes int layoutRes) {
-            return customView(layoutRes, true);
-        }
-
         public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
             LayoutInflater li = LayoutInflater.from(this.context);
             return customView(li.inflate(layoutRes, null), wrapInScrollView);
-        }
-
-        /**
-         * Use {@link #customView(android.view.View, boolean)} instead.
-         */
-        @Deprecated
-        public Builder customView(@NonNull View view) {
-            return customView(view, true);
         }
 
         public Builder customView(@NonNull View view, boolean wrapInScrollView) {
