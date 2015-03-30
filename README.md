@@ -343,6 +343,14 @@ including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project
 Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
 you're responsible for using padding values that look good with your content.
 
+If you need to access a View in the custom view after the dialog is built and shown, you can use `getCustomView()` of
+`MaterialDialog`.
+
+```java
+MaterialDialog dialog = //... initialization via the builder ...
+View view = dialog.getCustomView();
+```
+
 ---
 
 ### Typefaces
@@ -361,6 +369,28 @@ if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets/fonts`, you 
 Note that no extension is used in the name. This method will also handle recycling Typefaces via the `TypefaceHelper` which
 you can use in your own project to avoid duplicate allocations. If you want to load other Typeface files that
 aren't ttf files, you can use the `typeface(Typeface, Typeface)` Builder method.
+
+---
+
+### Getting and Setting Action Buttons After Showing
+
+If you want to get a reference to one of the dialog action buttons after the dialog is built and shown (e.g. to enable or disable buttons):
+
+```java
+MaterialDialog dialog = //... initialization via the builder ...
+View negative = dialog.getActionButton(DialogAction.NEGATIVE);
+View neutral = dialog.getActionButton(DialogAction.NEUTRAL);
+View positive = dialog.getActionButton(DialogAction.POSITIVE);
+```
+
+If you want to update the title of a dialog action button (you can pass a string resource ID in place of the literal string, too):
+
+```java
+MaterialDialog dialog = //... initialization via the builder ...
+dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
+```
+
+Setting an action button's text to null will cause it to be hidden. Do not manually use `setVisibility()` on action button views.
 
 ---
 
@@ -613,37 +643,6 @@ dialogs. See the sample project for details.
 ---
 
 ### Misc
-
-If you need to access a View in the custom view set to a MaterialDialog, you can use `getCustomView()` of
-MaterialDialog. This is especially useful if you pass a layout resource to the Builder.
-
-```java
-MaterialDialog dialog = //... initialization via the builder ...
-View view = dialog.getCustomView();
-```
-
-If you want to get a reference to the title frame (which contains the icon and title, e.g. to change visibility):
-
-```java
-MaterialDialog dialog = //... initialization via the builder ...
-TextView title = dialog.getTitleFrame();
-```
-
-If you want to get a reference to one of the dialog action buttons (e.g. to enable or disable buttons):
-
-```java
-MaterialDialog dialog = //... initialization via the builder ...
-View negative = dialog.getActionButton(DialogAction.NEGATIVE);
-View neutral = dialog.getActionButton(DialogAction.NEUTRAL);
-View positive = dialog.getActionButton(DialogAction.POSITIVE);
-```
-
-If you want to update the title of a dialog action button (you can pass a string resource ID in place of the literal string, too):
-
-```java
-MaterialDialog dialog = //... initialization via the builder ...
-dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
-```
 
 If you don't want the dialog to automatically be dismissed when an action button is pressed or when
 the user selects a list item:
