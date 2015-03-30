@@ -342,8 +342,9 @@ including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project
 Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
 you're responsible for using padding values that look good with your content.
 
-If you need to access a View in the custom view after the dialog is built and shown, you can use `getCustomView()` of
-`MaterialDialog`.
+If you need to access a View in the custom view after the dialog is built, you can use `getCustomView()` of
+`MaterialDialog`. This is especially useful if you pass a layout resource to the `Builder`, the dialog will
+handle the view inflation for you.
 
 ```java
 MaterialDialog dialog = //... initialization via the builder ...
