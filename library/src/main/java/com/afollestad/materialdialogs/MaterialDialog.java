@@ -1308,19 +1308,6 @@ public class MaterialDialog extends DialogBase implements
         /**
          * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
          *
-         * @param adapter The adapter to set to the list.
-         * @return This Builder object to allow for chaining of calls to set methods
-         * @deprecated Use {@link #adapter(ListAdapter, ListCallback)} instead.
-         */
-        @Deprecated
-        public Builder adapter(@NonNull ListAdapter adapter) {
-            this.adapter = adapter;
-            return this;
-        }
-
-        /**
-         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
-         *
          * @param adapter  The adapter to set to the list.
          * @param callback The callback invoked when an item in the list is selected.
          * @return This Builder object to allow for chaining of calls to set methods
@@ -1371,12 +1358,12 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public MaterialDialog build() {
-            if ((content == null || content.toString().trim().length() == 0) &&
-                    title != null && (items == null || items.length == 0) &&
-                    customView == null && adapter == null) {
-                this.content = this.title;
-                this.title = null;
-            }
+//            if ((content == null || content.toString().trim().length() == 0) &&
+//                    title != null && (items == null || items.length == 0) &&
+//                    customView == null && adapter == null) {
+//                this.content = this.title;
+//                this.title = null;
+//            }
             return new MaterialDialog(this);
         }
 

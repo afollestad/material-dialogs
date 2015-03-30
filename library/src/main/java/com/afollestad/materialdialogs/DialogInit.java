@@ -133,7 +133,7 @@ class DialogInit {
         }
 
         // Setup content
-        if (dialog.content != null) {
+        if (dialog.content != null && builder.content != null) {
             dialog.content.setText(builder.content);
             dialog.content.setMovementMethod(new LinkMovementMethod());
             dialog.setTypeface(dialog.content, builder.regularFont);
@@ -151,6 +151,8 @@ class DialogInit {
                 final int contentColor = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_content_color, fallback);
                 dialog.content.setTextColor(contentColor);
             }
+        } else if (dialog.content != null) {
+            dialog.content.setVisibility(View.GONE);
         }
 
         // Load default list item text color
