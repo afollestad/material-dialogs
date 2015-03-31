@@ -339,7 +339,7 @@ public class MainActivity extends ActionBarActivity implements
                         showToast(which + ": " + text);
                     }
                 })
-                .positiveText(android.R.string.ok)
+                .positiveText(android.R.string.cancel)
                 .show();
     }
 
