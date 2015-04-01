@@ -53,7 +53,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
     @Override
     protected void onBindDialogView(@NonNull View view) {
         getEditText().setText("");
-        getEditText().append(getText());
+        if (getText() != null)
+            getEditText().append(getText());
         ViewParent oldParent = getEditText().getParent();
         if (oldParent != view) {
             if (oldParent != null)
