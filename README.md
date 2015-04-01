@@ -416,6 +416,7 @@ new MaterialDialog.Builder(this)
         .titleGravity(GravityEnum.CENTER_HORIZONTAL)
         .contentGravity(GravityEnum.CENTER_HORIZONTAL)
         .btnStackedGravity(GravityEnum.START)
+        .buttonsGravity(GravityEnum.END)
         .itemsGravity(GravityEnum.END)
         .titleColorRes(R.color.material_red_500)
         .contentColorRes(Color.WHITE)
@@ -555,17 +556,29 @@ or operating system. This behavior can be overridden in your Activity themes:
     -->
     <item name="md_content_gravity">start</item>
     
-    <!-- 
-        This sets the gravity used while displaying the stacked action buttons, defaults to end.
-        Can be start, center, or end.
-    -->
-    <item name="md_btnstacked_gravity">end</item>
-    
     <!--
         This sets the gravity used while displaying the list items (not including custom adapters), defaults to start.
         Can be start, center, or end.
     -->
     <item name="md_items_gravity">start</item>
+    
+    <!--
+        This sets the gravity used while displaying the dialog action buttons, defaults to start.
+        
+        Start is regular configuration: neutral on the left, positive on the right, 
+                negative to the left of the positive button. Opposite in RTL layouts.
+        Center puts the neutral button in the center, with negative on the left and 
+                positive on the right. Positive and negative switch in RTL layouts.
+        End puts the neutral button on the right, positive on the left, and negative 
+                to the right of the positive button. Opposite in RTL layouts. 
+    -->
+    <item name="md_buttons_gravity">start</item>
+    
+    <!--
+        This sets the gravity used while displaying the stacked action buttons, defaults to end.
+        Can be start, center, or end.
+    -->
+    <item name="md_btnstacked_gravity">end</item>
 
 </style>
 ```

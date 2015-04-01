@@ -12,6 +12,8 @@
         android:id="@+id/buttonDefaultFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/md_neutral_button_margin"
+        android:layout_marginStart="@dimen/md_neutral_button_margin"
         android:layout_marginRight="@dimen/md_button_padding_frame_side"
         android:layout_marginEnd="@dimen/md_button_padding_frame_side"
         android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
@@ -19,10 +21,8 @@
         <FrameLayout
             android:id="@+id/buttonDefaultNeutral"
             style="@style/MD_ActionButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="@dimen/md_neutral_button_margin"
-            android:layout_marginStart="@dimen/md_neutral_button_margin">
+            tools:layout_alignParentLeft="true"
+            tools:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +34,9 @@
 
         <FrameLayout
             android:id="@+id/buttonDefaultNegative"
-            style="@style/MD_ActionButton">
+            style="@style/MD_ActionButton"
+            tools:toLeftOf="@+id/buttonDefaultPositive"
+            tools:toStartOf="@+id/buttonDefaultPositive">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,8 +49,8 @@
         <FrameLayout
             android:id="@+id/buttonDefaultPositive"
             style="@style/MD_ActionButton"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            tools:layout_alignParentRight="true"
+            tools:layout_alignParentEnd="true">
 
             <TextView
                 android:layout_width="wrap_content"
