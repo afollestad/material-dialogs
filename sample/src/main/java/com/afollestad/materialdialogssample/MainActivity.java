@@ -378,7 +378,6 @@ public class MainActivity extends ActionBarActivity implements
                 })
                 .alwaysCallMultiChoiceCallback()
                 .positiveText(R.string.choose)
-                .itemsGravity(GravityEnum.END)
                 .show();
     }
 

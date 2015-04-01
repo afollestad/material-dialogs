@@ -541,6 +541,30 @@ or operating system. This behavior can be overridden in your Activity themes:
         This overrides the background selector used on the negative action button.
     -->
     <item name="md_btn_negative_selector">@drawable/selector</item>
+    
+    <!-- 
+        This sets the gravity used while displaying the dialog title, defaults to start.
+        Can be start, center, or end.
+    -->
+    <item name="md_title_gravity">start</item>
+    
+    <!-- 
+        This sets the gravity used while displaying the dialog content, defaults to start.
+        Can be start, center, or end.
+    -->
+    <item name="md_content_gravity">start</item>
+    
+    <!-- 
+        This sets the gravity used while displaying the stacked action buttons, defaults to end.
+        Can be start, center, or end.
+    -->
+    <item name="md_btnstacked_gravity">end</item>
+    
+    <!--
+        This sets the gravity used while displaying the list items (not including custom adapters), defaults to start.
+        Can be start, center, or end.
+    -->
+    <item name="md_items_gravity">start</item>
 
 </style>
 ```

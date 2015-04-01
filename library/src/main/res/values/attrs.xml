@@ -30,26 +30,26 @@
 
     <attr name="md_title_gravity" format="enum">
         <enum name="start" value="0" />
-        <enum name="center" value="0" />
-        <enum name="right" value="1" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
     </attr>
 
     <attr name="md_content_gravity" format="enum">
         <enum name="start" value="0" />
-        <enum name="center" value="0" />
-        <enum name="right" value="1" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
     </attr>
 
     <attr name="md_btnstacked_gravity" format="enum">
         <enum name="start" value="0" />
-        <enum name="center" value="0" />
-        <enum name="right" value="1" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
     </attr>
 
     <attr name="md_items_gravity" format="enum">
         <enum name="start" value="0" />
-        <enum name="center" value="0" />
-        <enum name="right" value="1" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
     </attr>
 
 </resources>
