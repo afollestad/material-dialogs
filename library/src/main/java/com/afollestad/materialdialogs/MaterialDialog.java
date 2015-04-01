@@ -711,18 +711,22 @@ public class MaterialDialog extends DialogBase implements
                 } else {
                     if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
                         // There's a positive button, it goes next to that
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                             params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
                                     RelativeLayout.START_OF : RelativeLayout.END_OF, R.id.buttonDefaultPositive);
-                        else
+                        } else {
                             params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
                                     RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.buttonDefaultPositive);
+                        }
                     } else {
                         // Negative button replaces positive button position if there's no positive button
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                        else
-                            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
+                                    RelativeLayout.ALIGN_PARENT_END : RelativeLayout.ALIGN_PARENT_START);
+                        } else {
+                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
+                                    RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT);
+                        }
                     }
                 }
                 negativeButton.setLayoutParams(params);

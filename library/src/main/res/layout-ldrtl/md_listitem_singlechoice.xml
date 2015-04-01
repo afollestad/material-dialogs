@@ -10,16 +10,6 @@
     android:paddingRight="@dimen/md_dialog_frame_margin"
     android:paddingEnd="@dimen/md_dialog_frame_margin">
 
-    <CheckBox
-        android:id="@+id/control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/md_listitem_height"
-        android:clickable="false"
-        android:gravity="center_vertical"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -28,8 +18,18 @@
         tools:text="Item"
         android:gravity="center_vertical"
         android:textSize="@dimen/md_listitem_textsize"
-        android:paddingLeft="@dimen/md_listitem_control_margin"
-        android:paddingStart="@dimen/md_listitem_control_margin"
-        tools:ignore="NewApi,RtlSymmetry" />
+        android:paddingRight="@dimen/md_listitem_control_margin"
+        android:paddingEnd="@dimen/md_listitem_control_margin"
+        tools:ignore="RtlSymmetry" />
+
+    <RadioButton
+        android:id="@+id/control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/md_listitem_height"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 </LinearLayout>
