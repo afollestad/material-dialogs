@@ -91,7 +91,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @SuppressLint("RtlHardcoded")
-    protected static int gravityIntToGravity(GravityEnum gravity) {
+    protected static int gravityEnumToGravity(GravityEnum gravity) {
         switch (gravity) {
             case CENTER:
                 return Gravity.CENTER_HORIZONTAL;
@@ -605,7 +605,7 @@ public class MaterialDialog extends DialogBase implements
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
             if (isStacked)
-                positiveTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                positiveTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
         }
 
         neutralButton = view.findViewById(
@@ -619,7 +619,7 @@ public class MaterialDialog extends DialogBase implements
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
             if (isStacked)
-                neutralTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                neutralTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
         }
 
         negativeButton = view.findViewById(
@@ -651,7 +651,7 @@ public class MaterialDialog extends DialogBase implements
                 }
                 negativeButton.setLayoutParams(params);
             } else {
-                negativeTextView.setGravity(gravityIntToGravity(mBuilder.btnStackedGravity));
+                negativeTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
             }
         }
         return true;
@@ -715,6 +715,7 @@ public class MaterialDialog extends DialogBase implements
         protected GravityEnum titleGravity = GravityEnum.START;
         protected GravityEnum contentGravity = GravityEnum.START;
         protected GravityEnum btnStackedGravity = GravityEnum.END;
+        protected GravityEnum itemsGravity = GravityEnum.START;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -812,7 +813,14 @@ public class MaterialDialog extends DialogBase implements
                     a.recycle();
                 }
             }
+
             checkSingleton();
+            this.titleGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
+            this.contentGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.contentGravity);
+            this.btnStackedGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.btnStackedGravity);
+            this.itemsGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.itemsGravity);
+
+            // TODO action button gravity?
         }
 
         private void checkSingleton() {
@@ -847,6 +855,10 @@ public class MaterialDialog extends DialogBase implements
                 this.btnSelectorNeutral = s.btnSelectorNeutral;
             if (s.btnSelectorNegative != 0)
                 this.btnSelectorNegative = s.btnSelectorNegative;
+            this.titleGravity = s.titleGravity;
+            this.contentGravity = s.contentGravity;
+            this.btnStackedGravity = s.btnStackedGravity;
+            this.itemsGravity = s.itemsGravity;
         }
 
         public Builder title(@StringRes int titleRes) {
@@ -993,6 +1005,11 @@ public class MaterialDialog extends DialogBase implements
             this.listCallback = callback;
             this.listCallbackSingleChoice = null;
             this.listCallbackMultiChoice = null;
+            return this;
+        }
+
+        public Builder itemsGravity(@NonNull GravityEnum gravity) {
+            this.itemsGravity = gravity;
             return this;
         }
 
@@ -1333,12 +1350,6 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public MaterialDialog build() {
-//            if ((content == null || content.toString().trim().length() == 0) &&
-//                    title != null && (items == null || items.length == 0) &&
-//                    customView == null && adapter == null) {
-//                this.content = this.title;
-//                this.title = null;
-//            }
             return new MaterialDialog(this);
         }
 

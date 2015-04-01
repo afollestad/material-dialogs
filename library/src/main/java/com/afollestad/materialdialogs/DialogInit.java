@@ -139,7 +139,7 @@ class DialogInit {
                 final int fallback = DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
                 dialog.title.setTextColor(DialogUtils.resolveColor(dialog.getContext(), R.attr.md_title_color, fallback));
             }
-            dialog.title.setGravity(MaterialDialog.gravityIntToGravity(builder.titleGravity));
+            dialog.title.setGravity(MaterialDialog.gravityEnumToGravity(builder.titleGravity));
         }
 
         // Setup content
@@ -153,7 +153,7 @@ class DialogInit {
             } else {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
-            dialog.content.setGravity(MaterialDialog.gravityIntToGravity(builder.contentGravity));
+            dialog.content.setGravity(MaterialDialog.gravityEnumToGravity(builder.contentGravity));
             if (builder.contentColorSet) {
                 dialog.content.setTextColor(builder.contentColor);
             } else {

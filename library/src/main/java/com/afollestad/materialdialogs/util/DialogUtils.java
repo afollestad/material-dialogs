@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
 
+import com.afollestad.materialdialogs.GravityEnum;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
@@ -27,6 +29,33 @@ public class DialogUtils {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getColor(0, fallback);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    private static int gravityEnumToAttrInt(GravityEnum value) {
+        switch (value) {
+            case CENTER:
+                return 1;
+            case END:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    public static GravityEnum resolveGravityEnum(Context context, @AttrRes int attr, GravityEnum defaultGravity) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
+        try {
+            switch (a.getInt(0, gravityEnumToAttrInt(defaultGravity))) {
+                case 1:
+                    return GravityEnum.CENTER;
+                case 2:
+                    return GravityEnum.END;
+                default:
+                    return GravityEnum.START;
+            }
         } finally {
             a.recycle();
         }
