@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MD_Light" parent="Theme_Light_Dialog">
         <item name="md_divider">@color/md_divider_black</item>
@@ -22,7 +22,7 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton">
+    <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton" tools:ignore="NewApi">
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
         <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal
@@ -39,7 +39,7 @@
         <item name="android:focusable">true</item>
     </style>
 
-    <style name="MD_ActionButton.Text">
+    <style name="MD_ActionButton.Text" tools:ignore="NewApi">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/md_button_textsize</item>
         <item name="android:singleLine">true</item>

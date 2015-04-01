@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -103,6 +104,18 @@ public class MaterialDialog extends DialogBase implements
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
                     return Gravity.LEFT;
                 return Gravity.START;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    protected static int gravityEnumToTextAlignment(GravityEnum gravity) {
+        switch (gravity) {
+            case CENTER:
+                return View.TEXT_ALIGNMENT_CENTER;
+            case END:
+                return View.TEXT_ALIGNMENT_VIEW_END;
+            default:
+                return View.TEXT_ALIGNMENT_VIEW_START;
         }
     }
 
@@ -604,8 +617,13 @@ public class MaterialDialog extends DialogBase implements
             setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
             positiveButton.setTag(POSITIVE);
             positiveButton.setOnClickListener(this);
-            if (isStacked)
+            if (isStacked) {
                 positiveTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    positiveTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
+                }
+            }
         }
 
         neutralButton = view.findViewById(
@@ -618,8 +636,13 @@ public class MaterialDialog extends DialogBase implements
             neutralTextView.setText(mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
-            if (isStacked)
+            if (isStacked) {
                 neutralTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    neutralTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
+                }
+            }
         }
 
         negativeButton = view.findViewById(
@@ -652,6 +675,10 @@ public class MaterialDialog extends DialogBase implements
                 negativeButton.setLayoutParams(params);
             } else {
                 negativeTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //noinspection ResourceType
+                    negativeTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
+                }
             }
         }
         return true;
@@ -816,9 +843,9 @@ public class MaterialDialog extends DialogBase implements
 
             checkSingleton();
             this.titleGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
-            this.contentGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.contentGravity);
-            this.btnStackedGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.btnStackedGravity);
-            this.itemsGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.itemsGravity);
+            this.contentGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_content_gravity, this.contentGravity);
+            this.btnStackedGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_btnstacked_gravity, this.btnStackedGravity);
+            this.itemsGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_items_gravity, this.itemsGravity);
 
             // TODO action button gravity?
         }
