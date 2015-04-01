@@ -187,7 +187,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         if (listView != null) {
-// Padding below title is reduced for divider.
+            // Padding below title is reduced for divider.
             final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
             titleFrame.setPadding(titleFrame.getPaddingLeft(),
                     titleFrame.getPaddingTop(),
