@@ -140,6 +140,10 @@ class DialogInit {
                 dialog.title.setTextColor(DialogUtils.resolveColor(dialog.getContext(), R.attr.md_title_color, fallback));
             }
             dialog.title.setGravity(MaterialDialog.gravityEnumToGravity(builder.titleGravity));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                dialog.title.setTextAlignment(MaterialDialog.gravityEnumToTextAlignment(builder.titleGravity));
+            }
         }
 
         // Setup content
@@ -154,6 +158,10 @@ class DialogInit {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
             dialog.content.setGravity(MaterialDialog.gravityEnumToGravity(builder.contentGravity));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //noinspection ResourceType
+                dialog.content.setTextAlignment(MaterialDialog.gravityEnumToTextAlignment(builder.contentGravity));
+            }
             if (builder.contentColorSet) {
                 dialog.content.setTextColor(builder.contentColor);
             } else {
