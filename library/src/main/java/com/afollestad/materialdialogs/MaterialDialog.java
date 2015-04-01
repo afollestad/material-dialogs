@@ -1290,6 +1290,9 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        /**
+         * Limits the display size of a set icon to 48dp.
+         */
         public Builder limitIconToDefaultSize() {
             this.limitIconToDefaultSize = true;
             return this;

@@ -466,7 +466,7 @@ or operating system. This behavior can be overridden in your Activity themes:
     <attr name="md_icon_max_size" format="dimension" />
     
     <!--
-        Limit the icon to a default max size (32dp).
+        Limit the icon to a default max size (48dp).
     -->
     <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
 

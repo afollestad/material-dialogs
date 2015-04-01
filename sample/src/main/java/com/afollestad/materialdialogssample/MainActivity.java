@@ -250,7 +250,7 @@ public class MainActivity extends ActionBarActivity implements
     private void showBasicIcon() {
         new MaterialDialog.Builder(this)
                 .iconRes(R.drawable.ic_launcher)
-                .limitIconToDefaultSize() // limits the displayed icon size to 32dp
+                .limitIconToDefaultSize() // limits the displayed icon size to 48dp
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.agree)
