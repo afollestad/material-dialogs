@@ -90,12 +90,16 @@ public class DialogUtils {
         }
     }
 
-    public static boolean resolveBoolean(Context context, @AttrRes int attr) {
+    public static boolean resolveBoolean(Context context, @AttrRes int attr, boolean fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
-            return a.getBoolean(0, false);
+            return a.getBoolean(0, fallback);
         } finally {
             a.recycle();
         }
+    }
+
+    public static boolean resolveBoolean(Context context, @AttrRes int attr) {
+        return resolveBoolean(context, attr, false);
     }
 }

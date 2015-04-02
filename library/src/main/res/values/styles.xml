@@ -40,7 +40,6 @@
     </style>
 
     <style name="MD_ActionButton.Text" tools:ignore="NewApi">
-        <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/md_button_textsize</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_gravity">center_vertical</item>

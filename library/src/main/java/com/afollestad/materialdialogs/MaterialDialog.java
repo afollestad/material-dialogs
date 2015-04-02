@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -607,12 +608,22 @@ public class MaterialDialog extends DialogBase implements
             view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
         }
 
+        boolean textAllCaps;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, android.R.attr.textAllCaps, true);
+            if (textAllCaps)
+                textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, R.attr.textAllCaps, true);
+        } else {
+            textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, R.attr.textAllCaps, true);
+        }
+
         positiveButton = view.findViewById(
                 isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
         if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
             TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
             setTypeface(positiveTextView, mBuilder.mediumFont);
-            positiveTextView.setText(mBuilder.positiveText);
+            positiveTextView.setText(textAllCaps ?
+                    mBuilder.positiveText.toString().toUpperCase(Locale.getDefault()) : mBuilder.positiveText);
             positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
             setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
             positiveButton.setTag(POSITIVE);
@@ -645,7 +656,8 @@ public class MaterialDialog extends DialogBase implements
             setTypeface(neutralTextView, mBuilder.mediumFont);
             neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
             setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
-            neutralTextView.setText(mBuilder.neutralText);
+            neutralTextView.setText(textAllCaps ?
+                    mBuilder.neutralText.toString().toUpperCase(Locale.getDefault()) : mBuilder.neutralText);
             neutralButton.setTag(NEUTRAL);
             neutralButton.setOnClickListener(this);
             if (isStacked) {
@@ -690,7 +702,8 @@ public class MaterialDialog extends DialogBase implements
             setTypeface(negativeTextView, mBuilder.mediumFont);
             negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
             setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
-            negativeTextView.setText(mBuilder.negativeText);
+            negativeTextView.setText(textAllCaps ?
+                    mBuilder.negativeText.toString().toUpperCase(Locale.getDefault()) : mBuilder.negativeText);
             negativeButton.setTag(NEGATIVE);
             negativeButton.setOnClickListener(this);
 
