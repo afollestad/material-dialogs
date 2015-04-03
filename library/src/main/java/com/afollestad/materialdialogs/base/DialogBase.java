@@ -47,10 +47,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
     }
 
-    protected void setViewInternal(View view) {
-        super.setView(view);
-    }
-
     /**
      * @deprecated Not supported by the Material dialog.
      */
@@ -58,15 +54,6 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
     @Override
     public void setView(View view, int viewSpacingLeft, int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
         throw new RuntimeException("This method is not supported by the MaterialDialog.");
-    }
-
-    /**
-     * @deprecated Use setContent() instead.
-     */
-    @Deprecated
-    @Override
-    public void setMessage(CharSequence message) {
-        throw new RuntimeException("This method is not supported by the MaterialDialog, use setContent() instead.");
     }
 
     /**

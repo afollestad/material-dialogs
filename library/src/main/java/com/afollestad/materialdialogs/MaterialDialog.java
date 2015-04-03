@@ -1650,6 +1650,15 @@ public class MaterialDialog extends DialogBase implements
         invalidateCustomViewAssociations(); // invalidates padding in content area scroll (if needed)
     }
 
+    /**
+     * @deprecated Use setContent() instead.
+     */
+    @Deprecated
+    @Override
+    public void setMessage(CharSequence message) {
+        setContent(message);
+    }
+
     public final void setItems(CharSequence[] items) {
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
