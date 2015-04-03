@@ -1549,10 +1549,18 @@ public class MaterialDialog extends DialogBase implements
         return listView;
     }
 
+    /**
+     * Retrieves the TextView that contains the dialog title. If you want to update the
+     * title, use #{@link #setTitle(CharSequence)} instead.
+     */
     public final TextView getTitleView() {
         return title;
     }
 
+    /**
+     * Retrieves the TextView that contains the dialog content. If you want to update the
+     * content (message), use #{@link #setContent(CharSequence)} instead.
+     */
     @Nullable
     public final TextView getContentView() {
         return content;
