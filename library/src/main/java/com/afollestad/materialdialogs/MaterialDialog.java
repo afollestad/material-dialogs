@@ -1547,6 +1547,20 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
+     * Retrieves the text view containing the dialog title passed from the builder.
+     */
+    public final TextView getTitleTextView() {
+        return title;
+    }
+
+    /**
+     * Retrieves the text view containing the dialog content passed from the builder.
+     */
+    public final TextView getContentTextView() {
+        return content;
+    }
+
+    /**
      * Retrieves the custom view that was inflated or set to the MaterialDialog during building.
      *
      * @return The custom view that was passed into the Builder.
