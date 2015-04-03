@@ -513,9 +513,8 @@ public class MaterialDialog extends DialogBase implements
      * Measures the action button's and their text to decide whether or not the button should be stacked.
      */
     private void checkIfStackingNeeded() {
+        invalidateActions();
         if (numberOfActionButtons() <= 1) {
-            // Invalidating makes sure all button frames are hidden
-            invalidateActions();
             return;
         } else if (mBuilder.forceStacking) {
             isStacked = true;
@@ -527,17 +526,22 @@ public class MaterialDialog extends DialogBase implements
             neutralButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             negativeButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
-            if (mBuilder.positiveText != null) buttonsWidth += positiveButton.getMeasuredWidth();
-            if (mBuilder.neutralText != null) buttonsWidth += neutralButton.getMeasuredWidth();
-            if (mBuilder.negativeText != null) buttonsWidth += negativeButton.getMeasuredWidth();
+            if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
+                buttonsWidth += positiveButton.getMeasuredWidth();
+            }
+            if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE) {
+                buttonsWidth += neutralButton.getMeasuredWidth();
+            }
+            if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE) {
+                buttonsWidth += negativeButton.getMeasuredWidth();
+            }
 
-            final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getWidth();
+            final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getMeasuredWidth();
             isStacked = buttonsWidth > buttonFrameWidth;
         }
 
-        invalidateActions();
         if (isStacked) {
-            // Since isStacked is now true, invalidate the initial visibility states of the action button views
+            invalidateActions();
             positiveButton.setVisibility(mBuilder.positiveText != null ? View.VISIBLE : View.GONE);
             neutralButton.setVisibility(mBuilder.neutralText != null ? View.VISIBLE : View.GONE);
             negativeButton.setVisibility(mBuilder.negativeText != null ? View.VISIBLE : View.GONE);
