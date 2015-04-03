@@ -1537,17 +1537,25 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Retrieves the frame view containing the title and icon. You can manually change visibility and retrieve children.
-     */
-    public final View getTitleFrame() {
-        return titleFrame;
-    }
-
-    /**
      * Retrieves the view representing the dialog as a whole. Be careful with this.
      */
     public final View getView() {
         return view;
+    }
+
+    @Nullable
+    @Override
+    public final ListView getListView() {
+        return listView;
+    }
+
+    public final TextView getTitleView() {
+        return title;
+    }
+
+    @Nullable
+    public final TextView getContentView() {
+        return content;
     }
 
     /**
@@ -1555,6 +1563,7 @@ public class MaterialDialog extends DialogBase implements
      *
      * @return The custom view that was passed into the Builder.
      */
+    @Nullable
     public final View getCustomView() {
         return mBuilder.customView;
     }
@@ -1715,17 +1724,6 @@ public class MaterialDialog extends DialogBase implements
 
     public final boolean isCancelled() {
         return !isShowing();
-    }
-
-    /**
-     * Use this to customize any list-specific logic for this dialog (OnItemClickListener, OnLongItemClickListener, etc.)
-     *
-     * @return The ListView instance used by this dialog, or null if not using a list.
-     */
-    @Nullable
-    @Override
-    public final ListView getListView() {
-        return listView;
     }
 
     /**
