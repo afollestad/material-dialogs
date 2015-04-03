@@ -820,7 +820,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence neutralText;
         protected CharSequence negativeText;
         protected View customView;
-        protected int accentColor;
+        protected int progressColor;
         protected int positiveColor;
         protected int negativeColor;
         protected int neutralColor;
@@ -878,30 +878,30 @@ public class MaterialDialog extends DialogBase implements
         public Builder(@NonNull Context context) {
             this.context = context;
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
+            boolean useAppCompat = true;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
                 try {
-                    this.accentColor = a.getColor(0, materialBlue);
-                    this.positiveColor = this.accentColor;
-                    this.negativeColor = this.accentColor;
-                    this.neutralColor = this.accentColor;
+                    this.progressColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.progressColor;
+                    this.negativeColor = this.progressColor;
+                    this.neutralColor = this.progressColor;
+                    useAppCompat = false;
                 } catch (Exception e) {
-                    this.accentColor = materialBlue;
-                    this.positiveColor = materialBlue;
-                    this.negativeColor = materialBlue;
-                    this.neutralColor = materialBlue;
+                    e.printStackTrace();
                 } finally {
                     a.recycle();
                 }
-            } else {
+            }
+            if (useAppCompat) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
                 try {
-                    this.accentColor = a.getColor(0, materialBlue);
-                    this.positiveColor = this.accentColor;
-                    this.negativeColor = this.accentColor;
-                    this.neutralColor = this.accentColor;
+                    this.progressColor = a.getColor(0, materialBlue);
+                    this.positiveColor = this.progressColor;
+                    this.negativeColor = this.progressColor;
+                    this.neutralColor = this.progressColor;
                 } catch (Exception e) {
-                    this.accentColor = materialBlue;
+                    this.progressColor = materialBlue;
                     this.positiveColor = materialBlue;
                     this.negativeColor = materialBlue;
                     this.neutralColor = materialBlue;
@@ -950,6 +950,8 @@ public class MaterialDialog extends DialogBase implements
                 this.btnSelectorNeutral = s.btnSelectorNeutral;
             if (s.btnSelectorNegative != 0)
                 this.btnSelectorNegative = s.btnSelectorNegative;
+            if (s.progressColor != 0)
+                this.progressColor = s.progressColor;
             this.titleGravity = s.titleGravity;
             this.contentGravity = s.contentGravity;
             this.btnStackedGravity = s.btnStackedGravity;
@@ -1284,19 +1286,30 @@ public class MaterialDialog extends DialogBase implements
             return progress(indeterminate, max);
         }
 
+        public Builder progressColor(int color) {
+            this.progressColor = color;
+            return this;
+        }
+
+        public Builder progressColorRes(@ColorRes int colorRes) {
+            return progressColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder progressColorAttr(@AttrRes int colorAttr) {
+            return progressColorRes(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
         public Builder positiveColor(int color) {
             this.positiveColor = color;
             return this;
         }
 
         public Builder positiveColorRes(@ColorRes int colorRes) {
-            positiveColor(this.context.getResources().getColor(colorRes));
-            return this;
+            return positiveColor(this.context.getResources().getColor(colorRes));
         }
 
         public Builder positiveColorAttr(@AttrRes int colorAttr) {
-            positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
-            return this;
+            return positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder negativeColor(int color) {
@@ -1305,13 +1318,11 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder negativeColorRes(@ColorRes int colorRes) {
-            negativeColor(this.context.getResources().getColor(colorRes));
-            return this;
+            return negativeColor(this.context.getResources().getColor(colorRes));
         }
 
         public Builder negativeColorAttr(@AttrRes int colorAttr) {
-            negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
-            return this;
+            return negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder neutralColor(int color) {

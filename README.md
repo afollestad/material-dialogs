@@ -508,6 +508,13 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_negative_color">#673AB7</item>
 
     <!--
+        By default, a progress dialog's progress indicator color is derived
+        from the colorAccent attribute of AppCompat or android:colorAccent
+        attribute of the Material theme.
+    -->
+    <item name="md_progress_color">#673AB7</item>
+
+    <!--
         By default, the list item text color is black for the light
         theme and white for the dark theme.
     -->
@@ -670,6 +677,14 @@ dialog.setContent(getString(R.string.done));
 ```
 
 See the sample project for this dialog in action, with the addition of threading.
+
+##### Coloring
+
+Like action buttons and many other elements of the Material dialog, you can customize the color of a 
+ progress dialog's progress indicator. The `Builder` class contains a `progressColor()`, `progressColorRes()`,
+ and `progressColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ 
+There's also a global theming attribute as shown in the Global Theming section of this README: `md_progress_color`.
 
 ---
 

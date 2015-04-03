@@ -83,6 +83,7 @@ class DialogInit {
         builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
         builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
         builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
+        builder.progressColor = DialogUtils.resolveColor(builder.context, R.attr.md_progress_color, builder.progressColor);
 
         // Retrieve references to views
         dialog.title = (TextView) dialog.view.findViewById(R.id.title);
@@ -303,18 +304,16 @@ class DialogInit {
         if (builder.mIndeterminateProgress || builder.mProgress > -2) {
             dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
 
-            // Manually color progress bar on pre-Lollipop, since Material/AppCompat themes only do it on API 21+
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                Drawable indDraw = dialog.mProgress.getIndeterminateDrawable();
-                if (indDraw != null) {
-                    indDraw.setColorFilter(builder.accentColor, PorterDuff.Mode.SRC_ATOP);
-                    dialog.mProgress.setIndeterminateDrawable(indDraw);
-                }
-                Drawable regDraw = dialog.mProgress.getProgressDrawable();
-                if (regDraw != null) {
-                    regDraw.setColorFilter(builder.accentColor, PorterDuff.Mode.SRC_ATOP);
-                    dialog.mProgress.setProgressDrawable(regDraw);
-                }
+            // Color the progress bar
+            Drawable indDraw = dialog.mProgress.getIndeterminateDrawable();
+            if (indDraw != null) {
+                indDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
+                dialog.mProgress.setIndeterminateDrawable(indDraw);
+            }
+            Drawable regDraw = dialog.mProgress.getProgressDrawable();
+            if (regDraw != null) {
+                regDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
+                dialog.mProgress.setProgressDrawable(regDraw);
             }
 
             if (!builder.mIndeterminateProgress) {

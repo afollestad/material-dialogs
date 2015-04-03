@@ -26,6 +26,7 @@ public class ThemeSingleton {
     public int positiveColor = 0;
     public int neutralColor = 0;
     public int negativeColor = 0;
+    public int progressColor = 0;
     public int itemColor = 0;
     public Drawable icon = null;
     public int backgroundColor = 0;
