@@ -832,7 +832,7 @@ public class MaterialDialog extends DialogBase implements
         protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
-        protected float contentLineSpacingMultiplier = 1.3f;
+        protected float contentLineSpacingMultiplier = 1.2f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndices = null;
         protected boolean autoDismiss = true;
