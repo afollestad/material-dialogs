@@ -86,7 +86,8 @@ class DialogInit {
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
-            builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimary);
+            final int titleColorFallback = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimary);
+            builder.titleColor = DialogUtils.resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
             if (DialogUtils.isColorDark(builder.titleColor)) {
                 if (builder.theme == Theme.DARK)
                     builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
@@ -94,7 +95,8 @@ class DialogInit {
                 builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
         }
         if (!builder.contentColorSet) {
-            builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondary);
+            final int contentColorFallback = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondary);
+            builder.contentColor = DialogUtils.resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
             if (DialogUtils.isColorDark(builder.contentColor)) {
                 if (builder.theme == Theme.DARK)
                     builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
@@ -102,7 +104,7 @@ class DialogInit {
                 builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
         }
         if (!builder.itemColorSet)
-            builder.itemColor = builder.contentColor;
+            builder.itemColor = DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
 
         // Retrieve references to views
         dialog.title = (TextView) dialog.view.findViewById(R.id.title);
