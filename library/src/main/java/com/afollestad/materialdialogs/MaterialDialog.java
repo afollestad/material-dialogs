@@ -857,6 +857,10 @@ public class MaterialDialog extends DialogBase implements
         protected int mProgress = -2;
         protected int mProgressMax = 0;
 
+        protected boolean titleColorSet = false;
+        protected boolean contentColorSet = false;
+        protected boolean itemColorSet = false;
+
         @DrawableRes
         protected int listSelector;
         @DrawableRes
@@ -888,11 +892,6 @@ public class MaterialDialog extends DialogBase implements
 
             // Load theme values from the ThemeSingleton if needed
             checkSingleton();
-
-            // Retrieve default title/content colors
-            this.titleColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
-            this.contentColor = DialogUtils.resolveColor(context, android.R.attr.textColorSecondary);
-            this.itemColor = this.contentColor;
 
             // Retrieve gravity settings from global theme attributes if needed
             this.titleGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
@@ -960,6 +959,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder titleColor(int color) {
             this.titleColor = color;
+            this.titleColorSet = true;
             return this;
         }
 
@@ -1031,8 +1031,24 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder content(@StringRes int contentRes) {
+            content(this.context.getString(contentRes));
+            return this;
+        }
+
+        public Builder content(@NonNull CharSequence content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder content(@StringRes int contentRes, Object... formatArgs) {
+            content(this.context.getString(contentRes, formatArgs));
+            return this;
+        }
+
         public Builder contentColor(int color) {
             this.contentColor = color;
+            this.contentColorSet = true;
             return this;
         }
 
@@ -1043,21 +1059,6 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder contentColorAttr(@AttrRes int colorAttr) {
             contentColor(DialogUtils.resolveColor(this.context, colorAttr));
-            return this;
-        }
-
-        public Builder content(@StringRes int contentRes) {
-            content(this.context.getString(contentRes));
-            return this;
-        }
-
-        public Builder content(CharSequence content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder content(@StringRes int contentRes, Object... formatArgs) {
-            content(this.context.getString(contentRes, formatArgs));
             return this;
         }
 
@@ -1086,6 +1087,20 @@ public class MaterialDialog extends DialogBase implements
             this.listCallbackSingleChoice = null;
             this.listCallbackMultiChoice = null;
             return this;
+        }
+
+        public Builder itemColor(int color) {
+            this.itemColor = color;
+            this.itemColorSet = true;
+            return this;
+        }
+
+        public Builder itemColorRes(@ColorRes int colorRes) {
+            return itemColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder itemColorAttr(@AttrRes int colorAttr) {
+            return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder itemsGravity(@NonNull GravityEnum gravity) {
@@ -1164,6 +1179,19 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder positiveColor(int color) {
+            this.positiveColor = color;
+            return this;
+        }
+
+        public Builder positiveColorRes(@ColorRes int colorRes) {
+            return positiveColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder positiveColorAttr(@AttrRes int colorAttr) {
+            return positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
         public Builder neutralText(@StringRes int neutralRes) {
             return neutralText(this.context.getString(neutralRes));
         }
@@ -1173,6 +1201,19 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder negativeColor(int color) {
+            this.negativeColor = color;
+            return this;
+        }
+
+        public Builder negativeColorRes(@ColorRes int colorRes) {
+            return negativeColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder negativeColorAttr(@AttrRes int colorAttr) {
+            return negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
         public Builder negativeText(@StringRes int negativeRes) {
             return negativeText(this.context.getString(negativeRes));
         }
@@ -1180,6 +1221,19 @@ public class MaterialDialog extends DialogBase implements
         public Builder negativeText(@NonNull CharSequence message) {
             this.negativeText = message;
             return this;
+        }
+
+        public Builder neutralColor(int color) {
+            this.neutralColor = color;
+            return this;
+        }
+
+        public Builder neutralColorRes(@ColorRes int colorRes) {
+            return neutralColor(this.context.getResources().getColor(colorRes));
+        }
+
+        public Builder neutralColorAttr(@AttrRes int colorAttr) {
+            return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder listSelector(@DrawableRes int selectorRes) {
@@ -1281,45 +1335,6 @@ public class MaterialDialog extends DialogBase implements
             return progressColorRes(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
-        public Builder positiveColor(int color) {
-            this.positiveColor = color;
-            return this;
-        }
-
-        public Builder positiveColorRes(@ColorRes int colorRes) {
-            return positiveColor(this.context.getResources().getColor(colorRes));
-        }
-
-        public Builder positiveColorAttr(@AttrRes int colorAttr) {
-            return positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
-        }
-
-        public Builder negativeColor(int color) {
-            this.negativeColor = color;
-            return this;
-        }
-
-        public Builder negativeColorRes(@ColorRes int colorRes) {
-            return negativeColor(this.context.getResources().getColor(colorRes));
-        }
-
-        public Builder negativeColorAttr(@AttrRes int colorAttr) {
-            return negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
-        }
-
-        public Builder neutralColor(int color) {
-            this.neutralColor = color;
-            return this;
-        }
-
-        public Builder neutralColorRes(@ColorRes int colorRes) {
-            return neutralColor(this.context.getResources().getColor(colorRes));
-        }
-
-        public Builder neutralColorAttr(@AttrRes int colorAttr) {
-            return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
-        }
-
         public Builder dividerColor(int color) {
             this.dividerColor = color;
             return this;
@@ -1344,19 +1359,6 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder backgroundColorAttr(@AttrRes int colorAttr) {
             return backgroundColor(DialogUtils.resolveColor(this.context, colorAttr));
-        }
-
-        public Builder itemColor(int color) {
-            this.itemColor = color;
-            return this;
-        }
-
-        public Builder itemColorRes(@ColorRes int colorRes) {
-            return itemColor(this.context.getResources().getColor(colorRes));
-        }
-
-        public Builder itemColorAttr(@AttrRes int colorAttr) {
-            return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder callback(@NonNull ButtonCallback callback) {

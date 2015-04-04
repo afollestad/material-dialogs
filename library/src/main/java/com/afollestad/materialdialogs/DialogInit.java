@@ -2,7 +2,6 @@ package com.afollestad.materialdialogs;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -84,6 +83,26 @@ class DialogInit {
         builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
         builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
         builder.progressColor = DialogUtils.resolveColor(builder.context, R.attr.md_progress_color, builder.progressColor);
+
+        // Retrieve default title/content colors
+        if (!builder.titleColorSet) {
+            builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimary);
+            if (DialogUtils.isColorDark(builder.titleColor)) {
+                if (builder.theme == Theme.DARK)
+                    builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
+            } else if (builder.theme == Theme.LIGHT)
+                builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
+        }
+        if (!builder.contentColorSet) {
+            builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondary);
+            if (DialogUtils.isColorDark(builder.contentColor)) {
+                if (builder.theme == Theme.DARK)
+                    builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
+            } else if (builder.theme == Theme.LIGHT)
+                builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
+        }
+        if (!builder.itemColorSet)
+            builder.itemColor = builder.contentColor;
 
         // Retrieve references to views
         dialog.title = (TextView) dialog.view.findViewById(R.id.title);
