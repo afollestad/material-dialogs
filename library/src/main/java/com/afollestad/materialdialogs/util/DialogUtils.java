@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.AttrRes;
+import android.view.View;
 
 import com.afollestad.materialdialogs.GravityEnum;
 
@@ -106,5 +108,14 @@ public class DialogUtils {
     public static boolean isColorDark(int color) {
         double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return darkness >= 0.5;
+    }
+
+    public static void setBackgroundCompat(View view, Drawable d) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            //noinspection deprecation
+            view.setBackgroundDrawable(d);
+        } else {
+            view.setBackground(d);
+        }
     }
 }

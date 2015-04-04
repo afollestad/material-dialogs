@@ -1,29 +1,58 @@
 <resources>
     <!-- See http://www.google.com/design/spec/components/dialogs.html#dialogs-specs -->
+
+    <!-- Notes:
+
+        The specs specify 16dp between the content and the buttons and imply 16dp between
+        the title and the content. Also 24dp above the title and 8dp below the buttons.
+
+        Additionally, we interpret:
+         16dp between title and content
+         24dp above content if there is no title
+         24dp below content if there is no button bar
+
+        When dialog is large enough to scroll, some padding is removed to make space and
+        keep things symmetrical.
+        Reduced paddings are:
+         8dp above content if there is no title (0dp when scrolled)
+         8dp below content if there is no button bar (0dp when scrolled)
+         8dp between content and button bar
+         0dp below button bar
+
+        For implementation:
+         Content view gets 8dp vertical padding
+         Title bar gets 24dp top, 8dp bottom
+         Buttons get 8dp bottom
+         Stacked buttons get 24dp end padding, the spec's 16 plus the spec's 8dp button padding
+
+         MDRootLayout takes care of margins when no title or not button bar,
+         and the margin between buttons and content when not scrolling.
+    -->
+
     <!-- Margin around the dialog, excluding the button bar -->
     <dimen name="md_dialog_frame_margin">24dp</dimen>
-    <dimen name="md_title_frame_margin_bottom">16dp</dimen>
-    <dimen name="md_title_frame_margin_bottom_list">4dp</dimen>
+    <!-- Total title margin bottom is 16, but we split this between content and title -->
+    <dimen name="md_title_frame_margin_bottom">8dp</dimen>
+    <!-- The desired padding when no title is visible,
+         This plus md_content_padding_top should equals md_dialog_frame_margin -->
+    <dimen name="md_notitle_vertical_padding">16dp</dimen>
+
+    <dimen name="md_content_padding_top">8dp</dimen>
+
     <dimen name="md_button_min_width">42dp</dimen>
-    <!-- Above and below buttons, 36+12=48 for the height of the button frame -->
+    <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
     <dimen name="md_button_inset_vertical">6dp</dimen>
     <dimen name="md_button_inset_horizontal">4dp</dimen>
     <dimen name="md_button_textpadding_horizontal">1dp</dimen>
     <dimen name="md_button_padding_horizontal">8dp</dimen>
     <dimen name="md_button_padding_vertical">4dp</dimen>
     <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
-    <!-- 16dp - 4dp (inset) -->
+    <!-- 16dp - 4dp (inset from background drawable) -->
     <dimen name="md_button_padding_frame_side">12dp</dimen>
     <dimen name="md_neutral_button_margin">12dp</dimen>
-    <!--
-            Applied to content scrollview/listview and customview, the spec calls for 16dp between the
-             bottom of the content and the top of the button bar, we split this between the two for
-             ease of layouts and adjustments. Likewise the spec implies 16dp between the title and
-             content and we split that as well.
 
-             Splitting makes it easier to have consistent padding against the dividers.
-    -->
-    <dimen name="md_content_vertical_padding">8dp</dimen>
+    <!-- actual content padding bottom is 16dp, but we split between button bar and content -->
+    <dimen name="md_content_padding_bottom">8dp</dimen>
     <dimen name="md_button_frame_vertical_padding">8dp</dimen>
     <dimen name="md_button_height">48dp</dimen>
     <dimen name="md_title_textsize">18sp</dimen>
@@ -36,5 +65,6 @@
     <dimen name="md_icon_max_size">48dp</dimen>
     <dimen name="md_listitem_margin_left">24dp</dimen>
     <dimen name="md_action_corner_radius">2dp</dimen>
+    <dimen name="md_divider_height">1dp</dimen>
 
 </resources>

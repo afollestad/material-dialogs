@@ -79,7 +79,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setupGravity(ViewGroup view) {
         final LinearLayout itemRoot = (LinearLayout) view;
-        final int gravityInt = MaterialDialog.gravityEnumToGravity(itemGravity);
+        final int gravityInt = itemGravity.getGravityInt();
         itemRoot.setGravity(gravityInt | Gravity.CENTER_VERTICAL);
 
         if (view.getChildCount() == 2) {

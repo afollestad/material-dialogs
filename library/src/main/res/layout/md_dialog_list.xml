@@ -1,39 +1,31 @@
-<LinearLayout
+<com.afollestad.materialdialogs.internal.MDRootLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <include layout="@layout/md_stub_titleframe" />
+
     <LinearLayout
-        android:id="@+id/mainFrame"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <include layout="@layout/md_stub_titleframe" />
-
-        <View
-            android:id="@+id/titleBarDivider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/md_content_vertical_padding"
-            android:layout_marginBottom="-1dp"
-            android:visibility="gone" />
+        android:layout_height="match_parent">
 
         <ScrollView
             android:id="@+id/contentScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/md_content_vertical_padding">
+            android:clipToPadding="false">
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/md_dialog_frame_margin"
+                android:paddingTop="@dimen/md_content_padding_top"
+                android:paddingRight="@dimen/md_dialog_frame_margin"
+                android:paddingBottom="@dimen/md_content_padding_bottom"
                 android:textSize="@dimen/md_content_textsize"
                 tools:text="Content" />
 
@@ -44,7 +36,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Top padding cancelled out in code if there's a title -->
             <ListView
                 android:id="@+id/contentListView"
                 android:layout_width="match_parent"
@@ -53,8 +44,8 @@
                 android:divider="@null"
                 android:dividerHeight="0dp"
                 android:clipToPadding="false"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp" />
+                android:paddingTop="@dimen/md_content_padding_top"
+                android:paddingBottom="@dimen/md_content_padding_bottom" />
 
         </FrameLayout>
 
@@ -62,4 +53,4 @@
 
     <include layout="@layout/md_stub_actionbuttons" />
 
-</LinearLayout>
+</com.afollestad.materialdialogs.internal.MDRootLayout>

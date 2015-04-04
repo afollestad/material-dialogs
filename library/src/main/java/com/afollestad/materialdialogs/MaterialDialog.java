@@ -1,14 +1,9 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -23,15 +18,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,20 +33,18 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
+import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.util.DialogUtils;
-import com.afollestad.materialdialogs.util.RecyclerUtil;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -62,7 +52,7 @@ import java.util.Locale;
 public class MaterialDialog extends DialogBase implements
         View.OnClickListener, AdapterView.OnItemClickListener {
 
-    protected final View view;
+    protected final MDRootLayout view;
     protected final Builder mBuilder;
     protected ListView listView;
     protected ImageView icon;
@@ -74,10 +64,9 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
 
-    protected View positiveButton;
-    protected View neutralButton;
-    protected View negativeButton;
-    protected boolean isStacked;
+    protected MDButton positiveButton;
+    protected MDButton neutralButton;
+    protected MDButton negativeButton;
     protected int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
@@ -87,43 +76,8 @@ public class MaterialDialog extends DialogBase implements
         super(DialogInit.getTheme(builder));
         mBuilder = builder;
         final LayoutInflater inflater = LayoutInflater.from(mBuilder.context);
-        this.view = inflater.inflate(DialogInit.getInflateLayout(builder), null);
+        view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
-    }
-
-    @SuppressLint("RtlHardcoded")
-    protected static int gravityEnumToGravity(GravityEnum gravity) {
-        switch (gravity) {
-            case CENTER:
-                return Gravity.CENTER_HORIZONTAL;
-            case END:
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    return Gravity.RIGHT;
-                return Gravity.END;
-            default:
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    return Gravity.LEFT;
-                return Gravity.START;
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    protected static int gravityEnumToTextAlignment(GravityEnum gravity) {
-        switch (gravity) {
-            case CENTER:
-                return View.TEXT_ALIGNMENT_CENTER;
-            case END:
-                return View.TEXT_ALIGNMENT_VIEW_END;
-            default:
-                return View.TEXT_ALIGNMENT_VIEW_START;
-        }
-    }
-
-    @Override
-    public void onShow(DialogInterface dialog) {
-        super.onShow(dialog); // calls any external show listeners
-        checkIfStackingNeeded();
-        invalidateCustomViewAssociations();
     }
 
     protected final void setTypeface(TextView text, Typeface t) {
@@ -179,138 +133,6 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * To account for scrolling content and overscroll glows, the frame padding/margins sometimes
-     * must be set on inner views. This is dependent on the visibility of the title bar and action
-     * buttons. This method determines where the padding or margins are needed and applies them.
-     */
-    protected final void updateFramePadding() {
-        Resources r = getContext().getResources();
-        int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-
-        View contentScrollView = view.findViewById(R.id.contentScrollView);
-        if (contentScrollView != null) {
-            int paddingTop = contentScrollView.getPaddingTop();
-            int paddingBottom = contentScrollView.getPaddingBottom();
-            if (!hasActionButtons())
-                paddingBottom = framePadding;
-            if (titleFrame.getVisibility() == View.GONE)
-                paddingTop = framePadding;
-            contentScrollView.setPadding(contentScrollView.getPaddingLeft(), paddingTop,
-                    contentScrollView.getPaddingRight(), paddingBottom);
-        }
-
-        if (listView != null) {
-            // Padding below title is reduced for divider.
-            final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
-            titleFrame.setPadding(titleFrame.getPaddingLeft(),
-                    titleFrame.getPaddingTop(),
-                    titleFrame.getPaddingRight(),
-                    titlePaddingBottom);
-        }
-    }
-
-    /**
-     * Invalidates visibility of views for the presence of a custom view or list content
-     */
-    protected final void invalidateCustomViewAssociations() {
-        if (view.getMeasuredWidth() == 0) {
-            return;
-        }
-        View contentScrollView = view.findViewById(R.id.contentScrollView);
-        final int contentHorizontalPadding = (int) mBuilder.context.getResources()
-                .getDimension(R.dimen.md_dialog_frame_margin);
-        if (content != null)
-            content.setPadding(contentHorizontalPadding, 0, contentHorizontalPadding, 0);
-
-        if (mBuilder.customView != null) {
-            boolean topScroll = canViewOrChildScroll(customViewFrame.getChildAt(0), false);
-            boolean bottomScroll = canViewOrChildScroll(customViewFrame.getChildAt(0), true);
-            setDividerVisibility(topScroll, bottomScroll);
-        } else if ((mBuilder.items != null && mBuilder.items.length > 0) || mBuilder.adapter != null) {
-            if (contentScrollView != null) {
-                contentScrollView.setVisibility(mBuilder.content != null
-                        && mBuilder.content.toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
-            }
-            boolean canScroll = titleFrame.getVisibility() == View.VISIBLE &&
-                    (canListViewScroll() || canContentScroll());
-            setDividerVisibility(canScroll, canScroll);
-        } else {
-            if (contentScrollView != null)
-                contentScrollView.setVisibility(View.VISIBLE);
-            boolean canScroll = canContentScroll();
-            if (canScroll) {
-                if (content != null) {
-                    final int contentVerticalPadding = (int) mBuilder.context.getResources()
-                            .getDimension(R.dimen.md_title_frame_margin_bottom);
-                    content.setPadding(contentHorizontalPadding, contentVerticalPadding,
-                            contentHorizontalPadding, contentVerticalPadding);
-                }
-
-                // Same effect as when there's a ListView. Padding below title is reduced for divider.
-                final int titlePaddingBottom = (int) mBuilder.context.getResources().getDimension(R.dimen.md_title_frame_margin_bottom_list);
-                titleFrame.setPadding(titleFrame.getPaddingLeft(),
-                        titleFrame.getPaddingTop(),
-                        titleFrame.getPaddingRight(),
-                        titlePaddingBottom);
-            }
-            setDividerVisibility(canScroll, canScroll);
-        }
-    }
-
-    /**
-     * Set the visibility of the bottom divider and adjusts the layout margin,
-     * when the divider is visible the button bar bottom margin (8dp from
-     * http://www.google.com/design/spec/components/dialogs.html#dialogs-specs )
-     * is removed as it makes the button bar look off balanced with different amounts of padding
-     * above and below the divider.
-     */
-    private void setDividerVisibility(boolean topVisible, boolean bottomVisible) {
-        topVisible = topVisible && titleFrame.getVisibility() == View.VISIBLE;
-        bottomVisible = bottomVisible && hasActionButtons();
-
-        if (mBuilder.dividerColor == 0)
-            mBuilder.dividerColor = DialogUtils.resolveColor(mBuilder.context, R.attr.md_divider_color);
-        if (mBuilder.dividerColor == 0)
-            mBuilder.dividerColor = DialogUtils.resolveColor(getContext(), R.attr.md_divider);
-
-        View titleBarDivider = view.findViewById(R.id.titleBarDivider);
-        if (topVisible) {
-            titleBarDivider.setVisibility(View.VISIBLE);
-            titleBarDivider.setBackgroundColor(mBuilder.dividerColor);
-        } else {
-            titleBarDivider.setVisibility(View.GONE);
-        }
-
-        View buttonBarDivider = view.findViewById(R.id.buttonBarDivider);
-        if (bottomVisible) {
-            buttonBarDivider.setVisibility(View.VISIBLE);
-            buttonBarDivider.setBackgroundColor(mBuilder.dividerColor);
-            setVerticalMargins(view.findViewById(R.id.buttonStackedFrame), 0, 0);
-            setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame), 0, 0);
-        } else {
-            Resources r = getContext().getResources();
-            buttonBarDivider.setVisibility(View.GONE);
-
-            final int bottomMargin = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
-
-            /* Only enable the bottom margin if our available window space can hold the margin,
-               we don't want to enable this and cause the content to scroll, which is bad
-               experience itself but it also causes a vibrating window as this will keep getting
-               enabled/disabled over and over again.
-             */
-            Rect maxWindowFrame = new Rect();
-            getWindow().getDecorView().getWindowVisibleDisplayFrame(maxWindowFrame);
-            int currentHeight = getWindow().getDecorView().getMeasuredHeight();
-            if (currentHeight + bottomMargin < maxWindowFrame.height()) {
-                setVerticalMargins(view.findViewById(R.id.buttonStackedFrame),
-                        bottomMargin, bottomMargin);
-                setVerticalMargins(view.findViewById(R.id.buttonDefaultFrame),
-                        bottomMargin, bottomMargin);
-            }
-        }
-    }
-
-    /**
      * Sets the dialog ListView's adapter and it's item click listener.
      */
     protected final void invalidateList() {
@@ -320,99 +142,6 @@ public class MaterialDialog extends DialogBase implements
         listView.setAdapter(mBuilder.adapter);
         if (listType != null || mBuilder.listCallbackCustom != null)
             listView.setOnItemClickListener(this);
-    }
-
-    /**
-     * Find the view touching the bottom of this ViewGroup. Non visible children are ignored,
-     * however getChildDrawingOrder is not taking into account for simplicity and because it behaves
-     * inconsistently across platform versions.
-     *
-     * @return View touching the bottom of this viewgroup or null
-     */
-    @Nullable
-    private static View getBottomView(ViewGroup viewGroup) {
-        if (viewGroup == null)
-            return null;
-        View bottomView = null;
-        for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
-            View child = viewGroup.getChildAt(i);
-            if (child.getVisibility() == View.VISIBLE && child.getBottom() == viewGroup.getBottom()) {
-                bottomView = child;
-                break;
-            }
-        }
-        return bottomView;
-    }
-
-    @Nullable
-    private static View getTopView(ViewGroup viewGroup) {
-        if (viewGroup == null)
-            return null;
-        View topView = null;
-        for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
-            View child = viewGroup.getChildAt(i);
-            if (child.getVisibility() == View.VISIBLE && child.getTop() == viewGroup.getTop()) {
-                topView = child;
-                break;
-            }
-        }
-        return topView;
-    }
-
-    private static boolean canViewOrChildScroll(View view, boolean atBottom) {
-        if (view == null)
-            return false;
-        if (view instanceof ScrollView) {
-            ScrollView sv = (ScrollView) view;
-            if (sv.getChildCount() == 0)
-                return false;
-            final int childHeight = sv.getChildAt(0).getMeasuredHeight();
-            return sv.getMeasuredHeight() < childHeight;
-        } else if (view instanceof AdapterView) {
-            return canAdapterViewScroll((AdapterView) view);
-        } else if (view instanceof WebView) {
-            return canWebViewScroll((WebView) view);
-        } else if (view instanceof RecyclerView) {
-            return RecyclerUtil.canRecyclerViewScroll(view);
-        } else if (view instanceof ViewGroup) {
-            if (atBottom) {
-                return canViewOrChildScroll(getBottomView((ViewGroup) view), true);
-            } else {
-                return canViewOrChildScroll(getTopView((ViewGroup) view), false);
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private static boolean canWebViewScroll(WebView view) {
-        return view.getMeasuredHeight() > view.getContentHeight();
-    }
-
-    private static boolean canAdapterViewScroll(AdapterView lv) {
-        /* Force it to layout it's children */
-        if (lv.getLastVisiblePosition() == -1)
-            return false;
-
-        /* We can scroll if the first or last item is not visible */
-        boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
-        boolean lastItemVisible = lv.getLastVisiblePosition() == lv.getCount() - 1;
-
-        if (firstItemVisible && lastItemVisible) {
-            /* Or the first item's top is above or own top */
-            if (lv.getChildAt(0).getTop() < lv.getPaddingTop())
-                return true;
-
-            /* or the last item's bottom is beyond our own bottom */
-            return lv.getChildAt(lv.getChildCount() - 1).getBottom() >
-                    lv.getHeight() - lv.getPaddingBottom();
-        }
-
-        return true;
-    }
-
-    private boolean canListViewScroll() {
-        return canAdapterViewScroll(listView);
     }
 
     @Override
@@ -498,55 +227,6 @@ public class MaterialDialog extends DialogBase implements
         }
     }
 
-    /**
-     * Detects whether or not the content TextView can be scrolled.
-     */
-    private boolean canContentScroll() {
-        final ScrollView scrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
-        if (scrollView == null) return false;
-        final int childHeight = content.getMeasuredHeight();
-        return scrollView.getMeasuredHeight() < childHeight;
-    }
-
-    /**
-     * Measures the action button's and their text to decide whether or not the button should be stacked.
-     */
-    private void checkIfStackingNeeded() {
-        invalidateActions();
-        if (numberOfActionButtons() <= 1) {
-            return;
-        } else if (mBuilder.forceStacking) {
-            isStacked = true;
-        } else {
-            isStacked = false;
-            int buttonsWidth = 0;
-
-            positiveButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            neutralButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            negativeButton.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-
-            if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
-                buttonsWidth += positiveButton.getMeasuredWidth();
-            }
-            if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE) {
-                buttonsWidth += neutralButton.getMeasuredWidth();
-            }
-            if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE) {
-                buttonsWidth += negativeButton.getMeasuredWidth();
-            }
-
-            final int buttonFrameWidth = view.findViewById(R.id.buttonDefaultFrame).getMeasuredWidth();
-            isStacked = buttonsWidth > buttonFrameWidth;
-        }
-
-        if (isStacked) {
-            invalidateActions();
-            positiveButton.setVisibility(mBuilder.positiveText != null ? View.VISIBLE : View.GONE);
-            neutralButton.setVisibility(mBuilder.neutralText != null ? View.VISIBLE : View.GONE);
-            negativeButton.setVisibility(mBuilder.negativeText != null ? View.VISIBLE : View.GONE);
-        }
-    }
-
     protected final Drawable getListSelector() {
         if (mBuilder.listSelector != 0)
             return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.listSelector, null);
@@ -555,7 +235,7 @@ public class MaterialDialog extends DialogBase implements
         return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
     }
 
-    private Drawable getButtonSelector(DialogAction which) {
+    /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
         if (isStacked) {
             if (mBuilder.btnSelectorStacked != 0)
                 return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorStacked, null);
@@ -589,168 +269,6 @@ public class MaterialDialog extends DialogBase implements
         }
     }
 
-    /**
-     * Invalidates the positive/neutral/negative action buttons. Hides the action button frames if
-     * no action buttons are visible. Updates the action button references based on whether stacking
-     * is enabled. Sets up text color, selectors, and other properties of visible action buttons.
-     */
-    public final boolean invalidateActions() {
-        if (!hasActionButtons()) {
-            // If the dialog is a plain list dialog, no buttons are shown.
-            view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
-            view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
-            invalidateList();
-            return false;
-        }
-
-        if (isStacked) {
-            view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.GONE);
-            view.findViewById(R.id.buttonStackedFrame).setVisibility(View.VISIBLE);
-        } else {
-            view.findViewById(R.id.buttonDefaultFrame).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.buttonStackedFrame).setVisibility(View.GONE);
-        }
-
-        boolean textAllCaps;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, android.R.attr.textAllCaps, true);
-            if (textAllCaps)
-                textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, R.attr.textAllCaps, true);
-        } else {
-            textAllCaps = DialogUtils.resolveBoolean(mBuilder.context, R.attr.textAllCaps, true);
-        }
-
-        positiveButton = view.findViewById(
-                isStacked ? R.id.buttonStackedPositive : R.id.buttonDefaultPositive);
-        if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
-            TextView positiveTextView = (TextView) ((FrameLayout) positiveButton).getChildAt(0);
-            setTypeface(positiveTextView, mBuilder.mediumFont);
-            positiveTextView.setText(textAllCaps ?
-                    mBuilder.positiveText.toString().toUpperCase(Locale.getDefault()) : mBuilder.positiveText);
-            positiveTextView.setTextColor(getActionTextStateList(mBuilder.positiveColor));
-            setBackgroundCompat(positiveButton, getButtonSelector(DialogAction.POSITIVE));
-            positiveButton.setTag(POSITIVE);
-            positiveButton.setOnClickListener(this);
-            if (isStacked) {
-                positiveTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    positiveTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
-                }
-            } else {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
-                // Positive button is on the right when button gravity is start, left when end
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    params.addRule(mBuilder.buttonsGravity == GravityEnum.START || mBuilder.buttonsGravity == GravityEnum.CENTER ?
-                            RelativeLayout.ALIGN_PARENT_END : RelativeLayout.ALIGN_PARENT_START);
-                } else {
-                    params.addRule(mBuilder.buttonsGravity == GravityEnum.START || mBuilder.buttonsGravity == GravityEnum.CENTER ?
-                            RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT);
-                }
-                positiveButton.setLayoutParams(params);
-            }
-        }
-
-        neutralButton = view.findViewById(
-                isStacked ? R.id.buttonStackedNeutral : R.id.buttonDefaultNeutral);
-        if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE) {
-            TextView neutralTextView = (TextView) ((FrameLayout) neutralButton).getChildAt(0);
-            setTypeface(neutralTextView, mBuilder.mediumFont);
-            neutralTextView.setTextColor(getActionTextStateList(mBuilder.neutralColor));
-            setBackgroundCompat(neutralButton, getButtonSelector(DialogAction.NEUTRAL));
-            neutralTextView.setText(textAllCaps ?
-                    mBuilder.neutralText.toString().toUpperCase(Locale.getDefault()) : mBuilder.neutralText);
-            neutralButton.setTag(NEUTRAL);
-            neutralButton.setOnClickListener(this);
-            if (isStacked) {
-                neutralTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    neutralTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
-                }
-            } else {
-                // Neutral button follows buttonsGravity literally.
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    if (mBuilder.buttonsGravity == GravityEnum.CENTER) {
-                        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                        params.addRule(RelativeLayout.START_OF, R.id.buttonDefaultPositive);
-                        params.addRule(RelativeLayout.END_OF, R.id.buttonDefaultNegative);
-                        ((FrameLayout.LayoutParams) neutralTextView.getLayoutParams()).gravity = Gravity.CENTER;
-                    } else {
-                        params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                RelativeLayout.ALIGN_PARENT_START : RelativeLayout.ALIGN_PARENT_END);
-                    }
-                } else {
-                    if (mBuilder.buttonsGravity == GravityEnum.CENTER) {
-                        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                        params.addRule(RelativeLayout.LEFT_OF, R.id.buttonDefaultPositive);
-                        params.addRule(RelativeLayout.RIGHT_OF, R.id.buttonDefaultNegative);
-                        neutralTextView.setGravity(Gravity.CENTER_HORIZONTAL);
-                    } else {
-                        params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                RelativeLayout.ALIGN_PARENT_LEFT : RelativeLayout.ALIGN_PARENT_RIGHT);
-                    }
-                }
-                neutralButton.setLayoutParams(params);
-            }
-        }
-
-        negativeButton = view.findViewById(
-                isStacked ? R.id.buttonStackedNegative : R.id.buttonDefaultNegative);
-        if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE) {
-            TextView negativeTextView = (TextView) ((FrameLayout) negativeButton).getChildAt(0);
-            setTypeface(negativeTextView, mBuilder.mediumFont);
-            negativeTextView.setTextColor(getActionTextStateList(mBuilder.negativeColor));
-            setBackgroundCompat(negativeButton, getButtonSelector(DialogAction.NEGATIVE));
-            negativeTextView.setText(textAllCaps ?
-                    mBuilder.negativeText.toString().toUpperCase(Locale.getDefault()) : mBuilder.negativeText);
-            negativeButton.setTag(NEGATIVE);
-            negativeButton.setOnClickListener(this);
-
-            if (isStacked) {
-                negativeTextView.setGravity(gravityEnumToGravity(mBuilder.btnStackedGravity));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    //noinspection ResourceType
-                    negativeTextView.setTextAlignment(gravityEnumToTextAlignment(mBuilder.btnStackedGravity));
-                }
-            } else {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, (int) getContext().getResources().getDimension(R.dimen.md_button_height));
-                if (mBuilder.buttonsGravity == GravityEnum.CENTER) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                        params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                    else
-                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                } else {
-                    if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
-                        // There's a positive button, it goes next to that
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                    RelativeLayout.START_OF : RelativeLayout.END_OF, R.id.buttonDefaultPositive);
-                        } else {
-                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                    RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.buttonDefaultPositive);
-                        }
-                    } else {
-                        // Negative button replaces positive button position if there's no positive button
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                    RelativeLayout.ALIGN_PARENT_END : RelativeLayout.ALIGN_PARENT_START);
-                        } else {
-                            params.addRule(mBuilder.buttonsGravity == GravityEnum.START ?
-                                    RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT);
-                        }
-                    }
-                }
-                negativeButton.setLayoutParams(params);
-            }
-        }
-        return true;
-    }
-
     private boolean sendSingleChoiceCallback(View v) {
         CharSequence text = null;
         if (mBuilder.selectedIndex >= 0) {
@@ -772,7 +290,7 @@ public class MaterialDialog extends DialogBase implements
 
     @Override
     public final void onClick(View v) {
-        String tag = (String) v.getTag();
+        DialogAction tag = (DialogAction) v.getTag();
         switch (tag) {
             case POSITIVE: {
                 if (mBuilder.callback != null)
@@ -1459,25 +977,12 @@ public class MaterialDialog extends DialogBase implements
     public void show() {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
+
         try {
             super.show();
         } catch (WindowManager.BadTokenException e) {
             throw new DialogException("Bad window token, you cannot show a dialog before an Activity is created or after it's hidden.");
         }
-    }
-
-    private ColorStateList getActionTextStateList(int newPrimaryColor) {
-        final int fallBackButtonColor = DialogUtils.resolveColor(getContext(), android.R.attr.textColorPrimary);
-        if (newPrimaryColor == 0) newPrimaryColor = fallBackButtonColor;
-        int[][] states = new int[][]{
-                new int[]{-android.R.attr.state_enabled}, // disabled
-                new int[]{} // enabled
-        };
-        int[] colors = new int[]{
-                DialogUtils.adjustAlpha(newPrimaryColor, 0.4f),
-                newPrimaryColor
-        };
-        return new ColorStateList(states, colors);
     }
 
     /**
@@ -1489,24 +994,13 @@ public class MaterialDialog extends DialogBase implements
      * @return The view from the dialog's layout representing this action button.
      */
     public final View getActionButton(@NonNull DialogAction which) {
-        if (isStacked) {
-            switch (which) {
-                default:
-                    return view.findViewById(R.id.buttonStackedPositive);
-                case NEUTRAL:
-                    return view.findViewById(R.id.buttonStackedNeutral);
-                case NEGATIVE:
-                    return view.findViewById(R.id.buttonStackedNegative);
-            }
-        } else {
-            switch (which) {
-                default:
-                    return view.findViewById(R.id.buttonDefaultPositive);
-                case NEUTRAL:
-                    return view.findViewById(R.id.buttonDefaultNeutral);
-                case NEGATIVE:
-                    return view.findViewById(R.id.buttonDefaultNegative);
-            }
+        switch (which) {
+            default:
+                return view.findViewById(R.id.buttonDefaultPositive);
+            case NEUTRAL:
+                return view.findViewById(R.id.buttonDefaultNeutral);
+            case NEGATIVE:
+                return view.findViewById(R.id.buttonDefaultNegative);
         }
     }
 
@@ -1581,18 +1075,20 @@ public class MaterialDialog extends DialogBase implements
         switch (which) {
             default:
                 mBuilder.positiveText = title;
-                if (title == null) positiveButton.setVisibility(View.GONE);
+                positiveButton.setText(title);
+                positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
             case NEUTRAL:
                 mBuilder.neutralText = title;
-                if (title == null) neutralButton.setVisibility(View.GONE);
+                neutralButton.setText(title);
+                neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
             case NEGATIVE:
                 mBuilder.negativeText = title;
-                if (title == null) negativeButton.setVisibility(View.GONE);
+                negativeButton.setText(title);
+                negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
         }
-        invalidateActions();
     }
 
     /**
@@ -1658,7 +1154,7 @@ public class MaterialDialog extends DialogBase implements
 
     public final void setContent(CharSequence content) {
         this.content.setText(content);
-        invalidateCustomViewAssociations(); // invalidates padding in content area scroll (if needed)
+        this.content.setVisibility(TextUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -1681,7 +1177,6 @@ public class MaterialDialog extends DialogBase implements
         }
         mBuilder.items = items;
         listView.setAdapter(mBuilder.adapter);
-        invalidateCustomViewAssociations();
     }
 
     public final int getCurrentProgress() {
