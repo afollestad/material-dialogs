@@ -18,7 +18,6 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 
 class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
-    private final int itemColor;
     private final MaterialDialog dialog;
     private final GravityEnum itemGravity;
 
@@ -26,7 +25,6 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
         super(dialog.mBuilder.context, resource, textViewResourceId, objects);
         this.dialog = dialog;
         this.itemGravity = dialog.mBuilder.itemsGravity;
-        this.itemColor = DialogUtils.resolveColor(getContext(), R.attr.md_item_color, dialog.defaultItemColor);
     }
 
     @Override
@@ -59,7 +57,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
             }
         }
         tv.setText(dialog.mBuilder.items[index]);
-        tv.setTextColor(itemColor);
+        tv.setTextColor(dialog.mBuilder.itemColor);
         dialog.setTypeface(tv, dialog.mBuilder.regularFont);
         view.setTag(index + ":" + dialog.mBuilder.items[index]);
         setupGravity((ViewGroup) view);

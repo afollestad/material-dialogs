@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -858,12 +857,6 @@ public class MaterialDialog extends DialogBase implements
         protected int mProgress = -2;
         protected int mProgressMax = 0;
 
-        // Since 0 is black and -1 is white, no default value is good for indicating if a color was set.
-        // So this is a decent solution to this problem.
-        protected boolean titleColorSet;
-        protected boolean contentColorSet;
-        protected boolean itemColorSet;
-
         @DrawableRes
         protected int listSelector;
         @DrawableRes
@@ -878,39 +871,30 @@ public class MaterialDialog extends DialogBase implements
         public Builder(@NonNull Context context) {
             this.context = context;
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
-            boolean useAppCompat = true;
+
+            // Retrieve default accent colors, which are used on the action buttons and progress bars
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
-                try {
-                    this.progressColor = a.getColor(0, materialBlue);
-                    this.positiveColor = this.progressColor;
-                    this.negativeColor = this.progressColor;
-                    this.neutralColor = this.progressColor;
-                    useAppCompat = false;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    a.recycle();
-                }
-            }
-            if (useAppCompat) {
-                TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
-                try {
-                    this.progressColor = a.getColor(0, materialBlue);
-                    this.positiveColor = this.progressColor;
-                    this.negativeColor = this.progressColor;
-                    this.neutralColor = this.progressColor;
-                } catch (Exception e) {
-                    this.progressColor = materialBlue;
-                    this.positiveColor = materialBlue;
-                    this.negativeColor = materialBlue;
-                    this.neutralColor = materialBlue;
-                } finally {
-                    a.recycle();
-                }
+                final int fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
+                this.progressColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, fallback);
+                this.positiveColor = this.progressColor;
+                this.negativeColor = this.progressColor;
+                this.neutralColor = this.progressColor;
+            } else {
+                this.progressColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
+                this.positiveColor = this.progressColor;
+                this.negativeColor = this.progressColor;
+                this.neutralColor = this.progressColor;
             }
 
+            // Load theme values from the ThemeSingleton if needed
             checkSingleton();
+
+            // Retrieve default title/content colors
+            this.titleColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
+            this.contentColor = DialogUtils.resolveColor(context, android.R.attr.textColorSecondary);
+            this.itemColor = this.contentColor;
+
+            // Retrieve gravity settings from global theme attributes if needed
             this.titleGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
             this.contentGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_content_gravity, this.contentGravity);
             this.btnStackedGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_btnstacked_gravity, this.btnStackedGravity);
@@ -976,7 +960,6 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder titleColor(int color) {
             this.titleColor = color;
-            this.titleColorSet = true;
             return this;
         }
 
@@ -1050,7 +1033,6 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder contentColor(int color) {
             this.contentColor = color;
-            this.contentColorSet = true;
             return this;
         }
 
@@ -1366,7 +1348,6 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder itemColor(int color) {
             this.itemColor = color;
-            this.itemColorSet = true;
             return this;
         }
 

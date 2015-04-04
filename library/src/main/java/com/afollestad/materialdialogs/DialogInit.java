@@ -134,12 +134,7 @@ class DialogInit {
         } else {
             dialog.title.setText(builder.title);
             dialog.setTypeface(dialog.title, builder.mediumFont);
-            if (builder.titleColorSet) {
-                dialog.title.setTextColor(builder.titleColor);
-            } else {
-                final int fallback = DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
-                dialog.title.setTextColor(DialogUtils.resolveColor(dialog.getContext(), R.attr.md_title_color, fallback));
-            }
+            dialog.title.setTextColor(builder.titleColor);
             dialog.title.setGravity(MaterialDialog.gravityEnumToGravity(builder.titleGravity));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
@@ -158,29 +153,14 @@ class DialogInit {
             } else {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
+            dialog.content.setTextColor(builder.contentColor);
             dialog.content.setGravity(MaterialDialog.gravityEnumToGravity(builder.contentGravity));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
                 dialog.content.setTextAlignment(MaterialDialog.gravityEnumToTextAlignment(builder.contentGravity));
             }
-            if (builder.contentColorSet) {
-                dialog.content.setTextColor(builder.contentColor);
-            } else {
-                final int fallback = DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
-                final int contentColor = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_content_color, fallback);
-                dialog.content.setTextColor(contentColor);
-            }
         } else if (dialog.content != null) {
             dialog.content.setVisibility(View.GONE);
-        }
-
-        // Load default list item text color
-        if (builder.itemColorSet) {
-            dialog.defaultItemColor = builder.itemColor;
-        } else if (builder.theme == Theme.LIGHT) {
-            dialog.defaultItemColor = Color.BLACK;
-        } else {
-            dialog.defaultItemColor = Color.WHITE;
         }
 
         // Setup list dialog stuff
@@ -288,15 +268,6 @@ class DialogInit {
                         }
                     }
                 });
-
-        // Gingerbread compatibility stuff
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            dialog.setInverseBackgroundForced(true);
-            if (!builder.titleColorSet)
-                dialog.title.setTextColor(Color.BLACK);
-            if (!builder.contentColorSet && dialog.content != null)
-                dialog.content.setTextColor(Color.BLACK);
-        }
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
