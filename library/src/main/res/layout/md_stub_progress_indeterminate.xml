@@ -4,14 +4,16 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/md_dialog_frame_margin"
+    android:paddingRight="@dimen/md_dialog_frame_margin"
+    android:paddingTop="@dimen/md_content_padding_top"
+    android:paddingBottom="@dimen/md_content_padding_top"
     android:gravity="end|center_vertical">
 
     <ProgressBar
         android:id="@android:id/progress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-        android:layout_marginStart="@dimen/md_dialog_frame_margin" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/content"
@@ -21,6 +23,8 @@
         android:textSize="16sp"
         tools:text="Message"
         tools:ignore="UnusedAttribute"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
         android:gravity="start"
         android:textAlignment="viewStart" />
 

@@ -1,7 +1,10 @@
 package com.afollestad.materialdialogs;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -9,7 +12,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -114,9 +117,9 @@ class DialogInit {
         dialog.listView = (ListView) dialog.view.findViewById(R.id.contentListView);
 
         // Button views initially used by checkIfStackingNeeded()
-        dialog.positiveButton = dialog.view.findViewById(R.id.buttonDefaultPositive);
-        dialog.neutralButton = dialog.view.findViewById(R.id.buttonDefaultNeutral);
-        dialog.negativeButton = dialog.view.findViewById(R.id.buttonDefaultNegative);
+        dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultPositive);
+        dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNeutral);
+        dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNegative);
 
         // Set up the initial visibility of action buttons based on whether or not text was set
         dialog.positiveButton.setVisibility(builder.positiveText != null ? View.VISIBLE : View.GONE);
@@ -136,6 +139,7 @@ class DialogInit {
                 dialog.icon.setVisibility(View.GONE);
             }
         }
+
         // Setup icon size limiting
         int maxIconSize = builder.maxIconSize;
         if (maxIconSize == -1)
@@ -149,6 +153,13 @@ class DialogInit {
             dialog.icon.requestLayout();
         }
 
+        // Setup divider color in case content scrolls
+        if (builder.dividerColor == 0)
+            builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color);
+        if (builder.dividerColor == 0)
+            builder.dividerColor = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        dialog.view.setDividerColor(builder.dividerColor);
+
         // Setup title and title frame
         if (builder.title == null) {
             dialog.titleFrame.setVisibility(View.GONE);
@@ -156,10 +167,10 @@ class DialogInit {
             dialog.title.setText(builder.title);
             dialog.setTypeface(dialog.title, builder.mediumFont);
             dialog.title.setTextColor(builder.titleColor);
-            dialog.title.setGravity(MaterialDialog.gravityEnumToGravity(builder.titleGravity));
+            dialog.title.setGravity(builder.titleGravity.getGravityInt());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
-                dialog.title.setTextAlignment(MaterialDialog.gravityEnumToTextAlignment(builder.titleGravity));
+                dialog.title.setTextAlignment(builder.titleGravity.getTextAlignment());
             }
         }
 
@@ -175,13 +186,73 @@ class DialogInit {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
             dialog.content.setTextColor(builder.contentColor);
-            dialog.content.setGravity(MaterialDialog.gravityEnumToGravity(builder.contentGravity));
+            dialog.content.setGravity(builder.contentGravity.getGravityInt());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
-                dialog.content.setTextAlignment(MaterialDialog.gravityEnumToTextAlignment(builder.contentGravity));
+                dialog.content.setTextAlignment(builder.contentGravity.getTextAlignment());
             }
         } else if (dialog.content != null) {
             dialog.content.setVisibility(View.GONE);
+        }
+
+        // Setup buttons
+        dialog.view.setButtonGravity(builder.buttonsGravity);
+        dialog.view.setButtonStackedGravity(builder.btnStackedGravity);
+        dialog.view.setForceStack(builder.forceStacking);
+        boolean textAllCaps;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            textAllCaps = DialogUtils.resolveBoolean(builder.context, android.R.attr.textAllCaps, true);
+            if (textAllCaps)
+                textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
+        } else {
+            textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
+        }
+        if (dialog.positiveButton != null && builder.positiveText != null) {
+            MDButton positiveTextView = dialog.positiveButton;
+            dialog.setTypeface(positiveTextView, builder.mediumFont);
+            positiveTextView.setAllCapsCompat(textAllCaps);
+            positiveTextView.setText(builder.positiveText);
+            positiveTextView.setTextColor(getActionTextStateList(builder.context, builder.positiveColor));
+            dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
+            dialog.positiveButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.POSITIVE, false));
+            dialog.positiveButton.setTag(DialogAction.POSITIVE);
+            dialog.positiveButton.setOnClickListener(dialog);
+            dialog.positiveButton.setVisibility(View.VISIBLE);
+        }
+
+        if (dialog.negativeButton != null && builder.negativeText != null) {
+            MDButton negativeTextView = dialog.negativeButton;
+            dialog.setTypeface(negativeTextView, builder.mediumFont);
+            negativeTextView.setAllCapsCompat(textAllCaps);
+            negativeTextView.setText(builder.negativeText);
+            negativeTextView.setTextColor(getActionTextStateList(builder.context, builder.negativeColor));
+            dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
+            dialog.negativeButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, false));
+            dialog.negativeButton.setTag(DialogAction.NEGATIVE);
+            dialog.negativeButton.setOnClickListener(dialog);
+            dialog.negativeButton.setVisibility(View.VISIBLE);
+        }
+
+        if (dialog.neutralButton != null && builder.neutralText != null) {
+            MDButton neutralTextView = dialog.neutralButton;
+            dialog.setTypeface(neutralTextView, builder.mediumFont);
+            neutralTextView.setAllCapsCompat(textAllCaps);
+            neutralTextView.setText(builder.neutralText);
+            neutralTextView.setTextColor(getActionTextStateList(builder.context, builder.neutralColor));
+            dialog.neutralButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, true));
+            dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
+            dialog.neutralButton.setTag(DialogAction.NEUTRAL);
+            dialog.neutralButton.setOnClickListener(dialog);
+            dialog.neutralButton.setVisibility(View.VISIBLE);
+        }
+
+        // Load default list item text color
+        if (builder.itemColorSet) {
+            dialog.defaultItemColor = builder.itemColor;
+        } else if (builder.theme == Theme.LIGHT) {
+            dialog.defaultItemColor = Color.BLACK;
+        } else {
+            dialog.defaultItemColor = Color.WHITE;
         }
 
         // Setup list dialog stuff
@@ -189,17 +260,6 @@ class DialogInit {
             dialog.selectedIndicesList = new ArrayList<>();
         if (dialog.listView != null && (builder.items != null && builder.items.length > 0 || builder.adapter != null)) {
             dialog.listView.setSelector(dialog.getListSelector());
-
-            if (builder.title != null) {
-                // Cancel out top padding if there's a title
-                dialog.listView.setPadding(dialog.listView.getPaddingLeft(), 0,
-                        dialog.listView.getPaddingRight(), dialog.listView.getPaddingBottom());
-            }
-            if (dialog.hasActionButtons()) {
-                // No bottom padding if there's action buttons
-                dialog.listView.setPadding(dialog.listView.getPaddingLeft(), 0,
-                        dialog.listView.getPaddingRight(), 0);
-            }
 
             // No custom adapter specified, setup the list with a MaterialDialogAdapter.
             // Which supports regular lists and single/multi choice dialogs.
@@ -224,7 +284,6 @@ class DialogInit {
         setupProgressDialog(dialog);
 
         if (builder.customView != null) {
-            dialog.invalidateCustomViewAssociations();
             FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.customViewFrame);
             dialog.customViewFrame = frame;
             View innerView = builder.customView;
@@ -234,16 +293,8 @@ class DialogInit {
                 final Resources r = dialog.getContext().getResources();
                 final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
                 final ScrollView sv = new ScrollView(dialog.getContext());
-                int paddingTop;
-                int paddingBottom;
-                if (dialog.titleFrame.getVisibility() != View.GONE)
-                    paddingTop = r.getDimensionPixelSize(R.dimen.md_content_vertical_padding);
-                else
-                    paddingTop = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-                if (dialog.hasActionButtons())
-                    paddingBottom = r.getDimensionPixelSize(R.dimen.md_content_vertical_padding);
-                else
-                    paddingBottom = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+                int paddingTop = r.getDimensionPixelSize(R.dimen.md_content_padding_top);
+                int paddingBottom = r.getDimensionPixelSize(R.dimen.md_content_padding_bottom);
                 sv.setClipToPadding(false);
                 if (innerView instanceof EditText) {
                     // Setting padding to an EditText causes visual errors, set it to the parent instead
@@ -260,8 +311,6 @@ class DialogInit {
             }
             frame.addView(innerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
-        } else {
-            dialog.invalidateCustomViewAssociations();
         }
 
         // Setup user listeners
@@ -275,20 +324,10 @@ class DialogInit {
             dialog.setOnKeyListener(builder.keyListener);
 
         // Other internal initialization
-        dialog.updateFramePadding();
         dialog.invalidateList();
         dialog._setOnShowListenerInternal();
         dialog._setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
-        dialog.view.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        if (dialog.view.getMeasuredWidth() > 0) {
-                            dialog.invalidateCustomViewAssociations();
-                        }
-                    }
-                });
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
@@ -325,14 +364,21 @@ class DialogInit {
                 dialog.mProgressLabel.setText("0%");
             }
 
-            if (builder.title == null) {
-                // Redistribute main frame's bottom padding to the top padding if there's no title
-                final View mainFrame = dialog.view.findViewById(R.id.mainFrame);
-                mainFrame.setPadding(mainFrame.getPaddingLeft(),
-                        mainFrame.getPaddingBottom(),
-                        mainFrame.getPaddingRight(),
-                        mainFrame.getPaddingBottom());
-            }
         }
     }
+
+    private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
+        final int fallBackButtonColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
+        if (newPrimaryColor == 0) newPrimaryColor = fallBackButtonColor;
+        int[][] states = new int[][]{
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{} // enabled
+        };
+        int[] colors = new int[]{
+                DialogUtils.adjustAlpha(newPrimaryColor, 0.4f),
+                newPrimaryColor
+        };
+        return new ColorStateList(states, colors);
+    }
+
 }

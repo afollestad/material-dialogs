@@ -49,7 +49,6 @@
         <item name="android:minWidth">@dimen/md_button_min_width</item>
         <item name="android:paddingLeft">@dimen/md_button_textpadding_horizontal</item>
         <item name="android:paddingRight">@dimen/md_button_textpadding_horizontal</item>
-        <item name="android:duplicateParentState">true</item>
     </style>
 
     <!-- Light dialog theme for devices prior Honeycomb -->

@@ -1,111 +1,27 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:id="@+id/buttonBarDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="-1dp"
-        android:visibility="gone" />
 
-    <RelativeLayout
-        android:id="@+id/buttonDefaultFrame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/md_neutral_button_margin"
-        android:layout_marginStart="@dimen/md_neutral_button_margin"
-        android:layout_marginRight="@dimen/md_button_padding_frame_side"
-        android:layout_marginEnd="@dimen/md_button_padding_frame_side"
-        android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
+    <com.afollestad.materialdialogs.internal.MDButton
+        android:id="@+id/buttonDefaultNeutral"
+        style="@style/MD_ActionButton.Text"
+        tools:text="Neutral"
+        />
 
-        <FrameLayout
-            android:id="@+id/buttonDefaultNeutral"
-            style="@style/MD_ActionButton"
-            tools:layout_alignParentLeft="true"
-            tools:layout_alignParentStart="true">
+    <com.afollestad.materialdialogs.internal.MDButton
+        android:id="@+id/buttonDefaultNegative"
+        style="@style/MD_ActionButton.Text"
+        tools:layout_alignParentLeft="true"
+        tools:layout_alignParentStart="true"
+        tools:text="Negative"
+        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Neutral"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/buttonDefaultNegative"
-            style="@style/MD_ActionButton"
-            tools:toLeftOf="@+id/buttonDefaultPositive"
-            tools:toStartOf="@+id/buttonDefaultPositive">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Negative"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/buttonDefaultPositive"
-            style="@style/MD_ActionButton"
-            tools:layout_alignParentRight="true"
-            tools:layout_alignParentEnd="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Positive"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/buttonStackedFrame"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_button_frame_vertical_padding"
-        android:layout_marginBottom="@dimen/md_button_frame_vertical_padding">
-
-        <FrameLayout
-            android:id="@+id/buttonStackedPositive"
-            style="@style/MD_ActionButtonStacked">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Positive"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/buttonStackedNegative"
-            style="@style/MD_ActionButtonStacked">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Negative"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/buttonStackedNeutral"
-            style="@style/MD_ActionButtonStacked">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Neutral"
-                style="@style/MD_ActionButton.Text" />
-
-        </FrameLayout>
-
-    </LinearLayout>
+    <com.afollestad.materialdialogs.internal.MDButton
+        android:id="@+id/buttonDefaultPositive"
+        style="@style/MD_ActionButton.Text"
+        tools:layout_alignParentLeft="true"
+        tools:layout_alignParentStart="true"
+        tools:text="Positive"
+        />
 
 </merge>
