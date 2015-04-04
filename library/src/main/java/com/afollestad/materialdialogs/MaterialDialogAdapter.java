@@ -45,15 +45,17 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
             case SINGLE: {
                 @SuppressLint("CutPasteId")
                 MDRadioButton radio = (MDRadioButton) view.findViewById(R.id.control);
-                radio.setChecked(dialog.mBuilder.selectedIndex == index);
+                boolean selected = dialog.mBuilder.selectedIndex == index;
                 radio.setColorFilter(dialog.mBuilder.widgetColor);
+                radio.setChecked(selected);
                 break;
             }
             case MULTI: {
                 @SuppressLint("CutPasteId")
                 MDCheckBox checkbox = (MDCheckBox) view.findViewById(R.id.control);
-                checkbox.setChecked(dialog.selectedIndicesList.contains(index));
+                boolean selected = dialog.selectedIndicesList.contains(index);
                 checkbox.setColorFilter(dialog.mBuilder.widgetColor);
+                checkbox.setChecked(selected);
                 break;
             }
         }
