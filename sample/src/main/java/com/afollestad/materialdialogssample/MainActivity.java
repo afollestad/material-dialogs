@@ -489,7 +489,7 @@ public class MainActivity extends ActionBarActivity implements
         ThemeSingleton.get().positiveColor = color;
         ThemeSingleton.get().neutralColor = color;
         ThemeSingleton.get().negativeColor = color;
-        ThemeSingleton.get().progressColor = color;
+        ThemeSingleton.get().widgetColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(darker);
     }

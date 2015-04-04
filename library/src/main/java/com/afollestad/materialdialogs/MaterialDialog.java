@@ -337,7 +337,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence neutralText;
         protected CharSequence negativeText;
         protected View customView;
-        protected int progressColor;
+        protected int widgetColor;
         protected int positiveColor;
         protected int negativeColor;
         protected int neutralColor;
@@ -397,16 +397,20 @@ public class MaterialDialog extends DialogBase implements
             // Retrieve default accent colors, which are used on the action buttons and progress bars
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final int fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
-                this.progressColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, fallback);
-                this.positiveColor = this.progressColor;
-                this.negativeColor = this.progressColor;
-                this.neutralColor = this.progressColor;
+                this.widgetColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, fallback);
+                this.positiveColor = this.widgetColor;
+                this.negativeColor = this.widgetColor;
+                this.neutralColor = this.widgetColor;
             } else {
-                this.progressColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
-                this.positiveColor = this.progressColor;
-                this.negativeColor = this.progressColor;
-                this.neutralColor = this.progressColor;
+                this.widgetColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
+                this.positiveColor = this.widgetColor;
+                this.negativeColor = this.widgetColor;
+                this.neutralColor = this.widgetColor;
             }
+
+            // Set the default theme based on the Activity theme's primary color darkness (more white or more black)
+            final int primaryTextColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
+            this.theme = DialogUtils.isColorDark(primaryTextColor) ? Theme.LIGHT : Theme.DARK;
 
             // Load theme values from the ThemeSingleton if needed
             checkSingleton();
@@ -451,8 +455,8 @@ public class MaterialDialog extends DialogBase implements
                 this.btnSelectorNeutral = s.btnSelectorNeutral;
             if (s.btnSelectorNegative != 0)
                 this.btnSelectorNegative = s.btnSelectorNegative;
-            if (s.progressColor != 0)
-                this.progressColor = s.progressColor;
+            if (s.widgetColor != 0)
+                this.widgetColor = s.widgetColor;
             this.titleGravity = s.titleGravity;
             this.contentGravity = s.contentGravity;
             this.btnStackedGravity = s.btnStackedGravity;
@@ -840,17 +844,17 @@ public class MaterialDialog extends DialogBase implements
             return progress(indeterminate, max);
         }
 
-        public Builder progressColor(int color) {
-            this.progressColor = color;
+        public Builder widgetColor(int color) {
+            this.widgetColor = color;
             return this;
         }
 
-        public Builder progressColorRes(@ColorRes int colorRes) {
-            return progressColor(this.context.getResources().getColor(colorRes));
+        public Builder widgetColorRes(@ColorRes int colorRes) {
+            return widgetColor(this.context.getResources().getColor(colorRes));
         }
 
-        public Builder progressColorAttr(@AttrRes int colorAttr) {
-            return progressColorRes(DialogUtils.resolveColor(this.context, colorAttr));
+        public Builder widgetColorAttr(@AttrRes int colorAttr) {
+            return widgetColorRes(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder dividerColor(int color) {

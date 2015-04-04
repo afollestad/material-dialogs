@@ -22,12 +22,12 @@ import com.afollestad.materialdialogs.util.RecyclerUtil;
 
 /**
  * @author Kevin Barry (teslacoil) 4/02/2015
- *
- * This is the top level view for all MaterialDialogs
- * It handles the layout of:
- *  titleFrame (md_stub_titleframe)
- *  content (text, custom view, listview, etc)
- *  buttonDefault... (either stacked or horizontal)
+ *         <p/>
+ *         This is the top level view for all MaterialDialogs
+ *         It handles the layout of:
+ *         titleFrame (md_stub_titleframe)
+ *         content (text, custom view, listview, etc)
+ *         buttonDefault... (either stacked or horizontal)
  */
 public class MDRootLayout extends ViewGroup {
     private static final String TAG = "MD.RootView";
@@ -161,8 +161,8 @@ public class MDRootLayout extends ViewGroup {
         if (hasButtons) {
             if (mIsStacked) {
                 availableHeight -= stackedHeight;
-                fullPadding += 2*mButtonPaddingFull;
-                minPadding += 2*mButtonPaddingFull;
+                fullPadding += 2 * mButtonPaddingFull;
+                minPadding += 2 * mButtonPaddingFull;
             } else {
                 availableHeight -= mButtonBarHeight;
                 fullPadding += 2 * mButtonPaddingFull;
@@ -170,7 +170,7 @@ public class MDRootLayout extends ViewGroup {
             }
         } else {
             /* Content has 8dp, we add 16dp and get 24dp, the frame margin */
-            fullPadding += 2*mButtonPaddingFull;
+            fullPadding += 2 * mButtonPaddingFull;
         }
 
         if (mTitleBar != null && mTitleBar.getVisibility() != View.GONE) {
@@ -191,9 +191,9 @@ public class MDRootLayout extends ViewGroup {
             } else {
                 mUseFullPadding = false;
                 availableHeight = 0;
-                mDrawTopDivider =  mTitleBar != null && mTitleBar.getVisibility() != View.GONE &&
+                mDrawTopDivider = mTitleBar != null && mTitleBar.getVisibility() != View.GONE &&
                         canViewOrChildScroll(mContent, false);
-                mDrawBottomDivider =  hasButtons &&
+                mDrawBottomDivider = hasButtons &&
                         canViewOrChildScroll(mContent, true);
             }
 
@@ -315,7 +315,7 @@ public class MDRootLayout extends ViewGroup {
                     } else if (neutralRight == -1 && neutralLeft != -1) {
                         neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
                     } else if (neutralRight == -1 && neutralLeft == -1) {
-                        neutralLeft = (r - l)/2 - mButtons[INDEX_NEUTRAL].getMeasuredWidth()/2;
+                        neutralLeft = (r - l) / 2 - mButtons[INDEX_NEUTRAL].getMeasuredWidth() / 2;
                         neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
                     }
                     bl = neutralLeft;

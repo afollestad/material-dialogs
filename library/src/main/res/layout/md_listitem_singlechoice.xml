@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/md_dialog_frame_margin"
     android:paddingEnd="@dimen/md_dialog_frame_margin">
 
-    <RadioButton
+    <com.afollestad.materialdialogs.internal.MDRadioButton
         android:id="@+id/control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

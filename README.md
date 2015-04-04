@@ -245,6 +245,16 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
 every time the user selects an item.
 
+##### Coloring Radio Buttons
+
+Like action buttons and many other elements of the Material dialog, you can customize the color of a 
+ dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
+ and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ or `android:colorAccent` (for the Material theme) in your Activity's theme.
+ 
+There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
 ---
 
 ### Multi Choice List Dialogs
@@ -282,6 +292,16 @@ unless auto dismiss is turned off.
 
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
 every time the user selects an item.
+
+##### Coloring Check Boxes
+
+Like action buttons and many other elements of the Material dialog, you can customize the color of a 
+ dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
+ and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory. 
+ Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ or `android:colorAccent` (for the Material theme) in your Activity's theme.
+ 
+There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
 
 ---
 
@@ -401,47 +421,104 @@ Setting an action button's text to null will cause it to be hidden. Do not manua
 Before Lollipop, theming AlertDialogs was basically impossible without using reflection and custom drawables.
 Since KitKat, Android became more color neutral but AlertDialogs continued to use Holo Blue for the title and
 title divider. Lollipop has improved even more, with no colors in the dialog by default other than the action
-buttons. This library makes theming even easier. Here's a basic example:
+buttons. This library makes theming even easier.
+
+###### Basics
+
+By default, Material Dialogs will apply a light theme or dark theme based on the `?android:textColorPrimary` 
+attribute retrieved from the context creating the dialog. If the color is light (e.g. more white), it will
+guess the Activity is using a dark theme and it will use the dialog's dark theme. You can manually set the theme 
+used from the `Builder#theme()` method:
 
 ```java
 new MaterialDialog.Builder(this)
-        .title(R.string.title)
-        .content(R.string.content)
-        .positiveText(R.string.positive)
-        .neutralText(R.string.neutral)
-        .negativeText(R.string.negative)
-        .positiveColorRes(R.color.material_red_500)
-        .neutralColorRes(R.color.material_red_500)
-        .negativeColorRes(R.color.material_red_500)
-        .progressColorRes(R.color.material_red_500)
-        .titleGravity(GravityEnum.CENTER_HORIZONTAL)
-        .contentGravity(GravityEnum.CENTER_HORIZONTAL)
-        .btnStackedGravity(GravityEnum.START)
-        .buttonsGravity(GravityEnum.END)
-        .itemsGravity(GravityEnum.END)
-        .titleColorRes(R.color.material_red_500)
-        .contentColorRes(Color.WHITE)
-        .dividerColorRes(R.color.material_pink_500)
-        .backgroundColorRes(R.color.material_blue_grey_800)
-        .btnSelectorStacked(R.drawable.custom_btn_selector_stacked)
-        .btnSelector(R.drawable.custom_btn_selector)
-        .btnSelector(R.drawable.custom_btn_selector_primary, DialogAction.POSITIVE)
-        .listSelector(R.drawable.custom_list_and_stackedbtn_selector)
+        .content("Hi")
         .theme(Theme.DARK)
         .show();
 ```
 
-To see more colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
+Or you can use the global theming attribute, which is discussed in the section below. Global theming 
+avoids having to constantly call theme setters for every dialog you show.
+
+###### Colors
+
+Pretty much every aspect of a dialog created with this library can be colored:
+
+```java
+new MaterialDialog.Builder(this)
+        .titleColorRes(R.color.material_red_500)
+        .contentColorRes(Color.WHITE)
+        .dividerColorRes(R.color.material_pink_500)
+        .backgroundColorRes(R.color.material_blue_grey_800)
+        .positiveColorRes(R.color.material_red_500)
+        .neutralColorRes(R.color.material_red_500)
+        .negativeColorRes(R.color.material_red_500)
+        .widgetColorRes(R.color.material_red_500)
+        .show();
+```
+
+The names are self explanatory for the most part. The `widgetColor` method is discussed in a few other
+sections of this tutorial, it applies to progress bars, check boxes, and radio buttons. Also note
+that each of these methods have 3 variations for setting a color directly, using color resources, and
+using color attributes.
+
+###### Selectors
+
+Theming selectors allows you to change colors for pressable things:
+
+```java
+new MaterialDialog.Builder(this)
+        .btnSelector(R.drawable.custom_btn_selector)
+        .btnSelector(R.drawable.custom_btn_selector_primary, DialogAction.POSITIVE)
+        .btnSelectorStacked(R.drawable.custom_btn_selector_stacked)
+        .listSelector(R.drawable.custom_list_and_stackedbtn_selector)
+        .show();
+```
+
+The first `btnSelector` line sets a selector drawable used for all action buttons. The second `btnSelector`
+line overwrites the drawable used only for the positive button. This results in the positive button having
+a different selector than the neutral and negative buttons. `btnSelectorStacked` sets a selector drawable
+used when the buttons become stacked, either because there's not enough room to fit them all on one line,
+or because you used `forceStacked(true)` on the `Builder`. `listSelector` is used for list items, when
+you are NOT using a custom adapter.
 
 ***An important note related to using custom action button selectors***: make sure your selector drawable references
 inset drawables like the default ones do, this is important for correct action button padding.
+
+###### Gravity
+
+It's probably unlikely you'd want to change gravity of elements in a dialog, but it's possible.
+
+```java
+new MaterialDialog.Builder(this)
+        .titleGravity(GravityEnum.CENTER_HORIZONTAL)
+        .contentGravity(GravityEnum.CENTER_HORIZONTAL)
+        .btnStackedGravity(GravityEnum.START)
+        .itemsGravity(GravityEnum.END)
+        .buttonsGravity(GravityEnum.END)
+        .show();
+```
+
+These are pretty self explanatory. `titleGravity` sets the gravity for the dialog title, `contentGravity`
+sets the gravity for the dialog content, `btnStackedGravity` sets the gravity for stacked action buttons, 
+`itemsGravity` sets the gravity for list items (when you're NOT using a custom adapter). However, `buttonsGravity` 
+is a little less intuitive: think of it like it's changing the gravity of the neutral button. When you use START, 
+this is the normal configuration. The neutral button will be on the left (or right for RTL), the positive button 
+will be on the far right (or left for RTL), and the neutral button will be to the left of the positive button 
+(or right for RTL). Using END would result in the exact opposite. Using CENTER will put the neutral button
+in the center, the negative button on the left, and the positive button on the right (the negative and positive 
+positions switch for RTL).
+
+###### Material Palette
+
+To see colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
 
 ---
 
 ### Global Theming
 
-By default, the dialog inherits and extracts theme colors from other attributes and theme colors of the app
-or operating system. This behavior can be overridden in your Activity themes:
+Most of the theming aspects discussed in the above section can be automatically applied to all dialogs
+you show from an Activity which has a theme containing any these attributes:
 
 ```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -509,11 +586,11 @@ or operating system. This behavior can be overridden in your Activity themes:
     <item name="md_negative_color">#673AB7</item>
 
     <!--
-        By default, a progress dialog's progress indicator color is derived
-        from the colorAccent attribute of AppCompat or android:colorAccent
-        attribute of the Material theme.
+        By default, a progress dialog's progress bar, check boxes, and radio buttons 
+        have a color is derived from the colorAccent attribute of AppCompat or 
+        android:colorAccent attribute of the Material theme.
     -->
-    <item name="md_progress_color">#673AB7</item>
+    <item name="md_widget_color">#673AB7</item>
 
     <!--
         By default, the list item text color is black for the light
@@ -679,13 +756,15 @@ dialog.setContent(getString(R.string.done));
 
 See the sample project for this dialog in action, with the addition of threading.
 
-##### Coloring
+##### Coloring the Progress Bar
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
- progress dialog's progress indicator. The `Builder` class contains a `progressColor()`, `progressColorRes()`,
- and `progressColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ progress dialog's progress bar. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
+ and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
-There's also a global theming attribute as shown in the Global Theming section of this README: `md_progress_color`.
+There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
 
 ---
 

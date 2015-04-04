@@ -96,5 +96,4 @@ public class MDButton extends TextView {
             }
         }
     }
-
 }

@@ -85,7 +85,7 @@ class DialogInit {
         builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
         builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
         builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
-        builder.progressColor = DialogUtils.resolveColor(builder.context, R.attr.md_progress_color, builder.progressColor);
+        builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
@@ -154,10 +154,8 @@ class DialogInit {
         }
 
         // Setup divider color in case content scrolls
-        if (builder.dividerColor == 0)
-            builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color);
-        if (builder.dividerColor == 0)
-            builder.dividerColor = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
         dialog.view.setDividerColor(builder.dividerColor);
 
         // Setup title and title frame
@@ -338,12 +336,12 @@ class DialogInit {
             // Color the progress bar
             Drawable indDraw = dialog.mProgress.getIndeterminateDrawable();
             if (indDraw != null) {
-                indDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
+                indDraw.setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_ATOP);
                 dialog.mProgress.setIndeterminateDrawable(indDraw);
             }
             Drawable regDraw = dialog.mProgress.getProgressDrawable();
             if (regDraw != null) {
-                regDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
+                regDraw.setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_ATOP);
                 dialog.mProgress.setProgressDrawable(regDraw);
             }
 
