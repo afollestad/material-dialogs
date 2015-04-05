@@ -95,5 +95,4 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         if (mShowListener != null)
             mShowListener.onShow(dialog);
     }
-
 }

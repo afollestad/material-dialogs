@@ -74,7 +74,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .dismissListener(this)
                 .content(getDialogMessage());
 
-        View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_input, null);
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)

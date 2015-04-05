@@ -65,7 +65,6 @@ public class MDButton extends TextView {
             if (stacked) {
                 setPadding(mStackedEndPadding, getPaddingTop(), mStackedEndPadding, getPaddingBottom());
             } /* Else the padding was properly reset by the drawable */
-
         }
     }
 
@@ -76,25 +75,23 @@ public class MDButton extends TextView {
     public void setStackedSelector(Drawable d) {
         mStackedBackground = d;
         if (mStacked)
-            setStacked(mStacked, true);
+            setStacked(true, true);
     }
 
     public void setDefaultSelector(Drawable d) {
         mDefaultBackground = d;
         if (!mStacked)
-            setStacked(mStacked, true);
+            setStacked(true, true);
     }
 
     public void setAllCapsCompat(boolean allCaps) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             setAllCaps(allCaps);
         } else {
-            if (allCaps) {
+            if (allCaps)
                 setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-            } else {
+            else
                 setTransformationMethod(null);
-            }
         }
     }
-
 }

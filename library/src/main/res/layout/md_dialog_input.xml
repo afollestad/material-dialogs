@@ -1,0 +1,44 @@
+<com.afollestad.materialdialogs.internal.MDRootLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/md_stub_titleframe" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin"
+        android:paddingTop="@dimen/md_content_padding_top"
+        android:paddingBottom="@dimen/md_content_padding_bottom">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/md_content_textsize"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            tools:text="Message"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="UnusedAttribute" />
+
+        <EditText
+            android:id="@android:id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <include layout="@layout/md_stub_actionbuttons" />
+
+</com.afollestad.materialdialogs.internal.MDRootLayout>

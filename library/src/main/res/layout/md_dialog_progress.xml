@@ -14,8 +14,7 @@
         android:paddingLeft="@dimen/md_dialog_frame_margin"
         android:paddingRight="@dimen/md_dialog_frame_margin"
         android:paddingTop="@dimen/md_content_padding_top"
-        android:paddingBottom="@dimen/md_content_padding_bottom"
-        >
+        android:paddingBottom="@dimen/md_content_padding_bottom">
 
         <include layout="@layout/md_stub_progress" />
 

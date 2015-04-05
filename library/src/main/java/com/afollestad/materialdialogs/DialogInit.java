@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -12,15 +13,16 @@ import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -54,10 +56,12 @@ class DialogInit {
             return R.layout.md_dialog_custom;
         } else if (builder.items != null && builder.items.length > 0 || builder.adapter != null) {
             return R.layout.md_dialog_list;
-        } else if (builder.mProgress > -2) {
+        } else if (builder.progress > -2) {
             return R.layout.md_dialog_progress;
-        } else if (builder.mIndeterminateProgress) {
+        } else if (builder.indeterminateProgress) {
             return R.layout.md_dialog_progress_indeterminate;
+        } else if (builder.inputCallback != null) {
+            return R.layout.md_dialog_input;
         } else {
             return R.layout.md_dialog_basic;
         }
@@ -85,7 +89,7 @@ class DialogInit {
         builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
         builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
         builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
-        builder.progressColor = DialogUtils.resolveColor(builder.context, R.attr.md_progress_color, builder.progressColor);
+        builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
@@ -121,6 +125,9 @@ class DialogInit {
         dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNeutral);
         dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNegative);
 
+        if (builder.inputCallback != null && builder.positiveText == null)
+            builder.positiveText = builder.context.getString(android.R.string.ok);
+
         // Set up the initial visibility of action buttons based on whether or not text was set
         dialog.positiveButton.setVisibility(builder.positiveText != null ? View.VISIBLE : View.GONE);
         dialog.neutralButton.setVisibility(builder.neutralText != null ? View.VISIBLE : View.GONE);
@@ -154,10 +161,8 @@ class DialogInit {
         }
 
         // Setup divider color in case content scrolls
-        if (builder.dividerColor == 0)
-            builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color);
-        if (builder.dividerColor == 0)
-            builder.dividerColor = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
         dialog.view.setDividerColor(builder.dividerColor);
 
         // Setup title and title frame
@@ -207,6 +212,7 @@ class DialogInit {
         } else {
             textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
         }
+
         if (dialog.positiveButton != null && builder.positiveText != null) {
             MDButton positiveTextView = dialog.positiveButton;
             dialog.setTypeface(positiveTextView, builder.mediumFont);
@@ -283,6 +289,10 @@ class DialogInit {
         // Setup progress dialog stuff if needed
         setupProgressDialog(dialog);
 
+        // Setup inputu dialog stuff if needed
+        setupInputDialog(dialog);
+
+        // Setup custom views
         if (builder.customView != null) {
             FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.customViewFrame);
             dialog.customViewFrame = frame;
@@ -332,29 +342,19 @@ class DialogInit {
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
-        if (builder.mIndeterminateProgress || builder.mProgress > -2) {
-            dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
+        if (builder.indeterminateProgress || builder.progress > -2) {
+            dialog.mProgress = (MDProgressBar) dialog.view.findViewById(android.R.id.progress);
+            if (dialog.mProgress == null) return;
+            dialog.mProgress.setColorFilter(builder.widgetColor);
 
-            // Color the progress bar
-            Drawable indDraw = dialog.mProgress.getIndeterminateDrawable();
-            if (indDraw != null) {
-                indDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
-                dialog.mProgress.setIndeterminateDrawable(indDraw);
-            }
-            Drawable regDraw = dialog.mProgress.getProgressDrawable();
-            if (regDraw != null) {
-                regDraw.setColorFilter(builder.progressColor, PorterDuff.Mode.SRC_ATOP);
-                dialog.mProgress.setProgressDrawable(regDraw);
-            }
-
-            if (!builder.mIndeterminateProgress) {
+            if (!builder.indeterminateProgress) {
                 dialog.mProgress.setProgress(0);
-                dialog.mProgress.setMax(builder.mProgressMax);
+                dialog.mProgress.setMax(builder.progressMax);
                 dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.label);
                 dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
-                if (builder.mShowMinMax) {
+                if (builder.showMinMax) {
                     dialog.mProgressMinMax.setVisibility(View.VISIBLE);
-                    dialog.mProgressMinMax.setText("0/" + builder.mProgressMax);
+                    dialog.mProgressMinMax.setText("0/" + builder.progressMax);
                     ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) dialog.mProgress.getLayoutParams();
                     lp.leftMargin = 0;
                     lp.rightMargin = 0;
@@ -363,8 +363,70 @@ class DialogInit {
                 }
                 dialog.mProgressLabel.setText("0%");
             }
-
         }
+    }
+
+    private static void setupInputDialog(final MaterialDialog dialog) {
+        final MaterialDialog.Builder builder = dialog.mBuilder;
+        dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
+        if (dialog.input == null) return;
+        if (builder.inputPrefill != null)
+            dialog.input.append(builder.inputPrefill);
+        dialog.input.setHint(builder.inputHint);
+        dialog.input.setSingleLine();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface di) {
+                final MaterialDialog dialog = (MaterialDialog) di;
+                if (dialog.getInputEditText() == null) return;
+                dialog.getInputEditText().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.getInputEditText().requestFocus();
+                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null)
+                            imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_IMPLICIT);
+                    }
+                });
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface di) {
+                final MaterialDialog dialog = (MaterialDialog) di;
+                if (dialog.getInputEditText() == null) return;
+                dialog.getInputEditText().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.getInputEditText().requestFocus();
+                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), 0);
+                    }
+                });
+            }
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface di) {
+                final MaterialDialog dialog = (MaterialDialog) di;
+                if (dialog.getInputEditText() == null) return;
+                dialog.getInputEditText().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.getInputEditText().requestFocus();
+                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null)
+                            imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), 0);
+                    }
+                });
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            dialog.input.setBackgroundTintList(ColorStateList.valueOf(builder.widgetColor));
+        else if (dialog.input.getBackground() != null)
+            dialog.input.getBackground().setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_IN);
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {

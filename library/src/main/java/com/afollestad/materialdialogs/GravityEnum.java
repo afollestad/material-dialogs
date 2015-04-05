@@ -8,6 +8,7 @@ public enum GravityEnum {
     START, CENTER, END;
 
     private static final boolean HAS_RTL = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+
     public int getGravityInt() {
         switch (this) {
             case START:
