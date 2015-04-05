@@ -75,24 +75,23 @@ public class MDButton extends TextView {
     public void setStackedSelector(Drawable d) {
         mStackedBackground = d;
         if (mStacked)
-            setStacked(mStacked, true);
+            setStacked(true, true);
     }
 
     public void setDefaultSelector(Drawable d) {
         mDefaultBackground = d;
         if (!mStacked)
-            setStacked(mStacked, true);
+            setStacked(true, true);
     }
 
     public void setAllCapsCompat(boolean allCaps) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             setAllCaps(allCaps);
         } else {
-            if (allCaps) {
+            if (allCaps)
                 setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-            } else {
+            else
                 setTransformationMethod(null);
-            }
         }
     }
 }
