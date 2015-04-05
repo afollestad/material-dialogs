@@ -36,7 +36,7 @@ dependencies {
 
 See the project's Releases page for a list of versions with their changelogs.
 
-###### [ ![View Releases](https://github.com/afollestad/material-dialogs/releases)
+###### [View Releases](https://github.com/afollestad/material-dialogs/releases)
 
 If you Watch this repository, GitHub will send you an email every time I publish an update.
 
