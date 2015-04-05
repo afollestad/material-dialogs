@@ -2,7 +2,7 @@
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/screenshots.png)
 
-### Sample Project
+## Sample Project
 
 You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
 
@@ -18,7 +18,7 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ---
 
-### Gradle Dependency (jCenter)
+## Gradle Dependency (jCenter)
 
 Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
 
@@ -32,7 +32,7 @@ dependencies {
 
 ---
 
-### What's New
+## What's New
 
 See the project's Releases page for a list of versions with their changelogs.
 
@@ -42,7 +42,7 @@ If you Watch this repository, GitHub will send you an email every time I publish
 
 ---
 
-### Basic Dialog
+## Basic Dialog
 
 First of all, note that `MaterialDialog` extends `DialogBase`, which extends `AlertDialog`. While
 a very small number of the stock methods are purposely deprecated and don't work, you have access
@@ -69,7 +69,7 @@ If the content is long enough, it will become scrollable and a divider will be d
 
 ---
 
-### Migration from AlertDialogs
+## Migration from AlertDialogs
 
 If you're migrating old dialogs you could use ```AlertDialogWrapper```. You need change imports and replace ```AlertDialog.Builder``` with ```AlertDialogWrapper.Builder```:
 
@@ -89,7 +89,7 @@ But it's highly recommended to use original ```MaterialDialog``` API for new usa
 
 ---
 
-### Displaying an Icon
+## Displaying an Icon
 
 MaterialDialog supports the display of an icon just like the stock AlertDialog; it will go to the left of the title.
 
@@ -107,7 +107,7 @@ You can limit the maximum size of the icon using the `limitIconToDefaultSize()`,
 
 ---
 
-### Stacked Action Buttons
+## Stacked Action Buttons
 
 If you have multiple action buttons that together are too wide to fit on one line, the dialog will stack the
 buttons to be vertically orientated.
@@ -125,7 +125,7 @@ You can also force the dialog to stack its buttons with the `forceStacking()` me
 
 ---
 
-### Neutral Action Button
+## Neutral Action Button
 
 You can specify neutral text in addition to the positive and negative text. It will show the neutral
 action on the far left.
@@ -142,7 +142,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-### Callbacks
+## Callbacks
 
 To know when the user selects an action button, you set a callback. To do this, use the `ButtonCallback`
 class and override its `onPositive()`, `onNegative()`, or `onNeutral()` methods as needed. The advantage
@@ -187,7 +187,7 @@ If `autoDismiss` is turned off, then you must manually dismiss the dialog in the
 
 ---
 
-### List Dialogs
+## List Dialogs
 
 Creating a list dialog only requires passing in an array of strings. The callback (`itemsCallback`) is
 also very simple.
@@ -210,7 +210,7 @@ below your list, however this is only useful in some specific cases.
 
 ---
 
-### Single Choice List Dialogs
+## Single Choice List Dialogs
 
 Single choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
@@ -245,7 +245,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
 every time the user selects an item.
 
-##### Coloring Radio Buttons (API 22+)
+#### Coloring Radio Buttons (API 22+)
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -259,7 +259,7 @@ Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) a
 
 ---
 
-### Multi Choice List Dialogs
+## Multi Choice List Dialogs
 
 Multiple choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
@@ -295,7 +295,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
 every time the user selects an item.
 
-##### Coloring Check Boxes (API 22+)
+#### Coloring Check Boxes (API 22+)
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -309,7 +309,7 @@ Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) a
 
 ---
 
-### Custom List Dialogs
+## Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
 exactly how you want your list to work.
@@ -344,7 +344,7 @@ Note that you don't need to be using a custom adapter in order to access the `Li
 
 ---
 
-### Custom Views
+## Custom Views
 
 Custom views are very easy to implement.
 
@@ -366,7 +366,7 @@ including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project
 Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
 you're responsible for using padding values that look good with your content.
 
-###### Later Access
+#### Later Access
 
 If you need to access a View in the custom view after the dialog is built, you can use `getCustomView()` of
 `MaterialDialog`. This is especially useful if you pass a layout resource to the `Builder`, the dialog will
@@ -379,7 +379,7 @@ View view = dialog.getCustomView();
 
 ---
 
-### Typefaces
+## Typefaces
 
 By default, Material Dialogs will use the `Roboto Medium` font for the dialog title and action buttons,
 and `Roboto Regular` for content, list items, etc. This is done so using the font assets included in this library,
@@ -398,7 +398,7 @@ aren't ttf files, you can use the `typeface(Typeface, Typeface)` Builder method.
 
 ---
 
-### Getting and Setting Action Buttons
+## Getting and Setting Action Buttons
 
 If you want to get a reference to one of the dialog action buttons after the dialog is built and shown (e.g. to enable or disable buttons):
 
@@ -420,14 +420,14 @@ Setting an action button's text to null will cause it to be hidden. Do not manua
 
 ---
 
-### Theming
+## Theming
 
 Before Lollipop, theming AlertDialogs was basically impossible without using reflection and custom drawables.
 Since KitKat, Android became more color neutral but AlertDialogs continued to use Holo Blue for the title and
 title divider. Lollipop has improved even more, with no colors in the dialog by default other than the action
 buttons. This library makes theming even easier.
 
-###### Basics
+#### Basics
 
 By default, Material Dialogs will apply a light theme or dark theme based on the `?android:textColorPrimary` 
 attribute retrieved from the context creating the dialog. If the color is light (e.g. more white), it will
@@ -444,7 +444,7 @@ new MaterialDialog.Builder(this)
 Or you can use the global theming attribute, which is discussed in the section below. Global theming 
 avoids having to constantly call theme setters for every dialog you show.
 
-###### Colors
+#### Colors
 
 Pretty much every aspect of a dialog created with this library can be colored:
 
@@ -466,7 +466,7 @@ sections of this tutorial, it applies to progress bars on all API levels, along 
 buttons (on API 22 and above due to limitations). Also note that each of these methods have 3 variations 
 for setting a color directly, using color resources, and using color attributes.
 
-###### Selectors
+#### Selectors
 
 Theming selectors allows you to change colors for pressable things:
 
@@ -489,7 +489,7 @@ you are NOT using a custom adapter.
 ***An important note related to using custom action button selectors***: make sure your selector drawable references
 inset drawables like the default ones do, this is important for correct action button padding.
 
-###### Gravity
+#### Gravity
 
 It's probably unlikely you'd want to change gravity of elements in a dialog, but it's possible.
 
@@ -513,13 +513,13 @@ will be on the far right (or left for RTL), and the neutral button will be to th
 in the center, the negative button on the left, and the positive button on the right (the negative and positive 
 positions switch for RTL).
 
-###### Material Palette
+#### Material Palette
 
 To see colors that fit the Material design palette, see this page: http://www.google.com/design/spec/style/color.html#color-color-palette
 
 ---
 
-### Global Theming
+## Global Theming
 
 Most of the theming aspects discussed in the above section can be automatically applied to all dialogs
 you show from an Activity which has a theme containing any these attributes:
@@ -678,7 +678,7 @@ the color will override that behavior.
 
 ---
 
-### Show, Cancel, and Dismiss Callbacks
+## Show, Cancel, and Dismiss Callbacks
 
 You can directly setup show/cancel/dismiss listeners from the `Builder` rather than on the resulting
 `MaterialDialog` instance:
@@ -708,7 +708,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-### Input Dialogs
+## Input Dialogs
 
 An input dialog is pretty self explanatory, it retrieves input from the user of your application with
 an input field (EditText). You can also display content above the EditText if you desire.
@@ -725,7 +725,7 @@ new MaterialDialog.Builder(this)
         }).show();
 ```
 
-###### Coloring the EditText
+#### Coloring the EditText
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a
  input dialog's `EditText`. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -737,12 +737,12 @@ There's also a global theming attribute as shown in the Global Theming section o
 
 ---
 
-### Progress Dialogs
+## Progress Dialogs
 
 This library allows you to display progress dialogs with Material design that even use your app's
 accent color to color the progress bars (if you use AppCompat to theme your app, or the Material theme on Lollipop).
 
-###### Indeterminate Progress Dialogs
+#### Indeterminate Progress Dialogs
 
 This will display the classic progress dialog with a spinning circle, see the sample project to see it in action:
 
@@ -754,7 +754,7 @@ new MaterialDialog.Builder(this)
     .show();
 ```
 
-###### Determinate (Seek Bar) Progress Dialogs
+#### Determinate (Seek Bar) Progress Dialogs
 
 If a dialog is not indeterminate, it displays a horizontal progress bar that increases up until a max value.
 The comments in the code explain what this does.
@@ -789,7 +789,7 @@ dialog.setContent(getString(R.string.done));
 
 See the sample project for this dialog in action, with the addition of threading.
 
-##### Coloring the Progress Bar
+#### Coloring the Progress Bar
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  progress dialog's progress bar. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -801,7 +801,7 @@ There's also a global theming attribute as shown in the Global Theming section o
 
 ---
 
-### Preference Dialogs
+## Preference Dialogs
 
 Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference` allow you to associate a preference activity's settings
 with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
@@ -810,7 +810,7 @@ dialogs. See the sample project for details.
 
 ---
 
-### Misc
+## Misc
 
 If you don't want the dialog to automatically be dismissed when an action button is pressed or when
 the user selects a list item:
