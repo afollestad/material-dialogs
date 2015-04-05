@@ -250,7 +250,7 @@ every time the user selects an item.
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
  and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
- Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ Note that by default, radio buttons will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
@@ -708,6 +708,35 @@ new MaterialDialog.Builder(this)
 
 ---
 
+### Input Dialogs
+
+An input dialog is pretty self explanatory, it retrieves input from the user of your application with
+an input field (EditText). You can also display content above the EditText if you desire.
+
+```java
+new MaterialDialog.Builder(this)
+        .title(R.string.input)
+        .content(R.string.input_content)
+        .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
+            @Override
+            public void onInput(MaterialDialog dialog, CharSequence input) {
+                // Do something
+            }
+        }).show();
+```
+
+###### Coloring the EditText
+
+Like action buttons and many other elements of the Material dialog, you can customize the color of a
+ input dialog's `EditText`. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
+ and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ Note that by default, EditTexts will be colored with the color held in `colorAccent` (for AppCompat)
+ or `android:colorAccent` (for the Material theme) in your Activity's theme.
+
+There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
+---
+
 ### Progress Dialogs
 
 This library allows you to display progress dialogs with Material design that even use your app's
@@ -765,7 +794,7 @@ See the sample project for this dialog in action, with the addition of threading
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  progress dialog's progress bar. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
  and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
- Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ Note that by default, progress bars will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.

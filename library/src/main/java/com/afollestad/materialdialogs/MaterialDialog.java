@@ -27,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressLabel;
     protected TextView mProgressMinMax;
     protected TextView content;
+    protected EditText input;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
@@ -299,6 +301,8 @@ public class MaterialDialog extends DialogBase implements
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
                     sendMultichoiceCallback();
+                if (mBuilder.inputCallback != null && input != null)
+                    mBuilder.inputCallback.onInput(this, input.getText());
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -370,10 +374,13 @@ public class MaterialDialog extends DialogBase implements
         protected int dividerColor;
         protected int backgroundColor;
         protected int itemColor;
-        protected boolean mIndeterminateProgress;
-        protected boolean mShowMinMax;
-        protected int mProgress = -2;
-        protected int mProgressMax = 0;
+        protected boolean indeterminateProgress;
+        protected boolean showMinMax;
+        protected int progress = -2;
+        protected int progressMax = 0;
+        protected CharSequence inputPrefill;
+        protected CharSequence inputHint;
+        protected InputCallback inputCallback;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -821,12 +828,12 @@ public class MaterialDialog extends DialogBase implements
          */
         public Builder progress(boolean indeterminate, int max) {
             if (indeterminate) {
-                this.mIndeterminateProgress = true;
-                this.mProgress = -2;
+                this.indeterminateProgress = true;
+                this.progress = -2;
             } else {
-                this.mIndeterminateProgress = false;
-                this.mProgress = -1;
-                this.mProgressMax = max;
+                this.indeterminateProgress = false;
+                this.progress = -1;
+                this.progressMax = max;
             }
             return this;
         }
@@ -840,7 +847,7 @@ public class MaterialDialog extends DialogBase implements
          * @return An instance of the Builder so calls can be chained.
          */
         public Builder progress(boolean indeterminate, int max, boolean showMinMax) {
-            this.mShowMinMax = showMinMax;
+            this.showMinMax = showMinMax;
             return progress(indeterminate, max);
         }
 
@@ -966,6 +973,17 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback) {
+            this.inputCallback = callback;
+            this.inputHint = hint;
+            this.inputPrefill = prefill;
+            return this;
+        }
+
+        public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
+            return input(hint == 0 ? null : context.getString(hint), prefill == 0 ? null : context.getString(prefill), callback);
+        }
+
         public MaterialDialog build() {
             return new MaterialDialog(this);
         }
@@ -1039,6 +1057,11 @@ public class MaterialDialog extends DialogBase implements
     @Override
     public final ListView getListView() {
         return listView;
+    }
+
+    @Nullable
+    public final EditText getInputEditText() {
+        return input;
     }
 
     /**
@@ -1189,7 +1212,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void incrementProgress(int by) {
-        if (mBuilder.mProgress <= -2)
+        if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use incrementProgress() on this dialog.");
         setProgress(getCurrentProgress() + by);
     }
@@ -1197,7 +1220,7 @@ public class MaterialDialog extends DialogBase implements
     public final void setProgress(int progress) {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
-        else if (mBuilder.mProgress <= -2)
+        else if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
         mProgress.setProgress(progress);
         int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
@@ -1209,13 +1232,13 @@ public class MaterialDialog extends DialogBase implements
     public final void setMaxProgress(int max) {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
-        else if (mBuilder.mProgress <= -2)
+        else if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
         mProgress.setMax(max);
     }
 
     public final boolean isIndeterminateProgress() {
-        return mBuilder.mIndeterminateProgress;
+        return mBuilder.indeterminateProgress;
     }
 
     public final int getMaxProgress() {
@@ -1383,5 +1406,10 @@ public class MaterialDialog extends DialogBase implements
         public final String toString() {
             return super.toString();
         }
+    }
+
+    public interface InputCallback {
+
+        void onInput(MaterialDialog dialog, CharSequence input);
     }
 }
