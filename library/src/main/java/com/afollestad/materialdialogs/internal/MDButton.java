@@ -65,7 +65,6 @@ public class MDButton extends TextView {
             if (stacked) {
                 setPadding(mStackedEndPadding, getPaddingTop(), mStackedEndPadding, getPaddingBottom());
             } /* Else the padding was properly reset by the drawable */
-
         }
     }
 
