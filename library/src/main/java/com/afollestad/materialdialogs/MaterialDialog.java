@@ -32,11 +32,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
@@ -59,7 +59,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView title;
     protected View titleFrame;
     protected FrameLayout customViewFrame;
-    protected ProgressBar mProgress;
+    protected MDProgressBar mProgress;
     protected TextView mProgressLabel;
     protected TextView mProgressMinMax;
     protected TextView content;

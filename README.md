@@ -245,7 +245,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
 every time the user selects an item.
 
-##### Coloring Radio Buttons
+##### Coloring Radio Buttons (API 22+)
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -254,6 +254,8 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
+Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) and above.
 
 ---
 
@@ -293,7 +295,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
 every time the user selects an item.
 
-##### Coloring Check Boxes
+##### Coloring Check Boxes (API 22+)
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -302,6 +304,8 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
+Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) and above.
 
 ---
 
@@ -458,9 +462,9 @@ new MaterialDialog.Builder(this)
 ```
 
 The names are self explanatory for the most part. The `widgetColor` method is discussed in a few other
-sections of this tutorial, it applies to progress bars, check boxes, and radio buttons. Also note
-that each of these methods have 3 variations for setting a color directly, using color resources, and
-using color attributes.
+sections of this tutorial, it applies to progress bars on all API levels, along check boxes and radio 
+buttons (on API 22 and above due to limitations). Also note that each of these methods have 3 variations 
+for setting a color directly, using color resources, and using color attributes.
 
 ###### Selectors
 

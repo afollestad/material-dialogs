@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.method.LinkMovementMethod;
@@ -16,11 +15,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -331,19 +330,8 @@ class DialogInit {
     private static void setupProgressDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
         if (builder.mIndeterminateProgress || builder.mProgress > -2) {
-            dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
-
-            // Color the progress bar
-            Drawable indDraw = dialog.mProgress.getIndeterminateDrawable();
-            if (indDraw != null) {
-                indDraw.setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_ATOP);
-                dialog.mProgress.setIndeterminateDrawable(indDraw);
-            }
-            Drawable regDraw = dialog.mProgress.getProgressDrawable();
-            if (regDraw != null) {
-                regDraw.setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_ATOP);
-                dialog.mProgress.setProgressDrawable(regDraw);
-            }
+            dialog.mProgress = (MDProgressBar) dialog.view.findViewById(android.R.id.progress);
+            dialog.mProgress.setColorFilter(builder.widgetColor);
 
             if (!builder.mIndeterminateProgress) {
                 dialog.mProgress.setProgress(0);
