@@ -36,7 +36,7 @@ dependencies {
 
 See the project's Releases page for a list of versions with their changelogs.
 
-[ ![View Releases](http://dabuttonfactory.com/b.png?t=View%20Releases&f=sans-serif-Bold&ts=14&tc=ffffff&c=5&bgt=unicolored&bgc=4B81BF&hp=20&vp=11) ](https://github.com/afollestad/material-dialogs/releases)
+###### [ ![View Releases](https://github.com/afollestad/material-dialogs/releases)
 
 If you Watch this repository, GitHub will send you an email every time I publish an update.
 
