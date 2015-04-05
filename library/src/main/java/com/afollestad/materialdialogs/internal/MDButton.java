@@ -81,7 +81,7 @@ public class MDButton extends TextView {
     public void setDefaultSelector(Drawable d) {
         mDefaultBackground = d;
         if (!mStacked)
-            setStacked(true, true);
+            setStacked(false, true);
     }
 
     public void setAllCapsCompat(boolean allCaps) {
