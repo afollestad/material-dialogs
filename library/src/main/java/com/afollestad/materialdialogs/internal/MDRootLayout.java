@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -130,7 +129,6 @@ public class MDRootLayout extends ViewGroup {
                     hasButtons = true;
                 }
             }
-            Log.v(TAG, "buttonWidth " + buttonsWidth + " " + mButtonBarHeight);
 
             int buttonBarPadding = getContext().getResources()
                     .getDimensionPixelSize(R.dimen.md_neutral_button_margin);
@@ -148,6 +146,7 @@ public class MDRootLayout extends ViewGroup {
                     button.setStacked(true, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
                     stackedHeight += button.getMeasuredHeight();
+                    hasButtons = true;
                 }
             }
         }
