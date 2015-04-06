@@ -23,7 +23,7 @@
             android:fontFamily="sans-serif"
             android:textSize="@dimen/md_content_textsize"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             tools:text="Message"
