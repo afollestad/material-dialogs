@@ -59,4 +59,8 @@
         <enum name="end" value="2" />
     </attr>
 
+    <declare-styleable name="MDRootLayout">
+        <attr name="md_reduce_padding_no_title_no_buttons" format="boolean" />
+    </declare-styleable>
+
 </resources>
