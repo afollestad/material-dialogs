@@ -812,8 +812,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
-            final ContextThemeWrapper themedContext = DialogInit.getTheme(this);
-            LayoutInflater li = LayoutInflater.from(themedContext);
+            LayoutInflater li = LayoutInflater.from(this.context);
             return customView(li.inflate(layoutRes, null), wrapInScrollView);
         }
 
