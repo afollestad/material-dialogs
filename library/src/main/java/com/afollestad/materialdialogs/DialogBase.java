@@ -18,23 +18,9 @@ class DialogBase extends AlertDialog implements DialogInterface.OnShowListener, 
     private OnCancelListener mCancelListener;
     protected ContextThemeWrapper mThemedContext;
 
-    protected DialogBase(Context context) {
+    protected DialogBase(ContextThemeWrapper context) {
         super(context);
-    }
-
-    protected void setVerticalMargins(View view, int topMargin, int bottomMargin) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        boolean changed = false;
-        if (topMargin > -1 && params.topMargin != topMargin) {
-            params.topMargin = topMargin;
-            changed = true;
-        }
-        if (bottomMargin > -1 && params.bottomMargin != bottomMargin) {
-            params.bottomMargin = bottomMargin;
-            changed = true;
-        }
-        if (changed)
-            view.setLayoutParams(params);
+        mThemedContext = context;
     }
 
     public final Context getThemedContext() {
