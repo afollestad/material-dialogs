@@ -20,6 +20,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -76,9 +77,10 @@ public class MaterialDialog extends DialogBase implements
 
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
-        super(builder.context, DialogInit.getTheme(builder));
+        super(builder.context);
         mBuilder = builder;
-        final LayoutInflater inflater = LayoutInflater.from(mBuilder.context);
+        final ContextThemeWrapper themedContext = DialogInit.getTheme(builder);
+        final LayoutInflater inflater = LayoutInflater.from(themedContext);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
     }
