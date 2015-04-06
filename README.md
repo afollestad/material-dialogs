@@ -505,13 +505,32 @@ new MaterialDialog.Builder(this)
 
 These are pretty self explanatory. `titleGravity` sets the gravity for the dialog title, `contentGravity`
 sets the gravity for the dialog content, `btnStackedGravity` sets the gravity for stacked action buttons, 
-`itemsGravity` sets the gravity for list items (when you're NOT using a custom adapter). However, `buttonsGravity` 
-is a little less intuitive: think of it like it's changing the gravity of the neutral button. When you use START, 
-this is the normal configuration. The neutral button will be on the left (or right for RTL), the positive button 
-will be on the far right (or left for RTL), and the neutral button will be to the left of the positive button 
-(or right for RTL). Using END would result in the exact opposite. Using CENTER will put the neutral button
-in the center, the negative button on the left, and the positive button on the right (the negative and positive 
-positions switch for RTL).
+`itemsGravity` sets the gravity for list items (when you're NOT using a custom adapter). 
+
+For, `buttonsGravity` refer to this:
+
+<table>
+<tr>
+<td><b>START (Default)</b></td>
+<td>Neutral</td>
+<td>Negative</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td><b>CENTER</b></td>
+<td>Negative</td>
+<td>Neutral</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td><b>END</b></td>
+<td>Positive</td>
+<td>Negative</td>
+<td>Neutral</td>
+</tr>
+</table>
+
+With no positive button, the negative button takes it's place except for with CENTER.
 
 #### Material Palette
 
