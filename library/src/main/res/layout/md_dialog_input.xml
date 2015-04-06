@@ -30,7 +30,7 @@
             android:layout_gravity="center_horizontal"
             tools:ignore="UnusedAttribute" />
 
-        <EditText
+        <com.afollestad.materialdialogs.internal.MDEditText
             android:id="@android:id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

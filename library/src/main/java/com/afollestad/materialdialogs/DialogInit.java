@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDEditText;
 import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
@@ -368,12 +369,13 @@ class DialogInit {
 
     private static void setupInputDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
-        dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
+        dialog.input = (MDEditText) dialog.view.findViewById(android.R.id.input);
         if (dialog.input == null) return;
         if (builder.inputPrefill != null)
             dialog.input.append(builder.inputPrefill);
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
+        dialog.input.setColorFilter(dialog.mBuilder.widgetColor);
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -422,11 +424,6 @@ class DialogInit {
                 });
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            dialog.input.setBackgroundTintList(ColorStateList.valueOf(builder.widgetColor));
-        else if (dialog.input.getBackground() != null)
-            dialog.input.getBackground().setColorFilter(builder.widgetColor, PorterDuff.Mode.SRC_IN);
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {

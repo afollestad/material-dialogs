@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.base.DialogBase;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDEditText;
 import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -64,7 +65,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressLabel;
     protected TextView mProgressMinMax;
     protected TextView content;
-    protected EditText input;
+    protected MDEditText input;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
