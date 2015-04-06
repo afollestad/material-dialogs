@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -95,7 +94,6 @@ public class MDRootLayout extends ViewGroup {
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             if (v.getId() == R.id.titleFrame) {
@@ -123,8 +121,7 @@ public class MDRootLayout extends ViewGroup {
         final boolean stacked;
         if (!mForceStack) {
             int buttonsWidth = 0;
-            for (int i = 0; i < mButtons.length; i++) {
-                MDButton button = mButtons[i];
+            for (MDButton button : mButtons) {
                 if (button != null && button.getVisibility() != View.GONE) {
                     button.setStacked(false, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
@@ -132,25 +129,24 @@ public class MDRootLayout extends ViewGroup {
                     hasButtons = true;
                 }
             }
-            Log.v(TAG, "buttonWidth " + buttonsWidth + " " + mButtonBarHeight);
 
             int buttonBarPadding = getContext().getResources()
                     .getDimensionPixelSize(R.dimen.md_neutral_button_margin);
             final int buttonFrameWidth = width - 2 * buttonBarPadding;
             stacked = buttonsWidth > buttonFrameWidth;
         } else {
-            stacked = mForceStack;
+            stacked = true;
         }
 
         int stackedHeight = 0;
         mIsStacked = stacked;
         if (stacked) {
-            for (int i = 0; i < mButtons.length; i++) {
-                MDButton button = mButtons[i];
+            for (MDButton button : mButtons) {
                 if (button != null && button.getVisibility() != View.GONE) {
                     button.setStacked(true, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
                     stackedHeight += button.getMeasuredHeight();
+                    hasButtons = true;
                 }
             }
         }
@@ -229,24 +225,22 @@ public class MDRootLayout extends ViewGroup {
             t += mNoTitlePaddingFull;
         }
 
-        if (mContent != null && mContent.getVisibility() != View.GONE) {
+        if (mContent != null && mContent.getVisibility() != View.GONE)
             mContent.layout(l, t, r, t + mContent.getMeasuredHeight());
-        }
 
         if (mIsStacked) {
             b -= mButtonPaddingFull;
-            for (int i = 0; i < mButtons.length; i++) {
-                if (mButtons[i] != null && mButtons[i].getVisibility() != View.GONE) {
-                    mButtons[i].layout(l, b - mButtons[i].getMeasuredHeight(), r, b);
-                    b -= mButtons[i].getMeasuredHeight();
+            for (MDButton mButton : mButtons) {
+                if (mButton != null && mButton.getVisibility() != View.GONE) {
+                    mButton.layout(l, b - mButton.getMeasuredHeight(), r, b);
+                    b -= mButton.getMeasuredHeight();
                 }
             }
         } else {
             int barTop;
             int barBottom = b;
-            if (mUseFullPadding) {
+            if (mUseFullPadding)
                 barBottom -= mButtonPaddingFull;
-            }
             barTop = barBottom - mButtonBarHeight;
             /* START:
                Neutral   Negative  Positive
@@ -267,7 +261,6 @@ public class MDRootLayout extends ViewGroup {
 
             if (mButtons[INDEX_POSITIVE] != null && mButtons[INDEX_POSITIVE].getVisibility() != View.GONE) {
                 int bl, br;
-
                 if (mButtonGravity == GravityEnum.END) {
                     bl = l + offset;
                     br = bl + mButtons[INDEX_POSITIVE].getMeasuredWidth();
@@ -276,16 +269,12 @@ public class MDRootLayout extends ViewGroup {
                     bl = br - mButtons[INDEX_POSITIVE].getMeasuredWidth();
                     neutralRight = bl;
                 }
-
                 mButtons[INDEX_POSITIVE].layout(bl, barTop, br, barBottom);
-
                 offset += mButtons[INDEX_POSITIVE].getMeasuredWidth();
             }
 
             if (mButtons[INDEX_NEGATIVE] != null && mButtons[INDEX_NEGATIVE].getVisibility() != View.GONE) {
-
                 int bl, br;
-
                 if (mButtonGravity == GravityEnum.END) {
                     bl = l + offset;
                     br = bl + mButtons[INDEX_NEGATIVE].getMeasuredWidth();
@@ -297,7 +286,6 @@ public class MDRootLayout extends ViewGroup {
                     br = bl + mButtons[INDEX_NEGATIVE].getMeasuredWidth();
                     neutralLeft = br;
                 }
-
                 mButtons[INDEX_NEGATIVE].layout(bl, barTop, br, barBottom);
             }
 
@@ -314,7 +302,7 @@ public class MDRootLayout extends ViewGroup {
                         neutralLeft = neutralRight - mButtons[INDEX_NEUTRAL].getMeasuredWidth();
                     } else if (neutralRight == -1 && neutralLeft != -1) {
                         neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
-                    } else if (neutralRight == -1 && neutralLeft == -1) {
+                    } else if (neutralRight == -1) {
                         neutralLeft = (r - l) / 2 - mButtons[INDEX_NEUTRAL].getMeasuredWidth() / 2;
                         neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
                     }
@@ -342,9 +330,9 @@ public class MDRootLayout extends ViewGroup {
     }
 
     public void setButtonStackedGravity(GravityEnum gravity) {
-        for (int i = 0; i < mButtons.length; i++) {
-            if (mButtons[i] != null)
-                mButtons[i].setStackedGravity(gravity);
+        for (MDButton mButton : mButtons) {
+            if (mButton != null)
+                mButton.setStackedGravity(gravity);
         }
     }
 
@@ -394,7 +382,6 @@ public class MDRootLayout extends ViewGroup {
             /* Or the first item's top is above or own top */
             if (lv.getChildAt(0).getTop() < lv.getPaddingTop())
                 return true;
-
             /* or the last item's bottom is beyond our own bottom */
             return lv.getChildAt(lv.getChildCount() - 1).getBottom() >
                     lv.getHeight() - lv.getPaddingBottom();
@@ -412,8 +399,7 @@ public class MDRootLayout extends ViewGroup {
      */
     @Nullable
     private static View getBottomView(ViewGroup viewGroup) {
-        if (viewGroup == null)
-            return null;
+        if (viewGroup == null) return null;
         View bottomView = null;
         for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
             View child = viewGroup.getChildAt(i);

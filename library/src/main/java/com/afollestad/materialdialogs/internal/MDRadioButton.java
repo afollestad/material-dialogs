@@ -2,16 +2,17 @@ package com.afollestad.materialdialogs.internal;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
+import android.widget.RadioButton;
+
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MDRadioButton extends CheckBox {
+public class MDRadioButton extends RadioButton {
 
     public MDRadioButton(Context context) {
         super(context);
@@ -30,18 +31,16 @@ public class MDRadioButton extends CheckBox {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private int color;
-
-    @Override
-    protected boolean verifyDrawable(Drawable who) {
-        boolean val = super.verifyDrawable(who);
-        if (who != null)
-            who.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        return val;
-    }
-
     public void setColorFilter(int color) {
-        this.color = color;
-//        invalidate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            ColorStateList sl = new ColorStateList(new int[][]{
+                    new int[]{-android.R.attr.state_checked},
+                    new int[]{android.R.attr.state_checked}
+            }, new int[]{
+                    DialogUtils.resolveColor(getContext(), android.R.attr.textColorSecondary),
+                    color
+            });
+            setButtonTintList(sl);
+        }
     }
 }

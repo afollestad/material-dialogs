@@ -196,6 +196,13 @@ public class MainActivity extends ActionBarActivity implements
             }
         });
 
+        findViewById(R.id.input).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputDialog();
+            }
+        });
+
         findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -542,7 +549,19 @@ public class MainActivity extends ActionBarActivity implements
                 .show();
     }
 
-    public void showProgressDialog(boolean indeterminate) {
+    private void showInputDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input)
+                .content(R.string.input_content)
+                .input(R.string.input_hint, 0, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        showToast("Hello, " + input.toString() + "!");
+                    }
+                }).show();
+    }
+
+    private void showProgressDialog(boolean indeterminate) {
         if (indeterminate) {
             new MaterialDialog.Builder(this)
                     .title(R.string.progress_dialog)
