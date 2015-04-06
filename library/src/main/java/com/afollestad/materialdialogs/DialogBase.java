@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs.base;
+package com.afollestad.materialdialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class DialogBase extends AlertDialog implements DialogInterface.OnShowListener {
+class DialogBase extends AlertDialog implements DialogInterface.OnShowListener, DialogInterface.OnDismissListener, DialogInterface.OnCancelListener {
 
     private OnShowListener mShowListener;
+    private OnDismissListener mDismissListener;
+    private OnCancelListener mCancelListener;
     protected ContextThemeWrapper mThemedContext;
 
     protected DialogBase(Context context) {
@@ -89,17 +91,48 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         mShowListener = listener;
     }
 
-    public final void _setViewInternal(View view) {
-        super.setView(view);
+    protected final void setOnShowListenerInternal() {
+        super.setOnShowListener(this);
     }
 
-    public final void _setOnShowListenerInternal() {
-        super.setOnShowListener(this);
+    @Override
+    public void setOnDismissListener(OnDismissListener listener) {
+        mDismissListener = listener;
+    }
+
+    public final void setOnDismissListenerInternal() {
+        super.setOnDismissListener(this);
+    }
+
+    @Override
+    public void setOnCancelListener(OnCancelListener listener) {
+        mCancelListener = listener;
+    }
+
+    public final void setOnCancelListenerInternal() {
+        super.setOnCancelListener(this);
+    }
+
+    protected final void setViewInternal(View view) {
+        super.setView(view);
     }
 
     @Override
     public void onShow(DialogInterface dialog) {
         if (mShowListener != null)
             mShowListener.onShow(dialog);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (mDismissListener != null)
+            mDismissListener.onDismiss(dialog);
+    }
+
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        if (mCancelListener != null)
+            mCancelListener.onCancel(dialog);
     }
 }

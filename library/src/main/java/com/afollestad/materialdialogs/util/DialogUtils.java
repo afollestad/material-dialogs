@@ -1,14 +1,17 @@
 package com.afollestad.materialdialogs.util;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -117,5 +120,33 @@ public class DialogUtils {
         } else {
             view.setBackground(d);
         }
+    }
+
+    public static void showKeyboard(DialogInterface di, final MaterialDialog.Builder builder) {
+        final MaterialDialog dialog = (MaterialDialog) di;
+        if (dialog.getInputEditText() == null) return;
+        dialog.getInputEditText().post(new Runnable() {
+            @Override
+            public void run() {
+                dialog.getInputEditText().requestFocus();
+                InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+    }
+
+    public static void hideKeyboard(DialogInterface di, final MaterialDialog.Builder builder) {
+        final MaterialDialog dialog = (MaterialDialog) di;
+        if (dialog.getInputEditText() == null) return;
+        dialog.getInputEditText().post(new Runnable() {
+            @Override
+            public void run() {
+                dialog.getInputEditText().requestFocus();
+                InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), 0);
+            }
+        });
     }
 }

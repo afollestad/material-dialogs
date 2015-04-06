@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -20,7 +21,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -36,7 +36,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.base.DialogBase;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDEditText;
 import com.afollestad.materialdialogs.internal.MDProgressBar;
@@ -399,6 +398,10 @@ public class MaterialDialog extends DialogBase implements
         protected int btnSelectorNeutral;
         @DrawableRes
         protected int btnSelectorNegative;
+
+        public final Context getContext() {
+            return context;
+        }
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -1311,6 +1314,27 @@ public class MaterialDialog extends DialogBase implements
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
+    }
+
+    @Override
+    public final void onShow(DialogInterface dialog) {
+        super.onShow(dialog);
+        if (input != null)
+            DialogUtils.showKeyboard(this, mBuilder);
+    }
+
+    @Override
+    public final void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        if (input != null)
+            DialogUtils.hideKeyboard(this, mBuilder);
+    }
+
+    @Override
+    public final void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (input != null)
+            DialogUtils.hideKeyboard(this, mBuilder);
     }
 
     protected enum ListType {

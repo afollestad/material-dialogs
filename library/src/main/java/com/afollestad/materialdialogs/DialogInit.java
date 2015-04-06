@@ -329,8 +329,10 @@ class DialogInit {
 
         // Other internal initialization
         dialog.invalidateList();
-        dialog._setOnShowListenerInternal();
-        dialog._setViewInternal(dialog.view);
+        dialog.setOnShowListenerInternal();
+        dialog.setOnDismissListenerInternal();
+        dialog.setOnCancelListenerInternal();
+        dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
     }
 
@@ -369,54 +371,6 @@ class DialogInit {
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
         dialog.input.setColorFilter(dialog.mBuilder.widgetColor);
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface di) {
-                final MaterialDialog dialog = (MaterialDialog) di;
-                if (dialog.getInputEditText() == null) return;
-                dialog.getInputEditText().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.getInputEditText().requestFocus();
-                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        if (imm != null)
-                            imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_IMPLICIT);
-                    }
-                });
-            }
-        });
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface di) {
-                final MaterialDialog dialog = (MaterialDialog) di;
-                if (dialog.getInputEditText() == null) return;
-                dialog.getInputEditText().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.getInputEditText().requestFocus();
-                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), 0);
-                    }
-                });
-            }
-        });
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface di) {
-                final MaterialDialog dialog = (MaterialDialog) di;
-                if (dialog.getInputEditText() == null) return;
-                dialog.getInputEditText().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.getInputEditText().requestFocus();
-                        InputMethodManager imm = (InputMethodManager) builder.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        if (imm != null)
-                            imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), 0);
-                    }
-                });
-            }
-        });
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
