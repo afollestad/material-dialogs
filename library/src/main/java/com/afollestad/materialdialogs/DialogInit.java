@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.method.LinkMovementMethod;
@@ -39,15 +37,10 @@ import java.util.Arrays;
 class DialogInit {
 
     public static ContextThemeWrapper getTheme(MaterialDialog.Builder builder) {
-        TypedArray a = builder.context.getTheme().obtainStyledAttributes(new int[]{R.attr.md_dark_theme});
         boolean darkTheme = builder.theme == Theme.DARK;
         if (!darkTheme) {
-            try {
-                darkTheme = a.getBoolean(0, false);
-                builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
-            } finally {
-                a.recycle();
-            }
+            darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, false);
+            builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
         }
         return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
     }
