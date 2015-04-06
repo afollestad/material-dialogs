@@ -76,7 +76,7 @@ public class MaterialDialog extends DialogBase implements
 
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
-        super(DialogInit.getTheme(builder));
+        super(builder.context, DialogInit.getTheme(builder));
         mBuilder = builder;
         final LayoutInflater inflater = LayoutInflater.from(mBuilder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);

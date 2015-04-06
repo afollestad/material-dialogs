@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.method.LinkMovementMethod;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -36,13 +35,13 @@ import java.util.Arrays;
  */
 class DialogInit {
 
-    public static ContextThemeWrapper getTheme(MaterialDialog.Builder builder) {
+    public static int getTheme(MaterialDialog.Builder builder) {
         boolean darkTheme = builder.theme == Theme.DARK;
         if (!darkTheme) {
             darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, false);
             builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
         }
-        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
+        return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
     }
 
     public static int getInflateLayout(MaterialDialog.Builder builder) {
