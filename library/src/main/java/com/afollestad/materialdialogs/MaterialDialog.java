@@ -1323,15 +1323,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Override
-    public final void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        if (input != null)
-            DialogUtils.hideKeyboard(this, mBuilder);
-    }
-
-    @Override
-    public final void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
+    protected void onStop() {
+        super.onStop();
         if (input != null)
             DialogUtils.hideKeyboard(this, mBuilder);
     }

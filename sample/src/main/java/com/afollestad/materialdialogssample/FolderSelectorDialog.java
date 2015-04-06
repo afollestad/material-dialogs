@@ -39,7 +39,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         }
     };
 
-    public static interface FolderSelectCallback {
+    public interface FolderSelectCallback {
         void onFolderSelection(File folder);
     }
 
