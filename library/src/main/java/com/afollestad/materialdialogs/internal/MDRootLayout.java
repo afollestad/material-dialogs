@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs.internal;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
@@ -45,6 +46,7 @@ public class MDRootLayout extends ViewGroup {
     private boolean mForceStack = false;
     private boolean mIsStacked = false;
     private boolean mUseFullPadding = true;
+    private boolean mReducePaddingNoTitleNoButtons;
 
     private int mNoTitlePaddingFull;
     private int mButtonPaddingFull;
@@ -82,6 +84,11 @@ public class MDRootLayout extends ViewGroup {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MDRootLayout, defStyleAttr, 0);
+        mReducePaddingNoTitleNoButtons = a.getBoolean(R.styleable.MDRootLayout_md_reduce_padding_no_title_no_buttons, true);
+        a.recycle();
+
         mNoTitlePaddingFull = r.getDimensionPixelSize(R.dimen.md_notitle_vertical_padding);
         mButtonPaddingFull = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
 
@@ -172,7 +179,7 @@ public class MDRootLayout extends ViewGroup {
             fullPadding += 2 * mButtonPaddingFull;
         }
 
-        if (mTitleBar != null && mTitleBar.getVisibility() != View.GONE) {
+        if (isVisible(mTitleBar)) {
             mTitleBar.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.UNSPECIFIED);
             availableHeight -= mTitleBar.getMeasuredHeight();
@@ -180,13 +187,18 @@ public class MDRootLayout extends ViewGroup {
             fullPadding += mNoTitlePaddingFull;
         }
 
-        if (mContent != null && mContent.getVisibility() != View.GONE) {
+        if (isVisible(mContent)) {
             mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(availableHeight - minPadding, MeasureSpec.AT_MOST));
 
-            if (mContent.getMeasuredHeight() < availableHeight - fullPadding) {
-                mUseFullPadding = true;
-                availableHeight -= mContent.getMeasuredHeight() + fullPadding;
+            if (mContent.getMeasuredHeight() <= availableHeight - fullPadding) {
+                if (!mReducePaddingNoTitleNoButtons || isVisible(mTitleBar) || hasButtons) {
+                    mUseFullPadding = true;
+                    availableHeight -= mContent.getMeasuredHeight() + fullPadding;
+                } else {
+                    mUseFullPadding = false;
+                    availableHeight -= mContent.getMeasuredHeight() + minPadding;
+                }
             } else {
                 mUseFullPadding = false;
                 availableHeight = 0;
@@ -196,6 +208,10 @@ public class MDRootLayout extends ViewGroup {
         }
 
         setMeasuredDimension(width, height - availableHeight);
+    }
+
+    private static boolean isVisible(View v) {
+        return v != null && v.getVisibility() != View.GONE;
     }
 
     @Override
@@ -217,7 +233,7 @@ public class MDRootLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, final int l, int t, final int r, int b) {
-        if (mTitleBar != null && mTitleBar.getVisibility() != View.GONE) {
+        if (isVisible(mTitleBar)) {
             int height = mTitleBar.getMeasuredHeight();
             mTitleBar.layout(l, t, r, t + height);
             t += height;
@@ -225,13 +241,13 @@ public class MDRootLayout extends ViewGroup {
             t += mNoTitlePaddingFull;
         }
 
-        if (mContent != null && mContent.getVisibility() != View.GONE)
+        if (isVisible(mContent))
             mContent.layout(l, t, r, t + mContent.getMeasuredHeight());
 
         if (mIsStacked) {
             b -= mButtonPaddingFull;
             for (MDButton mButton : mButtons) {
-                if (mButton != null && mButton.getVisibility() != View.GONE) {
+                if (isVisible(mButton)) {
                     mButton.layout(l, b - mButton.getMeasuredHeight(), r, b);
                     b -= mButton.getMeasuredHeight();
                 }
@@ -259,7 +275,7 @@ public class MDRootLayout extends ViewGroup {
             int neutralLeft = -1;
             int neutralRight = -1;
 
-            if (mButtons[INDEX_POSITIVE] != null && mButtons[INDEX_POSITIVE].getVisibility() != View.GONE) {
+            if (isVisible(mButtons[INDEX_POSITIVE])) {
                 int bl, br;
                 if (mButtonGravity == GravityEnum.END) {
                     bl = l + offset;
@@ -273,7 +289,7 @@ public class MDRootLayout extends ViewGroup {
                 offset += mButtons[INDEX_POSITIVE].getMeasuredWidth();
             }
 
-            if (mButtons[INDEX_NEGATIVE] != null && mButtons[INDEX_NEGATIVE].getVisibility() != View.GONE) {
+            if (isVisible(mButtons[INDEX_NEGATIVE])) {
                 int bl, br;
                 if (mButtonGravity == GravityEnum.END) {
                     bl = l + offset;
@@ -289,7 +305,7 @@ public class MDRootLayout extends ViewGroup {
                 mButtons[INDEX_NEGATIVE].layout(bl, barTop, br, barBottom);
             }
 
-            if (mButtons[INDEX_NEUTRAL] != null && mButtons[INDEX_NEUTRAL].getVisibility() != View.GONE) {
+            if (isVisible(mButtons[INDEX_NEUTRAL])) {
                 int bl, br;
                 if (mButtonGravity == GravityEnum.END) {
                     br = r - mButtonHorizontalEdgeMargin;
