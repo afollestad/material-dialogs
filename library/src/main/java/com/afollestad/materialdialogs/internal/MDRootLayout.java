@@ -7,21 +7,23 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
 
 import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.R;
-import com.afollestad.materialdialogs.util.RecyclerUtil;
 
 /**
  * @author Kevin Barry (teslacoil) 4/02/2015
- *         <p/>
+ *         <p>
  *         This is the top level view for all MaterialDialogs
  *         It handles the layout of:
  *         titleFrame (md_stub_titleframe)
@@ -54,6 +56,7 @@ public class MDRootLayout extends ViewGroup {
     private int mButtonHorizontalEdgeMargin;
 
     private Paint mDividerPaint;
+    private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
 
     public MDRootLayout(Context context) {
         super(context);
@@ -187,10 +190,7 @@ public class MDRootLayout extends ViewGroup {
             } else {
                 mUseFullPadding = false;
                 availableHeight = 0;
-                mDrawTopDivider = mTitleBar != null && mTitleBar.getVisibility() != View.GONE &&
-                        canViewOrChildScroll(mContent, false);
-                mDrawBottomDivider = hasButtons &&
-                        canViewOrChildScroll(mContent, true);
+                setScrollListenerForDividersVisibility(mContent);
             }
 
         }
@@ -336,26 +336,99 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
-    private static boolean canViewOrChildScroll(View view, boolean atBottom) {
+    private void setScrollListenerForDividersVisibility(View view) {
         if (view == null)
-            return false;
+            return;
         if (view instanceof ScrollView) {
-            return canScrollViewScroll((ScrollView) view);
-        } else if (view instanceof AdapterView) {
-            return canAdapterViewScroll((AdapterView) view);
-        } else if (view instanceof WebView) {
-            return canWebViewScroll((WebView) view);
-        } else if (view instanceof RecyclerView) {
-            return RecyclerUtil.canRecyclerViewScroll(view);
-        } else if (view instanceof ViewGroup) {
-            if (atBottom) {
-                return canViewOrChildScroll(getBottomView((ViewGroup) view), true);
-            } else {
-                return canViewOrChildScroll(getTopView((ViewGroup) view), false);
+            final ScrollView sv = (ScrollView) view;
+            if (mOnScrollChangedListener == null) {
+                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        boolean canScroll = canScrollViewScroll(sv);
+                        invalidateDividersVisibility(canScroll, sv);
+                    }
+                };
+                sv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
             }
-        } else {
-            return false;
+        } else if (view instanceof AdapterView) {
+            final AdapterView sv = (AdapterView) view;
+            if (mOnScrollChangedListener == null) {
+                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        boolean canScroll = canAdapterViewScroll(sv);
+                        invalidateDividersVisibility(canScroll, sv);
+                    }
+                };
+                sv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
+            }
+        } else if (view instanceof WebView) {
+            boolean canScroll = canWebViewScroll((WebView) view);
+            mDrawTopDivider = mDrawBottomDivider = canScroll;
+        } else if (view instanceof RecyclerView) {
+            /* Scroll offset detection for RecyclerView isn't very reliable b/c the OnScrollChangedListener
+            isn't always called on scroll. We can't set a OnScrollListener either because that will
+            override the user's OnScrollListener if they set one.*/
+
+            final RecyclerView rv = (RecyclerView) view;
+            if (mOnScrollChangedListener == null) {
+                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        boolean canScroll = canRecyclerViewScroll(rv);
+                        invalidateDividersVisibility(canScroll, rv);
+                    }
+                };
+                rv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
+            }
+        } else if (view instanceof ViewGroup) {
+            View bottomView = getBottomView((ViewGroup) view);
+            setScrollListenerForDividersVisibility(bottomView);
+            View topView = getTopView((ViewGroup) view);
+            setScrollListenerForDividersVisibility(topView);
         }
+    }
+
+    private void invalidateDividersVisibility(boolean canScroll, ViewGroup view) {
+        if (canScroll) {
+            boolean hasButtons = false;
+            for (MDButton button : mButtons) {
+                if (button != null && button.getVisibility() != View.GONE) {
+                    hasButtons = true;
+                }
+            }
+
+            mDrawTopDivider =
+                    mTitleBar != null &&
+                            mTitleBar.getVisibility() != View.GONE &&
+                            //Not scrolled to the top.
+                            view.getScrollY() + view.getPaddingTop() > view.getChildAt(0).getTop();
+
+            mDrawBottomDivider =
+                    hasButtons &&
+                            view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view.getChildAt(view.getChildCount() - 1).getBottom();
+            invalidate();
+        }
+    }
+
+    public static boolean canRecyclerViewScroll(RecyclerView view) {
+        final RecyclerView.LayoutManager lm = view.getLayoutManager();
+        final int count = view.getAdapter().getItemCount();
+        int lastVisible;
+
+        if (lm instanceof LinearLayoutManager) {
+            LinearLayoutManager llm = (LinearLayoutManager) lm;
+            lastVisible = llm.findLastVisibleItemPosition();
+        } else {
+            throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager. Please report any new layout managers.");
+        }
+
+        if (lastVisible == -1)
+            return false;
+        /* We scroll if the last item is not visible */
+        final boolean lastItemVisible = lastVisible == count - 1;
+        return !lastItemVisible || view.getChildAt(view.getChildCount() - 1).getBottom() > view.getHeight() - view.getPaddingBottom();
     }
 
     private static boolean canScrollViewScroll(ScrollView sv) {
