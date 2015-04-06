@@ -79,8 +79,8 @@ public class MaterialDialog extends DialogBase implements
     protected MaterialDialog(Builder builder) {
         super(builder.context);
         mBuilder = builder;
-        final ContextThemeWrapper themedContext = DialogInit.getTheme(builder);
-        final LayoutInflater inflater = LayoutInflater.from(themedContext);
+        mThemedContext = DialogInit.getTheme(builder);
+        final LayoutInflater inflater = LayoutInflater.from(getThemedContext());
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
     }
@@ -237,7 +237,7 @@ public class MaterialDialog extends DialogBase implements
             return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.listSelector, null);
         final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
         if (d != null) return d;
-        return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
+        return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_list_selector);
     }
 
     /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
@@ -246,7 +246,7 @@ public class MaterialDialog extends DialogBase implements
                 return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorStacked, null);
             final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_stacked_selector);
             if (d != null) return d;
-            return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
+            return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_stacked_selector);
         } else {
             switch (which) {
                 default: {
@@ -254,21 +254,21 @@ public class MaterialDialog extends DialogBase implements
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_positive_selector);
                 }
                 case NEUTRAL: {
                     if (mBuilder.btnSelectorNeutral != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_neutral_selector);
                 }
                 case NEGATIVE: {
                     if (mBuilder.btnSelectorNegative != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNegative, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_negative_selector);
                 }
             }
         }
@@ -1042,11 +1042,11 @@ public class MaterialDialog extends DialogBase implements
     public Button getButton(int whichButton) {
         Log.w("MaterialDialog", "Warning: getButton() is a deprecated method that does not return valid references to action buttons.");
         if (whichButton == AlertDialog.BUTTON_POSITIVE) {
-            return mBuilder.positiveText != null ? new Button(getContext()) : null;
+            return mBuilder.positiveText != null ? new Button(getThemedContext()) : null;
         } else if (whichButton == AlertDialog.BUTTON_NEUTRAL) {
-            return mBuilder.neutralText != null ? new Button(getContext()) : null;
+            return mBuilder.neutralText != null ? new Button(getThemedContext()) : null;
         } else {
-            return mBuilder.negativeText != null ? new Button(getContext()) : null;
+            return mBuilder.negativeText != null ? new Button(getThemedContext()) : null;
         }
     }
 
@@ -1129,7 +1129,7 @@ public class MaterialDialog extends DialogBase implements
      * @param titleRes The string resource of the new title of the action button.
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
-        setActionButton(which, getContext().getString(titleRes));
+        setActionButton(which, getThemedContext().getString(titleRes));
     }
 
     /**

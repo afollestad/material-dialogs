@@ -67,9 +67,9 @@ class DialogInit {
         // Check if default library fonts should be used
         if (!builder.useCustomFonts) {
             if (builder.mediumFont == null)
-                builder.mediumFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Medium");
+                builder.mediumFont = TypefaceHelper.get(dialog.getThemedContext(), "Roboto-Medium");
             if (builder.regularFont == null)
-                builder.regularFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Regular");
+                builder.regularFont = TypefaceHelper.get(dialog.getThemedContext(), "Roboto-Regular");
         }
 
         // Set cancelable flag and dialog background color
@@ -155,7 +155,7 @@ class DialogInit {
         }
 
         // Setup divider color in case content scrolls
-        final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+        final int dividerFallback = DialogUtils.resolveColor(dialog.getThemedContext(), R.attr.md_divider);
         builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
         dialog.view.setDividerColor(builder.dividerColor);
 
@@ -180,7 +180,7 @@ class DialogInit {
             dialog.setTypeface(dialog.content, builder.regularFont);
             dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
             if (builder.positiveColor == 0) {
-                dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
+                dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getThemedContext(), android.R.attr.textColorPrimary));
             } else {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
@@ -294,9 +294,9 @@ class DialogInit {
             if (builder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    overscroll glow without clipping */
-                final Resources r = dialog.getContext().getResources();
+                final Resources r = dialog.getThemedContext().getResources();
                 final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-                final ScrollView sv = new ScrollView(dialog.getContext());
+                final ScrollView sv = new ScrollView(dialog.getThemedContext());
                 int paddingTop = r.getDimensionPixelSize(R.dimen.md_content_padding_top);
                 int paddingBottom = r.getDimensionPixelSize(R.dimen.md_content_padding_bottom);
                 sv.setClipToPadding(false);

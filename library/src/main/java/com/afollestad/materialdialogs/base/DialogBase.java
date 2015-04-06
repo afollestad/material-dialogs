@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Message;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
  * @author Aidan Follestad (afollestad)
  */
 public class DialogBase extends AlertDialog implements DialogInterface.OnShowListener {
+
     private OnShowListener mShowListener;
+    protected ContextThemeWrapper mThemedContext;
 
     protected DialogBase(Context context) {
         super(context);
@@ -30,6 +33,10 @@ public class DialogBase extends AlertDialog implements DialogInterface.OnShowLis
         }
         if (changed)
             view.setLayoutParams(params);
+    }
+
+    public final Context getThemedContext() {
+        return mThemedContext;
     }
 
     /**
