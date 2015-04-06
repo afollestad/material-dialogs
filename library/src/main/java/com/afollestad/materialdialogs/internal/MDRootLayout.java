@@ -58,7 +58,9 @@ public class MDRootLayout extends ViewGroup {
     private int mButtonHorizontalEdgeMargin;
 
     private Paint mDividerPaint;
-    private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
+
+    private ViewTreeObserver.OnScrollChangedListener mTopOnScrollChangedListener;
+    private ViewTreeObserver.OnScrollChangedListener mBottomOnScrollChangedListener;
 
     public MDRootLayout(Context context) {
         super(context);
@@ -202,7 +204,6 @@ public class MDRootLayout extends ViewGroup {
             } else {
                 mUseFullPadding = false;
                 availableHeight = 0;
-                setScrollListenerForDividersVisibility(mContent);
             }
 
         }
@@ -329,6 +330,8 @@ public class MDRootLayout extends ViewGroup {
                 mButtons[INDEX_NEUTRAL].layout(bl, barTop, br, barBottom);
             }
         }
+
+        setUpDividersVisibility(mContent, true, false);
     }
 
     public void setForceStack(boolean forceStack) {
@@ -352,80 +355,92 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
-    private void setScrollListenerForDividersVisibility(View view) {
+    private void setUpDividersVisibility(View view, boolean topAndBottom, boolean bottom) {
         if (view == null)
             return;
         if (view instanceof ScrollView) {
             final ScrollView sv = (ScrollView) view;
-            if (mOnScrollChangedListener == null) {
-                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-                    @Override
-                    public void onScrollChanged() {
-                        boolean canScroll = canScrollViewScroll(sv);
-                        invalidateDividersVisibility(canScroll, sv);
-                    }
-                };
-                sv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
+            if (canScrollViewScroll(sv)) {
+                addScrollListener(sv, topAndBottom, bottom);
+            } else {
+                if (!bottom || topAndBottom)
+                    mDrawTopDivider = false;
+                if (bottom || topAndBottom)
+                    mDrawBottomDivider = false;
             }
         } else if (view instanceof AdapterView) {
             final AdapterView sv = (AdapterView) view;
-            if (mOnScrollChangedListener == null) {
-                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-                    @Override
-                    public void onScrollChanged() {
-                        boolean canScroll = canAdapterViewScroll(sv);
-                        invalidateDividersVisibility(canScroll, sv);
-                    }
-                };
-                sv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
+            if (canAdapterViewScroll(sv)) {
+                addScrollListener(sv, topAndBottom, bottom);
+            } else {
+                if (!bottom || topAndBottom)
+                    mDrawTopDivider = false;
+                if (bottom || topAndBottom)
+                    mDrawBottomDivider = false;
             }
         } else if (view instanceof WebView) {
             boolean canScroll = canWebViewScroll((WebView) view);
-            mDrawTopDivider = mDrawBottomDivider = canScroll;
+            if (!bottom || topAndBottom)
+                mDrawTopDivider = canScroll;
+            if (bottom || topAndBottom)
+                mDrawBottomDivider = canScroll;
         } else if (view instanceof RecyclerView) {
-            /* Scroll offset detection for RecyclerView isn't very reliable b/c the OnScrollChangedListener
+            /* Scroll offset detection for RecyclerView isn't reliable b/c the OnScrollChangedListener
             isn't always called on scroll. We can't set a OnScrollListener either because that will
             override the user's OnScrollListener if they set one.*/
-
-            final RecyclerView rv = (RecyclerView) view;
-            if (mOnScrollChangedListener == null) {
-                mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-                    @Override
-                    public void onScrollChanged() {
-                        boolean canScroll = canRecyclerViewScroll(rv);
-                        invalidateDividersVisibility(canScroll, rv);
-                    }
-                };
-                rv.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
-            }
+            boolean canScroll = canRecyclerViewScroll((RecyclerView) view);
+            if (!bottom || topAndBottom)
+                mDrawTopDivider = canScroll;
+            if (bottom || topAndBottom)
+                mDrawBottomDivider = canScroll;
         } else if (view instanceof ViewGroup) {
-            View bottomView = getBottomView((ViewGroup) view);
-            setScrollListenerForDividersVisibility(bottomView);
             View topView = getTopView((ViewGroup) view);
-            setScrollListenerForDividersVisibility(topView);
+            setUpDividersVisibility(topView, topAndBottom, false);
+            View bottomView = getBottomView((ViewGroup) view);
+            if (bottomView != topView) {
+                setUpDividersVisibility(bottomView, false, true);
+            }
         }
     }
 
-    private void invalidateDividersVisibility(boolean canScroll, ViewGroup view) {
-        if (canScroll) {
-            boolean hasButtons = false;
-            for (MDButton button : mButtons) {
-                if (button != null && button.getVisibility() != View.GONE) {
-                    hasButtons = true;
+    private void addScrollListener(final ViewGroup vg, final boolean topAndBottom, final boolean bottom) {
+        if ((!bottom && mTopOnScrollChangedListener == null
+                || (bottom && mBottomOnScrollChangedListener == null))) {
+            ViewTreeObserver.OnScrollChangedListener onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    invalidateDividersForScrollingView(vg, topAndBottom, bottom);
                 }
+            };
+            if (!bottom) {
+                mTopOnScrollChangedListener = onScrollChangedListener;
+                vg.getViewTreeObserver().addOnScrollChangedListener(mTopOnScrollChangedListener);
+            } else {
+                mBottomOnScrollChangedListener = onScrollChangedListener;
+                vg.getViewTreeObserver().addOnScrollChangedListener(mBottomOnScrollChangedListener);
             }
-
-            mDrawTopDivider =
-                    mTitleBar != null &&
-                            mTitleBar.getVisibility() != View.GONE &&
-                            //Not scrolled to the top.
-                            view.getScrollY() + view.getPaddingTop() > view.getChildAt(0).getTop();
-
-            mDrawBottomDivider =
-                    hasButtons &&
-                            view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view.getChildAt(view.getChildCount() - 1).getBottom();
-            invalidate();
         }
+    }
+
+    private void invalidateDividersForScrollingView(ViewGroup view, final boolean topAndBottom, boolean bottom) {
+        boolean hasButtons = false;
+        for (MDButton button : mButtons) {
+            if (button != null && button.getVisibility() != View.GONE) {
+                hasButtons = true;
+            }
+        }
+        if (!bottom || topAndBottom) {
+            mDrawTopDivider = mTitleBar != null &&
+                    mTitleBar.getVisibility() != View.GONE &&
+                    //Not scrolled to the top.
+                    view.getScrollY() + view.getPaddingTop() > view.getChildAt(0).getTop();
+
+        }
+        if (bottom || topAndBottom) {
+            mDrawBottomDivider = hasButtons &&
+                    view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view.getChildAt(view.getChildCount() - 1).getBottom();
+        }
+        invalidate();
     }
 
     public static boolean canRecyclerViewScroll(RecyclerView view) {
@@ -484,7 +499,7 @@ public class MDRootLayout extends ViewGroup {
      * however getChildDrawingOrder is not taking into account for simplicity and because it behaves
      * inconsistently across platform versions.
      *
-     * @return View touching the bottom of this viewgroup or null
+     * @return View touching the bottom of this ViewGroup or null
      */
     @Nullable
     private static View getBottomView(ViewGroup viewGroup) {
