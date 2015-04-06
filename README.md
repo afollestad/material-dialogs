@@ -416,8 +416,6 @@ MaterialDialog dialog = //... initialization via the builder ...
 dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
 ```
 
-Setting an action button's text to null will cause it to be hidden. Do not manually use `setVisibility()` on action button views.
-
 ---
 
 # Theming
