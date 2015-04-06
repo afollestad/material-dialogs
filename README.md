@@ -725,6 +725,12 @@ new MaterialDialog.Builder(this)
         }).show();
 ```
 
+Note that the dialog will force the positive action button to be visible, when it's pressed the input
+is submitted to the callback.
+
+The input dialog will automatically handle focusing the EditText and displaying the keyboard to allow
+the user to immediate enter input. When the dialog is closed, the keyboard will be automatically dismissed.
+
 #### Coloring the EditText
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a
