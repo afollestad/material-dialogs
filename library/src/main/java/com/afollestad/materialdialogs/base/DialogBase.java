@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 public class DialogBase extends AlertDialog implements DialogInterface.OnShowListener {
     private OnShowListener mShowListener;
 
-    protected DialogBase(Context context) {
-        super(context);
+    protected DialogBase(Context context, int theme) {
+        super(context, theme);
     }
 
     protected void setVerticalMargins(View view, int topMargin, int bottomMargin) {
