@@ -6,16 +6,13 @@ import android.content.DialogInterface;
 import android.os.Message;
 import android.view.ContextThemeWrapper;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-class DialogBase extends AlertDialog implements DialogInterface.OnShowListener, DialogInterface.OnDismissListener, DialogInterface.OnCancelListener {
+class DialogBase extends AlertDialog implements DialogInterface.OnShowListener {
 
     private OnShowListener mShowListener;
-    private OnDismissListener mDismissListener;
-    private OnCancelListener mCancelListener;
     protected ContextThemeWrapper mThemedContext;
 
     protected DialogBase(ContextThemeWrapper context) {
@@ -81,24 +78,6 @@ class DialogBase extends AlertDialog implements DialogInterface.OnShowListener, 
         super.setOnShowListener(this);
     }
 
-    @Override
-    public void setOnDismissListener(OnDismissListener listener) {
-        mDismissListener = listener;
-    }
-
-    public final void setOnDismissListenerInternal() {
-        super.setOnDismissListener(this);
-    }
-
-    @Override
-    public void setOnCancelListener(OnCancelListener listener) {
-        mCancelListener = listener;
-    }
-
-    public final void setOnCancelListenerInternal() {
-        super.setOnCancelListener(this);
-    }
-
     protected final void setViewInternal(View view) {
         super.setView(view);
     }
@@ -107,18 +86,5 @@ class DialogBase extends AlertDialog implements DialogInterface.OnShowListener, 
     public void onShow(DialogInterface dialog) {
         if (mShowListener != null)
             mShowListener.onShow(dialog);
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        if (mDismissListener != null)
-            mDismissListener.onDismiss(dialog);
-    }
-
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        if (mCancelListener != null)
-            mCancelListener.onCancel(dialog);
     }
 }

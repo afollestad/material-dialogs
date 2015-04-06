@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -11,7 +10,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -283,7 +281,7 @@ class DialogInit {
         // Setup progress dialog stuff if needed
         setupProgressDialog(dialog);
 
-        // Setup inputu dialog stuff if needed
+        // Setup input dialog stuff if needed
         setupInputDialog(dialog);
 
         // Setup custom views
@@ -293,7 +291,7 @@ class DialogInit {
             View innerView = builder.customView;
             if (builder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
-                   overscroll glow without clipping */
+                   over scroll glow without clipping */
                 final Resources r = dialog.getThemedContext().getResources();
                 final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
                 final ScrollView sv = new ScrollView(dialog.getThemedContext());
@@ -317,6 +315,9 @@ class DialogInit {
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
+        // Setup internal show listener
+        dialog.setOnShowListenerInternal();
+
         // Setup user listeners
         if (builder.showListener != null)
             dialog.setOnShowListener(builder.showListener);
@@ -329,9 +330,6 @@ class DialogInit {
 
         // Other internal initialization
         dialog.invalidateList();
-        dialog.setOnShowListenerInternal();
-        dialog.setOnDismissListenerInternal();
-        dialog.setOnCancelListenerInternal();
         dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
     }
