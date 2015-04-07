@@ -672,8 +672,8 @@ you show from an Activity which has a theme containing any these attributes:
         This sets the gravity used while displaying the dialog action buttons, defaults to start.
         
         START (Default)    Neutral     Negative    Positive
-	CENTER:            Negative    Neutral     Positive
-	END:	           Positive    Negative    Neutral
+        CENTER:            Negative    Neutral     Positive
+        END:	           Positive    Negative    Neutral
     -->
     <item name="md_buttons_gravity">start</item>
     
