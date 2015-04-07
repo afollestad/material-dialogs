@@ -8,6 +8,7 @@
         <item name="md_btn_positive_selector">@drawable/md_btn_selector_ripple</item>
         <item name="md_btn_neutral_selector">@drawable/md_btn_selector_ripple</item>
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_ripple</item>
+        <item name="colorAccent">#000</item>
     </style>
 
     <style name="MD_Dark" parent="Theme.AppCompat.Dialog">
@@ -17,6 +18,7 @@
         <item name="md_btn_positive_selector">@drawable/md_btn_selector_ripple_dark</item>
         <item name="md_btn_neutral_selector">@drawable/md_btn_selector_ripple_dark</item>
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_ripple_dark</item>
+        <item name="colorAccent">#fff</item>
     </style>
 
 </resources>
