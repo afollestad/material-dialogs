@@ -250,15 +250,6 @@ class DialogInit {
             dialog.neutralButton.setVisibility(View.VISIBLE);
         }
 
-        // Load default list item text color
-        if (builder.itemColorSet) {
-            dialog.defaultItemColor = builder.itemColor;
-        } else if (builder.theme == Theme.LIGHT) {
-            dialog.defaultItemColor = Color.BLACK;
-        } else {
-            dialog.defaultItemColor = Color.WHITE;
-        }
-
         // Setup list dialog stuff
         if (builder.listCallbackMultiChoice != null)
             dialog.selectedIndicesList = new ArrayList<>();
@@ -338,6 +329,15 @@ class DialogInit {
         dialog.invalidateList();
         dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
+
+        // API 10 compatibility stuff
+        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            dialog.setInverseBackgroundForced(true);
+//            if (!builder.titleColorSet)
+//                title.setTextColor(Color.BLACK);
+//            if (!builder.contentColorSet)
+//                content.setTextColor(Color.BLACK);
+        }
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {

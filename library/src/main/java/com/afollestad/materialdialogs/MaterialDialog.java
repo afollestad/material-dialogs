@@ -70,7 +70,6 @@ public class MaterialDialog extends DialogBase implements
     protected MDButton positiveButton;
     protected MDButton neutralButton;
     protected MDButton negativeButton;
-    protected int defaultItemColor;
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
 
