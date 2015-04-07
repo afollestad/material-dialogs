@@ -671,12 +671,9 @@ you show from an Activity which has a theme containing any these attributes:
     <!--
         This sets the gravity used while displaying the dialog action buttons, defaults to start.
         
-        Start is regular configuration: neutral on the left, positive on the right, 
-                negative to the left of the positive button. Opposite in RTL layouts.
-        Center puts the neutral button in the center, with negative on the left and 
-                positive on the right. Positive and negative switch in RTL layouts.
-        End puts the neutral button on the right, positive on the left, and negative 
-                to the right of the positive button. Opposite in RTL layouts. 
+        START (Default)    Neutral     Negative    Positive
+	CENTER:            Negative    Neutral     Positive
+	END:	           Positive    Negative    Neutral
     -->
     <item name="md_buttons_gravity">start</item>
     
