@@ -449,7 +449,7 @@ Pretty much every aspect of a dialog created with this library can be colored:
 ```java
 new MaterialDialog.Builder(this)
         .titleColorRes(R.color.material_red_500)
-        .contentColorRes(Color.WHITE)
+        .contentColor(Color.WHITE) // notice no 'res' postfix for literal color
         .dividerColorRes(R.color.material_pink_500)
         .backgroundColorRes(R.color.material_blue_grey_800)
         .positiveColorRes(R.color.material_red_500)
