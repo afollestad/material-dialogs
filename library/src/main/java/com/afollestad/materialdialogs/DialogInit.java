@@ -363,6 +363,7 @@ class DialogInit {
             dialog.input.append(builder.inputPrefill);
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
+        dialog.input.setTextColor(builder.contentColor);
         MDTintHelper.setEditTextTint(dialog.input, dialog.mBuilder.widgetColor);
     }
 

@@ -11,7 +11,6 @@
         <item name="md_btn_positive_selector">@drawable/md_btn_selector</item>
         <item name="md_btn_neutral_selector">@drawable/md_btn_selector</item>
         <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
-        <item name="colorAccent">#000</item>
 
         <item name="android:windowBackground">@drawable/md_dialog_background</item>
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
@@ -27,7 +26,6 @@
         <item name="md_btn_positive_selector">@drawable/md_btn_selector_dark</item>
         <item name="md_btn_neutral_selector">@drawable/md_btn_selector_dark</item>
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
-        <item name="colorAccent">#fff</item>
 
         <item name="android:windowBackground">@drawable/md_dialog_background_dark</item>
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
