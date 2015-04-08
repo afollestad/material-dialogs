@@ -73,7 +73,7 @@ public class MaterialDialog extends DialogBase implements
     protected MaterialDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));
         mBuilder = builder;
-        final LayoutInflater inflater = LayoutInflater.from(getContext());
+        final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
     }
