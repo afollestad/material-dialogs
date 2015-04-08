@@ -395,7 +395,7 @@ public class MDRootLayout extends ViewGroup {
                 mDrawBottomDivider = canScroll;
         } else if (view instanceof ViewGroup) {
             View topView = getTopView((ViewGroup) view);
-            setUpDividersVisibility(topView, topAndBottom, false);
+            setUpDividersVisibility(topView, topAndBottom, bottom);
             View bottomView = getBottomView((ViewGroup) view);
             if (bottomView != topView) {
                 setUpDividersVisibility(bottomView, false, true);
