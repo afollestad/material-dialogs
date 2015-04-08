@@ -471,7 +471,12 @@ public class MainActivity extends ActionBarActivity implements
         });
 
         //Workaround for CheckBox theming  on API 10 until AppCompat fix it
-        MDTintHelper.setCheckBoxTint(checkbox, getResources().getColor(R.color.material_pink_500));
+        int widgetColor = ThemeSingleton.get().widgetColor;
+        MDTintHelper.setCheckBoxTint(checkbox,
+                widgetColor == 0 ? getResources().getColor(R.color.material_pink_500) : widgetColor);
+
+        MDTintHelper.setEditTextTint(passwordInput,
+                widgetColor == 0 ? getResources().getColor(R.color.material_pink_500) : widgetColor);
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
