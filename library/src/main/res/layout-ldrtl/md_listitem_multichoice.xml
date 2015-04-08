@@ -22,7 +22,7 @@
         android:paddingEnd="@dimen/md_listitem_control_margin"
         tools:ignore="RtlSymmetry" />
 
-    <com.afollestad.materialdialogs.internal.MDCheckBox
+    <CheckBox
         android:id="@+id/control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

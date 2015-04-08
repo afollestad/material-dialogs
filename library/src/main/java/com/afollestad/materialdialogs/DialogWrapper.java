@@ -1,6 +1,6 @@
 package com.afollestad.materialdialogs;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Convenience class for migrating old dialogs code. Not all methods are implemented yet. Using MaterialDialog.Builder directly is recommended.
  */
-public class AlertDialogWrapper {
+public class DialogWrapper {
 
     public static class Builder {
 
@@ -160,14 +160,14 @@ public class AlertDialogWrapper {
             return this;
         }
 
-        public AlertDialog create() {
+        public Dialog create() {
             addButtonsCallback();
             addListCallbacks();
             return builder.build();
         }
 
-        public AlertDialog show() {
-            AlertDialog dialog = create();
+        public Dialog show() {
+            Dialog dialog = create();
             dialog.show();
             return dialog;
         }
