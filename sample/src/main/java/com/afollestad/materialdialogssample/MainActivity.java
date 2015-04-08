@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.ThemeSingleton;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 
 import java.io.File;
 
@@ -460,13 +461,17 @@ public class MainActivity extends ActionBarActivity implements
         });
 
         // Toggling the show password CheckBox will mask or unmask the password input EditText
-        ((CheckBox) dialog.getCustomView().findViewById(R.id.showPassword)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CheckBox checkbox = (CheckBox) dialog.getCustomView().findViewById(R.id.showPassword);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 passwordInput.setInputType(!isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT);
                 passwordInput.setTransformationMethod(!isChecked ? PasswordTransformationMethod.getInstance() : null);
             }
         });
+
+        //Workaround for CheckBox theming  on API 10 until AppCompat fix it
+        MDTintHelper.setCheckBoxTint(checkbox, getResources().getColor(R.color.material_pink_500));
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
