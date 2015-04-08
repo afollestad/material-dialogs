@@ -46,10 +46,14 @@ public class MDTintHelper {
             progressBar.setSecondaryProgressTintList(stateList);
             progressBar.setIndeterminateTintList(stateList);
         } else {
+            PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                mode = PorterDuff.Mode.MULTIPLY;
+            }
             if (progressBar.getIndeterminateDrawable() != null)
-                progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                progressBar.getIndeterminateDrawable().setColorFilter(color, mode);
             if (progressBar.getProgressDrawable() != null)
-                progressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                progressBar.getProgressDrawable().setColorFilter(color, mode);
         }
     }
 
