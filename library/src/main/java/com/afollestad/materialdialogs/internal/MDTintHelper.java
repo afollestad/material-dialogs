@@ -5,9 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.internal.widget.TintCheckBox;
-import android.support.v7.internal.widget.TintEditText;
-import android.support.v7.internal.widget.TintRadioButton;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -31,7 +28,7 @@ public class MDTintHelper {
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             radioButton.setButtonTintList(sl);
-        } else if (radioButton instanceof TintRadioButton) {
+        } else {
             Drawable drawable = ContextCompat.getDrawable(radioButton.getContext(), R.drawable.abc_btn_radio_material);
             DrawableWrapper d = new DrawableWrapper(drawable);
             d.setTintList(sl);
@@ -61,7 +58,7 @@ public class MDTintHelper {
         ColorStateList s1 = ColorStateList.valueOf(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setBackgroundTintList(s1);
-        } else if (editText instanceof TintEditText) {
+        } else {
             Drawable drawable = ContextCompat.getDrawable(editText.getContext(), R.drawable.abc_edit_text_material);
             DrawableWrapper d = new DrawableWrapper(drawable);
             d.setTintList(s1);
@@ -79,7 +76,7 @@ public class MDTintHelper {
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             box.setButtonTintList(sl);
-        } else if (box instanceof TintCheckBox) {
+        } else {
             Drawable drawable = ContextCompat.getDrawable(box.getContext(), R.drawable.abc_btn_check_material);
             DrawableWrapper d = new DrawableWrapper(drawable);
             d.setTintList(sl);

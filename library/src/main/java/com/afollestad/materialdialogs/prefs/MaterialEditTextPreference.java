@@ -2,9 +2,7 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.support.annotation.NonNull;
@@ -23,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.afollestad.materialdialogs.R;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
@@ -34,8 +33,10 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
-            mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
+        mColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, mColor);
+        }
     }
 
     public MaterialEditTextPreference(Context context) {
@@ -77,8 +78,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
-        if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
-            getEditText().getBackground().setColorFilter(mColor, PorterDuff.Mode.SRC_ATOP);
+        MDTintHelper.setEditTextTint(getEditText(), mColor);
 
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
