@@ -32,7 +32,6 @@ import com.afollestad.materialdialogs.R;
  *         buttonDefault... (either stacked or horizontal)
  */
 public class MDRootLayout extends ViewGroup {
-    private static final String TAG = "MD.RootView";
 
     private View mTitleBar;
     private View mContent;
