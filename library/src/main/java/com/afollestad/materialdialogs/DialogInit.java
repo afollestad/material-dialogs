@@ -340,7 +340,9 @@ class DialogInit {
                 dialog.mProgress.setProgress(0);
                 dialog.mProgress.setMax(builder.progressMax);
                 dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.label);
+                dialog.mProgressLabel.setTextColor(builder.contentColor);
                 dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
+                dialog.mProgressMinMax.setTextColor(builder.contentColor);
                 if (builder.showMinMax) {
                     dialog.mProgressMinMax.setVisibility(View.VISIBLE);
                     dialog.mProgressMinMax.setText("0/" + builder.progressMax);
