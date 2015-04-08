@@ -2,6 +2,9 @@
 <resources>
 
     <style name="MD_Light" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+
         <item name="md_divider">@color/md_divider_black</item>
         <item name="md_list_selector">@drawable/md_selector</item>
         <item name="md_btn_stacked_selector">@drawable/md_selector</item>
@@ -10,10 +13,14 @@
         <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
         <item name="colorAccent">#000</item>
 
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/md_dialog_background</item>
+        <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     </style>
 
     <style name="MD_Dark" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+
         <item name="md_divider">@color/md_divider_white</item>
         <item name="md_list_selector">@drawable/md_selector_dark</item>
         <item name="md_btn_stacked_selector">@drawable/md_selector_dark</item>
@@ -22,7 +29,8 @@
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
         <item name="colorAccent">#fff</item>
 
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/md_dialog_background_dark</item>
+        <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     </style>
 
 </resources>

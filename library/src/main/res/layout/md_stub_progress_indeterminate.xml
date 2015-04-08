@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/md_content_padding_top"
     android:gravity="end|center_vertical">
 
-    <com.afollestad.materialdialogs.internal.MDProgressBar
+    <ProgressBar
         android:id="@android:id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

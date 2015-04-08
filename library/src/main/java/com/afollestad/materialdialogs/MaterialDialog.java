@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Paint;
@@ -20,13 +19,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -34,11 +31,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
-import com.afollestad.materialdialogs.internal.MDEditText;
-import com.afollestad.materialdialogs.internal.MDProgressBar;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
@@ -61,11 +57,11 @@ public class MaterialDialog extends DialogBase implements
     protected TextView title;
     protected View titleFrame;
     protected FrameLayout customViewFrame;
-    protected MDProgressBar mProgress;
+    protected ProgressBar mProgress;
     protected TextView mProgressLabel;
     protected TextView mProgressMinMax;
     protected TextView content;
-    protected MDEditText input;
+    protected EditText input;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
@@ -75,9 +71,9 @@ public class MaterialDialog extends DialogBase implements
 
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
-        super(DialogInit.getTheme(builder));
+        super(builder.context, DialogInit.getTheme(builder));
         mBuilder = builder;
-        final LayoutInflater inflater = LayoutInflater.from(getThemedContext());
+        final LayoutInflater inflater = LayoutInflater.from(getContext());
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
     }
@@ -234,7 +230,7 @@ public class MaterialDialog extends DialogBase implements
             return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.listSelector, null);
         final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
         if (d != null) return d;
-        return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_list_selector);
+        return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
     }
 
     /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
@@ -243,7 +239,7 @@ public class MaterialDialog extends DialogBase implements
                 return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorStacked, null);
             final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_stacked_selector);
             if (d != null) return d;
-            return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_stacked_selector);
+            return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
         } else {
             switch (which) {
                 default: {
@@ -251,21 +247,21 @@ public class MaterialDialog extends DialogBase implements
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_positive_selector);
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
                 }
                 case NEUTRAL: {
                     if (mBuilder.btnSelectorNeutral != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_neutral_selector);
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
                 }
                 case NEGATIVE: {
                     if (mBuilder.btnSelectorNegative != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNegative, null);
                     final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getThemedContext(), R.attr.md_btn_negative_selector);
+                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
                 }
             }
         }
@@ -406,18 +402,14 @@ public class MaterialDialog extends DialogBase implements
             final int materialBlue = context.getResources().getColor(R.color.md_material_blue_600);
 
             // Retrieve default accent colors, which are used on the action buttons and progress bars
+            this.widgetColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                final int fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
-                this.widgetColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, fallback);
-                this.positiveColor = this.widgetColor;
-                this.negativeColor = this.widgetColor;
-                this.neutralColor = this.widgetColor;
-            } else {
-                this.widgetColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
-                this.positiveColor = this.widgetColor;
-                this.negativeColor = this.widgetColor;
-                this.neutralColor = this.widgetColor;
+                this.widgetColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, this.widgetColor);
             }
+
+            this.positiveColor = this.widgetColor;
+            this.negativeColor = this.widgetColor;
+            this.neutralColor = this.widgetColor;
 
             // Set the default theme based on the Activity theme's primary color darkness (more white or more black)
             final int primaryTextColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
@@ -1029,26 +1021,26 @@ public class MaterialDialog extends DialogBase implements
                 return view.findViewById(R.id.buttonDefaultNegative);
         }
     }
-
-    /**
+/*
+    *//**
      * This will not return buttons that are actually in the layout itself, since the layout doesn't
      * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
      * stock OS requires this method in order to detect visible buttons.
      *
      * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     */
+     *//*
     @Deprecated
     @Override
     public Button getButton(int whichButton) {
         Log.w("MaterialDialog", "Warning: getButton() is a deprecated method that does not return valid references to action buttons.");
         if (whichButton == AlertDialog.BUTTON_POSITIVE) {
-            return mBuilder.positiveText != null ? new Button(getThemedContext()) : null;
+            return mBuilder.positiveText != null ? new Button(getContext()) : null;
         } else if (whichButton == AlertDialog.BUTTON_NEUTRAL) {
-            return mBuilder.neutralText != null ? new Button(getThemedContext()) : null;
+            return mBuilder.neutralText != null ? new Button(getContext()) : null;
         } else {
-            return mBuilder.negativeText != null ? new Button(getThemedContext()) : null;
+            return mBuilder.negativeText != null ? new Button(getContext()) : null;
         }
-    }
+    }*/
 
     /**
      * Retrieves the view representing the dialog as a whole. Be careful with this.
@@ -1058,7 +1050,6 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Nullable
-    @Override
     public final ListView getListView() {
         return listView;
     }
@@ -1129,7 +1120,7 @@ public class MaterialDialog extends DialogBase implements
      * @param titleRes The string resource of the new title of the action button.
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
-        setActionButton(which, getThemedContext().getString(titleRes));
+        setActionButton(which, getContext().getString(titleRes));
     }
 
     /**
@@ -1164,19 +1155,16 @@ public class MaterialDialog extends DialogBase implements
         this.title.setText(title);
     }
 
-    @Override
     public void setIcon(@DrawableRes int resId) {
         icon.setImageResource(resId);
         icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
     }
 
-    @Override
     public void setIcon(Drawable d) {
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
 
-    @Override
     public void setIconAttribute(@AttrRes int attrId) {
         Drawable d = DialogUtils.resolveDrawable(mBuilder.context, attrId);
         icon.setImageDrawable(d);
@@ -1192,7 +1180,6 @@ public class MaterialDialog extends DialogBase implements
      * @deprecated Use setContent() instead.
      */
     @Deprecated
-    @Override
     public void setMessage(CharSequence message) {
         setContent(message);
     }

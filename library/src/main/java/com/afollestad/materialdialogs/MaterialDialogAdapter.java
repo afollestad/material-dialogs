@@ -8,12 +8,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.internal.MDCheckBox;
-import com.afollestad.materialdialogs.internal.MDRadioButton;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 
 class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
@@ -44,17 +45,17 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
         switch (dialog.listType) {
             case SINGLE: {
                 @SuppressLint("CutPasteId")
-                MDRadioButton radio = (MDRadioButton) view.findViewById(R.id.control);
+                RadioButton radio = (RadioButton) view.findViewById(R.id.control);
                 boolean selected = dialog.mBuilder.selectedIndex == index;
-                radio.setColorFilter(dialog.mBuilder.widgetColor);
+                MDTintHelper.setRadioButtonTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
                 break;
             }
             case MULTI: {
                 @SuppressLint("CutPasteId")
-                MDCheckBox checkbox = (MDCheckBox) view.findViewById(R.id.control);
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
                 boolean selected = dialog.selectedIndicesList.contains(index);
-                checkbox.setColorFilter(dialog.mBuilder.widgetColor);
+                MDTintHelper.setCheckBoxTint(checkbox, dialog.mBuilder.widgetColor);
                 checkbox.setChecked(selected);
                 break;
             }

@@ -3,23 +3,21 @@ package com.afollestad.materialdialogs;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.method.LinkMovementMethod;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
-import com.afollestad.materialdialogs.internal.MDEditText;
-import com.afollestad.materialdialogs.internal.MDProgressBar;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -34,13 +32,13 @@ import java.util.Arrays;
  */
 class DialogInit {
 
-    public static ContextThemeWrapper getTheme(MaterialDialog.Builder builder) {
+    public static int getTheme(MaterialDialog.Builder builder) {
         boolean darkTheme = builder.theme == Theme.DARK;
         if (!darkTheme) {
             darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, false);
             builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
         }
-        return new ContextThemeWrapper(builder.context, darkTheme ? R.style.MD_Dark : R.style.MD_Light);
+        return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
     }
 
     public static int getInflateLayout(MaterialDialog.Builder builder) {
@@ -65,9 +63,9 @@ class DialogInit {
         // Check if default library fonts should be used
         if (!builder.useCustomFonts) {
             if (builder.mediumFont == null)
-                builder.mediumFont = TypefaceHelper.get(dialog.getThemedContext(), "Roboto-Medium");
+                builder.mediumFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Medium");
             if (builder.regularFont == null)
-                builder.regularFont = TypefaceHelper.get(dialog.getThemedContext(), "Roboto-Regular");
+                builder.regularFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Regular");
         }
 
         // Set cancelable flag and dialog background color
@@ -159,7 +157,7 @@ class DialogInit {
         }
 
         // Setup divider color in case content scrolls
-        final int dividerFallback = DialogUtils.resolveColor(dialog.getThemedContext(), R.attr.md_divider);
+        final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
         builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
         dialog.view.setDividerColor(builder.dividerColor);
 
@@ -184,7 +182,7 @@ class DialogInit {
             dialog.setTypeface(dialog.content, builder.regularFont);
             dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
             if (builder.positiveColor == 0) {
-                dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getThemedContext(), android.R.attr.textColorPrimary));
+                dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
             } else {
                 dialog.content.setLinkTextColor(builder.positiveColor);
             }
@@ -289,9 +287,9 @@ class DialogInit {
             if (builder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    over scroll glow without clipping */
-                final Resources r = dialog.getThemedContext().getResources();
+                final Resources r = dialog.getContext().getResources();
                 final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-                final ScrollView sv = new ScrollView(dialog.getThemedContext());
+                final ScrollView sv = new ScrollView(dialog.getContext());
                 int paddingTop = r.getDimensionPixelSize(R.dimen.md_content_padding_top);
                 int paddingBottom = r.getDimensionPixelSize(R.dimen.md_content_padding_bottom);
                 sv.setClipToPadding(false);
@@ -329,23 +327,14 @@ class DialogInit {
         dialog.invalidateList();
         dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
-
-        // API 10 compatibility stuff
-        if (builder.theme == Theme.LIGHT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            dialog.setInverseBackgroundForced(true);
-//            if (!builder.titleColorSet)
-//                title.setTextColor(Color.BLACK);
-//            if (!builder.contentColorSet)
-//                content.setTextColor(Color.BLACK);
-        }
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
         if (builder.indeterminateProgress || builder.progress > -2) {
-            dialog.mProgress = (MDProgressBar) dialog.view.findViewById(android.R.id.progress);
+            dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
             if (dialog.mProgress == null) return;
-            dialog.mProgress.setColorFilter(builder.widgetColor);
+            MDTintHelper.setProgressBarTint(dialog.mProgress, builder.widgetColor);
 
             if (!builder.indeterminateProgress) {
                 dialog.mProgress.setProgress(0);
@@ -368,13 +357,13 @@ class DialogInit {
 
     private static void setupInputDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
-        dialog.input = (MDEditText) dialog.view.findViewById(android.R.id.input);
+        dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
         if (dialog.input == null) return;
         if (builder.inputPrefill != null)
             dialog.input.append(builder.inputPrefill);
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
-        dialog.input.setColorFilter(dialog.mBuilder.widgetColor);
+        MDTintHelper.setEditTextTint(dialog.input, dialog.mBuilder.widgetColor);
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
