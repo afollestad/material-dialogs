@@ -62,7 +62,12 @@ public class MDTintHelper {
             Drawable drawable = ContextCompat.getDrawable(editText.getContext(), R.drawable.abc_edit_text_material);
             DrawableWrapper d = new DrawableWrapper(drawable);
             d.setTintList(s1);
-            editText.setBackgroundDrawable(d);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                editText.setBackground(d);
+            } else {
+                //noinspection deprecation
+                editText.setBackgroundDrawable(d);
+            }
         }
     }
 
