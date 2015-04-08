@@ -24,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.0.1'
+    compile 'com.afollestad:material-dialogs:0.7.1.0'
 }
 ```
 
@@ -827,6 +827,14 @@ Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference
 with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
 `MaterialListPreference`, and `MaterialMultiSelectListPreference` classes that can be used in your preferences XML to automatically use Material-themed
 dialogs. See the sample project for details.
+
+---
+
+# Tint Helper
+
+You can use the `MDTintHelper` class to dynamically color check boxes, radio buttons, edit texts, and progress bars 
+(to get around not being able to change `styles.xml` at runtime). It is used in the library to dynamically color
+UI elements to match your set `widgetColor`.
 
 ---
 
