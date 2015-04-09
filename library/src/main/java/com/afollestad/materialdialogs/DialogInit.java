@@ -50,7 +50,7 @@ class DialogInit {
             return R.layout.md_dialog_progress;
         } else if (builder.indeterminateProgress) {
             return R.layout.md_dialog_progress_indeterminate;
-        } else if (builder.inputCallback != null) {
+        } else if (builder.inputCallback != null || builder.textWatcher != null) {
             return R.layout.md_dialog_input;
         } else {
             return R.layout.md_dialog_basic;
@@ -363,6 +363,8 @@ class DialogInit {
         if (dialog.input == null) return;
         if (builder.inputPrefill != null)
             dialog.input.append(builder.inputPrefill);
+        if (builder.textWatcher != null)
+            dialog.input.addTextChangedListener(builder.textWatcher);
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);
