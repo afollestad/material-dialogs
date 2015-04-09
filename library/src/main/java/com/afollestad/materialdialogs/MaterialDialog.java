@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -377,6 +378,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected TextWatcher textWatcher;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -966,6 +968,13 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder forceStacking(boolean stacked) {
             this.forceStacking = stacked;
+            return this;
+        }
+
+        public Builder input(CharSequence hint, CharSequence prefill, @NonNull TextWatcher watcher) {
+            inputHint = hint;
+            inputPrefill = prefill;
+            textWatcher = watcher;
             return this;
         }
 
