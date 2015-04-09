@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -297,7 +298,7 @@ public class MaterialDialog extends DialogBase implements
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
                     sendMultichoiceCallback();
-                if (mBuilder.inputCallback != null && input != null)
+                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(this, input.getText());
                 if (mBuilder.autoDismiss) dismiss();
                 break;
@@ -377,6 +378,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected boolean alwaysCallInputCallback;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -978,6 +980,11 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
             return input(hint == 0 ? null : context.getString(hint), prefill == 0 ? null : context.getString(prefill), callback);
+        }
+
+        public Builder alwaysCallInputCallback() {
+            this.alwaysCallInputCallback = true;
+            return this;
         }
 
         public MaterialDialog build() {

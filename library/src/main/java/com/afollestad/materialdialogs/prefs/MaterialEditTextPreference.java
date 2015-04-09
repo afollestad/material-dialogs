@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
+    private MaterialDialog mDialog;
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -65,6 +66,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
     }
 
     @Override
+    public Dialog getDialog() {
+        return mDialog;
+    }
+
+    @Override
     protected void showDialog(Bundle state) {
         Builder mBuilder = new MaterialDialog.Builder(getContext())
                 .title(getDialogTitle())
@@ -89,7 +95,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
         mBuilder.customView(layout, false);
 
-        MaterialDialog mDialog = mBuilder.build();
+        mDialog = mBuilder.build();
         if (state != null)
             mDialog.onRestoreInstanceState(state);
         requestInputMethod(mDialog);

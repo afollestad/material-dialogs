@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogs.prefs;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -40,6 +41,11 @@ public class MaterialListPreference extends ListPreference {
         super.setEntries(entries);
         if (mDialog != null)
             mDialog.setItems(entries);
+    }
+
+    @Override
+    public Dialog getDialog() {
+        return mDialog;
     }
 
     @Override

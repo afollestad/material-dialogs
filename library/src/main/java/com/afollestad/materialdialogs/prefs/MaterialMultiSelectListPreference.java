@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs.prefs;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -47,6 +48,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         this.context = context;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
             setWidgetLayoutResource(0);
+    }
+
+    @Override
+    public Dialog getDialog() {
+        return mDialog;
     }
 
     @Override
