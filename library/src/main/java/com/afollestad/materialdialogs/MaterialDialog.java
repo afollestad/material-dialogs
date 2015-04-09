@@ -19,7 +19,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -298,8 +297,10 @@ public class MaterialDialog extends DialogBase implements
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
                     sendMultichoiceCallback();
-                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
-                    mBuilder.inputCallback.onInput(this, input.getText());
+                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback) {
+                    if (input.getText().toString().trim().length() > 0)
+                        mBuilder.inputCallback.onInput(this, input.getText());
+                }
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }

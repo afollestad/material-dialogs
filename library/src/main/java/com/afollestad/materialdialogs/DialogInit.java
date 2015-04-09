@@ -373,7 +373,8 @@ class DialogInit {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    dialog.mBuilder.inputCallback.onInput(dialog, s);
+                    if (s.toString().trim().length() > 0)
+                        dialog.mBuilder.inputCallback.onInput(dialog, s);
                 }
 
                 @Override
