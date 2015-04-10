@@ -38,8 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:progressBarStyleHorizontal"
-            android:layout_marginLeft="@dimen/md_dialog_frame_margin"
-            android:layout_marginStart="@dimen/md_dialog_frame_margin"
             android:layout_marginBottom="@dimen/md_dialog_frame_margin"
             android:layout_toRightOf="@+id/minMax"
             android:layout_toEndOf="@+id/minMax"
