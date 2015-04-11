@@ -24,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.1.1'
+    compile 'com.afollestad:material-dialogs:0.7.1.2'
 }
 ```
 
