@@ -633,7 +633,6 @@ public class MainActivity extends ActionBarActivity implements
                     .positiveText(R.string.dismiss)
                     .content(Html.fromHtml(getString(R.string.about_body)))
                     .contentLineSpacing(1.6f)
-                    .build()
                     .show();
             return true;
         }

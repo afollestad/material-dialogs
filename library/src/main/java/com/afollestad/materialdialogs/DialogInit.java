@@ -211,7 +211,7 @@ class DialogInit {
             textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
         }
 
-        if (dialog.positiveButton != null && builder.positiveText != null) {
+//        if (dialog.positiveButton != null && builder.positiveText != null) {
             MDButton positiveTextView = dialog.positiveButton;
             dialog.setTypeface(positiveTextView, builder.mediumFont);
             positiveTextView.setAllCapsCompat(textAllCaps);
@@ -222,9 +222,9 @@ class DialogInit {
             dialog.positiveButton.setTag(DialogAction.POSITIVE);
             dialog.positiveButton.setOnClickListener(dialog);
             dialog.positiveButton.setVisibility(View.VISIBLE);
-        }
+//        }
 
-        if (dialog.negativeButton != null && builder.negativeText != null) {
+//        if (dialog.negativeButton != null && builder.negativeText != null) {
             MDButton negativeTextView = dialog.negativeButton;
             dialog.setTypeface(negativeTextView, builder.mediumFont);
             negativeTextView.setAllCapsCompat(textAllCaps);
@@ -235,9 +235,9 @@ class DialogInit {
             dialog.negativeButton.setTag(DialogAction.NEGATIVE);
             dialog.negativeButton.setOnClickListener(dialog);
             dialog.negativeButton.setVisibility(View.VISIBLE);
-        }
+//        }
 
-        if (dialog.neutralButton != null && builder.neutralText != null) {
+//        if (dialog.neutralButton != null && builder.neutralText != null) {
             MDButton neutralTextView = dialog.neutralButton;
             dialog.setTypeface(neutralTextView, builder.mediumFont);
             neutralTextView.setAllCapsCompat(textAllCaps);
@@ -248,7 +248,7 @@ class DialogInit {
             dialog.neutralButton.setTag(DialogAction.NEUTRAL);
             dialog.neutralButton.setOnClickListener(dialog);
             dialog.neutralButton.setVisibility(View.VISIBLE);
-        }
+//        }
 
         // Setup list dialog stuff
         if (builder.listCallbackMultiChoice != null)

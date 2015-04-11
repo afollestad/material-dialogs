@@ -133,7 +133,7 @@ public class MDRootLayout extends ViewGroup {
         if (!mForceStack) {
             int buttonsWidth = 0;
             for (MDButton button : mButtons) {
-                if (button != null && button.getVisibility() != View.GONE) {
+                if (button != null && isVisible(button)) {
                     button.setStacked(false, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
                     buttonsWidth += button.getMeasuredWidth();
@@ -153,7 +153,7 @@ public class MDRootLayout extends ViewGroup {
         mIsStacked = stacked;
         if (stacked) {
             for (MDButton button : mButtons) {
-                if (button != null && button.getVisibility() != View.GONE) {
+                if (button != null && isVisible(button)) {
                     button.setStacked(true, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
                     stackedHeight += button.getMeasuredHeight();
@@ -211,7 +211,10 @@ public class MDRootLayout extends ViewGroup {
     }
 
     private static boolean isVisible(View v) {
-        return v != null && v.getVisibility() != View.GONE;
+        boolean visible = v != null && v.getVisibility() != View.GONE;
+        if (visible && v instanceof MDButton)
+            visible = ((MDButton) v).getText().toString().trim().length() > 0;
+        return visible;
     }
 
     @Override
