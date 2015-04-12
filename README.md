@@ -62,7 +62,7 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-On Lollipop (API 21) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
+On Lollipop (API 21+) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
 (which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 If the content is long enough, it will become scrollable and a divider will be displayed above the action buttons.
@@ -245,7 +245,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
 every time the user selects an item.
 
-## Coloring Radio Buttons (API 22+)
+## Coloring Radio Buttons
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -254,8 +254,6 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
-
-Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) and above.
 
 ---
 
@@ -295,7 +293,7 @@ unless auto dismiss is turned off.
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
 every time the user selects an item.
 
-## Coloring Check Boxes (API 22+)
+## Coloring Check Boxes
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
@@ -304,8 +302,6 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
-
-Due to limitations, this only works correctly on API 22 (Android 5.1 Lollipop) and above.
 
 ---
 
@@ -459,10 +455,10 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-The names are self explanatory for the most part. The `widgetColor` method is discussed in a few other
-sections of this tutorial, it applies to progress bars on all API levels, along check boxes and radio 
-buttons (on API 22 and above due to limitations). Also note that each of these methods have 3 variations 
-for setting a color directly, using color resources, and using color attributes.
+The names are self explanatory for the most part. The `widgetColor` method, discussed in a few other
+sections of this tutorial, applies to progress bars, check boxes, and radio buttons. Also note that 
+each of these methods have 3 variations for setting a color directly, using color resources, and using 
+color attributes.
 
 ## Selectors
 
@@ -485,7 +481,7 @@ or because you used `forceStacked(true)` on the `Builder`. `listSelector` is use
 you are NOT using a custom adapter.
 
 ***An important note related to using custom action button selectors***: make sure your selector drawable references
-inset drawables like the default ones do, this is important for correct action button padding.
+inset drawables like the default ones do - this is important for correct action button padding.
 
 ## Gravity
 
