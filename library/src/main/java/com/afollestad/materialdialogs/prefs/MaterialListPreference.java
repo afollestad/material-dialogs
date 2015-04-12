@@ -6,11 +6,15 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Marc Holder Kluver (marchold), Aidan Follestad (afollestad)
@@ -84,7 +88,21 @@ public class MaterialListPreference extends ListPreference {
             builder.content(getDialogMessage());
         }
 
-        mDialog = builder.show();
+        PreferenceManager pm = getPreferenceManager();
+        try {
+            Method method = pm.getClass().getDeclaredMethod(
+                    "registerOnActivityDestroyListener",
+                    PreferenceManager.OnActivityDestroyListener.class);
+            method.setAccessible(true);
+            method.invoke(pm, this);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        mDialog = builder.build();
+        if (state != null)
+            mDialog.onRestoreInstanceState(state);
+        mDialog.show();
     }
 
     @Override
