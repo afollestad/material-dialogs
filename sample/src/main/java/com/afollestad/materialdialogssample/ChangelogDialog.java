@@ -45,12 +45,7 @@ public class ChangelogDialog extends DialogFragment {
                 .title(R.string.changelog)
                 .customView(customView, false)
                 .positiveText(android.R.string.ok)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-//                        dismiss();
-                    }
-                }).build();
+                .build();
 
         final WebView webView = (WebView) customView.findViewById(R.id.webview);
         try {
