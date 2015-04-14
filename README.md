@@ -730,6 +730,7 @@ an input field (EditText). You can also display content above the EditText if yo
 new MaterialDialog.Builder(this)
         .title(R.string.input)
         .content(R.string.input_content)
+        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
         .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
