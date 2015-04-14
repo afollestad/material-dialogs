@@ -8,8 +8,8 @@
     android:paddingStart="@dimen/md_dialog_frame_margin"
     android:paddingRight="@dimen/md_dialog_frame_margin"
     android:paddingEnd="@dimen/md_dialog_frame_margin"
-    android:paddingTop="@dimen/md_content_padding_top"
-    android:paddingBottom="@dimen/md_content_padding_top"
+    android:paddingTop="@dimen/md_simplelistitem_padding_top"
+    android:paddingBottom="@dimen/md_simplelistitem_padding_top"
     android:gravity="start|center_vertical"
     android:minHeight="@dimen/md_listitem_height">
 

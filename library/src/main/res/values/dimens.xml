@@ -37,8 +37,8 @@
          This plus md_content_padding_top should equals md_dialog_frame_margin -->
     <dimen name="md_notitle_vertical_padding">16dp</dimen>
 
-    <!-- 12dp + 8dp title frame margin = 20dp -->
     <dimen name="md_content_padding_top">8dp</dimen>
+    <dimen name="md_simplelistitem_padding_top">12dp</dimen>
 
     <dimen name="md_button_min_width">72dp</dimen>
     <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
