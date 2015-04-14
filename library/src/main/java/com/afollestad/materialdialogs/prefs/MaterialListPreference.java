@@ -13,7 +13,6 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -95,7 +94,7 @@ public class MaterialListPreference extends ListPreference {
                     PreferenceManager.OnActivityDestroyListener.class);
             method.setAccessible(true);
             method.invoke(pm, this);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -103,6 +102,13 @@ public class MaterialListPreference extends ListPreference {
         if (state != null)
             mDialog.onRestoreInstanceState(state);
         mDialog.show();
+    }
+
+    @Override
+    public void onActivityDestroy() {
+        super.onActivityDestroy();
+        if (mDialog != null && mDialog.isShowing())
+            mDialog.dismiss();
     }
 
     @Override

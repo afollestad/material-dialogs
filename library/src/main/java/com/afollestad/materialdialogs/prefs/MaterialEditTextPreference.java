@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -106,7 +105,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                     PreferenceManager.OnActivityDestroyListener.class);
             method.setAccessible(true);
             method.invoke(pm, this);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -137,5 +136,12 @@ public class MaterialEditTextPreference extends EditTextPreference {
     private void requestInputMethod(Dialog dialog) {
         Window window = dialog.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+
+    @Override
+    public void onActivityDestroy() {
+        super.onActivityDestroy();
+        if (mDialog != null && mDialog.isShowing())
+            mDialog.dismiss();
     }
 }
