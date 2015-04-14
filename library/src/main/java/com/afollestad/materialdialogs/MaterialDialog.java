@@ -69,6 +69,10 @@ public class MaterialDialog extends DialogBase implements
     protected ListType listType;
     protected List<Integer> selectedIndicesList;
 
+    public final Builder getBuilder() {
+        return mBuilder;
+    }
+
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));
@@ -78,11 +82,11 @@ public class MaterialDialog extends DialogBase implements
         DialogInit.init(this);
     }
 
-    protected final void setTypeface(TextView text, Typeface t) {
+    public final void setTypeface(TextView target, Typeface t) {
         if (t == null) return;
-        int flags = text.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
-        text.setPaintFlags(flags);
-        text.setTypeface(t);
+        int flags = target.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
+        target.setPaintFlags(flags);
+        target.setTypeface(t);
     }
 
     protected final void checkIfListInitScroll() {
@@ -399,6 +403,23 @@ public class MaterialDialog extends DialogBase implements
         public final Context getContext() {
             return context;
         }
+
+        public final GravityEnum getItemsGravity() {
+            return itemsGravity;
+        }
+
+        public final int getTitleColor() {
+            return titleColor;
+        }
+
+        public final CharSequence[] getItems() {
+            return items;
+        }
+
+        public final Typeface getRegularFont() {
+            return regularFont;
+        }
+
 
         public Builder(@NonNull Context context) {
             this.context = context;

@@ -28,6 +28,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.ThemeSingleton;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
+import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
+import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 
 import java.io.File;
 
@@ -145,6 +147,13 @@ public class MainActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 showMultiChoiceLimited();
+            }
+        });
+
+        findViewById(R.id.simpleList).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSimpleList();
             }
         });
 
@@ -406,6 +415,32 @@ public class MainActivity extends ActionBarActivity implements
                 })
                 .positiveText(R.string.dismiss)
                 .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if selection is still allowed
+                .show();
+    }
+
+    private void showSimpleList() {
+        final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content("username@gmail.com")
+                .icon(R.drawable.ic_circle_darker)
+                .build());
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content("user02@gmail.com")
+                .icon(R.drawable.ic_circle_darker)
+                .build());
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content(R.string.add_account)
+                .icon(R.drawable.ic_circle_lighter)
+                .build());
+        new MaterialDialog.Builder(this)
+                .title(R.string.set_backup)
+                .adapter(adapter, new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        MaterialSimpleListItem item = adapter.getItem(which);
+                        showToast(item.getContent().toString());
+                    }
+                })
                 .show();
     }
 

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
+import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -212,42 +213,42 @@ class DialogInit {
         }
 
 //        if (dialog.positiveButton != null && builder.positiveText != null) {
-            MDButton positiveTextView = dialog.positiveButton;
-            dialog.setTypeface(positiveTextView, builder.mediumFont);
-            positiveTextView.setAllCapsCompat(textAllCaps);
-            positiveTextView.setText(builder.positiveText);
-            positiveTextView.setTextColor(getActionTextStateList(builder.context, builder.positiveColor));
-            dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
-            dialog.positiveButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.POSITIVE, false));
-            dialog.positiveButton.setTag(DialogAction.POSITIVE);
-            dialog.positiveButton.setOnClickListener(dialog);
-            dialog.positiveButton.setVisibility(View.VISIBLE);
+        MDButton positiveTextView = dialog.positiveButton;
+        dialog.setTypeface(positiveTextView, builder.mediumFont);
+        positiveTextView.setAllCapsCompat(textAllCaps);
+        positiveTextView.setText(builder.positiveText);
+        positiveTextView.setTextColor(getActionTextStateList(builder.context, builder.positiveColor));
+        dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
+        dialog.positiveButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.POSITIVE, false));
+        dialog.positiveButton.setTag(DialogAction.POSITIVE);
+        dialog.positiveButton.setOnClickListener(dialog);
+        dialog.positiveButton.setVisibility(View.VISIBLE);
 //        }
 
 //        if (dialog.negativeButton != null && builder.negativeText != null) {
-            MDButton negativeTextView = dialog.negativeButton;
-            dialog.setTypeface(negativeTextView, builder.mediumFont);
-            negativeTextView.setAllCapsCompat(textAllCaps);
-            negativeTextView.setText(builder.negativeText);
-            negativeTextView.setTextColor(getActionTextStateList(builder.context, builder.negativeColor));
-            dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
-            dialog.negativeButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, false));
-            dialog.negativeButton.setTag(DialogAction.NEGATIVE);
-            dialog.negativeButton.setOnClickListener(dialog);
-            dialog.negativeButton.setVisibility(View.VISIBLE);
+        MDButton negativeTextView = dialog.negativeButton;
+        dialog.setTypeface(negativeTextView, builder.mediumFont);
+        negativeTextView.setAllCapsCompat(textAllCaps);
+        negativeTextView.setText(builder.negativeText);
+        negativeTextView.setTextColor(getActionTextStateList(builder.context, builder.negativeColor));
+        dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
+        dialog.negativeButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, false));
+        dialog.negativeButton.setTag(DialogAction.NEGATIVE);
+        dialog.negativeButton.setOnClickListener(dialog);
+        dialog.negativeButton.setVisibility(View.VISIBLE);
 //        }
 
 //        if (dialog.neutralButton != null && builder.neutralText != null) {
-            MDButton neutralTextView = dialog.neutralButton;
-            dialog.setTypeface(neutralTextView, builder.mediumFont);
-            neutralTextView.setAllCapsCompat(textAllCaps);
-            neutralTextView.setText(builder.neutralText);
-            neutralTextView.setTextColor(getActionTextStateList(builder.context, builder.neutralColor));
-            dialog.neutralButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, true));
-            dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
-            dialog.neutralButton.setTag(DialogAction.NEUTRAL);
-            dialog.neutralButton.setOnClickListener(dialog);
-            dialog.neutralButton.setVisibility(View.VISIBLE);
+        MDButton neutralTextView = dialog.neutralButton;
+        dialog.setTypeface(neutralTextView, builder.mediumFont);
+        neutralTextView.setAllCapsCompat(textAllCaps);
+        neutralTextView.setText(builder.neutralText);
+        neutralTextView.setTextColor(getActionTextStateList(builder.context, builder.neutralColor));
+        dialog.neutralButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, true));
+        dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
+        dialog.neutralButton.setTag(DialogAction.NEUTRAL);
+        dialog.neutralButton.setOnClickListener(dialog);
+        dialog.neutralButton.setVisibility(View.VISIBLE);
 //        }
 
         // Setup list dialog stuff
@@ -272,6 +273,9 @@ class DialogInit {
                 }
                 builder.adapter = new MaterialDialogAdapter(dialog,
                         MaterialDialog.ListType.getLayoutForType(dialog.listType), R.id.title, builder.items);
+            } else if (builder.adapter instanceof MaterialSimpleListAdapter) {
+                // Notify simple list adapter of the dialog it belongs to
+                ((MaterialSimpleListAdapter) builder.adapter).setDialog(dialog);
             }
         }
 
