@@ -10,7 +10,7 @@
         android:fontFamily="sans-serif"
         android:textSize="@dimen/md_content_textsize"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         tools:text="Message"
         android:layout_gravity="center_horizontal" />
 
@@ -32,7 +32,7 @@
             android:minWidth="36dp"
             tools:text="100%"
             android:textStyle="bold"
-            android:textSize="14sp"
+            android:textSize="@dimen/md_content_textsize"
             android:gravity="start"
             android:textAlignment="viewStart"
             android:layout_alignLeft="@android:id/progress"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:minWidth="48dp"
             tools:text="100%"
-            android:textSize="14sp"
+            android:textSize="@dimen/md_content_textsize"
             android:gravity="end"
             android:textAlignment="viewEnd"
             android:layout_alignRight="@android:id/progress"
