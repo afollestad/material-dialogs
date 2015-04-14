@@ -61,14 +61,14 @@
     <dimen name="md_button_textsize">14sp</dimen>
     <dimen name="md_listitem_textsize">16sp</dimen>
     <dimen name="md_listitem_height">48dp</dimen>
-    <dimen name="md_listitem_control_margin">8dp</dimen>
+    <dimen name="md_listitem_control_margin">6dp</dimen>
     <dimen name="md_icon_margin">16dp</dimen>
     <dimen name="md_icon_max_size">48dp</dimen>
     <dimen name="md_listitem_margin_left">24dp</dimen>
     <dimen name="md_action_corner_radius">2dp</dimen>
     <dimen name="md_divider_height">1dp</dimen>
 
-    <dimen name="md_simplelist_icon">36dp</dimen>
-    <dimen name="md_simplelist_icon_margin">20dp</dimen>
+    <dimen name="md_simplelist_icon">40dp</dimen>
+    <dimen name="md_simplelist_icon_margin">16dp</dimen>
 
 </resources>

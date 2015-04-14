@@ -46,7 +46,7 @@ If you Watch this repository, GitHub will send you an email every time I publish
 
 First of all, note that `MaterialDialog` extends `DialogBase`, which extends `AlertDialog`. While
 a very small number of the stock methods are purposely deprecated and don't work, you have access
-to methods such as `dismiss()`, `setTitle()`, `setIcon()`, etc. Alternatives are discussed below.
+to methods such as `dismiss()`, `setTitle()`, `setIcon()`, `setCancelable()`, etc. Alternatives are discussed below.
 
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
 (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage). Note that you can
@@ -691,7 +691,10 @@ the color will override that behavior.
 # Show, Cancel, and Dismiss Callbacks
 
 You can directly setup show/cancel/dismiss listeners from the `Builder` rather than on the resulting
-`MaterialDialog` instance:
+`MaterialDialog` instance.
+
+Also note that the `Builder` has a `cancelable()` method that lets you disable dismissing the dialog
+when you tap outside the dialog window.
 
 ```java
 new MaterialDialog.Builder(this)
