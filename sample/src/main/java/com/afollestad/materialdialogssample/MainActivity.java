@@ -16,7 +16,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -518,14 +517,12 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void showCustomWebView() {
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .title(R.string.changelog)
-                .customView(R.layout.dialog_webview, false)
-                .positiveText(android.R.string.ok)
-                .build();
-        WebView webView = (WebView) dialog.getCustomView().findViewById(R.id.webview);
-        webView.loadUrl("file:///android_asset/webview.html");
-        dialog.show();
+        int accentColor = ThemeSingleton.get().widgetColor;
+        if (accentColor == 0)
+            accentColor = getResources().getColor(R.color.material_pink_500);
+
+        ChangelogDialog.create(false, accentColor)
+                .show(getSupportFragmentManager(), "changelog");
     }
 
     static int selectedColorIndex = -1;

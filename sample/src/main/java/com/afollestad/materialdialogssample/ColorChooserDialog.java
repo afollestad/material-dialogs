@@ -88,9 +88,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void setBackgroundCompat(View view, Drawable d) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(d);
-        else view.setBackgroundDrawable(d);
+        } else {
+            //noinspection deprecation
+            view.setBackgroundDrawable(d);
+        }
     }
 
     private int shiftColor(int color) {
