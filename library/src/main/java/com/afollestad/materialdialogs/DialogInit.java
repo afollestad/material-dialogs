@@ -386,6 +386,8 @@ class DialogInit {
                 }
             });
         }
+        if (builder.inputType != -1)
+            dialog.input.setInputType(builder.inputType);
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);

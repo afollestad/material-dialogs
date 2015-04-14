@@ -383,6 +383,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
 
         protected boolean titleColorSet = false;
@@ -1002,6 +1003,15 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
             return input(hint == 0 ? null : context.getString(hint), prefill == 0 ? null : context.getString(prefill), callback);
+        }
+
+        public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback, int inputType) {
+            this.inputType = inputType;
+            return input(hint, prefill, callback);
+        }
+
+        public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback, int inputType) {
+            return input(hint == 0 ? null : context.getString(hint), prefill == 0 ? null : context.getString(prefill), callback, inputType);
         }
 
         public Builder alwaysCallInputCallback() {
