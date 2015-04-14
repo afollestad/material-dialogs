@@ -36,11 +36,8 @@ import java.util.Arrays;
 class DialogInit {
 
     public static int getTheme(MaterialDialog.Builder builder) {
-        boolean darkTheme = builder.theme == Theme.DARK;
-        if (!darkTheme) {
-            darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, false);
-            builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
-        }
+        boolean darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
+        builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
         return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
     }
 
