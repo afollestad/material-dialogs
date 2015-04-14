@@ -343,8 +343,10 @@ class DialogInit {
                 dialog.mProgress.setMax(builder.progressMax);
                 dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.label);
                 dialog.mProgressLabel.setTextColor(builder.contentColor);
+                dialog.setTypeface(dialog.mProgressLabel, builder.mediumFont);
                 dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
                 dialog.mProgressMinMax.setTextColor(builder.contentColor);
+                dialog.setTypeface(dialog.mProgressMinMax, builder.regularFont);
                 if (builder.showMinMax) {
                     dialog.mProgressMinMax.setVisibility(View.VISIBLE);
                     dialog.mProgressMinMax.setText("0/" + builder.progressMax);
@@ -363,6 +365,7 @@ class DialogInit {
         final MaterialDialog.Builder builder = dialog.mBuilder;
         dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
         if (dialog.input == null) return;
+        dialog.setTypeface(dialog.input, builder.regularFont);
         if (builder.inputPrefill != null)
             dialog.input.append(builder.inputPrefill);
         if (builder.alwaysCallInputCallback) {

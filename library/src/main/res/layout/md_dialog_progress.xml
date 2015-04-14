@@ -11,7 +11,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingLeft="@dimen/md_dialog_frame_margin"
         android:paddingRight="@dimen/md_dialog_frame_margin"

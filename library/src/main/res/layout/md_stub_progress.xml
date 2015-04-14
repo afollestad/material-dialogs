@@ -18,47 +18,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/minMax"
-            android:layout_width="wrap_content"
-            android:minWidth="48dp"
-            android:layout_height="wrap_content"
-            tools:text="50/100"
-            android:textSize="14sp"
-            android:layout_marginRight="12dp"
-            android:layout_marginEnd="12dp"
-            android:gravity="start"
-            android:textAlignment="viewStart"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
         <ProgressBar
             android:id="@android:id/progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:progressBarStyleHorizontal"
-            android:layout_marginBottom="@dimen/md_dialog_frame_margin"
-            android:layout_toRightOf="@+id/minMax"
-            android:layout_toEndOf="@+id/minMax"
-            android:layout_toLeftOf="@+id/label"
-            android:layout_toStartOf="@+id/label"
-            android:layout_centerVertical="true" />
+            android:paddingBottom="2dp" />
 
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:minWidth="36dp"
             android:layout_height="wrap_content"
+            android:minWidth="36dp"
+            tools:text="100%"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:layout_alignLeft="@android:id/progress"
+            android:layout_alignStart="@android:id/progress"
+            android:layout_below="@android:id/progress" />
+
+        <TextView
+            android:id="@+id/minMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="48dp"
             tools:text="100%"
             android:textSize="14sp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
             android:gravity="end"
             android:textAlignment="viewEnd"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_alignRight="@android:id/progress"
+            android:layout_alignEnd="@android:id/progress"
+            android:layout_below="@android:id/progress" />
 
     </RelativeLayout>
 
