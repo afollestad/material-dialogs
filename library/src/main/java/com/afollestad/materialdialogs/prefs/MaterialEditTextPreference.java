@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -82,7 +83,14 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .negativeText(getNegativeButtonText())
                 .callback(callback)
                 .dismissListener(this)
-                .content(getDialogMessage());
+                .content(getDialogMessage())
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        if (getEditText().getText().length() > 0)
+                            getEditText().setSelection(getEditText().length());
+                    }
+                });
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
