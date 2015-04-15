@@ -301,10 +301,8 @@ public class MaterialDialog extends DialogBase implements
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
                     sendMultichoiceCallback();
-                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback) {
-                    if (input.getText().toString().trim().length() > 0)
-                        mBuilder.inputCallback.onInput(this, input.getText());
-                }
+                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
+                    mBuilder.inputCallback.onInput(this, input.getText());
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
