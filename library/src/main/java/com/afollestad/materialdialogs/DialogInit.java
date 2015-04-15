@@ -368,7 +368,7 @@ class DialogInit {
         if (dialog.input == null) return;
         dialog.setTypeface(dialog.input, builder.regularFont);
         if (builder.inputPrefill != null)
-            dialog.input.append(builder.inputPrefill);
+            dialog.input.setText(builder.inputPrefill);
         if (builder.inputType != -1)
             dialog.input.setInputType(builder.inputType);
         if (builder.alwaysCallInputCallback) {

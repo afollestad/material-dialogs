@@ -1332,8 +1332,11 @@ public class MaterialDialog extends DialogBase implements
     @Override
     public final void onShow(DialogInterface dialog) {
         super.onShow(dialog);
-        if (input != null)
+        if (input != null) {
             DialogUtils.showKeyboard(this, mBuilder);
+            if (input.getText().length() > 0)
+                input.setSelection(input.getText().length());
+        }
     }
 
     @Override
