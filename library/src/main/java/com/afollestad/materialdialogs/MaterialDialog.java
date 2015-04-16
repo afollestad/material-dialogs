@@ -447,7 +447,8 @@ public class MaterialDialog extends DialogBase implements
         private void checkSingleton() {
             if (ThemeSingleton.get(false) == null) return;
             ThemeSingleton s = ThemeSingleton.get();
-            theme(s.darkTheme ? Theme.DARK : Theme.LIGHT);
+            if (s.darkTheme)
+                this.theme = Theme.DARK;
             if (s.titleColor != 0)
                 this.titleColor = s.titleColor;
             if (s.contentColor != 0)
