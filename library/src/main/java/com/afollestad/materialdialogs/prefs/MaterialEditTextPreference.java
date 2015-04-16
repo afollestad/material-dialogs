@@ -95,7 +95,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
-        MDTintHelper.setEditTextTint(getEditText(), mColor);
+        MDTintHelper.setTint(getEditText(), mColor);
 
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {

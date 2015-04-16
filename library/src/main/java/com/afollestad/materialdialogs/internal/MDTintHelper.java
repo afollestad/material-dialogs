@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -18,7 +19,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 public class MDTintHelper {
 
-    public static void setRadioButtonTint(RadioButton radioButton, int color) {
+    public static void setTint(RadioButton radioButton, int color) {
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}
@@ -36,7 +37,7 @@ public class MDTintHelper {
         }
     }
 
-    public static void setProgressBarTint(ProgressBar progressBar, int color) {
+    public static void setTint(ProgressBar progressBar, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ColorStateList stateList = ColorStateList.valueOf(color);
             progressBar.setProgressTintList(stateList);
@@ -54,7 +55,7 @@ public class MDTintHelper {
         }
     }
 
-    public static void setEditTextTint(EditText editText, int color) {
+    public static void setTint(EditText editText, int color) {
         ColorStateList s1 = ColorStateList.valueOf(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setBackgroundTintList(s1);
@@ -66,7 +67,20 @@ public class MDTintHelper {
         }
     }
 
-    public static void setCheckBoxTint(CheckBox box, int color) {
+    public static void setTint(SeekBar seekBar, int color) {
+        ColorStateList s1 = ColorStateList.valueOf(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            seekBar.setThumbTintList(s1);
+            seekBar.setProgressTintList(s1);
+        } else {
+            seekBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                seekBar.getThumb().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+
+        }
+    }
+
+    public static void setTint(CheckBox box, int color) {
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}

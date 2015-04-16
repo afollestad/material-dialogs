@@ -31,10 +31,14 @@ public class TypefaceHelper {
     public static Typeface get(Context c, String name) {
         synchronized (cache) {
             if (!cache.containsKey(name)) {
-                Typeface t = Typeface.createFromAsset(
-                        c.getAssets(), String.format("fonts/%s.ttf", name));
-                cache.put(name, t);
-                return t;
+                try {
+                    Typeface t = Typeface.createFromAsset(
+                            c.getAssets(), String.format("fonts/%s.ttf", name));
+                    cache.put(name, t);
+                    return t;
+                } catch (RuntimeException e) {
+                    return null;
+                }
             }
             return cache.get(name);
         }

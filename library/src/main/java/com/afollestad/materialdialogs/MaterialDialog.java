@@ -551,11 +551,17 @@ public class MaterialDialog extends DialogBase implements
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder typeface(String medium, String regular) {
-            if (medium != null)
+            if (medium != null) {
                 this.mediumFont = TypefaceHelper.get(this.context, medium);
-            if (regular != null)
+                if (this.mediumFont == null)
+                    throw new RuntimeException("No font asset found for " + medium);
+            }
+            if (regular != null) {
                 this.regularFont = TypefaceHelper.get(this.context, regular);
-            this.useCustomFonts = true;
+                if (this.regularFont == null)
+                    throw new RuntimeException("No font asset found for " + regular);
+            }
+            this.useCustomFonts = this.mediumFont != null || this.regularFont != null;
             return this;
         }
 

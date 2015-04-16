@@ -337,7 +337,7 @@ class DialogInit {
         if (builder.indeterminateProgress || builder.progress > -2) {
             dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
             if (dialog.mProgress == null) return;
-            MDTintHelper.setProgressBarTint(dialog.mProgress, builder.widgetColor);
+            MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
 
             if (!builder.indeterminateProgress) {
                 dialog.mProgress.setProgress(0);
@@ -391,7 +391,7 @@ class DialogInit {
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);
         dialog.input.setHintTextColor(DialogUtils.adjustAlpha(builder.contentColor, 0.3f));
-        MDTintHelper.setEditTextTint(dialog.input, dialog.mBuilder.widgetColor);
+        MDTintHelper.setTint(dialog.input, dialog.mBuilder.widgetColor);
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {

@@ -47,7 +47,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
                 @SuppressLint("CutPasteId")
                 RadioButton radio = (RadioButton) view.findViewById(R.id.control);
                 boolean selected = dialog.mBuilder.selectedIndex == index;
-                MDTintHelper.setRadioButtonTint(radio, dialog.mBuilder.widgetColor);
+                MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
                 break;
             }
@@ -55,7 +55,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
                 @SuppressLint("CutPasteId")
                 CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
                 boolean selected = dialog.selectedIndicesList.contains(index);
-                MDTintHelper.setCheckBoxTint(checkbox, dialog.mBuilder.widgetColor);
+                MDTintHelper.setTint(checkbox, dialog.mBuilder.widgetColor);
                 checkbox.setChecked(selected);
                 break;
             }
