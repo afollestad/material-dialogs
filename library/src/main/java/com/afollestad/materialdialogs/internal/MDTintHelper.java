@@ -67,19 +67,6 @@ public class MDTintHelper {
         }
     }
 
-    public static void setTint(SeekBar seekBar, int color) {
-        ColorStateList s1 = ColorStateList.valueOf(color);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            seekBar.setThumbTintList(s1);
-            seekBar.setProgressTintList(s1);
-        } else {
-            seekBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                seekBar.getThumb().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-
-        }
-    }
-
     public static void setTint(CheckBox box, int color) {
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
