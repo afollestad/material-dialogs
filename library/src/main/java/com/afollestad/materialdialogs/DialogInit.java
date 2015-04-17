@@ -122,7 +122,7 @@ class DialogInit {
         dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNegative);
 
         if (builder.inputCallback != null && builder.positiveText == null)
-            builder.positiveText = builder.context.getString(android.R.string.ok);
+            builder.positiveText = builder.context.getText(android.R.string.ok);
 
         // Set up the initial visibility of action buttons based on whether or not text was set
         dialog.positiveButton.setVisibility(builder.positiveText != null ? View.VISIBLE : View.GONE);

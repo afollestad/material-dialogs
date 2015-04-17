@@ -487,7 +487,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder title(@StringRes int titleRes) {
-            title(this.context.getString(titleRes));
+            title(this.context.getText(titleRes));
             return this;
         }
 
@@ -582,7 +582,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes) {
-            content(this.context.getString(contentRes));
+            content(this.context.getText(contentRes));
             return this;
         }
 
@@ -720,7 +720,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder positiveText(@StringRes int postiveRes) {
-            positiveText(this.context.getString(postiveRes));
+            positiveText(this.context.getText(postiveRes));
             return this;
         }
 
@@ -743,7 +743,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder neutralText(@StringRes int neutralRes) {
-            return neutralText(this.context.getString(neutralRes));
+            return neutralText(this.context.getText(neutralRes));
         }
 
         public Builder neutralText(@NonNull CharSequence message) {
@@ -765,7 +765,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder negativeText(@StringRes int negativeRes) {
-            return negativeText(this.context.getString(negativeRes));
+            return negativeText(this.context.getText(negativeRes));
         }
 
         public Builder negativeText(@NonNull CharSequence message) {
@@ -1002,7 +1002,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
-            return input(hint == 0 ? null : context.getString(hint), prefill == 0 ? null : context.getString(prefill), callback);
+            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), callback);
         }
 
         public Builder inputType(int type) {
@@ -1155,7 +1155,7 @@ public class MaterialDialog extends DialogBase implements
      * @param titleRes The string resource of the new title of the action button.
      */
     public final void setActionButton(DialogAction which, @StringRes int titleRes) {
-        setActionButton(which, getContext().getString(titleRes));
+        setActionButton(which, getContext().getText(titleRes));
     }
 
     /**
