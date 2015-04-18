@@ -37,6 +37,19 @@ public class MDTintHelper {
         }
     }
 
+    public static void setTint(SeekBar seekBar, int color) {
+        ColorStateList s1 = ColorStateList.valueOf(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            seekBar.setThumbTintList(s1);
+            seekBar.setProgressTintList(s1);
+        } else {
+            seekBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                seekBar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+        }
+    }
+
     public static void setTint(ProgressBar progressBar, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ColorStateList stateList = ColorStateList.valueOf(color);
