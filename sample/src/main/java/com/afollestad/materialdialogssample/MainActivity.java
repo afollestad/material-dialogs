@@ -600,7 +600,7 @@ public class MainActivity extends ActionBarActivity implements
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .input(R.string.input_hint, 0, new MaterialDialog.InputCallback() {
+                .input(R.string.input_hint, 0, false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         showToast("Hello, " + input.toString() + "!");

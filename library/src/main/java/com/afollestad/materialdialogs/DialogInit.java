@@ -371,22 +371,7 @@ class DialogInit {
         dialog.setTypeface(dialog.input, builder.regularFont);
         if (builder.inputPrefill != null)
             dialog.input.setText(builder.inputPrefill);
-        if (builder.alwaysCallInputCallback) {
-            dialog.input.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    dialog.mBuilder.inputCallback.onInput(dialog, s);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-        }
+        dialog.setInternalInputCallback();
         dialog.input.setHint(builder.inputHint);
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);

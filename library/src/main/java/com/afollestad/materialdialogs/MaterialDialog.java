@@ -18,7 +18,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -381,6 +383,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
 
@@ -994,15 +997,24 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback) {
+        public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
             this.inputCallback = callback;
             this.inputHint = hint;
             this.inputPrefill = prefill;
+            this.inputAllowEmpty = allowEmptyInput;
             return this;
         }
 
+        public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback) {
+            return input(hint, prefill, true, callback);
+        }
+
+        public Builder input(@StringRes int hint, @StringRes int prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), allowEmptyInput, callback);
+        }
+
         public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
-            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), callback);
+            return input(hint, prefill, true, callback);
         }
 
         public Builder inputType(int type) {
@@ -1344,6 +1356,29 @@ public class MaterialDialog extends DialogBase implements
             if (input.getText().length() > 0)
                 input.setSelection(input.getText().length());
         }
+    }
+
+    protected void setInternalInputCallback() {
+        if (input == null) return;
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (mBuilder.alwaysCallInputCallback)
+                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
+                if (!mBuilder.inputAllowEmpty) {
+                    final View positiveAb = getActionButton(DialogAction.POSITIVE);
+                    positiveAb.setEnabled(s.toString().trim().length() > 0);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override
