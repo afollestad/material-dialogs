@@ -6,8 +6,10 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -369,8 +371,6 @@ class DialogInit {
         dialog.setTypeface(dialog.input, builder.regularFont);
         if (builder.inputPrefill != null)
             dialog.input.setText(builder.inputPrefill);
-        if (builder.inputType != -1)
-            dialog.input.setInputType(builder.inputType);
         if (builder.alwaysCallInputCallback) {
             dialog.input.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -392,6 +392,14 @@ class DialogInit {
         dialog.input.setTextColor(builder.contentColor);
         dialog.input.setHintTextColor(DialogUtils.adjustAlpha(builder.contentColor, 0.3f));
         MDTintHelper.setTint(dialog.input, dialog.mBuilder.widgetColor);
+
+        if (builder.inputType != -1) {
+            dialog.input.setInputType(builder.inputType);
+            if ((builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
+                dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
     }
 
     private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
