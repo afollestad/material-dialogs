@@ -17,6 +17,7 @@
 
         <item name="android:windowBackground">@drawable/md_dialog_background</item>
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="MD_Dark" parent="Theme.AppCompat.Dialog">
@@ -35,6 +36,7 @@
 
         <item name="android:windowBackground">@drawable/md_dialog_background_dark</item>
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
 </resources>
