@@ -112,7 +112,7 @@ You can limit the maximum size of the icon using the `limitIconToDefaultSize()`,
 # Stacked Action Buttons
 
 If you have multiple action buttons that together are too wide to fit on one line, the dialog will stack the
-buttons to be vertically orientated.
+buttons to be vertically oriented.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -537,7 +537,7 @@ To see colors that fit the Material design palette, see this page: http://www.go
 # Global Theming
 
 Most of the theming aspects discussed in the above section can be automatically applied to all dialogs
-you show from an Activity which has a theme containing any these attributes:
+you show from an Activity which has a theme containing any of these attributes:
 
 ```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -591,14 +591,14 @@ you show from an Activity which has a theme containing any these attributes:
     <item name="md_positive_color">#673AB7</item>
 
     <!--
-        By default, the positive action text color is derived
+        By default, the neutral action text color is derived
         from the colorAccent attribute of AppCompat or android:colorAccent
         attribute of the Material theme.
     -->
     <item name="md_neutral_color">#673AB7</item>
 
     <!--
-        By default, the positive action text color is derived
+        By default, the negative action text color is derived
         from the colorAccent attribute of AppCompat or android:colorAccent
         attribute of the Material theme.
     -->
@@ -606,7 +606,7 @@ you show from an Activity which has a theme containing any these attributes:
 
     <!--
         By default, a progress dialog's progress bar, check boxes, and radio buttons 
-        have a color is derived from the colorAccent attribute of AppCompat or 
+        have a color that is derived from the colorAccent attribute of AppCompat or 
         android:colorAccent attribute of the Material theme.
     -->
     <item name="md_widget_color">#673AB7</item>
@@ -745,7 +745,7 @@ Note that the dialog will force the positive action button to be visible, when i
 is submitted to the callback.
 
 The input dialog will automatically handle focusing the EditText and displaying the keyboard to allow
-the user to immediate enter input. When the dialog is closed, the keyboard will be automatically dismissed.
+the user to immediately enter input. When the dialog is closed, the keyboard will be automatically dismissed.
 
 ## Coloring the EditText
 
