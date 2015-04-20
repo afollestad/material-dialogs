@@ -1,3 +1,5 @@
+# The library accidentally got removed from jCenter, I'm working to get it back up ASAP
+
 # Material Dialogs
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdshowcase.png)
