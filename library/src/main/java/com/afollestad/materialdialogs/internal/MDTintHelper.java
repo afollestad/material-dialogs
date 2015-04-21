@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs.internal;
 
 import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -41,16 +42,24 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             seekBar.setThumbTintList(s1);
             seekBar.setProgressTintList(s1);
-        } else {
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             Drawable progressDrawable = DrawableCompat.wrap(seekBar.getProgressDrawable());
             seekBar.setProgressDrawable(progressDrawable);
             DrawableCompat.setTintList(progressDrawable, s1);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 Drawable thumbDrawable = DrawableCompat.wrap(seekBar.getThumb());
                 DrawableCompat.setTintList(thumbDrawable, s1);
                 seekBar.setThumb(thumbDrawable);
             }
+        } else {
+            PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                mode = PorterDuff.Mode.MULTIPLY;
+            }
+            if (seekBar.getIndeterminateDrawable() != null)
+                seekBar.getIndeterminateDrawable().setColorFilter(color, mode);
+            if (seekBar.getProgressDrawable() != null)
+                seekBar.getProgressDrawable().setColorFilter(color, mode);
         }
     }
 
@@ -60,7 +69,7 @@ public class MDTintHelper {
             progressBar.setProgressTintList(sl);
             progressBar.setSecondaryProgressTintList(sl);
             progressBar.setIndeterminateTintList(sl);
-        } else {
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             if (progressBar.getIndeterminateDrawable() != null) {
                 Drawable indeterminateDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
                 DrawableCompat.setTintList(indeterminateDrawable, sl);
@@ -71,6 +80,15 @@ public class MDTintHelper {
                 DrawableCompat.setTintList(progressDrawable, sl);
                 progressBar.setProgressDrawable(progressDrawable);
             }
+        } else {
+            PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                mode = PorterDuff.Mode.MULTIPLY;
+            }
+            if (progressBar.getIndeterminateDrawable() != null)
+                progressBar.getIndeterminateDrawable().setColorFilter(color, mode);
+            if (progressBar.getProgressDrawable() != null)
+                progressBar.getProgressDrawable().setColorFilter(color, mode);
         }
     }
 
