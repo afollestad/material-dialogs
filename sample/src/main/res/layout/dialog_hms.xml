@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              tools:ignore="ContentDescription">
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:listSelector="@android:color/transparent"
+        app:columnCount="3"
+        app:rowCount="5"
+        app:columnOrderPreserved="false"
+        app:rowOrderPreserved="false"
+        app:useDefaultMargins="false">
+
+        <TextView
+            android:id="@+id/dialog_hms_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            tools:text="00:00:00"
+            app:layout_columnSpan="2"/>
+
+        <ImageButton
+            android:id="@+id/dialog_hms_backspace_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_backspace_black_18dp"
+            android:background="@android:color/transparent"
+            app:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="1"
+            android:tag="1"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="2"
+            android:tag="2"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="3"
+            android:tag="3"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="4"
+            android:tag="4"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="5"
+            android:tag="5"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="6"
+            android:tag="6"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="7"
+            android:tag="7"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="8"
+            android:tag="8"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="9"
+            android:tag="9"/>
+
+        <Button
+            android:id="@+id/dialog_hms_minus_plus_button"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="-/+"/>
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:ignore="HardcodedText,I18N"
+            android:text="0"
+            android:tag="0"/>
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>
