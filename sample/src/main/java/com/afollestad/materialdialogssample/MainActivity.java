@@ -36,7 +36,7 @@ import java.io.File;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends ActionBarActivity implements
-        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback {
+        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback, HMSDialog.Callback {
 
     private Toast mToast;
 
@@ -181,6 +181,13 @@ public class MainActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 showCustomColorChooser();
+            }
+        });
+
+        findViewById(R.id.customView_hmsDialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomHMSDialog();
             }
         });
 
@@ -531,6 +538,10 @@ public class MainActivity extends ActionBarActivity implements
         new ColorChooserDialog().show(this, selectedColorIndex);
     }
 
+    private void showCustomHMSDialog() {
+        new HMSDialog().show(this);
+    }
+
     @Override
     public void onColorSelection(int index, int color, int darker) {
         selectedColorIndex = index;
@@ -543,6 +554,12 @@ public class MainActivity extends ActionBarActivity implements
             getWindow().setStatusBarColor(darker);
             getWindow().setNavigationBarColor(color);
         }
+    }
+
+    @Override
+    public void onHMSSelection(final boolean isPositive, final int hours, final int minutes, final int seconds) {
+        final String text = (isPositive ? "plus " : "minutes ") + hours + ':' + minutes + ':' + seconds;
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void showThemed() {

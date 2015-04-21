@@ -136,6 +136,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing" />
 
         <Button
+            android:id="@+id/customView_hmsDialog"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/customView_hms"
+            android:layout_marginTop="@dimen/sample_button_spacing" />
+
+        <Button
             android:id="@+id/themed"
             android:layout_width="match_parent"
             android:layout_height="56dp"
