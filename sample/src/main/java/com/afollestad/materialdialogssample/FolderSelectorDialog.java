@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -100,7 +100,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         mCallback = (FolderSelectCallback) activity;
     }
 
-    public void show(ActionBarActivity context) {
+    public void show(AppCompatActivity context) {
         show(context.getSupportFragmentManager(), "FOLDER_SELECTOR");
     }
 

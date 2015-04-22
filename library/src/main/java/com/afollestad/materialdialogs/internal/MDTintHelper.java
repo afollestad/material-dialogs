@@ -1,11 +1,13 @@
 package com.afollestad.materialdialogs.internal;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatEditText;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,7 +27,7 @@ public class MDTintHelper {
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}
         }, new int[]{
-                DialogUtils.resolveColor(radioButton.getContext(), android.R.attr.textColorSecondary),
+                DialogUtils.resolveColor(radioButton.getContext(), R.attr.colorControlNormal),
                 color
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -92,14 +94,27 @@ public class MDTintHelper {
         }
     }
 
+    private static ColorStateList createEditTextColorStateList(Context context, int color) {
+        int[][] states = new int[3][];
+        int[] colors = new int[3];
+        int i = 0;
+        states[i] = new int[]{-android.R.attr.state_enabled};
+        colors[i] = DialogUtils.resolveColor(context, R.attr.colorControlNormal);
+        i++;
+        states[i] = new int[]{-android.R.attr.state_pressed, -android.R.attr.state_focused};
+        colors[i] = DialogUtils.resolveColor(context, R.attr.colorControlNormal);
+        i++;
+        states[i] = new int[]{};
+        colors[i] = color;
+        return new ColorStateList(states, colors);
+    }
+
     public static void setTint(EditText editText, int color) {
-        ColorStateList s1 = ColorStateList.valueOf(color);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            editText.setBackgroundTintList(s1);
-        } else {
-            Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(editText.getContext(), R.drawable.abc_edit_text_material));
-            DrawableCompat.setTintList(drawable, s1);
-            DialogUtils.setBackgroundCompat(editText, drawable);
+        ColorStateList editTextColorStateList = createEditTextColorStateList(editText.getContext(), color);
+        if (editText instanceof AppCompatEditText) {
+            ((AppCompatEditText) editText).setSupportBackgroundTintList(editTextColorStateList);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            editText.setBackgroundTintList(editTextColorStateList);
         }
     }
 
@@ -108,7 +123,7 @@ public class MDTintHelper {
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}
         }, new int[]{
-                DialogUtils.resolveColor(box.getContext(), android.R.attr.textColorSecondary),
+                DialogUtils.resolveColor(box.getContext(), R.attr.colorControlNormal),
                 color
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

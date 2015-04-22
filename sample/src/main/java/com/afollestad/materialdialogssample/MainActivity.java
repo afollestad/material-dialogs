@@ -7,7 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
@@ -35,7 +35,7 @@ import java.io.File;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends ActionBarActivity implements
+public class MainActivity extends AppCompatActivity implements
         FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback {
 
     private Toast mToast;
@@ -504,7 +504,6 @@ public class MainActivity extends ActionBarActivity implements
             }
         });
 
-        //Workaround for CheckBox theming  on API 10 until AppCompat fix it
         int widgetColor = ThemeSingleton.get().widgetColor;
         MDTintHelper.setTint(checkbox,
                 widgetColor == 0 ? getResources().getColor(R.color.material_pink_500) : widgetColor);
