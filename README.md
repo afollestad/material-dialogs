@@ -1,11 +1,3 @@
-## The library accidentally got removed from jCenter, I'm working to get it back up ASAP
-
-As a temporary workaround, you can add this to your repositories in build.grade:
-
-```Gradle
-maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
-```
-
 # Material Dialogs
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdshowcase.png)
