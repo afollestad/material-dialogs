@@ -9,7 +9,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 22
         versionCode 1
-        versionName "0.7.2.7"
+        versionName "0.7.2.8"
     }
     lintOptions {
         abortOnError false
@@ -18,18 +18,18 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:22.1.0@aar'
-    compile 'com.android.support:appcompat-v7:22.1.0@aar'
-    compile 'com.android.support:recyclerview-v7:22.1.0@aar'
+    compile 'com.android.support:support-v4:22.1.1@aar'
+    compile 'com.android.support:appcompat-v7:22.1.1@aar'
+    compile 'com.android.support:recyclerview-v7:22.1.1@aar'
 
-    compile 'com.android.support:support-annotations:22.1.0'
+    compile 'com.android.support:support-annotations:22.1.1'
 }
 
 publish {
     userOrg = 'drummer-aidan'
     groupId = 'com.afollestad'
     artifactId = 'material-dialogs'
-    version = '0.7.2.7'
+    version = '0.7.2.8'
     description = 'A library for implementing Material design styled dialogs across all versions of Android.'
     website = 'https://github.com/afollestad/material-dialogs'
     issueTracker = "${website}/issues"
