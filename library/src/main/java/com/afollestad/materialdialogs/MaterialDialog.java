@@ -327,6 +327,7 @@ public class MaterialDialog extends DialogBase implements
      * The class used to construct a MaterialDialog.
      */
     public static class Builder {
+        protected static final int INPUT_NO_MAX_LENGTH = -1;
 
         protected final Context context;
         protected CharSequence title;
@@ -383,6 +384,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected int inputMaxLength = INPUT_NO_MAX_LENGTH;
         protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
@@ -997,20 +999,29 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+        public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, int maxLength, @NonNull InputCallback callback) {
             this.inputCallback = callback;
             this.inputHint = hint;
             this.inputPrefill = prefill;
             this.inputAllowEmpty = allowEmptyInput;
+            this.inputMaxLength = maxLength;
             return this;
+        }
+
+        public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+            return input(hint, prefill, allowEmptyInput, INPUT_NO_MAX_LENGTH, callback);
         }
 
         public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback) {
             return input(hint, prefill, true, callback);
         }
 
+        public Builder input(@StringRes int hint, @StringRes int prefill, boolean allowEmptyInput, int maxLength, @NonNull InputCallback callback) {
+            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), allowEmptyInput, maxLength, callback);
+        }
+
         public Builder input(@StringRes int hint, @StringRes int prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
-            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), allowEmptyInput, callback);
+            return input(hint, prefill, allowEmptyInput, INPUT_NO_MAX_LENGTH, callback);
         }
 
         public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
