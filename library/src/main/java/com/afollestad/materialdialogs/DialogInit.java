@@ -374,6 +374,8 @@ class DialogInit {
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);
         dialog.input.setHintTextColor(DialogUtils.adjustAlpha(builder.contentColor, 0.3f));
+        dialog.input.setSelectAllOnFocus(builder.inputSelectAllOnFocus);
+
         MDTintHelper.setTint(dialog.input, dialog.mBuilder.widgetColor);
 
         if (builder.inputType != -1) {
