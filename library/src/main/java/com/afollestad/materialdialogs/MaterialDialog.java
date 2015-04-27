@@ -140,7 +140,9 @@ public class MaterialDialog extends DialogBase implements
      * Sets the dialog ListView's adapter and it's item click listener.
      */
     protected final void invalidateList() {
-        if ((mBuilder.items == null || mBuilder.items.length == 0) && mBuilder.adapter == null)
+        if (listView == null)
+            return;
+        else if ((mBuilder.items == null || mBuilder.items.length == 0) && mBuilder.adapter == null)
             return;
         // Set up list with adapter
         listView.setAdapter(mBuilder.adapter);
