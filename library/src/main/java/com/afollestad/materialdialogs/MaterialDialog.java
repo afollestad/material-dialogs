@@ -592,6 +592,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@NonNull CharSequence content) {
+            if (this.customView != null)
+                throw new IllegalStateException("You cannot set content() when you're using a custom view.");
             this.content = content;
             return this;
         }
@@ -633,6 +635,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder items(@NonNull CharSequence[] items) {
+            if (this.customView != null)
+                throw new IllegalStateException("You cannot set items() when you're using a custom view.");
             this.items = items;
             return this;
         }
@@ -840,6 +844,14 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder customView(@NonNull View view, boolean wrapInScrollView) {
+            if (this.content != null)
+                throw new IllegalStateException("You cannot use customView() when you have content set.");
+            else if (this.items != null)
+                throw new IllegalStateException("You cannot use customView() when you have items set.");
+            else if (this.inputCallback != null)
+                throw new IllegalStateException("You cannot use customView() with an input dialog");
+            else if (this.progress > -2 || this.indeterminateProgress)
+                throw new IllegalStateException("You cannot use customView() with a progress dialog");
             this.customView = view;
             this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
@@ -853,6 +865,8 @@ public class MaterialDialog extends DialogBase implements
          * @return An instance of the Builder so calls can be chained.
          */
         public Builder progress(boolean indeterminate, int max) {
+            if (this.customView != null)
+                throw new IllegalStateException("You cannot set progress() when you're using a custom view.");
             if (indeterminate) {
                 this.indeterminateProgress = true;
                 this.progress = -2;
@@ -952,6 +966,8 @@ public class MaterialDialog extends DialogBase implements
          * @return This Builder object to allow for chaining of calls to set methods
          */
         public Builder adapter(@NonNull ListAdapter adapter, ListCallback callback) {
+            if (this.customView != null)
+                throw new IllegalStateException("You cannot set adapter() when you're using a custom view.");
             this.adapter = adapter;
             this.listCallbackCustom = callback;
             return this;
@@ -1000,6 +1016,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+            if (this.customView != null)
+                throw new IllegalStateException("You cannot set content() when you're using a custom view.");
             this.inputCallback = callback;
             this.inputHint = hint;
             this.inputPrefill = prefill;
