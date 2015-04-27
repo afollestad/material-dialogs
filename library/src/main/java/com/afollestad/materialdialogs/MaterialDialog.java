@@ -388,6 +388,7 @@ public class MaterialDialog extends DialogBase implements
         protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
+        protected boolean inputSelectAllOnFocus = false;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -1019,6 +1020,11 @@ public class MaterialDialog extends DialogBase implements
             return input(hint, prefill, true, callback);
         }
 
+        public Builder inputSelectAllOnFocus() {
+            inputSelectAllOnFocus = true;
+            return this;
+        }
+
         public Builder inputType(int type) {
             this.inputType = type;
             return this;
@@ -1355,7 +1361,7 @@ public class MaterialDialog extends DialogBase implements
         super.onShow(dialog);
         if (input != null) {
             DialogUtils.showKeyboard(this, mBuilder);
-            if (input.getText().length() > 0)
+            if (input.getText().length() > 0 && !mBuilder.inputSelectAllOnFocus)
                 input.setSelection(input.getText().length());
         }
     }
