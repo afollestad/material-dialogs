@@ -38,6 +38,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
@@ -64,6 +65,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
     protected EditText input;
+    protected TextView inputMinMax;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
@@ -388,6 +390,8 @@ public class MaterialDialog extends DialogBase implements
         protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
+        protected int inputMaxLength = -1;
+        protected int inputMaxLengthErrorColor = 0;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -1042,6 +1046,21 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder inputMaxLength(int maxLength, int errorColor) {
+            if (maxLength < 1)
+                throw new IllegalArgumentException("Max length for input dialogs cannot be less than 1.");
+            this.inputMaxLength = maxLength;
+            this.inputMaxLengthErrorColor = errorColor;
+            return this;
+        }
+
+        /**
+         * Same as #{@link #inputMaxLength(int, int)}, but it takes a color resource ID for the error color.
+         */
+        public Builder inputMaxLengthRes(int maxLength, @ColorRes int errorColor) {
+            return inputMaxLength(maxLength, context.getResources().getColor(errorColor));
+        }
+
         public Builder alwaysCallInputCallback() {
             this.alwaysCallInputCallback = true;
             return this;
@@ -1389,9 +1408,20 @@ public class MaterialDialog extends DialogBase implements
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(MaterialDialog.this, s);
+                final int length = s.toString().trim().length();
                 if (!mBuilder.inputAllowEmpty) {
                     final View positiveAb = getActionButton(DialogAction.POSITIVE);
-                    positiveAb.setEnabled(s.toString().trim().length() > 0);
+                    positiveAb.setEnabled(length > 0);
+                }
+                if (inputMinMax != null) {
+                    inputMinMax.setText(length + "/" + mBuilder.inputMaxLength);
+                    final boolean overMax = length > mBuilder.inputMaxLength;
+                    final int colorText = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
+                    final int colorWidget = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
+                    inputMinMax.setTextColor(colorText);
+                    MDTintHelper.setTint(input, colorWidget);
+                    final View positiveAb = getActionButton(DialogAction.POSITIVE);
+                    if (positiveAb.isEnabled()) positiveAb.setEnabled(!overMax);
                 }
             }
 

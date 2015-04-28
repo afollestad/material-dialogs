@@ -154,5 +154,6 @@
     <string name="simple_list">Simple Dialog (Guidelines Spec)</string>
     <string name="set_backup">Set backup account</string>
     <string name="add_account">Add account</string>
+    <string name="submit">Submit</string>
 
 </resources>

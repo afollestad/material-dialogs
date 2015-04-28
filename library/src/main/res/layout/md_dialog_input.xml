@@ -25,19 +25,43 @@
             android:fontFamily="sans-serif"
             android:textSize="@dimen/md_content_textsize"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginBottom="@dimen/md_content_padding_bottom"
             tools:text="Message"
             android:layout_gravity="center_horizontal"
             tools:ignore="UnusedAttribute" />
 
-        <EditText
-            android:id="@android:id/input"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/md_content_textsize"
-            tools:ignore="TextFields" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@android:id/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/md_content_textsize"
+                tools:ignore="TextFields"
+                android:layout_marginLeft="-2dp"
+                android:layout_marginRight="-2dp"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/minMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                tools:text="50/100"
+                android:textSize="@dimen/md_content_textsize"
+                android:gravity="end"
+                android:textAlignment="viewEnd"
+                android:layout_alignRight="@android:id/input"
+                android:layout_alignEnd="@android:id/input"
+                android:layout_below="@android:id/input"
+                android:paddingRight="4dp"
+                android:paddingEnd="4dp"
+                android:fontFamily="sans-serif-medium"
+                tools:ignore="RtlSymmetry,UnusedAttribute" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

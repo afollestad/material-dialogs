@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -382,6 +383,15 @@ class DialogInit {
                 // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
                 dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
+        }
+
+        dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
+        if (builder.inputMaxLength > -1) {
+            dialog.inputMinMax.setText("0/" + builder.inputMaxLength);
+            dialog.inputMinMax.setTextColor(builder.contentColor);
+        } else {
+            dialog.inputMinMax.setVisibility(View.GONE);
+            dialog.inputMinMax = null;
         }
     }
 
