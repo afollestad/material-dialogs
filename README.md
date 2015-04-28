@@ -745,11 +745,13 @@ new MaterialDialog.Builder(this)
         }).show();
 ```
 
-Note that the dialog will force the positive action button to be visible, when it's pressed the input
-is submitted to the callback.
-
 The input dialog will automatically handle focusing the EditText and displaying the keyboard to allow
 the user to immediately enter input. When the dialog is closed, the keyboard will be automatically dismissed.
+
+**Note that the dialog will force the positive action button to be visible, when it's pressed the input
+is submitted to the callback.**
+
+**Also Note that the call to `inputType()` is optional.**
 
 ## Coloring the EditText
 
@@ -760,6 +762,28 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
 
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
+## Limiting Input Length
+
+The code below will show a little indicator in the input dialog that tells the user how many characters they've
+typed, and how many more they can type before reaching a certain limit. If they go over that limit,
+the dialog won't allow them to submit the input. It will also color the input field and length indicator
+with an error color of your choosing.
+
+```java
+new MaterialDialog.Builder(this)
+        .title(R.string.input)
+        .inputMaxLengthRes(20, R.color.material_red_500)
+        .input(null, null, new MaterialDialog.InputCallback() {
+            @Override
+            public void onInput(MaterialDialog dialog, CharSequence input) {
+                // Do something
+            }
+        }).show();
+```
+
+**Note that `inputMaxLengthRes(int, int)` takes a color resource ID for the second parameter, while
+`inputMaxLength(int, int)` takes a literal color integr for the second parameter. You can use either one.**
 
 ---
 
