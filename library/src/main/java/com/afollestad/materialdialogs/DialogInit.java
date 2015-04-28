@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -23,7 +22,6 @@ import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.util.DialogUtils;
-import com.afollestad.materialdialogs.util.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,14 +58,6 @@ class DialogInit {
 
     public static void init(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
-
-        // Check if default library fonts should be used
-        if (!builder.useCustomFonts) {
-            if (builder.mediumFont == null)
-                builder.mediumFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Medium");
-            if (builder.regularFont == null)
-                builder.regularFont = TypefaceHelper.get(dialog.getContext(), "Roboto-Regular");
-        }
 
         // Set cancelable flag and dialog background color
         dialog.setCancelable(builder.cancelable);

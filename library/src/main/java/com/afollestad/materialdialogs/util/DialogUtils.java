@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -37,6 +38,12 @@ public class DialogUtils {
         } finally {
             a.recycle();
         }
+    }
+
+    public static String resolveString(Context context, @AttrRes int attr) {
+        TypedValue v = new TypedValue();
+        context.getTheme().resolveAttribute(attr, v, true);
+        return (String) v.string;
     }
 
     private static int gravityEnumToAttrInt(GravityEnum value) {

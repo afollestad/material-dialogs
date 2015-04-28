@@ -63,4 +63,7 @@
         <attr name="md_reduce_padding_no_title_no_buttons" format="boolean" />
     </declare-styleable>
 
+    <attr name="md_medium_font" format="string" />
+    <attr name="md_regular_font" format="string" />
+
 </resources>

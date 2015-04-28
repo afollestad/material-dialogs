@@ -33,7 +33,7 @@ public class TypefaceHelper {
             if (!cache.containsKey(name)) {
                 try {
                     Typeface t = Typeface.createFromAsset(
-                            c.getAssets(), String.format("fonts/%s.ttf", name));
+                            c.getAssets(), String.format("fonts/%s", name));
                     cache.put(name, t);
                     return t;
                 } catch (RuntimeException e) {

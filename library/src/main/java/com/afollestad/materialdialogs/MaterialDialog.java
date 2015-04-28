@@ -366,7 +366,6 @@ public class MaterialDialog extends DialogBase implements
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
-        protected boolean useCustomFonts;
         protected Drawable icon;
         protected boolean limitIconToDefaultSize;
         protected int maxIconSize = -1;
@@ -451,6 +450,25 @@ public class MaterialDialog extends DialogBase implements
             this.btnStackedGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_btnstacked_gravity, this.btnStackedGravity);
             this.itemsGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_items_gravity, this.itemsGravity);
             this.buttonsGravity = DialogUtils.resolveGravityEnum(context, R.attr.md_buttons_gravity, this.buttonsGravity);
+
+            final String mediumFont = DialogUtils.resolveString(context, R.attr.md_medium_font);
+            final String regularFont = DialogUtils.resolveString(context, R.attr.md_regular_font);
+            typeface(mediumFont, regularFont);
+
+            if (this.mediumFont == null) {
+                try {
+                    this.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+                } catch (Throwable ignored) {
+                }
+            }
+            if (this.regularFont == null) {
+                try {
+                    this.regularFont = Typeface.create("sans-serif", Typeface.NORMAL);
+                } catch (Throwable ignored) {
+                }
+            }
+            if (this.mediumFont == null)
+                this.mediumFont = this.regularFont;
         }
 
         private void checkSingleton() {
@@ -527,17 +545,6 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Disable usage of the default fonts. This is automatically set by
-         * {@link #typeface(String, String)} and {@link #typeface(Typeface, Typeface)}.
-         *
-         * @return The Builder instance so you can chain calls to it.
-         */
-        public Builder disableDefaultFonts() {
-            this.useCustomFonts = true;
-            return this;
-        }
-
-        /**
          * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
          * to avoid duplicate Typeface allocations and high memory usage.
          *
@@ -548,7 +555,6 @@ public class MaterialDialog extends DialogBase implements
         public Builder typeface(Typeface medium, Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
-            this.useCustomFonts = true;
             return this;
         }
 
@@ -571,7 +577,6 @@ public class MaterialDialog extends DialogBase implements
                 if (this.regularFont == null)
                     throw new RuntimeException("No font asset found for " + regular);
             }
-            this.useCustomFonts = this.mediumFont != null || this.regularFont != null;
             return this;
         }
 
