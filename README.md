@@ -380,8 +380,8 @@ View view = dialog.getCustomView();
 If you want to use custom fonts, you can make a call to `typeface(String, String)` when
 using the `Builder`. This will pull fonts from files in your project's `assets/fonts` folder. For example,
 if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets/fonts`, you would call `typeface("Roboto.ttf", "Roboto-Light.ttf")`.
-Note that no extension is used in the name. This method will also handle recycling Typefaces via the `TypefaceHelper` which
-you can use in your own project to avoid duplicate allocations.
+This method will also handle recycling Typefaces via the `TypefaceHelper` which you can use in your own project to avoid duplicate 
+allocations. The raw `typeface(Typeface, Typeface)` variation will not recycle typefaces, every call will allocate the Typeface again.
 
 There's a global theming attribute available to automatically apply fonts to every Material Dialog in
 your app, also.
