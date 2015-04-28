@@ -24,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.2.8'
+    compile 'com.afollestad:material-dialogs:0.7.3.0'
 }
 ```
 
@@ -377,20 +377,14 @@ View view = dialog.getCustomView();
 
 # Typefaces
 
-By default, Material Dialogs will use the `Roboto Medium` font for the dialog title and action buttons,
-and `Roboto Regular` for content, list items, etc. This is done so using the font assets included in this library,
-so these fonts will be used even on Samsung devices that by default use weird handwriting typefaces.
-
-If you want this default behavior to be avoided, you can make a call to `disableDefaultFonts()` when
-using the `Builder`. This will result in the library not applying Roboto and Roboto Medium fonts,
-and everything will use the regular system font.
-
-If you want to explicitly use custom fonts, you can make a call to `typeface(String, String)` when
-using the `Builder`. This will pull fonts from TTF files in your project's `assets` folder. For example,
-if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets/fonts`, you would call `typeface("Roboto", "Roboto-Light")`.
+If you want to use custom fonts, you can make a call to `typeface(String, String)` when
+using the `Builder`. This will pull fonts from files in your project's `assets/fonts` folder. For example,
+if you had `Roboto.ttf` and `Roboto-Light.ttf` in `/src/main/assets/fonts`, you would call `typeface("Roboto.ttf", "Roboto-Light.ttf")`.
 Note that no extension is used in the name. This method will also handle recycling Typefaces via the `TypefaceHelper` which
-you can use in your own project to avoid duplicate allocations. If you want to load other Typeface files that
-aren't ttf files, you can use the `typeface(Typeface, Typeface)` Builder method.
+you can use in your own project to avoid duplicate allocations.
+
+There's a global theming attribute available to automatically apply fonts to every Material Dialog in
+your app, also.
 
 ---
 
@@ -678,6 +672,18 @@ you show from an Activity which has a theme containing any of these attributes:
         Can be start, center, or end.
     -->
     <item name="md_btnstacked_gravity">end</item>
+
+    <!--
+        The name of font in assets/fonts used on titles and action buttons
+        (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium]
+    -->
+    <item name="md_medium_font">Roboto-Medium.ttf</item>
+
+    <!--
+        The name of font in assets/fonts used everywhere else, like content and list items
+        (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
+    -->
+    <item name="md_regular_font">Roboto-Medium.ttf</item>
 
 </style>
 ```

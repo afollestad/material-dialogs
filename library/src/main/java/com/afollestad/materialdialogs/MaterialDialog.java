@@ -562,20 +562,20 @@ public class MaterialDialog extends DialogBase implements
          * Sets the fonts used in the dialog, by file names. This also uses TypefaceHelper in order
          * to avoid any un-needed allocations (it recycles typefaces for you).
          *
-         * @param medium  The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium].ttf
-         * @param regular The name of font in assets/fonts, minus the extension (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular].ttf
+         * @param medium  The name of font in assets/fonts used on titles and action buttons (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium]
+         * @param regular The name of font in assets/fonts used everywhere else, like content and list items (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder typeface(String medium, String regular) {
             if (medium != null) {
                 this.mediumFont = TypefaceHelper.get(this.context, medium);
                 if (this.mediumFont == null)
-                    throw new RuntimeException("No font asset found for " + medium);
+                    throw new IllegalArgumentException("No font asset found for " + medium);
             }
             if (regular != null) {
                 this.regularFont = TypefaceHelper.get(this.context, regular);
                 if (this.regularFont == null)
-                    throw new RuntimeException("No font asset found for " + regular);
+                    throw new IllegalArgumentException("No font asset found for " + regular);
             }
             return this;
         }
