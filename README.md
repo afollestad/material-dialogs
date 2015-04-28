@@ -783,7 +783,7 @@ new MaterialDialog.Builder(this)
 ```
 
 **Note that `inputMaxLengthRes(int, int)` takes a color resource ID for the second parameter, while
-`inputMaxLength(int, int)` takes a literal color integr for the second parameter. You can use either one.**
+`inputMaxLength(int, int)` takes a literal color integer for the second parameter. You can use either one.**
 
 ---
 
