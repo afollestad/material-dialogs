@@ -1051,9 +1051,12 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder inputMaxLength(int maxLength) {
+            return inputMaxLength(maxLength, 0);
+        }
+
         /**
-         * @param errorColor the error color.
-         *                   Pass in 0 for the default red error color (as specified in guidelines).
+         * @param errorColor Pass in 0 for the default red error color (as specified in guidelines).
          */
         public Builder inputMaxLength(int maxLength, int errorColor) {
             if (maxLength < 1)
