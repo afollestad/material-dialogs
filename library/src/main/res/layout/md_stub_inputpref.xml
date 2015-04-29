@@ -6,16 +6,22 @@
     android:layout_height="match_parent"
     android:gravity="start"
     android:paddingLeft="@dimen/md_dialog_frame_margin"
-    android:paddingRight="@dimen/md_dialog_frame_margin">
+    android:paddingRight="@dimen/md_dialog_frame_margin"
+    android:paddingTop="@dimen/md_content_padding_top"
+    android:paddingBottom="@dimen/md_content_padding_bottom">
 
     <TextView
         android:id="@android:id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        tools:text="Dialog message"
-        android:paddingBottom="12dp" />
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/md_content_textsize"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="@dimen/md_content_padding_bottom"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        tools:text="Message"
+        android:layout_gravity="center_horizontal"
+        tools:ignore="UnusedAttribute" />
 
 </LinearLayout>

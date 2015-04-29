@@ -83,7 +83,6 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .negativeText(getNegativeButtonText())
                 .callback(callback)
                 .dismissListener(this)
-                .content(getDialogMessage())
                 .showListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialog) {
