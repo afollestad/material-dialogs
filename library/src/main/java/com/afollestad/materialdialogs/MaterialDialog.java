@@ -1424,7 +1424,7 @@ public class MaterialDialog extends DialogBase implements
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(MaterialDialog.this, s);
-                final int length = s.toString().trim().length();
+                final int length = s.toString().length();
                 if (!mBuilder.inputAllowEmpty) {
                     final View positiveAb = getActionButton(DialogAction.POSITIVE);
                     positiveAb.setEnabled(length > 0);
