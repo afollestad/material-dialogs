@@ -1051,11 +1051,19 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        /**
+         * @param errorColor the error color.
+         *                   Pass in 0 for the default red error color (as specified in guidelines).
+         */
         public Builder inputMaxLength(int maxLength, int errorColor) {
             if (maxLength < 1)
                 throw new IllegalArgumentException("Max length for input dialogs cannot be less than 1.");
             this.inputMaxLength = maxLength;
-            this.inputMaxLengthErrorColor = errorColor;
+            if (errorColor == 0) {
+                inputMaxLengthErrorColor = context.getResources().getColor(R.color.md_edittext_error);
+            } else {
+                this.inputMaxLengthErrorColor = errorColor;
+            }
             return this;
         }
 

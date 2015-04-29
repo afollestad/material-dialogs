@@ -17,4 +17,6 @@
     <color name="md_material_blue_600">#1E88E5</color>
     <color name="md_material_blue_800">#1565C0</color>
 
+    <color name="md_edittext_error">#DD2C00</color>
+
 </resources>

@@ -42,7 +42,7 @@
                 tools:ignore="TextFields"
                 android:layout_marginLeft="-2dp"
                 android:layout_marginRight="-2dp"
-                android:layout_marginBottom="2dp" />
+                android:layout_marginBottom="1dp" />
 
             <TextView
                 android:id="@+id/minMax"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
                 tools:text="50/100"
-                android:textSize="@dimen/md_content_textsize"
+                android:textSize="12sp"
                 android:gravity="end"
                 android:textAlignment="viewEnd"
                 android:layout_alignRight="@android:id/input"
@@ -58,7 +58,7 @@
                 android:layout_below="@android:id/input"
                 android:paddingRight="4dp"
                 android:paddingEnd="4dp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="sans-serif"
                 tools:ignore="RtlSymmetry,UnusedAttribute" />
 
         </RelativeLayout>

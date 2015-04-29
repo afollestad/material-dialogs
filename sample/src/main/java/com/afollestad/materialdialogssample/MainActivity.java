@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputMaxLengthRes(16, R.color.material_indigo_600)
+                .inputMaxLength(16, 0)
                 .positiveText(R.string.submit)
                 .input(R.string.input_hint, R.string.input_hint, false, new MaterialDialog.InputCallback() {
                     @Override
