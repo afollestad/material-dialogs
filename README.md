@@ -30,6 +30,16 @@ dependencies {
 
 [ ![Download](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs/_latestVersion)
 
+### If jCenter is Having Issues (the library can't be resolved)
+
+Add this to your app's build.gradle file:
+
+```Gradle
+repositories {
+    maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
+}
+```
+
 ---
 
 # What's New
