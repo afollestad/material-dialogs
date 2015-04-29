@@ -3,11 +3,11 @@ package com.afollestad.materialdialogssample;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 @SuppressLint("NewApi")
-public class PreferenceActivity extends ActionBarActivity {
+public class PreferenceActivity extends AppCompatActivity {
 
     public static class SettingsFragment extends PreferenceFragment {
         @Override
