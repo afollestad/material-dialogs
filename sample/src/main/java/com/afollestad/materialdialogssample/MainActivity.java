@@ -506,10 +506,10 @@ public class MainActivity extends AppCompatActivity implements
 
         int widgetColor = ThemeSingleton.get().widgetColor;
         MDTintHelper.setTint(checkbox,
-                widgetColor == 0 ? getResources().getColor(R.color.material_pink_500) : widgetColor);
+                widgetColor == 0 ? getResources().getColor(R.color.material_teal_500) : widgetColor);
 
         MDTintHelper.setTint(passwordInput,
-                widgetColor == 0 ? getResources().getColor(R.color.material_pink_500) : widgetColor);
+                widgetColor == 0 ? getResources().getColor(R.color.material_teal_500) : widgetColor);
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
@@ -518,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements
     private void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
-            accentColor = getResources().getColor(R.color.material_pink_500);
+            accentColor = getResources().getColor(R.color.material_teal_500);
 
         ChangelogDialog.create(false, accentColor)
                 .show(getSupportFragmentManager(), "changelog");
@@ -556,7 +556,7 @@ public class MainActivity extends AppCompatActivity implements
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .backgroundColorRes(R.color.material_blue_grey_800)
-                .dividerColorRes(R.color.material_pink_500)
+                .dividerColorRes(R.color.material_teal_500)
                 .btnSelector(R.drawable.md_btn_selector_custom, DialogAction.POSITIVE)
                 .positiveColor(Color.WHITE)
                 .negativeColorAttr(android.R.attr.textColorSecondaryInverse)
@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputMaxLength(16, 0)
+                .inputMaxLength(16)
                 .positiveText(R.string.submit)
                 .input(R.string.input_hint, R.string.input_hint, false, new MaterialDialog.InputCallback() {
                     @Override

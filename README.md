@@ -24,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.3.0'
+    compile 'com.afollestad:material-dialogs:0.7.3.1'
 }
 ```
 
@@ -39,6 +39,9 @@ repositories {
     maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
 }
 ```
+
+This will reference Bintray's Maven repository that contains material-dialogs directly, rather
+than going through jCenter first.
 
 ---
 
@@ -778,7 +781,7 @@ There's also a global theming attribute as shown in the Global Theming section o
 The code below will show a little indicator in the input dialog that tells the user how many characters they've
 typed, and how many more they can type before reaching a certain limit. If they go over that limit,
 the dialog won't allow them to submit the input. It will also color the input field and length indicator
-with an error color of your choosing.
+with an error color of your choosing (or the default if you don't specify one).
 
 ```java
 new MaterialDialog.Builder(this)
@@ -792,8 +795,10 @@ new MaterialDialog.Builder(this)
         }).show();
 ```
 
-**Note that `inputMaxLengthRes(int, int)` takes a color resource ID for the second parameter, while
-`inputMaxLength(int, int)` takes a literal color integer for the second parameter. You can use either one.**
+*Note that `inputMaxLengthRes(int, int)` takes a color resource ID for the second parameter, while
+`inputMaxLength(int, int)` takes a literal color integer for the second parameter. You can use either one.
+If you want to use the default error color from the guidelines, you can use `inputMaxLength(int)` which doesn't
+take the second error color parameter*
 
 ---
 

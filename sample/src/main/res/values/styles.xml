@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/material_indigo_500</item>
         <item name="colorPrimaryDark">@color/material_indigo_600</item>
-        <item name="colorAccent">@color/material_pink_500</item>
+        <item name="colorAccent">@color/material_teal_500</item>
     </style>
 
 </resources>
