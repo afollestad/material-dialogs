@@ -599,9 +599,9 @@ public class MainActivity extends AppCompatActivity implements
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputMaxLengthRes(20, R.color.material_indigo_600)
+                .inputMaxLengthRes(16, R.color.material_indigo_600)
                 .positiveText(R.string.submit)
-                .input(R.string.input_hint, 0, false, new MaterialDialog.InputCallback() {
+                .input(R.string.input_hint, R.string.input_hint, false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         showToast("Hello, " + input.toString() + "!");

@@ -1418,22 +1418,26 @@ public class MaterialDialog extends DialogBase implements
                     final View positiveAb = getActionButton(DialogAction.POSITIVE);
                     positiveAb.setEnabled(length > 0);
                 }
-                if (inputMinMax != null) {
-                    inputMinMax.setText(length + "/" + mBuilder.inputMaxLength);
-                    final boolean overMax = length > mBuilder.inputMaxLength;
-                    final int colorText = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
-                    final int colorWidget = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
-                    inputMinMax.setTextColor(colorText);
-                    MDTintHelper.setTint(input, colorWidget);
-                    final View positiveAb = getActionButton(DialogAction.POSITIVE);
-                    if (positiveAb.isEnabled()) positiveAb.setEnabled(!overMax);
-                }
+                invalidateInputMinMaxIndicator(length);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    protected void invalidateInputMinMaxIndicator(int currentLength) {
+        if (inputMinMax != null) {
+            inputMinMax.setText(currentLength + "/" + mBuilder.inputMaxLength);
+            final boolean overMax = currentLength > mBuilder.inputMaxLength;
+            final int colorText = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
+            final int colorWidget = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
+            inputMinMax.setTextColor(colorText);
+            MDTintHelper.setTint(input, colorWidget);
+            final View positiveAb = getActionButton(DialogAction.POSITIVE);
+            if (positiveAb.isEnabled()) positiveAb.setEnabled(!overMax);
+        }
     }
 
     @Override
