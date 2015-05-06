@@ -1447,7 +1447,7 @@ public class MaterialDialog extends DialogBase implements
             inputMinMax.setTextColor(colorText);
             MDTintHelper.setTint(input, colorWidget);
             final View positiveAb = getActionButton(DialogAction.POSITIVE);
-            if (positiveAb.isEnabled()) positiveAb.setEnabled(!overMax);
+            positiveAb.setEnabled(!overMax);
         }
     }
 
