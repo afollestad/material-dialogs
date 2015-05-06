@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
@@ -55,6 +56,7 @@ public class MaterialDialog extends DialogBase implements
 
     protected final MDRootLayout view;
     protected final Builder mBuilder;
+    private Handler mHandler;
     protected ListView listView;
     protected ImageView icon;
     protected TextView title;
@@ -1097,7 +1099,7 @@ public class MaterialDialog extends DialogBase implements
     public void show() {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
-
+        mHandler = new Handler();
         try {
             super.show();
         } catch (WindowManager.BadTokenException e) {
@@ -1123,26 +1125,6 @@ public class MaterialDialog extends DialogBase implements
                 return view.findViewById(R.id.buttonDefaultNegative);
         }
     }
-/*
-    *//**
-     * This will not return buttons that are actually in the layout itself, since the layout doesn't
-     * contain buttons. This is only implemented to avoid crashing issues on Huawei devices. Huawei's
-     * stock OS requires this method in order to detect visible buttons.
-     *
-     * @deprecated Use getActionButton(com.afollestad.materialdialogs.DialogAction)} instead.
-     *//*
-    @Deprecated
-    @Override
-    public Button getButton(int whichButton) {
-        Log.w("MaterialDialog", "Warning: getButton() is a deprecated method that does not return valid references to action buttons.");
-        if (whichButton == AlertDialog.BUTTON_POSITIVE) {
-            return mBuilder.positiveText != null ? new Button(getContext()) : null;
-        } else if (whichButton == AlertDialog.BUTTON_NEUTRAL) {
-            return mBuilder.neutralText != null ? new Button(getContext()) : null;
-        } else {
-            return mBuilder.negativeText != null ? new Button(getContext()) : null;
-        }
-    }*/
 
     /**
      * Retrieves the view representing the dialog as a whole. Be careful with this.
@@ -1195,24 +1177,30 @@ public class MaterialDialog extends DialogBase implements
      * @param which The action button to update.
      * @param title The new title of the action button.
      */
-    public final void setActionButton(@NonNull DialogAction which, CharSequence title) {
-        switch (which) {
-            default:
-                mBuilder.positiveText = title;
-                positiveButton.setText(title);
-                positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                break;
-            case NEUTRAL:
-                mBuilder.neutralText = title;
-                neutralButton.setText(title);
-                neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                break;
-            case NEGATIVE:
-                mBuilder.negativeText = title;
-                negativeButton.setText(title);
-                negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                break;
-        }
+    public final void setActionButton(@NonNull final DialogAction which, final CharSequence title) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                switch (which) {
+                    default:
+                        mBuilder.positiveText = title;
+                        positiveButton.setText(title);
+                        positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                        break;
+                    case NEUTRAL:
+                        mBuilder.neutralText = title;
+                        neutralButton.setText(title);
+                        neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                        break;
+                    case NEGATIVE:
+                        mBuilder.negativeText = title;
+                        negativeButton.setText(title);
+                        negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                        break;
+                }
+
+            }
+        });
     }
 
     /**
@@ -1250,32 +1238,48 @@ public class MaterialDialog extends DialogBase implements
         return number;
     }
 
-    /**
-     * Updates the dialog's title.
-     */
-    public final void setTitle(@NonNull CharSequence title) {
-        this.title.setText(title);
+    public final void setTitle(@NonNull final CharSequence newTitle) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                title.setText(newTitle);
+            }
+        });
     }
 
-    public void setIcon(@DrawableRes int resId) {
-        icon.setImageResource(resId);
-        icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
+    public void setIcon(@DrawableRes final int resId) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                icon.setImageResource(resId);
+                icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
-    public void setIcon(Drawable d) {
-        icon.setImageDrawable(d);
-        icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
+    public void setIcon(final Drawable d) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                icon.setImageDrawable(d);
+                icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     public void setIconAttribute(@AttrRes int attrId) {
         Drawable d = DialogUtils.resolveDrawable(mBuilder.context, attrId);
-        icon.setImageDrawable(d);
-        icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
+        setIcon(d);
     }
 
-    public final void setContent(CharSequence content) {
-        this.content.setText(content);
-        this.content.setVisibility(TextUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
+    public final void setContent(final CharSequence newContent) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                content.setText(newContent);
+                content.setVisibility(TextUtils.isEmpty(newContent) ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     /**
@@ -1296,7 +1300,12 @@ public class MaterialDialog extends DialogBase implements
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
         mBuilder.items = items;
-        listView.setAdapter(mBuilder.adapter);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                listView.setAdapter(mBuilder.adapter);
+            }
+        });
     }
 
     public final int getCurrentProgress() {
@@ -1304,30 +1313,45 @@ public class MaterialDialog extends DialogBase implements
         return mProgress.getProgress();
     }
 
-    public final void incrementProgress(int by) {
+    public final void incrementProgress(final int by) {
         if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use incrementProgress() on this dialog.");
-        setProgress(getCurrentProgress() + by);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                setProgress(getCurrentProgress() + by);
+            }
+        });
     }
 
-    public final void setProgress(int progress) {
+    public final void setProgress(final int progress) {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
         else if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
-        mProgress.setProgress(progress);
-        int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-        mProgressLabel.setText(percentage + "%");
-        if (mProgressMinMax != null)
-            mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.setProgress(progress);
+                int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+                mProgressLabel.setText(percentage + "%");
+                if (mProgressMinMax != null)
+                    mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
+            }
+        });
     }
 
-    public final void setMaxProgress(int max) {
+    public final void setMaxProgress(final int max) {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
         else if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
-        mProgress.setMax(max);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.setMax(max);
+            }
+        });
     }
 
     public final boolean isIndeterminateProgress() {
@@ -1380,7 +1404,12 @@ public class MaterialDialog extends DialogBase implements
     public void setSelectedIndex(int index) {
         mBuilder.selectedIndex = index;
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
-            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+                }
+            });
         } else {
             throw new IllegalStateException("You can only use setSelectedIndex() with the default adapter implementation.");
         }
@@ -1397,7 +1426,12 @@ public class MaterialDialog extends DialogBase implements
         mBuilder.selectedIndices = indices;
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
-            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+                }
+            });
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
