@@ -1314,26 +1314,17 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void incrementProgress(final int by) {
-        if (mBuilder.progress <= -2)
-            throw new IllegalStateException("Cannot use incrementProgress() on this dialog.");
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                setProgress(getCurrentProgress() + by);
-            }
-        });
+        setProgress(getCurrentProgress() + by);
     }
 
     public final void setProgress(final int progress) {
-        if (Looper.myLooper() != Looper.getMainLooper())
-            throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
-        else if (mBuilder.progress <= -2)
+        if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
+        mProgress.setProgress(progress);
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mProgress.setProgress(progress);
-                int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+                final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
                 mProgressLabel.setText(percentage + "%");
                 if (mProgressMinMax != null)
                     mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
@@ -1342,9 +1333,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void setMaxProgress(final int max) {
-        if (Looper.myLooper() != Looper.getMainLooper())
-            throw new IllegalStateException("You can only set the dialog's progress from the UI thread.");
-        else if (mBuilder.progress <= -2)
+        if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
         mHandler.post(new Runnable() {
             @Override
