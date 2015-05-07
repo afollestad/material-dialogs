@@ -1335,12 +1335,7 @@ public class MaterialDialog extends DialogBase implements
     public final void setMaxProgress(final int max) {
         if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mProgress.setMax(max);
-            }
-        });
+        mProgress.setMax(max);
     }
 
     public final boolean isIndeterminateProgress() {
