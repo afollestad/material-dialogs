@@ -431,6 +431,7 @@ public class MainActivity extends AppCompatActivity implements
                 .content(R.string.add_account)
                 .icon(R.drawable.ic_circle_lighter)
                 .build());
+
         new MaterialDialog.Builder(this)
                 .title(R.string.set_backup)
                 .adapter(adapter, new MaterialDialog.ListCallback() {

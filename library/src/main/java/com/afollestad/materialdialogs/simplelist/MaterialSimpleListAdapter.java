@@ -54,7 +54,7 @@ public class MaterialSimpleListAdapter extends ArrayAdapter<MaterialSimpleListIt
             else
                 ic.setVisibility(View.GONE);
             TextView tv = (TextView) view.findViewById(android.R.id.title);
-            tv.setTextColor(dialog.getBuilder().getTitleColor());
+            tv.setTextColor(dialog.getBuilder().getItemColor());
             tv.setText(item.getContent());
             dialog.setTypeface(tv, dialog.getBuilder().getRegularFont());
             setupGravity((ViewGroup) view);

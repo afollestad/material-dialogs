@@ -417,8 +417,8 @@ public class MaterialDialog extends DialogBase implements
             return itemsGravity;
         }
 
-        public final int getTitleColor() {
-            return titleColor;
+        public final int getItemColor() {
+            return itemColor;
         }
 
         public final Typeface getRegularFont() {
