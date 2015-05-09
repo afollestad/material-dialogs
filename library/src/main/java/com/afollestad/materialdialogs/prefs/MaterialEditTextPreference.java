@@ -85,6 +85,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
     }
 
+    @Override
     public EditText getEditText() {
         return mEditText;
     }
