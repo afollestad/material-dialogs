@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
     private MaterialDialog mDialog;
+    private EditText mEditText;
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +45,9 @@ public class MaterialEditTextPreference extends EditTextPreference {
             fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);
         else fallback = 0;
         mColor = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
+
+        mEditText = new AppCompatEditText(context, attrs);
+        mEditText.setEnabled(true);
     }
 
     public MaterialEditTextPreference(Context context) {
@@ -52,22 +57,36 @@ public class MaterialEditTextPreference extends EditTextPreference {
     @Override
     protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
         if (editText.getParent() != null)
-            ((ViewGroup) getEditText().getParent()).removeView(editText);
+            ((ViewGroup) mEditText.getParent()).removeView(editText);
         ((ViewGroup) dialogView).addView(editText, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     protected void onBindDialogView(@NonNull View view) {
-        getEditText().setText("");
+        mEditText.setText("");
         if (getText() != null)
-            getEditText().setText(getText());
-        ViewParent oldParent = getEditText().getParent();
+            mEditText.setText(getText());
+        ViewParent oldParent = mEditText.getParent();
         if (oldParent != view) {
             if (oldParent != null)
-                ((ViewGroup) oldParent).removeView(getEditText());
-            onAddEditTextToDialogView(view, getEditText());
+                ((ViewGroup) oldParent).removeView(mEditText);
+            onAddEditTextToDialogView(view, mEditText);
         }
+    }
+
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        if (positiveResult) {
+            String value = mEditText.getText().toString();
+            if (callChangeListener(value)) {
+                setText(value);
+            }
+        }
+    }
+
+    public EditText getEditText() {
+        return mEditText;
     }
 
     @Override
@@ -87,15 +106,15 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .showListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialog) {
-                        if (getEditText().getText().length() > 0)
-                            getEditText().setSelection(getEditText().length());
+                        if (mEditText.getText().length() > 0)
+                            mEditText.setSelection(mEditText.length());
                     }
                 });
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
-        MDTintHelper.setTint(getEditText(), mColor);
+        MDTintHelper.setTint(mEditText, mColor);
 
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
@@ -132,7 +151,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     private final ButtonCallback callback = new ButtonCallback() {
         @Override
         public void onPositive(MaterialDialog dialog) {
-            String value = getEditText().getText().toString();
+            String value = mEditText.getText().toString();
             if (callChangeListener(value) && isPersistent())
                 setText(value);
         }
