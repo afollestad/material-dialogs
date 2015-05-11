@@ -640,6 +640,13 @@ public class MainActivity extends AppCompatActivity implements
                     .content(R.string.please_wait)
                     .contentGravity(GravityEnum.CENTER)
                     .progress(false, 150, true)
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            if (mThread != null)
+                                mThread.interrupt();
+                        }
+                    })
                     .showListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(DialogInterface dialogInterface) {
