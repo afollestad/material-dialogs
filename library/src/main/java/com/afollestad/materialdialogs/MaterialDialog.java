@@ -1379,6 +1379,8 @@ public class MaterialDialog extends DialogBase implements
             if (input.getText().length() > 0)
                 input.setSelection(input.getText().length());
         }
+        // Set listeners initially or in case they were scrubbed when the dialog was dismissed previously
+        DialogInit.resetListeners(this);
         super.onShow(dialog);
     }
 

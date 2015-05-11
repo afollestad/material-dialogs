@@ -312,7 +312,14 @@ class DialogInit {
         // Setup internal show listener
         dialog.setOnShowListenerInternal();
 
-        // Setup user listeners
+        // Other internal initialization
+        dialog.invalidateList();
+        dialog.setViewInternal(dialog.view);
+        dialog.checkIfListInitScroll();
+    }
+
+    public static void resetListeners(MaterialDialog dialog) {
+        MaterialDialog.Builder builder = dialog.getBuilder();
         if (builder.showListener != null)
             dialog.setOnShowListener(builder.showListener);
         if (builder.cancelListener != null)
@@ -321,11 +328,6 @@ class DialogInit {
             dialog.setOnDismissListener(builder.dismissListener);
         if (builder.keyListener != null)
             dialog.setOnKeyListener(builder.keyListener);
-
-        // Other internal initialization
-        dialog.invalidateList();
-        dialog.setViewInternal(dialog.view);
-        dialog.checkIfListInitScroll();
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
