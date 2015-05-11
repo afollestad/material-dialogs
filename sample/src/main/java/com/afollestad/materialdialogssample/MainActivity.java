@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
         FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback {
 
     private Toast mToast;
+    private Thread mThread;
 
     private void showToast(String message) {
         if (mToast != null) {
@@ -47,6 +48,13 @@ public class MainActivity extends AppCompatActivity implements
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    private void startThread(Runnable run) {
+        if (mThread != null)
+            mThread.interrupt();
+        mThread = new Thread(run);
+        mThread.start();
     }
 
     private void showToast(@StringRes int message) {
@@ -235,6 +243,13 @@ public class MainActivity extends AppCompatActivity implements
                     startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mThread != null && !mThread.isInterrupted() && mThread.isAlive())
+            mThread.interrupt();
     }
 
     private void showBasicNoTitle() {
@@ -479,6 +494,7 @@ public class MainActivity extends AppCompatActivity implements
                 }).build();
 
         positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        //noinspection ConstantConditions
         passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -534,6 +550,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onColorSelection(int index, int color, int darker) {
         selectedColorIndex = index;
+        //noinspection ConstantConditions
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         ThemeSingleton.get().positiveColor = color;
         ThemeSingleton.get().neutralColor = color;
@@ -627,10 +644,11 @@ public class MainActivity extends AppCompatActivity implements
                         @Override
                         public void onShow(DialogInterface dialogInterface) {
                             final MaterialDialog dialog = (MaterialDialog) dialogInterface;
-                            new Thread(new Runnable() {
+                            startThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    while (dialog.getCurrentProgress() != dialog.getMaxProgress()) {
+                                    while (dialog.getCurrentProgress() != dialog.getMaxProgress() &&
+                                            !Thread.currentThread().isInterrupted()) {
                                         if (dialog.isCancelled())
                                             break;
                                         try {
@@ -648,12 +666,13 @@ public class MainActivity extends AppCompatActivity implements
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            mThread = null;
                                             dialog.setContent(getString(R.string.done));
                                         }
                                     });
 
                                 }
-                            }).start();
+                            });
                         }
                     }).show();
         }
