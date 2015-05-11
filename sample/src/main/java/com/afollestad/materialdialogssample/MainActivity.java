@@ -638,9 +638,20 @@ public class MainActivity extends AppCompatActivity implements
                                         } catch (InterruptedException e) {
                                             break;
                                         }
-                                        dialog.incrementProgress(1);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.incrementProgress(1);
+                                            }
+                                        });
                                     }
-                                    dialog.setContent(getString(R.string.done));
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.setContent(getString(R.string.done));
+                                        }
+                                    });
+
                                 }
                             }).start();
                         }

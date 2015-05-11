@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
@@ -56,7 +55,6 @@ public class MaterialDialog extends DialogBase implements
 
     protected final MDRootLayout view;
     protected final Builder mBuilder;
-    private Handler mHandler;
     protected ListView listView;
     protected ImageView icon;
     protected TextView title;
@@ -1099,7 +1097,6 @@ public class MaterialDialog extends DialogBase implements
     public void show() {
         if (Looper.myLooper() != Looper.getMainLooper())
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
-        mHandler = new Handler();
         try {
             super.show();
         } catch (WindowManager.BadTokenException e) {
@@ -1178,29 +1175,23 @@ public class MaterialDialog extends DialogBase implements
      * @param title The new title of the action button.
      */
     public final void setActionButton(@NonNull final DialogAction which, final CharSequence title) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                switch (which) {
-                    default:
-                        mBuilder.positiveText = title;
-                        positiveButton.setText(title);
-                        positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                        break;
-                    case NEUTRAL:
-                        mBuilder.neutralText = title;
-                        neutralButton.setText(title);
-                        neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                        break;
-                    case NEGATIVE:
-                        mBuilder.negativeText = title;
-                        negativeButton.setText(title);
-                        negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
-                        break;
-                }
-
-            }
-        });
+        switch (which) {
+            default:
+                mBuilder.positiveText = title;
+                positiveButton.setText(title);
+                positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                break;
+            case NEUTRAL:
+                mBuilder.neutralText = title;
+                neutralButton.setText(title);
+                neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                break;
+            case NEGATIVE:
+                mBuilder.negativeText = title;
+                negativeButton.setText(title);
+                negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
+                break;
+        }
     }
 
     /**
@@ -1239,32 +1230,17 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void setTitle(@NonNull final CharSequence newTitle) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                title.setText(newTitle);
-            }
-        });
+        title.setText(newTitle);
     }
 
     public void setIcon(@DrawableRes final int resId) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                icon.setImageResource(resId);
-                icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
-            }
-        });
+        icon.setImageResource(resId);
+        icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
     }
 
     public void setIcon(final Drawable d) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                icon.setImageDrawable(d);
-                icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
-            }
-        });
+        icon.setImageDrawable(d);
+        icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
 
     public void setIconAttribute(@AttrRes int attrId) {
@@ -1273,13 +1249,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void setContent(final CharSequence newContent) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                content.setText(newContent);
-                content.setVisibility(TextUtils.isEmpty(newContent) ? View.GONE : View.VISIBLE);
-            }
-        });
+        content.setText(newContent);
+        content.setVisibility(TextUtils.isEmpty(newContent) ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -1300,12 +1271,7 @@ public class MaterialDialog extends DialogBase implements
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
         mBuilder.items = items;
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                listView.setAdapter(mBuilder.adapter);
-            }
-        });
+        listView.setAdapter(mBuilder.adapter);
     }
 
     public final int getCurrentProgress() {
@@ -1321,15 +1287,10 @@ public class MaterialDialog extends DialogBase implements
         if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
         mProgress.setProgress(progress);
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-                mProgressLabel.setText(percentage + "%");
-                if (mProgressMinMax != null)
-                    mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
-            }
-        });
+        final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+        mProgressLabel.setText(percentage + "%");
+        if (mProgressMinMax != null)
+            mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
     }
 
     public final void setMaxProgress(final int max) {
@@ -1388,12 +1349,7 @@ public class MaterialDialog extends DialogBase implements
     public void setSelectedIndex(int index) {
         mBuilder.selectedIndex = index;
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
-                }
-            });
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndex() with the default adapter implementation.");
         }
@@ -1410,12 +1366,7 @@ public class MaterialDialog extends DialogBase implements
         mBuilder.selectedIndices = indices;
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
-                }
-            });
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
