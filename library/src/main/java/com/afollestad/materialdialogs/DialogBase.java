@@ -43,7 +43,7 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
         super.onStop();
         // Prevent framework leak
         try {
-            Class superCls = getClass().getSuperclass();
+            Class superCls = getClass().getSuperclass().getSuperclass();
             Field cancelMsg = superCls.getDeclaredField("mCancelMessage");
             scrubMessageField(cancelMsg);
             Field dismissMsg = superCls.getDeclaredField("mDismissMessage");
