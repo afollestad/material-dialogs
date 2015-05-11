@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
@@ -63,8 +64,12 @@ class DialogInit {
         dialog.setCancelable(builder.cancelable);
         if (builder.backgroundColor == 0)
             builder.backgroundColor = DialogUtils.resolveColor(builder.context, R.attr.md_background_color);
-        if (builder.backgroundColor != 0)
-            dialog.view.setBackgroundColor(builder.backgroundColor);
+        if (builder.backgroundColor != 0) {
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setCornerRadius(builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
+            drawable.setColor(builder.backgroundColor);
+            DialogUtils.setBackgroundCompat(dialog.view, drawable);
+        }
 
         // Retrieve action button colors from theme attributes or the Builder
         builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
