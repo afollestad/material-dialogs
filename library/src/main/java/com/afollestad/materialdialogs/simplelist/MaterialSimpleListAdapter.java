@@ -25,8 +25,13 @@ public class MaterialSimpleListAdapter extends ArrayAdapter<MaterialSimpleListIt
     private MaterialDialog dialog;
 
     public void setDialog(MaterialDialog dialog) {
+        setDialog(dialog, true);
+    }
+
+    public void setDialog(MaterialDialog dialog, boolean notifyDataSetChanged) {
         this.dialog = dialog;
-        notifyDataSetChanged();
+        if (notifyDataSetChanged)
+            notifyDataSetChanged();
     }
 
     public MaterialSimpleListAdapter(Context context) {

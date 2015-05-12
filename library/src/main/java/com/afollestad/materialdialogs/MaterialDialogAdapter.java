@@ -20,6 +20,8 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
 
     private final MaterialDialog dialog;
     private final GravityEnum itemGravity;
+    public RadioButton mRadioButton;
+    public boolean mInitRadio;
 
     public MaterialDialogAdapter(MaterialDialog dialog, int resource, int textViewResourceId, CharSequence[] objects) {
         super(dialog.mBuilder.context, resource, textViewResourceId, objects);
@@ -49,6 +51,8 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
                 boolean selected = dialog.mBuilder.selectedIndex == index;
                 MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
+                if (selected && mInitRadio)
+                    mRadioButton = radio;
                 break;
             }
             case MULTI: {

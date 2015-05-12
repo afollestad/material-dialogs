@@ -117,6 +117,7 @@ class DialogInit {
         dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNeutral);
         dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNegative);
 
+        // Don't allow the submit button to not be shown for input dialogs
         if (builder.inputCallback != null && builder.positiveText == null)
             builder.positiveText = builder.context.getText(android.R.string.ok);
 
@@ -192,7 +193,7 @@ class DialogInit {
             dialog.content.setVisibility(View.GONE);
         }
 
-        // Setup buttons
+        // Setup action buttons
         dialog.view.setButtonGravity(builder.buttonsGravity);
         dialog.view.setButtonStackedGravity(builder.btnStackedGravity);
         dialog.view.setForceStack(builder.forceStacking);
@@ -205,7 +206,6 @@ class DialogInit {
             textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
         }
 
-//        if (dialog.positiveButton != null && builder.positiveText != null) {
         MDButton positiveTextView = dialog.positiveButton;
         dialog.setTypeface(positiveTextView, builder.mediumFont);
         positiveTextView.setAllCapsCompat(textAllCaps);
@@ -216,9 +216,7 @@ class DialogInit {
         dialog.positiveButton.setTag(DialogAction.POSITIVE);
         dialog.positiveButton.setOnClickListener(dialog);
         dialog.positiveButton.setVisibility(View.VISIBLE);
-//        }
 
-//        if (dialog.negativeButton != null && builder.negativeText != null) {
         MDButton negativeTextView = dialog.negativeButton;
         dialog.setTypeface(negativeTextView, builder.mediumFont);
         negativeTextView.setAllCapsCompat(textAllCaps);
@@ -229,9 +227,7 @@ class DialogInit {
         dialog.negativeButton.setTag(DialogAction.NEGATIVE);
         dialog.negativeButton.setOnClickListener(dialog);
         dialog.negativeButton.setVisibility(View.VISIBLE);
-//        }
 
-//        if (dialog.neutralButton != null && builder.neutralText != null) {
         MDButton neutralTextView = dialog.neutralButton;
         dialog.setTypeface(neutralTextView, builder.mediumFont);
         neutralTextView.setAllCapsCompat(textAllCaps);
@@ -242,7 +238,6 @@ class DialogInit {
         dialog.neutralButton.setTag(DialogAction.NEUTRAL);
         dialog.neutralButton.setOnClickListener(dialog);
         dialog.neutralButton.setVisibility(View.VISIBLE);
-//        }
 
         // Setup list dialog stuff
         if (builder.listCallbackMultiChoice != null)
@@ -258,9 +253,8 @@ class DialogInit {
                     dialog.listType = MaterialDialog.ListType.SINGLE;
                 } else if (builder.listCallbackMultiChoice != null) {
                     dialog.listType = MaterialDialog.ListType.MULTI;
-                    if (builder.selectedIndices != null) {
+                    if (builder.selectedIndices != null)
                         dialog.selectedIndicesList = new ArrayList<>(Arrays.asList(builder.selectedIndices));
-                    }
                 } else {
                     dialog.listType = MaterialDialog.ListType.REGULAR;
                 }
@@ -268,7 +262,7 @@ class DialogInit {
                         MaterialDialog.ListType.getLayoutForType(dialog.listType), R.id.title, builder.items);
             } else if (builder.adapter instanceof MaterialSimpleListAdapter) {
                 // Notify simple list adapter of the dialog it belongs to
-                ((MaterialSimpleListAdapter) builder.adapter).setDialog(dialog);
+                ((MaterialSimpleListAdapter) builder.adapter).setDialog(dialog, false);
             }
         }
 

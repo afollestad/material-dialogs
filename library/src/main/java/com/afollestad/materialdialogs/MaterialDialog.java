@@ -30,10 +30,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
@@ -171,7 +171,7 @@ public class MaterialDialog extends DialogBase implements
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
                 final boolean shouldBeChecked = !selectedIndicesList.contains(Integer.valueOf(position));
-                final CheckBox cb = (CheckBox) ((LinearLayout) view).getChildAt(0);
+                final CheckBox cb = (CheckBox) view.findViewById(R.id.control);
                 if (shouldBeChecked) {
                     // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
                     selectedIndicesList.add(position);
@@ -196,6 +196,9 @@ public class MaterialDialog extends DialogBase implements
                 }
             } else if (listType == ListType.SINGLE) {
                 boolean allowSelection = true;
+                final MaterialDialogAdapter adapter = (MaterialDialogAdapter) mBuilder.adapter;
+                final RadioButton radio = (RadioButton) view.findViewById(R.id.control);
+
                 if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
                     // If auto dismiss is enabled, and no action button is visible to approve the selection, dismiss the dialog
                     dismiss();
@@ -216,7 +219,16 @@ public class MaterialDialog extends DialogBase implements
                 // Update the checked states
                 if (allowSelection && mBuilder.selectedIndex != position) {
                     mBuilder.selectedIndex = position;
-                    ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+                    // Uncheck the previously selected radio button
+                    if (adapter.mRadioButton == null) {
+                        adapter.mInitRadio = true;
+                        adapter.notifyDataSetChanged();
+                    }
+                    if (adapter.mRadioButton != null)
+                        adapter.mRadioButton.setChecked(false);
+                    // Check the newly selected radio button
+                    radio.setChecked(true);
+                    adapter.mRadioButton = radio;
                 }
             }
 
