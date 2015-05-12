@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
@@ -1111,6 +1112,7 @@ public class MaterialDialog extends DialogBase implements
             throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
         try {
             super.show();
+            mHandler = new Handler();
         } catch (WindowManager.BadTokenException e) {
             throw new DialogException("Bad window token, you cannot show a dialog before an Activity is created or after it's hidden.");
         }
@@ -1295,14 +1297,21 @@ public class MaterialDialog extends DialogBase implements
         setProgress(getCurrentProgress() + by);
     }
 
+    private Handler mHandler;
+
     public final void setProgress(final int progress) {
         if (mBuilder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
         mProgress.setProgress(progress);
-        final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-        mProgressLabel.setText(percentage + "%");
-        if (mProgressMinMax != null)
-            mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+                mProgressLabel.setText(percentage + "%");
+                if (mProgressMinMax != null)
+                    mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
+            }
+        });
     }
 
     public final void setMaxProgress(final int max) {
