@@ -378,7 +378,8 @@ class DialogInit {
 
         dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
         if (builder.inputMaxLength > -1) {
-            dialog.invalidateInputMinMaxIndicator(dialog.input.getText().toString().length());
+            dialog.invalidateInputMinMaxIndicator(dialog.input.getText().toString().length(),
+                    !builder.inputAllowEmpty);
         } else {
             dialog.inputMinMax.setVisibility(View.GONE);
             dialog.inputMinMax = null;

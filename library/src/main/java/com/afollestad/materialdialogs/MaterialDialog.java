@@ -1417,11 +1417,13 @@ public class MaterialDialog extends DialogBase implements
                 if (mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(MaterialDialog.this, s);
                 final int length = s.toString().length();
+                boolean emptyDisabled = false;
                 if (!mBuilder.inputAllowEmpty) {
+                    emptyDisabled = length == 0;
                     final View positiveAb = getActionButton(DialogAction.POSITIVE);
-                    positiveAb.setEnabled(length > 0);
+                    positiveAb.setEnabled(!emptyDisabled);
                 }
-                invalidateInputMinMaxIndicator(length);
+                invalidateInputMinMaxIndicator(length, emptyDisabled);
             }
 
             @Override
@@ -1430,16 +1432,16 @@ public class MaterialDialog extends DialogBase implements
         });
     }
 
-    protected void invalidateInputMinMaxIndicator(int currentLength) {
+    protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
             inputMinMax.setText(currentLength + "/" + mBuilder.inputMaxLength);
-            final boolean overMax = currentLength > mBuilder.inputMaxLength;
-            final int colorText = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
-            final int colorWidget = overMax ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
+            final boolean isDisabled = emptyDisabled || currentLength > mBuilder.inputMaxLength;
+            final int colorText = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
+            final int colorWidget = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
             inputMinMax.setTextColor(colorText);
             MDTintHelper.setTint(input, colorWidget);
             final View positiveAb = getActionButton(DialogAction.POSITIVE);
-            positiveAb.setEnabled(!overMax);
+            positiveAb.setEnabled(!isDisabled);
         }
     }
 
