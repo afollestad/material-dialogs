@@ -408,6 +408,7 @@ public class MaterialDialog extends DialogBase implements
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
         protected boolean itemColorSet = false;
+        protected Object object;
 
         @DrawableRes
         protected int listSelector;
@@ -1095,6 +1096,14 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        /**
+         * Sets the optional object to be associated with the dialog. Can be accessed via {@link MaterialDialog#getObject()}
+         */
+        public Builder object(Object object){
+            this.object = object;
+            return this;
+        }
+
         public MaterialDialog build() {
             return new MaterialDialog(this);
         }
@@ -1448,6 +1457,14 @@ public class MaterialDialog extends DialogBase implements
         super.onStop();
         if (input != null)
             DialogUtils.hideKeyboard(this, mBuilder);
+    }
+
+    /**
+     * Returns the optional object associated with the dialog
+     */
+    @Nullable
+    public Object getObject(){
+        return mBuilder.object;
     }
 
     protected enum ListType {
