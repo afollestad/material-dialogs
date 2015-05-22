@@ -22,7 +22,10 @@ public class PreferenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preference_activity_custom);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+
+        if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+        }
     }
 
     @Override

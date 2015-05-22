@@ -2,9 +2,10 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -47,6 +48,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
         mColor = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
 
         mEditText = new AppCompatEditText(context, attrs);
+        // Give it an ID so it can be saved/restored
+        mEditText.setId(android.R.id.edit);
         mEditText.setEnabled(true);
     }
 
@@ -56,22 +59,26 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     @Override
     protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
-        if (editText.getParent() != null)
-            ((ViewGroup) mEditText.getParent()).removeView(editText);
         ((ViewGroup) dialogView).addView(editText, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     protected void onBindDialogView(@NonNull View view) {
-        mEditText.setText("");
-        if (getText() != null)
-            mEditText.setText(getText());
-        ViewParent oldParent = mEditText.getParent();
+        EditText editText = mEditText;
+        editText.setText(getText());
+
+        // Initialize cursor to end of text
+        if (editText.getText().length() > 0) {
+            editText.setSelection(editText.length());
+        }
+
+        ViewParent oldParent = editText.getParent();
         if (oldParent != view) {
-            if (oldParent != null)
-                ((ViewGroup) oldParent).removeView(mEditText);
-            onAddEditTextToDialogView(view, mEditText);
+            if (oldParent != null) {
+                ((ViewGroup) oldParent).removeView(editText);
+            }
+            onAddEditTextToDialogView(view, editText);
         }
     }
 
@@ -103,14 +110,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .callback(callback)
-                .dismissListener(this)
-                .showListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        if (mEditText.getText().length() > 0)
-                            mEditText.setSelection(mEditText.length());
-                    }
-                });
+                .dismissListener(this);
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
@@ -171,5 +171,68 @@ public class MaterialEditTextPreference extends EditTextPreference {
         super.onActivityDestroy();
         if (mDialog != null && mDialog.isShowing())
             mDialog.dismiss();
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Parcelable superState = super.onSaveInstanceState();
+        Dialog dialog = getDialog();
+        if (dialog == null || !dialog.isShowing()) {
+            return superState;
+        }
+
+        final SavedState myState = new SavedState(superState);
+        myState.isDialogShowing = true;
+        myState.dialogBundle = dialog.onSaveInstanceState();
+        return myState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state == null || !state.getClass().equals(SavedState.class)) {
+            // Didn't save state for us in onSaveInstanceState
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState myState = (SavedState) state;
+        super.onRestoreInstanceState(myState.getSuperState());
+        if (myState.isDialogShowing) {
+            showDialog(myState.dialogBundle);
+        }
+    }
+
+    // From DialogPreference
+    private static class SavedState extends BaseSavedState {
+        boolean isDialogShowing;
+        Bundle dialogBundle;
+
+        public SavedState(Parcel source) {
+            super(source);
+            isDialogShowing = source.readInt() == 1;
+            dialogBundle = source.readBundle();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(isDialogShowing ? 1 : 0);
+            dest.writeBundle(dialogBundle);
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 }
