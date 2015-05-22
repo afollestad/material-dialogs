@@ -470,7 +470,10 @@ public class MaterialDialog extends DialogBase implements
 
             if (this.mediumFont == null) {
                 try {
-                    this.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        this.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+                    else
+                        this.mediumFont = Typeface.create("sans-serif", Typeface.BOLD);
                 } catch (Throwable ignored) {
                 }
             }
@@ -480,8 +483,6 @@ public class MaterialDialog extends DialogBase implements
                 } catch (Throwable ignored) {
                 }
             }
-            if (this.mediumFont == null)
-                this.mediumFont = this.regularFont;
         }
 
         private void checkSingleton() {
