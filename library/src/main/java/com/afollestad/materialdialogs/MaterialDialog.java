@@ -1434,7 +1434,7 @@ public class MaterialDialog extends DialogBase implements
     protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
             inputMinMax.setText(currentLength + "/" + mBuilder.inputMaxLength);
-            final boolean isDisabled = emptyDisabled || currentLength > mBuilder.inputMaxLength;
+            final boolean isDisabled = (emptyDisabled && currentLength == 0) || currentLength > mBuilder.inputMaxLength;
             final int colorText = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
             final int colorWidget = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
             inputMinMax.setTextColor(colorText);
