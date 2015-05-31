@@ -54,7 +54,6 @@ import java.util.List;
 public class MaterialDialog extends DialogBase implements
         View.OnClickListener, AdapterView.OnItemClickListener {
 
-    protected final MDRootLayout view;
     protected final Builder mBuilder;
     protected ListView listView;
     protected ImageView icon;

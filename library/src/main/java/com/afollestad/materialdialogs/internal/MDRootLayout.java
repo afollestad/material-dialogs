@@ -47,6 +47,7 @@ public class MDRootLayout extends ViewGroup {
     private boolean mIsStacked = false;
     private boolean mUseFullPadding = true;
     private boolean mReducePaddingNoTitleNoButtons;
+    private boolean mNoTitleNoPadding;
 
     private int mNoTitlePaddingFull;
     private int mButtonPaddingFull;
@@ -102,6 +103,10 @@ public class MDRootLayout extends ViewGroup {
         mDividerWidth = r.getDimensionPixelSize(R.dimen.md_divider_height);
         mDividerPaint.setColor(DialogUtils.resolveColor(context, R.attr.md_divider_color));
         setWillNotDraw(false);
+    }
+
+    public void noTitleNoPadding() {
+        mNoTitleNoPadding = true;
     }
 
     @Override
@@ -186,7 +191,7 @@ public class MDRootLayout extends ViewGroup {
             mTitleBar.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.UNSPECIFIED);
             availableHeight -= mTitleBar.getMeasuredHeight();
-        } else {
+        } else if(!mNoTitleNoPadding) {
             fullPadding += mNoTitlePaddingFull;
         }
 
@@ -242,7 +247,7 @@ public class MDRootLayout extends ViewGroup {
             int height = mTitleBar.getMeasuredHeight();
             mTitleBar.layout(l, t, r, t + height);
             t += height;
-        } else if (mUseFullPadding) {
+        } else if (!mNoTitleNoPadding && mUseFullPadding) {
             t += mNoTitlePaddingFull;
         }
 

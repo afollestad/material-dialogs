@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -274,6 +275,7 @@ class DialogInit {
 
         // Setup custom views
         if (builder.customView != null) {
+            ((MDRootLayout) dialog.view.findViewById(R.id.root)).noTitleNoPadding();
             FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.customViewFrame);
             dialog.customViewFrame = frame;
             View innerView = builder.customView;

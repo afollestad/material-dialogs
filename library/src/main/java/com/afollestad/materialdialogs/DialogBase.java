@@ -5,15 +5,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 
+import com.afollestad.materialdialogs.internal.MDRootLayout;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
 class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
+    protected MDRootLayout view;
     private OnShowListener mShowListener;
 
     protected DialogBase(Context context, int theme) {
         super(context, theme);
+    }
+
+    @Override
+    public View findViewById(int id) {
+        return view.findViewById(id);
     }
 
     @Override
