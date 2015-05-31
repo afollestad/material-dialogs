@@ -45,7 +45,7 @@ public class ThemeSingleton {
 
     public GravityEnum titleGravity = GravityEnum.START;
     public GravityEnum contentGravity = GravityEnum.START;
-    public GravityEnum btnStackedGravity = GravityEnum.START;
+    public GravityEnum btnStackedGravity = GravityEnum.END;
     public GravityEnum itemsGravity = GravityEnum.START;
     public GravityEnum buttonsGravity = GravityEnum.START;
 }

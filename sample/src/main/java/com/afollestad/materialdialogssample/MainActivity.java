@@ -295,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.speedBoost)
                 .negativeText(R.string.noThanks)
+                .btnStackedGravity(GravityEnum.END)
                 .forceStacking(true)  // this generally should not be forced, but is used for demo purposes
                 .show();
     }
