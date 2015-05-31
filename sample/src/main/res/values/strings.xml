@@ -130,7 +130,7 @@
     <string name="list_pref_desc">This is an example of a list preference that automatically uses Material Dialogs to show the list dialog.</string>
     <string name="multilist_pref_title">Multi Select List Preference</string>
     <string name="multilist_pref_desc">This is an example of a multi select list preference that automatically uses Material Dialogs to show the list dialog.</string>
-    <string name="edittext_pref_title">Material EditText Preference</string>
+    <string name="edittext_pref_title">EditText Preference</string>
     <string name="edittext_pref_desc">This is an example of an EditText preference that automatically uses Material Dialogs to show the input dialog.</string>
     <string name="edittext_pref_dialogtitle">Enter a Name</string>
     <string name="edittext_pref_optionalvalue">Default value</string>
@@ -155,5 +155,9 @@
     <string name="set_backup">Set backup account</string>
     <string name="add_account">Add account</string>
     <string name="submit">Submit</string>
+    <string name="preference_dialog_message">This is an example of a dialog message.</string>
+    <string name="preference_dialog_title">Dialog Title</string>
+    <string name="material_dialog_pref_title">Dialog Preference</string>
+    <string name="material_dialog_pref_summary">This is an example of a basic dialog preference that automatically uses Material Dialogs to show the dialog.</string>
 
 </resources>

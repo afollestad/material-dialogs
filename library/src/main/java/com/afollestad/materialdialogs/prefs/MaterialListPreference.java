@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -89,21 +90,34 @@ public class MaterialListPreference extends ListPreference {
             builder.content(getDialogMessage());
         }
 
-        PreferenceManager pm = getPreferenceManager();
         try {
+            PreferenceManager pm = getPreferenceManager();
             Method method = pm.getClass().getDeclaredMethod(
                     "registerOnActivityDestroyListener",
                     PreferenceManager.OnActivityDestroyListener.class);
             method.setAccessible(true);
             method.invoke(pm, this);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         mDialog = builder.build();
         if (state != null)
             mDialog.onRestoreInstanceState(state);
         mDialog.show();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        try {
+            PreferenceManager pm = getPreferenceManager();
+            Method method = pm.getClass().getDeclaredMethod(
+                    "unregisterOnActivityDestroyListener",
+                    PreferenceManager.OnActivityDestroyListener.class);
+            method.setAccessible(true);
+            method.invoke(pm, this);
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -166,7 +180,7 @@ public class MaterialListPreference extends ListPreference {
         }
 
         @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(isDialogShowing ? 1 : 0);
             dest.writeBundle(dialogBundle);

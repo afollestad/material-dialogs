@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -67,17 +68,13 @@ public class MaterialEditTextPreference extends EditTextPreference {
     protected void onBindDialogView(@NonNull View view) {
         EditText editText = mEditText;
         editText.setText(getText());
-
         // Initialize cursor to end of text
-        if (editText.getText().length() > 0) {
+        if (editText.getText().length() > 0)
             editText.setSelection(editText.length());
-        }
-
         ViewParent oldParent = editText.getParent();
         if (oldParent != view) {
-            if (oldParent != null) {
+            if (oldParent != null)
                 ((ViewGroup) oldParent).removeView(editText);
-            }
             onAddEditTextToDialogView(view, editText);
         }
     }
@@ -86,9 +83,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             String value = mEditText.getText().toString();
-            if (callChangeListener(value)) {
+            if (callChangeListener(value))
                 setText(value);
-            }
         }
     }
 
@@ -126,15 +122,14 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
         mBuilder.customView(layout, false);
 
-        PreferenceManager pm = getPreferenceManager();
         try {
+            PreferenceManager pm = getPreferenceManager();
             Method method = pm.getClass().getDeclaredMethod(
                     "registerOnActivityDestroyListener",
                     PreferenceManager.OnActivityDestroyListener.class);
             method.setAccessible(true);
             method.invoke(pm, this);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         mDialog = mBuilder.build();
@@ -143,6 +138,20 @@ public class MaterialEditTextPreference extends EditTextPreference {
         requestInputMethod(mDialog);
 
         mDialog.show();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        try {
+            PreferenceManager pm = getPreferenceManager();
+            Method method = pm.getClass().getDeclaredMethod(
+                    "unregisterOnActivityDestroyListener",
+                    PreferenceManager.OnActivityDestroyListener.class);
+            method.setAccessible(true);
+            method.invoke(pm, this);
+        } catch (Exception ignored) {
+        }
     }
 
     /**
@@ -214,7 +223,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
 
         @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(isDialogShowing ? 1 : 0);
             dest.writeBundle(dialogBundle);

@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <com.afollestad.materialdialogs.prefs.MaterialDialogPreference
+        android:dialogIcon="@drawable/ic_launcher"
+        android:dialogMessage="@string/preference_dialog_message"
+        android:dialogTitle="@string/preference_dialog_title"
+        android:key="unused_key00"
+        android:negativeButtonText="@android:string/cancel"
+        android:positiveButtonText="@android:string/ok"
+        android:summary="@string/material_dialog_pref_summary"
+        android:title="@string/material_dialog_pref_title" />
+
     <com.afollestad.materialdialogs.prefs.MaterialListPreference
-        android:key="unused_key01"
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
-        android:title="@string/list_pref_title"
-        android:summary="@string/list_pref_desc"
+        android:key="unused_key01"
+        android:layout="@layout/preference_custom"
         android:persistent="true"
-        android:layout="@layout/preference_custom" />
+        android:summary="@string/list_pref_desc"
+        android:title="@string/list_pref_title" />
 
     <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
-        android:key="unused_key03"
-        android:title="@string/edittext_pref_title"
-        android:summary="@string/edittext_pref_desc"
-        android:inputType="textPersonName"
-        android:dialogTitle="@string/edittext_pref_dialogtitle"
-        android:dialogMessage="@string/optional_dialog_message"
-        android:persistent="true"
         android:defaultValue="@string/edittext_pref_optionalvalue"
-        android:layout="@layout/preference_custom" />
+        android:dialogMessage="@string/optional_dialog_message"
+        android:dialogTitle="@string/edittext_pref_dialogtitle"
+        android:inputType="textPersonName"
+        android:key="unused_key03"
+        android:layout="@layout/preference_custom"
+        android:persistent="true"
+        android:summary="@string/edittext_pref_desc"
+        android:title="@string/edittext_pref_title" />
 
 </PreferenceScreen>
