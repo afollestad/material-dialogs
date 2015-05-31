@@ -8,9 +8,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
@@ -18,6 +18,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.UiThread;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -541,7 +542,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder titleColor(int color) {
+        public Builder titleColor(@ColorInt int color) {
             this.titleColor = color;
             this.titleColorSet = true;
             return this;
@@ -565,7 +566,7 @@ public class MaterialDialog extends DialogBase implements
          * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder typeface(Typeface medium, Typeface regular) {
+        public Builder typeface(@Nullable Typeface medium, @Nullable Typeface regular) {
             this.mediumFont = medium;
             this.regularFont = regular;
             return this;
@@ -579,7 +580,7 @@ public class MaterialDialog extends DialogBase implements
          * @param regular The name of font in assets/fonts used everywhere else, like content and list items (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder typeface(String medium, String regular) {
+        public Builder typeface(@Nullable String medium, @Nullable String regular) {
             if (medium != null) {
                 this.mediumFont = TypefaceHelper.get(this.context, medium);
                 if (this.mediumFont == null)
@@ -625,7 +626,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder contentColor(int color) {
+        public Builder contentColor(@ColorInt int color) {
             this.contentColor = color;
             this.contentColorSet = true;
             return this;
@@ -670,7 +671,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder itemColor(int color) {
+        public Builder itemColor(@ColorInt int color) {
             this.itemColor = color;
             this.itemColorSet = true;
             return this;
@@ -730,7 +731,7 @@ public class MaterialDialog extends DialogBase implements
          * @param callback        The callback that will be called when the presses the positive button.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder itemsCallbackMultiChoice(Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
+        public Builder itemsCallbackMultiChoice(@Nullable Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
             this.selectedIndices = selectedIndices;
             this.listCallback = null;
             this.listCallbackSingleChoice = null;
@@ -760,7 +761,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder positiveColor(int color) {
+        public Builder positiveColor(@ColorInt int color) {
             this.positiveColor = color;
             return this;
         }
@@ -782,7 +783,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder negativeColor(int color) {
+        public Builder negativeColor(@ColorInt int color) {
             this.negativeColor = color;
             return this;
         }
@@ -804,7 +805,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder neutralColor(int color) {
+        public Builder neutralColor(@ColorInt int color) {
             this.neutralColor = color;
             return this;
         }
@@ -913,7 +914,7 @@ public class MaterialDialog extends DialogBase implements
             return progress(indeterminate, max);
         }
 
-        public Builder widgetColor(int color) {
+        public Builder widgetColor(@ColorInt int color) {
             this.widgetColor = color;
             return this;
         }
@@ -926,7 +927,7 @@ public class MaterialDialog extends DialogBase implements
             return widgetColorRes(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
-        public Builder dividerColor(int color) {
+        public Builder dividerColor(@ColorInt int color) {
             this.dividerColor = color;
             return this;
         }
@@ -939,7 +940,7 @@ public class MaterialDialog extends DialogBase implements
             return dividerColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
-        public Builder backgroundColor(int color) {
+        public Builder backgroundColor(@ColorInt int color) {
             this.backgroundColor = color;
             return this;
         }
@@ -987,7 +988,7 @@ public class MaterialDialog extends DialogBase implements
          * @param callback The callback invoked when an item in the list is selected.
          * @return This Builder object to allow for chaining of calls to set methods
          */
-        public Builder adapter(@NonNull ListAdapter adapter, ListCallback callback) {
+        public Builder adapter(@NonNull ListAdapter adapter, @Nullable ListCallback callback) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set adapter() when you're using a custom view.");
             this.adapter = adapter;
@@ -1037,7 +1038,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder input(CharSequence hint, CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+        public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set content() when you're using a custom view.");
             this.inputCallback = callback;
@@ -1047,7 +1048,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder input(CharSequence hint, CharSequence prefill, @NonNull InputCallback callback) {
+        public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, @NonNull InputCallback callback) {
             return input(hint, prefill, true, callback);
         }
 
@@ -1095,10 +1096,12 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        @UiThread
         public MaterialDialog build() {
             return new MaterialDialog(this);
         }
 
+        @UiThread
         public MaterialDialog show() {
             MaterialDialog dialog = build();
             dialog.show();
@@ -1107,9 +1110,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Override
+    @UiThread
     public void show() {
-        if (Looper.myLooper() != Looper.getMainLooper())
-            throw new IllegalStateException("Dialogs can only be shown from the UI thread.");
         try {
             super.show();
             mHandler = new Handler();
@@ -1188,6 +1190,7 @@ public class MaterialDialog extends DialogBase implements
      * @param which The action button to update.
      * @param title The new title of the action button.
      */
+    @UiThread
     public final void setActionButton(@NonNull final DialogAction which, final CharSequence title) {
         switch (which) {
             default:
@@ -1243,28 +1246,53 @@ public class MaterialDialog extends DialogBase implements
         return number;
     }
 
-    public final void setTitle(@NonNull final CharSequence newTitle) {
+    @UiThread
+    public final void setTitle(@NonNull CharSequence newTitle) {
         title.setText(newTitle);
     }
 
+    @UiThread
+    public final void setTitle(@StringRes int newTitleRes) {
+        setTitle(mBuilder.context.getString(newTitleRes));
+    }
+
+    @UiThread
+    public final void setTitle(@StringRes int newTitleRes, @Nullable Object... formatArgs) {
+        setTitle(mBuilder.context.getString(newTitleRes, formatArgs));
+    }
+
+    @UiThread
     public void setIcon(@DrawableRes final int resId) {
         icon.setImageResource(resId);
         icon.setVisibility(resId != 0 ? View.VISIBLE : View.GONE);
     }
 
+    @UiThread
     public void setIcon(final Drawable d) {
         icon.setImageDrawable(d);
         icon.setVisibility(d != null ? View.VISIBLE : View.GONE);
     }
 
+    @UiThread
     public void setIconAttribute(@AttrRes int attrId) {
         Drawable d = DialogUtils.resolveDrawable(mBuilder.context, attrId);
         setIcon(d);
     }
 
-    public final void setContent(final CharSequence newContent) {
+    @UiThread
+    public final void setContent(CharSequence newContent) {
         content.setText(newContent);
         content.setVisibility(TextUtils.isEmpty(newContent) ? View.GONE : View.VISIBLE);
+    }
+
+    @UiThread
+    public final void setContent(@StringRes int newContentRes) {
+        setContent(mBuilder.context.getString(newContentRes));
+    }
+
+    @UiThread
+    public final void setContent(@StringRes int newContentRes, @Nullable Object... formatArgs) {
+        setContent(mBuilder.context.getString(newContentRes, formatArgs));
     }
 
     /**
@@ -1275,6 +1303,7 @@ public class MaterialDialog extends DialogBase implements
         setContent(message);
     }
 
+    @UiThread
     public final void setItems(CharSequence[] items) {
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
@@ -1367,6 +1396,7 @@ public class MaterialDialog extends DialogBase implements
      *
      * @param index The index of the list item to check.
      */
+    @UiThread
     public void setSelectedIndex(int index) {
         mBuilder.selectedIndex = index;
         if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
@@ -1383,6 +1413,7 @@ public class MaterialDialog extends DialogBase implements
      *
      * @param indices The indices of the list items to check.
      */
+    @UiThread
     public void setSelectedIndices(@NonNull Integer[] indices) {
         mBuilder.selectedIndices = indices;
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));

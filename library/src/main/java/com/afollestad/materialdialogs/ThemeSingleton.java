@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
 /**
@@ -21,15 +22,24 @@ public class ThemeSingleton {
     }
 
     public boolean darkTheme = false;
+    @ColorInt
     public int titleColor = 0;
+    @ColorInt
     public int contentColor = 0;
+    @ColorInt
     public int positiveColor = 0;
+    @ColorInt
     public int neutralColor = 0;
+    @ColorInt
     public int negativeColor = 0;
+    @ColorInt
     public int widgetColor = 0;
+    @ColorInt
     public int itemColor = 0;
     public Drawable icon = null;
+    @ColorInt
     public int backgroundColor = 0;
+    @ColorInt
     public int dividerColor = 0;
 
     @DrawableRes

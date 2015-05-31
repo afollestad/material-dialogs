@@ -10,6 +10,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.ListAdapter;
 
@@ -160,12 +161,14 @@ public class AlertDialogWrapper {
             return this;
         }
 
+        @UiThread
         public Dialog create() {
             addButtonsCallback();
             addListCallbacks();
             return builder.build();
         }
 
+        @UiThread
         public Dialog show() {
             Dialog dialog = create();
             dialog.show();
