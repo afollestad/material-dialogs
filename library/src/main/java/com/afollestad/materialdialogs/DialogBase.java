@@ -35,7 +35,7 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
     }
 
     protected final void setViewInternal(View view) {
-        setContentView(view);
+        super.setContentView(view);
     }
 
     @Override
