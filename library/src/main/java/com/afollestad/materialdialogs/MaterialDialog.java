@@ -1247,11 +1247,13 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @UiThread
+    @Override
     public final void setTitle(@NonNull CharSequence newTitle) {
         title.setText(newTitle);
     }
 
     @UiThread
+    @Override
     public final void setTitle(@StringRes int newTitleRes) {
         setTitle(mBuilder.context.getString(newTitleRes));
     }

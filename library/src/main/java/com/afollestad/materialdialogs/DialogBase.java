@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 
@@ -41,5 +42,23 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
     public void onShow(DialogInterface dialog) {
         if (mShowListener != null)
             mShowListener.onShow(dialog);
+    }
+
+    @Override
+    @Deprecated
+    public void setContentView(int layoutResID) throws IllegalAccessError {
+        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+    }
+
+    @Override
+    @Deprecated
+    public void setContentView(View view) throws IllegalAccessError {
+        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+    }
+
+    @Override
+    @Deprecated
+    public void setContentView(View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
+        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
     }
 }
