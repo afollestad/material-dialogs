@@ -72,5 +72,6 @@
     <dimen name="md_simplelist_icon_margin">16dp</dimen>
 
     <dimen name="md_bg_corner_radius">2dp</dimen>
+    <dimen name="circular_progress_border">4dp</dimen>
 
 </resources>

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
+import com.afollestad.materialdialogs.progress.CircularProgressDrawable;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
@@ -329,7 +330,19 @@ class DialogInit {
         if (builder.indeterminateProgress || builder.progress > -2) {
             dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
             if (dialog.mProgress == null) return;
-            MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
+
+            if (builder.indeterminateProgress &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                dialog.mProgress.setIndeterminateDrawable(new CircularProgressDrawable(
+                        builder.widgetColor, builder.context.getResources().getDimension(R.dimen.circular_progress_border)));
+            } else if (!builder.indeterminateProgress && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                dialog.mProgress.setIndeterminateDrawable(new CircularProgressDrawable(
+                        builder.widgetColor, builder.context.getResources().getDimension(R.dimen.circular_progress_border)));
+                MDTintHelper.setTint(dialog.mProgress, builder.widgetColor, true);
+            } else {
+                MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
+            }
 
             if (!builder.indeterminateProgress) {
                 dialog.mProgress.setProgress(0);
