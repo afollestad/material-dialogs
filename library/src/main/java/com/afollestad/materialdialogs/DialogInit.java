@@ -336,9 +336,6 @@ class DialogInit {
                     Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 dialog.mProgress.setIndeterminateDrawable(new CircularProgressDrawable(
                         builder.widgetColor, builder.context.getResources().getDimension(R.dimen.circular_progress_border)));
-            } else if (!builder.indeterminateProgress && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                dialog.mProgress.setIndeterminateDrawable(new CircularProgressDrawable(
-                        builder.widgetColor, builder.context.getResources().getDimension(R.dimen.circular_progress_border)));
                 MDTintHelper.setTint(dialog.mProgress, builder.widgetColor, true);
             } else {
                 MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
