@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.support.annotation.LayoutRes;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -16,16 +18,19 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 
-class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
+class MaterialDialogAdapter extends BaseAdapter {
 
     private final MaterialDialog dialog;
+    @LayoutRes
+    private final int layout;
+
     private final GravityEnum itemGravity;
     public RadioButton mRadioButton;
     public boolean mInitRadio;
 
-    public MaterialDialogAdapter(MaterialDialog dialog, int resource, int textViewResourceId, CharSequence[] objects) {
-        super(dialog.mBuilder.context, resource, textViewResourceId, objects);
+    public MaterialDialogAdapter(MaterialDialog dialog, @LayoutRes int layout) {
         this.dialog = dialog;
+        this.layout = layout;
         this.itemGravity = dialog.mBuilder.itemsGravity;
     }
 
@@ -35,14 +40,26 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
     }
 
     @Override
+    public int getCount() {
+        return dialog.mBuilder.items != null ? dialog.mBuilder.items.length : 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return dialog.mBuilder.items[position];
+    }
+
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @SuppressLint("WrongViewCast")
     @Override
-    public View getView(final int index, View convertView, ViewGroup parent) {
-        final View view = super.getView(index, convertView, parent);
+    public View getView(final int index, View view, ViewGroup parent) {
+        if (view == null)
+            view = LayoutInflater.from(dialog.getContext()).inflate(layout, parent, false);
+
         TextView tv = (TextView) view.findViewById(R.id.title);
         switch (dialog.listType) {
             case SINGLE: {
@@ -67,6 +84,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
         tv.setText(dialog.mBuilder.items[index]);
         tv.setTextColor(dialog.mBuilder.itemColor);
         dialog.setTypeface(tv, dialog.mBuilder.regularFont);
+
         view.setTag(index + ":" + dialog.mBuilder.items[index]);
         setupGravity((ViewGroup) view);
 
@@ -121,7 +139,7 @@ class MaterialDialogAdapter extends ArrayAdapter<CharSequence> {
     private boolean isRTL() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
             return false;
-        Configuration config = getContext().getResources().getConfiguration();
+        Configuration config = dialog.getBuilder().getContext().getResources().getConfiguration();
         return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 }

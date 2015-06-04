@@ -1309,13 +1309,12 @@ public class MaterialDialog extends DialogBase implements
     public final void setItems(CharSequence[] items) {
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
+        mBuilder.items = items;
         if (mBuilder.adapter instanceof MaterialDialogAdapter) {
-            mBuilder.adapter = new MaterialDialogAdapter(this,
-                    ListType.getLayoutForType(listType), R.id.title, items);
+            mBuilder.adapter = new MaterialDialogAdapter(this, ListType.getLayoutForType(listType));
         } else {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
-        mBuilder.items = items;
         listView.setAdapter(mBuilder.adapter);
     }
 
