@@ -81,6 +81,7 @@ public class MaterialDialog extends DialogBase implements
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));
+        mHandler = new Handler();
         mBuilder = builder;
         final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
@@ -1114,7 +1115,6 @@ public class MaterialDialog extends DialogBase implements
     public void show() {
         try {
             super.show();
-            mHandler = new Handler();
         } catch (WindowManager.BadTokenException e) {
             throw new DialogException("Bad window token, you cannot show a dialog before an Activity is created or after it's hidden.");
         }
