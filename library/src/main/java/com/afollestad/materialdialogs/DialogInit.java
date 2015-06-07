@@ -161,10 +161,7 @@ class DialogInit {
         dialog.view.setDividerColor(builder.dividerColor);
 
         // Setup title and title frame
-        if (builder.title == null) {
-            dialog.titleFrame.setVisibility(View.GONE);
-        } else {
-            dialog.title.setText(builder.title);
+        if (dialog.title != null) {
             dialog.setTypeface(dialog.title, builder.mediumFont);
             dialog.title.setTextColor(builder.titleColor);
             dialog.title.setGravity(builder.titleGravity.getGravityInt());
@@ -172,27 +169,37 @@ class DialogInit {
                 //noinspection ResourceType
                 dialog.title.setTextAlignment(builder.titleGravity.getTextAlignment());
             }
+
+            if (builder.title == null) {
+                dialog.titleFrame.setVisibility(View.GONE);
+            } else {
+                dialog.title.setText(builder.title);
+                dialog.titleFrame.setVisibility(View.VISIBLE);
+            }
         }
 
         // Setup content
-        if (dialog.content != null && builder.content != null) {
-            dialog.content.setText(builder.content);
+        if (dialog.content != null) {
             dialog.content.setMovementMethod(new LinkMovementMethod());
             dialog.setTypeface(dialog.content, builder.regularFont);
             dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
-            if (builder.positiveColor == 0) {
+            if (builder.positiveColor == 0)
                 dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
-            } else {
+            else
                 dialog.content.setLinkTextColor(builder.positiveColor);
-            }
             dialog.content.setTextColor(builder.contentColor);
             dialog.content.setGravity(builder.contentGravity.getGravityInt());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
                 dialog.content.setTextAlignment(builder.contentGravity.getTextAlignment());
             }
-        } else if (dialog.content != null) {
-            dialog.content.setVisibility(View.GONE);
+
+            if (builder.content != null) {
+                dialog.content.setText(builder.content);
+                dialog.content.setText(View.VISIBLE);
+            } else {
+                dialog.content.setVisibility(View.GONE);
+            }
         }
 
         // Setup action buttons
