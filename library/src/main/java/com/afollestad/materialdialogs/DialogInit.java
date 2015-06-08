@@ -196,7 +196,7 @@ class DialogInit {
 
             if (builder.content != null) {
                 dialog.content.setText(builder.content);
-                dialog.content.setText(View.VISIBLE);
+                dialog.content.setVisibility(View.VISIBLE);
             } else {
                 dialog.content.setVisibility(View.GONE);
             }
