@@ -315,8 +315,10 @@ public class MaterialDialog extends DialogBase implements
         DialogAction tag = (DialogAction) v.getTag();
         switch (tag) {
             case POSITIVE: {
-                if (mBuilder.callback != null)
+                if (mBuilder.callback != null) {
+                    mBuilder.callback.onAny(this);
                     mBuilder.callback.onPositive(this);
+                }
                 if (mBuilder.listCallbackSingleChoice != null)
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
@@ -327,14 +329,18 @@ public class MaterialDialog extends DialogBase implements
                 break;
             }
             case NEGATIVE: {
-                if (mBuilder.callback != null)
+                if (mBuilder.callback != null) {
+                    mBuilder.callback.onAny(this);
                     mBuilder.callback.onNegative(this);
+                }
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
             case NEUTRAL: {
-                if (mBuilder.callback != null)
+                if (mBuilder.callback != null) {
+                    mBuilder.callback.onAny(this);
                     mBuilder.callback.onNeutral(this);
+                }
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -1540,6 +1546,9 @@ public class MaterialDialog extends DialogBase implements
      * Override these as needed, so no needing to sub empty methods from an interface
      */
     public static abstract class ButtonCallback {
+
+        public void onAny(MaterialDialog dialog) {
+        }
 
         public void onPositive(MaterialDialog dialog) {
         }
