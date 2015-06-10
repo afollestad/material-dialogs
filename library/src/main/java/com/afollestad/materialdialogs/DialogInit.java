@@ -74,10 +74,14 @@ class DialogInit {
         }
 
         // Retrieve action button colors from theme attributes or the Builder
-        builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
-        builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
-        builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
-        builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
+        if (!builder.positiveColorSet)
+            builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
+        if (!builder.neutralColorSet)
+            builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
+        if (!builder.negativeColorSet)
+            builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
+        if (!builder.widgetColorSet)
+            builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
@@ -156,8 +160,10 @@ class DialogInit {
         }
 
         // Setup divider color in case content scrolls
-        final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
-        builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
+        if (!builder.dividerColorSet) {
+            final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
+            builder.dividerColor = DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
+        }
         dialog.view.setDividerColor(builder.dividerColor);
 
         // Setup title and title frame

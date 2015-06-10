@@ -415,6 +415,11 @@ public class MaterialDialog extends DialogBase implements
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
         protected boolean itemColorSet = false;
+        protected boolean positiveColorSet = false;
+        protected boolean neutralColorSet = false;
+        protected boolean negativeColorSet = false;
+        protected boolean widgetColorSet = false;
+        protected boolean dividerColorSet = false;
 
         @DrawableRes
         protected int listSelector;
@@ -770,6 +775,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder positiveColor(@ColorInt int color) {
             this.positiveColor = color;
+            this.positiveColorSet = true;
             return this;
         }
 
@@ -792,6 +798,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder negativeColor(@ColorInt int color) {
             this.negativeColor = color;
+            this.negativeColorSet = true;
             return this;
         }
 
@@ -814,6 +821,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder neutralColor(@ColorInt int color) {
             this.neutralColor = color;
+            this.neutralColorSet = true;
             return this;
         }
 
@@ -923,6 +931,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder widgetColor(@ColorInt int color) {
             this.widgetColor = color;
+            this.widgetColorSet = true;
             return this;
         }
 
@@ -936,6 +945,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder dividerColor(@ColorInt int color) {
             this.dividerColor = color;
+            this.dividerColorSet = true;
             return this;
         }
 
