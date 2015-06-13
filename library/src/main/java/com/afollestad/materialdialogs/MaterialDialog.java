@@ -415,6 +415,7 @@ public class MaterialDialog extends DialogBase implements
 
         protected String progressNumberFormat;
         protected NumberFormat progressPercentFormat;
+        protected boolean indeterminateIsHorizontalProgress;
 
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
@@ -940,7 +941,7 @@ public class MaterialDialog extends DialogBase implements
          * hange the format of the small text showing current and maximum units of progress.
          * The default is "%1d/%2d".
          */
-        public Builder progressNumberFormat(String format) {
+        public Builder progressNumberFormat(@NonNull String format) {
             this.progressNumberFormat = format;
             return this;
         }
@@ -949,8 +950,17 @@ public class MaterialDialog extends DialogBase implements
          * Change the format of the small text showing the percentage of progress.
          * The default is NumberFormat.getPercentageInstance().
          */
-        public Builder progressPercentFormat(NumberFormat format) {
+        public Builder progressPercentFormat(@NonNull NumberFormat format) {
             this.progressPercentFormat = format;
+            return this;
+        }
+
+        /**
+         * By default, indeterminate progress dialogs will use a circular indicator. You
+         * can change it to use a horizontal progress indicator.
+         */
+        public Builder progressIndeterminateStyle(boolean horizontal) {
+            this.indeterminateIsHorizontalProgress = horizontal;
             return this;
         }
 
@@ -1377,8 +1387,11 @@ public class MaterialDialog extends DialogBase implements
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-                mProgressLabel.setText(mBuilder.progressPercentFormat.format(percentage));
+                if (mProgressLabel != null) {
+//                    final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
+                    mProgressLabel.setText(mBuilder.progressPercentFormat.format(
+                            (float) getCurrentProgress() / (float) getMaxProgress()));
+                }
                 if (mProgressMinMax != null) {
                     mProgressMinMax.setText(String.format(mBuilder.progressNumberFormat,
                             getCurrentProgress(), getMaxProgress()));

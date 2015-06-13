@@ -135,6 +135,7 @@
     <string name="edittext_pref_dialogtitle">Enter a Name</string>
     <string name="edittext_pref_optionalvalue">Default value</string>
     <string name="progress_dialog_indeterminate">Progress Dialog (Indeterminate)</string>
+    <string name="progress_dialog_indeterminate_horizontal">Progress Dialog (Horizontal Indeterminate)</string>
     <string name="progress_dialog">Progress Dialog</string>
     <string name="please_wait">Please wait…</string>
     <string name="done">Done!</string>

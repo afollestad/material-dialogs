@@ -24,7 +24,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.5.6'
+    compile 'com.afollestad:material-dialogs:0.7.6.0'
 }
 ```
 
@@ -800,6 +800,13 @@ new MaterialDialog.Builder(this)
 If you want to use the default error color from the guidelines, you can use `inputMaxLength(int)` which doesn't
 take the second error color parameter*
 
+## Custom Invalidation
+
+The easiest way to invalidate (enable or disable the EditText based on whether you think the input is acceptable)
+input dialogs is to call `alwaysCallInputCallback()` from the `Builder` so that the callback is invoked
+every time the user changes their input. From there, you can constantly check what they've typed
+and use `setEnabled()` on the `EditText` view (which can be retrieved with `MaterialDialog#getInputEditText()`).
+
 ---
 
 # Progress Dialogs
@@ -853,6 +860,21 @@ dialog.setContent(getString(R.string.done));
 ```
 
 See the sample project for this dialog in action, with the addition of threading.
+
+## Make an Indeterminate Dialog Horizontal
+
+By default, indeterminate progress dialogs use a circular progress indicator. From the `Builder`,
+you can tell the dialog that it needs to use a horizontal indicator when displaying an indeterminate progress
+dialog:
+
+```java
+new MaterialDialog.Builder(this)
+    .title(R.string.progress_dialog)
+    .content(R.string.please_wait)
+    .progress(true, 0)
+    .progressIndeterminateStyle(true)
+    .show();
+```
 
 ## Coloring the Progress Bar
 

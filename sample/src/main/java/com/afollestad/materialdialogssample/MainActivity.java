@@ -223,14 +223,21 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(false);
+                showProgressDialog(false, false);
             }
         });
 
         findViewById(R.id.progress2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(true);
+                showProgressDialog(true, false);
+            }
+        });
+
+        findViewById(R.id.progress3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressDialog(true, true);
             }
         });
 
@@ -628,12 +635,13 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    private void showProgressDialog(boolean indeterminate) {
+    private void showProgressDialog(boolean indeterminate, boolean horizontalIndeterminate) {
         if (indeterminate) {
             new MaterialDialog.Builder(this)
                     .title(R.string.progress_dialog)
                     .content(R.string.please_wait)
                     .progress(true, 0)
+                    .progressIndeterminateStyle(horizontalIndeterminate)
                     .show();
         } else {
             new MaterialDialog.Builder(this)
