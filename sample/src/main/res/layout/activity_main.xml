@@ -164,6 +164,13 @@
             android:text="@string/input" />
 
         <Button
+            android:id="@+id/input_custominvalidation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/input_custominvalidation" />
+
+        <Button
             android:id="@+id/progress1"
             android:layout_width="match_parent"
             android:layout_height="56dp"

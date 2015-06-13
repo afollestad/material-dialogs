@@ -804,8 +804,12 @@ take the second error color parameter*
 
 The easiest way to invalidate (enable or disable the EditText based on whether you think the input is acceptable)
 input dialogs is to call `alwaysCallInputCallback()` from the `Builder` so that the callback is invoked
-every time the user changes their input. From there, you can constantly check what they've typed
-and use `setEnabled()` on the `EditText` view (which can be retrieved with `MaterialDialog#getInputEditText()`).
+every time the user changes their input. From there, you can constantly check what they've typed. If you
+decide they shouldn't be able to submit that, you can disable the submit button using this from within the callback:
+
+```java
+dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+```
 
 ---
 

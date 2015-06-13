@@ -220,6 +220,13 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        findViewById(R.id.input_custominvalidation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputDialogCustomInvalidation();
+            }
+        });
+
         findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -631,6 +638,29 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         showToast("Hello, " + input.toString() + "!");
+                    }
+                }).show();
+    }
+
+    private void showInputDialogCustomInvalidation() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input)
+                .content(R.string.input_content_custominvalidation)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .positiveText(R.string.submit)
+                .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
+                .input(R.string.input_hint, 0, false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input.toString().equalsIgnoreCase("hello")) {
+                            dialog.setContent("I told you not to type that!");
+                            dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+                        } else {
+                            dialog.setContent(R.string.input_content_custominvalidation);
+                            dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                        }
                     }
                 }).show();
     }

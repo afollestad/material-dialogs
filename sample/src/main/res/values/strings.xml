@@ -150,6 +150,7 @@
     <!-- Optional button to Skip a PreferenceActivity [CHAR LIMIT=20] -->
     <string name="skip_button_label">Skip</string>
     <string name="input">Input</string>
+    <string name="input_custominvalidation">Input (Custom Invalidation)</string>
     <string name="input_hint">John Appleseed</string>
     <string name="input_content">What\'s your name?</string>
     <string name="simple_list">Simple Dialog (Guidelines Spec)</string>
@@ -160,5 +161,6 @@
     <string name="preference_dialog_title">Dialog Title</string>
     <string name="material_dialog_pref_title">Dialog Preference</string>
     <string name="material_dialog_pref_summary">This is an example of a basic dialog preference that automatically uses Material Dialogs to show the dialog.</string>
+    <string name="input_content_custominvalidation">Do not type hello, or else!</string>
 
 </resources>
