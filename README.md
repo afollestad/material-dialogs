@@ -890,6 +890,23 @@ Like action buttons and many other elements of the Material dialog, you can cust
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
 
+## Custom Number and Progress Formats
+
+Like the stock `ProgressDialog`, you can format the progress min/max numbers and the percentage indicator
+of determinate dialogs.
+
+```java
+MaterialDialog dialog = new MaterialDialog.Builder(this)
+    .progress(false, 150, true)
+    ...
+    .progressNumberFormat("%1d/%2d")
+    .progressPercentFormat(NumberFormat.getPercentageInstance())
+    ...
+    .show();
+```
+
+The values passed above are the default.
+
 ---
 
 # Preference Dialogs
