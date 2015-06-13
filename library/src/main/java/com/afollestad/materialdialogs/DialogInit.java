@@ -365,14 +365,15 @@ class DialogInit {
                 dialog.setTypeface(dialog.mProgressMinMax, builder.regularFont);
                 if (builder.showMinMax) {
                     dialog.mProgressMinMax.setVisibility(View.VISIBLE);
-                    dialog.mProgressMinMax.setText("0/" + builder.progressMax);
+                    dialog.mProgressMinMax.setText(String.format(builder.progressNumberFormat,
+                            0, builder.progressMax));
                     ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) dialog.mProgress.getLayoutParams();
                     lp.leftMargin = 0;
                     lp.rightMargin = 0;
                 } else {
                     dialog.mProgressMinMax.setVisibility(View.GONE);
                 }
-                dialog.mProgressLabel.setText("0%");
+                dialog.mProgressLabel.setText(builder.progressPercentFormat.format(0));
             }
         }
     }

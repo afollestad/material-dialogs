@@ -44,6 +44,7 @@ import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -412,6 +413,9 @@ public class MaterialDialog extends DialogBase implements
         protected int inputMaxLength = -1;
         protected int inputMaxLengthErrorColor = 0;
 
+        protected String progressNumberFormat;
+        protected NumberFormat progressPercentFormat;
+
         protected boolean titleColorSet = false;
         protected boolean contentColorSet = false;
         protected boolean itemColorSet = false;
@@ -461,6 +465,9 @@ public class MaterialDialog extends DialogBase implements
             this.positiveColor = this.widgetColor;
             this.negativeColor = this.widgetColor;
             this.neutralColor = this.widgetColor;
+
+            this.progressPercentFormat = NumberFormat.getPercentInstance();
+            this.progressNumberFormat = "%1d/%2d";
 
             // Set the default theme based on the Activity theme's primary color darkness (more white or more black)
             final int primaryTextColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
@@ -929,6 +936,24 @@ public class MaterialDialog extends DialogBase implements
             return progress(indeterminate, max);
         }
 
+        /**
+         * hange the format of the small text showing current and maximum units of progress.
+         * The default is "%1d/%2d".
+         */
+        public Builder progressNumberFormat(String format) {
+            this.progressNumberFormat = format;
+            return this;
+        }
+
+        /**
+         * Change the format of the small text showing the percentage of progress.
+         * The default is NumberFormat.getPercentageInstance().
+         */
+        public Builder progressPercentFormat(NumberFormat format) {
+            this.progressPercentFormat = format;
+            return this;
+        }
+
         public Builder widgetColor(@ColorInt int color) {
             this.widgetColor = color;
             this.widgetColorSet = true;
@@ -1353,9 +1378,11 @@ public class MaterialDialog extends DialogBase implements
             @Override
             public void run() {
                 final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-                mProgressLabel.setText(percentage + "%");
-                if (mProgressMinMax != null)
-                    mProgressMinMax.setText(getCurrentProgress() + "/" + getMaxProgress());
+                mProgressLabel.setText(mBuilder.progressPercentFormat.format(percentage));
+                if (mProgressMinMax != null) {
+                    mProgressMinMax.setText(String.format(mBuilder.progressNumberFormat,
+                            getCurrentProgress(), getMaxProgress()));
+                }
             }
         });
     }
@@ -1373,6 +1400,24 @@ public class MaterialDialog extends DialogBase implements
     public final int getMaxProgress() {
         if (mProgress == null) return -1;
         return mProgress.getMax();
+    }
+
+    /**
+     * Change the format of the small text showing the percentage of progress.
+     * The default is NumberFormat.getPercentageInstance().
+     */
+    public final void setProgressPercentFormat(NumberFormat format) {
+        mBuilder.progressPercentFormat = format;
+        setProgress(getCurrentProgress()); // invalidates display
+    }
+
+    /**
+     * Change the format of the small text showing current and maximum units of progress.
+     * The default is "%1d/%2d".
+     */
+    public final void setProgressNumberFormat(String format) {
+        mBuilder.progressNumberFormat = format;
+        setProgress(getCurrentProgress()); // invalidates display
     }
 
     public final boolean isCancelled() {
