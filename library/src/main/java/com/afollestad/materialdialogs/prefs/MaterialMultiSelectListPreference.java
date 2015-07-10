@@ -74,6 +74,22 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
                 .positiveText(getPositiveButtonText())
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    }
+                })
                 .items(getEntries())
                 .itemsCallbackMultiChoice(indices.toArray(new Integer[indices.size()]), new MaterialDialog.ListCallbackMultiChoice() {
                     @Override

@@ -66,6 +66,23 @@ public class MaterialListPreference extends ListPreference {
                 .title(getDialogTitle())
                 .content(getDialogMessage())
                 .icon(getDialogIcon())
+                .dismissListener(this)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    }
+                })
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
                 .autoDismiss(true) // immediately close the dialog after selection
