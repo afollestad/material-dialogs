@@ -422,8 +422,16 @@ public class MainActivity extends AppCompatActivity implements
                         return true; // allow selection
                     }
                 })
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        dialog.clearSelectedIndices();
+                    }
+                })
                 .alwaysCallMultiChoiceCallback()
                 .positiveText(R.string.choose)
+                .autoDismiss(false)
+                .neutralText(R.string.clear_selection)
                 .show();
     }
 

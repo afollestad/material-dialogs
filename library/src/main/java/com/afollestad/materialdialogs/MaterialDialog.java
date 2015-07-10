@@ -1502,6 +1502,21 @@ public class MaterialDialog extends DialogBase implements
         }
     }
 
+    /**
+     * Clears all selected checkboxes from multi choice list dialogs.
+     */
+    public void clearSelectedIndices() {
+        if (selectedIndicesList == null)
+            throw new IllegalStateException("You can only use clearSelectedIndicies() with multi choice list dialogs.");
+        mBuilder.selectedIndices = null;
+        selectedIndicesList.clear();
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+        } else {
+            throw new IllegalStateException("You can only use clearSelectedIndicies() with the default adapter implementation.");
+        }
+    }
+
     @Override
     public final void onShow(DialogInterface dialog) {
         if (input != null) {
