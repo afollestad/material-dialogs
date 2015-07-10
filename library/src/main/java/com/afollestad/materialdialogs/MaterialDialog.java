@@ -1377,6 +1377,10 @@ public class MaterialDialog extends DialogBase implements
         return mProgress.getProgress();
     }
 
+    public ProgressBar getProgressBar() {
+        return mProgress;
+    }
+
     public final void incrementProgress(final int by) {
         setProgress(getCurrentProgress() + by);
     }

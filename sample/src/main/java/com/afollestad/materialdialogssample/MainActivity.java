@@ -230,21 +230,28 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(false, false);
+                showDeterminateProgressDialog();
             }
         });
 
         findViewById(R.id.progress2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(true, false);
+                showIndeterminateProgressDialog(false);
             }
         });
 
         findViewById(R.id.progress3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(true, true);
+                showIndeterminateProgressDialog(true);
+            }
+        });
+
+        findViewById(R.id.progress4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressDialogConnectionSimulation();
             }
         });
 
@@ -434,7 +441,6 @@ public class MainActivity extends AppCompatActivity implements
                 .neutralText(R.string.clear_selection)
                 .show();
     }
-
 
     private void showMultiChoiceLimited() {
         new MaterialDialog.Builder(this)
@@ -673,58 +679,58 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    private void showProgressDialog(boolean indeterminate, boolean horizontalIndeterminate) {
-        if (indeterminate) {
-            new MaterialDialog.Builder(this)
-                    .title(R.string.progress_dialog)
-                    .content(R.string.please_wait)
-                    .progress(true, 0)
-                    .progressIndeterminateStyle(horizontalIndeterminate)
-                    .show();
-        } else {
-            new MaterialDialog.Builder(this)
-                    .title(R.string.progress_dialog)
-                    .content(R.string.please_wait)
-                    .contentGravity(GravityEnum.CENTER)
-                    .progress(false, 150, true)
-                    .cancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            if (mThread != null)
-                                mThread.interrupt();
-                        }
-                    })
-                    .showListener(new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(DialogInterface dialogInterface) {
-                            final MaterialDialog dialog = (MaterialDialog) dialogInterface;
-                            startThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    while (dialog.getCurrentProgress() != dialog.getMaxProgress() &&
-                                            !Thread.currentThread().isInterrupted()) {
-                                        if (dialog.isCancelled())
-                                            break;
-                                        try {
-                                            Thread.sleep(50);
-                                        } catch (InterruptedException e) {
-                                            break;
-                                        }
-                                        dialog.incrementProgress(1);
-                                    }
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            mThread = null;
-                                            dialog.setContent(getString(R.string.done));
-                                        }
-                                    });
+    private void showIndeterminateProgressDialog(boolean horizontal) {
+        new MaterialDialog.Builder(this)
+                .title(R.string.progress_dialog)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .progressIndeterminateStyle(horizontal)
+                .show();
+    }
 
+    private void showDeterminateProgressDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.progress_dialog)
+                .content(R.string.please_wait)
+                .contentGravity(GravityEnum.CENTER)
+                .progress(false, 150, true)
+                .cancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        if (mThread != null)
+                            mThread.interrupt();
+                    }
+                })
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        final MaterialDialog dialog = (MaterialDialog) dialogInterface;
+                        startThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (dialog.getCurrentProgress() != dialog.getMaxProgress() &&
+                                        !Thread.currentThread().isInterrupted()) {
+                                    if (dialog.isCancelled())
+                                        break;
+                                    try {
+                                        Thread.sleep(50);
+                                    } catch (InterruptedException e) {
+                                        break;
+                                    }
+                                    dialog.incrementProgress(1);
                                 }
-                            });
-                        }
-                    }).show();
-        }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mThread = null;
+                                        dialog.setContent(getString(R.string.done));
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                }).show();
     }
 
     @Override
