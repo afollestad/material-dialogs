@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0 rc2"
 
     signingConfigs {
         production {
@@ -17,8 +17,8 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 133
-        versionName "0.7.6.0"
+        versionCode 134
+        versionName "0.7.7.0"
     }
     lintOptions {
         abortOnError false
