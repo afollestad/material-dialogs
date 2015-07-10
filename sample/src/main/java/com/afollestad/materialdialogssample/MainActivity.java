@@ -248,13 +248,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        findViewById(R.id.progress4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showProgressDialogConnectionSimulation();
-            }
-        });
-
         findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
