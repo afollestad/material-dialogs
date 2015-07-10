@@ -1521,8 +1521,7 @@ public class MaterialDialog extends DialogBase implements
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (mBuilder.alwaysCallInputCallback)
-                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
+
                 final int length = s.toString().length();
                 boolean emptyDisabled = false;
                 if (!mBuilder.inputAllowEmpty) {
@@ -1531,6 +1530,8 @@ public class MaterialDialog extends DialogBase implements
                     positiveAb.setEnabled(!emptyDisabled);
                 }
                 invalidateInputMinMaxIndicator(length, emptyDisabled);
+                if (mBuilder.alwaysCallInputCallback)
+                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
             }
 
             @Override
