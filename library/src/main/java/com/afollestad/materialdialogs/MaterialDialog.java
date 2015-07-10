@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -898,6 +899,8 @@ public class MaterialDialog extends DialogBase implements
                 throw new IllegalStateException("You cannot use customView() with an input dialog");
             else if (this.progress > -2 || this.indeterminateProgress)
                 throw new IllegalStateException("You cannot use customView() with a progress dialog");
+            if (view.getParent() != null && view.getParent() instanceof ViewGroup)
+                ((ViewGroup) view.getParent()).removeView(view);
             this.customView = view;
             this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
