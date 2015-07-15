@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.ThemeSingleton;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.File;
 
@@ -574,9 +575,9 @@ public class MainActivity extends AppCompatActivity implements
         selectedColorIndex = index;
         //noinspection ConstantConditions
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-        ThemeSingleton.get().positiveColor = color;
-        ThemeSingleton.get().neutralColor = color;
-        ThemeSingleton.get().negativeColor = color;
+        ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
+        ThemeSingleton.get().neutralColor = DialogUtils.getActionTextStateList(this, color);
+        ThemeSingleton.get().negativeColor = DialogUtils.getActionTextStateList(this, color);
         ThemeSingleton.get().widgetColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(darker);

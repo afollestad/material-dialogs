@@ -85,11 +85,11 @@ class DialogInit {
 
         // Retrieve action button colors from theme attributes or the Builder
         if (!builder.positiveColorSet)
-            builder.positiveColor = DialogUtils.resolveColor(builder.context, R.attr.md_positive_color, builder.positiveColor);
+            builder.positiveColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_positive_color, builder.positiveColor);
         if (!builder.neutralColorSet)
-            builder.neutralColor = DialogUtils.resolveColor(builder.context, R.attr.md_neutral_color, builder.neutralColor);
+            builder.neutralColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_neutral_color, builder.neutralColor);
         if (!builder.negativeColorSet)
-            builder.negativeColor = DialogUtils.resolveColor(builder.context, R.attr.md_negative_color, builder.negativeColor);
+            builder.negativeColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_negative_color, builder.negativeColor);
         if (!builder.widgetColorSet)
             builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
 
@@ -199,7 +199,7 @@ class DialogInit {
             dialog.content.setMovementMethod(new LinkMovementMethod());
             dialog.setTypeface(dialog.content, builder.regularFont);
             dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
-            if (builder.positiveColor == 0)
+            if (builder.positiveColor == null)
                 dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
             else
                 dialog.content.setLinkTextColor(builder.positiveColor);
@@ -235,7 +235,7 @@ class DialogInit {
         dialog.setTypeface(positiveTextView, builder.mediumFont);
         positiveTextView.setAllCapsCompat(textAllCaps);
         positiveTextView.setText(builder.positiveText);
-        positiveTextView.setTextColor(getActionTextStateList(builder.context, builder.positiveColor));
+        positiveTextView.setTextColor(builder.positiveColor);
         dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
         dialog.positiveButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.POSITIVE, false));
         dialog.positiveButton.setTag(DialogAction.POSITIVE);
@@ -246,7 +246,7 @@ class DialogInit {
         dialog.setTypeface(negativeTextView, builder.mediumFont);
         negativeTextView.setAllCapsCompat(textAllCaps);
         negativeTextView.setText(builder.negativeText);
-        negativeTextView.setTextColor(getActionTextStateList(builder.context, builder.negativeColor));
+        negativeTextView.setTextColor(builder.negativeColor);
         dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
         dialog.negativeButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, false));
         dialog.negativeButton.setTag(DialogAction.NEGATIVE);
@@ -257,7 +257,7 @@ class DialogInit {
         dialog.setTypeface(neutralTextView, builder.mediumFont);
         neutralTextView.setAllCapsCompat(textAllCaps);
         neutralTextView.setText(builder.neutralText);
-        neutralTextView.setTextColor(getActionTextStateList(builder.context, builder.neutralColor));
+        neutralTextView.setTextColor(builder.neutralColor);
         dialog.neutralButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, true));
         dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
         dialog.neutralButton.setTag(DialogAction.NEUTRAL);
@@ -427,19 +427,4 @@ class DialogInit {
             dialog.inputMinMax = null;
         }
     }
-
-    private static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
-        final int fallBackButtonColor = DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
-        if (newPrimaryColor == 0) newPrimaryColor = fallBackButtonColor;
-        int[][] states = new int[][]{
-                new int[]{-android.R.attr.state_enabled}, // disabled
-                new int[]{} // enabled
-        };
-        int[] colors = new int[]{
-                DialogUtils.adjustAlpha(newPrimaryColor, 0.4f),
-                newPrimaryColor
-        };
-        return new ColorStateList(states, colors);
-    }
-
 }
