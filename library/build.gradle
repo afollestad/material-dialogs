@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc3"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 8
@@ -21,4 +22,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.android.support:support-annotations:22.2.1'
+}
+
+publish {
+    userOrg = 'drummer-aidan'
+    groupId = 'com.afollestad'
+    artifactId = 'material-dialogs'
+    version = '0.7.7.0'
+    description = 'A library for implementing Material design styled dialogs across all versions of Android.'
+    website = 'https://github.com/afollestad/material-dialogs'
+    issueTracker = "${website}/issues"
+    repository = "${website}.git"
 }
