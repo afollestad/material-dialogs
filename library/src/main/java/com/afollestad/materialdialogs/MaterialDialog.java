@@ -1166,7 +1166,16 @@ public class MaterialDialog extends DialogBase implements
 
         @UiThread
         public MaterialDialog build() {
-            return new MaterialDialog(this);
+            MaterialDialog d = new MaterialDialog(this);
+
+            if (context.getResources().getBoolean(R.bool.md_is_tablet)) {
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(d.getWindow().getAttributes());
+                lp.width = context.getResources().getDimensionPixelSize(R.dimen.md_default_dialog_width);
+                d.getWindow().setAttributes(lp);
+            }
+
+            return d;
         }
 
         @UiThread
