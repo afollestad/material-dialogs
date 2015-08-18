@@ -10,12 +10,12 @@ import android.os.Parcelable;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -66,6 +66,23 @@ public class MaterialListPreference extends ListPreference {
                 .title(getDialogTitle())
                 .content(getDialogMessage())
                 .icon(getDialogIcon())
+                .dismissListener(this)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    }
+                })
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
                 .autoDismiss(true) // immediately close the dialog after selection
@@ -74,9 +91,13 @@ public class MaterialListPreference extends ListPreference {
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         onClick(null, DialogInterface.BUTTON_POSITIVE);
                         if (which >= 0 && getEntryValues() != null) {
-                            String value = getEntryValues()[which].toString();
-                            if (callChangeListener(value) && isPersistent())
-                                setValue(value);
+                            try {
+                                Field clickedIndex = ListPreference.class.getDeclaredField("mClickedDialogEntryIndex");
+                                clickedIndex.setAccessible(true);
+                                clickedIndex.set(MaterialListPreference.this, which);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         return true;
                     }
@@ -125,18 +146,6 @@ public class MaterialListPreference extends ListPreference {
         super.onActivityDestroy();
         if (mDialog != null && mDialog.isShowing())
             mDialog.dismiss();
-    }
-
-    @Override
-    public void setValue(String value) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            super.setValue(value);
-        } else {
-            String oldValue = getValue();
-            super.setValue(value);
-            if (!TextUtils.equals(value, oldValue))
-                notifyChanged();
-        }
     }
 
     @Override

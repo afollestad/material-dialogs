@@ -162,5 +162,6 @@
     <string name="material_dialog_pref_title">Dialog Preference</string>
     <string name="material_dialog_pref_summary">This is an example of a basic dialog preference that automatically uses Material Dialogs to show the dialog.</string>
     <string name="input_content_custominvalidation">Do not type hello, or else!</string>
+    <string name="clear_selection">Clear</string>
 
 </resources>

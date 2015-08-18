@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -25,6 +26,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -87,6 +89,14 @@ public class MaterialDialog extends DialogBase implements
         final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
+
+        // Set up width if on tablet
+        if (builder.context.getResources().getBoolean(R.bool.md_is_tablet)) {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(getWindow().getAttributes());
+            lp.width = builder.context.getResources().getDimensionPixelSize(R.dimen.md_default_dialog_width);
+            getWindow().setAttributes(lp);
+        }
     }
 
     public final void setTypeface(TextView target, Typeface t) {
@@ -369,9 +379,9 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence negativeText;
         protected View customView;
         protected int widgetColor;
-        protected int positiveColor;
-        protected int negativeColor;
-        protected int neutralColor;
+        protected ColorStateList positiveColor;
+        protected ColorStateList negativeColor;
+        protected ColorStateList neutralColor;
         protected ButtonCallback callback;
         protected ListCallback listCallback;
         protected ListCallbackSingleChoice listCallbackSingleChoice;
@@ -464,9 +474,9 @@ public class MaterialDialog extends DialogBase implements
                 this.widgetColor = DialogUtils.resolveColor(context, android.R.attr.colorAccent, this.widgetColor);
             }
 
-            this.positiveColor = this.widgetColor;
-            this.negativeColor = this.widgetColor;
-            this.neutralColor = this.widgetColor;
+            this.positiveColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
+            this.negativeColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
+            this.neutralColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
 
             this.progressPercentFormat = NumberFormat.getPercentInstance();
             this.progressNumberFormat = "%1d/%2d";
@@ -515,11 +525,11 @@ public class MaterialDialog extends DialogBase implements
                 this.titleColor = s.titleColor;
             if (s.contentColor != 0)
                 this.contentColor = s.contentColor;
-            if (s.positiveColor != 0)
+            if (s.positiveColor != null)
                 this.positiveColor = s.positiveColor;
-            if (s.neutralColor != 0)
+            if (s.neutralColor != null)
                 this.neutralColor = s.neutralColor;
-            if (s.negativeColor != 0)
+            if (s.negativeColor != null)
                 this.negativeColor = s.negativeColor;
             if (s.itemColor != 0)
                 this.itemColor = s.itemColor;
@@ -783,17 +793,21 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder positiveColor(@ColorInt int color) {
-            this.positiveColor = color;
-            this.positiveColorSet = true;
-            return this;
+            return positiveColor(DialogUtils.getActionTextStateList(context, color));
         }
 
         public Builder positiveColorRes(@ColorRes int colorRes) {
-            return positiveColor(this.context.getResources().getColor(colorRes));
+            return positiveColor(DialogUtils.getActionTextColorStateList(this.context, colorRes));
         }
 
         public Builder positiveColorAttr(@AttrRes int colorAttr) {
-            return positiveColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return positiveColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+        }
+
+        public Builder positiveColor(ColorStateList colorStateList) {
+            this.positiveColor = colorStateList;
+            this.positiveColorSet = true;
+            return this;
         }
 
         public Builder neutralText(@StringRes int neutralRes) {
@@ -806,17 +820,21 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder negativeColor(@ColorInt int color) {
-            this.negativeColor = color;
-            this.negativeColorSet = true;
-            return this;
+            return negativeColor(DialogUtils.getActionTextStateList(context, color));
         }
 
         public Builder negativeColorRes(@ColorRes int colorRes) {
-            return negativeColor(this.context.getResources().getColor(colorRes));
+            return negativeColor(DialogUtils.getActionTextColorStateList(this.context, colorRes));
         }
 
         public Builder negativeColorAttr(@AttrRes int colorAttr) {
-            return negativeColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return negativeColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+        }
+
+        public Builder negativeColor(ColorStateList colorStateList) {
+            this.negativeColor = colorStateList;
+            this.negativeColorSet = true;
+            return this;
         }
 
         public Builder negativeText(@StringRes int negativeRes) {
@@ -829,17 +847,21 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder neutralColor(@ColorInt int color) {
-            this.neutralColor = color;
-            this.neutralColorSet = true;
-            return this;
+            return neutralColor(DialogUtils.getActionTextStateList(context, color));
         }
 
         public Builder neutralColorRes(@ColorRes int colorRes) {
-            return neutralColor(this.context.getResources().getColor(colorRes));
+            return neutralColor(DialogUtils.getActionTextColorStateList(this.context, colorRes));
         }
 
         public Builder neutralColorAttr(@AttrRes int colorAttr) {
-            return neutralColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return neutralColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+        }
+
+        public Builder neutralColor(ColorStateList colorStateList) {
+            this.neutralColor = colorStateList;
+            this.neutralColorSet = true;
+            return this;
         }
 
         public Builder listSelector(@DrawableRes int selectorRes) {
@@ -899,6 +921,8 @@ public class MaterialDialog extends DialogBase implements
                 throw new IllegalStateException("You cannot use customView() with an input dialog");
             else if (this.progress > -2 || this.indeterminateProgress)
                 throw new IllegalStateException("You cannot use customView() with a progress dialog");
+            if (view.getParent() != null && view.getParent() instanceof ViewGroup)
+                ((ViewGroup) view.getParent()).removeView(view);
             this.customView = view;
             this.wrapCustomViewInScroll = wrapInScrollView;
             return this;
@@ -1380,6 +1404,10 @@ public class MaterialDialog extends DialogBase implements
         return mProgress.getProgress();
     }
 
+    public ProgressBar getProgressBar() {
+        return mProgress;
+    }
+
     public final void incrementProgress(final int by) {
         setProgress(getCurrentProgress() + by);
     }
@@ -1502,6 +1530,21 @@ public class MaterialDialog extends DialogBase implements
             ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
+        }
+    }
+
+    /**
+     * Clears all selected checkboxes from multi choice list dialogs.
+     */
+    public void clearSelectedIndices() {
+        if (selectedIndicesList == null)
+            throw new IllegalStateException("You can only use clearSelectedIndicies() with multi choice list dialogs.");
+        mBuilder.selectedIndices = null;
+        selectedIndicesList.clear();
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof MaterialDialogAdapter) {
+            ((MaterialDialogAdapter) mBuilder.adapter).notifyDataSetChanged();
+        } else {
+            throw new IllegalStateException("You can only use clearSelectedIndicies() with the default adapter implementation.");
         }
     }
 

@@ -105,6 +105,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .icon(getDialogIcon())
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
+                .dismissListener(this)
                 .callback(callback)
                 .dismissListener(this);
 
@@ -161,9 +162,20 @@ public class MaterialEditTextPreference extends EditTextPreference {
     private final ButtonCallback callback = new ButtonCallback() {
         @Override
         public void onPositive(MaterialDialog dialog) {
+            onClick(dialog, DialogInterface.BUTTON_POSITIVE);
             String value = mEditText.getText().toString();
             if (callChangeListener(value) && isPersistent())
                 setText(value);
+        }
+
+        @Override
+        public void onNeutral(MaterialDialog dialog) {
+            onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+        }
+
+        @Override
+        public void onNegative(MaterialDialog dialog) {
+            onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
         }
     };
 

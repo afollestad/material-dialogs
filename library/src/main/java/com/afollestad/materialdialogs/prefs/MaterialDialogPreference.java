@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
-import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -54,6 +52,23 @@ public class MaterialDialogPreference extends DialogPreference {
                 .title(getDialogTitle())
                 .content(getDialogMessage())
                 .icon(getDialogIcon())
+                .dismissListener(this)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    }
+                })
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .autoDismiss(true); // immediately close the dialog after selection

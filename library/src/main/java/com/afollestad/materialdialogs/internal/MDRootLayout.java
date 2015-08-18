@@ -191,7 +191,7 @@ public class MDRootLayout extends ViewGroup {
             mTitleBar.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.UNSPECIFIED);
             availableHeight -= mTitleBar.getMeasuredHeight();
-        } else if(!mNoTitleNoPadding) {
+        } else if (!mNoTitleNoPadding) {
             fullPadding += mNoTitlePaddingFull;
         }
 
@@ -485,6 +485,8 @@ public class MDRootLayout extends ViewGroup {
     }
 
     public static boolean canRecyclerViewScroll(RecyclerView view) {
+        if (view == null || view.getAdapter() == null || view.getLayoutManager() == null)
+            return false;
         final RecyclerView.LayoutManager lm = view.getLayoutManager();
         final int count = view.getAdapter().getItemCount();
         int lastVisible;

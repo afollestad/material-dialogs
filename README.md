@@ -2,6 +2,52 @@
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdshowcase.png)
 
+# Table of Contents
+
+1. [Sample Project](https://github.com/afollestad/material-dialogs#sample-project)
+2. [Gradle Dependency](https://github.com/afollestad/material-dialogs#gradle-dependency-jcenter)
+    1. [If jCenter is Having Issues](https://github.com/afollestad/material-dialogs#if-jcenter-is-having-issues-the-library-cant-be-resolved)
+3. [What's New](https://github.com/afollestad/material-dialogs#whats-new)
+4. [Basic Dialog](https://github.com/afollestad/material-dialogs#basic-dialog)
+5. [Migration from AlertDialogs](https://github.com/afollestad/material-dialogs#migration-from-alertdialogs)
+6. [Displaying an Icon](https://github.com/afollestad/material-dialogs#displaying-an-icon)
+7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#stacked-action-buttons)
+8. [Neutral Action Button](https://github.com/afollestad/material-dialogs#neutral-action-button)
+9. [Callbacks](https://github.com/afollestad/material-dialogs#callbacks)
+10. [List Dialogs](https://github.com/afollestad/material-dialogs#list-dialogs)
+11. [Single Choice List Dialogs](https://github.com/afollestad/material-dialogs#single-choice-list-dialogs)
+    1. [Coloring Radio Buttons](https://github.com/afollestad/material-dialogs#coloring-radio-buttons)
+12. [Multi Choice List Dialogs](https://github.com/afollestad/material-dialogs#multi-choice-list-dialogs)
+    1. [Coloring Check Boxes](https://github.com/afollestad/material-dialogs#coloring-check-boxes)
+13. [Custom List Dialogs](https://github.com/afollestad/material-dialogs#custom-list-dialogs)
+14. [Custom Views](https://github.com/afollestad/material-dialogs#custom-views)
+    1. [Later Access](https://github.com/afollestad/material-dialogs#later-access)
+15. [Typefaces](https://github.com/afollestad/material-dialogs#typefaces)
+16. [Getting and Setting Action Buttons](https://github.com/afollestad/material-dialogs#getting-and-setting-action-buttons)
+17. [Theming](https://github.com/afollestad/material-dialogs#theming)
+    1. [Basics](https://github.com/afollestad/material-dialogs#basics)
+    2. [Colors](https://github.com/afollestad/material-dialogs#colors)
+    3. [Selectors](https://github.com/afollestad/material-dialogs#selectors)
+    4. [Gravity](https://github.com/afollestad/material-dialogs#gravity)
+    5. [Material Palette](https://github.com/afollestad/material-dialogs#material-palette)
+18. [Global Theming](https://github.com/afollestad/material-dialogs#global-theming)
+19. [Show, Cancel, and Dismiss Callbacks](https://github.com/afollestad/material-dialogs#show-cancel-and-dismiss-callbacks)
+20. [Input Dialogs](https://github.com/afollestad/material-dialogs#input-dialogs)
+    1. [Coloring the EditText](https://github.com/afollestad/material-dialogs#coloring-the-edittext)
+    2. [Limiting Input Length](https://github.com/afollestad/material-dialogs#limiting-input-length)
+    3. [Custom Invalidation](https://github.com/afollestad/material-dialogs#custom-invalidation)
+21. [Progress Dialogs](https://github.com/afollestad/material-dialogs#progress-dialogs)
+    1. [Indeterminate Progress Dialogs](https://github.com/afollestad/material-dialogs#indeterminate-progress-dialogs)
+    2. [Determinate (Seek Bar) Progress Dialogs](https://github.com/afollestad/material-dialogs#determinate-seek-bar-progress-dialogs)
+    3. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
+    4. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
+    5. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
+22. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
+23. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
+24. [Misc](https://github.com/afollestad/material-dialogs#misc)
+
+------
+
 # Sample Project
 
 You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
@@ -24,7 +70,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```Gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.6.0'
+    compile 'com.afollestad:material-dialogs:0.7.8.1'
 }
 ```
 
