@@ -417,6 +417,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence inputPrefill;
         protected CharSequence inputHint;
         protected InputCallback inputCallback;
+        protected TextWatcher customTextChangedListener;
         protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
@@ -1114,14 +1115,19 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+        public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, boolean allowEmptyInput, @NonNull TextWatcher customTextChangedListener, @NonNull InputCallback callback) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set content() when you're using a custom view.");
+            this.customTextChangedListener = customTextChangedListener;
             this.inputCallback = callback;
             this.inputHint = hint;
             this.inputPrefill = prefill;
             this.inputAllowEmpty = allowEmptyInput;
             return this;
+        }
+
+        public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill,  boolean allowEmptyInput, @NonNull InputCallback callback) {
+            return input(hint, prefill, allowEmptyInput, null, callback);
         }
 
         public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, @NonNull InputCallback callback) {
@@ -1554,6 +1560,9 @@ public class MaterialDialog extends DialogBase implements
 
     protected void setInternalInputCallback() {
         if (input == null) return;
+        if (mBuilder.customTextChangedListener != null)
+            input.addTextChangedListener(mBuilder.customTextChangedListener);
+
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1570,12 +1579,12 @@ public class MaterialDialog extends DialogBase implements
                     positiveAb.setEnabled(!emptyDisabled);
                 }
                 invalidateInputMinMaxIndicator(length, emptyDisabled);
-                if (mBuilder.alwaysCallInputCallback)
-                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (mBuilder.alwaysCallInputCallback)
+                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
             }
         });
     }
