@@ -42,11 +42,12 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        final int fallback;
+        int fallback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);
         else fallback = 0;
-        mColor = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
+        fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
+        mColor = DialogUtils.resolveColor(context, R.attr.md_widget_color, fallback);
 
         mEditText = new AppCompatEditText(context, attrs);
         // Give it an ID so it can be saved/restored
