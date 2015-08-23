@@ -542,8 +542,8 @@ It's probably unlikely you'd want to change gravity of elements in a dialog, but
 
 ```java
 new MaterialDialog.Builder(this)
-        .titleGravity(GravityEnum.CENTER_HORIZONTAL)
-        .contentGravity(GravityEnum.CENTER_HORIZONTAL)
+        .titleGravity(GravityEnum.CENTER)
+        .contentGravity(GravityEnum.CENTER)
         .btnStackedGravity(GravityEnum.START)
         .itemsGravity(GravityEnum.END)
         .buttonsGravity(GravityEnum.END)
