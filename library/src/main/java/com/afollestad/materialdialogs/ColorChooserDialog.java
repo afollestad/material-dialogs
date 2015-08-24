@@ -444,7 +444,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             mGrid.setAdapter(new ColorGridAdapter());
             mGrid.setSelector(ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
         } else ((BaseAdapter) mGrid.getAdapter()).notifyDataSetChanged();
-        getDialog().setTitle(title());
+        if (getDialog() != null)
+            getDialog().setTitle(title());
     }
 
     private class ColorGridAdapter extends BaseAdapter {
