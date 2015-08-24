@@ -57,7 +57,6 @@
     <string name="customView_colorChooser">Custom View No Scroll #2</string>
     <string name="ssid">SSID</string>
     <string name="ssidLit">Material Dialogs</string>
-    <string name="color_chooser">Color Chooser</string>
 
     <string-array name="socialNetworks">
         <item>Twitter</item>
