@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -189,10 +191,17 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        findViewById(R.id.customView_colorChooser).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.colorChooser_primary).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomColorChooser();
+                showColorChooser(false);
+            }
+        });
+
+        findViewById(R.id.colorChooser_accent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showColorChooser(true);
             }
         });
 
@@ -566,34 +575,36 @@ public class MainActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), "changelog");
     }
 
-    private int topLevelColor;
-    private int subLevelColor;
+    private int primaryPreselect;
+    private int accentPreselect;
 
-    private void showCustomColorChooser() {
+    private void showColorChooser(boolean accent) {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
-                .hideTopLevel(topLevelColor)
-                .preselect(topLevelColor, subLevelColor)
+                .accentMode(accent)
+                .preselect(accent ? primaryPreselect : accentPreselect)
                 .show();
     }
 
     // Receives callback from color chooser dialog
     @Override
-    public void onColorSelection(@StringRes int dialogTitle, int topLevelColor, int subLevelColor) {
-        this.topLevelColor = topLevelColor;
-        this.subLevelColor = subLevelColor;
-        final int color = subLevelColor != 0 ? subLevelColor : topLevelColor;
-
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-        ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
-        ThemeSingleton.get().neutralColor = DialogUtils.getActionTextStateList(this, color);
-        ThemeSingleton.get().negativeColor = DialogUtils.getActionTextStateList(this, color);
-        ThemeSingleton.get().widgetColor = color;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(CircleView.shiftColorDown(color));
-            getWindow().setNavigationBarColor(color);
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+        if (dialog.isAccentMode()) {
+            accentPreselect = color;
+            ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
+            ThemeSingleton.get().neutralColor = DialogUtils.getActionTextStateList(this, color);
+            ThemeSingleton.get().negativeColor = DialogUtils.getActionTextStateList(this, color);
+            ThemeSingleton.get().widgetColor = color;
+        } else {
+            primaryPreselect = color;
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(CircleView.shiftColorDown(color));
+                getWindow().setNavigationBarColor(color);
+            }
         }
+
     }
 
     private void showThemed() {

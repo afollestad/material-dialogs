@@ -54,7 +54,8 @@
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
     <string name="changelog">Changelog</string>
     <string name="customView_webView">Custom View No Scroll #1</string>
-    <string name="customView_colorChooser">Custom View No Scroll #2</string>
+    <string name="color_chooser_primary">Color Chooser Primary</string>
+    <string name="color_chooser_accent">Color Chooser Accent</string>
     <string name="ssid">SSID</string>
     <string name="ssidLit">Material Dialogs</string>
 

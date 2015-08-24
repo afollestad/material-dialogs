@@ -129,11 +129,18 @@
             android:text="@string/customView_webView" />
 
         <Button
-            android:id="@+id/customView_colorChooser"
+            android:id="@+id/colorChooser_primary"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/customView_colorChooser" />
+            android:text="@string/color_chooser_primary" />
+
+        <Button
+            android:id="@+id/colorChooser_accent"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/color_chooser_accent" />
 
         <Button
             android:id="@+id/themed"
