@@ -604,7 +604,6 @@ public class MainActivity extends AppCompatActivity implements
                 getWindow().setNavigationBarColor(color);
             }
         }
-
     }
 
     private void showThemed() {
