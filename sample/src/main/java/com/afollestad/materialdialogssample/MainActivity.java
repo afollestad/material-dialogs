@@ -575,8 +575,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onColorSelection(@StringRes int dialogTitle, int topLevelColor, int subLevelColor) {
         this.topLevelColor = topLevelColor;
         this.subLevelColor = subLevelColor;
-        int color = topLevelColor;
-        if (subLevelColor != 0) color = subLevelColor;
+        int color = subLevelColor != 0 ? subLevelColor : topLevelColor;
         //noinspection ConstantConditions
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
