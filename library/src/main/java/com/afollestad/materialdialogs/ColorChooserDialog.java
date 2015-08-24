@@ -28,7 +28,7 @@ import java.io.Serializable;
 @SuppressWarnings("FieldCanBeLocal")
 public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
 
-    private final int[] TOP_LEVEL_COLORS = new int[]{
+    private final static int[] COLORS_TOP = new int[]{
             Color.parseColor("#F44336"),
             Color.parseColor("#E91E63"),
             Color.parseColor("#9C27B0"),
@@ -49,7 +49,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             Color.parseColor("#9E9E9E"),
             Color.parseColor("#607D8B")
     };
-    private final int[][] SUB_LEVEL_COLORS = new int[][]{
+    private final static int[][] COLORS_SUB = new int[][]{
             new int[]{
                     Color.parseColor("#FFEBEE"),
                     Color.parseColor("#FFCDD2"),
@@ -280,6 +280,37 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             }
     };
 
+    private int[] mColorsTop;
+    private int[][] mColorsSub;
+
+    private void generateColors() {
+        if (getBuilder().mHideToplevel == 0) {
+            mColorsTop = COLORS_TOP;
+            mColorsSub = COLORS_SUB;
+            return;
+        }
+
+        mColorsTop = new int[COLORS_TOP.length - 1];
+        int index = 0;
+        int skipIndex = -1;
+        for (int color : COLORS_TOP) {
+            if (color == getBuilder().mHideToplevel) {
+                skipIndex = index;
+                continue;
+            }
+            mColorsTop[index] = color;
+            index++;
+        }
+
+        mColorsSub = new int[mColorsTop.length][COLORS_SUB[0].length];
+        index = 0;
+        for (int i = 0; i < COLORS_SUB.length; i++) {
+            if (i == skipIndex) continue;
+            mColorsSub[index] = COLORS_SUB[i];
+            index++;
+        }
+    }
+
     public ColorChooserDialog() {
     }
 
@@ -371,15 +402,17 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (getBuilder() == null)
             throw new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
+
+        generateColors();
         final int preselectTop = preselectTop();
         if (preselectTop != 0) {
-            for (int i = 0; i < TOP_LEVEL_COLORS.length; i++) {
-                if (TOP_LEVEL_COLORS[i] == preselectTop) {
+            for (int i = 0; i < mColorsTop.length; i++) {
+                if (mColorsTop[i] == preselectTop) {
                     topIndex(i);
                     final int preselectSub = preselectSub();
                     if (preselectSub != 0) {
-                        for (int b = 0; b < SUB_LEVEL_COLORS[i].length; b++) {
-                            if (preselectSub == SUB_LEVEL_COLORS[i][b]) {
+                        for (int b = 0; b < mColorsSub[i].length; b++) {
+                            if (preselectSub == mColorsSub[i][b]) {
                                 subIndex(b);
                                 break;
                             }
@@ -420,9 +453,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                         int topLevelColor = 0;
                         int subLevelColor = 0;
                         if (topIndex() > -1)
-                            topLevelColor = TOP_LEVEL_COLORS[topIndex()];
+                            topLevelColor = mColorsTop[topIndex()];
                         if (subIndex() > -1)
-                            subLevelColor = SUB_LEVEL_COLORS[topIndex()][subIndex()];
+                            subLevelColor = mColorsSub[topIndex()][subIndex()];
                         mCallback.onColorSelection(title(), topLevelColor, subLevelColor);
                         dismiss();
                     }
@@ -455,20 +488,14 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
         @Override
         public int getCount() {
-            if (isInSub()) {
-                return SUB_LEVEL_COLORS[topIndex()].length;
-            } else {
-                return TOP_LEVEL_COLORS.length;
-            }
+            if (isInSub()) return mColorsSub[topIndex()].length;
+            else return mColorsTop.length;
         }
 
         @Override
         public Object getItem(int position) {
-            if (isInSub()) {
-                return SUB_LEVEL_COLORS[topIndex()][position];
-            } else {
-                return TOP_LEVEL_COLORS[position];
-            }
+            if (isInSub()) return mColorsSub[topIndex()][position];
+            else return mColorsTop[position];
         }
 
         @Override
@@ -483,13 +510,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 convertView.setLayoutParams(new GridView.LayoutParams(mCircleSize, mCircleSize));
             }
             CircleView child = (CircleView) convertView;
-            if (isInSub()) {
-                child.setBackgroundColor(SUB_LEVEL_COLORS[topIndex()][position]);
+            final int color = isInSub() ? mColorsSub[topIndex()][position] : mColorsTop[position];
+            child.setBackgroundColor(color);
+            if (isInSub())
                 child.setSelected(subIndex() == position);
-            } else {
-                child.setBackgroundColor(TOP_LEVEL_COLORS[position]);
-                child.setSelected(topIndex() == position);
-            }
+            else child.setSelected(topIndex() == position);
             child.setTag(position);
             child.setOnClickListener(ColorChooserDialog.this);
             return convertView;
@@ -508,6 +533,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected int mPreselectTopLevel;
         @ColorInt
         protected int mPreselectSubLevel;
+        @ColorInt
+        protected int mHideToplevel;
 
         public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
             mContext = context;
@@ -528,7 +555,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
 
         @NonNull
+        public Builder hideTopLevel(@ColorInt int topLevelColor) {
+            mHideToplevel = topLevelColor;
+            return this;
+        }
+
+        @NonNull
         public ColorChooserDialog build() {
+            if (mHideToplevel == mPreselectTopLevel)
+                mPreselectTopLevel = 0;
             ColorChooserDialog dialog = new ColorChooserDialog();
             Bundle args = new Bundle();
             args.putSerializable("builder", this);

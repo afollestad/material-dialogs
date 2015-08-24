@@ -572,6 +572,7 @@ public class MainActivity extends AppCompatActivity implements
     private void showCustomColorChooser() {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
+                .hideTopLevel(topLevelColor)
                 .preselect(topLevelColor, subLevelColor)
                 .show();
     }
