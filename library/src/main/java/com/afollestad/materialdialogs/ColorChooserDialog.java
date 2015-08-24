@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogssample;
+package com.afollestad.materialdialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -18,8 +18,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.CircleView;
+
+import java.io.Serializable;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -321,19 +322,29 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     private int preselectTop() {
-        return getArguments().getInt("top_level_preselect", -1);
+        return getBuilder().mPreselectTopLevel;
     }
 
     private void preselectTop(int value) {
-        getArguments().putInt("top_level_preselect", value);
+        setBuilder(getBuilder().preselect(value, getBuilder().mPreselectTopLevel));
     }
 
     private int preselectSub() {
-        return getArguments().getInt("sub_level_preselect", -1);
+        return getBuilder().mPreselectSubLevel;
     }
 
     private void preselectSub(int value) {
-        getArguments().putInt("sub_level_preselect", value);
+        setBuilder(getBuilder().preselect(getBuilder().mPreselectTopLevel, value));
+    }
+
+    @StringRes
+    private int title() {
+        Builder builder = getBuilder();
+        int title;
+        if (isInSub()) title = builder.mTitleSub;
+        else title = builder.mTitle;
+        if (title == 0) title = builder.mTitle;
+        return title;
     }
 
     @Override
@@ -347,7 +358,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 topIndex(index);
                 isInSub(true);
             }
-            invalidateGrid();
+            invalidate();
         }
     }
 
@@ -358,6 +369,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (getBuilder() == null)
+            throw new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
         final int preselectTop = preselectTop();
         if (preselectTop != 0) {
             for (int i = 0; i < TOP_LEVEL_COLORS.length; i++) {
@@ -419,18 +432,19 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                         super.onNeutral(dialog);
                         dialog.setActionButton(DialogAction.NEUTRAL, null);
                         isInSub(false);
-                        invalidateGrid();
+                        invalidate();
                     }
                 }).build();
-        invalidateGrid();
+        invalidate();
         return dialog;
     }
 
-    private void invalidateGrid() {
+    private void invalidate() {
         if (mGrid.getAdapter() == null) {
             mGrid.setAdapter(new ColorGridAdapter());
             mGrid.setSelector(ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
         } else ((BaseAdapter) mGrid.getAdapter()).notifyDataSetChanged();
+        getDialog().setTitle(title());
     }
 
     private class ColorGridAdapter extends BaseAdapter {
@@ -481,14 +495,66 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
     }
 
-    public static void show(AppCompatActivity context, @StringRes int title,
-                            @ColorInt int toplevelColor, @ColorInt int subLevelColor) {
-        ColorChooserDialog dialog = new ColorChooserDialog();
-        Bundle args = new Bundle();
-        args.putInt("title", title);
-        args.putInt("top_level_preselect", toplevelColor);
-        args.putInt("sub_level_preselect", subLevelColor);
-        dialog.setArguments(args);
-        dialog.show(context.getSupportFragmentManager(), "COLOR_SELECTOR");
+    public static class Builder implements Serializable {
+
+        @NonNull
+        protected final transient AppCompatActivity mContext;
+        @StringRes
+        protected final int mTitle;
+        @StringRes
+        protected int mTitleSub;
+        @ColorInt
+        protected int mPreselectTopLevel;
+        @ColorInt
+        protected int mPreselectSubLevel;
+
+        public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
+            mContext = context;
+            mTitle = title;
+        }
+
+        @NonNull
+        public Builder titleSub(@StringRes int titleSub) {
+            mTitleSub = titleSub;
+            return this;
+        }
+
+        @NonNull
+        public Builder preselect(@ColorInt int topLevelColor, @ColorInt int subLevelColor) {
+            mPreselectTopLevel = topLevelColor;
+            mPreselectSubLevel = subLevelColor;
+            return this;
+        }
+
+        @NonNull
+        public ColorChooserDialog build() {
+            ColorChooserDialog dialog = new ColorChooserDialog();
+            Bundle args = new Bundle();
+            args.putSerializable("builder", this);
+            dialog.setArguments(args);
+            return dialog;
+        }
+
+        @NonNull
+        public ColorChooserDialog show() {
+            ColorChooserDialog dialog = build();
+            dialog.show(mContext);
+            return dialog;
+        }
+    }
+
+    public Builder getBuilder() {
+        if (getArguments() == null || !getArguments().containsKey("builder")) return null;
+        return (Builder) getArguments().getSerializable("builder");
+    }
+
+    public void setBuilder(Builder builder) {
+        getArguments().putSerializable("builder", builder);
+    }
+
+    @NonNull
+    public ColorChooserDialog show(AppCompatActivity context) {
+        show(context.getSupportFragmentManager(), "[MD_COLOR_CHOOSER]");
+        return this;
     }
 }

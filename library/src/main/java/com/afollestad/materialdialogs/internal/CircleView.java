@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogssample;
+package com.afollestad.materialdialogs.internal;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

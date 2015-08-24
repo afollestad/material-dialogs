@@ -164,5 +164,7 @@
     <string name="input_content_custominvalidation">Do not type hello, or else!</string>
     <string name="clear_selection">Clear</string>
     <string name="back">Back</string>
+    <string name="color_palette">Color Palette</string>
+    <string name="colors">Colors</string>
 
 </resources>

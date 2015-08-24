@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
@@ -21,11 +22,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.ColorChooserDialog;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.ThemeSingleton;
+import com.afollestad.materialdialogs.internal.CircleView;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
@@ -558,8 +561,7 @@ public class MainActivity extends AppCompatActivity implements
     private void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
-            accentColor = getResources().getColor(R.color.material_teal_500);
-
+            accentColor = ContextCompat.getColor(this, R.color.material_teal_500);
         ChangelogDialog.create(false, accentColor)
                 .show(getSupportFragmentManager(), "changelog");
     }
@@ -568,16 +570,21 @@ public class MainActivity extends AppCompatActivity implements
     private int subLevelColor;
 
     private void showCustomColorChooser() {
-        ColorChooserDialog.show(this, R.string.color_chooser, topLevelColor, subLevelColor);
+        new ColorChooserDialog.Builder(this, R.string.color_palette)
+                .titleSub(R.string.colors)
+                .preselect(topLevelColor, subLevelColor)
+                .show();
     }
 
+    // Receives callback from color chooser dialog
     @Override
     public void onColorSelection(@StringRes int dialogTitle, int topLevelColor, int subLevelColor) {
         this.topLevelColor = topLevelColor;
         this.subLevelColor = subLevelColor;
-        int color = subLevelColor != 0 ? subLevelColor : topLevelColor;
-        //noinspection ConstantConditions
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        final int color = subLevelColor != 0 ? subLevelColor : topLevelColor;
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
         ThemeSingleton.get().neutralColor = DialogUtils.getActionTextStateList(this, color);
         ThemeSingleton.get().negativeColor = DialogUtils.getActionTextStateList(this, color);
