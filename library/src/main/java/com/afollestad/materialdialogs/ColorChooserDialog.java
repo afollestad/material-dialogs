@@ -409,7 +409,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         mGrid.setGravity(Gravity.CENTER);
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .title(getArguments().getInt("title", 0))
+                .title(title())
                 .autoDismiss(false)
                 .customView(mGrid, false)
                 .positiveText(R.string.done)
@@ -423,7 +423,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                             topLevelColor = TOP_LEVEL_COLORS[topIndex()];
                         if (subIndex() > -1)
                             subLevelColor = SUB_LEVEL_COLORS[topIndex()][subIndex()];
-                        mCallback.onColorSelection(getArguments().getInt("title", 0), topLevelColor, subLevelColor);
+                        mCallback.onColorSelection(title(), topLevelColor, subLevelColor);
                         dismiss();
                     }
 
