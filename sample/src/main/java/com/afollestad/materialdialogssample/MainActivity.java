@@ -37,7 +37,7 @@ import java.io.File;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
-        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.Callback {
+        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.ColorCallback {
 
     private Toast mToast;
     private Thread mThread;
@@ -564,15 +564,19 @@ public class MainActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), "changelog");
     }
 
-    static int selectedColorIndex = -1;
+    private int topLevelColor;
+    private int subLevelColor;
 
     private void showCustomColorChooser() {
-        new ColorChooserDialog().show(this, selectedColorIndex);
+        ColorChooserDialog.show(this, R.string.color_chooser, topLevelColor, subLevelColor);
     }
 
     @Override
-    public void onColorSelection(int index, int color, int darker) {
-        selectedColorIndex = index;
+    public void onColorSelection(int topLevelColor, int subLevelColor) {
+        this.topLevelColor = topLevelColor;
+        this.subLevelColor = subLevelColor;
+        int color = topLevelColor;
+        if (subLevelColor != 0) color = subLevelColor;
         //noinspection ConstantConditions
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
@@ -580,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements
         ThemeSingleton.get().negativeColor = DialogUtils.getActionTextStateList(this, color);
         ThemeSingleton.get().widgetColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(darker);
+            getWindow().setStatusBarColor(CircleView.shiftColorDown(color));
             getWindow().setNavigationBarColor(color);
         }
     }
