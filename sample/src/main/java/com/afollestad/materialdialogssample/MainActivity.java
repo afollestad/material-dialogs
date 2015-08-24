@@ -582,7 +582,7 @@ public class MainActivity extends AppCompatActivity implements
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .accentMode(accent)
-                .preselect(accent ? primaryPreselect : accentPreselect)
+                .preselect(accent ? accentPreselect : primaryPreselect)
                 .show();
     }
 
