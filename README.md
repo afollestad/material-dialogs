@@ -42,9 +42,10 @@
     3. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
     4. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
     5. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
-22. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
-23. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
-24. [Misc](https://github.com/afollestad/material-dialogs#misc)
+22. [Color Chooser Dialog](https://github.com/afollestad/material-dialogs#color-chooser-dialog)
+23. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
+24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
+25. [Misc](https://github.com/afollestad/material-dialogs#misc)
 
 ------
 
@@ -952,6 +953,42 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
 ```
 
 The values passed above are the default.
+
+---
+
+# Color Chooser Dialog
+
+This library includes a color chooser implementation, which wraps a Material Dialog (that uses a custom view)
+inside of a Dialog Fragment. This means the dialog will survive orientation changes.
+
+The color chooser dialog is used like this:
+
+```java
+boolean accent = false;
+int preselection = // ...
+
+// Accepts an AppCompatActivity and dialog title string ID
+new ColorChooserDialog.Builder(this, R.string.color_palette)
+    .titleSub(R.string.colors)  // optional title when looking at sub colors
+    .accentMode(accent)  // optional boolean, true shows accent palette
+    .preselect(preselection)  // optional color int, preselects a color
+    .show();
+```
+
+The dialog passed in the `Builder` constructor must implement `ColorCallback`:
+
+```java
+@Override
+public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+    if (dialog.isAccentMode()) {
+        // Accent color selected
+    } else {
+        // Primary color selected
+    }
+}
+```
+
+See the sample project for more info.
 
 ---
 
