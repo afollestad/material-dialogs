@@ -572,7 +572,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onColorSelection(int topLevelColor, int subLevelColor) {
+    public void onColorSelection(@StringRes int dialogTitle, int topLevelColor, int subLevelColor) {
         this.topLevelColor = topLevelColor;
         this.subLevelColor = subLevelColor;
         int color = topLevelColor;

@@ -352,7 +352,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     public interface ColorCallback {
-        void onColorSelection(@ColorInt int topLevelColor, @ColorInt int subLevelColor);
+        void onColorSelection(@StringRes int dialogTitle, @ColorInt int topLevelColor, @ColorInt int subLevelColor);
     }
 
     @NonNull
@@ -410,7 +410,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                             topLevelColor = TOP_LEVEL_COLORS[topIndex()];
                         if (subIndex() > -1)
                             subLevelColor = SUB_LEVEL_COLORS[topIndex()][subIndex()];
-                        mCallback.onColorSelection(topLevelColor, subLevelColor);
+                        mCallback.onColorSelection(getArguments().getInt("title", 0), topLevelColor, subLevelColor);
                         dismiss();
                     }
 
