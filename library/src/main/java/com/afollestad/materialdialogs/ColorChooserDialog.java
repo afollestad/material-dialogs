@@ -298,10 +298,6 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return (Builder) getArguments().getSerializable("builder");
     }
 
-    private void setBuilder(Builder builder) {
-        getArguments().putSerializable("builder", builder);
-    }
-
     @NonNull
     public ColorChooserDialog show(AppCompatActivity context) {
         show(context.getSupportFragmentManager(), "[MD_COLOR_CHOOSER]");
