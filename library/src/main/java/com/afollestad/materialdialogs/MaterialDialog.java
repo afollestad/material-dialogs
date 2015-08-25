@@ -504,13 +504,13 @@ public class MaterialDialog extends DialogBase implements
                         this.mediumFont = Typeface.create("sans-serif-medium", Typeface.NORMAL);
                     else
                         this.mediumFont = Typeface.create("sans-serif", Typeface.BOLD);
-                } catch (Throwable ignored) {
+                } catch (Exception ignored) {
                 }
             }
             if (this.regularFont == null) {
                 try {
                     this.regularFont = Typeface.create("sans-serif", Typeface.NORMAL);
-                } catch (Throwable ignored) {
+                } catch (Exception ignored) {
                 }
             }
         }
