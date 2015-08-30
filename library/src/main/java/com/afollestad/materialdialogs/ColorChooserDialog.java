@@ -100,15 +100,35 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     public void onClick(View v) {
         if (v.getTag() != null) {
             final int index = (Integer) v.getTag();
+            final MaterialDialog dialog = (MaterialDialog) getDialog();
+            final Builder builder = getBuilder();
+
             if (isInSub()) {
                 subIndex(index);
             } else {
-                ((MaterialDialog) getDialog()).setActionButton(DialogAction.NEUTRAL, R.string.back);
+                dialog.setActionButton(DialogAction.NEUTRAL, builder.mBackBtn);
                 topIndex(index);
                 isInSub(true);
             }
+
+            if (builder.mDynamicButtonColor) {
+                int selectedColor = getSelectedColor();
+                dialog.positiveButton.setTextColor(selectedColor);
+                dialog.neutralButton.setTextColor(selectedColor);
+            }
+
             invalidate();
         }
+    }
+
+    @ColorInt
+    private int getSelectedColor() {
+        int color = 0;
+        if (subIndex() > -1)
+            color = mColorsSub[topIndex()][subIndex()];
+        else if (topIndex() > -1)
+            color = mColorsTop[topIndex()];
+        return color;
     }
 
     public interface ColorCallback {
@@ -162,30 +182,31 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         mGrid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         mGrid.setGravity(Gravity.CENTER);
 
+        Builder builder = getBuilder();
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(getTitle())
                 .autoDismiss(false)
                 .customView(mGrid, false)
-                .positiveText(R.string.done)
+                .neutralText(builder.mCancelBtn)
+                .positiveText(builder.mDoneBtn)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        int color = 0;
-                        if (subIndex() > -1)
-                            color = mColorsSub[topIndex()][subIndex()];
-                        else if (topIndex() > -1)
-                            color = mColorsTop[topIndex()];
-                        mCallback.onColorSelection(ColorChooserDialog.this, color);
+                        mCallback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
                         dismiss();
                     }
 
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
                         super.onNeutral(dialog);
-                        dialog.setActionButton(DialogAction.NEUTRAL, null);
-                        isInSub(false);
-                        invalidate();
+                        if (isInSub()) {
+                            dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCancelBtn);
+                            isInSub(false);
+                            invalidate();
+                        } else {
+                            dialog.cancel();
+                        }
                     }
                 }).build();
         invalidate();
@@ -251,7 +272,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected int mTitleSub;
         @ColorInt
         protected int mPreselect;
-        protected boolean mAccentMode;
+        @StringRes
+        protected int mDoneBtn = R.string.md_done_label;
+        @StringRes
+        protected int mBackBtn = R.string.md_back_label;
+        @StringRes
+        protected int mCancelBtn = R.string.md_cancel_label;
+
+        protected boolean mAccentMode = false;
+        protected boolean mDynamicButtonColor = true;
 
         public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
             mContext = context;
@@ -273,6 +302,30 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder accentMode(boolean accentMode) {
             mAccentMode = accentMode;
+            return this;
+        }
+
+        @NonNull
+        public Builder doneButton(@StringRes int text) {
+            mDoneBtn = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder backButton(@StringRes int text) {
+            mBackBtn = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder cancelButton(@StringRes int text) {
+            mCancelBtn = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder dynamicButtonColor(boolean enabled) {
+            mDynamicButtonColor = enabled;
             return this;
         }
 

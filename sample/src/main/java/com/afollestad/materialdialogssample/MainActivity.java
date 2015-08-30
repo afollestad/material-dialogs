@@ -582,6 +582,9 @@ public class MainActivity extends AppCompatActivity implements
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .accentMode(accent)
+                .doneButton(R.string.md_done_label)
+                .cancelButton(R.string.md_cancel_label)
+                .backButton(R.string.md_back_label)
                 .preselect(accent ? accentPreselect : primaryPreselect)
                 .show();
     }
@@ -738,7 +741,7 @@ public class MainActivity extends AppCompatActivity implements
                                     @Override
                                     public void run() {
                                         mThread = null;
-                                        dialog.setContent(getString(R.string.done));
+                                        dialog.setContent(getString(R.string.md_done_label));
                                     }
                                 });
 

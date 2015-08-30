@@ -971,6 +971,10 @@ int preselection = // ...
 new ColorChooserDialog.Builder(this, R.string.color_palette)
     .titleSub(R.string.colors)  // optional title when looking at sub colors
     .accentMode(accent)  // optional boolean, true shows accent palette
+    .doneButton(R.string.md_done_label)  // optional string, changes done button label
+    .cancelButton(R.string.md_cancel_label)  // optional string, changes cancel button label
+    .backButton(R.string.md_back_label)  // optional string, changes back button label
+    .dynamicButtonColor(true)  // true by default, false turns off changing action button colors
     .preselect(preselection)  // optional color int, preselects a color
     .show();
 ```

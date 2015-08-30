@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="back">Back</string>
-    <string name="done">Done</string>
+    <string name="md_back_label">Back</string>
+    <string name="md_done_label">Done</string>
+    <string name="md_cancel_label">Cancel</string>
 </resources>
