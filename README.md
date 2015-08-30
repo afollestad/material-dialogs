@@ -979,7 +979,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .show();
 ```
 
-The dialog passed in the `Builder` constructor must implement `ColorCallback`:
+The `Activity` passed in the `Builder` constructor must implement `ColorCallback`:
 
 ```java
 @Override
