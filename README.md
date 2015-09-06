@@ -1019,7 +1019,7 @@ If you don't want the dialog to automatically be dismissed when an action button
 the user selects a list item:
 
 ```java
-MaterialDialog dialog new MaterialDialog.Builder(this)
+MaterialDialog dialog = new MaterialDialog.Builder(this)
         // ... other initialization
         .autoDismiss(false)
         .show();
