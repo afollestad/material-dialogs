@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogssample;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class ChangelogDialog extends DialogFragment {
         return dialog;
     }
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

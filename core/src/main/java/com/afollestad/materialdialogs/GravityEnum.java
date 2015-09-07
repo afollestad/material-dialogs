@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogs;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.Gravity;
@@ -10,6 +11,7 @@ public enum GravityEnum {
 
     private static final boolean HAS_RTL = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 
+    @SuppressLint("RtlHardcoded")
     public int getGravityInt() {
         switch (this) {
             case START:

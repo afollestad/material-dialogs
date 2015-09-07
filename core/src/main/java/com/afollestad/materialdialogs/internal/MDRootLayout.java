@@ -42,7 +42,7 @@ public class MDRootLayout extends ViewGroup {
     private static final int INDEX_POSITIVE = 2;
     private boolean mDrawTopDivider = false;
     private boolean mDrawBottomDivider = false;
-    private MDButton[] mButtons = new MDButton[3];
+    private final MDButton[] mButtons = new MDButton[3];
     private boolean mForceStack = false;
     private boolean mIsStacked = false;
     private boolean mUseFullPadding = true;

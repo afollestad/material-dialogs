@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -73,7 +74,7 @@ public class DialogUtils {
         if (value.type >= TypedValue.TYPE_FIRST_COLOR_INT && value.type <= TypedValue.TYPE_LAST_COLOR_INT) {
             return getActionTextStateList(context, value.data);
         } else {
-            return context.getResources().getColorStateList(colorId);
+            return ContextCompat.getColorStateList(context, colorId);
         }
     }
 

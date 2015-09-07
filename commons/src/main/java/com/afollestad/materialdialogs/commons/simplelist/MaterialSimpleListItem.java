@@ -11,7 +11,7 @@ import android.support.v4.content.ContextCompat;
  */
 public class MaterialSimpleListItem {
 
-    private Builder mBuilder;
+    private final Builder mBuilder;
 
     private MaterialSimpleListItem(Builder builder) {
         mBuilder = builder;
@@ -27,7 +27,7 @@ public class MaterialSimpleListItem {
 
     public static class Builder {
 
-        private Context mContext;
+        private final Context mContext;
         protected Drawable mIcon;
         protected CharSequence mContent;
 

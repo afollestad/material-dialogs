@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -66,6 +67,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         return results.toArray(new File[results.size()]);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new MaterialDialog.Builder(getActivity())

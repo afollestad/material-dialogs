@@ -25,9 +25,9 @@ public class CircleView extends FrameLayout {
     private final int borderWidthSmall;
     private final int borderWidthLarge;
 
-    private Paint outerPaint;
-    private Paint whitePaint;
-    private Paint innerPaint;
+    private final Paint outerPaint;
+    private final Paint whitePaint;
+    private final Paint innerPaint;
     private boolean mSelected;
 
     public CircleView(Context context) {

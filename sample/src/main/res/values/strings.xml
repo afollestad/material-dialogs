@@ -138,7 +138,6 @@
     <string name="progress_dialog_indeterminate_horizontal">Progress Dialog (Horizontal Indeterminate)</string>
     <string name="progress_dialog">Progress Dialog</string>
     <string name="please_wait">Please wait…</string>
-    <string name="done">Done</string>
     <string name="optional_dialog_message">This is an optional dialog message.</string>
     <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
     <string name="selection_limit_reached">Selection limit reached!</string>
@@ -163,7 +162,6 @@
     <string name="material_dialog_pref_summary">This is an example of a basic dialog preference that automatically uses Material Dialogs to show the dialog.</string>
     <string name="input_content_custominvalidation">Do not type hello, or else!</string>
     <string name="clear_selection">Clear</string>
-    <string name="back">Back</string>
     <string name="color_palette">Color Palette</string>
     <string name="colors">Colors</string>
 

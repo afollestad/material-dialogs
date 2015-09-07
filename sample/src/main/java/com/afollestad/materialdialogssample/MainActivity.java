@@ -558,10 +558,10 @@ public class MainActivity extends AppCompatActivity implements
 
         int widgetColor = ThemeSingleton.get().widgetColor;
         MDTintHelper.setTint(checkbox,
-                widgetColor == 0 ? getResources().getColor(R.color.material_teal_500) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_teal_500) : widgetColor);
 
         MDTintHelper.setTint(passwordInput,
-                widgetColor == 0 ? getResources().getColor(R.color.material_teal_500) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_teal_500) : widgetColor);
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default

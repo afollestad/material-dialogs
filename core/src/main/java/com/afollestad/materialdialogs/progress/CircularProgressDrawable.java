@@ -32,11 +32,11 @@ public class CircularProgressDrawable extends Drawable
     private ObjectAnimator mObjectAnimatorSweep;
     private ObjectAnimator mObjectAnimatorAngle;
     private boolean mModeAppearing;
-    private Paint mPaint;
+    private final Paint mPaint;
     private float mCurrentGlobalAngleOffset;
     private float mCurrentGlobalAngle;
     private float mCurrentSweepAngle;
-    private float mBorderWidth;
+    private final float mBorderWidth;
     private boolean mRunning;
 
     public CircularProgressDrawable(int color, float borderWidth) {
@@ -143,7 +143,7 @@ public class CircularProgressDrawable extends Drawable
     //////////////////////////////////////////////////////////////////////////////
     ////////////////            Animation
 
-    private Property<CircularProgressDrawable, Float> mAngleProperty
+    private final Property<CircularProgressDrawable, Float> mAngleProperty
             = new Property<CircularProgressDrawable, Float>(Float.class, "angle") {
         @Override
         public Float get(CircularProgressDrawable object) {
@@ -156,7 +156,7 @@ public class CircularProgressDrawable extends Drawable
         }
     };
 
-    private Property<CircularProgressDrawable, Float> mSweepProperty
+    private final Property<CircularProgressDrawable, Float> mSweepProperty
             = new Property<CircularProgressDrawable, Float>(Float.class, "arc") {
         @Override
         public Float get(CircularProgressDrawable object) {

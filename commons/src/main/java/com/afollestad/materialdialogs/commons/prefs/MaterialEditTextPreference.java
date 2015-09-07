@@ -39,7 +39,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
     private MaterialDialog mDialog;
-    private EditText mEditText;
+    private final EditText mEditText;
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -112,6 +112,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .callback(callback)
                 .dismissListener(this);
 
+        @SuppressLint("InflateParams")
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
