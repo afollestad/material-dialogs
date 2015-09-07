@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
+import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 

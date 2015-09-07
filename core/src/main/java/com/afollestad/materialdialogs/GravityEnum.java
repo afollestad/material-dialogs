@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogs;
 
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
@@ -22,6 +23,7 @@ public enum GravityEnum {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public int getTextAlignment() {
         switch (this) {
             case CENTER:

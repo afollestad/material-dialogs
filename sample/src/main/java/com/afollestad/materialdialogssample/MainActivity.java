@@ -28,7 +28,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.afollestad.materialdialogs.ThemeSingleton;
+import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.commons.color.CircleView;
 import com.afollestad.materialdialogs.commons.color.ColorChooserDialog;
 import com.afollestad.materialdialogs.commons.simplelist.MaterialSimpleListAdapter;
