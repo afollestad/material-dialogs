@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.internal;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -355,6 +356,22 @@ public class MDRootLayout extends ViewGroup {
 
     public void setButtonGravity(GravityEnum gravity) {
         mButtonGravity = gravity;
+        invertGravityIfNecessary();
+    }
+
+    private void invertGravityIfNecessary() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) return;
+        Configuration config = getResources().getConfiguration();
+        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            switch (mButtonGravity) {
+                case START:
+                    mButtonGravity = GravityEnum.END;
+                    break;
+                case END:
+                    mButtonGravity = GravityEnum.START;
+                    break;
+            }
+        }
     }
 
     public void setButtonStackedGravity(GravityEnum gravity) {
