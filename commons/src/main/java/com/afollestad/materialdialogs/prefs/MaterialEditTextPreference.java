@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs.commons.prefs;
+package com.afollestad.materialdialogs.prefs;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

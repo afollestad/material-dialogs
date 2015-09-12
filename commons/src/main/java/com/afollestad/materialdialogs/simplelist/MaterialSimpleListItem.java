@@ -1,4 +1,4 @@
-package com.afollestad.materialdialogs.commons.simplelist;
+package com.afollestad.materialdialogs.simplelist;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
