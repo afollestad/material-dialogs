@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedAttribute">
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/md_content_textsize"
+        tools:text="Message" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@android:id/progress"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@android:id/progress"
+            android:layout_alignStart="@android:id/progress"
+            android:layout_below="@android:id/progress"
+            android:gravity="start"
+            android:minWidth="36dp"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/md_content_textsize"
+            android:textStyle="bold"
+            tools:text="100%" />
+
+        <TextView
+            android:id="@+id/minMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@android:id/progress"
+            android:layout_alignRight="@android:id/progress"
+            android:layout_below="@android:id/progress"
+            android:gravity="end"
+            android:minWidth="48dp"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/md_content_textsize"
+            tools:text="100%" />
+
+    </RelativeLayout>
+
+</merge>

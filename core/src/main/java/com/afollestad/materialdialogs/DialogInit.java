@@ -25,7 +25,9 @@ import com.afollestad.materialdialogs.internal.MDAdapter;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
-import com.afollestad.materialdialogs.progress.CircularProgressDrawable;
+import com.afollestad.materialdialogs.internal.progress.HorizontalProgressDrawable;
+import com.afollestad.materialdialogs.internal.progress.IndeterminateHorizontalProgressDrawable;
+import com.afollestad.materialdialogs.internal.progress.IndeterminateProgressDrawable;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.util.ArrayList;
@@ -352,12 +354,25 @@ class DialogInit {
             dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
             if (dialog.mProgress == null) return;
 
-            if (builder.indeterminateProgress && !builder.indeterminateIsHorizontalProgress &&
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &&
-                    Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                dialog.mProgress.setIndeterminateDrawable(new CircularProgressDrawable(
-                        builder.widgetColor, builder.context.getResources().getDimension(R.dimen.circular_progress_border)));
-                MDTintHelper.setTint(dialog.mProgress, builder.widgetColor, true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                if (builder.indeterminateProgress) {
+                    if (builder.indeterminateIsHorizontalProgress) {
+                        IndeterminateHorizontalProgressDrawable d = new IndeterminateHorizontalProgressDrawable(builder.getContext());
+                        d.setTint(builder.widgetColor);
+                        dialog.mProgress.setProgressDrawable(d);
+                        dialog.mProgress.setIndeterminateDrawable(d);
+                    } else {
+                        IndeterminateProgressDrawable d = new IndeterminateProgressDrawable(builder.getContext());
+                        d.setTint(builder.widgetColor);
+                        dialog.mProgress.setProgressDrawable(d);
+                        dialog.mProgress.setIndeterminateDrawable(d);
+                    }
+                } else {
+                    HorizontalProgressDrawable d = new HorizontalProgressDrawable(builder.getContext());
+                    d.setTint(builder.widgetColor);
+                    dialog.mProgress.setProgressDrawable(d);
+                    dialog.mProgress.setIndeterminateDrawable(d);
+                }
             } else {
                 MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
             }

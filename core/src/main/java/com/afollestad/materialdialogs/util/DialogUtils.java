@@ -22,6 +22,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
  */
 public class DialogUtils {
 
+    @SuppressWarnings("ConstantConditions")
+    public static float resolveFloat(Context context, int attr) {
+        TypedArray a = context.obtainStyledAttributes(null, new int[]{attr});
+        try {
+            return a.getFloat(0, 0);
+        } finally {
+            a.recycle();
+        }
+    }
+
     public static int adjustAlpha(int color, @SuppressWarnings("SameParameterValue") float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
         int red = Color.red(color);

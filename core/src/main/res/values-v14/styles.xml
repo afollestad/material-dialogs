@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<resources>
+
+    <style name="Widget.MaterialProgressBar.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <!--
+        Disabled for correct behavior on Android 4.x
+        <item name="android:progressDrawable">@null</item>
+        -->
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding">-->
+        <!--<item name="android:minHeight">3.2dp</item>-->
+        <!--<item name="android:maxHeight">3.2dp</item>-->
+    <!--</style>-->
+
+    <style name="Widget.MaterialProgressBar.ProgressBar" parent="android:Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:maxWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+    </style>
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.NoPadding">-->
+        <!--<item name="android:minWidth">42dp</item>-->
+        <!--<item name="android:maxWidth">42dp</item>-->
+        <!--<item name="android:minHeight">42dp</item>-->
+        <!--<item name="android:maxHeight">42dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.Large">-->
+        <!--<item name="android:minWidth">76dp</item>-->
+        <!--<item name="android:maxWidth">76dp</item>-->
+        <!--<item name="android:minHeight">76dp</item>-->
+        <!--<item name="android:maxHeight">76dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.Large.NoPadding">-->
+        <!--<item name="android:minWidth">66.5dp</item>-->
+        <!--<item name="android:maxWidth">66.5dp</item>-->
+        <!--<item name="android:minHeight">66.5dp</item>-->
+        <!--<item name="android:maxHeight">66.5dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.Small">-->
+        <!--<item name="android:minWidth">16dp</item>-->
+        <!--<item name="android:maxWidth">16dp</item>-->
+        <!--<item name="android:minHeight">16dp</item>-->
+        <!--<item name="android:maxHeight">16dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.MaterialProgressBar.ProgressBar.Small.NoPadding">-->
+        <!--<item name="android:minWidth">14dp</item>-->
+        <!--<item name="android:maxWidth">14dp</item>-->
+        <!--<item name="android:minHeight">14dp</item>-->
+        <!--<item name="android:maxHeight">14dp</item>-->
+    <!--</style>-->
+
+</resources>
