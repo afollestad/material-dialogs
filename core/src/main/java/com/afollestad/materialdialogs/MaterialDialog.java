@@ -1383,7 +1383,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @UiThread
-    public final void setItems(CharSequence[] items) {
+    public final void setItems(CharSequence... items) {
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
         mBuilder.items = items;
