@@ -826,26 +826,27 @@ There's also a global theming attribute as shown in the Global Theming section o
 ## Limiting Input Length
 
 The code below will show a little indicator in the input dialog that tells the user how many characters they've
-typed, and how many more they can type before reaching a certain limit. If they go over that limit,
-the dialog won't allow them to submit the input. It will also color the input field and length indicator
-with an error color of your choosing (or the default if you don't specify one).
+typed. If they type less than 2 characters, or more than 20, the dialog won't allow the input to be submitted.
+It will also color the input field and character counter in error color passed for the third parameter.
+ 
+If you pass 0 for the min length, there will be no min length. If you pass -1 for the max length, there will
+be no max length. If you don't pass a third parameter at all, it will default to Material red. 
 
 ```java
 new MaterialDialog.Builder(this)
-        .title(R.string.input)
-        .inputMaxLengthRes(20, R.color.material_red_500)
-        .input(null, null, new MaterialDialog.InputCallback() {
-            @Override
-            public void onInput(MaterialDialog dialog, CharSequence input) {
-                // Do something
-            }
-        }).show();
+    .title(R.string.input)
+    .inputRangeRes(2, 20, R.color.material_red_500)
+    .input(null, null, new MaterialDialog.InputCallback() {
+        @Override
+        public void onInput(MaterialDialog dialog, CharSequence input) {
+            // Do something
+        }
+    }).show();
 ```
 
-*Note that `inputMaxLengthRes(int, int)` takes a color resource ID for the second parameter, while
-`inputMaxLength(int, int)` takes a literal color integer for the second parameter. You can use either one.
-If you want to use the default error color from the guidelines, you can use `inputMaxLength(int)` which doesn't
-take the second error color parameter*
+*Note that `inputRangeRes(int, int, int)` takes a color resource ID for the third parameter, while
+`inputRange(int, int, int)` takes a literal color integer for the second parameter. You can use either one, or use
+the variation that doesn't take a third parameter at all.
 
 ## Custom Invalidation
 

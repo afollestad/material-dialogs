@@ -15,6 +15,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -422,8 +423,9 @@ public class MaterialDialog extends DialogBase implements
         protected boolean inputAllowEmpty;
         protected int inputType = -1;
         protected boolean alwaysCallInputCallback;
+        protected int inputMinLength = -1;
         protected int inputMaxLength = -1;
-        protected int inputMaxLengthErrorColor = 0;
+        protected int inputRangeErrorColor = 0;
 
         protected String progressNumberFormat;
         protected NumberFormat progressPercentFormat;
@@ -1143,30 +1145,62 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder inputMaxLength(int maxLength) {
-            return inputMaxLength(maxLength, 0);
+        /**
+         * @deprecated in favor of {@link #inputRange(int, int)}
+         */
+        @Deprecated
+        public Builder inputMaxLength(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength) {
+            return inputRange(0, maxLength, 0);
+        }
+
+        /**
+         * @deprecated in favor of {@link #inputRange(int, int, int)}
+         */
+        @Deprecated
+        public Builder inputMaxLength(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength, @ColorInt int errorColor) {
+            return inputRange(0, maxLength, errorColor);
+        }
+
+        /**
+         * @deprecated in favor of {@link #inputRangeRes(int, int, int)}
+         */
+        @Deprecated
+        public Builder inputMaxLengthRes(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength, @ColorRes int errorColor) {
+            return inputRangeRes(0, maxLength, errorColor);
+        }
+
+        public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+                                  @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength) {
+            return inputRange(minLength, maxLength, 0);
         }
 
         /**
          * @param errorColor Pass in 0 for the default red error color (as specified in guidelines).
          */
-        public Builder inputMaxLength(int maxLength, int errorColor) {
+        public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+                                  @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength,
+                                  @ColorInt int errorColor) {
+            if (minLength < 0)
+                throw new IllegalArgumentException("Min length for input dialogs cannot be less than 0.");
             if (maxLength < 1)
                 throw new IllegalArgumentException("Max length for input dialogs cannot be less than 1.");
+            this.inputMinLength = minLength;
             this.inputMaxLength = maxLength;
             if (errorColor == 0) {
-                inputMaxLengthErrorColor = ContextCompat.getColor(context, R.color.md_edittext_error);
+                this.inputRangeErrorColor = ContextCompat.getColor(context, R.color.md_edittext_error);
             } else {
-                this.inputMaxLengthErrorColor = errorColor;
+                this.inputRangeErrorColor = errorColor;
             }
             return this;
         }
 
         /**
-         * Same as #{@link #inputMaxLength(int, int)}, but it takes a color resource ID for the error color.
+         * Same as #{@link #inputRange(int, int, int)}, but it takes a color resource ID for the error color.
          */
-        public Builder inputMaxLengthRes(int maxLength, @ColorRes int errorColor) {
-            return inputMaxLength(maxLength, ContextCompat.getColor(context, errorColor));
+        public Builder inputRangeRes(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+                                     @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength,
+                                     @ColorRes int errorColor) {
+            return inputRange(minLength, maxLength, ContextCompat.getColor(context, errorColor));
         }
 
         public Builder alwaysCallInputCallback() {
@@ -1584,10 +1618,12 @@ public class MaterialDialog extends DialogBase implements
 
     protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
-            inputMinMax.setText(currentLength + "/" + mBuilder.inputMaxLength);
-            final boolean isDisabled = (emptyDisabled && currentLength == 0) || currentLength > mBuilder.inputMaxLength;
-            final int colorText = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.contentColor;
-            final int colorWidget = isDisabled ? mBuilder.inputMaxLengthErrorColor : mBuilder.widgetColor;
+            inputMinMax.setText(String.format("%d/%d", currentLength, mBuilder.inputMaxLength));
+            final boolean isDisabled = (emptyDisabled && currentLength == 0) ||
+                    currentLength > mBuilder.inputMaxLength ||
+                    currentLength < mBuilder.inputMinLength;
+            final int colorText = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.contentColor;
+            final int colorWidget = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.widgetColor;
             inputMinMax.setTextColor(colorText);
             MDTintHelper.setTint(input, colorWidget);
             final View positiveAb = getActionButton(DialogAction.POSITIVE);
