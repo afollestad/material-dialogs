@@ -26,7 +26,6 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
  * @author Kevin Barry (teslacoil) 4/02/2015
- *         <p/>
  *         This is the top level view for all MaterialDialogs
  *         It handles the layout of:
  *         titleFrame (md_stub_titleframe)

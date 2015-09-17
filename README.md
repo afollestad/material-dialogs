@@ -5,8 +5,10 @@
 # Table of Contents
 
 1. [Sample Project](https://github.com/afollestad/material-dialogs#sample-project)
-2. [Gradle Dependency](https://github.com/afollestad/material-dialogs#gradle-dependency-jcenter)
-    1. [If jCenter is Having Issues](https://github.com/afollestad/material-dialogs#if-jcenter-is-having-issues-the-library-cant-be-resolved)
+2. [Gradle Dependency](https://github.com/afollestad/material-dialogs#gradle-dependency)
+    1. [Repository](https://github.com/afollestad/material-dialogs#repository)
+    2. [Core](https://github.com/afollestad/material-dialogs#core)
+    3. [Commons](https://github.com/afollestad/material-dialogs#commons)
 3. [What's New](https://github.com/afollestad/material-dialogs#whats-new)
 4. [Basic Dialog](https://github.com/afollestad/material-dialogs#basic-dialog)
 5. [Migration from AlertDialogs](https://github.com/afollestad/material-dialogs#migration-from-alertdialogs)
@@ -65,30 +67,35 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ---
 
-# Gradle Dependency (jCenter)
+# Gradle Dependency
 
-Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file:
+[![Release](https://img.shields.io/github/release/afollestad/gradle-simple.svg?label=jitpack)](https://jitpack.io/#afollestad/material-dialogs)
 
-```Gradle
-dependencies {
-    compile 'com.afollestad:material-dialogs:0.7.9.1'
-}
-```
+### Repository
 
-[ ![Download](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs/_latestVersion)
-
-### If jCenter is Having Issues (the library can't be resolved)
-
-Add this to your app's build.gradle file:
+First, add the following to your app's `build.gradle` file:
 
 ```Gradle
 repositories {
-    maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
+    maven { url "https://jitpack.io" }
 }
 ```
 
-This will reference Bintray's Maven repository that contains material-dialogs directly, rather
-than going through jCenter first.
+### Core
+
+```gradle
+dependencies {
+    compile 'com.afollestad:material-dialogs:core:0.8.0.0'
+}
+```
+
+### Commons
+
+```gradle
+dependencies {
+    compile 'com.afollestad:material-dialogs:commons:0.8.0.0'
+}
+```
 
 ---
 
