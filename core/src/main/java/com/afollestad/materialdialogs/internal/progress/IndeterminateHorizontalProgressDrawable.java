@@ -17,9 +17,6 @@ import android.support.annotation.Keep;
 
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * A backported {@code Drawable} for indeterminate horizontal {@code ProgressBar}.
- */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class IndeterminateHorizontalProgressDrawable extends IndeterminateProgressDrawableBase {
 
@@ -39,11 +36,6 @@ public class IndeterminateHorizontalProgressDrawable extends IndeterminateProgre
     private RectTransformX mRect1TransformX = new RectTransformX(RECT_1_TRANSFORM_X);
     private RectTransformX mRect2TransformX = new RectTransformX(RECT_2_TRANSFORM_X);
 
-    /**
-     * Create a new {@code IndeterminateHorizontalProgressDrawable}.
-     *
-     * @param context the {@code Context} for retrieving style information.
-     */
     public IndeterminateHorizontalProgressDrawable(Context context) {
         super(context);
 
@@ -59,18 +51,10 @@ public class IndeterminateHorizontalProgressDrawable extends IndeterminateProgre
         };
     }
 
-    /**
-     * Get whether this {@code Drawable} is showing a track. The default is true.
-     *
-     * @return Whether this {@code Drawable} is showing a track.
-     */
     public boolean getShowTrack() {
         return mShowTrack;
     }
 
-    /**
-     * Set whether this {@code Drawable} should show a track. The default is true.
-     */
     public void setShowTrack(boolean showTrack) {
         if (mShowTrack != showTrack) {
             mShowTrack = showTrack;
@@ -78,17 +62,11 @@ public class IndeterminateHorizontalProgressDrawable extends IndeterminateProgre
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getIntrinsicHeight() {
         return mUseIntrinsicPadding ? mPaddedIntrinsicHeight : mProgressIntrinsicHeight;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getOpacity() {
         if (mAlpha == 0) {

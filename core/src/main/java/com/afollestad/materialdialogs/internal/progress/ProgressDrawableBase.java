@@ -5,6 +5,7 @@
 
 package com.afollestad.materialdialogs.internal.progress;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -17,6 +18,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 
 import com.afollestad.materialdialogs.R;
@@ -42,18 +44,10 @@ abstract class ProgressDrawableBase extends Drawable {
         setTint(colorControlActivated);
     }
 
-    /**
-     * Get whether this {@code Drawable} is showing a track. The default is true.
-     *
-     * @return Whether this {@code Drawable} is showing a track.
-     */
     public boolean getUseIntrinsicPadding() {
         return mUseIntrinsicPadding;
     }
 
-    /**
-     * Set whether this {@code Drawable} should show a track. The default is true.
-     */
     public void setUseIntrinsicPadding(boolean useIntrinsicPadding) {
         if (mUseIntrinsicPadding != useIntrinsicPadding) {
             mUseIntrinsicPadding = useIntrinsicPadding;
@@ -61,9 +55,6 @@ abstract class ProgressDrawableBase extends Drawable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setAlpha(int alpha) {
         if (mAlpha != alpha) {
@@ -72,35 +63,22 @@ abstract class ProgressDrawableBase extends Drawable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    // Rewrite for compatibility.
     @Override
     public void setTint(int tint) {
         setTintList(ColorStateList.valueOf(tint));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ColorFilter getColorFilter() {
         return mColorFilter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setColorFilter(ColorFilter colorFilter) {
         mColorFilter = colorFilter;
         invalidateSelf();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setTintList(ColorStateList tint) {
         mTint = tint;
@@ -108,11 +86,8 @@ abstract class ProgressDrawableBase extends Drawable {
         invalidateSelf();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void setTintMode(PorterDuff.Mode tintMode) {
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
         mTintMode = tintMode;
         mTintFilter = makeTintFilter(mTint, tintMode);
         invalidateSelf();
@@ -129,17 +104,11 @@ abstract class ProgressDrawableBase extends Drawable {
         return new PorterDuffColorFilter(color, tintMode);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isAutoMirrored() {
         return mAutoMirrored;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setAutoMirrored(boolean autoMirrored) {
         if (mAutoMirrored != autoMirrored) {
@@ -148,13 +117,11 @@ abstract class ProgressDrawableBase extends Drawable {
         }
     }
 
+    @SuppressLint("NewApi")
     private boolean needMirroring() {
         return isAutoMirrored() && getLayoutDirection() == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void draw(Canvas canvas) {
 

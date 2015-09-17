@@ -15,9 +15,6 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Keep;
 
-/**
- * A backported {@code Drawable} for indeterminate circular {@code ProgressBar}.
- */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class IndeterminateProgressDrawable extends IndeterminateProgressDrawableBase {
 
@@ -33,11 +30,6 @@ public class IndeterminateProgressDrawable extends IndeterminateProgressDrawable
     private RingPathTransform mRingPathTransform = new RingPathTransform();
     private RingRotation mRingRotation = new RingRotation();
 
-    /**
-     * Create a new {@code IndeterminateProgressDrawable}.
-     *
-     * @param context the {@code Context} for retrieving style information.
-     */
     public IndeterminateProgressDrawable(Context context) {
         super(context);
 
@@ -55,25 +47,16 @@ public class IndeterminateProgressDrawable extends IndeterminateProgressDrawable
         return mUseIntrinsicPadding ? mPaddedIntrinsicSize : mProgressIntrinsicSize;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getIntrinsicWidth() {
         return getIntrinsicSize();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getIntrinsicHeight() {
         return getIntrinsicSize();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getOpacity() {
         if (mAlpha == 0) {

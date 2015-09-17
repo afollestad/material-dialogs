@@ -22,9 +22,6 @@ abstract class IndeterminateProgressDrawableBase extends ProgressDrawableBase
         super(context);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -34,9 +31,6 @@ abstract class IndeterminateProgressDrawableBase extends ProgressDrawableBase
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void start() {
 
@@ -59,9 +53,6 @@ abstract class IndeterminateProgressDrawableBase extends ProgressDrawableBase
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void stop() {
         for (Animator animator : mAnimators) {
@@ -69,9 +60,6 @@ abstract class IndeterminateProgressDrawableBase extends ProgressDrawableBase
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isRunning() {
         for (Animator animator : mAnimators) {

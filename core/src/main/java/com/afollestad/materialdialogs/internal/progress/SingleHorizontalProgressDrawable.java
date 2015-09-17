@@ -50,17 +50,11 @@ class SingleHorizontalProgressDrawable extends ProgressDrawableBase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getIntrinsicHeight() {
         return mUseIntrinsicPadding ? mPaddedIntrinsicHeight : mProgressIntrinsicHeight;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getOpacity() {
         if (mAlpha == 0) {

@@ -15,9 +15,6 @@ import android.os.Build;
 
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * A backported {@code Drawable} for determinate horizontal {@code ProgressBar}.
- */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class HorizontalProgressDrawable extends LayerDrawable {
 
@@ -26,11 +23,6 @@ public class HorizontalProgressDrawable extends LayerDrawable {
     private SingleHorizontalProgressDrawable mSecondaryProgressDrawable;
     private SingleHorizontalProgressDrawable mProgressDrawable;
 
-    /**
-     * Create a new {@code HorizontalProgressDrawable}.
-     *
-     * @param context the {@code Context} for retrieving style information.
-     */
     public HorizontalProgressDrawable(Context context) {
         super(new Drawable[]{
                 new SingleHorizontalProgressDrawable(context),
@@ -53,18 +45,10 @@ public class HorizontalProgressDrawable extends LayerDrawable {
         mProgressDrawable.setShowTrack(false);
     }
 
-    /**
-     * Get whether this {@code Drawable} is showing a track. The default is true.
-     *
-     * @return Whether this {@code Drawable} is showing a track.
-     */
     public boolean getShowTrack() {
         return mTrackDrawable.getShowTrack();
     }
 
-    /**
-     * Set whether this {@code Drawable} should show a track. The default is true.
-     */
     public void setShowTrack(boolean showTrack) {
         if (mTrackDrawable.getShowTrack() != showTrack) {
             mTrackDrawable.setShowTrack(showTrack);
@@ -73,18 +57,10 @@ public class HorizontalProgressDrawable extends LayerDrawable {
         }
     }
 
-    /**
-     * Get whether this {@code Drawable} is using an intrinsic padding. The default is true.
-     *
-     * @return Whether this {@code Drawable} is using an intrinsic padding.
-     */
     public boolean getUseIntrinsicPadding() {
         return mTrackDrawable.getUseIntrinsicPadding();
     }
 
-    /**
-     * Set whether this {@code Drawable} should use an intrinsic padding. The default is true.
-     */
     public void setUseIntrinsicPadding(boolean useIntrinsicPadding) {
 
         mTrackDrawable.setUseIntrinsicPadding(useIntrinsicPadding);
@@ -92,9 +68,6 @@ public class HorizontalProgressDrawable extends LayerDrawable {
         mProgressDrawable.setUseIntrinsicPadding(useIntrinsicPadding);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     // Rewrite for compatibility and workaround lint.
     @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -104,9 +77,6 @@ public class HorizontalProgressDrawable extends LayerDrawable {
         mProgressDrawable.setTint(tint);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     // Rewrite for compatibility and workaround lint.
     @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -116,9 +86,6 @@ public class HorizontalProgressDrawable extends LayerDrawable {
         mProgressDrawable.setTintList(tint);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     // Rewrite for compatibility and workaround lint.
     @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
