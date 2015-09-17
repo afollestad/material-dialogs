@@ -87,7 +87,7 @@ Contains all the major classes of this library, including `MaterialDialog` and `
 
 ```gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:core:0.8.0.0'
+    compile 'com.afollestad.material-dialogs:core:0.8.0.0@aar'
 }
 ```
 
@@ -98,7 +98,7 @@ the Material `Preference` classes, and `MaterialSimpleListAdapter`/`MaterialSimp
 
 ```gradle
 dependencies {
-    compile 'com.afollestad:material-dialogs:commons:0.8.0.0'
+    compile 'com.afollestad.material-dialogs:commons:0.8.0.0@arr'
 }
 ```
 
