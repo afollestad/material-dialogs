@@ -19,9 +19,8 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDAdapter;
 
 /**
- * See the sample project to understand how this is used.
- * <p/>
- * Mimics the Simple List dialog style displayed on Google's guidelines site: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
+ * See the sample project to understand how this is used. Mimics the Simple List dialog style
+ * displayed on Google's guidelines site: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
  *
  * @author Aidan Follestad (afollestad)
  */
