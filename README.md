@@ -83,6 +83,8 @@ repositories {
 
 ### Core
 
+Contains all the major classes of this library, including `MaterialDialog` and `AlertDialogWrapper`.
+
 ```gradle
 dependencies {
     compile 'com.afollestad:material-dialogs:core:0.8.0.0'
@@ -90,6 +92,9 @@ dependencies {
 ```
 
 ### Commons
+
+Contains extensions to the library that not everyone may need. This includes the `ColorChooserDialog`,
+the Material `Preference` classes, and `MaterialSimpleListAdapter`/`MaterialSimpleListItem`.
 
 ```gradle
 dependencies {
