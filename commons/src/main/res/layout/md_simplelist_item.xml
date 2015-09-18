@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/md_dialog_frame_margin"
-    android:paddingStart="@dimen/md_dialog_frame_margin"
-    android:paddingRight="@dimen/md_dialog_frame_margin"
-    android:paddingEnd="@dimen/md_dialog_frame_margin"
-    android:paddingTop="@dimen/md_simplelistitem_padding_top"
-    android:paddingBottom="@dimen/md_simplelistitem_padding_top"
+    android:layout_height="wrap_content"
     android:gravity="start|center_vertical"
-    android:minHeight="@dimen/md_listitem_height">
+    android:minHeight="@dimen/md_listitem_height"
+    android:paddingEnd="@dimen/md_dialog_frame_margin"
+    android:paddingLeft="@dimen/md_dialog_frame_margin"
+    android:paddingRight="@dimen/md_dialog_frame_margin"
+    android:paddingStart="@dimen/md_dialog_frame_margin">
 
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="@dimen/md_simplelist_icon"
         android:layout_height="@dimen/md_simplelist_icon"
-        tools:background="#f5f5f5"
-        android:layout_marginRight="@dimen/md_simplelist_icon_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/md_simplelist_icon_margin"
+        android:layout_marginRight="@dimen/md_simplelist_icon_margin"
         android:scaleType="fitXY"
+        tools:background="#f5f5f5"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@android:id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@android:id/icon"
+        android:layout_toRightOf="@android:id/icon"
         android:textSize="@dimen/md_content_textsize"
         tools:text="Title" />
 
-</LinearLayout>
+</RelativeLayout>
