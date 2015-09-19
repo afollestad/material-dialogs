@@ -278,8 +278,10 @@ class DialogInit {
                     dialog.listType = MaterialDialog.ListType.SINGLE;
                 } else if (builder.listCallbackMultiChoice != null) {
                     dialog.listType = MaterialDialog.ListType.MULTI;
-                    if (builder.selectedIndices != null)
+                    if (builder.selectedIndices != null) {
                         dialog.selectedIndicesList = new ArrayList<>(Arrays.asList(builder.selectedIndices));
+                        builder.selectedIndices = null;
+                    }
                 } else {
                     dialog.listType = MaterialDialog.ListType.REGULAR;
                 }

@@ -129,11 +129,10 @@ public class MaterialDialog extends DialogBase implements
                             return;
                         selectedIndex = mBuilder.selectedIndex;
                     } else {
-                        if (mBuilder.selectedIndices == null || mBuilder.selectedIndices.length == 0)
+                        if (selectedIndicesList == null || selectedIndicesList.size() == 0)
                             return;
-                        List<Integer> indicesList = Arrays.asList(mBuilder.selectedIndices);
-                        Collections.sort(indicesList);
-                        selectedIndex = indicesList.get(0);
+                        Collections.sort(selectedIndicesList);
+                        selectedIndex = selectedIndicesList.get(0);
                     }
                     if (listView.getLastVisiblePosition() < selectedIndex) {
                         final int totalVisible = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
@@ -1554,7 +1553,6 @@ public class MaterialDialog extends DialogBase implements
      */
     @UiThread
     public void setSelectedIndices(@NonNull Integer[] indices) {
-        mBuilder.selectedIndices = indices;
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
         if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
             ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
@@ -1567,14 +1565,55 @@ public class MaterialDialog extends DialogBase implements
      * Clears all selected checkboxes from multi choice list dialogs.
      */
     public void clearSelectedIndices() {
-        if (selectedIndicesList == null)
-            throw new IllegalStateException("You can only use clearSelectedIndicies() with multi choice list dialogs.");
-        mBuilder.selectedIndices = null;
-        selectedIndicesList.clear();
+        clearSelectedIndices(true);
+    }
+
+    /**
+     * Clears all selected checkboxes from multi choice list dialogs.
+     *
+     * @param sendCallback Defaults to true. True will notify the multi-choice callback, if any.
+     */
+    public void clearSelectedIndices(boolean sendCallback) {
+        if (listType == null || listType != ListType.MULTI)
+            throw new IllegalStateException("You can only use clearSelectedIndices() with multi choice list dialogs.");
         if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
+            if (selectedIndicesList != null)
+                selectedIndicesList.clear();
             ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+            if (sendCallback && mBuilder.listCallbackMultiChoice != null)
+                sendMultichoiceCallback();
         } else {
-            throw new IllegalStateException("You can only use clearSelectedIndicies() with the default adapter implementation.");
+            throw new IllegalStateException("You can only use clearSelectedIndices() with the default adapter implementation.");
+        }
+    }
+
+    /**
+     * Selects all checkboxes in multi choice list dialogs.
+     */
+    public void selectAllIndicies() {
+        selectAllIndicies(true);
+    }
+
+    /**
+     * Selects all checkboxes in multi choice list dialogs.
+     *
+     * @param sendCallback Defaults to true. True will notify the multi-choice callback, if any.
+     */
+    public void selectAllIndicies(boolean sendCallback) {
+        if (listType == null || listType != ListType.MULTI)
+            throw new IllegalStateException("You can only use selectAllIndicies() with multi choice list dialogs.");
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
+            if (selectedIndicesList == null)
+                selectedIndicesList = new ArrayList<>();
+            for (int i = 0; i < mBuilder.adapter.getCount(); i++) {
+                if (!selectedIndicesList.contains(i))
+                    selectedIndicesList.add(i);
+            }
+            ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+            if (sendCallback && mBuilder.listCallbackMultiChoice != null)
+                sendMultichoiceCallback();
+        } else {
+            throw new IllegalStateException("You can only use selectAllIndicies() with the default adapter implementation.");
         }
     }
 
