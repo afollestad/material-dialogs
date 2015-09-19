@@ -5,7 +5,6 @@
 
 package com.afollestad.materialdialogs.internal.progress;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -117,9 +116,8 @@ abstract class ProgressDrawableBase extends Drawable {
         }
     }
 
-    @SuppressLint("NewApi")
     private boolean needMirroring() {
-        return isAutoMirrored() && getLayoutDirection() == ViewCompat.LAYOUT_DIRECTION_RTL;
+        return Build.VERSION.SDK_INT >= 23 && isAutoMirrored() && getLayoutDirection() == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
     @Override
