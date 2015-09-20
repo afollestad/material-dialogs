@@ -88,7 +88,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 
 ```gradle
 dependencies {
-    compile('com.afollestad.material-dialogs:core:0.8.0.1@aar')) {
+    compile('com.afollestad.material-dialogs:core:0.8.0.1@aar') {
         transitive = true
     }
 }
