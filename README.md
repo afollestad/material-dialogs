@@ -39,11 +39,12 @@
     2. [Limiting Input Length](https://github.com/afollestad/material-dialogs#limiting-input-length)
     3. [Custom Invalidation](https://github.com/afollestad/material-dialogs#custom-invalidation)
 21. [Progress Dialogs](https://github.com/afollestad/material-dialogs#progress-dialogs)
-    1. [Indeterminate Progress Dialogs](https://github.com/afollestad/material-dialogs#indeterminate-progress-dialogs)
-    2. [Determinate (Seek Bar) Progress Dialogs](https://github.com/afollestad/material-dialogs#determinate-seek-bar-progress-dialogs)
-    3. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
-    4. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
-    5. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
+    1. [Proguard](https://github.com/afollestad/material-dialogs#proguard)
+    2. [Indeterminate Progress Dialogs](https://github.com/afollestad/material-dialogs#indeterminate-progress-dialogs)
+    3. [Determinate (Seek Bar) Progress Dialogs](https://github.com/afollestad/material-dialogs#determinate-seek-bar-progress-dialogs)
+    4. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
+    5. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
+    6. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
 22. [Color Chooser Dialog](https://github.com/afollestad/material-dialogs#color-chooser-dialog)
 24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
 25. [Misc](https://github.com/afollestad/material-dialogs#misc)
@@ -899,6 +900,13 @@ dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
 
 This library allows you to display progress dialogs with Material design that even use your app's
 accent color to color the progress bars (if you use AppCompat to theme your app, or the Material theme on Lollipop).
+
+## Proguard
+
+Normally, `ObjectAnimator` in the context it's used in this library (for custom progress drawables) would
+need special proguard rules so that certain elements aren't removed when your app is built in release mode.
+Luckily, AAR packages are allowed to specify proguard rules that get included in apps that depend on them.
+So you do not need to worry about including any Proguard rules in order to ensure progress bars behave well.
 
 ## Indeterminate Progress Dialogs
 

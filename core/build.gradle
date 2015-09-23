@@ -12,7 +12,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "0.8.0.1"
-        consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        consumerProguardFiles 'progress-proguard.txt'
     }
     lintOptions {
         abortOnError false
