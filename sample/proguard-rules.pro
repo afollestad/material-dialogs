@@ -16,6 +16,8 @@
 #   public *;
 #}
 
+-keep class com.afollestad.materialdialogs.internal.progress.** { *; }
+
 -keep class !android.support.v7.internal.view.menu.**,** {*;}
 -dontwarn
 -ignorewarnings
