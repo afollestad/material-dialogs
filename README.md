@@ -2,7 +2,7 @@
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdshowcase.png)
 
-# Table of Contents
+# Table of Contents (Core)
 
 1. [Sample Project](https://github.com/afollestad/material-dialogs#sample-project)
 2. [Gradle Dependency](https://github.com/afollestad/material-dialogs#gradle-dependency)
@@ -45,9 +45,17 @@
     4. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
     5. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
 22. [Color Chooser Dialog](https://github.com/afollestad/material-dialogs#color-chooser-dialog)
-23. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
 24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
 25. [Misc](https://github.com/afollestad/material-dialogs#misc)
+
+------
+
+# Table of Contents (Commons)
+
+1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
+2. [Folder Selector Dialogs](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
+3. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
+4. [Simple List Dialogs](https://github.com/afollestad/material-dialogs#simple-list-dialogs) 
 
 ------
 
@@ -1023,14 +1031,6 @@ public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int c
 
 See the sample project for more info.
 
----
-
-# Preference Dialogs
-
-Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference` allow you to associate a preference activity's settings
-with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
-`MaterialListPreference`, and `MaterialMultiSelectListPreference` classes that can be used in your preferences XML to automatically use Material-themed
-dialogs. See the sample project for details.
 
 ---
 
@@ -1053,3 +1053,33 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
         .autoDismiss(false)
         .show();
 ```
+
+---
+
+# Color Chooser Dialogs
+
+To be filled in.
+
+---
+
+# Preference Dialogs
+
+Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference` allow you to associate a preference activity's settings
+with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
+`MaterialListPreference`, and `MaterialMultiSelectListPreference` classes that can be used in your preferences XML to automatically use Material-themed
+dialogs. See the sample project for details.
+
+---
+
+# Folder Selector Dialogs
+
+To be filled in.
+
+---
+
+# Simple List Dialogs
+
+
+To be filled in.
+
+---

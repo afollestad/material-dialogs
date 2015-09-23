@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -28,6 +29,8 @@ import java.io.Serializable;
  */
 @SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
+
+    private final static String TAG = "[MD_COLOR_CHOOSER]";
 
     private int[] mColorsTop;
     private int[][] mColorsSub;
@@ -139,7 +142,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (getBuilder() == null)
+        if (getArguments() == null || !getArguments().containsKey("builder"))
             throw new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
         generateColors();
 
@@ -354,7 +357,13 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
     @NonNull
     public ColorChooserDialog show(AppCompatActivity context) {
-        show(context.getSupportFragmentManager(), "[MD_COLOR_CHOOSER]");
+        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(TAG);
+        if (frag != null) {
+            ((DialogFragment) frag).dismiss();
+            context.getSupportFragmentManager().beginTransaction()
+                    .remove(frag).commit();
+        }
+        show(context.getSupportFragmentManager(), TAG);
         return this;
     }
 }

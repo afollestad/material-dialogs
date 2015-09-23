@@ -1,14 +1,18 @@
 package com.afollestad.materialdialogssample;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -30,6 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.color.CircleView;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.afollestad.materialdialogs.folderselector.FolderSelectorDialog;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
@@ -42,10 +47,11 @@ import java.io.File;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
-        FolderSelectorDialog.FolderSelectCallback, ColorChooserDialog.ColorCallback {
+        FolderSelectorDialog.FolderCallback, ColorChooserDialog.ColorCallback {
 
     private Toast mToast;
     private Thread mThread;
+    private final static int STORAGE_PERMISSION_RC = 69;
 
     private void showToast(String message) {
         if (mToast != null) {
@@ -222,7 +228,12 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.folder_chooser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FolderSelectorDialog().show(MainActivity.this);
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+                    return;
+                }
+                new FolderSelectorDialog.Builder(MainActivity.this).show();
             }
         });
 
@@ -413,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements
                         return true; // allow selection
                     }
                 })
-                .positiveText(R.string.choose)
+                .positiveText(R.string.md_choose_label)
                 .show();
     }
 
@@ -442,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 })
                 .alwaysCallMultiChoiceCallback()
-                .positiveText(R.string.choose)
+                .positiveText(R.string.md_choose_label)
                 .autoDismiss(false)
                 .neutralText(R.string.clear_selection)
                 .show();
@@ -769,6 +780,23 @@ public class MainActivity extends AppCompatActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_RC) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.folder_chooser).performClick();
+                    }
+                }, 1000);
+            } else {
+                Toast.makeText(this, "The folder chooser will not work without permission to read external storage.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
