@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.ArrayRes;
@@ -282,23 +283,32 @@ public class MaterialDialog extends DialogBase implements
                 default: {
                     if (mBuilder.btnSelectorPositive != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
-                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
+                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+                    d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
+                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    return d;
                 }
                 case NEUTRAL: {
                     if (mBuilder.btnSelectorNeutral != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
-                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
+                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+                    d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
+                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    return d;
                 }
                 case NEGATIVE: {
                     if (mBuilder.btnSelectorNegative != 0)
                         return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNegative, null);
-                    final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
+                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
-                    return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+                    d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
+                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    return d;
                 }
             }
         }
@@ -372,6 +382,7 @@ public class MaterialDialog extends DialogBase implements
         protected GravityEnum btnStackedGravity = GravityEnum.END;
         protected GravityEnum itemsGravity = GravityEnum.START;
         protected GravityEnum buttonsGravity = GravityEnum.START;
+        protected int buttonRippleColor = 0;
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
@@ -454,10 +465,6 @@ public class MaterialDialog extends DialogBase implements
             return context;
         }
 
-        public final GravityEnum getItemsGravity() {
-            return itemsGravity;
-        }
-
         public final int getItemColor() {
             return itemColor;
         }
@@ -479,6 +486,12 @@ public class MaterialDialog extends DialogBase implements
             this.positiveColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.negativeColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.neutralColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
+
+            int fallback = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                fallback = DialogUtils.resolveColor(context, android.R.attr.colorControlActivated);
+            this.buttonRippleColor = DialogUtils.resolveColor(context, R.attr.md_btn_ripple_color,
+                    DialogUtils.resolveColor(context, R.attr.colorControlActivated, fallback));
 
             this.progressPercentFormat = NumberFormat.getPercentInstance();
             this.progressNumberFormat = "%1d/%2d";
@@ -575,6 +588,19 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder buttonRippleColor(@ColorInt int color) {
+            this.buttonRippleColor = color;
+            return this;
+        }
+
+        public Builder buttonRippleColorRes(@ColorRes int colorRes) {
+            return buttonRippleColor(ContextCompat.getColor(this.context, colorRes));
+        }
+
+        public Builder buttonRippleColorAttr(@AttrRes int colorAttr) {
+            return buttonRippleColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
         public Builder titleColor(@ColorInt int color) {
             this.titleColor = color;
             this.titleColorSet = true;
@@ -582,13 +608,11 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder titleColorRes(@ColorRes int colorRes) {
-            titleColor(ContextCompat.getColor(this.context, colorRes));
-            return this;
+            return titleColor(ContextCompat.getColor(this.context, colorRes));
         }
 
         public Builder titleColorAttr(@AttrRes int colorAttr) {
-            titleColor(DialogUtils.resolveColor(this.context, colorAttr));
-            return this;
+            return titleColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         /**

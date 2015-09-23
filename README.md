@@ -525,6 +525,7 @@ new MaterialDialog.Builder(this)
         .neutralColorRes(R.color.material_red_500)
         .negativeColorRes(R.color.material_red_500)
         .widgetColorRes(R.color.material_red_500)
+        .buttonRippleColorRes(R.color.material_red_500)
         .show();
 ```
 
@@ -535,7 +536,7 @@ color attributes.
 
 ## Selectors
 
-Theming selectors allows you to change colors for pressable things:
+Selectors are drawables that change state when pressed or focused.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -552,6 +553,8 @@ a different selector than the neutral and negative buttons. `btnSelectorStacked`
 used when the buttons become stacked, either because there's not enough room to fit them all on one line,
 or because you used `forceStacked(true)` on the `Builder`. `listSelector` is used for list items, when
 you are NOT using a custom adapter.
+
+***Note***: 
 
 ***An important note related to using custom action button selectors***: make sure your selector drawable references
 inset drawables like the default ones do - this is important for correct action button padding.
@@ -693,6 +696,12 @@ you show from an Activity which has a theme containing any of these attributes:
         content is scrollable
     -->
     <item name="md_divider_color">#E91E63</item>
+
+    <!--
+        This overrides the color used for the ripple displayed on action buttons (Lollipop and above).
+        Defaults to the colorControlHighlight attribute from AppCompat OR the Material theme.
+    -->
+    <item name="md_btn_ripple_color">#E91E63</item>
 
     <!--
         This overrides the selector used on list items.

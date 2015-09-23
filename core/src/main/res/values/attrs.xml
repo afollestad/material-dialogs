@@ -29,6 +29,8 @@
     <attr name="md_btn_neutral_selector" format="reference" />
     <attr name="md_btn_negative_selector" format="reference" />
 
+    <attr name="md_btn_ripple_color" format="color" />
+
     <attr name="md_title_gravity" format="enum">
         <enum name="start" value="0" />
         <enum name="center" value="1" />
