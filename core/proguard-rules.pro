@@ -16,4 +16,9 @@
 #   public *;
 #}
 
--keep class com.afollestad.materialdialogs.internal.progress.** { *; }
+-keepattributes InnerClasses
+-keep interface com.afollestad.materialdialogs.** { *; }
+-keep class com.afollestad.materialdialogs.** { *; }
+-keepclassmembers class com.yourpackage.YourClass** {
+    *;
+}
