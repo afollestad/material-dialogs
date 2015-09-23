@@ -1058,7 +1058,34 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
 
 # Color Chooser Dialogs
 
-To be filled in.
+The Builder is used like this:
+
+```java
+// Pass AppCompatActivity which implements ColorCallback, along with the title of the dialog
+new ColorChooserDialog.Builder(this, R.string.color_palette)
+    .titleSub(R.string.colors)  // title of dialog when viewing shades of a color
+    .accentMode(accent)  // when true, will display accent palette instead of primary palette
+    .doneButton(R.string.md_done_label)  // changes label of the done button
+    .cancelButton(R.string.md_cancel_label)  // changes label of the cancel button
+    .backButton(R.string.md_back_label)  // changes label of the back button
+    .preselect(accent ? accentPreselect : primaryPreselect)  // optionally preselects a color
+    .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
+    .show();
+```
+
+The Activity you show the dialog in must implement `ColorCallback`:
+
+```java
+public class MyActivity implements ColorChooserDialog.ColorCallback {
+
+    // ...
+
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+        // TODO
+    }
+}
+```
 
 ---
 
@@ -1073,13 +1100,62 @@ dialogs. See the sample project for details.
 
 # Folder Selector Dialogs
 
-To be filled in.
+The Builder is used like this:
+
+```java
+// Pass AppCompatActivity which implements FolderCallback
+new FolderSelectorDialog.Builder(this)
+    .chooseButton(R.string.md_choose_label)  // changes label of the choose button
+    .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
+    .show();
+```
+
+The Activity you show the dialog in must implement `FolderCallback`:
+
+```java
+public class MyActivity implements FolderSelectorDialog.FolderCallback {
+
+    // ...
+
+    @Override
+    public void onFolderSelection(File folder) {
+        // TODO
+    }
+}
 
 ---
 
 # Simple List Dialogs
 
+Simple List Dialogs are a specific style of list dialogs taken from the Material Design Guidelines: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
 
-To be filled in.
+This library's implementation is just a pre-made adapter that you can pass to the `MaterialDialog.Builder`.
+
+```java
+final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
+adapter.add(new MaterialSimpleListItem.Builder(this)
+    .content("username@gmail.com")
+    .icon(R.drawable.ic_circle_darker)
+    .build());
+adapter.add(new MaterialSimpleListItem.Builder(this)
+    .content("user02@gmail.com")
+    .icon(R.drawable.ic_circle_darker)
+    .build());
+adapter.add(new MaterialSimpleListItem.Builder(this)
+    .content(R.string.add_account)
+    .icon(R.drawable.ic_circle_lighter)
+    .build());
+
+new MaterialDialog.Builder(this)
+    .title(R.string.set_backup)
+    .adapter(adapter, new MaterialDialog.ListCallback() {
+        @Override
+        public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+            MaterialSimpleListItem item = adapter.getItem(which);
+            // TODO
+        }
+    })
+    .show();
+```
 
 ---
