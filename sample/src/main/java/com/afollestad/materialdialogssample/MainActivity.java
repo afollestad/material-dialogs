@@ -34,7 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.color.CircleView;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
-import com.afollestad.materialdialogs.folderselector.FolderSelectorDialog;
+import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
@@ -47,7 +47,7 @@ import java.io.File;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
-        FolderSelectorDialog.FolderCallback, ColorChooserDialog.ColorCallback {
+        FolderChooserDialog.FolderCallback, ColorChooserDialog.ColorCallback {
 
     private Toast mToast;
     private Thread mThread;
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
                     return;
                 }
-                new FolderSelectorDialog.Builder(MainActivity.this)
+                new FolderChooserDialog.Builder(MainActivity.this)
                         .chooseButton(R.string.md_choose_label)
                         .initialPath("/sdcard/Download")
                         .show();
@@ -482,30 +482,30 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void showSimpleList() {
-final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
-adapter.add(new MaterialSimpleListItem.Builder(this)
-        .content("username@gmail.com")
-        .icon(R.drawable.ic_circle_darker)
-        .build());
-adapter.add(new MaterialSimpleListItem.Builder(this)
-        .content("user02@gmail.com")
-        .icon(R.drawable.ic_circle_darker)
-        .build());
-adapter.add(new MaterialSimpleListItem.Builder(this)
-        .content(R.string.add_account)
-        .icon(R.drawable.ic_circle_lighter)
-        .build());
+        final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content("username@gmail.com")
+                .icon(R.drawable.ic_circle_darker)
+                .build());
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content("user02@gmail.com")
+                .icon(R.drawable.ic_circle_darker)
+                .build());
+        adapter.add(new MaterialSimpleListItem.Builder(this)
+                .content(R.string.add_account)
+                .icon(R.drawable.ic_circle_lighter)
+                .build());
 
-new MaterialDialog.Builder(this)
-        .title(R.string.set_backup)
-        .adapter(adapter, new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                MaterialSimpleListItem item = adapter.getItem(which);
-                showToast(item.getContent().toString());
-            }
-        })
-        .show();
+        new MaterialDialog.Builder(this)
+                .title(R.string.set_backup)
+                .adapter(adapter, new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        MaterialSimpleListItem item = adapter.getItem(which);
+                        showToast(item.getContent().toString());
+                    }
+                })
+                .show();
     }
 
     private void showCustomList() {

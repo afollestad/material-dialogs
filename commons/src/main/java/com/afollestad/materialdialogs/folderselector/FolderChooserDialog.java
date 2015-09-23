@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class FolderSelectorDialog extends DialogFragment implements MaterialDialog.ListCallback {
+public class FolderChooserDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
     private final static String TAG = "[MD_FOLDER_SELECTOR]";
 
@@ -54,7 +54,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         void onFolderSelection(File folder);
     }
 
-    public FolderSelectorDialog() {
+    public FolderChooserDialog() {
     }
 
     String[] getContentsArray() {
@@ -93,7 +93,7 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         }
 
         if (getArguments() == null || !getArguments().containsKey("builder"))
-            throw new IllegalStateException("You must create a FolderSelectorDialog using the Builder.");
+            throw new IllegalStateException("You must create a FolderChooserDialog using the Builder.");
         if (!getArguments().containsKey("current_path"))
             getArguments().putString("current_path", getBuilder().mInitialPath);
         parentFolder = new File(getArguments().getString("current_path"));
@@ -170,8 +170,8 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         }
 
         @NonNull
-        public FolderSelectorDialog build() {
-            FolderSelectorDialog dialog = new FolderSelectorDialog();
+        public FolderChooserDialog build() {
+            FolderChooserDialog dialog = new FolderChooserDialog();
             Bundle args = new Bundle();
             args.putSerializable("builder", this);
             dialog.setArguments(args);
@@ -179,8 +179,8 @@ public class FolderSelectorDialog extends DialogFragment implements MaterialDial
         }
 
         @NonNull
-        public FolderSelectorDialog show() {
-            FolderSelectorDialog dialog = build();
+        public FolderChooserDialog show() {
+            FolderChooserDialog dialog = build();
             dialog.show(mContext);
             return dialog;
         }

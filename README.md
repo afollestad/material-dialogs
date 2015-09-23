@@ -48,8 +48,6 @@
 24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
 25. [Misc](https://github.com/afollestad/material-dialogs#misc)
 
-------
-
 # Table of Contents (Commons)
 
 1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
@@ -105,7 +103,7 @@ dependencies {
 ### Commons
 
 The *commons* module contains extensions to the library that not everyone may need. This includes the
-`ColorChooserDialog`, the Material `Preference` classes, and `MaterialSimpleListAdapter`/`MaterialSimpleListItem`.
+`ColorChooserDialog`, `FolderChooserDialog`, the Material `Preference` classes, and `MaterialSimpleListAdapter`/`MaterialSimpleListItem`.
 
 ```gradle
 dependencies {
@@ -1104,7 +1102,7 @@ The Builder is used like this:
 
 ```java
 // Pass AppCompatActivity which implements FolderCallback
-new FolderSelectorDialog.Builder(this)
+new FolderChooserDialog.Builder(this)
     .chooseButton(R.string.md_choose_label)  // changes label of the choose button
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .show();
@@ -1113,7 +1111,7 @@ new FolderSelectorDialog.Builder(this)
 The Activity you show the dialog in must implement `FolderCallback`:
 
 ```java
-public class MyActivity implements FolderSelectorDialog.FolderCallback {
+public class MyActivity implements FolderChooserDialog.FolderCallback {
 
     // ...
 
