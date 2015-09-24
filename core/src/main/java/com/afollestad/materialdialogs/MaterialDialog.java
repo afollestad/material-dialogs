@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.ArrayRes;
@@ -48,6 +47,7 @@ import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.util.DialogUtils;
+import com.afollestad.materialdialogs.util.RippleHelper;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 
 import java.text.NumberFormat;
@@ -286,8 +286,8 @@ public class MaterialDialog extends DialogBase implements
                     Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
-                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
                     return d;
                 }
                 case NEUTRAL: {
@@ -296,8 +296,8 @@ public class MaterialDialog extends DialogBase implements
                     Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
-                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
                     return d;
                 }
                 case NEGATIVE: {
@@ -306,8 +306,8 @@ public class MaterialDialog extends DialogBase implements
                     Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && d instanceof RippleDrawable)
-                        ((RippleDrawable) d).setColor(ColorStateList.valueOf(mBuilder.buttonRippleColor));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
                     return d;
                 }
             }

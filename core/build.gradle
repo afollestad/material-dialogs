@@ -11,7 +11,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8.1.0"
+        versionName "0.8.1.1"
         consumerProguardFiles 'progress-proguard.txt'
     }
     lintOptions {
