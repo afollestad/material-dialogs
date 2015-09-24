@@ -5,6 +5,8 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatEditText;
@@ -22,7 +24,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 public class MDTintHelper {
 
-    public static void setTint(RadioButton radioButton, int color) {
+    public static void setTint(@NonNull RadioButton radioButton, @ColorInt int color) {
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}
@@ -39,7 +41,7 @@ public class MDTintHelper {
         }
     }
 
-    public static void setTint(SeekBar seekBar, int color) {
+    public static void setTint(@NonNull SeekBar seekBar, @ColorInt int color) {
         ColorStateList s1 = ColorStateList.valueOf(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             seekBar.setThumbTintList(s1);
@@ -65,11 +67,11 @@ public class MDTintHelper {
         }
     }
 
-    public static void setTint(ProgressBar progressBar, int color) {
+    public static void setTint(@NonNull ProgressBar progressBar, @ColorInt int color) {
         setTint(progressBar, color, false);
     }
 
-    public static void setTint(ProgressBar progressBar, int color, boolean skipIndeterminate) {
+    public static void setTint(@NonNull ProgressBar progressBar, @ColorInt int color, boolean skipIndeterminate) {
         ColorStateList sl = ColorStateList.valueOf(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             progressBar.setProgressTintList(sl);
@@ -88,7 +90,7 @@ public class MDTintHelper {
         }
     }
 
-    private static ColorStateList createEditTextColorStateList(Context context, int color) {
+    private static ColorStateList createEditTextColorStateList(@NonNull Context context, @ColorInt int color) {
         int[][] states = new int[3][];
         int[] colors = new int[3];
         int i = 0;
@@ -103,7 +105,7 @@ public class MDTintHelper {
         return new ColorStateList(states, colors);
     }
 
-    public static void setTint(EditText editText, int color) {
+    public static void setTint(@NonNull EditText editText, @ColorInt int color) {
         ColorStateList editTextColorStateList = createEditTextColorStateList(editText.getContext(), color);
         if (editText instanceof AppCompatEditText) {
             ((AppCompatEditText) editText).setSupportBackgroundTintList(editTextColorStateList);
@@ -112,7 +114,7 @@ public class MDTintHelper {
         }
     }
 
-    public static void setTint(CheckBox box, int color) {
+    public static void setTint(@NonNull CheckBox box, @ColorInt int color) {
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked}
