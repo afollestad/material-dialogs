@@ -104,8 +104,8 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                 .itemsCallback(this)
                 .callback(mButtonCallback)
                 .autoDismiss(false)
-                .positiveText(R.string.md_choose_label)
-                .negativeText(android.R.string.cancel)
+                .positiveText(getBuilder().mChooseButton)
+                .negativeText(getBuilder().mCancelButton)
                 .build();
     }
 
@@ -147,17 +147,26 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         protected final transient AppCompatActivity mContext;
         @StringRes
         protected int mChooseButton;
+        @StringRes
+        protected int mCancelButton;
         protected String mInitialPath;
 
         public <ActivityType extends AppCompatActivity & FolderCallback> Builder(@NonNull ActivityType context) {
             mContext = context;
             mChooseButton = R.string.md_choose_label;
+            mCancelButton = android.R.string.cancel;
             mInitialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         }
 
         @NonNull
         public Builder chooseButton(@StringRes int text) {
             mChooseButton = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder cancelButton(@StringRes int text) {
+            mCancelButton = text;
             return this;
         }
 
