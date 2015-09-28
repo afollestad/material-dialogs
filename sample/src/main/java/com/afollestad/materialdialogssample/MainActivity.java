@@ -43,11 +43,24 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.File;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
         FolderChooserDialog.FolderCallback, ColorChooserDialog.ColorCallback {
+
+    // custom view dialog
+    private EditText passwordInput;
+    private View positiveAction;
+
+    // color chooser dialog
+    private int primaryPreselect;
+    private int accentPreselect;
+
+    // UTILITY METHODS
 
     private Toast mToast;
     private Thread mThread;
@@ -73,217 +86,19 @@ public class MainActivity extends AppCompatActivity implements
         showToast(getString(message));
     }
 
+    // BEGIN SAMPLE
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
 
-        findViewById(R.id.basicNoTitle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBasicNoTitle();
-            }
-        });
-
-        findViewById(R.id.basic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBasic();
-            }
-        });
-
-        findViewById(R.id.basicLongContent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBasicLongContent();
-            }
-        });
-
-        findViewById(R.id.basicIcon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBasicIcon();
-            }
-        });
-
-        findViewById(R.id.stacked).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showStacked();
-            }
-        });
-
-        findViewById(R.id.neutral).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNeutral();
-            }
-        });
-
-        findViewById(R.id.callbacks).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCallbacks();
-            }
-        });
-
-        findViewById(R.id.list).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showList();
-            }
-        });
-
-        findViewById(R.id.listNoTitle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showListNoTitle();
-            }
-        });
-
-        findViewById(R.id.longList).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLongList();
-            }
-        });
-
-        findViewById(R.id.singleChoice).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSingleChoice();
-            }
-        });
-
-        findViewById(R.id.multiChoice).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMultiChoice();
-            }
-        });
-
-        findViewById(R.id.multiChoiceLimited).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMultiChoiceLimited();
-            }
-        });
-
-        findViewById(R.id.simpleList).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSimpleList();
-            }
-        });
-
-        findViewById(R.id.customListItems).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCustomList();
-            }
-        });
-
-        findViewById(R.id.customView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCustomView();
-            }
-        });
-
-        findViewById(R.id.customView_webView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCustomWebView();
-            }
-        });
-
-        findViewById(R.id.colorChooser_primary).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showColorChooser(false);
-            }
-        });
-
-        findViewById(R.id.colorChooser_accent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showColorChooser(true);
-            }
-        });
-
-        findViewById(R.id.themed).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showThemed();
-            }
-        });
-
-        findViewById(R.id.showCancelDismiss).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showShowCancelDismissCallbacks();
-            }
-        });
-
-        findViewById(R.id.folder_chooser).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
-                    return;
-                }
-                new FolderChooserDialog.Builder(MainActivity.this)
-                        .chooseButton(R.string.md_choose_label)
-                        .initialPath("/sdcard/Download")
-                        .show();
-            }
-        });
-
-        findViewById(R.id.input).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showInputDialog();
-            }
-        });
-
-        findViewById(R.id.input_custominvalidation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showInputDialogCustomInvalidation();
-            }
-        });
-
-        findViewById(R.id.progress1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeterminateProgressDialog();
-            }
-        });
-
-        findViewById(R.id.progress2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showIndeterminateProgressDialog(false);
-            }
-        });
-
-        findViewById(R.id.progress3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showIndeterminateProgressDialog(true);
-            }
-        });
-
-        findViewById(R.id.preference_dialogs).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1)
-                    startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
-                else
-                    startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -293,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements
             mThread.interrupt();
     }
 
-    private void showBasicNoTitle() {
+    @OnClick(R.id.basicNoTitle)
+    public void showBasicNoTitle() {
         new MaterialDialog.Builder(this)
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
@@ -301,7 +117,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showBasic() {
+    @OnClick(R.id.basic)
+    public void showBasic() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -310,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showBasicLongContent() {
+    @OnClick(R.id.basicLongContent)
+    public void showBasicLongContent() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.loremIpsum)
@@ -319,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showBasicIcon() {
+    @OnClick(R.id.basicIcon)
+    public void showBasicIcon() {
         new MaterialDialog.Builder(this)
                 .iconRes(R.drawable.ic_launcher)
                 .limitIconToDefaultSize() // limits the displayed icon size to 48dp
@@ -330,7 +149,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showStacked() {
+    @OnClick(R.id.stacked)
+    public void showStacked() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -341,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showNeutral() {
+    @OnClick(R.id.neutral)
+    public void showNeutral() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -351,7 +172,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showCallbacks() {
+    @OnClick(R.id.callbacks)
+    public void showCallbacks() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -377,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showList() {
+    @OnClick(R.id.list)
+    public void showList() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -390,7 +213,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showListNoTitle() {
+    @OnClick(R.id.listNoTitle)
+    public void showListNoTitle() {
         new MaterialDialog.Builder(this)
                 .items(R.array.socialNetworks)
                 .itemsCallback(new MaterialDialog.ListCallback() {
@@ -402,7 +226,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showLongList() {
+    @OnClick(R.id.longList)
+    public void showLongList() {
         new MaterialDialog.Builder(this)
                 .title(R.string.states)
                 .items(R.array.states)
@@ -416,7 +241,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showSingleChoice() {
+    @OnClick(R.id.singleChoice)
+    public void showSingleChoice() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -431,7 +257,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showMultiChoice() {
+    @OnClick(R.id.multiChoice)
+    public void showMultiChoice() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -462,7 +289,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showMultiChoiceLimited() {
+    @OnClick(R.id.multiChoiceLimited)
+    public void showMultiChoiceLimited() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -481,7 +309,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showSimpleList() {
+    @OnClick(R.id.simpleList)
+    public void showSimpleList() {
         final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content("username@gmail.com")
@@ -508,7 +337,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showCustomList() {
+    @OnClick(R.id.customListItems)
+    public void showCustomList() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
@@ -521,11 +351,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-
-    private EditText passwordInput;
-    private View positiveAction;
-
-    private void showCustomView() {
+    @OnClick(R.id.customView)
+    public void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.googleWifi)
                 .customView(R.layout.dialog_customview, true)
@@ -581,7 +408,8 @@ public class MainActivity extends AppCompatActivity implements
         positiveAction.setEnabled(false); // disabled by default
     }
 
-    private void showCustomWebView() {
+    @OnClick(R.id.customView_webView)
+    public void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
             accentColor = ContextCompat.getColor(this, R.color.material_teal_500);
@@ -589,8 +417,15 @@ public class MainActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), "changelog");
     }
 
-    private int primaryPreselect;
-    private int accentPreselect;
+    @OnClick(R.id.colorChooser_primary)
+    public void showColorChooserPrimary() {
+        showColorChooser(false);
+    }
+
+    @OnClick(R.id.colorChooser_accent)
+    public void showColorChooserAccent() {
+        showColorChooser(true);
+    }
 
     private void showColorChooser(boolean accent) {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
@@ -623,7 +458,8 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void showThemed() {
+    @OnClick(R.id.themed)
+    public void showThemed() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -643,7 +479,8 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showShowCancelDismissCallbacks() {
+    @OnClick(R.id.showCancelDismiss)
+    public void showShowCancelDismissCallbacks() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -671,7 +508,26 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    private void showInputDialog() {
+    @OnClick(R.id.folder_chooser)
+    public void showFolderChooser() {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+            return;
+        }
+        new FolderChooserDialog.Builder(MainActivity.this)
+                .chooseButton(R.string.md_choose_label)
+                .initialPath("/sdcard/Download")
+                .show();
+    }
+
+    @Override
+    public void onFolderSelection(File folder) {
+        showToast(folder.getAbsolutePath());
+    }
+
+    @OnClick(R.id.input)
+    public void showInputDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input)
                 .content(R.string.input_content)
@@ -688,7 +544,8 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    private void showInputDialogCustomInvalidation() {
+    @OnClick(R.id.input_custominvalidation)
+    public void showInputDialogCustomInvalidation() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input)
                 .content(R.string.input_content_custominvalidation)
@@ -711,16 +568,8 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    private void showIndeterminateProgressDialog(boolean horizontal) {
-        new MaterialDialog.Builder(this)
-                .title(R.string.progress_dialog)
-                .content(R.string.please_wait)
-                .progress(true, 0)
-                .progressIndeterminateStyle(horizontal)
-                .show();
-    }
-
-    private void showDeterminateProgressDialog() {
+    @OnClick(R.id.progress1)
+    public void showProgressDeterminateDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.progress_dialog)
                 .content(R.string.please_wait)
@@ -765,6 +614,33 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
+    @OnClick(R.id.progress2)
+    public void showProgressIndeterminateDialog() {
+        showIndeterminateProgressDialog(false);
+    }
+
+    @OnClick(R.id.progress3)
+    public void showProgressHorizontalIndeterminateDialog() {
+        showIndeterminateProgressDialog(true);
+    }
+
+    private void showIndeterminateProgressDialog(boolean horizontal) {
+        new MaterialDialog.Builder(this)
+                .title(R.string.progress_dialog)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .progressIndeterminateStyle(horizontal)
+                .show();
+    }
+
+    @OnClick(R.id.preference_dialogs)
+    public void showPreferenceDialogs() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1)
+            startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+        else
+            startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -800,10 +676,5 @@ public class MainActivity extends AppCompatActivity implements
                 Toast.makeText(this, "The folder chooser will not work without permission to read external storage.", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    @Override
-    public void onFolderSelection(File folder) {
-        showToast(folder.getAbsolutePath());
     }
 }
