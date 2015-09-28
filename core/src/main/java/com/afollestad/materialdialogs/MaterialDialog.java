@@ -342,6 +342,8 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onAny(this);
                     mBuilder.callback.onPositive(this);
                 }
+                if (mBuilder.onPositiveCallback != null)
+                    mBuilder.onPositiveCallback.onClick(this);
                 if (mBuilder.listCallbackSingleChoice != null)
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
@@ -356,6 +358,8 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onAny(this);
                     mBuilder.callback.onNegative(this);
                 }
+                if (mBuilder.onNegativeCallback != null)
+                    mBuilder.onNegativeCallback.onClick(this);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -364,10 +368,15 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onAny(this);
                     mBuilder.callback.onNeutral(this);
                 }
+                if (mBuilder.onNeutralCallback != null)
+                    mBuilder.onNeutralCallback.onClick(this);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
         }
+
+        if (mBuilder.onAnyCallback != null)
+            mBuilder.onAnyCallback.onClick(this);
     }
 
     /**
@@ -396,6 +405,10 @@ public class MaterialDialog extends DialogBase implements
         protected ColorStateList negativeColor;
         protected ColorStateList neutralColor;
         protected ButtonCallback callback;
+        protected SingleButtonCallback onPositiveCallback;
+        protected SingleButtonCallback onNegativeCallback;
+        protected SingleButtonCallback onNeutralCallback;
+        protected SingleButtonCallback onAnyCallback;
         protected ListCallback listCallback;
         protected ListCallbackSingleChoice listCallbackSingleChoice;
         protected ListCallbackMultiChoice listCallbackMultiChoice;
@@ -1058,6 +1071,26 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder callback(@NonNull ButtonCallback callback) {
             this.callback = callback;
+            return this;
+        }
+
+        public Builder onPositive(@NonNull SingleButtonCallback callback) {
+            this.onPositiveCallback = callback;
+            return this;
+        }
+
+        public Builder onNegative(@NonNull SingleButtonCallback callback) {
+            this.onNegativeCallback = callback;
+            return this;
+        }
+
+        public Builder onNeutral(@NonNull SingleButtonCallback callback) {
+            this.onNeutralCallback = callback;
+            return this;
+        }
+
+        public Builder onAny(@NonNull SingleButtonCallback callback) {
+            this.onAnyCallback = callback;
             return this;
         }
 
@@ -1771,35 +1804,13 @@ public class MaterialDialog extends DialogBase implements
 
         public void onNeutral(MaterialDialog dialog) {
         }
+    }
 
-        public ButtonCallback() {
-            super();
-        }
-
-        @Override
-        protected final Object clone() throws CloneNotSupportedException {
-            return super.clone();
-        }
-
-        @Override
-        public final boolean equals(Object o) {
-            return super.equals(o);
-        }
-
-        @Override
-        protected final void finalize() throws Throwable {
-            super.finalize();
-        }
-
-        @Override
-        public final int hashCode() {
-            return super.hashCode();
-        }
-
-        @Override
-        public final String toString() {
-            return super.toString();
-        }
+    /**
+     * An alternate way to define a single callback.
+     */
+    public interface SingleButtonCallback {
+        void onClick(MaterialDialog dialog);
     }
 
     public interface InputCallback {

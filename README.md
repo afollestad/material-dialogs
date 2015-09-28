@@ -269,6 +269,18 @@ new MaterialDialog.Builder(this)
         });
 ```
 
+Alternatively, you can use the `onPositive()`, `onNegative()`, `onNetural()` and `onAny()` methods on the builder, which each take a `SingleButtonCallback`. This is especially useful if you use [retrolambda](https://github.com/orfjackal/retrolambda) in your project, as these methods are compatible with lambda arguments.
+
+```java
+new MaterialDialog.Builder(this)
+        .onPositive(dialog -> {})
+        .onNegative(dialog -> {})
+        .onNeutral(dialog -> {})
+        .onAny(dialog -> {});
+```
+
+Both forms of callbacks may be defined, in which case both will be called when applicable. The `ButtonCallback` methods will be called before the `SingleButtonCallback` methods.
+
 If `autoDismiss` is turned off, then you must manually dismiss the dialog in these callbacks. Auto dismiss is on by default.
 
 ---
