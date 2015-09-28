@@ -68,9 +68,6 @@
     <dimen name="md_action_corner_radius">2dp</dimen>
     <dimen name="md_divider_height">1dp</dimen>
 
-    <dimen name="md_simplelist_icon">40dp</dimen>
-    <dimen name="md_simplelist_icon_margin">16dp</dimen>
-
     <dimen name="md_bg_corner_radius">2dp</dimen>
     <dimen name="circular_progress_border">4dp</dimen>
     <dimen name="md_default_dialog_width">0dp</dimen>

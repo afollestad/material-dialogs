@@ -2,9 +2,12 @@ package com.afollestad.materialdialogs.simplelist;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -25,11 +28,16 @@ public class MaterialSimpleListItem {
         return mBuilder.mContent;
     }
 
+    public int getIconPadding() {
+        return mBuilder.mIconPadding;
+    }
+
     public static class Builder {
 
         private final Context mContext;
         protected Drawable mIcon;
         protected CharSequence mContent;
+        protected int mIconPadding;
 
         public Builder(Context context) {
             mContext = context;
@@ -42,6 +50,21 @@ public class MaterialSimpleListItem {
 
         public Builder icon(@DrawableRes int iconRes) {
             return icon(ContextCompat.getDrawable(mContext, iconRes));
+        }
+
+        public Builder iconPadding(@IntRange(from = 0, to = Integer.MAX_VALUE) int padding) {
+            this.mIconPadding = padding;
+            return this;
+        }
+
+        public Builder iconPaddingDp(@IntRange(from = 0, to = Integer.MAX_VALUE) int paddingDp) {
+            this.mIconPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingDp,
+                    mContext.getResources().getDisplayMetrics());
+            return this;
+        }
+
+        public Builder iconPaddingRes(@DimenRes int paddingRes) {
+            return iconPadding(mContext.getResources().getDimensionPixelSize(paddingRes));
         }
 
         public Builder content(CharSequence content) {

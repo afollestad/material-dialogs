@@ -1157,7 +1157,8 @@ adapter.add(new MaterialSimpleListItem.Builder(this)
     .build());
 adapter.add(new MaterialSimpleListItem.Builder(this)
     .content(R.string.add_account)
-    .icon(R.drawable.ic_circle_lighter)
+    .icon(R.drawable.ic_content_add)
+    .iconPaddingDp(8)
     .build());
 
 new MaterialDialog.Builder(this)
