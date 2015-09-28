@@ -1150,10 +1150,12 @@ final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
 adapter.add(new MaterialSimpleListItem.Builder(this)
     .content("username@gmail.com")
     .icon(R.drawable.ic_account_circle)
+    .backgroundColor(Color.WHITE)
     .build());
 adapter.add(new MaterialSimpleListItem.Builder(this)
     .content("user02@gmail.com")
     .icon(R.drawable.ic_account_circle)
+    .backgroundColor(Color.WHITE)
     .build());
 adapter.add(new MaterialSimpleListItem.Builder(this)
     .content(R.string.add_account)
