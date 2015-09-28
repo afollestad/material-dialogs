@@ -639,12 +639,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about) {
-            new MaterialDialog.Builder(this)
-                    .title(R.string.about)
-                    .positiveText(R.string.dismiss)
-                    .content(Html.fromHtml(getString(R.string.about_body)))
-                    .contentLineSpacing(1.6f)
-                    .show();
+            AboutDialog.show(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
