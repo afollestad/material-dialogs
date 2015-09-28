@@ -304,11 +304,11 @@ public class MainActivity extends AppCompatActivity implements
         final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content("username@gmail.com")
-                .icon(R.drawable.ic_circle_darker)
+                .icon(R.drawable.ic_account_circle)
                 .build());
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content("user02@gmail.com")
-                .icon(R.drawable.ic_circle_darker)
+                .icon(R.drawable.ic_account_circle)
                 .build());
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content(R.string.add_account)
