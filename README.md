@@ -230,6 +230,9 @@ new MaterialDialog.Builder(this)
 
 # Callbacks
 
+**As of version 0.8.2.0, the `callback()` Builder method is deprecated in favor of the individual callback methods
+  discussed below. Earlier versions will still require use of `ButtonCallback`.**
+
 To know when the user selects an action button, you set callbacks:
 
 ```java
