@@ -16,7 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     private Toast mToast;
     private Thread mThread;
     private final static int STORAGE_PERMISSION_RC = 69;
+    private Handler mHandler;
 
     private void showToast(String message) {
         if (mToast != null) {
@@ -93,12 +93,14 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mHandler = new Handler();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        mHandler = null;
     }
 
     @Override
@@ -650,7 +652,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_RC) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                new Handler().postDelayed(new Runnable() {
+                mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         findViewById(R.id.folder_chooser).performClick();
