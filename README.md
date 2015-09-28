@@ -230,46 +230,40 @@ new MaterialDialog.Builder(this)
 
 # Callbacks
 
-To know when the user selects an action button, you set a callback. To do this, use the `ButtonCallback`
-class and override its `onPositive()`, `onNegative()`, or `onNeutral()` methods as needed. The advantage
-to this is that you can override button functionality *À la carte*, so no need to stub empty methods.
+To know when the user selects an action button, you set callbacks:
 
 ```java
 new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-            }
-        });
-
-new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-            }
-
-            @Override
-            public void onNegative(MaterialDialog dialog) {
-            }
-        });
-
-new MaterialDialog.Builder(this)
-        .callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-            }
-
-            @Override
-            public void onNegative(MaterialDialog dialog) {
-            }
-
-            @Override
-            public void onNeutral(MaterialDialog dialog) {
-            }
-        });
+    .onPositive(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            // TODO
+        }
+    })
+    .onPositive(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            // TODO
+        }
+    })
+    .onPositive(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            // TODO
+        }
+    })
+    .onAny(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            // TODO
+        }
+    });
 ```
 
-Alternatively, you can use the `onPositive()`, `onNegative()`, `onNetural()` and `onAny()` methods on the builder, which each take a `SingleButtonCallback`. This is especially useful if you use [retrolambda](https://github.com/orfjackal/retrolambda) in your project, as these methods are compatible with lambda arguments.
+If you are listening for all three action buttons, you could just use `onAny()`. The `which` (`DialogAction`)
+ parameter will tell you which button was pressed.
+
+These methods are compatible with lambda arguments.
 
 ```java
 new MaterialDialog.Builder(this)
@@ -278,8 +272,6 @@ new MaterialDialog.Builder(this)
         .onNeutral(dialog -> {})
         .onAny(dialog -> {});
 ```
-
-Both forms of callbacks may be defined, in which case both will be called when applicable. The `ButtonCallback` methods will be called before the `SingleButtonCallback` methods.
 
 If `autoDismiss` is turned off, then you must manually dismiss the dialog in these callbacks. Auto dismiss is on by default.
 

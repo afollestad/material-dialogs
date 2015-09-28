@@ -114,12 +114,6 @@ public class MainActivity extends AppCompatActivity implements
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog dialog) {
-
-                    }
-                })
                 .show();
     }
 
@@ -186,20 +180,10 @@ public class MainActivity extends AppCompatActivity implements
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
                 .neutralText(R.string.more_info)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        showToast("Positive!");
-                    }
-
-                    @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        showToast("Neutral");
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        showToast("Negative…");
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showToast(which.name() + "!");
                     }
                 })
                 .show();
@@ -282,9 +266,9 @@ public class MainActivity extends AppCompatActivity implements
                         return true; // allow selection
                     }
                 })
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onNeutral(MaterialDialog dialog) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.clearSelectedIndices();
                     }
                 })
@@ -364,14 +348,10 @@ public class MainActivity extends AppCompatActivity implements
                 .customView(R.layout.dialog_customview, true)
                 .positiveText(R.string.connect)
                 .negativeText(android.R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         showToast("Password: " + passwordInput.getText().toString());
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
                     }
                 }).build();
 

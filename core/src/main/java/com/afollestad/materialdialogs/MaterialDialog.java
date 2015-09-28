@@ -343,7 +343,7 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onPositive(this);
                 }
                 if (mBuilder.onPositiveCallback != null)
-                    mBuilder.onPositiveCallback.onClick(this, DialogAction.POSITIVE);
+                    mBuilder.onPositiveCallback.onClick(this, tag);
                 if (mBuilder.listCallbackSingleChoice != null)
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
@@ -359,7 +359,7 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onNegative(this);
                 }
                 if (mBuilder.onNegativeCallback != null)
-                    mBuilder.onNegativeCallback.onClick(this, DialogAction.NEGATIVE);
+                    mBuilder.onNegativeCallback.onClick(this, tag);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -369,14 +369,13 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onNeutral(this);
                 }
                 if (mBuilder.onNeutralCallback != null)
-                    mBuilder.onNeutralCallback.onClick(this, DialogAction.NEUTRAL);
+                    mBuilder.onNeutralCallback.onClick(this, tag);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
         }
-
         if (mBuilder.onAnyCallback != null)
-            mBuilder.onAnyCallback.onClick(this, null);
+            mBuilder.onAnyCallback.onClick(this, tag);
     }
 
     /**
@@ -1790,18 +1789,25 @@ public class MaterialDialog extends DialogBase implements
 
     /**
      * Override these as needed, so no needing to sub empty methods from an interface
+     *
+     * @deprecated Use the individual onPositive, onNegative, onNeutral, or onAny Builder methods instead.
      */
+    @Deprecated
     public static abstract class ButtonCallback {
 
+        @Deprecated
         public void onAny(MaterialDialog dialog) {
         }
 
+        @Deprecated
         public void onPositive(MaterialDialog dialog) {
         }
 
+        @Deprecated
         public void onNegative(MaterialDialog dialog) {
         }
 
+        @Deprecated
         public void onNeutral(MaterialDialog dialog) {
         }
 
@@ -1842,7 +1848,7 @@ public class MaterialDialog extends DialogBase implements
      */
     public interface SingleButtonCallback {
 
-        void onClick(@NonNull MaterialDialog dialog, @Nullable DialogAction which);
+        void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which);
     }
 
     public interface InputCallback {
