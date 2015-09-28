@@ -114,6 +114,12 @@ public class MainActivity extends AppCompatActivity implements
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog) {
+
+                    }
+                })
                 .show();
     }
 

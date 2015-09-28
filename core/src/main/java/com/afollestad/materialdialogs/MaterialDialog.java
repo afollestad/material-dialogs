@@ -343,7 +343,7 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onPositive(this);
                 }
                 if (mBuilder.onPositiveCallback != null)
-                    mBuilder.onPositiveCallback.onClick(this);
+                    mBuilder.onPositiveCallback.onClick(this, DialogAction.POSITIVE);
                 if (mBuilder.listCallbackSingleChoice != null)
                     sendSingleChoiceCallback(v);
                 if (mBuilder.listCallbackMultiChoice != null)
@@ -359,7 +359,7 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onNegative(this);
                 }
                 if (mBuilder.onNegativeCallback != null)
-                    mBuilder.onNegativeCallback.onClick(this);
+                    mBuilder.onNegativeCallback.onClick(this, DialogAction.NEGATIVE);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
@@ -369,14 +369,14 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.callback.onNeutral(this);
                 }
                 if (mBuilder.onNeutralCallback != null)
-                    mBuilder.onNeutralCallback.onClick(this);
+                    mBuilder.onNeutralCallback.onClick(this, DialogAction.NEUTRAL);
                 if (mBuilder.autoDismiss) dismiss();
                 break;
             }
         }
 
         if (mBuilder.onAnyCallback != null)
-            mBuilder.onAnyCallback.onClick(this);
+            mBuilder.onAnyCallback.onClick(this, null);
     }
 
     /**
@@ -1805,7 +1805,7 @@ public class MaterialDialog extends DialogBase implements
         public void onNeutral(MaterialDialog dialog) {
         }
 
-        // The overidden methods below prevent Android Studio from suggesting that they are overidden by developers 
+        // The overidden methods below prevent Android Studio from suggesting that they are overidden by developers
 
         public ButtonCallback() {
             super();
@@ -1841,11 +1841,12 @@ public class MaterialDialog extends DialogBase implements
      * An alternate way to define a single callback.
      */
     public interface SingleButtonCallback {
-        void onClick(MaterialDialog dialog);
+
+        void onClick(@NonNull MaterialDialog dialog, @Nullable DialogAction which);
     }
 
     public interface InputCallback {
 
-        void onInput(MaterialDialog dialog, CharSequence input);
+        void onInput(@NonNull MaterialDialog dialog, CharSequence input);
     }
 }
