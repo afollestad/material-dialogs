@@ -1,13 +1,19 @@
 package com.afollestad.materialdialogs.simplelist;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
+
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -32,15 +38,22 @@ public class MaterialSimpleListItem {
         return mBuilder.mIconPadding;
     }
 
+    @ColorInt
+    public int getBackgroundColor() {
+        return mBuilder.mBackgroundColor;
+    }
+
     public static class Builder {
 
         private final Context mContext;
         protected Drawable mIcon;
         protected CharSequence mContent;
         protected int mIconPadding;
+        protected int mBackgroundColor;
 
         public Builder(Context context) {
             mContext = context;
+            mBackgroundColor = Color.parseColor("#BCBCBC");
         }
 
         public Builder icon(Drawable icon) {
@@ -74,6 +87,19 @@ public class MaterialSimpleListItem {
 
         public Builder content(@StringRes int contentRes) {
             return content(mContext.getString(contentRes));
+        }
+
+        public Builder backgroundColor(@ColorInt int color) {
+            this.mBackgroundColor = color;
+            return this;
+        }
+
+        public Builder backgroundColorRes(@ColorRes int colorRes) {
+            return backgroundColor(ContextCompat.getColor(mContext, colorRes));
+        }
+
+        public Builder backgroundColorAttr(@AttrRes int colorAttr) {
+            return backgroundColor(DialogUtils.resolveColor(mContext, colorAttr));
         }
 
         public MaterialSimpleListItem build() {

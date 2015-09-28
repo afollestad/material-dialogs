@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogs.simplelist;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,6 +51,8 @@ public class MaterialSimpleListAdapter extends ArrayAdapter<MaterialSimpleListIt
                 ic.setImageDrawable(item.getIcon());
                 ic.setPadding(item.getIconPadding(), item.getIconPadding(),
                         item.getIconPadding(), item.getIconPadding());
+                ic.getBackground().setColorFilter(item.getBackgroundColor(),
+                        PorterDuff.Mode.SRC_ATOP);
             } else {
                 ic.setVisibility(View.GONE);
             }
