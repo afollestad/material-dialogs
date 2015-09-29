@@ -108,7 +108,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 
 ```gradle
 dependencies {
-    compile('com.afollestad.material-dialogs:commons:0.8.0.1@aar') {
+    compile('com.afollestad.material-dialogs:commons:0.8.1.0@aar') {
         transitive = true
     }
 }
