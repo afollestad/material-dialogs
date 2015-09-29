@@ -182,7 +182,9 @@ public class MaterialDialog extends DialogBase implements
                 // If auto dismiss is enabled, dismiss the dialog when a list item is selected
                 dismiss();
             }
-            mBuilder.listCallback.onSelection(this, view, position, mBuilder.items[position]);
+            if (mBuilder.listCallback != null) {
+                mBuilder.listCallback.onSelection(this, view, position, mBuilder.items[position]);
+            }
         } else {
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
