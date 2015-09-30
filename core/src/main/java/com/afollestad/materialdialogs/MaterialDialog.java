@@ -21,7 +21,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -489,7 +488,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder(@NonNull Context context) {
             this.context = context;
-            final int materialBlue = ContextCompat.getColor(context, R.color.md_material_blue_600);
+            final int materialBlue = DialogUtils.getColor(context, R.color.md_material_blue_600);
 
             // Retrieve default accent colors, which are used on the action buttons and progress bars
             this.widgetColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
@@ -608,7 +607,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder buttonRippleColorRes(@ColorRes int colorRes) {
-            return buttonRippleColor(ContextCompat.getColor(this.context, colorRes));
+            return buttonRippleColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder buttonRippleColorAttr(@AttrRes int colorAttr) {
@@ -622,7 +621,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder titleColorRes(@ColorRes int colorRes) {
-            return titleColor(ContextCompat.getColor(this.context, colorRes));
+            return titleColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder titleColorAttr(@AttrRes int colorAttr) {
@@ -704,7 +703,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder contentColorRes(@ColorRes int colorRes) {
-            contentColor(ContextCompat.getColor(this.context, colorRes));
+            contentColor(DialogUtils.getColor(this.context, colorRes));
             return this;
         }
 
@@ -749,7 +748,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder itemColorRes(@ColorRes int colorRes) {
-            return itemColor(ContextCompat.getColor(this.context, colorRes));
+            return itemColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder itemColorAttr(@AttrRes int colorAttr) {
@@ -1036,7 +1035,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder widgetColorRes(@ColorRes int colorRes) {
-            return widgetColor(ContextCompat.getColor(this.context, colorRes));
+            return widgetColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder widgetColorAttr(@AttrRes int colorAttr) {
@@ -1050,7 +1049,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder dividerColorRes(@ColorRes int colorRes) {
-            return dividerColor(ContextCompat.getColor(this.context, colorRes));
+            return dividerColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder dividerColorAttr(@AttrRes int colorAttr) {
@@ -1063,7 +1062,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder backgroundColorRes(@ColorRes int colorRes) {
-            return backgroundColor(ContextCompat.getColor(this.context, colorRes));
+            return backgroundColor(DialogUtils.getColor(this.context, colorRes));
         }
 
         public Builder backgroundColorAttr(@AttrRes int colorAttr) {
@@ -1244,7 +1243,7 @@ public class MaterialDialog extends DialogBase implements
             this.inputMinLength = minLength;
             this.inputMaxLength = maxLength;
             if (errorColor == 0) {
-                this.inputRangeErrorColor = ContextCompat.getColor(context, R.color.md_edittext_error);
+                this.inputRangeErrorColor = DialogUtils.getColor(context, R.color.md_edittext_error);
             } else {
                 this.inputRangeErrorColor = errorColor;
             }
@@ -1257,7 +1256,7 @@ public class MaterialDialog extends DialogBase implements
         public Builder inputRangeRes(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
                                      @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength,
                                      @ColorRes int errorColor) {
-            return inputRange(minLength, maxLength, ContextCompat.getColor(context, errorColor));
+            return inputRange(minLength, maxLength, DialogUtils.getColor(context, errorColor));
         }
 
         public Builder alwaysCallInputCallback() {

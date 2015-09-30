@@ -15,10 +15,11 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.FloatRange;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.FrameLayout;
+
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 public class CircleView extends FrameLayout {
 
@@ -82,7 +83,7 @@ public class CircleView extends FrameLayout {
 
     @Override
     public void setBackgroundResource(@ColorRes int color) {
-        setBackgroundColor(ContextCompat.getColor(getContext(), color));
+        setBackgroundColor(DialogUtils.getColor(getContext(), color));
     }
 
     /**
