@@ -95,7 +95,7 @@ public class MaterialSimpleListItem {
         }
 
         public Builder backgroundColorRes(@ColorRes int colorRes) {
-            return backgroundColor(ContextCompat.getColor(mContext, colorRes));
+            return backgroundColor(DialogUtils.getColor(mContext, colorRes));
         }
 
         public Builder backgroundColorAttr(@AttrRes int colorAttr) {
