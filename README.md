@@ -1100,6 +1100,26 @@ public class MyActivity implements ColorChooserDialog.ColorCallback {
 }
 ```
 
+You can also specify custom colors to be displayed if you don't want to use the built-in primary or accent
+color palettes (which consist of the entire Material Design Color Palette):
+
+```java
+int[] primary = new int[] {
+    Color.parseColor("#F44336")
+};
+int[][] secondary = new int[][] {
+    new int[] { Color.parseColor("#EF5350"), Color.parseColor("#F44336"), Color.parseColor("#E53935") }
+};
+
+new ColorChooserDialog.Builder(this, R.string.color_palette)
+    .titleSub(R.string.colors)
+    .customColors(primary, secondary)
+    .show();
+```
+
+The first parameter for primary colors also takes an array resource (`R.array.colors`), which can be
+seen in the sample project.
+
 ---
 
 # Preference Dialogs

@@ -3,8 +3,10 @@ package com.afollestad.materialdialogs.color;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.widget.GridView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.Serializable;
 
@@ -32,11 +35,20 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
     private final static String TAG = "[MD_COLOR_CHOOSER]";
 
+    @NonNull
     private int[] mColorsTop;
+    @Nullable
     private int[][] mColorsSub;
 
     private void generateColors() {
-        if (getBuilder().mAccentMode) {
+        Builder builder = getBuilder();
+        if (builder.mColorsTop != null) {
+            mColorsTop = builder.mColorsTop;
+            mColorsSub = builder.mColorsSub;
+            return;
+        }
+
+        if (builder.mAccentMode) {
             mColorsTop = ColorPalette.ACCENT_COLORS;
             mColorsSub = ColorPalette.ACCENT_COLORS_SUB;
         } else {
@@ -74,15 +86,17 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
     private void topIndex(int value) {
         if (topIndex() != value)
-            subIndex(getBuilder().mAccentMode ? 2 : 5);
+            findSubIndexForColor(value, mColorsTop[value]);
         getArguments().putInt("top_index", value);
     }
 
     private int subIndex() {
+        if (mColorsSub == null) return -1;
         return getArguments().getInt("sub_index", -1);
     }
 
     private void subIndex(int value) {
+        if (mColorsSub == null) return;
         getArguments().putInt("sub_index", value);
     }
 
@@ -110,9 +124,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             if (isInSub()) {
                 subIndex(index);
             } else {
-                dialog.setActionButton(DialogAction.NEUTRAL, builder.mBackBtn);
                 topIndex(index);
-                isInSub(true);
+                if (mColorsSub != null && index < mColorsSub.length) {
+                    dialog.setActionButton(DialogAction.NEUTRAL, builder.mBackBtn);
+                    isInSub(true);
+                }
             }
 
             if (builder.mDynamicButtonColor) {
@@ -139,6 +155,17 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor);
     }
 
+    private void findSubIndexForColor(int topIndex, int color) {
+        if (getBuilder().mColorsSub.length - 1 < topIndex) return;
+        int[] subColors = getBuilder().mColorsSub[topIndex];
+        for (int subIndex = 0; subIndex < subColors.length; subIndex++) {
+            if (subColors[subIndex] == color) {
+                subIndex(subIndex);
+                break;
+            }
+        }
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -153,20 +180,26 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                     topIndex(topIndex);
                     if (getBuilder().mAccentMode) {
                         subIndex(2);
-                    } else subIndex(5);
+                    } else if (getBuilder().mColorsSub != null) {
+                        findSubIndexForColor(topIndex, preselectColor);
+                    } else {
+                        subIndex(5);
+                    }
                     break;
                 }
 
-                boolean found = false;
-                for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
-                    if (mColorsSub[topIndex][subIndex] == preselectColor) {
-                        topIndex(topIndex);
-                        subIndex(subIndex);
-                        found = true;
-                        break;
+                if (mColorsSub != null) {
+                    boolean found = false;
+                    for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
+                        if (mColorsSub[topIndex][subIndex] == preselectColor) {
+                            topIndex(topIndex);
+                            subIndex(subIndex);
+                            found = true;
+                            break;
+                        }
                     }
+                    if (found) break;
                 }
-                if (found) break;
             }
         }
 
@@ -281,6 +314,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected int mBackBtn = R.string.md_back_label;
         @StringRes
         protected int mCancelBtn = R.string.md_cancel_label;
+        @Nullable
+        protected int[] mColorsTop;
+        @Nullable
+        protected int[][] mColorsSub;
 
         protected boolean mAccentMode = false;
         protected boolean mDynamicButtonColor = true;
@@ -329,6 +366,20 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder dynamicButtonColor(boolean enabled) {
             mDynamicButtonColor = enabled;
+            return this;
+        }
+
+        @NonNull
+        public Builder customColors(@NonNull int[] topLevel, @Nullable int[][] subLevel) {
+            mColorsTop = topLevel;
+            mColorsSub = subLevel;
+            return this;
+        }
+
+        @NonNull
+        public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
+            mColorsTop = DialogUtils.getColorArray(mContext, topLevel);
+            mColorsSub = subLevel;
             return this;
         }
 

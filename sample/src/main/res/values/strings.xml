@@ -164,5 +164,6 @@
     <string name="clear_selection">Clear</string>
     <string name="color_palette">Color Palette</string>
     <string name="colors">Colors</string>
+    <string name="color_chooser_customColors">Color Chooser (Custom Colors)</string>
 
 </resources>
