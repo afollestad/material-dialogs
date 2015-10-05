@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialEditTextPreference extends EditTextPreference implements MaterialDialog.SingleButtonCallback {
+public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
     private MaterialDialog mDialog;
@@ -109,7 +109,22 @@ public class MaterialEditTextPreference extends EditTextPreference implements Ma
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .dismissListener(this)
-                .onAny(this)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        switch (which) {
+                            default:
+                                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                                break;
+                            case NEUTRAL:
+                                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                break;
+                            case NEGATIVE:
+                                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                                break;
+                        }
+                    }
+                })
                 .dismissListener(this);
 
         @SuppressLint("InflateParams")
@@ -200,21 +215,6 @@ public class MaterialEditTextPreference extends EditTextPreference implements Ma
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isDialogShowing) {
             showDialog(myState.dialogBundle);
-        }
-    }
-
-    @Override
-    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        switch (which) {
-            default:
-                onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                break;
-            case NEUTRAL:
-                onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                break;
-            case NEGATIVE:
-                onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                break;
         }
     }
 

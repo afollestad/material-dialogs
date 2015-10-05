@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.lang.reflect.Field;
@@ -67,6 +68,22 @@ public class MaterialListPreference extends ListPreference {
                 .content(getDialogMessage())
                 .icon(getDialogIcon())
                 .dismissListener(this)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        switch (which) {
+                            default:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                                break;
+                            case NEUTRAL:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                break;
+                            case NEGATIVE:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                                break;
+                        }
+                    }
+                })
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNeutral(MaterialDialog dialog) {

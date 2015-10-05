@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 
@@ -36,19 +37,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     private File[] parentContents;
     private boolean canGoUp = true;
     private FolderCallback mCallback;
-
-    private final MaterialDialog.ButtonCallback mButtonCallback = new MaterialDialog.ButtonCallback() {
-        @Override
-        public void onPositive(MaterialDialog materialDialog) {
-            materialDialog.dismiss();
-            mCallback.onFolderSelection(parentFolder);
-        }
-
-        @Override
-        public void onNegative(MaterialDialog materialDialog) {
-            materialDialog.dismiss();
-        }
-    };
 
     public interface FolderCallback {
         void onFolderSelection(File folder);
@@ -102,7 +90,19 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                 .title(parentFolder.getAbsolutePath())
                 .items(getContentsArray())
                 .itemsCallback(this)
-                .callback(mButtonCallback)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        mCallback.onFolderSelection(parentFolder);
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
                 .autoDismiss(false)
                 .positiveText(getBuilder().mChooseButton)
                 .negativeText(getBuilder().mCancelButton)

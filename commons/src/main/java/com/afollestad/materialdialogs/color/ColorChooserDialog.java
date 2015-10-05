@@ -193,17 +193,16 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 .customView(mGrid, false)
                 .neutralText(builder.mCancelBtn)
                 .positiveText(builder.mDoneBtn)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         mCallback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
                         dismiss();
                     }
-
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        super.onNeutral(dialog);
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (isInSub()) {
                             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCancelBtn);
                             isInSub(false);
