@@ -23,9 +23,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
-import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialEditTextPreference extends EditTextPreference {
+public class MaterialEditTextPreference extends EditTextPreference implements MaterialDialog.SingleButtonCallback {
 
     private int mColor = 0;
     private MaterialDialog mDialog;
@@ -109,7 +109,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
                 .positiveText(getPositiveButtonText())
                 .negativeText(getNegativeButtonText())
                 .dismissListener(this)
-                .callback(callback)
+                .onAny(this)
                 .dismissListener(this);
 
         @SuppressLint("InflateParams")
@@ -160,30 +160,6 @@ public class MaterialEditTextPreference extends EditTextPreference {
     }
 
     /**
-     * Callback listener for the MaterialDialog. Positive button checks with
-     * OnPreferenceChangeListener before committing user entered text
-     */
-    private final ButtonCallback callback = new ButtonCallback() {
-        @Override
-        public void onPositive(MaterialDialog dialog) {
-            onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-            String value = mEditText.getText().toString();
-            if (callChangeListener(value) && isPersistent())
-                setText(value);
-        }
-
-        @Override
-        public void onNeutral(MaterialDialog dialog) {
-            onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-        }
-
-        @Override
-        public void onNegative(MaterialDialog dialog) {
-            onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-        }
-    };
-
-    /**
      * Copied from DialogPreference.java
      */
     private void requestInputMethod(Dialog dialog) {
@@ -224,6 +200,21 @@ public class MaterialEditTextPreference extends EditTextPreference {
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isDialogShowing) {
             showDialog(myState.dialogBundle);
+        }
+    }
+
+    @Override
+    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        switch (which) {
+            default:
+                onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                break;
+            case NEUTRAL:
+                onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                break;
+            case NEGATIVE:
+                onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                break;
         }
     }
 
