@@ -45,9 +45,8 @@
     4. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
     5. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
     6. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
-22. [Color Chooser Dialog](https://github.com/afollestad/material-dialogs#color-chooser-dialog)
-24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
-25. [Misc](https://github.com/afollestad/material-dialogs#misc)
+22. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
+23. [Misc](https://github.com/afollestad/material-dialogs#misc)
 
 # Table of Contents (Commons)
 
@@ -1006,47 +1005,6 @@ The values passed above are the default.
 
 ---
 
-# Color Chooser Dialog
-
-This library includes a color chooser implementation, which wraps a Material Dialog (that uses a custom view)
-inside of a Dialog Fragment. This means the dialog will survive orientation changes.
-
-The color chooser dialog is used like this:
-
-```java
-boolean accent = false;
-int preselection = // ...
-
-// Accepts an AppCompatActivity and dialog title string ID
-new ColorChooserDialog.Builder(this, R.string.color_palette)
-    .titleSub(R.string.colors)  // optional title when looking at sub colors
-    .accentMode(accent)  // optional boolean, true shows accent palette
-    .doneButton(R.string.md_done_label)  // optional string, changes done button label
-    .cancelButton(R.string.md_cancel_label)  // optional string, changes cancel button label
-    .backButton(R.string.md_back_label)  // optional string, changes back button label
-    .dynamicButtonColor(true)  // true by default, false turns off changing action button colors
-    .preselect(preselection)  // optional color int, preselects a color
-    .show();
-```
-
-The `Activity` passed in the `Builder` constructor must implement `ColorCallback`:
-
-```java
-@Override
-public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
-    if (dialog.isAccentMode()) {
-        // Accent color selected
-    } else {
-        // Primary color selected
-    }
-}
-```
-
-See the sample project for more info.
-
-
----
-
 # Tint Helper
 
 You can use the `MDTintHelper` class to dynamically color check boxes, radio buttons, edit texts, and progress bars 
@@ -1100,6 +1058,8 @@ public class MyActivity implements ColorChooserDialog.ColorCallback {
 }
 ```
 
+---
+
 You can also specify custom colors to be displayed if you don't want to use the built-in primary or accent
 color palettes (which consist of the entire Material Design Color Palette):
 
@@ -1117,8 +1077,9 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .show();
 ```
 
-The first parameter for primary colors also takes an array resource (`R.array.colors`), which can be
-seen in the sample project.
+The first parameter for primary colors can also take an array resource (`R.array.colors`), which can be
+seen in the sample project. If you pass `null` for the second parameter, there will be no sub levels displayed
+for top level colors.
 
 ---
 
