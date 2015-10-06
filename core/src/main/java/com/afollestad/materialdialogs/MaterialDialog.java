@@ -502,9 +502,9 @@ public class MaterialDialog extends DialogBase implements
 
             int fallback = 0;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                fallback = DialogUtils.resolveColor(context, android.R.attr.colorControlActivated);
+                fallback = DialogUtils.resolveColor(context, android.R.attr.colorControlHighlight);
             this.buttonRippleColor = DialogUtils.resolveColor(context, R.attr.md_btn_ripple_color,
-                    DialogUtils.resolveColor(context, R.attr.colorControlActivated, fallback));
+                    DialogUtils.resolveColor(context, R.attr.colorControlHighlight, fallback));
 
             this.progressPercentFormat = NumberFormat.getPercentInstance();
             this.progressNumberFormat = "%1d/%2d";
