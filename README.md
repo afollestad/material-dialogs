@@ -242,13 +242,13 @@ new MaterialDialog.Builder(this)
             // TODO
         }
     })
-    .onPositive(new MaterialDialog.SingleButtonCallback() {
+    .onNeutral(new MaterialDialog.SingleButtonCallback() {
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             // TODO
         }
     })
-    .onPositive(new MaterialDialog.SingleButtonCallback() {
+    .onNegative(new MaterialDialog.SingleButtonCallback() {
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             // TODO
@@ -264,16 +264,6 @@ new MaterialDialog.Builder(this)
 
 If you are listening for all three action buttons, you could just use `onAny()`. The `which` (`DialogAction`)
  parameter will tell you which button was pressed.
-
-These methods are compatible with lambda arguments.
-
-```java
-new MaterialDialog.Builder(this)
-        .onPositive(dialog -> {})
-        .onNegative(dialog -> {})
-        .onNeutral(dialog -> {})
-        .onAny(dialog -> {});
-```
 
 If `autoDismiss` is turned off, then you must manually dismiss the dialog in these callbacks. Auto dismiss is on by default.
 
