@@ -88,6 +88,12 @@ class DefaultAdapter extends BaseAdapter {
         view.setTag(index + ":" + dialog.mBuilder.items[index]);
         setupGravity((ViewGroup) view);
 
+        if (dialog.mBuilder.itemIds != null) {
+            if (index < dialog.mBuilder.itemIds.length)
+                view.setId(dialog.mBuilder.itemIds[index]);
+            else view.setId(-1);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ViewGroup group = (ViewGroup) view;
             if (group.getChildCount() == 2) {

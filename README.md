@@ -21,6 +21,7 @@
     1. [Coloring Radio Buttons](https://github.com/afollestad/material-dialogs#coloring-radio-buttons)
 12. [Multi Choice List Dialogs](https://github.com/afollestad/material-dialogs#multi-choice-list-dialogs)
     1. [Coloring Check Boxes](https://github.com/afollestad/material-dialogs#coloring-check-boxes)
+13. [Assigning IDs to List Item Views](https://github.com/afollestad/material-dialogs#assigning-ids-to-list-item-views)
 13. [Custom List Dialogs](https://github.com/afollestad/material-dialogs#custom-list-dialogs)
 14. [Custom Views](https://github.com/afollestad/material-dialogs#custom-views)
     1. [Later Access](https://github.com/afollestad/material-dialogs#later-access)
@@ -384,6 +385,15 @@ Like action buttons and many other elements of the Material dialog, you can cust
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
+
+---
+
+# Assigning IDs to List Item Views
+
+If you need to keep track of list items by ID rather than index, you can assign
+
+```java
+```
 
 ---
 

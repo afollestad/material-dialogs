@@ -449,6 +449,7 @@ public class MaterialDialog extends DialogBase implements
         protected int inputMinLength = -1;
         protected int inputMaxLength = -1;
         protected int inputRangeErrorColor = 0;
+        protected int[] itemIds;
 
         protected String progressNumberFormat;
         protected NumberFormat progressPercentFormat;
@@ -741,23 +742,56 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder itemColor(@ColorInt int color) {
+        public Builder itemsColor(@ColorInt int color) {
             this.itemColor = color;
             this.itemColorSet = true;
             return this;
         }
 
-        public Builder itemColorRes(@ColorRes int colorRes) {
-            return itemColor(DialogUtils.getColor(this.context, colorRes));
+        /**
+         * Renamed to {@link #itemsColor(int)} for consistency.
+         */
+        @Deprecated
+        public Builder itemColor(@ColorInt int color) {
+            return itemsColor(color);
         }
 
+        public Builder itemsColorRes(@ColorRes int colorRes) {
+            return itemsColor(DialogUtils.getColor(this.context, colorRes));
+        }
+
+        /**
+         * Renamed to {@link #itemsColorRes(int)} for consistency.
+         */
+        @Deprecated
+        public Builder itemColorRes(@ColorRes int colorRes) {
+            return itemsColorRes(colorRes);
+        }
+
+        public Builder itemsColorAttr(@AttrRes int colorAttr) {
+            return itemsColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        /**
+         * Renamed to {@link #itemsColorAttr(int)} for consistency.
+         */
+        @Deprecated
         public Builder itemColorAttr(@AttrRes int colorAttr) {
-            return itemColor(DialogUtils.resolveColor(this.context, colorAttr));
+            return itemsColorAttr(colorAttr);
         }
 
         public Builder itemsGravity(@NonNull GravityEnum gravity) {
             this.itemsGravity = gravity;
             return this;
+        }
+
+        public Builder itemsIds(@NonNull int[] idsArray) {
+            this.itemIds = idsArray;
+            return this;
+        }
+
+        public Builder itemsIds(@ArrayRes int idsArrayRes) {
+            return itemsIds(context.getResources().getIntArray(idsArrayRes));
         }
 
         public Builder buttonsGravity(@NonNull GravityEnum gravity) {
