@@ -390,10 +390,23 @@ There's also a global theming attribute as shown in the Global Theming section o
 
 # Assigning IDs to List Item Views
 
-If you need to keep track of list items by ID rather than index, you can assign
+If you need to keep track of list items by ID rather than index, you can assign item IDs from an integer array:
 
 ```java
+new MaterialDialog.Builder(this)
+        .title(R.string.socialNetworks)
+        .items(R.array.socialNetworks)
+        .itemsIds(R.array.itemIds)
+        .itemsCallback(new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                showToast(which + ": " + text + ", ID = " + view.getId());
+            }
+        })
+        .show();
 ```
+
+You can also pass a literal integer array (`int[]`) in place of an array resource ID.
 
 ---
 
