@@ -7,6 +7,7 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,8 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -33,7 +36,18 @@ import java.io.Serializable;
 @SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
 
-    private final static String TAG = "[MD_COLOR_CHOOSER]";
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+            TAG_PRIMARY,
+            TAG_ACCENT,
+            TAG_CUSTOM
+    })
+    public @interface ColorChooserTag {
+    }
+
+    public final static String TAG_PRIMARY = "[MD_COLOR_CHOOSER]";
+    public final static String TAG_ACCENT = "[MD_COLOR_CHOOSER]";
+    public final static String TAG_CUSTOM = "[MD_COLOR_CHOOSER]";
 
     @NonNull
     private int[] mColorsTop;
@@ -405,15 +419,33 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return (Builder) getArguments().getSerializable("builder");
     }
 
-    @NonNull
-    public ColorChooserDialog show(AppCompatActivity context) {
-        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(TAG);
+    private void dismissIfNecessary(AppCompatActivity context, String tag) {
+        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
         if (frag != null) {
             ((DialogFragment) frag).dismiss();
             context.getSupportFragmentManager().beginTransaction()
                     .remove(frag).commit();
         }
-        show(context.getSupportFragmentManager(), TAG);
+    }
+
+    public static ColorChooserDialog findVisible(@NonNull AppCompatActivity context, @ColorChooserTag String tag) {
+        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
+        if (frag != null)
+            return (ColorChooserDialog) frag;
+        return null;
+    }
+
+    @NonNull
+    public ColorChooserDialog show(AppCompatActivity context) {
+        String tag;
+        Builder builder = getBuilder();
+        if (builder.mColorsTop != null)
+            tag = TAG_CUSTOM;
+        else if (builder.mAccentMode)
+            tag = TAG_ACCENT;
+        else tag = TAG_PRIMARY;
+        dismissIfNecessary(context, tag);
+        show(context.getSupportFragmentManager(), tag);
         return this;
     }
 }

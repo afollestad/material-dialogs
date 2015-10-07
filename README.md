@@ -52,6 +52,7 @@
 # Table of Contents (Commons)
 
 1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
+    1. [Finding Visible Dialogs](https://github.com/afollestad/material-dialogs#finding-visible-dialogs)
 2. [Folder Selector Dialogs](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
 3. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
 4. [Simple List Dialogs](https://github.com/afollestad/material-dialogs#simple-list-dialogs) 
@@ -1093,6 +1094,20 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
 The first parameter for primary colors can also take an array resource (`R.array.colors`), which can be
 seen in the sample project. If you pass `null` for the second parameter, there will be no sub levels displayed
 for top level colors.
+
+## Finding Visible Dialogs
+
+Since the `ColorChooserDialog` is a `DialogFragment`, it attaches to your Activity through its `FragmentManager`.
+`ColorChooserDialog` has a utility method called `findVisible(AppCompatActivity, String)` that will
+find a visible color chooser if any is visible:
+
+```java
+ColorChooserDialog primary = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_PRIMARY);
+
+ColorChooserDialog accent = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_ACCENT);
+
+ColorChooserDialog custom = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_CUSTOM);
+```
 
 ---
 
