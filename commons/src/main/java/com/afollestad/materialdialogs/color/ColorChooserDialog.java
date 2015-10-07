@@ -428,9 +428,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
     }
 
+    @Nullable
     public static ColorChooserDialog findVisible(@NonNull AppCompatActivity context, @ColorChooserTag String tag) {
         Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
-        if (frag != null)
+        if (frag != null && frag instanceof ColorChooserDialog)
             return (ColorChooserDialog) frag;
         return null;
     }
