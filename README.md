@@ -400,7 +400,7 @@ new MaterialDialog.Builder(this)
         .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                showToast(which + ": " + text + ", ID = " + view.getId());
+                Toast.makeText(Activity.this, which + ": " + text + ", ID = " + view.getId(), Toast.LENGTH_SHORT).show();
             }
         })
         .show();
