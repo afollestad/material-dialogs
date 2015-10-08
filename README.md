@@ -11,6 +11,7 @@
     3. [Commons](https://github.com/afollestad/material-dialogs#commons)
 3. [What's New](https://github.com/afollestad/material-dialogs#whats-new)
 4. [Basic Dialog](https://github.com/afollestad/material-dialogs#basic-dialog)
+5. [Dismissing Dialogs](https://github.com/afollestad/material-dialogs#dismissing-dialogs)
 5. [Migration from AlertDialogs](https://github.com/afollestad/material-dialogs#migration-from-alertdialogs)
 6. [Displaying an Icon](https://github.com/afollestad/material-dialogs#displaying-an-icon)
 7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#stacked-action-buttons)
@@ -153,6 +154,43 @@ On Lollipop (API 21+) or if you use AppCompat, the Material dialog will automati
 (which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
 
 If the content is long enough, it will become scrollable and a divider will be displayed above the action buttons.
+
+---
+
+# Dismissing Dialogs
+
+I've had lots of issues asking how you dismiss a dialog. It works the same way that `AlertDialog` does, as
+both `AlertDialog` and `MaterialDialog` are an instance of `android.app.Dialog` (which is where `dismiss()`
+and `show()` come from). You cannot dismiss a dialog using it's `Builder`. You can only dismiss a
+dialog using the dialog itself.
+
+There's many ways you can get an instance of `MaterialDialog`. The two major ways are through the `show()` and `build()`
+methods of `MaterialDialog.Builder`.
+
+Through `show()`:
+
+```java
+MaterialDialog dialog = new MaterialDialog.Builder(this)
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.agree)
+        .show();
+dialog.dismiss();
+```
+
+Through `build()`:
+
+```java
+MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+        .title(R.string.title)
+        .content(R.string.content)
+        .positiveText(R.string.agree);
+MaterialDialog dialog = builder.build();
+dialog.show();
+```
+
+There are other various places where the `MaterialDialog` instance is given, such as in some callbacks
+ that are discussed in future sections below.
 
 ---
 
