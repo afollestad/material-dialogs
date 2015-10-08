@@ -2,6 +2,8 @@ package com.afollestad.materialdialogs.color;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
@@ -145,13 +147,18 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 }
             }
 
-            if (builder.mDynamicButtonColor) {
-                int selectedColor = getSelectedColor();
-                dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor);
-                dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
-            }
-
+            invalidateDynamicButtonColors();
             invalidate();
+        }
+    }
+
+    private void invalidateDynamicButtonColors() {
+        final Builder builder = getBuilder();
+        if (builder.mDynamicButtonColor) {
+            final MaterialDialog dialog = (MaterialDialog) getDialog();
+            int selectedColor = getSelectedColor();
+            dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor);
+            dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
         }
     }
 
@@ -162,6 +169,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             color = mColorsSub[topIndex()][subIndex()];
         else if (topIndex() > -1)
             color = mColorsTop[topIndex()];
+        if (color == 0) {
+            int fallback = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                fallback = DialogUtils.resolveColor(getActivity(), android.R.attr.colorAccent);
+            color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent, fallback);
+        }
         return color;
     }
 
@@ -170,7 +183,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void findSubIndexForColor(int topIndex, int color) {
-        if (getBuilder().mColorsSub.length - 1 < topIndex) return;
+        if (getBuilder().mColorsSub == null || getBuilder().mColorsSub.length - 1 < topIndex)
+            return;
         int[] subColors = getBuilder().mColorsSub[topIndex];
         for (int subIndex = 0; subIndex < subColors.length; subIndex++) {
             if (subColors[subIndex] == color) {
@@ -258,7 +272,14 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                             dialog.cancel();
                         }
                     }
-                }).build();
+                })
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        invalidateDynamicButtonColors();
+                    }
+                })
+                .build();
         invalidate();
         return dialog;
     }

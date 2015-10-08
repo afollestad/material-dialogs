@@ -54,8 +54,8 @@
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
     <string name="changelog">Changelog</string>
     <string name="customView_webView">Custom View No Scroll #1</string>
-    <string name="color_chooser_primary">Color Chooser Primary</string>
-    <string name="color_chooser_accent">Color Chooser Accent</string>
+    <string name="color_chooser_primary">Color Chooser (Primary)</string>
+    <string name="color_chooser_accent">Color Chooser (Accent)</string>
     <string name="ssid">SSID</string>
     <string name="ssidLit">Material Dialogs</string>
 
@@ -164,6 +164,7 @@
     <string name="clear_selection">Clear</string>
     <string name="color_palette">Color Palette</string>
     <string name="colors">Colors</string>
-    <string name="color_chooser_customColors">Color Chooser (Custom Colors)</string>
+    <string name="color_chooser_customColors">Color Chooser (Custom)</string>
+    <string name="color_chooser_customColors_noSub">Color Chooser (Custom, No Sub)</string>
 
 </resources>

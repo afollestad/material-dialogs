@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -411,35 +410,45 @@ public class MainActivity extends AppCompatActivity implements
 
     @OnClick(R.id.colorChooser_primary)
     public void showColorChooserPrimary() {
-        showColorChooser(false, 0);
+        new ColorChooserDialog.Builder(this, R.string.color_palette)
+                .titleSub(R.string.colors)
+                .preselect(primaryPreselect)
+                .show();
     }
 
     @OnClick(R.id.colorChooser_accent)
     public void showColorChooserAccent() {
-        showColorChooser(true, 0);
+        new ColorChooserDialog.Builder(this, R.string.color_palette)
+                .titleSub(R.string.colors)
+                .accentMode(true)
+                .preselect(primaryPreselect)
+                .show();
     }
 
     @OnClick(R.id.colorChooser_customColors)
     public void showColorChooserCustomColors() {
-        showColorChooser(false, R.array.custom_colors);
-    }
+        int[][] subColors = new int[][]{
+                new int[]{Color.parseColor("#EF5350"), Color.parseColor("#F44336"), Color.parseColor("#E53935")},
+                new int[]{Color.parseColor("#EC407A"), Color.parseColor("#E91E63"), Color.parseColor("#D81B60")},
+                new int[]{Color.parseColor("#AB47BC"), Color.parseColor("#9C27B0"), Color.parseColor("#8E24AA")},
+                new int[]{Color.parseColor("#7E57C2"), Color.parseColor("#673AB7"), Color.parseColor("#5E35B1")},
+                new int[]{Color.parseColor("#5C6BC0"), Color.parseColor("#3F51B5"), Color.parseColor("#3949AB")},
+                new int[]{Color.parseColor("#42A5F5"), Color.parseColor("#2196F3"), Color.parseColor("#1E88E5")}
+        };
 
-    private void showColorChooser(boolean accent, @ArrayRes int customColors) {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
-                .accentMode(accent)
-                .doneButton(R.string.md_done_label)
-                .cancelButton(R.string.md_cancel_label)
-                .backButton(R.string.md_back_label)
-                .preselect(accent ? accentPreselect : primaryPreselect)
-                .customColors(customColors, new int[][]{
-                        new int[]{Color.parseColor("#EF5350"), Color.parseColor("#F44336"), Color.parseColor("#E53935")},
-                        new int[]{Color.parseColor("#EC407A"), Color.parseColor("#E91E63"), Color.parseColor("#D81B60")},
-                        new int[]{Color.parseColor("#AB47BC"), Color.parseColor("#9C27B0"), Color.parseColor("#8E24AA")},
-                        new int[]{Color.parseColor("#7E57C2"), Color.parseColor("#673AB7"), Color.parseColor("#5E35B1")},
-                        new int[]{Color.parseColor("#5C6BC0"), Color.parseColor("#3F51B5"), Color.parseColor("#3949AB")},
-                        new int[]{Color.parseColor("#42A5F5"), Color.parseColor("#2196F3"), Color.parseColor("#1E88E5")}
-                })
+                .preselect(primaryPreselect)
+                .customColors(R.array.custom_colors, subColors)
+                .show();
+    }
+
+    @OnClick(R.id.colorChooser_customColorsNoSub)
+    public void showColorChooserCustomColorsNoSub() {
+        new ColorChooserDialog.Builder(this, R.string.color_palette)
+                .titleSub(R.string.colors)
+                .preselect(primaryPreselect)
+                .customColors(R.array.custom_colors, null)
                 .show();
     }
 

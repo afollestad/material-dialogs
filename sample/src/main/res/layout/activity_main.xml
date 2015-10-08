@@ -150,6 +150,13 @@
             android:text="@string/color_chooser_customColors" />
 
         <Button
+            android:id="@+id/colorChooser_customColorsNoSub"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/color_chooser_customColors_noSub" />
+
+        <Button
             android:id="@+id/themed"
             android:layout_width="match_parent"
             android:layout_height="56dp"
