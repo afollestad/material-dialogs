@@ -166,5 +166,14 @@
     <string name="colors">Colors</string>
     <string name="color_chooser_customColors">Color Chooser (Custom)</string>
     <string name="color_chooser_customColors_noSub">Color Chooser (Custom, No Sub)</string>
+    <string name="action_buttons">Action Buttons</string>
+    <string name="custom_views">Custom Views</string>
+    <string name="color_chooser">Color Choosers</string>
+    <string name="progress">Progress</string>
+    <string name="preferences">Preferences</string>
+    <string name="misc">Miscellaneous</string>
+    <string name="basic_lists">Basic Lists</string>
+    <string name="choice_lists">Choice Lists</string>
+    <string name="advanced_lists">Advanced Lists</string>
 
 </resources>

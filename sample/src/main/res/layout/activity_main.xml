@@ -10,6 +10,11 @@
         android:padding="@dimen/activity_horizontal_margin"
         tools:context=".MainActivity">
 
+        <TextView
+            style="@style/SampleHeader"
+            android:layout_marginTop="0dp"
+            android:text="@string/basic" />
+
         <Button
             android:id="@+id/basicNoTitle"
             android:layout_width="match_parent"
@@ -37,6 +42,10 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_icon" />
 
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/action_buttons" />
+
         <Button
             android:id="@+id/stacked"
             android:layout_width="match_parent"
@@ -57,6 +66,10 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/callbacks" />
+
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/basic_lists" />
 
         <Button
             android:id="@+id/list"
@@ -79,6 +92,10 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_list_notitle" />
 
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/choice_lists" />
+
         <Button
             android:id="@+id/singleChoice"
             android:layout_width="match_parent"
@@ -100,6 +117,10 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/multiChoiceLimited" />
 
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/advanced_lists" />
+
         <Button
             android:id="@+id/simpleList"
             android:layout_width="match_parent"
@@ -114,6 +135,10 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/custom_adapter" />
 
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/custom_views" />
+
         <Button
             android:id="@+id/customView"
             android:layout_width="match_parent"
@@ -127,6 +152,10 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/customView_webView" />
+
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/color_chooser" />
 
         <Button
             android:id="@+id/colorChooser_primary"
@@ -156,26 +185,9 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_customColors_noSub" />
 
-        <Button
-            android:id="@+id/themed"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/themed" />
-
-        <Button
-            android:id="@+id/showCancelDismiss"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/showCancelDismissCallbacks" />
-
-        <Button
-            android:id="@+id/folder_chooser"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/folder_chooser" />
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/input" />
 
         <Button
             android:id="@+id/input"
@@ -190,6 +202,10 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/input_custominvalidation" />
+
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/progress" />
 
         <Button
             android:id="@+id/progress1"
@@ -212,12 +228,41 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/progress_dialog_indeterminate_horizontal" />
 
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/preferences" />
+
         <Button
             android:id="@+id/preference_dialogs"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/preference_dialogs" />
+
+        <TextView
+            style="@style/SampleHeader"
+            android:text="@string/misc" />
+
+        <Button
+            android:id="@+id/themed"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/themed" />
+
+        <Button
+            android:id="@+id/showCancelDismiss"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/showCancelDismissCallbacks" />
+
+        <Button
+            android:id="@+id/folder_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/folder_chooser" />
 
     </LinearLayout>
 
