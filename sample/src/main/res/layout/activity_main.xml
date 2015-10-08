@@ -10,6 +10,8 @@
         android:padding="@dimen/activity_horizontal_margin"
         tools:context=".MainActivity">
 
+        <!-- Basic -->
+
         <TextView
             style="@style/SampleHeader"
             android:layout_marginTop="0dp"
@@ -42,6 +44,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_icon" />
 
+        <!-- Action Buttons -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/action_buttons" />
@@ -66,6 +70,8 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/callbacks" />
+
+        <!-- Basic Lists -->
 
         <TextView
             style="@style/SampleHeader"
@@ -92,6 +98,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_list_notitle" />
 
+        <!-- Choice Lists -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/choice_lists" />
@@ -117,6 +125,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/multiChoiceLimited" />
 
+        <!-- Advanced Lists -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/advanced_lists" />
@@ -135,6 +145,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/custom_adapter" />
 
+        <!-- Custom Views -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/custom_views" />
@@ -152,6 +164,8 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/customView_webView" />
+
+        <!-- Color Chooser -->
 
         <TextView
             style="@style/SampleHeader"
@@ -185,6 +199,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_customColors_noSub" />
 
+        <!-- Input -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/input" />
@@ -202,6 +218,8 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/input_custominvalidation" />
+
+        <!-- Progress -->
 
         <TextView
             style="@style/SampleHeader"
@@ -228,6 +246,8 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/progress_dialog_indeterminate_horizontal" />
 
+        <!-- Preferences -->
+
         <TextView
             style="@style/SampleHeader"
             android:text="@string/preferences" />
@@ -238,6 +258,8 @@
             android:layout_height="56dp"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/preference_dialogs" />
+
+        <!-- Misc -->
 
         <TextView
             style="@style/SampleHeader"
