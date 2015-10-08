@@ -42,7 +42,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="basic_notitle">Basic (No Title)</string>
     <string name="shareLocationPrompt">This app wants to access your location.</string>
-    <string name="basic_list_long">Basic Long List</string>
+    <string name="basic_list_long">Basic List (Long)</string>
     <string name="states">States</string>
     <string name="custom_listitem_button">A button!</string>
     <string name="custom_adapter">Custom Adapter</string>
@@ -64,6 +64,13 @@
         <item>Google+</item>
         <item>Instagram</item>
         <item>Facebook</item>
+    </string-array>
+
+    <string-array name="socialNetworks_longItems">
+        <item>Twitter is an online social networking service that enables users to send and read short 140-character messages called "tweets".</item>
+        <item>Google+ is an interest-based social network that is owned and operated by Google Inc. The service is Google\'s fourth foray into social networking.</item>
+        <item>Instagram is an online mobile photo-sharing, video-sharing and social networking service that enables its users to take pictures and videos, and share them on a variety of social networking platforms.</item>
+        <item>Facebook is an online social networking service headquartered in Menlo Park, California. Its website was launched on February 4, 2004, by Mark Zuckerberg with friends.</item>
     </string-array>
 
     <string-array name="states">
@@ -175,5 +182,8 @@
     <string name="basic_lists">Basic Lists</string>
     <string name="choice_lists">Choice Lists</string>
     <string name="advanced_lists">Advanced Lists</string>
+    <string name="list_longItems">Basic List (Long Items)</string>
+    <string name="singleChoice_longItems">Single Choice (Long Items)</string>
+    <string name="multiChoice_longItems">Multi Choice (Long Items)</string>
 
 </resources>

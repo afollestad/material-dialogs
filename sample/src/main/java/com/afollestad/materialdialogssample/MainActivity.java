@@ -233,11 +233,41 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.list_longItems)
+    public void showListLongItems() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks_longItems)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                    }
+                })
+                .show();
+    }
+
     @OnClick(R.id.singleChoice)
     public void showSingleChoice() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
+                .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                        return true; // allow selection
+                    }
+                })
+                .positiveText(R.string.md_choose_label)
+                .show();
+    }
+
+    @OnClick(R.id.singleChoice_longItems)
+    public void showSingleChoiceLongItems() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks_longItems)
                 .itemsCallbackSingleChoice(2, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
@@ -298,6 +328,29 @@ public class MainActivity extends AppCompatActivity implements
                 })
                 .positiveText(R.string.dismiss)
                 .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if selection is still allowed
+                .show();
+    }
+
+    @OnClick(R.id.multiChoice_longItems)
+    public void showMultiChoiceLongItems() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks_longItems)
+                .itemsCallbackMultiChoice(new Integer[]{1, 3}, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        StringBuilder str = new StringBuilder();
+                        for (int i = 0; i < which.length; i++) {
+                            if (i > 0) str.append('\n');
+                            str.append(which[i]);
+                            str.append(": ");
+                            str.append(text[i]);
+                        }
+                        showToast(str.toString());
+                        return true; // allow selection
+                    }
+                })
+                .positiveText(R.string.md_choose_label)
                 .show();
     }
 
@@ -421,7 +474,7 @@ public class MainActivity extends AppCompatActivity implements
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .accentMode(true)
-                .preselect(primaryPreselect)
+                .preselect(accentPreselect)
                 .show();
     }
 

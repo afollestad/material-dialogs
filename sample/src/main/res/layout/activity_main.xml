@@ -20,27 +20,27 @@
         <Button
             android:id="@+id/basicNoTitle"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:text="@string/basic_notitle" />
 
         <Button
             android:id="@+id/basic"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic" />
 
         <Button
             android:id="@+id/basicLongContent"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_longContent" />
 
         <Button
             android:id="@+id/basicIcon"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_icon" />
 
@@ -53,21 +53,21 @@
         <Button
             android:id="@+id/stacked"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/stacked" />
 
         <Button
             android:id="@+id/neutral"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/neutral" />
 
         <Button
             android:id="@+id/callbacks"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/callbacks" />
 
@@ -78,25 +78,32 @@
             android:text="@string/basic_lists" />
 
         <Button
+            android:id="@+id/listNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/basic_list_notitle" />
+
+        <Button
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/list" />
 
         <Button
             android:id="@+id/longList"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_list_long" />
 
         <Button
-            android:id="@+id/listNoTitle"
+            android:id="@+id/list_longItems"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_list_notitle" />
+            android:text="@string/list_longItems" />
 
         <!-- Choice Lists -->
 
@@ -107,23 +114,37 @@
         <Button
             android:id="@+id/singleChoice"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/singleChoice" />
 
         <Button
+            android:id="@+id/singleChoice_longItems"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/singleChoice_longItems" />
+
+        <Button
             android:id="@+id/multiChoice"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/multiChoice" />
 
         <Button
             android:id="@+id/multiChoiceLimited"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/multiChoiceLimited" />
+
+        <Button
+            android:id="@+id/multiChoice_longItems"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/multiChoice_longItems" />
 
         <!-- Advanced Lists -->
 
@@ -134,14 +155,14 @@
         <Button
             android:id="@+id/simpleList"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/simple_list" />
 
         <Button
             android:id="@+id/customListItems"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/custom_adapter" />
 
@@ -154,14 +175,14 @@
         <Button
             android:id="@+id/customView"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/customView" />
 
         <Button
             android:id="@+id/customView_webView"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/customView_webView" />
 
@@ -174,28 +195,28 @@
         <Button
             android:id="@+id/colorChooser_primary"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_primary" />
 
         <Button
             android:id="@+id/colorChooser_accent"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_accent" />
 
         <Button
             android:id="@+id/colorChooser_customColors"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_customColors" />
 
         <Button
             android:id="@+id/colorChooser_customColorsNoSub"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/color_chooser_customColors_noSub" />
 
@@ -208,14 +229,14 @@
         <Button
             android:id="@+id/input"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/input" />
 
         <Button
             android:id="@+id/input_custominvalidation"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/input_custominvalidation" />
 
@@ -228,21 +249,21 @@
         <Button
             android:id="@+id/progress1"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/progress_dialog" />
 
         <Button
             android:id="@+id/progress2"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/progress_dialog_indeterminate" />
 
         <Button
             android:id="@+id/progress3"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/progress_dialog_indeterminate_horizontal" />
 
@@ -255,7 +276,7 @@
         <Button
             android:id="@+id/preference_dialogs"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/preference_dialogs" />
 
@@ -268,21 +289,21 @@
         <Button
             android:id="@+id/themed"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/themed" />
 
         <Button
             android:id="@+id/showCancelDismiss"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/showCancelDismissCallbacks" />
 
         <Button
             android:id="@+id/folder_chooser"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/sample_button_height"
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/folder_chooser" />
 
