@@ -167,7 +167,7 @@ dialog using the dialog itself.
 There's many ways you can get an instance of `MaterialDialog`. The two major ways are through the `show()` and `build()`
 methods of `MaterialDialog.Builder`.
 
-Through `show()`:
+Through `show()`, which immediately shows the dialog and returns the visible dialog:
 
 ```java
 MaterialDialog dialog = new MaterialDialog.Builder(this)
@@ -175,18 +175,24 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
         .content(R.string.content)
         .positiveText(R.string.agree)
         .show();
-dialog.dismiss();
 ```
 
-Through `build()`:
+Through `build()`, which only builds the dialog but doesn't show it until you say so:
 
 ```java
 MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree);
+
 MaterialDialog dialog = builder.build();
 dialog.show();
+```
+
+Once you the dialog is shown, you can dismiss it:
+
+```java
+dialog.dismiss();
 ```
 
 There are other various places where the `MaterialDialog` instance is given, such as in some callbacks
