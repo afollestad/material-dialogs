@@ -189,7 +189,7 @@ MaterialDialog dialog = builder.build();
 dialog.show();
 ```
 
-Once you the dialog is shown, you can dismiss it:
+Once the dialog is shown, you can dismiss it:
 
 ```java
 dialog.dismiss();
