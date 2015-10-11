@@ -25,13 +25,14 @@ import com.afollestad.materialdialogs.internal.MDAdapter;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
-import com.afollestad.materialdialogs.internal.progress.HorizontalProgressDrawable;
-import com.afollestad.materialdialogs.internal.progress.IndeterminateHorizontalProgressDrawable;
-import com.afollestad.materialdialogs.internal.progress.IndeterminateProgressDrawable;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import me.zhanghai.android.materialprogressbar.HorizontalProgressDrawable;
+import me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable;
+import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 
 /**
  * Used by MaterialDialog while initializing the dialog. Offloads some of the code to make the main class
