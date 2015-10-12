@@ -316,6 +316,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private boolean sendSingleChoiceCallback(View v) {
+        if (mBuilder.listCallbackSingleChoice == null) return false;
         CharSequence text = null;
         if (mBuilder.selectedIndex >= 0) {
             text = mBuilder.items[mBuilder.selectedIndex];
@@ -324,6 +325,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private boolean sendMultichoiceCallback() {
+        if (mBuilder.listCallbackMultiChoice == null) return false;
         Collections.sort(selectedIndicesList); // make sure the indicies are in order
         List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
@@ -345,10 +347,8 @@ public class MaterialDialog extends DialogBase implements
                 }
                 if (mBuilder.onPositiveCallback != null)
                     mBuilder.onPositiveCallback.onClick(this, tag);
-                if (mBuilder.listCallbackSingleChoice != null)
-                    sendSingleChoiceCallback(v);
-                if (mBuilder.listCallbackMultiChoice != null)
-                    sendMultichoiceCallback();
+                sendSingleChoiceCallback(v);
+                sendMultichoiceCallback();
                 if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(this, input.getText());
                 if (mBuilder.autoDismiss) dismiss();
