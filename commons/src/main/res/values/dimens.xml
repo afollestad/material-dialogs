@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="md_simpleitem_height">62dp</dimen>
-    <dimen name="md_simplelist_icon">44dp</dimen>
+    <dimen name="md_simplelist_icon">40dp</dimen>
     <dimen name="md_simplelist_icon_margin">16dp</dimen>
     <dimen name="md_simplelist_textsize">18sp</dimen>
 
