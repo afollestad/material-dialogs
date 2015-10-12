@@ -16,8 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:paddingBottom="@dimen/md_listitem_vertical_margin_choice"
         android:paddingEnd="@dimen/md_listitem_control_margin"
         android:paddingRight="@dimen/md_listitem_control_margin"
+        android:paddingTop="@dimen/md_listitem_vertical_margin_choice"
         android:textSize="@dimen/md_listitem_textsize"
         tools:ignore="RtlSymmetry"
         tools:text="Item" />
