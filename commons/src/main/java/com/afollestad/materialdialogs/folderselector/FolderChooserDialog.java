@@ -36,6 +36,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     private File parentFolder;
     private File[] parentContents;
     private boolean canGoUp = true;
+    private boolean showfiles = false;
     private FolderCallback mCallback;
 
     public interface FolderCallback {
@@ -46,7 +47,12 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     }
 
     String[] getContentsArray() {
-        if (parentContents == null) return new String[]{};
+        if (parentContents == null){
+            String[] results = new String[1];
+            if (canGoUp) results[0] = "...";
+            return results;
+        }
+
         String[] results = new String[parentContents.length + (canGoUp ? 1 : 0)];
         if (canGoUp) results[0] = "...";
         for (int i = 0; i < parentContents.length; i++)
@@ -56,10 +62,15 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
     File[] listFiles() {
         File[] contents = parentFolder.listFiles();
+        boolean showFiles = getBuilder().mShowFiles;
         List<File> results = new ArrayList<>();
         if (contents != null) {
             for (File fi : contents) {
-                if (fi.isDirectory()) results.add(fi);
+                if (showFiles) {
+                    results.add(fi);
+                } else {
+                    if (fi.isDirectory()) results.add(fi);
+                }
             }
             Collections.sort(results, new FolderSorter());
             return results.toArray(new File[results.size()]);
@@ -150,6 +161,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         @StringRes
         protected int mCancelButton;
         protected String mInitialPath;
+        private boolean mShowFiles=false;
 
         public <ActivityType extends AppCompatActivity & FolderCallback> Builder(@NonNull ActivityType context) {
             mContext = context;
@@ -176,6 +188,14 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                 initialPath = File.separator;
             mInitialPath = initialPath;
             return this;
+        }
+
+        @NonNull
+        public Builder isShowingFiles(@Nullable boolean ShowFiles) {
+
+            mShowFiles = ShowFiles;
+            return this;
+
         }
 
         @NonNull
