@@ -142,7 +142,7 @@ always substitute literal strings and string resources for methods that take str
 for color resources (e.g. `titleColor` and `titleColorRes`).
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree)
@@ -170,7 +170,7 @@ methods of `MaterialDialog.Builder`.
 Through `show()`, which immediately shows the dialog and returns the visible dialog:
 
 ```java
-MaterialDialog dialog = new MaterialDialog.Builder(this)
+MaterialDialog dialog = MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree)
@@ -180,7 +180,7 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
 Through `build()`, which only builds the dialog but doesn't show it until you say so:
 
 ```java
-MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+MaterialDialog.Builder builder = MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree);
@@ -225,7 +225,7 @@ But it's highly recommended to use original ```MaterialDialog``` API for new usa
 MaterialDialog supports the display of an icon just like the stock AlertDialog; it will go to the left of the title.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree)
@@ -244,7 +244,7 @@ If you have multiple action buttons that together are too wide to fit on one lin
 buttons to be vertically oriented.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.longer_positive)
@@ -262,7 +262,7 @@ You can specify neutral text in addition to the positive and negative text. It w
 action on the far left.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .content(R.string.content)
         .positiveText(R.string.agree)
@@ -281,7 +281,7 @@ new MaterialDialog.Builder(this)
 To know when the user selects an action button, you set callbacks:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .onPositive(new MaterialDialog.SingleButtonCallback() {
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -321,7 +321,7 @@ Creating a list dialog only requires passing in an array of strings. The callbac
 also very simple.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .items(R.array.items)
         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -345,7 +345,7 @@ you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback
 display radio buttons next to list items.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .items(R.array.items)
         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
@@ -392,7 +392,7 @@ you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`
 display check boxes next to list items, and the callback can return multiple selections.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .items(R.array.items)
         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
@@ -438,7 +438,7 @@ There's also a global theming attribute as shown in the Global Theming section o
 If you need to keep track of list items by ID rather than index, you can assign item IDs from an integer array:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsIds(R.array.itemIds)
@@ -461,7 +461,7 @@ Like Android's native dialogs, you can also pass in your own adapter via `.adapt
 exactly how you want your list to work.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.socialNetworks)
         .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
                 new MaterialDialog.ListCallback() {
@@ -476,7 +476,7 @@ new MaterialDialog.Builder(this)
 If you need access to the `ListView`, you can use the `MaterialDialog` instance:
 
 ```java
-MaterialDialog dialog = new MaterialDialog.Builder(this)
+MaterialDialog dialog = MaterialDialog.build(this)
         ...
         .build();
 
@@ -496,7 +496,7 @@ Custom views are very easy to implement.
 
 ```java
 boolean wrapInScrollView = true;
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.title)
         .customView(R.layout.custom_view, wrapInScrollView)
         .positiveText(R.string.positive)
@@ -573,7 +573,7 @@ guess the Activity is using a dark theme and it will use the dialog's dark theme
 You can manually set the theme used from the `Builder#theme()` method:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .content("Hi")
         .theme(Theme.DARK)
         .show();
@@ -587,7 +587,7 @@ avoids having to constantly call theme setters for every dialog you show.
 Pretty much every aspect of a dialog created with this library can be colored:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .titleColorRes(R.color.material_red_500)
         .contentColor(Color.WHITE) // notice no 'res' postfix for literal color
         .dividerColorRes(R.color.material_pink_500)
@@ -610,7 +610,7 @@ color attributes.
 Selectors are drawables that change state when pressed or focused.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .btnSelector(R.drawable.custom_btn_selector)
         .btnSelector(R.drawable.custom_btn_selector_primary, DialogAction.POSITIVE)
         .btnSelectorStacked(R.drawable.custom_btn_selector_stacked)
@@ -635,7 +635,7 @@ inset drawables like the default ones do - this is important for correct action 
 It's probably unlikely you'd want to change gravity of elements in a dialog, but it's possible.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .titleGravity(GravityEnum.CENTER)
         .contentGravity(GravityEnum.CENTER)
         .btnStackedGravity(GravityEnum.START)
@@ -862,7 +862,7 @@ Also note that the `Builder` has a `cancelable()` method that lets you disable d
 when you tap outside the dialog window.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .title("Use Google's Location Services?")
     .content("Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.")
     .positiveText("Agree")
@@ -892,7 +892,7 @@ An input dialog is pretty self explanatory, it retrieves input from the user of 
 an input field (EditText). You can also display content above the EditText if you desire.
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
         .title(R.string.input)
         .content(R.string.input_content)
         .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
@@ -932,7 +932,7 @@ If you pass 0 for the min length, there will be no min length. If you pass -1 fo
 be no max length. If you don't pass a third parameter at all, it will default to Material red. 
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .title(R.string.input)
     .inputRangeRes(2, 20, R.color.material_red_500)
     .input(null, null, new MaterialDialog.InputCallback() {
@@ -977,7 +977,7 @@ So you do not need to worry about including any Proguard rules in order to ensur
 This will display the classic progress dialog with a spinning circle, see the sample project to see it in action:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .title(R.string.progress_dialog)
     .content(R.string.please_wait)
     .progress(true, 0)
@@ -993,7 +993,7 @@ The comments in the code explain what this does.
 // Create and show a non-indeterminate dialog with a max value of 150
 // If the showMinMax parameter is true, a min/max ratio will be shown to the left of the seek bar.
 boolean showMinMax = true;
-MaterialDialog dialog = new MaterialDialog.Builder(this)
+MaterialDialog dialog = MaterialDialog.build(this)
     .title(R.string.progress_dialog)
     .content(R.string.please_wait)
     .progress(false, 150, showMinMax)
@@ -1026,7 +1026,7 @@ you can tell the dialog that it needs to use a horizontal indicator when display
 dialog:
 
 ```java
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .title(R.string.progress_dialog)
     .content(R.string.please_wait)
     .progress(true, 0)
@@ -1050,7 +1050,7 @@ Like the stock `ProgressDialog`, you can format the progress min/max numbers and
 of determinate dialogs.
 
 ```java
-MaterialDialog dialog = new MaterialDialog.Builder(this)
+MaterialDialog dialog = MaterialDialog.build(this)
     .progress(false, 150, true)
     ...
     .progressNumberFormat("%1d/%2d")
@@ -1077,7 +1077,7 @@ If you don't want the dialog to automatically be dismissed when an action button
 the user selects a list item:
 
 ```java
-MaterialDialog dialog = new MaterialDialog.Builder(this)
+MaterialDialog dialog = MaterialDialog.build(this)
         // ... other initialization
         .autoDismiss(false)
         .show();
@@ -1216,7 +1216,7 @@ adapter.add(new MaterialSimpleListItem.Builder(this)
     .iconPaddingDp(8)
     .build());
 
-new MaterialDialog.Builder(this)
+MaterialDialog.build(this)
     .title(R.string.set_backup)
     .adapter(adapter, new MaterialDialog.ListCallback() {
         @Override
