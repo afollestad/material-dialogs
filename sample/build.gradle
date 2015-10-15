@@ -39,7 +39,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':core')
-    compile 'com.android.support:gridlayout-v7:23.0.1'
+    compile 'com.android.support:gridlayout-v7:23.1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile project(':commons')
 }
