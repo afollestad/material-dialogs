@@ -70,7 +70,6 @@
 
     <dimen name="md_bg_corner_radius">2dp</dimen>
     <dimen name="circular_progress_border">4dp</dimen>
-    <dimen name="md_default_dialog_width">0dp</dimen>
     <dimen name="md_listitem_vertical_margin">12dp</dimen>
     <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
 

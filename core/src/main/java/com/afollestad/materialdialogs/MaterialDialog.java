@@ -92,14 +92,6 @@ public class MaterialDialog extends DialogBase implements
         final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
-
-        // Set up width if on tablet
-        if (builder.context.getResources().getBoolean(R.bool.md_is_tablet)) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(getWindow().getAttributes());
-            lp.width = builder.context.getResources().getDimensionPixelSize(R.dimen.md_default_dialog_width);
-            getWindow().setAttributes(lp);
-        }
     }
 
     public final void setTypeface(TextView target, Typeface t) {
