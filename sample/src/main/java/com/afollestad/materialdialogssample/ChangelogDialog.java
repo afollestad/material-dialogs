@@ -42,7 +42,7 @@ public class ChangelogDialog extends DialogFragment {
         } catch (InflateException e) {
             throw new IllegalStateException("This device does not support Web Views.");
         }
-        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+        MaterialDialog dialog = MaterialDialog.build(getActivity())
                 .theme(getArguments().getBoolean("dark_theme") ? Theme.DARK : Theme.LIGHT)
                 .title(R.string.changelog)
                 .customView(customView, false)

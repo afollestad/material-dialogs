@@ -380,6 +380,13 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
+     * Create a new Builder used to construct a MaterialDialog.
+     */
+    public static Builder build(@NonNull Context context) {
+        return new Builder(context);
+    }
+
+    /**
      * The class used to construct a MaterialDialog.
      */
     public static class Builder {

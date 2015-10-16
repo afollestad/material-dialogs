@@ -22,7 +22,7 @@ public class AboutDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new MaterialDialog.Builder(getActivity())
+        return MaterialDialog.build(getActivity())
                 .title(R.string.about)
                 .positiveText(R.string.dismiss)
                 .content(Html.fromHtml(getString(R.string.about_body)))
