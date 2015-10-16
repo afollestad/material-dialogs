@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.commons.R;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
     private void init(Context context) {
         this.context = context;
+        setLayoutResource(R.layout.md_preference_custom);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
             setWidgetLayoutResource(0);
     }

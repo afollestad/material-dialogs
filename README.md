@@ -1,6 +1,6 @@
 # Material Dialogs
 
-![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdshowcase.png)
+![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mdart.jpg)
 
 # Table of Contents (Core)
 
@@ -97,7 +97,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 
 ```gradle
 dependencies {
-    compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
+    compile('com.afollestad.material-dialogs:core:0.8.4.0@aar') {
         transitive = true
     }
 }

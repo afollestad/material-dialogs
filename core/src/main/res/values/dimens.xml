@@ -33,6 +33,7 @@
     <dimen name="md_dialog_frame_margin">24dp</dimen>
     <!-- Total title margin bottom is 16, but we split this between content and title -->
     <dimen name="md_title_frame_margin_bottom">12dp</dimen>
+    <dimen name="md_title_frame_margin_bottom_less">6dp</dimen>
     <!-- The desired padding when no title is visible,
          This plus md_content_padding_top should equals md_dialog_frame_margin -->
     <dimen name="md_notitle_vertical_padding">16dp</dimen>

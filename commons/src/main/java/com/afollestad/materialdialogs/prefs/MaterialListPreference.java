@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.commons.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -39,6 +40,7 @@ public class MaterialListPreference extends ListPreference {
 
     private void init(Context context) {
         this.context = context;
+        setLayoutResource(R.layout.md_preference_custom);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
             setWidgetLayoutResource(0);
     }

@@ -6,4 +6,6 @@
     <dimen name="md_simplelist_icon_margin">16dp</dimen>
     <dimen name="md_simplelist_textsize">18sp</dimen>
 
+    <dimen name="md_preference_content_inset">20dp</dimen>
+
 </resources>

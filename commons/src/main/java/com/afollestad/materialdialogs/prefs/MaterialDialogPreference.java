@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.commons.R;
 
 import java.lang.reflect.Method;
 
@@ -39,6 +40,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
     private void init(Context context) {
         this.context = context;
+        setLayoutResource(R.layout.md_preference_custom);
     }
 
     @Override

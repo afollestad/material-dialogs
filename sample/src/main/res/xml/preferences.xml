@@ -15,7 +15,6 @@
         android:entries="@array/preference_values"
         android:entryValues="@array/preference_values"
         android:key="unused_key01"
-        android:layout="@layout/preference_custom"
         android:persistent="true"
         android:summary="@string/list_pref_desc"
         android:title="@string/list_pref_title" />
@@ -26,7 +25,6 @@
         android:dialogTitle="@string/edittext_pref_dialogtitle"
         android:inputType="textPersonName"
         android:key="unused_key03"
-        android:layout="@layout/preference_custom"
         android:persistent="true"
         android:summary="@string/edittext_pref_desc"
         android:title="@string/edittext_pref_title" />

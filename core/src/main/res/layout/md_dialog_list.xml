@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/md_stub_titleframe" />
+    <include layout="@layout/md_stub_titleframe_lesspadding" />
 
     <LinearLayout
         android:orientation="vertical"
