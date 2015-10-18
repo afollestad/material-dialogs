@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colorChooserCustomFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/md_title_frame_margin_bottom"
+    android:paddingTop="@dimen/md_title_frame_margin_bottom">
+
+    <View
+        android:id="@+id/colorIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        tools:background="@color/md_material_blue_600" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:text="#"
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorSecondary"
+            android:textSize="@dimen/md_title_textsize"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/hexInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="0099CC"
+            android:maxLength="6"
+            android:textSize="@dimen/md_title_textsize"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin">
+
+        <!-- Red -->
+
+        <TextView
+            android:id="@+id/colorRLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorR"
+            android:layout_alignTop="@+id/colorR"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:text="R"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <SeekBar
+            android:id="@+id/colorR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+            android:layout_toEndOf="@+id/colorRLabel"
+            android:layout_toLeftOf="@+id/colorRValue"
+            android:layout_toRightOf="@+id/colorRLabel"
+            android:layout_toStartOf="@+id/colorRValue"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/colorRValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorR"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/colorR"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:minWidth="24dp"
+            android:text="0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <!-- Green -->
+
+        <TextView
+            android:id="@+id/colorGLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorG"
+            android:layout_alignTop="@+id/colorG"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:text="G"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <SeekBar
+            android:id="@+id/colorG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/colorR"
+            android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+            android:layout_toEndOf="@+id/colorGLabel"
+            android:layout_toLeftOf="@+id/colorGValue"
+            android:layout_toRightOf="@+id/colorGLabel"
+            android:layout_toStartOf="@+id/colorGValue"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/colorGValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorG"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/colorG"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:minWidth="24dp"
+            android:text="0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <!-- Blue -->
+
+        <TextView
+            android:id="@+id/colorBLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorB"
+            android:layout_alignTop="@+id/colorB"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:text="B"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <SeekBar
+            android:id="@+id/colorB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/colorG"
+            android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+            android:layout_toEndOf="@+id/colorBLabel"
+            android:layout_toLeftOf="@+id/colorBValue"
+            android:layout_toRightOf="@+id/colorBLabel"
+            android:layout_toStartOf="@+id/colorBValue"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/colorBValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorB"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/colorB"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:minWidth="24dp"
+            android:text="0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</LinearLayout>

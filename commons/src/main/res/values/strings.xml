@@ -6,4 +6,5 @@
     <string name="md_choose_label">Choose</string>
     <string name="md_error_label">Error</string>
     <string name="md_storage_perm_error">Your app has not been granted the READ_EXTERNAL_STORAGE permission.</string>
+    <string name="md_custom_label">Custom</string>
 </resources>

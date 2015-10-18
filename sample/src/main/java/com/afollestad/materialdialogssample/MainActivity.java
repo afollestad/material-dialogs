@@ -93,7 +93,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         mHandler = new Handler();
+        primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
+        accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
     }
 
     @Override

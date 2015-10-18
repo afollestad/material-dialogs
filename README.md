@@ -54,6 +54,7 @@
 
 1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
     1. [Finding Visible Dialogs](https://github.com/afollestad/material-dialogs#finding-visible-dialogs)
+    2. [User Color Input](https://github.com/afollestad/material-dialogs#user-color-input)
 2. [Folder Selector Dialogs](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
 3. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
 4. [Simple List Dialogs](https://github.com/afollestad/material-dialogs#simple-list-dialogs) 
@@ -97,7 +98,10 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 
 ```gradle
 dependencies {
-    compile('com.afollestad.material-dialogs:core:0.8.4.0@aar') {
+
+    // ... other dependencies here
+    
+    compile('com.afollestad.material-dialogs:core:0.8.4.1@aar') {
         transitive = true
     }
 }
@@ -110,7 +114,10 @@ The *commons* module contains extensions to the library that not everyone may ne
 
 ```gradle
 dependencies {
-    compile('com.afollestad.material-dialogs:commons:0.8.3.0@aar') {
+
+    // ... other dependencies here
+    
+    compile('com.afollestad.material-dialogs:commons:0.8.4.1@aar') {
         transitive = true
     }
 }
@@ -1151,6 +1158,17 @@ ColorChooserDialog primary = ColorChooserDialog.findVisible(this, ColorChooserDi
 ColorChooserDialog accent = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_ACCENT);
 
 ColorChooserDialog custom = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_CUSTOM);
+```
+
+## User Color Input
+
+By default, color chooser dialogs allow the user to input a custom color using RGB sliders or a Hexadecimal input field.
+This can be disabled if you don't want users to be able to use it:
+
+```java
+new ColorChooserDialog.Builder(this, R.string.color_palette)
+    .allowUserColorInput(false)
+    .show();
 ```
 
 ---
