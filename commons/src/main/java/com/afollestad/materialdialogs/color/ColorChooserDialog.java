@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
+import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.Serializable;
@@ -117,7 +118,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void topIndex(int value) {
-        if (topIndex() != value)
+        if (topIndex() != value && value > -1)
             findSubIndexForColor(value, mColorsTop[value]);
         getArguments().putInt("top_index", value);
     }
@@ -163,18 +164,38 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 }
             }
 
+            if (builder.mAllowUserCustom)
+                mSelectedCustomColor = getSelectedColor();
             invalidateDynamicButtonColors();
             invalidate();
         }
     }
 
     private void invalidateDynamicButtonColors() {
+        final MaterialDialog dialog = (MaterialDialog) getDialog();
+        if (dialog == null) return;
         final Builder builder = getBuilder();
         if (builder.mDynamicButtonColor) {
-            final MaterialDialog dialog = (MaterialDialog) getDialog();
             int selectedColor = getSelectedColor();
+
+            int overLimitCount = 0;
+            if (Color.red(selectedColor) > 247) overLimitCount++;
+            if (Color.green(selectedColor) > 247) overLimitCount++;
+            if (Color.blue(selectedColor) > 247) overLimitCount++;
+            if (overLimitCount >= 2) {
+                // Once we get close to white, the action buttons and seekbars will be a very light gray
+                selectedColor = Color.parseColor("#EEEEEE");
+            }
+
             dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor);
             dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(selectedColor);
+            dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
+
+            if (mCustomSeekR != null) {
+                MDTintHelper.setTint(mCustomSeekR, selectedColor);
+                MDTintHelper.setTint(mCustomSeekG, selectedColor);
+                MDTintHelper.setTint(mCustomSeekB, selectedColor);
+            }
         }
     }
 
@@ -221,9 +242,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         generateColors();
 
         final int preselectColor = getBuilder().mPreselect;
+        boolean foundPreselectColor = false;
         if (preselectColor != 0) {
             for (int topIndex = 0; topIndex < mColorsTop.length; topIndex++) {
                 if (mColorsTop[topIndex] == preselectColor) {
+                    foundPreselectColor = true;
                     topIndex(topIndex);
                     if (getBuilder().mAccentMode) {
                         subIndex(2);
@@ -236,16 +259,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 }
 
                 if (mColorsSub != null) {
-                    boolean found = false;
                     for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
                         if (mColorsSub[topIndex][subIndex] == preselectColor) {
+                            foundPreselectColor = true;
                             topIndex(topIndex);
                             subIndex(subIndex);
-                            found = true;
                             break;
                         }
                     }
-                    if (found) break;
+                    if (foundPreselectColor) break;
                 }
             }
         }
@@ -297,6 +319,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         mGrid = (GridView) v.findViewById(R.id.grid);
 
         if (builder.mAllowUserCustom) {
+            mSelectedCustomColor = preselectColor;
             mColorChooserCustomFrame = v.findViewById(R.id.colorChooserCustomFrame);
             mCustomColorHex = (EditText) v.findViewById(R.id.hexInput);
             mCustomColorIndicator = v.findViewById(R.id.colorIndicator);
@@ -309,13 +332,21 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
 
         invalidate();
+        if (!foundPreselectColor) {
+            // If color wasn't found in the preset colors, it must be custom
+            toggleCustom(dialog);
+        }
+
         return dialog;
     }
 
     private void toggleCustom(MaterialDialog dialog) {
+        if (dialog == null)
+            dialog = (MaterialDialog) getDialog();
         if (mGrid.getVisibility() == View.VISIBLE) {
             dialog.setTitle(getBuilder().mCustomBtn);
-            dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mBackBtn);
+            dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mPresetsBtn);
+            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.GONE);
             mGrid.setVisibility(View.GONE);
             mColorChooserCustomFrame.setVisibility(View.VISIBLE);
             mCustomColorTextWatcher = new TextWatcher() {
@@ -340,6 +371,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                     int blue = Color.blue(mSelectedCustomColor);
                     mCustomSeekB.setProgress(blue);
                     mCustomSeekBValue.setText(String.format("%d", blue));
+                    isInSub(false);
+                    topIndex(-1);
+                    subIndex(-1);
+                    invalidateDynamicButtonColors();
                 }
 
                 @Override
@@ -347,12 +382,6 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 }
             };
             mCustomColorHex.addTextChangedListener(mCustomColorTextWatcher);
-            mCustomColorHex.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    mCustomColorHex.selectAll();
-                }
-            });
             mCustomColorRgbListener = new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -375,14 +404,14 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             mCustomSeekR.setOnSeekBarChangeListener(mCustomColorRgbListener);
             mCustomSeekG.setOnSeekBarChangeListener(mCustomColorRgbListener);
             mCustomSeekB.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & getBuilder().mPreselect));
+            mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & mSelectedCustomColor));
         } else {
             dialog.setTitle(getBuilder().mTitle);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCustomBtn);
+            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.VISIBLE);
             mGrid.setVisibility(View.VISIBLE);
             mColorChooserCustomFrame.setVisibility(View.GONE);
             mCustomColorHex.removeTextChangedListener(mCustomColorTextWatcher);
-            mCustomColorHex.setOnFocusChangeListener(null);
             mCustomColorTextWatcher = null;
             mCustomSeekR.setOnSeekBarChangeListener(null);
             mCustomSeekG.setOnSeekBarChangeListener(null);
@@ -458,6 +487,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected int mCancelBtn = R.string.md_cancel_label;
         @StringRes
         protected int mCustomBtn = R.string.md_custom_label;
+        @StringRes
+        protected int mPresetsBtn = R.string.md_presets_label;
         @Nullable
         protected int[] mColorsTop;
         @Nullable
@@ -511,6 +542,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder customButton(@StringRes int text) {
             mCustomBtn = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder presetsButton(@StringRes int text) {
+            mPresetsBtn = text;
             return this;
         }
 

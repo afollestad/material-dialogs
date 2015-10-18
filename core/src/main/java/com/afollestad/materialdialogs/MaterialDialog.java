@@ -848,6 +848,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder positiveText(@StringRes int postiveRes) {
+            if (postiveRes == 0) return this;
             positiveText(this.context.getText(postiveRes));
             return this;
         }
@@ -876,6 +877,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder neutralText(@StringRes int neutralRes) {
+            if (neutralRes == 0) return this;
             return neutralText(this.context.getText(neutralRes));
         }
 
@@ -903,6 +905,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder negativeText(@StringRes int negativeRes) {
+            if (negativeRes == 0) return this;
             return negativeText(this.context.getText(negativeRes));
         }
 

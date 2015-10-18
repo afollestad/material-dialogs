@@ -101,7 +101,7 @@ dependencies {
 
     // ... other dependencies here
     
-    compile('com.afollestad.material-dialogs:core:0.8.4.1@aar') {
+    compile('com.afollestad.material-dialogs:core:0.8.4.2@aar') {
         transitive = true
     }
 }
@@ -117,7 +117,7 @@ dependencies {
 
     // ... other dependencies here
     
-    compile('com.afollestad.material-dialogs:commons:0.8.4.1@aar') {
+    compile('com.afollestad.material-dialogs:commons:0.8.4.2@aar') {
         transitive = true
     }
 }
@@ -1168,6 +1168,8 @@ This can be disabled if you don't want users to be able to use it:
 ```java
 new ColorChooserDialog.Builder(this, R.string.color_palette)
     .allowUserColorInput(false)
+    .customButton(R.string.md_custom_label)
+    .presetsButton(R.string.md_presets_label)
     .show();
 ```
 
