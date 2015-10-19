@@ -329,14 +329,13 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             mCustomSeekGValue = (TextView) v.findViewById(R.id.colorGValue);
             mCustomSeekB = (SeekBar) v.findViewById(R.id.colorB);
             mCustomSeekBValue = (TextView) v.findViewById(R.id.colorBValue);
+            if (!foundPreselectColor) {
+                // If color wasn't found in the preset colors, it must be custom
+                toggleCustom(dialog);
+            }
         }
 
         invalidate();
-        if (!foundPreselectColor) {
-            // If color wasn't found in the preset colors, it must be custom
-            toggleCustom(dialog);
-        }
-
         return dialog;
     }
 
