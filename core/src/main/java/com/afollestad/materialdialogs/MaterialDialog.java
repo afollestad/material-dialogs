@@ -1263,12 +1263,10 @@ public class MaterialDialog extends DialogBase implements
          * @param errorColor Pass in 0 for the default red error color (as specified in guidelines).
          */
         public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-                                  @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength,
+                                  @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
                                   @ColorInt int errorColor) {
             if (minLength < 0)
                 throw new IllegalArgumentException("Min length for input dialogs cannot be less than 0.");
-            if (maxLength < 1)
-                throw new IllegalArgumentException("Max length for input dialogs cannot be less than 1.");
             this.inputMinLength = minLength;
             this.inputMaxLength = maxLength;
             if (errorColor == 0) {
@@ -1745,7 +1743,7 @@ public class MaterialDialog extends DialogBase implements
         if (inputMinMax != null) {
             inputMinMax.setText(String.format("%d/%d", currentLength, mBuilder.inputMaxLength));
             final boolean isDisabled = (emptyDisabled && currentLength == 0) ||
-                    currentLength > mBuilder.inputMaxLength ||
+                    (mBuilder.inputMaxLength > 0 && currentLength > mBuilder.inputMaxLength) ||
                     currentLength < mBuilder.inputMinLength;
             final int colorText = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.contentColor;
             final int colorWidget = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.widgetColor;
