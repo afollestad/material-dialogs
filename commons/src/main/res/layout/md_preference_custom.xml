@@ -6,6 +6,7 @@
     android:baselineAligned="false"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
     android:paddingEnd="?android:attr/scrollbarSize"
     android:paddingRight="?android:attr/scrollbarSize"
     tools:ignore="RtlSymmetry,UnusedAttribute">
@@ -13,6 +14,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="left|start"
         android:layout_marginBottom="12dip"
         android:layout_marginEnd="6dip"
         android:layout_marginLeft="@dimen/md_preference_content_inset"
@@ -25,6 +27,8 @@
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:fontFamily="sans-serif"
@@ -54,6 +58,7 @@
         android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="end|right"
         android:gravity="center_vertical"
         android:orientation="vertical" />
 
