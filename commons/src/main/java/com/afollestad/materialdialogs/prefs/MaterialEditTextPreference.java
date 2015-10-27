@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -45,38 +44,29 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     public MaterialEditTextPreference(Context context) {
         super(context);
-        init(context, null, 0, 0);
+        init(context, null);
     }
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs);
     }
 
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, com.android.internal.R.styleable.Preference, defStyleAttr, defStyleRes);
-        try {
-            final int layoutResource = a.getResourceId(com.android.internal.R.styleable.Preference_layout, 0);
-            if (layoutResource == 0)
-                setLayoutResource(R.layout.md_preference_custom);
-        } finally {
-            a.recycle();
-        }
-
+    private void init(Context context, AttributeSet attrs) {
+        PrefUtil.setLayoutResource(this, attrs);
         int fallback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);

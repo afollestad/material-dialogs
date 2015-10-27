@@ -31,37 +31,29 @@ public class MaterialDialogPreference extends DialogPreference {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialDialogPreference(Context context) {
         super(context);
-        init(context, null, 0, 0);
+        init(context, null);
     }
 
     public MaterialDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context, attrs);
     }
 
     public MaterialDialogPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs);
     }
 
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(Context context, AttributeSet attrs) {
         this.context = context;
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, com.android.internal.R.styleable.Preference, defStyleAttr, defStyleRes);
-        try {
-            final int layoutResource = a.getResourceId(com.android.internal.R.styleable.Preference_layout, 0);
-            if (layoutResource == 0)
-                setLayoutResource(R.layout.md_preference_custom);
-        } finally {
-            a.recycle();
-        }
+        PrefUtil.setLayoutResource(this, attrs);
     }
 
     @Override
