@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ListView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -58,6 +59,11 @@ public class MaterialListPreference extends ListPreference {
         return mDialog;
     }
 
+    public ListView getListView() {
+        if (getDialog() == null) return null;
+        return ((MaterialDialog) getDialog()).getListView();
+    }
+
     @Override
     protected void showDialog(Bundle state) {
         if (getEntries() == null || getEntryValues() == null) {
@@ -87,20 +93,20 @@ public class MaterialListPreference extends ListPreference {
                         }
                     }
                 })
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                    }
-
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        switch (which) {
+                            case POSITIVE:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                                break;
+                            case NEGATIVE:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                                break;
+                            case NEUTRAL:
+                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                break;
+                        }
                     }
                 })
                 .negativeText(getNegativeButtonText())
