@@ -1247,7 +1247,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-                                  @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength) {
+                                  @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength) {
             return inputRange(minLength, maxLength, 0);
         }
 
