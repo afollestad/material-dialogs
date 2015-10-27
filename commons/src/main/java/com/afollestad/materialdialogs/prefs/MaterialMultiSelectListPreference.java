@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -36,12 +37,25 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
     private MaterialDialog mDialog;
 
     public MaterialMultiSelectListPreference(Context context) {
-        this(context, null);
+        super(context);
+        init(context, null, 0, 0);
     }
 
     public MaterialMultiSelectListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs, 0, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public MaterialMultiSelectListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public MaterialMultiSelectListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -51,10 +65,17 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             mDialog.setItems(entries);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         this.context = context;
-        if (getDialogLayoutResource() == 0)
-            setLayoutResource(R.layout.md_preference_custom);
+        final TypedArray a = context.obtainStyledAttributes(
+                attrs, com.android.internal.R.styleable.Preference, defStyleAttr, defStyleRes);
+        try {
+            final int layoutResource = a.getResourceId(com.android.internal.R.styleable.Preference_layout, 0);
+            if (layoutResource == 0)
+                setLayoutResource(R.layout.md_preference_custom);
+        } finally {
+            a.recycle();
+        }
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
             setWidgetLayoutResource(0);
     }

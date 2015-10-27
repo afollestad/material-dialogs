@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs.util;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -97,7 +98,7 @@ public class DialogUtils {
 
     /**
      * Returns a color associated with a particular resource ID
-     * <p>
+     * <p/>
      * Starting in {@link android.os.Build.VERSION_CODES#M}, the returned
      * color will be styled for the specified Context's theme.
      *
@@ -247,7 +248,7 @@ public class DialogUtils {
     }
 
     public static int[] getColorArray(@NonNull Context context, @ArrayRes int array) {
-        if(array == 0) return null;
+        if (array == 0) return null;
         TypedArray ta = context.getResources().obtainTypedArray(array);
         int[] colors = new int[ta.length()];
         for (int i = 0; i < ta.length(); i++)
@@ -255,4 +256,8 @@ public class DialogUtils {
         ta.recycle();
         return colors;
     }
+
+//    public static int getInternalIdentifier(String type, String name) {
+//        return Resources.getSystem().getIdentifier(name, type, "android");
+//    }
 }

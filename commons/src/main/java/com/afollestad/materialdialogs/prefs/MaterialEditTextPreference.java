@@ -1,9 +1,11 @@
 package com.afollestad.materialdialogs.prefs;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -39,12 +41,41 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     private int mColor = 0;
     private MaterialDialog mDialog;
-    private final EditText mEditText;
+    private EditText mEditText;
+
+    public MaterialEditTextPreference(Context context) {
+        super(context);
+        init(context, null, 0, 0);
+    }
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if (getDialogLayoutResource() == 0)
-            setLayoutResource(R.layout.md_preference_custom);
+        init(context, attrs, 0, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        final TypedArray a = context.obtainStyledAttributes(
+                attrs, com.android.internal.R.styleable.Preference, defStyleAttr, defStyleRes);
+        try {
+            final int layoutResource = a.getResourceId(com.android.internal.R.styleable.Preference_layout, 0);
+            if (layoutResource == 0)
+                setLayoutResource(R.layout.md_preference_custom);
+        } finally {
+            a.recycle();
+        }
 
         int fallback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -57,10 +88,6 @@ public class MaterialEditTextPreference extends EditTextPreference {
         // Give it an ID so it can be saved/restored
         mEditText.setId(android.R.id.edit);
         mEditText.setEnabled(true);
-    }
-
-    public MaterialEditTextPreference(Context context) {
-        this(context, null);
     }
 
     @Override
