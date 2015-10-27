@@ -1247,7 +1247,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-                                  @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength) {
+                                  @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength) {
             return inputRange(minLength, maxLength, 0);
         }
 
@@ -1733,13 +1733,17 @@ public class MaterialDialog extends DialogBase implements
 
     protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
-            inputMinMax.setText(String.format("%d/%d", currentLength, mBuilder.inputMaxLength));
+            if (mBuilder.inputMaxLength > 0) {
+                inputMinMax.setText(String.format("%d/%d", currentLength, mBuilder.inputMaxLength));
+                inputMinMax.setVisibility(View.VISIBLE);
+            } else inputMinMax.setVisibility(View.GONE);
             final boolean isDisabled = (emptyDisabled && currentLength == 0) ||
                     (mBuilder.inputMaxLength > 0 && currentLength > mBuilder.inputMaxLength) ||
                     currentLength < mBuilder.inputMinLength;
             final int colorText = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.contentColor;
             final int colorWidget = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.widgetColor;
-            inputMinMax.setTextColor(colorText);
+            if (mBuilder.inputMaxLength > 0)
+                inputMinMax.setTextColor(colorText);
             MDTintHelper.setTint(input, colorWidget);
             final View positiveAb = getActionButton(DialogAction.POSITIVE);
             positiveAb.setEnabled(!isDisabled);
