@@ -6,6 +6,7 @@
         android:dialogMessage="@string/preference_dialog_message"
         android:dialogTitle="@string/preference_dialog_title"
         android:key="unused_key00"
+        android:layout="@layout/md_stub_colorchooser_grid"
         android:negativeButtonText="@android:string/cancel"
         android:positiveButtonText="@android:string/ok"
         android:summary="@string/material_dialog_pref_summary"

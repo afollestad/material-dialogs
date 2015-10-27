@@ -40,7 +40,8 @@ public class MaterialDialogPreference extends DialogPreference {
 
     private void init(Context context) {
         this.context = context;
-        setLayoutResource(R.layout.md_preference_custom);
+        if (getLayoutResource() == 0)
+            setLayoutResource(R.layout.md_preference_custom);
     }
 
     @Override

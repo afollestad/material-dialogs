@@ -43,7 +43,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     public MaterialEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(R.layout.md_preference_custom);
+        if (getDialogLayoutResource() == 0)
+            setLayoutResource(R.layout.md_preference_custom);
 
         int fallback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
