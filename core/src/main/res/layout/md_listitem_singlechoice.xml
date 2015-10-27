@@ -15,6 +15,7 @@
         android:id="@+id/control"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:button="@drawable/abc_btn_radio_material"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"

@@ -226,18 +226,10 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.selectedIndex = oldSelected;
                 }
                 // Update the checked states
-                if (allowSelection && mBuilder.selectedIndex != position) {
+                if (allowSelection) {
                     mBuilder.selectedIndex = position;
-                    // Uncheck the previously selected radio button
-                    if (adapter.mRadioButton == null) {
-                        adapter.mInitRadio = true;
-                        adapter.notifyDataSetChanged();
-                    }
-                    if (adapter.mRadioButton != null)
-                        adapter.mRadioButton.setChecked(false);
-                    // Check the newly selected radio button
                     radio.setChecked(true);
-                    adapter.mRadioButton = radio;
+                    adapter.notifyDataSetChanged();
                 }
             }
 
