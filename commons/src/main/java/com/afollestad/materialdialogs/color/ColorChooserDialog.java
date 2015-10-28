@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     private EditText mCustomColorHex;
     private View mCustomColorIndicator;
     private TextWatcher mCustomColorTextWatcher;
+    private SeekBar mCustomSeekA;
+    private TextView mCustomSeekAValue;
     private SeekBar mCustomSeekR;
     private TextView mCustomSeekRValue;
     private SeekBar mCustomSeekG;
@@ -177,21 +180,23 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         final Builder builder = getBuilder();
         if (builder.mDynamicButtonColor) {
             int selectedColor = getSelectedColor();
-
-            int overLimitCount = 0;
-            if (Color.red(selectedColor) > 247) overLimitCount++;
-            if (Color.green(selectedColor) > 247) overLimitCount++;
-            if (Color.blue(selectedColor) > 247) overLimitCount++;
-            if (overLimitCount >= 2) {
-                // Once we get close to white, the action buttons and seekbars will be a very light gray
-                selectedColor = Color.parseColor("#EEEEEE");
+            if (Color.alpha(selectedColor) < 64 ||
+                    (Color.red(selectedColor) > 247 &&
+                            Color.green(selectedColor) > 247 &&
+                            Color.blue(selectedColor) > 247)) {
+                // Once we get close to white or transparent, the action buttons and seekbars will be a very light gray
+                selectedColor = Color.parseColor("#DEDEDE");
             }
 
-            dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor);
-            dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(selectedColor);
-            dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
+            if (getBuilder().mDynamicButtonColor) {
+                dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor);
+                dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(selectedColor);
+                dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
+            }
 
             if (mCustomSeekR != null) {
+                if (mCustomSeekA.getVisibility() == View.VISIBLE)
+                    MDTintHelper.setTint(mCustomSeekA, selectedColor);
                 MDTintHelper.setTint(mCustomSeekR, selectedColor);
                 MDTintHelper.setTint(mCustomSeekG, selectedColor);
                 MDTintHelper.setTint(mCustomSeekB, selectedColor);
@@ -323,12 +328,26 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             mColorChooserCustomFrame = v.findViewById(R.id.colorChooserCustomFrame);
             mCustomColorHex = (EditText) v.findViewById(R.id.hexInput);
             mCustomColorIndicator = v.findViewById(R.id.colorIndicator);
+            mCustomSeekA = (SeekBar) v.findViewById(R.id.colorA);
+            mCustomSeekAValue = (TextView) v.findViewById(R.id.colorAValue);
             mCustomSeekR = (SeekBar) v.findViewById(R.id.colorR);
             mCustomSeekRValue = (TextView) v.findViewById(R.id.colorRValue);
             mCustomSeekG = (SeekBar) v.findViewById(R.id.colorG);
             mCustomSeekGValue = (TextView) v.findViewById(R.id.colorGValue);
             mCustomSeekB = (SeekBar) v.findViewById(R.id.colorB);
             mCustomSeekBValue = (TextView) v.findViewById(R.id.colorBValue);
+
+            if (!builder.mAllowUserCustomAlpha) {
+                v.findViewById(R.id.colorALabel).setVisibility(View.GONE);
+                mCustomSeekA.setVisibility(View.GONE);
+                mCustomSeekAValue.setVisibility(View.GONE);
+                mCustomColorHex.setHint("2196F3");
+                mCustomColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+            } else {
+                mCustomColorHex.setHint("FF2196F3");
+                mCustomColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
+            }
+
             if (!foundPreselectColor) {
                 // If color wasn't found in the preset colors, it must be custom
                 toggleCustom(dialog);
@@ -361,15 +380,21 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                         mSelectedCustomColor = Color.BLACK;
                     }
                     mCustomColorIndicator.setBackgroundColor(mSelectedCustomColor);
+                    if (mCustomSeekA.getVisibility() == View.VISIBLE) {
+                        int alpha = Color.alpha(mSelectedCustomColor);
+                        mCustomSeekA.setProgress(alpha);
+                        mCustomSeekAValue.setText(String.format("%d", alpha));
+                    }
+                    if (mCustomSeekA.getVisibility() == View.VISIBLE) {
+                        int alpha = Color.alpha(mSelectedCustomColor);
+                        mCustomSeekA.setProgress(alpha);
+                    }
                     int red = Color.red(mSelectedCustomColor);
                     mCustomSeekR.setProgress(red);
-                    mCustomSeekRValue.setText(String.format("%d", red));
                     int green = Color.green(mSelectedCustomColor);
                     mCustomSeekG.setProgress(green);
-                    mCustomSeekGValue.setText(String.format("%d", green));
                     int blue = Color.blue(mSelectedCustomColor);
                     mCustomSeekB.setProgress(blue);
-                    mCustomSeekBValue.setText(String.format("%d", blue));
                     isInSub(false);
                     topIndex(-1);
                     subIndex(-1);
@@ -385,10 +410,18 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if (fromUser) {
-                        int color = Color.rgb(mCustomSeekR.getProgress(),
-                                mCustomSeekG.getProgress(),
-                                mCustomSeekB.getProgress());
-                        mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & color));
+                        if (getBuilder().mAllowUserCustomAlpha) {
+                            int color = Color.argb(mCustomSeekA.getProgress(),
+                                    mCustomSeekR.getProgress(),
+                                    mCustomSeekG.getProgress(),
+                                    mCustomSeekB.getProgress());
+                            mCustomColorHex.setText(String.format("%08X", color));
+                        } else {
+                            int color = Color.rgb(mCustomSeekR.getProgress(),
+                                    mCustomSeekG.getProgress(),
+                                    mCustomSeekB.getProgress());
+                            mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & color));
+                        }
                     }
                 }
 
@@ -400,10 +433,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             };
+            if (mCustomSeekA.getVisibility() == View.VISIBLE) {
+                mCustomSeekA.setOnSeekBarChangeListener(mCustomColorRgbListener);
+                mCustomColorHex.setText(String.format("%08X", mSelectedCustomColor));
+            } else {
+                mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & mSelectedCustomColor));
+            }
             mCustomSeekR.setOnSeekBarChangeListener(mCustomColorRgbListener);
             mCustomSeekG.setOnSeekBarChangeListener(mCustomColorRgbListener);
             mCustomSeekB.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & mSelectedCustomColor));
         } else {
             dialog.setTitle(getBuilder().mTitle);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCustomBtn);
@@ -496,6 +534,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected boolean mAccentMode = false;
         protected boolean mDynamicButtonColor = true;
         protected boolean mAllowUserCustom = true;
+        protected boolean mAllowUserCustomAlpha = true;
 
         public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
             mContext = context;
@@ -573,6 +612,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder allowUserColorInput(boolean allow) {
             mAllowUserCustom = allow;
+            return this;
+        }
+
+        @NonNull
+        public Builder allowUserColorInputAlpha(boolean allow) {
+            mAllowUserCustomAlpha = allow;
             return this;
         }
 

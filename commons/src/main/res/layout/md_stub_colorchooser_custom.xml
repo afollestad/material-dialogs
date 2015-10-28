@@ -36,8 +36,7 @@
             android:id="@+id/hexInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="0099CC"
-            android:maxLength="6"
+            android:hint="FF0099CC"
             android:textSize="@dimen/md_title_textsize"
             tools:ignore="HardcodedText" />
 
@@ -49,6 +48,49 @@
         android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
         android:paddingLeft="@dimen/md_dialog_frame_margin"
         android:paddingRight="@dimen/md_dialog_frame_margin">
+
+        <!-- Alpha -->
+
+        <TextView
+            android:id="@+id/colorALabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorA"
+            android:layout_alignTop="@+id/colorA"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:text="A"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
+
+        <SeekBar
+            android:id="@+id/colorA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
+            android:layout_toEndOf="@+id/colorALabel"
+            android:layout_toLeftOf="@+id/colorAValue"
+            android:layout_toRightOf="@+id/colorALabel"
+            android:layout_toStartOf="@+id/colorAValue"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/colorAValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorA"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/colorA"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:minWidth="24dp"
+            android:text="0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/md_content_textsize"
+            tools:ignore="HardcodedText" />
 
         <!-- Red -->
 
@@ -69,6 +111,7 @@
             android:id="@+id/colorR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/colorA"
             android:layout_marginTop="@dimen/md_title_frame_margin_bottom"
             android:layout_toEndOf="@+id/colorRLabel"
             android:layout_toLeftOf="@+id/colorRValue"

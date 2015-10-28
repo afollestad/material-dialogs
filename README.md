@@ -1173,6 +1173,16 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .show();
 ```
 
+If you want the user to be able to input a custom color, but don't want them to be able to change transparency (alpha):
+
+```java
+new ColorChooserDialog.Builder(this, R.string.color_palette)
+    .allowUserColorInputAlpha(false)
+    .customButton(R.string.md_custom_label)
+    .presetsButton(R.string.md_presets_label)
+    .show();
+```
+
 ---
 
 # Preference Dialogs

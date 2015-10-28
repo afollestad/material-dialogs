@@ -4,7 +4,7 @@
     <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <color name="material_indigo_500">#3F51B5</color>
     <color name="material_indigo_600">#3949AB</color>
-    <color name="material_teal_500">#009688</color>
+    <color name="material_teal_a400">#1DE9B6</color>
     <color name="material_red_400">#EF5350</color>
 
 </resources>
