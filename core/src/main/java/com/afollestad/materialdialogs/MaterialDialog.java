@@ -313,7 +313,7 @@ public class MaterialDialog extends DialogBase implements
         Collections.sort(selectedIndicesList); // make sure the indicies are in order
         List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
-            if (i > mBuilder.items.length - 1) continue;
+            if (i < 0 || i > mBuilder.items.length - 1) continue;
             selectedTitles.add(mBuilder.items[i]);
         }
         return mBuilder.listCallbackMultiChoice.onSelection(this,
