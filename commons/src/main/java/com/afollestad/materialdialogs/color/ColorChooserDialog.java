@@ -41,7 +41,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author Aidan Follestad (afollestad)
  */
 @SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
-public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
+public class ColorChooserDialog extends DialogFragment implements View.OnClickListener, View.OnLongClickListener {
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
@@ -153,7 +153,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getTag() != null) {
-            final int index = (Integer) v.getTag();
+            final String[] tag = ((String) v.getTag()).split(":");
+            final int index = Integer.parseInt(tag[0]);
             final MaterialDialog dialog = (MaterialDialog) getDialog();
             final Builder builder = getBuilder();
 
@@ -172,6 +173,17 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             invalidateDynamicButtonColors();
             invalidate();
         }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (v.getTag() != null) {
+            final String[] tag = ((String) v.getTag()).split(":");
+            final int color = Integer.parseInt(tag[1]);
+            ((CircleView) v).showHint(color);
+            return true;
+        }
+        return false;
     }
 
     private void invalidateDynamicButtonColors() {
@@ -500,8 +512,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             if (isInSub())
                 child.setSelected(subIndex() == position);
             else child.setSelected(topIndex() == position);
-            child.setTag(position);
+            child.setTag(String.format("%d:%d", position, color));
             child.setOnClickListener(ColorChooserDialog.this);
+            child.setOnLongClickListener(ColorChooserDialog.this);
             return convertView;
         }
     }
