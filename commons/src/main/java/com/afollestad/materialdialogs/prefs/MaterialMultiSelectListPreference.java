@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.MultiSelectListPreference;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -130,15 +128,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             builder.content(getDialogMessage());
         }
 
-        try {
-            PreferenceManager pm = getPreferenceManager();
-            Method method = pm.getClass().getDeclaredMethod(
-                    "registerOnActivityDestroyListener",
-                    PreferenceManager.OnActivityDestroyListener.class);
-            method.setAccessible(true);
-            method.invoke(pm, this);
-        } catch (Exception ignored) {
-        }
+        PrefUtil.registerOnActivityDestroyListener(this, this);
 
         mDialog = builder.build();
         if (state != null)
@@ -149,15 +139,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        try {
-            PreferenceManager pm = getPreferenceManager();
-            Method method = pm.getClass().getDeclaredMethod(
-                    "unregisterOnActivityDestroyListener",
-                    PreferenceManager.OnActivityDestroyListener.class);
-            method.setAccessible(true);
-            method.invoke(pm, this);
-        } catch (Exception ignored) {
-        }
+        PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
     @Override

@@ -162,15 +162,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
         mBuilder.customView(layout, false);
 
-        try {
-            PreferenceManager pm = getPreferenceManager();
-            Method method = pm.getClass().getDeclaredMethod(
-                    "registerOnActivityDestroyListener",
-                    PreferenceManager.OnActivityDestroyListener.class);
-            method.setAccessible(true);
-            method.invoke(pm, this);
-        } catch (Exception ignored) {
-        }
+        PrefUtil.registerOnActivityDestroyListener(this, this);
 
         mDialog = mBuilder.build();
         if (state != null)
@@ -183,15 +175,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        try {
-            PreferenceManager pm = getPreferenceManager();
-            Method method = pm.getClass().getDeclaredMethod(
-                    "unregisterOnActivityDestroyListener",
-                    PreferenceManager.OnActivityDestroyListener.class);
-            method.setAccessible(true);
-            method.invoke(pm, this);
-        } catch (Exception ignored) {
-        }
+        PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
     /**
