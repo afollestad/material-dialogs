@@ -713,7 +713,7 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder items(@NonNull CharSequence[] items) {
+        public Builder items(@NonNull CharSequence... items) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set items() when you're using a custom view.");
             this.items = items;
