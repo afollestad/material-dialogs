@@ -306,6 +306,8 @@ class DialogInit {
             FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.customViewFrame);
             dialog.customViewFrame = frame;
             View innerView = builder.customView;
+            if (innerView.getParent() != null)
+                ((ViewGroup) innerView.getParent()).removeView(innerView);
             if (builder.wrapCustomViewInScroll) {
                 /* Apply the frame padding to the content, this allows the ScrollView to draw it's
                    over scroll glow without clipping */
