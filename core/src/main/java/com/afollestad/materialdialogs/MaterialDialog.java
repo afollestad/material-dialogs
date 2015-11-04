@@ -389,6 +389,7 @@ public class MaterialDialog extends DialogBase implements
         protected ColorStateList positiveColor;
         protected ColorStateList negativeColor;
         protected ColorStateList neutralColor;
+        protected ColorStateList linkColor;
         protected ButtonCallback callback;
         protected SingleButtonCallback onPositiveCallback;
         protected SingleButtonCallback onNegativeCallback;
@@ -485,6 +486,7 @@ public class MaterialDialog extends DialogBase implements
             this.positiveColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.negativeColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.neutralColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
+            this.linkColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
 
             int fallback = 0;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -565,6 +567,8 @@ public class MaterialDialog extends DialogBase implements
                 this.btnSelectorNegative = s.btnSelectorNegative;
             if (s.widgetColor != 0)
                 this.widgetColor = s.widgetColor;
+            if (s.linkColor != null)
+                this.linkColor = s.linkColor;
             this.titleGravity = s.titleGravity;
             this.contentGravity = s.contentGravity;
             this.btnStackedGravity = s.btnStackedGravity;
@@ -863,7 +867,7 @@ public class MaterialDialog extends DialogBase implements
             return positiveColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
         }
 
-        public Builder positiveColor(ColorStateList colorStateList) {
+        public Builder positiveColor(@NonNull ColorStateList colorStateList) {
             this.positiveColor = colorStateList;
             this.positiveColorSet = true;
             return this;
@@ -891,7 +895,7 @@ public class MaterialDialog extends DialogBase implements
             return negativeColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
         }
 
-        public Builder negativeColor(ColorStateList colorStateList) {
+        public Builder negativeColor(@NonNull ColorStateList colorStateList) {
             this.negativeColor = colorStateList;
             this.negativeColorSet = true;
             return this;
@@ -919,9 +923,26 @@ public class MaterialDialog extends DialogBase implements
             return neutralColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
         }
 
-        public Builder neutralColor(ColorStateList colorStateList) {
+        public Builder neutralColor(@NonNull ColorStateList colorStateList) {
             this.neutralColor = colorStateList;
             this.neutralColorSet = true;
+            return this;
+        }
+
+        public Builder linkColor(@ColorInt int color) {
+            return linkColor(DialogUtils.getActionTextStateList(context, color));
+        }
+
+        public Builder linkColorRes(@ColorRes int colorRes) {
+            return linkColor(DialogUtils.getActionTextColorStateList(this.context, colorRes));
+        }
+
+        public Builder linkColorAttr(@AttrRes int colorAttr) {
+            return linkColor(DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+        }
+
+        public Builder linkColor(@NonNull ColorStateList colorStateList) {
+            this.linkColor = colorStateList;
             return this;
         }
 

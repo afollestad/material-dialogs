@@ -597,6 +597,7 @@ Pretty much every aspect of a dialog created with this library can be colored:
 new MaterialDialog.Builder(this)
         .titleColorRes(R.color.material_red_500)
         .contentColor(Color.WHITE) // notice no 'res' postfix for literal color
+        .linkColorAttr(R.attr.my_link_color_attr)  // notice attr is used instead of none or res for attribute resolving
         .dividerColorRes(R.color.material_pink_500)
         .backgroundColorRes(R.color.material_blue_grey_800)
         .positiveColorRes(R.color.material_red_500)
@@ -734,6 +735,11 @@ you show from an Activity which has a theme containing any of these attributes:
     -->
     <item name="md_content_color">#9C27B0</item>
 
+    <!--
+        By default, the link color is derived from the colorAccent attribute 
+        of AppCompat or android:colorAccent attribute of the Material theme.
+    -->
+    <item name="md_link_color">#673AB7</item>
 
     <!--
         By default, the positive action text color is derived

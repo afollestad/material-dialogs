@@ -44,6 +44,8 @@ public class ThemeSingleton {
     public int backgroundColor = 0;
     @ColorInt
     public int dividerColor = 0;
+    @ColorInt
+    public ColorStateList linkColor = null;
 
     @DrawableRes
     public int listSelector = 0;

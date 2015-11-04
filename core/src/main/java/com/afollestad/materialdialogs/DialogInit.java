@@ -84,7 +84,7 @@ class DialogInit {
             DialogUtils.setBackgroundCompat(dialog.view, drawable);
         }
 
-        // Retrieve action button colors from theme attributes or the Builder
+        // Retrieve color theme attributes
         if (!builder.positiveColorSet)
             builder.positiveColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_positive_color, builder.positiveColor);
         if (!builder.neutralColorSet)
@@ -93,6 +93,8 @@ class DialogInit {
             builder.negativeColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_negative_color, builder.negativeColor);
         if (!builder.widgetColorSet)
             builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
+        if (builder.linkColor == null)
+            builder.linkColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_link_color, builder.linkColor);
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
@@ -200,10 +202,9 @@ class DialogInit {
             dialog.content.setMovementMethod(new LinkMovementMethod());
             dialog.setTypeface(dialog.content, builder.regularFont);
             dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
-            if (builder.positiveColor == null)
+            if (builder.linkColor == null)
                 dialog.content.setLinkTextColor(DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
-            else
-                dialog.content.setLinkTextColor(builder.positiveColor);
+            else dialog.content.setLinkTextColor(builder.linkColor);
             dialog.content.setTextColor(builder.contentColor);
             dialog.content.setGravity(builder.contentGravity.getGravityInt());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
