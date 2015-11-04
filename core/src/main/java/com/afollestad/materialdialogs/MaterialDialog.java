@@ -486,7 +486,8 @@ public class MaterialDialog extends DialogBase implements
             this.positiveColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.negativeColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
             this.neutralColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
-            this.linkColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
+            this.linkColor = DialogUtils.getActionTextStateList(context,
+                    DialogUtils.resolveColor(context, R.attr.md_link_color, this.widgetColor));
 
             int fallback = 0;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)

@@ -93,8 +93,6 @@ class DialogInit {
             builder.negativeColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_negative_color, builder.negativeColor);
         if (!builder.widgetColorSet)
             builder.widgetColor = DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
-        if (builder.linkColor == null)
-            builder.linkColor = DialogUtils.resolveActionTextColorStateList(builder.context, R.attr.md_link_color, builder.linkColor);
 
         // Retrieve default title/content colors
         if (!builder.titleColorSet) {
