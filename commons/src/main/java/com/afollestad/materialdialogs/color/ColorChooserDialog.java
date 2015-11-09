@@ -435,6 +435,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                             mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & color));
                         }
                     }
+                    mCustomSeekAValue.setText(String.format("%d", mCustomSeekA.getProgress()));
+                    mCustomSeekRValue.setText(String.format("%d", mCustomSeekR.getProgress()));
+                    mCustomSeekGValue.setText(String.format("%d", mCustomSeekG.getProgress()));
+                    mCustomSeekBValue.setText(String.format("%d", mCustomSeekB.getProgress()));
                 }
 
                 @Override
