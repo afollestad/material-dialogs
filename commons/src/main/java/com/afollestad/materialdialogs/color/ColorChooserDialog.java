@@ -376,7 +376,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         if (mGrid.getVisibility() == View.VISIBLE) {
             dialog.setTitle(getBuilder().mCustomBtn);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mPresetsBtn);
-            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.GONE);
+            dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
             mGrid.setVisibility(View.GONE);
             mColorChooserCustomFrame.setVisibility(View.VISIBLE);
             mCustomColorTextWatcher = new TextWatcher() {
@@ -457,7 +457,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         } else {
             dialog.setTitle(getBuilder().mTitle);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCustomBtn);
-            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.VISIBLE);
+            if (isInSub())
+                dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mBackBtn);
+            else dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
             mGrid.setVisibility(View.VISIBLE);
             mColorChooserCustomFrame.setVisibility(View.GONE);
             mCustomColorHex.removeTextChangedListener(mCustomColorTextWatcher);
