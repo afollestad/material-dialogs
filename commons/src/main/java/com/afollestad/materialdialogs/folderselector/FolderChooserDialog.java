@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -71,14 +72,15 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            return new MaterialDialog.Builder(getActivity())
-                    .title(R.string.md_error_label)
-                    .content(R.string.md_storage_perm_error)
-                    .positiveText(android.R.string.ok)
-                    .build();
-        }
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+        ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
+        PackageManager.PERMISSION_GRANTED) {
+    return new MaterialDialog.Builder(getActivity())
+            .title(R.string.md_error_label)
+            .content(R.string.md_storage_perm_error)
+            .positiveText(android.R.string.ok)
+            .build();
+}
 
         if (getArguments() == null || !getArguments().containsKey("builder"))
             throw new IllegalStateException("You must create a FolderChooserDialog using the Builder.");
