@@ -1,1 +1,1 @@
--keep class com.afollestad.materialdialogs.internal.progress.** { *; }
+-keep class me.zhanghai.android.materialprogressbar.** { *; }
