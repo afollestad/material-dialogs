@@ -449,15 +449,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             };
+            mCustomSeekR.setOnSeekBarChangeListener(mCustomColorRgbListener);
+            mCustomSeekG.setOnSeekBarChangeListener(mCustomColorRgbListener);
+            mCustomSeekB.setOnSeekBarChangeListener(mCustomColorRgbListener);
             if (mCustomSeekA.getVisibility() == View.VISIBLE) {
                 mCustomSeekA.setOnSeekBarChangeListener(mCustomColorRgbListener);
                 mCustomColorHex.setText(String.format("%08X", mSelectedCustomColor));
             } else {
                 mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & mSelectedCustomColor));
             }
-            mCustomSeekR.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomSeekG.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomSeekB.setOnSeekBarChangeListener(mCustomColorRgbListener);
         } else {
             dialog.setTitle(getBuilder().mTitle);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mCustomBtn);
