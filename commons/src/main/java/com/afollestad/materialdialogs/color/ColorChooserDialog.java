@@ -101,6 +101,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     private int mSelectedCustomColor;
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("top_index", topIndex());
+        outState.putBoolean("in_sub", isInSub());
+        outState.putInt("sub_index", subIndex());
+        outState.putBoolean("in_custom", mColorChooserCustomFrame.getVisibility() == View.VISIBLE);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (!(activity instanceof ColorCallback))
@@ -258,33 +267,40 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             throw new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
         generateColors();
 
-        final int preselectColor = getBuilder().mPreselect;
+        int preselectColor;
         boolean foundPreselectColor = false;
-        if (preselectColor != 0) {
-            for (int topIndex = 0; topIndex < mColorsTop.length; topIndex++) {
-                if (mColorsTop[topIndex] == preselectColor) {
-                    foundPreselectColor = true;
-                    topIndex(topIndex);
-                    if (getBuilder().mAccentMode) {
-                        subIndex(2);
-                    } else if (mColorsSub != null) {
-                        findSubIndexForColor(topIndex, preselectColor);
-                    } else {
-                        subIndex(5);
-                    }
-                    break;
-                }
 
-                if (mColorsSub != null) {
-                    for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
-                        if (mColorsSub[topIndex][subIndex] == preselectColor) {
-                            foundPreselectColor = true;
-                            topIndex(topIndex);
-                            subIndex(subIndex);
-                            break;
+        if (savedInstanceState != null) {
+            foundPreselectColor = !savedInstanceState.getBoolean("in_custom", false);
+            preselectColor = getSelectedColor();
+        } else {
+            preselectColor = getBuilder().mPreselect;
+            if (preselectColor != 0) {
+                for (int topIndex = 0; topIndex < mColorsTop.length; topIndex++) {
+                    if (mColorsTop[topIndex] == preselectColor) {
+                        foundPreselectColor = true;
+                        topIndex(topIndex);
+                        if (getBuilder().mAccentMode) {
+                            subIndex(2);
+                        } else if (mColorsSub != null) {
+                            findSubIndexForColor(topIndex, preselectColor);
+                        } else {
+                            subIndex(5);
                         }
+                        break;
                     }
-                    if (foundPreselectColor) break;
+
+                    if (mColorsSub != null) {
+                        for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
+                            if (mColorsSub[topIndex][subIndex] == preselectColor) {
+                                foundPreselectColor = true;
+                                topIndex(topIndex);
+                                subIndex(subIndex);
+                                break;
+                            }
+                        }
+                        if (foundPreselectColor) break;
+                    }
                 }
             }
         }
@@ -377,7 +393,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             dialog.setTitle(getBuilder().mCustomBtn);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mPresetsBtn);
             dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
-            mGrid.setVisibility(View.GONE);
+            mGrid.setVisibility(View.INVISIBLE);
             mColorChooserCustomFrame.setVisibility(View.VISIBLE);
             mCustomColorTextWatcher = new TextWatcher() {
                 @Override

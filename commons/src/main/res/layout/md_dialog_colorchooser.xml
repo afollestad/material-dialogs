@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/md_stub_colorchooser_grid" />
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <include
-        layout="@layout/md_stub_colorchooser_custom"
-        android:visibility="gone" />
+        <include layout="@layout/md_stub_colorchooser_grid" />
 
-</FrameLayout>
+        <include
+            layout="@layout/md_stub_colorchooser_custom"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</ScrollView>

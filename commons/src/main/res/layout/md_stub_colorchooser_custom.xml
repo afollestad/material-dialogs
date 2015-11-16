@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/colorChooserCustomFrame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/md_title_frame_margin_bottom"
     android:paddingTop="@dimen/md_title_frame_margin_bottom">
