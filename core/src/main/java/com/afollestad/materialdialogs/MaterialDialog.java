@@ -1374,6 +1374,13 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
+     * Retrieves the ImageView that contains the dialog icon.
+     */
+    public ImageView getIconView() {
+        return icon;
+    }
+
+    /**
      * Retrieves the TextView that contains the dialog content. If you want to update the
      * content (message), use #{@link #setContent(CharSequence)} instead.
      */
