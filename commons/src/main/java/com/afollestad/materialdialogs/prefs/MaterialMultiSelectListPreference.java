@@ -83,7 +83,6 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         }
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
-                .content(getDialogMessage())
                 .icon(getDialogIcon())
                 .negativeText(getNegativeButtonText())
                 .positiveText(getPositiveButtonText())
