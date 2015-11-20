@@ -65,7 +65,6 @@ public class MaterialDialogPreference extends DialogPreference {
     protected void showDialog(Bundle state) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
-                .content(getDialogMessage())
                 .icon(getDialogIcon())
                 .dismissListener(this)
                 .callback(new MaterialDialog.ButtonCallback() {
