@@ -105,22 +105,6 @@ public class MaterialListPreference extends ListPreference {
                         }
                     }
                 })
-                .onAny(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        switch (which) {
-                            case POSITIVE:
-                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                                break;
-                            case NEGATIVE:
-                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                                break;
-                            case NEUTRAL:
-                                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                                break;
-                        }
-                    }
-                })
                 .negativeText(getNegativeButtonText())
                 .items(getEntries())
                 .autoDismiss(true) // immediately close the dialog after selection

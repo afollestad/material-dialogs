@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 
@@ -67,20 +68,20 @@ public class MaterialDialogPreference extends DialogPreference {
                 .title(getDialogTitle())
                 .icon(getDialogIcon())
                 .dismissListener(this)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                    }
-
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        switch (which) {
+                            default:
+                                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                                break;
+                            case NEUTRAL:
+                                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                break;
+                            case NEGATIVE:
+                                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                                break;
+                        }
                     }
                 })
                 .positiveText(getPositiveButtonText())
