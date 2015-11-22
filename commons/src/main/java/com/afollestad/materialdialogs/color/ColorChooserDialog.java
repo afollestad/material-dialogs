@@ -274,34 +274,39 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             foundPreselectColor = !savedInstanceState.getBoolean("in_custom", false);
             preselectColor = getSelectedColor();
         } else {
-            preselectColor = getBuilder().mPreselect;
-            if (preselectColor != 0) {
-                for (int topIndex = 0; topIndex < mColorsTop.length; topIndex++) {
-                    if (mColorsTop[topIndex] == preselectColor) {
-                        foundPreselectColor = true;
-                        topIndex(topIndex);
-                        if (getBuilder().mAccentMode) {
-                            subIndex(2);
-                        } else if (mColorsSub != null) {
-                            findSubIndexForColor(topIndex, preselectColor);
-                        } else {
-                            subIndex(5);
-                        }
-                        break;
-                    }
-
-                    if (mColorsSub != null) {
-                        for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
-                            if (mColorsSub[topIndex][subIndex] == preselectColor) {
-                                foundPreselectColor = true;
-                                topIndex(topIndex);
-                                subIndex(subIndex);
-                                break;
+            if (getBuilder().mSetPreselectionColor) {
+                preselectColor = getBuilder().mPreselect;
+                if (preselectColor != 0) {
+                    for (int topIndex = 0; topIndex < mColorsTop.length; topIndex++) {
+                        if (mColorsTop[topIndex] == preselectColor) {
+                            foundPreselectColor = true;
+                            topIndex(topIndex);
+                            if (getBuilder().mAccentMode) {
+                                subIndex(2);
+                            } else if (mColorsSub != null) {
+                                findSubIndexForColor(topIndex, preselectColor);
+                            } else {
+                                subIndex(5);
                             }
+                            break;
                         }
-                        if (foundPreselectColor) break;
+
+                        if (mColorsSub != null) {
+                            for (int subIndex = 0; subIndex < mColorsSub[topIndex].length; subIndex++) {
+                                if (mColorsSub[topIndex][subIndex] == preselectColor) {
+                                    foundPreselectColor = true;
+                                    topIndex(topIndex);
+                                    subIndex(subIndex);
+                                    break;
+                                }
+                            }
+                            if (foundPreselectColor) break;
+                        }
                     }
                 }
+            } else {
+                preselectColor = Color.BLACK;
+                foundPreselectColor = true;
             }
         }
 
@@ -570,6 +575,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         protected boolean mDynamicButtonColor = true;
         protected boolean mAllowUserCustom = true;
         protected boolean mAllowUserCustomAlpha = true;
+        protected boolean mSetPreselectionColor = false;
 
         public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
             mContext = context;
@@ -585,6 +591,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder preselect(@ColorInt int preselect) {
             mPreselect = preselect;
+            mSetPreselectionColor = true;
             return this;
         }
 
