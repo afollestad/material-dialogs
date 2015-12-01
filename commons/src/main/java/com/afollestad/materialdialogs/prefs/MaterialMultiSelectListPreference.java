@@ -137,7 +137,6 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 

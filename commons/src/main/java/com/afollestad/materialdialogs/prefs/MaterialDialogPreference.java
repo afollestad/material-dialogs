@@ -4,22 +4,17 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.commons.R;
-
-import java.lang.reflect.Method;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -106,7 +101,6 @@ public class MaterialDialogPreference extends DialogPreference {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 

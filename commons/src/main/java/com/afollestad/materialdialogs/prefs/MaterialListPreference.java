@@ -143,7 +143,6 @@ public class MaterialListPreference extends ListPreference {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
