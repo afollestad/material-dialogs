@@ -11,7 +11,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8.5.1"
+        versionName "0.8.5.2"
     }
     lintOptions {
         abortOnError false
@@ -20,7 +20,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
 //    compile 'com.android.support:preference-v7:23.1.0'
     compile project(':core')
