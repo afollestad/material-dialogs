@@ -174,6 +174,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 

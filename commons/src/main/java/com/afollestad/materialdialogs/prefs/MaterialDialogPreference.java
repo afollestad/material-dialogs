@@ -101,6 +101,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
