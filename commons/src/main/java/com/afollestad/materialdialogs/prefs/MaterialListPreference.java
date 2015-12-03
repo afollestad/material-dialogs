@@ -138,6 +138,7 @@ public class MaterialListPreference extends ListPreference {
         mDialog = builder.build();
         if (state != null)
             mDialog.onRestoreInstanceState(state);
+        onClick(mDialog, DialogInterface.BUTTON_NEGATIVE);
         mDialog.show();
     }
 
