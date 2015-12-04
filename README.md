@@ -83,11 +83,14 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ### Repository
 
-First, add the following to your app's `build.gradle` file:
+Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
 
-```Gradle
-repositories {
-    maven { url "https://jitpack.io" }
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
 }
 ```
 
