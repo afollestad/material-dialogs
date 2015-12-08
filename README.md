@@ -100,10 +100,12 @@ allprojects {
 The *core* module contains all the major classes of this library, including `MaterialDialog` and `AlertDialogWrapper`.
 You can create basic, list, single/multi choice, progress, input, etc. dialogs with core.
 
+Replace `w.x.y.z` with the current version, which can be seen on that JitPack badge above.
+
 ```gradle
 dependencies {
 	...
-    compile('com.github.afollestad.material-dialogs:core:0.8.6.0@aar') {
+    compile('com.github.afollestad.material-dialogs:core:w.x.y.z@aar') {
         transitive = true
     }
 }
