@@ -11,6 +11,15 @@
     android:paddingRight="?android:attr/scrollbarSize"
     tools:ignore="RtlSymmetry,UnusedAttribute">
 
+    <ImageView
+        android:id="@+android:id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/md_preference_content_inset"
+        android:layout_marginStart="@dimen/md_preference_content_inset"
+        tools:ignore="ContentDescription" />
+
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

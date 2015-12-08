@@ -38,7 +38,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     private FileCallback mCallback;
 
     public interface FileCallback {
-        void onFileSelection(File file);
+        void onFileSelection(@NonNull File file);
     }
 
     public FileChooserDialog() {
@@ -79,7 +79,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         } else {
             // get the file mime type
             String filename = file.toURI().toString();
-            int dotPos =  filename.lastIndexOf('.');
+            int dotPos = filename.lastIndexOf('.');
             if (dotPos == -1) {
                 return false;
             }
@@ -103,7 +103,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                 return false;
             }
             int fileTypeDelimiter = fileType.lastIndexOf('/');
-            if (fileTypeDelimiter == -1 ) {
+            if (fileTypeDelimiter == -1) {
                 return false;
             }
             String fileTypeMainType = fileType.substring(0, fileTypeDelimiter);

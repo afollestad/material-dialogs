@@ -55,9 +55,10 @@
 1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
     1. [Finding Visible Dialogs](https://github.com/afollestad/material-dialogs#finding-visible-dialogs)
     2. [User Color Input](https://github.com/afollestad/material-dialogs#user-color-input)
-2. [Folder Selector Dialogs](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
-3. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
-4. [Simple List Dialogs](https://github.com/afollestad/material-dialogs#simple-list-dialogs) 
+2. [File Selector Dialogs](https://github.com/afollestad/material-dialogs#file-selector-dialogs)
+3. [Folder Selector Dialogs](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
+4. [Preference Dialogs](https://github.com/afollestad/material-dialogs#preference-dialogs)
+5. [Simple List Dialogs](https://github.com/afollestad/material-dialogs#simple-list-dialogs) 
 
 ------
 
@@ -102,7 +103,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	...
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.2@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.6.0@aar') {
         transitive = true
     }
 }
@@ -1201,6 +1202,35 @@ dialogs. See the sample project for details.
 
 ---
 
+# File Selector Dialogs
+
+The Builder is used like this:
+
+```java
+// Pass AppCompatActivity which implements FileCallback
+new FileChooserDialog.Builder(this)
+    .chooseButton(R.string.md_choose_label)  // changes label of the choose button
+    .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
+    .mimeType("image/*") // Optional MIME type filter
+    .show();
+```
+
+The Activity you show the dialog in must implement `FileCallback`:
+
+```java
+public class MyActivity implements FolderChooserDialog.FileCallback {
+
+    // ...
+
+    @Override
+    public void onFileSelection(@NonNull File file) {
+        // TODO
+    }
+}
+```
+
+---
+
 # Folder Selector Dialogs
 
 The Builder is used like this:
@@ -1221,7 +1251,7 @@ public class MyActivity implements FolderChooserDialog.FolderCallback {
     // ...
 
     @Override
-    public void onFolderSelection(File folder) {
+    public void onFolderSelection(@NonNull File folder) {
         // TODO
     }
 }
