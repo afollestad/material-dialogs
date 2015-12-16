@@ -6,6 +6,7 @@ android:
     - android-23
     - extra-android-support
     - extra-android-m2repository
+    - extra-google-m2repository
 
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
