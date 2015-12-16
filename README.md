@@ -81,6 +81,7 @@ repository will allow GitHub to email you whenever I publish a release.
 # Gradle Dependency
 
 [![Release](https://img.shields.io/github/release/afollestad/material-dialogs.svg?label=jitpack)](https://jitpack.io/#afollestad/material-dialogs)
+[![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
 
 ### Repository
 
