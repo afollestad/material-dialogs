@@ -1,5 +1,6 @@
 # Material Dialogs
 
+[![Release](https://img.shields.io/github/release/afollestad/material-dialogs.svg?label=jitpack)](https://jitpack.io/#afollestad/material-dialogs)
 [![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mddemoshowcase.png)
@@ -82,8 +83,6 @@ repository will allow GitHub to email you whenever I publish a release.
 
 # Gradle Dependency
 
-[![Release](https://img.shields.io/github/release/afollestad/material-dialogs.svg?label=jitpack)](https://jitpack.io/#afollestad/material-dialogs)
-
 ### Repository
 
 Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
@@ -102,7 +101,7 @@ allprojects {
 The *core* module contains all the major classes of this library, including `MaterialDialog` and `AlertDialogWrapper`.
 You can create basic, list, single/multi choice, progress, input, etc. dialogs with core.
 
-Replace `w.x.y.z` with the current version, which can be seen on that JitPack badge above.
+Replace `w.x.y.z` with the current version, which can be seen on the JitPack badge at the top of this document.
 
 ```gradle
 dependencies {
