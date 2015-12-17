@@ -106,7 +106,7 @@ Replace `w.x.y.z` with the current version, which can be seen on the JitPack bad
 ```gradle
 dependencies {
 	...
-    compile('com.github.afollestad.material-dialogs:core:w.x.y.z@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.2@aar') {
         transitive = true
     }
 }
@@ -124,7 +124,7 @@ dependencies {
 
     // ... other dependencies here
     
-    compile('com.github.afollestad.material-dialogs:commons:w.x.y.z@aar') {
+    compile('com.github.afollestad.material-dialogs:commons:0.8.5.2@aar') {
         transitive = true
     }
 }
