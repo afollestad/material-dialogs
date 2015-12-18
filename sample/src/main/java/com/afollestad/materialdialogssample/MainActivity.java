@@ -8,12 +8,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -587,7 +589,6 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
         new FileChooserDialog.Builder(this)
-                .initialPath("/sdcard/Download")
                 .show();
     }
 
@@ -605,7 +606,6 @@ public class MainActivity extends AppCompatActivity implements
         }
         new FolderChooserDialog.Builder(MainActivity.this)
                 .chooseButton(R.string.md_choose_label)
-                .initialPath("/sdcard/Download")
                 .show();
     }
 
