@@ -115,10 +115,14 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence s) {
         if (canGoUp && i == 0) {
             parentFolder = parentFolder.getParentFile();
+            if (parentFolder.getAbsolutePath().equals("/storage/emulated"))
+                parentFolder = parentFolder.getParentFile();
             canGoUp = parentFolder.getParent() != null;
         } else {
             parentFolder = parentContents[canGoUp ? i - 1 : i];
             canGoUp = true;
+            if (parentFolder.getAbsolutePath().equals("/storage/emulated"))
+                parentFolder = Environment.getExternalStorageDirectory();
         }
         parentContents = listFiles();
         MaterialDialog dialog = (MaterialDialog) getDialog();
