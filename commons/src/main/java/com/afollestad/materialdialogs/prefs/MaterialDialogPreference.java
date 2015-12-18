@@ -49,7 +49,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
-        PrefUtil.setLayoutResource(this, attrs);
+        PrefUtil.setLayoutResource(context, this, attrs);
     }
 
     @Override

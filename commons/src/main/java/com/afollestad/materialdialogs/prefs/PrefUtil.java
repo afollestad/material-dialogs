@@ -1,5 +1,7 @@
 package com.afollestad.materialdialogs.prefs;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -19,7 +21,7 @@ class PrefUtil {
     private PrefUtil() {
     }
 
-    public static void setLayoutResource(@NonNull Preference preference, @Nullable AttributeSet attrs) {
+    public static void setLayoutResource(@NonNull Context context, @NonNull Preference preference, @Nullable AttributeSet attrs) {
         boolean foundLayout = false;
         if (attrs != null) {
             for (int i = 0; i < attrs.getAttributeCount(); i++) {
@@ -31,7 +33,18 @@ class PrefUtil {
                 }
             }
         }
-        if (!foundLayout)
+
+        boolean useStockLayout = false;
+        if (attrs != null) {
+            TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Preference, 0, 0);
+            try {
+                useStockLayout = a.getBoolean(R.styleable.Preference_useStockLayout, false);
+            } finally {
+                a.recycle();
+            }
+        }
+
+        if (!foundLayout && !useStockLayout)
             preference.setLayoutResource(R.layout.md_preference_custom);
     }
 

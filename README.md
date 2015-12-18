@@ -1205,6 +1205,13 @@ with user input that's received through typing or selection. Material Dialogs in
 `MaterialListPreference`, and `MaterialMultiSelectListPreference` classes that can be used in your preferences XML to automatically use Material-themed
 dialogs. See the sample project for details.
 
+By default, all of these preference classes will set their layout to `R.layout.md_preference_custom`. If you 
+don't want a default layout to be set, you can provide an attribute on the preferences in your XML:
+
+```
+app:useStockLayout="true"
+```
+
 ---
 
 # File Selector Dialogs

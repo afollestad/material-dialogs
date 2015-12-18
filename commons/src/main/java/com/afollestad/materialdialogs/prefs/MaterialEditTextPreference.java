@@ -66,7 +66,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
 
     private void init(Context context, AttributeSet attrs) {
-        PrefUtil.setLayoutResource(this, attrs);
+        PrefUtil.setLayoutResource(context, this, attrs);
         int fallback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);
