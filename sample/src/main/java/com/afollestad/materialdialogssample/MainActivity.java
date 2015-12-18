@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.color.CircleView;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.internal.ThemeSingleton;
@@ -49,7 +50,7 @@ import butterknife.OnClick;
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
-        FolderChooserDialog.FolderCallback, ColorChooserDialog.ColorCallback {
+        FolderChooserDialog.FolderCallback, FileChooserDialog.FileCallback, ColorChooserDialog.ColorCallback {
 
     // custom view dialog
     private EditText passwordInput;
@@ -578,6 +579,23 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.file_chooser)
+    public void showFileChooser() {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+            return;
+        }
+        new FileChooserDialog.Builder(this)
+                .initialPath("/sdcard/Download")
+                .show();
+    }
+
+    @Override
+    public void onFileSelection(@NonNull File file) {
+        showToast(file.getAbsolutePath());
+    }
+
     @OnClick(R.id.folder_chooser)
     public void showFolderChooser() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
@@ -592,7 +610,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFolderSelection(File folder) {
+    public void onFolderSelection(@NonNull File folder) {
         showToast(folder.getAbsolutePath());
     }
 

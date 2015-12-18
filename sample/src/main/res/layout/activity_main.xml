@@ -301,6 +301,13 @@
             android:text="@string/showCancelDismissCallbacks" />
 
         <Button
+            android:id="@+id/file_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/file_chooser" />
+
+        <Button
             android:id="@+id/folder_chooser"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sample_button_height"

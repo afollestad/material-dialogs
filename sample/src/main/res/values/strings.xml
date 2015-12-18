@@ -185,5 +185,6 @@
     <string name="list_longItems">Basic List (Long Items)</string>
     <string name="singleChoice_longItems">Single Choice (Long Items)</string>
     <string name="multiChoice_longItems">Multi Choice (Long Items)</string>
+    <string name="file_chooser">File Chooser</string>
 
 </resources>
