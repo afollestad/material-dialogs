@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogssample;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -581,6 +582,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @OnClick(R.id.file_chooser)
     public void showFileChooser() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
@@ -597,6 +599,7 @@ public class MainActivity extends AppCompatActivity implements
         showToast(file.getAbsolutePath());
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @OnClick(R.id.folder_chooser)
     public void showFolderChooser() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
