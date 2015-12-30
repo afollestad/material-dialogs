@@ -858,7 +858,7 @@ you show from an Activity which has a theme containing any of these attributes:
         The name of font in assets/fonts used everywhere else, like content and list items
         (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
     -->
-    <item name="md_regular_font">Roboto-Medium.ttf</item>
+    <item name="md_regular_font">Roboto-Regular.ttf</item>
 
 </style>
 ```
