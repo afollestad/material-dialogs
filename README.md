@@ -1226,7 +1226,7 @@ new FileChooserDialog.Builder(this)
 The Activity you show the dialog in must implement `FileCallback`:
 
 ```java
-public class MyActivity implements FolderChooserDialog.FileCallback {
+public class MyActivity implements FileChooserDialog.FileCallback {
 
     // ...
 
