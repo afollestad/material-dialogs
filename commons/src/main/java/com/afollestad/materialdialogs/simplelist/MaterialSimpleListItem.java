@@ -9,6 +9,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
@@ -43,6 +44,15 @@ public class MaterialSimpleListItem {
         return mBuilder.mBackgroundColor;
     }
 
+    public long getId() {
+        return mBuilder.mId;
+    }
+
+    @Nullable
+    public Object getTag() {
+        return mBuilder.mTag;
+    }
+
     public static class Builder {
 
         private final Context mContext;
@@ -50,6 +60,8 @@ public class MaterialSimpleListItem {
         protected CharSequence mContent;
         protected int mIconPadding;
         protected int mBackgroundColor;
+        protected long mId;
+        protected Object mTag;
 
         public Builder(Context context) {
             mContext = context;
@@ -100,6 +112,16 @@ public class MaterialSimpleListItem {
 
         public Builder backgroundColorAttr(@AttrRes int colorAttr) {
             return backgroundColor(DialogUtils.resolveColor(mContext, colorAttr));
+        }
+
+        public Builder id(long id) {
+            mId = id;
+            return this;
+        }
+
+        public Builder tag(@Nullable Object tag) {
+            mTag = tag;
+            return this;
         }
 
         public MaterialSimpleListItem build() {
