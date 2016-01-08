@@ -15,9 +15,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
+
+import java.lang.reflect.Field;
 
 /**
  * Tints widgets
@@ -112,6 +115,7 @@ public class MDTintHelper {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setBackgroundTintList(editTextColorStateList);
         }
+        setCursorTint(editText, color);
     }
 
     public static void setTint(@NonNull CheckBox box, @ColorInt int color) {
@@ -128,6 +132,28 @@ public class MDTintHelper {
             Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(box.getContext(), R.drawable.abc_btn_check_material));
             DrawableCompat.setTintList(drawable, sl);
             box.setButtonDrawable(drawable);
+        }
+    }
+
+    private static void setCursorTint(@NonNull EditText editText, @ColorInt int color) {
+        try {
+            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            fCursorDrawableRes.setAccessible(true);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(editText);
+            Field fEditor = TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
+            Object editor = fEditor.get(editText);
+            Class<?> clazz = editor.getClass();
+            Field fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
+            fCursorDrawable.setAccessible(true);
+            Drawable[] drawables = new Drawable[2];
+            drawables[0] = editText.getContext().getResources().getDrawable(mCursorDrawableRes);
+            drawables[1] = editText.getContext().getResources().getDrawable(mCursorDrawableRes);
+            drawables[0].setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            drawables[1].setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            fCursorDrawable.set(editor, drawables);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
