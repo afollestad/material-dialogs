@@ -1,6 +1,6 @@
 # Material Dialogs
 
-[![Release](https://img.shields.io/github/release/afollestad/material-dialogs.svg?label=jitpack)](https://jitpack.io/#afollestad/material-dialogs)
+[![Release](https://jitpack.io/v/afollestad/material-dialogs.svg)](https://jitpack.io/#afollestad/material-dialogs)
 [![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mddemoshowcase.png)
