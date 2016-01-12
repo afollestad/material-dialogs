@@ -2,6 +2,7 @@
 
 [![Release](https://jitpack.io/v/afollestad/material-dialogs.svg)](https://jitpack.io/#afollestad/material-dialogs)
 [![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/afollestad/material-dialogs/blob/master/LICENSE.txt)
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mddemoshowcase.png)
 
