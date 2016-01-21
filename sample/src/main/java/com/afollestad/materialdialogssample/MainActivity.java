@@ -9,14 +9,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -69,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements
     private Thread mThread;
     private final static int STORAGE_PERMISSION_RC = 69;
     private Handler mHandler;
+
+    private int chooserDialog;
 
     private void showToast(String message) {
         if (mToast != null) {
@@ -585,6 +585,7 @@ public class MainActivity extends AppCompatActivity implements
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @OnClick(R.id.file_chooser)
     public void showFileChooser() {
+        chooserDialog = R.id.file_chooser;
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
@@ -602,6 +603,7 @@ public class MainActivity extends AppCompatActivity implements
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @OnClick(R.id.folder_chooser)
     public void showFolderChooser() {
+        chooserDialog = R.id.folder_chooser;
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
@@ -755,11 +757,11 @@ public class MainActivity extends AppCompatActivity implements
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        findViewById(R.id.folder_chooser).performClick();
+                        findViewById(chooserDialog).performClick();
                     }
                 }, 1000);
             } else {
-                Toast.makeText(this, "The folder chooser will not work without permission to read external storage.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "The folder or file chooser will not work without permission to read external storage.", Toast.LENGTH_LONG).show();
             }
         }
     }
