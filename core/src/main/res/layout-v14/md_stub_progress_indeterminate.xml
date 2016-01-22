@@ -26,7 +26,7 @@
         android:paddingLeft="16dp"
         android:paddingStart="16dp"
         android:textAlignment="viewStart"
-        android:textSize="16sp"
+        android:textSize="@dimen/md_content_textsize"
         tools:ignore="NewApi,RtlSymmetry,UnusedAttribute"
         tools:text="Message" />
 
