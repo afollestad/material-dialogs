@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:clickable="false"
         android:button="@drawable/abc_btn_check_material"
+        android:background="@null"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center_vertical" />
