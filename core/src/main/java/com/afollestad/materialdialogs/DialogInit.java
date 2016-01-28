@@ -74,7 +74,7 @@ class DialogInit {
 
         // Set cancelable flag and dialog background color
         dialog.setCancelable(builder.cancelable);
-        dialog.setCanceledOnTouchOutside(builder.cancelable);
+        dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
         if (builder.backgroundColor == 0)
             builder.backgroundColor = DialogUtils.resolveColor(builder.context, R.attr.md_background_color);
         if (builder.backgroundColor != 0) {
