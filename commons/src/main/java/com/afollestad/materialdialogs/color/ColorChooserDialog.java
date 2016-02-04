@@ -106,7 +106,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         outState.putInt("top_index", topIndex());
         outState.putBoolean("in_sub", isInSub());
         outState.putInt("sub_index", subIndex());
-        outState.putBoolean("in_custom", mColorChooserCustomFrame.getVisibility() == View.VISIBLE);
+        outState.putBoolean("in_custom", mColorChooserCustomFrame != null &&
+                mColorChooserCustomFrame.getVisibility() == View.VISIBLE);
     }
 
     @Override
