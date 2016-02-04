@@ -404,6 +404,7 @@ public class MaterialDialog extends DialogBase implements
         protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
         protected boolean cancelable = true;
+        protected boolean canceledOnTouchOutside = true;
         protected float contentLineSpacingMultiplier = 1.2f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndices = null;
@@ -1159,6 +1160,11 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
+            return this;
+        }
+
+        public Builder canceledOnTouchOutside(boolean canceledOnTouchOutside) {
+            this.canceledOnTouchOutside = canceledOnTouchOutside;
             return this;
         }
 
