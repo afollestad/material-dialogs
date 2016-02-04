@@ -3,9 +3,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha5'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha9'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
     }
 }
 
