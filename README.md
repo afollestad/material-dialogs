@@ -121,7 +121,7 @@ dependencies {
 
     // ... other dependencies here
     
-    compile('com.github.afollestad.material-dialogs:commons:0.8.5.3@aar') {
+    compile('com.github.afollestad.material-dialogs:commons:0.8.5.4@aar') {
         transitive = true
     }
 }
