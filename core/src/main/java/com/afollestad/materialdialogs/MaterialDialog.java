@@ -333,8 +333,10 @@ public class MaterialDialog extends DialogBase implements
                 }
                 if (mBuilder.onPositiveCallback != null)
                     mBuilder.onPositiveCallback.onClick(this, tag);
-                sendSingleChoiceCallback(v);
-                sendMultichoiceCallback();
+                if (!mBuilder.alwaysCallSingleChoiceCallback)
+                    sendSingleChoiceCallback(v);
+                if (!mBuilder.alwaysCallMultiChoiceCallback)
+                    sendMultichoiceCallback();
                 if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
                     mBuilder.inputCallback.onInput(this, input.getText());
                 if (mBuilder.autoDismiss) dismiss();
@@ -716,7 +718,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder items(@NonNull Collection collection) {
-            if(collection.size() > 0){
+            if (collection.size() > 0) {
                 final String[] array = new String[collection.size()];
                 int i = 0;
                 for (Object obj : collection) {
