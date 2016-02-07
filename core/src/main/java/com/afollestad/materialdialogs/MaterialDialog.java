@@ -1162,6 +1162,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
+            this.canceledOnTouchOutside = cancelable;
             return this;
         }
 
