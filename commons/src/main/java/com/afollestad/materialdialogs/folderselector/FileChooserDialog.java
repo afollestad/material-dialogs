@@ -146,6 +146,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                 })
                 .autoDismiss(false)
                 .negativeText(getBuilder().mCancelButton)
+                .positiveText(getBuilder().mChooseButton)
                 .build();
     }
 
@@ -195,6 +196,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         @NonNull
         protected final transient AppCompatActivity mContext;
         @StringRes
+        protected int mChooseButton;
+        @StringRes
         protected int mCancelButton;
         protected String mInitialPath;
         protected String mMimeType;
@@ -202,6 +205,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         public <ActivityType extends AppCompatActivity & FileCallback> Builder(@NonNull ActivityType context) {
             mContext = context;
             mCancelButton = android.R.string.cancel;
+            mChooseButton = R.string.md_choose_label;
             mInitialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             mMimeType = null;
         }
@@ -209,6 +213,12 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         @NonNull
         public Builder cancelButton(@StringRes int text) {
             mCancelButton = text;
+            return this;
+        }
+
+        @NonNull
+        public Builder chooseButton(@StringRes int text) {
+            mChooseButton = text;
             return this;
         }
 
