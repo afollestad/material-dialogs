@@ -416,7 +416,9 @@ class DialogInit {
     private static void setupInputDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
         dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
+        dialog.textInputLayout = (TextInputLayout) dialog.view.findViewById(R.id.text_input_layout);
         if (dialog.input == null) return;
+        dialog.textInputLayout.setErrorEnabled(true);
         dialog.setTypeface(dialog.input, builder.regularFont);
         if (builder.inputPrefill != null)
             dialog.input.setText(builder.inputPrefill);
