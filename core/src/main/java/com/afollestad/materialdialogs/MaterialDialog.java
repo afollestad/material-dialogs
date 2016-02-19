@@ -73,6 +73,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
     protected EditText input;
+    protected TextInputLayout textInputLayout;
     protected TextView inputMinMax;
 
     protected MDButton positiveButton;
@@ -1386,6 +1387,11 @@ public class MaterialDialog extends DialogBase implements
     @Nullable
     public final EditText getInputEditText() {
         return input;
+    }
+    
+    @Nullable
+    public TextInputLayout getTextInputLayout(){
+        return textInputLayout;
     }
 
     /**
