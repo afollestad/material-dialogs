@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -73,6 +74,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView mProgressMinMax;
     protected TextView content;
     protected EditText input;
+    protected TextInputLayout textInputLayout;
     protected TextView inputMinMax;
 
     protected MDButton positiveButton;
@@ -1386,6 +1388,11 @@ public class MaterialDialog extends DialogBase implements
     @Nullable
     public final EditText getInputEditText() {
         return input;
+    }
+    
+    @Nullable
+    public TextInputLayout getTextInputLayout(){
+        return textInputLayout;
     }
 
     /**

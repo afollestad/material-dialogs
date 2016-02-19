@@ -34,15 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@android:id/input"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/md_content_textsize"
-                tools:ignore="TextFields"
                 android:layout_marginLeft="-2dp"
                 android:layout_marginRight="-2dp"
-                android:layout_marginBottom="1dp" />
+                android:layout_marginBottom="1dp">
+
+                <EditText
+                    android:id="@android:id/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/md_content_textsize"
+                    tools:ignore="TextFields"/>
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/minMax"
@@ -53,9 +59,9 @@
                 android:textSize="12sp"
                 android:gravity="end"
                 android:textAlignment="viewEnd"
-                android:layout_alignRight="@android:id/input"
-                android:layout_alignEnd="@android:id/input"
-                android:layout_below="@android:id/input"
+                android:layout_alignRight="@id/text_input_layout"
+                android:layout_alignEnd="@id/text_input_layout"
+                android:layout_below="@id/text_input_layout"
                 android:paddingRight="4dp"
                 android:paddingEnd="4dp"
                 android:fontFamily="sans-serif"
