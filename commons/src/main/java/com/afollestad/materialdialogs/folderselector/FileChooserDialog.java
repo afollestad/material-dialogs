@@ -278,7 +278,13 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     private static class FileSorter implements Comparator<File> {
         @Override
         public int compare(File lhs, File rhs) {
-            return lhs.getName().compareTo(rhs.getName());
+            if (lhs.isDirectory() && !rhs.isDirectory()) {
+                return -1;
+            } else if (!lhs.isDirectory() && rhs.isDirectory()) {
+                return 1;
+            } else {
+                return lhs.getName().compareTo(rhs.getName());
+            }
         }
     }
 }
