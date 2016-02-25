@@ -13,6 +13,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -181,7 +182,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         mCallback = (FileCallback) activity;
     }
 
-    public void show(AppCompatActivity context) {
+    public void show(FragmentActivity context) {
         final String tag = getBuilder().mTag;
         Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
         if (frag != null) {
