@@ -213,7 +213,7 @@ public class DialogUtils {
                 dialog.getInputEditText().requestFocus();
                 InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null)
-                    imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_IMPLICIT);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
     }
