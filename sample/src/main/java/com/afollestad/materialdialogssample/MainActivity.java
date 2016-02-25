@@ -406,6 +406,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @SuppressWarnings("ResourceAsColor")
     @OnClick(R.id.customView)
     public void showCustomView() {
         MaterialDialog dialog = new MaterialDialog.Builder(this)
@@ -596,7 +597,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFileSelection(@NonNull File file) {
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
         showToast(file.getAbsolutePath());
     }
 
@@ -615,7 +616,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFolderSelection(@NonNull File folder) {
+    public void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File folder) {
         showToast(folder.getAbsolutePath());
     }
 

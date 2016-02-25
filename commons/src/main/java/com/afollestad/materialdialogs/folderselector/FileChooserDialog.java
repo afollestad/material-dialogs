@@ -30,7 +30,7 @@ import java.util.List;
 
 public class FileChooserDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
-    private final static String TAG = "[MD_FILE_SELECTOR]";
+    private final static String DEFAULT_TAG = "[MD_FILE_SELECTOR]";
 
     private File parentFolder;
     private File[] parentContents;
@@ -38,7 +38,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     private FileCallback mCallback;
 
     public interface FileCallback {
-        void onFileSelection(@NonNull File file);
+        void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file);
     }
 
     public FileChooserDialog() {
@@ -164,7 +164,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                 parentFolder = Environment.getExternalStorageDirectory();
         }
         if (parentFolder.isFile()) {
-            mCallback.onFileSelection(parentFolder);
+            mCallback.onFileSelection(this, parentFolder);
             dismiss();
         } else {
             parentContents = listFiles(getBuilder().mMimeType);
@@ -182,13 +182,14 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     }
 
     public void show(AppCompatActivity context) {
-        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(TAG);
+        final String tag = getBuilder().mTag;
+        Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
         if (frag != null) {
             ((DialogFragment) frag).dismiss();
             context.getSupportFragmentManager().beginTransaction()
                     .remove(frag).commit();
         }
-        show(context.getSupportFragmentManager(), TAG);
+        show(context.getSupportFragmentManager(), tag);
     }
 
     public static class Builder implements Serializable {
@@ -201,6 +202,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         protected int mCancelButton;
         protected String mInitialPath;
         protected String mMimeType;
+        protected String mTag;
 
         public <ActivityType extends AppCompatActivity & FileCallback> Builder(@NonNull ActivityType context) {
             mContext = context;
@@ -237,6 +239,14 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         }
 
         @NonNull
+        public Builder tag(@Nullable String tag) {
+            if (tag == null)
+                tag = DEFAULT_TAG;
+            mTag = tag;
+            return this;
+        }
+
+        @NonNull
         public FileChooserDialog build() {
             FileChooserDialog dialog = new FileChooserDialog();
             Bundle args = new Bundle();
@@ -251,6 +261,11 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             dialog.show(mContext);
             return dialog;
         }
+    }
+
+    @NonNull
+    public String getInitialPath() {
+        return getBuilder().mInitialPath;
     }
 
     @SuppressWarnings("ConstantConditions")
