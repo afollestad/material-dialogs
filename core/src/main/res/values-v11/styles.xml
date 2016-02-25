@@ -13,7 +13,7 @@
         <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
 
         <item name="android:actionModeBackground">@color/primary_material_dark</item>
-        <item name="android:actionModeCloseDrawable">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
+        <item name="android:actionModeCloseDrawable">@drawable/md_nav_back</item>
 
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
         <item name="android:backgroundDimEnabled">true</item>
@@ -31,7 +31,7 @@
         <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
 
         <item name="android:actionModeBackground">@color/primary_material_dark</item>
-        <item name="android:actionModeCloseDrawable">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
+        <item name="android:actionModeCloseDrawable">@drawable/md_nav_back</item>
 
         <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
         <item name="android:backgroundDimEnabled">true</item>
