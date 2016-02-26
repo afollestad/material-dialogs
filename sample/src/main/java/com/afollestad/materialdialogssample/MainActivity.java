@@ -632,7 +632,7 @@ public class MainActivity extends AppCompatActivity implements
                 .positiveText(R.string.submit)
                 .input(R.string.input_hint, R.string.input_hint, false, new MaterialDialog.InputCallback() {
                     @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         showToast("Hello, " + input.toString() + "!");
                     }
                 }).show();
@@ -650,7 +650,7 @@ public class MainActivity extends AppCompatActivity implements
                 .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
                 .input(R.string.input_hint, 0, false, new MaterialDialog.InputCallback() {
                     @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (input.toString().equalsIgnoreCase("hello")) {
                             dialog.setContent("I told you not to type that!");
                             dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);

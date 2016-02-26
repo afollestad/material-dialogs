@@ -204,7 +204,7 @@ public class DialogUtils {
         }
     }
 
-    public static void showKeyboard(DialogInterface di, final MaterialDialog.Builder builder) {
+    public static void showKeyboard(@NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
         final MaterialDialog dialog = (MaterialDialog) di;
         if (dialog.getInputEditText() == null) return;
         dialog.getInputEditText().post(new Runnable() {
@@ -213,23 +213,17 @@ public class DialogUtils {
                 dialog.getInputEditText().requestFocus();
                 InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null)
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_FORCED);
             }
         });
     }
 
-    public static void hideKeyboard(DialogInterface di, final MaterialDialog.Builder builder) {
+    public static void hideKeyboard(@NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
         final MaterialDialog dialog = (MaterialDialog) di;
         if (dialog.getInputEditText() == null) return;
-        dialog.getInputEditText().post(new Runnable() {
-            @Override
-            public void run() {
-                dialog.getInputEditText().requestFocus();
-                InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null)
-                    imm.hideSoftInputFromWindow(dialog.getCurrentFocus().getWindowToken(), 0);
-            }
-        });
+        InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null)
+            imm.hideSoftInputFromWindow(dialog.getCurrentFocus().getWindowToken(), 0);
     }
 
     public static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {

@@ -55,6 +55,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -180,7 +181,7 @@ public class MaterialDialog extends DialogBase implements
         } else {
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
-                final boolean shouldBeChecked = !selectedIndicesList.contains(Integer.valueOf(position));
+                final boolean shouldBeChecked = !selectedIndicesList.contains(position);
                 final CheckBox cb = (CheckBox) view.findViewById(R.id.control);
                 if (shouldBeChecked) {
                     // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
@@ -1787,7 +1788,7 @@ public class MaterialDialog extends DialogBase implements
     protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
             if (mBuilder.inputMaxLength > 0) {
-                inputMinMax.setText(String.format("%d/%d", currentLength, mBuilder.inputMaxLength));
+                inputMinMax.setText(String.format(Locale.getDefault(), "%d/%d", currentLength, mBuilder.inputMaxLength));
                 inputMinMax.setVisibility(View.VISIBLE);
             } else inputMinMax.setVisibility(View.GONE);
             final boolean isDisabled = (emptyDisabled && currentLength == 0) ||
@@ -1804,10 +1805,10 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    public void dismiss() {
         if (input != null)
             DialogUtils.hideKeyboard(this, mBuilder);
+        super.dismiss();
     }
 
     protected enum ListType {
