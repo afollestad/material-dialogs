@@ -25,7 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:support-annotations:23.2.0'
-    compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
+    compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 }
 
 // build a jar with source files
