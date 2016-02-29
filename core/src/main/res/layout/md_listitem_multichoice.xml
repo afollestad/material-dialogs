@@ -11,13 +11,12 @@
     android:paddingStart="@dimen/md_dialog_frame_margin"
     tools:gravity="start|center_vertical">
 
-    <CheckBox
+    <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/control"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:clickable="false"
-        android:button="@drawable/abc_btn_check_material"
         android:background="@null"
+        android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center_vertical" />

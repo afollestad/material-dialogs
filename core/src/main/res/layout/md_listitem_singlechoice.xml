@@ -11,11 +11,10 @@
     android:paddingStart="@dimen/md_dialog_frame_margin"
     tools:gravity="start|center_vertical">
 
-    <RadioButton
+    <android.support.v7.widget.AppCompatRadioButton
         android:id="@+id/control"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:button="@drawable/abc_btn_radio_material"
         android:background="@null"
         android:clickable="false"
         android:focusable="false"
