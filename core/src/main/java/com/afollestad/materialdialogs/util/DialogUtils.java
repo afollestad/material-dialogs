@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
@@ -222,8 +223,14 @@ public class DialogUtils {
         final MaterialDialog dialog = (MaterialDialog) di;
         if (dialog.getInputEditText() == null) return;
         InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null)
-            imm.hideSoftInputFromWindow(dialog.getCurrentFocus().getWindowToken(), 0);
+        if (imm != null) {
+            final View currentFocus = dialog.getCurrentFocus();
+            final IBinder windowToken = currentFocus != null ?
+                    currentFocus.getWindowToken() : dialog.getView().getWindowToken();
+            if (windowToken != null) {
+                imm.hideSoftInputFromWindow(windowToken, 0);
+            }
+        }
     }
 
     public static ColorStateList getActionTextStateList(Context context, int newPrimaryColor) {
