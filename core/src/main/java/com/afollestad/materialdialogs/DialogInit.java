@@ -429,7 +429,8 @@ class DialogInit {
 
         if (builder.inputType != -1) {
             dialog.input.setInputType(builder.inputType);
-            if ((builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+            if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD  &&
+                    (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
                 // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
                 dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
