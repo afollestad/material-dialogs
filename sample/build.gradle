@@ -17,8 +17,8 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 158
-        versionName "0.8.5.6"
+        versionCode 159
+        versionName "0.8.5.7"
     }
     lintOptions {
         abortOnError false
@@ -39,6 +39,6 @@ android {
 dependencies {
     compile project(':core')
     compile project(':commons')
-    compile 'com.android.support:gridlayout-v7:23.2.0'
+    compile 'com.android.support:gridlayout-v7:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
 }

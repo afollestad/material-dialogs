@@ -21,10 +21,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:23.2.0'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:recyclerview-v7:23.2.0'
-    compile 'com.android.support:support-annotations:23.2.0'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-annotations:23.2.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 }
 
