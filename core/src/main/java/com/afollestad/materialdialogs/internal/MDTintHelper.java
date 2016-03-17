@@ -39,11 +39,17 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             radioButton.setButtonTintList(sl);
         } else {
-            Drawable radioVector = VectorDrawableCompat.create(radioButton.getContext().getResources(),
+            Drawable radioDrawable = VectorDrawableCompat.create(radioButton.getContext().getResources(),
                     R.drawable.abc_btn_radio_material, null);
-            Drawable d = DrawableCompat.wrap(radioVector);
-            DrawableCompat.setTintList(d, sl);
-            radioButton.setButtonDrawable(d);
+            if (radioDrawable == null) {
+                // https://github.com/afollestad/material-dialogs/issues/1006
+                // Trying to load this resource as normal drawable
+                radioDrawable = ContextCompat.getDrawable(radioButton.getContext(),
+                        R.drawable.abc_btn_radio_material);
+            }
+            Drawable drawable = DrawableCompat.wrap(radioDrawable);
+            DrawableCompat.setTintList(drawable, sl);
+            radioButton.setButtonDrawable(drawable);
         }
     }
 
@@ -136,6 +142,7 @@ public class MDTintHelper {
                     R.drawable.abc_btn_check_material, null);
             if (checkDrawable == null) {
                 // https://github.com/afollestad/material-dialogs/issues/1006
+                // Trying to load this resource as normal drawable
                 checkDrawable = ContextCompat.getDrawable(box.getContext(),
                         R.drawable.abc_btn_check_material);
             }
