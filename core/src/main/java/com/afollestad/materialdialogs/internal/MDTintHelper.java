@@ -132,9 +132,14 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             box.setButtonTintList(sl);
         } else {
-            Drawable checkVector = VectorDrawableCompat.create(box.getContext().getResources(),
+            Drawable checkDrawable = VectorDrawableCompat.create(box.getContext().getResources(),
                     R.drawable.abc_btn_check_material, null);
-            Drawable drawable = DrawableCompat.wrap(checkVector);
+            if (checkDrawable == null) {
+                // https://github.com/afollestad/material-dialogs/issues/1006
+                checkDrawable = ContextCompat.getDrawable(box.getContext(),
+                        R.drawable.abc_btn_check_material);
+            }
+            Drawable drawable = DrawableCompat.wrap(checkDrawable);
             DrawableCompat.setTintList(drawable, sl);
             box.setButtonDrawable(drawable);
         }
