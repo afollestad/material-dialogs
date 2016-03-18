@@ -39,11 +39,17 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             radioButton.setButtonTintList(sl);
         } else {
-            Drawable radioVector = VectorDrawableCompat.create(radioButton.getContext().getResources(),
+            Drawable radioDrawable = VectorDrawableCompat.create(radioButton.getContext().getResources(),
                     R.drawable.abc_btn_radio_material, null);
-            Drawable d = DrawableCompat.wrap(radioVector);
-            DrawableCompat.setTintList(d, sl);
-            radioButton.setButtonDrawable(d);
+            if (radioDrawable == null) {
+                // https://github.com/afollestad/material-dialogs/issues/1006
+                // Trying to load this resource as normal drawable
+                radioDrawable = ContextCompat.getDrawable(radioButton.getContext(),
+                        R.drawable.abc_btn_radio_material);
+            }
+            Drawable drawable = DrawableCompat.wrap(radioDrawable);
+            DrawableCompat.setTintList(drawable, sl);
+            radioButton.setButtonDrawable(drawable);
         }
     }
 
@@ -132,9 +138,15 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             box.setButtonTintList(sl);
         } else {
-            Drawable checkVector = VectorDrawableCompat.create(box.getContext().getResources(),
+            Drawable checkDrawable = VectorDrawableCompat.create(box.getContext().getResources(),
                     R.drawable.abc_btn_check_material, null);
-            Drawable drawable = DrawableCompat.wrap(checkVector);
+            if (checkDrawable == null) {
+                // https://github.com/afollestad/material-dialogs/issues/1006
+                // Trying to load this resource as normal drawable
+                checkDrawable = ContextCompat.getDrawable(box.getContext(),
+                        R.drawable.abc_btn_check_material);
+            }
+            Drawable drawable = DrawableCompat.wrap(checkDrawable);
             DrawableCompat.setTintList(drawable, sl);
             box.setButtonDrawable(drawable);
         }
