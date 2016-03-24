@@ -2,6 +2,6 @@
 <resources>
     <dimen name="md_preference_content_inset">16dp</dimen>
 
-    <dimen name="md_preference_title_text">16sp</dimen>
-    <dimen name="md_preference_summary_text">14sp</dimen>
+<!--    <dimen name="md_preference_title_text">16sp</dimen>
+    <dimen name="md_preference_summary_text">14sp</dimen>-->
 </resources>
