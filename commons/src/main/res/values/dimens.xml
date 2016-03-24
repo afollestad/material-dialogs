@@ -9,7 +9,4 @@
     <dimen name="md_preference_content_inset">8dp</dimen>
     <dimen name="md_colorchooser_circlesize">56dp</dimen>
 
-    <!--<dimen name="md_preference_title_text">18sp</dimen>
-    <dimen name="md_preference_summary_text">14sp</dimen>-->
-
 </resources>

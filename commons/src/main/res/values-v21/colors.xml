@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="md_preference_title">?android:textColorPrimary</color>
-    <color name="md_preference_summary">?android:textColorSecondary</color>
-</resources>
