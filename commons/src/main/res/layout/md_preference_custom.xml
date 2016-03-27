@@ -42,8 +42,7 @@
             android:fadingEdge="horizontal"
             android:fontFamily="sans-serif"
             android:singleLine="true"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="16sp"
+            style="@style/MD_Preference_Title"
             tools:text="Title" />
 
         <TextView
@@ -54,10 +53,9 @@
             android:layout_alignStart="@android:id/title"
             android:layout_below="@android:id/title"
             android:layout_marginTop="2dp"
-            android:fontFamily="sans-serif"
             android:maxLines="4"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            style="@style/MD_Preference_Summary"
             tools:text="Summary" />
 
     </RelativeLayout>

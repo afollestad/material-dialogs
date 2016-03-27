@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MD_Preference_Title" >
+        <item name="android:textColor">#8a000000</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MD_Preference_Summary" >
+        <item name="android:textColor">#8a000000</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>
