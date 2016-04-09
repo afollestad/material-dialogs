@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatEditText;
@@ -39,9 +38,8 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             radioButton.setButtonTintList(sl);
         } else {
-            Drawable radioVector = VectorDrawableCompat.create(radioButton.getContext().getResources(),
-                    R.drawable.abc_btn_radio_material, null);
-            Drawable d = DrawableCompat.wrap(radioVector);
+            Drawable radioDrawable = ContextCompat.getDrawable(radioButton.getContext(), R.drawable.abc_btn_radio_material);
+            Drawable d = DrawableCompat.wrap(radioDrawable);
             DrawableCompat.setTintList(d, sl);
             radioButton.setButtonDrawable(d);
         }
@@ -132,9 +130,8 @@ public class MDTintHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             box.setButtonTintList(sl);
         } else {
-            Drawable checkVector = VectorDrawableCompat.create(box.getContext().getResources(),
-                    R.drawable.abc_btn_check_material, null);
-            Drawable drawable = DrawableCompat.wrap(checkVector);
+            Drawable checkDrawable = ContextCompat.getDrawable(box.getContext(), R.drawable.abc_btn_check_material);
+            Drawable drawable = DrawableCompat.wrap(checkDrawable);
             DrawableCompat.setTintList(drawable, sl);
             box.setButtonDrawable(drawable);
         }

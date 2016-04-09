@@ -282,7 +282,8 @@ public class MainActivity extends AppCompatActivity implements
                         return true; // allow selection
                     }
                 })
-                .positiveText(R.string.md_choose_label)
+//                .positiveText(R.string.md_choose_label)
+                .alwaysCallSingleChoiceCallback()
                 .show();
     }
 
