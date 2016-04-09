@@ -5,13 +5,13 @@ group='com.afollestad'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8.5.7"
+        versionName "0.8.5.8"
     }
     lintOptions {
         abortOnError false
@@ -20,8 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.2.1'
-//    compile 'com.android.support:preference-v7:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
     compile project(':core')
 }
 
