@@ -232,7 +232,7 @@ class DialogInit {
         }
 
         MDButton positiveTextView = dialog.positiveButton;
-        dialog.setTypeface(positiveTextView, builder.mediumFont);
+        dialog.setTypeface(positiveTextView, builder.buttonFont);
         positiveTextView.setAllCapsCompat(textAllCaps);
         positiveTextView.setText(builder.positiveText);
         positiveTextView.setTextColor(builder.positiveColor);
@@ -243,7 +243,7 @@ class DialogInit {
         dialog.positiveButton.setVisibility(View.VISIBLE);
 
         MDButton negativeTextView = dialog.negativeButton;
-        dialog.setTypeface(negativeTextView, builder.mediumFont);
+        dialog.setTypeface(negativeTextView, builder.buttonFont);
         negativeTextView.setAllCapsCompat(textAllCaps);
         negativeTextView.setText(builder.negativeText);
         negativeTextView.setTextColor(builder.negativeColor);
@@ -254,7 +254,7 @@ class DialogInit {
         dialog.negativeButton.setVisibility(View.VISIBLE);
 
         MDButton neutralTextView = dialog.neutralButton;
-        dialog.setTypeface(neutralTextView, builder.mediumFont);
+        dialog.setTypeface(neutralTextView, builder.buttonFont);
         neutralTextView.setAllCapsCompat(textAllCaps);
         neutralTextView.setText(builder.neutralText);
         neutralTextView.setTextColor(builder.neutralColor);
