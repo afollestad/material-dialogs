@@ -4,7 +4,7 @@
 ###### Include the following:
  - Material Dialogs version: `0.8.5.8`
  - Device OS version: `6.0.1`
- - Devide Manufacturer: `Huawei`
+ - Device Manufacturer: `Huawei`
  - Device Name: `Nexus 6P`
 
 Also, please wrap Java with correct syntax highlighting.
