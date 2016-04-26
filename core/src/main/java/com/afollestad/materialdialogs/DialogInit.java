@@ -13,6 +13,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -128,6 +129,7 @@ class DialogInit {
         dialog.titleFrame = dialog.view.findViewById(R.id.titleFrame);
         dialog.content = (TextView) dialog.view.findViewById(R.id.content);
         dialog.listView = (ListView) dialog.view.findViewById(R.id.contentListView);
+        dialog.checkBox = (CheckBox) dialog.view.findViewById(R.id.checkboxSelection);
 
         // Button views initially used by checkIfStackingNeeded()
         dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultPositive);
@@ -229,6 +231,11 @@ class DialogInit {
                 textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
         } else {
             textAllCaps = DialogUtils.resolveBoolean(builder.context, R.attr.textAllCaps, true);
+        }
+
+        if (builder.checkboxText != null){
+            dialog.checkBox.setText(builder.checkboxText);
+            dialog.view.findViewById(R.id.checkboxSelectionRoot).setVisibility(View.VISIBLE);
         }
 
         MDButton positiveTextView = dialog.positiveButton;

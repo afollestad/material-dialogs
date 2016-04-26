@@ -1,0 +1,17 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+        <LinearLayout android:id="@+id/checkboxSelectionRoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/md_dialog_frame_margin"
+                    android:paddingRight="@dimen/md_dialog_frame_margin"
+                    android:paddingTop="@dimen/md_content_padding_top"
+                    android:visibility="gone">
+                    <CheckBox
+                        android:id="@+id/checkboxSelection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/md_content_textsize"
+                        tools:text="Checkbox" />
+        </LinearLayout>
+    </merge>

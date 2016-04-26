@@ -158,6 +158,22 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.basicCheckbox)
+    public void showBasicCheckbox() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.useGoogleLocationServices)
+                .content(R.string.useGoogleLocationServicesPrompt)
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
+                .checkboxSelection(R.string.basic_checkbox_text, new MaterialDialog.CheckboxCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog) {
+                        showToast(R.string.basic_checkbox_text);
+                    }
+                })
+                .show();
+    }
+
     @OnClick(R.id.stacked)
     public void showStacked() {
         new MaterialDialog.Builder(this)

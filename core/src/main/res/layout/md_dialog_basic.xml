@@ -28,6 +28,8 @@
 
     </ScrollView>
 
+    <include layout="@layout/md_stub_checkbox" />
+
     <include layout="@layout/md_stub_actionbuttons" />
 
 </com.afollestad.materialdialogs.internal.MDRootLayout>
