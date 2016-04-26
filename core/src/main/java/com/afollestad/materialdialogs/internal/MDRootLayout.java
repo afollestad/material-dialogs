@@ -36,6 +36,7 @@ public class MDRootLayout extends ViewGroup {
 
     private View mTitleBar;
     private View mContent;
+    private View mCheckbox;
 
     private static final int INDEX_NEUTRAL = 0;
     private static final int INDEX_NEGATIVE = 1;
@@ -116,6 +117,8 @@ public class MDRootLayout extends ViewGroup {
             View v = getChildAt(i);
             if (v.getId() == R.id.titleFrame) {
                 mTitleBar = v;
+            } else if (v.getId() == R.id.checkboxSelectionRoot) {
+                mCheckbox = v;
             } else if (v.getId() == R.id.buttonDefaultNeutral) {
                 mButtons[INDEX_NEUTRAL] = (MDButton) v;
             } else if (v.getId() == R.id.buttonDefaultNegative) {
@@ -195,6 +198,29 @@ public class MDRootLayout extends ViewGroup {
             fullPadding += mNoTitlePaddingFull;
         }
 
+        /**
+         * First we calculate the height of checkbox because if the content is too long the
+         * checkbox does not have the height to appear
+         */
+        if (isVisible(mCheckbox)) {
+            mCheckbox.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(availableHeight - minPadding, MeasureSpec.AT_MOST));
+
+            if (mCheckbox.getMeasuredHeight() <= availableHeight - fullPadding) {
+                if (!mReducePaddingNoTitleNoButtons || isVisible(mTitleBar) || hasButtons) {
+                    mUseFullPadding = true;
+                    availableHeight -= mCheckbox.getMeasuredHeight() + fullPadding;
+                } else {
+                    mUseFullPadding = false;
+                    availableHeight -= mCheckbox.getMeasuredHeight() + minPadding;
+                }
+            } else {
+                mUseFullPadding = false;
+                availableHeight = 0;
+            }
+
+        }
+
         if (isVisible(mContent)) {
             mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(availableHeight - minPadding, MeasureSpec.AT_MOST));
@@ -251,8 +277,14 @@ public class MDRootLayout extends ViewGroup {
             t += mNoTitlePaddingFull;
         }
 
-        if (isVisible(mContent))
+        if (isVisible(mContent)){
+            int height = mContent.getMeasuredHeight();
             mContent.layout(l, t, r, t + mContent.getMeasuredHeight());
+            t += height;
+        }
+
+        if (isVisible(mCheckbox))
+            mCheckbox.layout(l, t, r, t + mCheckbox.getMeasuredHeight());
 
         if (mIsStacked) {
             b -= mButtonPaddingFull;

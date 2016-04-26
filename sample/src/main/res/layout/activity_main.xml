@@ -44,6 +44,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/basic_icon" />
 
+        <Button
+            android:id="@+id/basicCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/basic_checkbox" />
+
         <!-- Action Buttons -->
 
         <TextView

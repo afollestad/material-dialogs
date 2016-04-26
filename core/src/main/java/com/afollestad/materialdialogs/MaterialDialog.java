@@ -75,6 +75,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView content;
     protected EditText input;
     protected TextView inputMinMax;
+    protected CheckBox checkBox;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
@@ -366,6 +367,8 @@ public class MaterialDialog extends DialogBase implements
         }
         if (mBuilder.onAnyCallback != null)
             mBuilder.onAnyCallback.onClick(this, tag);
+        if (mBuilder.checkboxCallback != null && this.checkBox.isChecked())
+            mBuilder.checkboxCallback.onSelection(this);
     }
 
     /**
@@ -403,6 +406,8 @@ public class MaterialDialog extends DialogBase implements
         protected ListCallbackSingleChoice listCallbackSingleChoice;
         protected ListCallbackMultiChoice listCallbackMultiChoice;
         protected ListCallback listCallbackCustom;
+        protected CharSequence checkboxText;
+        protected CheckboxCallback checkboxCallback;
         protected boolean alwaysCallMultiChoiceCallback = false;
         protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
@@ -860,6 +865,18 @@ public class MaterialDialog extends DialogBase implements
          */
         public Builder alwaysCallMultiChoiceCallback() {
             this.alwaysCallMultiChoiceCallback = true;
+            return this;
+        }
+
+        public Builder checkboxSelection(@NonNull CharSequence mCheckboxText, @NonNull CheckboxCallback callback){
+            this.checkboxText = mCheckboxText;
+            this.checkboxCallback = callback;
+            return this;
+        }
+
+        public Builder checkboxSelection(@StringRes int checkboxTextRes, @NonNull CheckboxCallback callback){
+            if (checkboxTextRes == 0) return this;
+            checkboxSelection(this.context.getText(checkboxTextRes), callback);
             return this;
         }
 
@@ -1826,6 +1843,18 @@ public class MaterialDialog extends DialogBase implements
                     throw new IllegalArgumentException("Not a valid list type");
             }
         }
+    }
+
+    /**
+     * A callback used for checkbox selection.
+     */
+    public interface CheckboxCallback {
+        /**
+         * Exec onSelection() only if the checkbox was checked
+         *
+         * @param dialog The dialog of which a checkbox was checked.
+         */
+        void onSelection(MaterialDialog dialog);
     }
 
     /**
