@@ -880,9 +880,9 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder positiveText(@StringRes int postiveRes) {
-            if (postiveRes == 0) return this;
-            positiveText(this.context.getText(postiveRes));
+        public Builder positiveText(@StringRes int positiveRes) {
+            if (positiveRes == 0) return this;
+            positiveText(this.context.getText(positiveRes));
             return this;
         }
 
