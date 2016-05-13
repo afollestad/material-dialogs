@@ -1,6 +1,7 @@
 # Material Dialogs
 
-[![Release](https://jitpack.io/v/afollestad/material-dialogs.svg)](https://jitpack.io/#afollestad/material-dialogs)
+[ ![Core](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acore/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
+[ ![Commons](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acommons/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acommons/_latestVersion)
 [![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/afollestad/material-dialogs/blob/master/LICENSE.txt)
 
@@ -86,16 +87,8 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ### Repository
 
-Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
-
-```gradle
-allprojects {
-	repositories {
-		...
-		maven { url "https://jitpack.io" }
-	}
-}
-```
+The Gradle dependency is available via [jCenter](https://bintray.com/drummer-aidan/maven/material-dialogs/view).
+jCenter is the default Maven repository used by Android Studio.
 
 ### Core
 
@@ -104,12 +97,9 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 
 ```gradle
 dependencies {
-
 	// ... other dependencies here
 
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
 }
 ```
 
@@ -120,12 +110,9 @@ The *commons* module contains extensions to the library that not everyone may ne
 
 ```gradle
 dependencies {
-
     // ... other dependencies here
     
-    compile('com.github.afollestad.material-dialogs:commons:0.8.5.8@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad.material-dialogs:commons:0.8.5.9'
 }
 ```
 

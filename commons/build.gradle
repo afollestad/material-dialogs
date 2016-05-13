@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
 
 ext {
-    PUBLISH_GROUP_ID = 'com.afollestad'
-    PUBLISH_ARTIFACT_ID = 'material-dialogs:commons'
-    PUBLISH_VERSION = '0.8.5.8'
+    PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
+    PUBLISH_ARTIFACT_ID = 'commons'
+    PUBLISH_VERSION = '0.8.5.9'
 }
 
 android {
@@ -14,7 +14,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8.5.8"
+        versionName "0.8.5.9"
     }
     lintOptions {
         abortOnError false
