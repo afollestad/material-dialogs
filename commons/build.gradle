@@ -4,6 +4,7 @@ ext {
     PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
     PUBLISH_ARTIFACT_ID = 'commons'
     PUBLISH_VERSION = '0.8.5.9'
+    SUPPORT_LIBRARY_VERSION = '23.4.0'
 }
 
 android {
@@ -14,7 +15,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8.5.9"
+        versionName "${PUBLISH_VERSION}"
     }
     lintOptions {
         abortOnError false
@@ -23,7 +24,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
+//    compile "com.afollestad.material-dialogs:core:${PUBLISH_VERSION}"
     compile project(':core')
 }
 
