@@ -4,16 +4,16 @@ ext {
     PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
     PUBLISH_ARTIFACT_ID = 'core'
     PUBLISH_VERSION = '0.8.5.9'
-    SUPPORT_LIBRARY_VERSION = '23.4.0'
+    SUPPORT_LIBRARY_VERSION = '24.0.0'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "${PUBLISH_VERSION}"
         consumerProguardFiles 'progress-proguard.txt'

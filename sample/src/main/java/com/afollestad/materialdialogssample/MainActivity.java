@@ -53,19 +53,17 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements
         FolderChooserDialog.FolderCallback, FileChooserDialog.FileCallback, ColorChooserDialog.ColorCallback {
 
+    private final static int STORAGE_PERMISSION_RC = 69;
     // custom view dialog
     private EditText passwordInput;
     private View positiveAction;
-
     // color chooser dialog
     private int primaryPreselect;
-    private int accentPreselect;
 
     // UTILITY METHODS
-
+    private int accentPreselect;
     private Toast mToast;
     private Thread mThread;
-    private final static int STORAGE_PERMISSION_RC = 69;
     private Handler mHandler;
 
     private int chooserDialog;
@@ -106,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         mHandler = null;
     }
 

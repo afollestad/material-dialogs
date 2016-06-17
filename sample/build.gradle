@@ -1,8 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     signingConfigs {
         production {
@@ -16,7 +26,7 @@ android {
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 160
         versionName "0.8.5.8"
     }
@@ -39,6 +49,7 @@ android {
 dependencies {
     compile project(':core')
     compile project(':commons')
-    compile 'com.android.support:gridlayout-v7:23.3.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:gridlayout-v7:24.0.0'
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }
