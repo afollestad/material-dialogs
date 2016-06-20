@@ -99,7 +99,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 dependencies {
 	// ... other dependencies here
 
-    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.0'
 }
 ```
 
