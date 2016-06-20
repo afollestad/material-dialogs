@@ -31,4 +31,4 @@ dependencies {
     compile project(':core')
 }
 
-apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/release-aar.gradle'
+apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'

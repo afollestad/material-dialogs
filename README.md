@@ -112,7 +112,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 dependencies {
     // ... other dependencies here
     
-    compile 'com.afollestad.material-dialogs:commons:0.8.5.9'
+    compile 'com.afollestad.material-dialogs:commons:0.8.6.0'
 }
 ```
 
