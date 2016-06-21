@@ -21,15 +21,6 @@ android {
     compileSdkVersion TARGET_SDK
     buildToolsVersion BUILD_TOOLS
 
-    signingConfigs {
-        production {
-            keyAlias 'afollestad'
-            keyPassword 'aidan1995'
-            storeFile file('./keystore.jks')
-            storePassword 'aidan1995'
-        }
-    }
-
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
@@ -41,11 +32,7 @@ android {
         abortOnError false
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.production
-        }
         release {
-            signingConfig signingConfigs.production
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
