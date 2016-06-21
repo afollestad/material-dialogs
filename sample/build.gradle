@@ -10,9 +10,16 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+ext {
+    PUBLISH_VERSION = '0.8.6.0'
+    SUPPORT_LIBRARY_VERSION = '24.0.0'
+    BUILD_TOOLS = "24.0.0"
+    TARGET_SDK = 24
+}
+
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion TARGET_SDK
+    buildToolsVersion BUILD_TOOLS
 
     signingConfigs {
         production {
@@ -26,9 +33,9 @@ android {
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
-        targetSdkVersion 24
-        versionCode 160
-        versionName "0.8.5.8"
+        targetSdkVersion TARGET_SDK
+        versionCode 162
+        versionName PUBLISH_VERSION
     }
     lintOptions {
         abortOnError false
@@ -49,7 +56,7 @@ android {
 dependencies {
     compile project(':core')
     compile project(':commons')
-    compile 'com.android.support:gridlayout-v7:24.0.0'
+    compile "com.android.support:gridlayout-v7:$SUPPORT_LIBRARY_VERSION"
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }
