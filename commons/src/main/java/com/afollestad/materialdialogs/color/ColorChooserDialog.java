@@ -156,6 +156,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return title;
     }
 
+    public String tag() {
+        Builder builder = getBuilder();
+        if (builder.mTag!=null) return builder.mTag;
+        else return super.getTag();
+    }
+
     public boolean isAccentMode() {
         return getBuilder().mAccentMode;
     }
@@ -572,6 +578,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @Nullable
         protected int[][] mColorsSub;
 
+        protected String mTag;
+
         protected boolean mAccentMode = false;
         protected boolean mDynamicButtonColor = true;
         protected boolean mAllowUserCustom = true;
@@ -586,6 +594,12 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         @NonNull
         public Builder titleSub(@StringRes int titleSub) {
             mTitleSub = titleSub;
+            return this;
+        }
+
+        @NonNull
+        public Builder tag(String tag) {
+            mTag=tag;
             return this;
         }
 
