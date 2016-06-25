@@ -1,6 +1,7 @@
 - [ ] I have verified there are no duplicate active or recent bugs, questions, or requests
 - [ ] I have verified that I am using the latest version of Material Dialogs.
 - [ ] I have given my issue a non-generic title.
+- [ ] I have read over the documentation (before asking questions on how to do something).
 
 ###### Include the following:
  - Material Dialogs version: `0.8.5.8`

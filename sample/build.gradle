@@ -11,7 +11,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
-    PUBLISH_VERSION = '0.8.6.0'
+    PUBLISH_VERSION = '0.8.6.1'
     SUPPORT_LIBRARY_VERSION = '24.0.0'
     BUILD_TOOLS = "24.0.0"
     TARGET_SDK = 24
@@ -25,7 +25,7 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 9
         targetSdkVersion TARGET_SDK
-        versionCode 162
+        versionCode 163
         versionName PUBLISH_VERSION
     }
     lintOptions {
