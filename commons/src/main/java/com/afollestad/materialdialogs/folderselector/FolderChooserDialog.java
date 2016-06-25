@@ -48,7 +48,11 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     }
 
     String[] getContentsArray() {
-        if (parentContents == null) return new String[]{};
+        if (parentContents == null) {
+            if (canGoUp)
+                return new String[]{"..."};
+            return new String[]{};
+        }
         String[] results = new String[parentContents.length + (canGoUp ? 1 : 0)];
         if (canGoUp) results[0] = "...";
         for (int i = 0; i < parentContents.length; i++)
