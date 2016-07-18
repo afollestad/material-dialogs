@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDTintHelper;
+import com.afollestad.materialdialogs.util.DialogUtils;
 
 class DefaultAdapter extends BaseAdapter {
 
@@ -57,6 +58,7 @@ class DefaultAdapter extends BaseAdapter {
     public View getView(final int index, View view, ViewGroup parent) {
         if (view == null)
             view = LayoutInflater.from(dialog.getContext()).inflate(layout, parent, false);
+        boolean disabled = DialogUtils.isIn(index, dialog.mBuilder.disabledIndices);
 
         TextView tv = (TextView) view.findViewById(R.id.title);
         switch (dialog.listType) {
@@ -66,6 +68,7 @@ class DefaultAdapter extends BaseAdapter {
                 boolean selected = dialog.mBuilder.selectedIndex == index;
                 MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
+                radio.setEnabled(!disabled);
                 break;
             }
             case MULTI: {
@@ -74,9 +77,11 @@ class DefaultAdapter extends BaseAdapter {
                 boolean selected = dialog.selectedIndicesList.contains(index);
                 MDTintHelper.setTint(checkbox, dialog.mBuilder.widgetColor);
                 checkbox.setChecked(selected);
+                checkbox.setEnabled(!disabled);
                 break;
             }
         }
+
         tv.setText(dialog.mBuilder.items[index]);
         tv.setTextColor(dialog.mBuilder.itemColor);
         dialog.setTypeface(tv, dialog.mBuilder.regularFont);

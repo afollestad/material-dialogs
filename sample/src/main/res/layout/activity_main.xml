@@ -146,6 +146,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/multiChoice_longItems" />
 
+        <Button
+            android:id="@+id/multiChoice_disabledItems"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/multiChoice_disabledItems" />
+
         <!-- Advanced Lists -->
 
         <TextView

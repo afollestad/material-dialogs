@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.R;
+import com.afollestad.materialdialogs.StackingBehavior;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
@@ -43,7 +44,7 @@ public class MDRootLayout extends ViewGroup {
     private boolean mDrawTopDivider = false;
     private boolean mDrawBottomDivider = false;
     private final MDButton[] mButtons = new MDButton[3];
-    private boolean mForceStack = false;
+    private StackingBehavior mStackBehavior = StackingBehavior.ADAPTIVE;
     private boolean mIsStacked = false;
     private boolean mUseFullPadding = true;
     private boolean mReducePaddingNoTitleNoButtons;
@@ -137,7 +138,11 @@ public class MDRootLayout extends ViewGroup {
         boolean hasButtons = false;
 
         final boolean stacked;
-        if (!mForceStack) {
+        if (mStackBehavior == StackingBehavior.ALWAYS) {
+            stacked = true;
+        } else if (mStackBehavior == StackingBehavior.NEVER) {
+            stacked = false;
+        } else {
             int buttonsWidth = 0;
             for (MDButton button : mButtons) {
                 if (button != null && isVisible(button)) {
@@ -152,8 +157,6 @@ public class MDRootLayout extends ViewGroup {
                     .getDimensionPixelSize(R.dimen.md_neutral_button_margin);
             final int buttonFrameWidth = width - 2 * buttonBarPadding;
             stacked = buttonsWidth > buttonFrameWidth;
-        } else {
-            stacked = true;
         }
 
         int stackedHeight = 0;
@@ -343,8 +346,8 @@ public class MDRootLayout extends ViewGroup {
         setUpDividersVisibility(mContent, true, true);
     }
 
-    public void setForceStack(boolean forceStack) {
-        mForceStack = forceStack;
+    public void setStackingBehavior(StackingBehavior behavior) {
+        mStackBehavior = behavior;
         invalidate();
     }
 

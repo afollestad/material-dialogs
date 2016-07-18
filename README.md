@@ -19,7 +19,8 @@
 5. [Dismissing Dialogs](https://github.com/afollestad/material-dialogs#dismissing-dialogs)
 5. [Migration from AlertDialogs](https://github.com/afollestad/material-dialogs#migration-from-alertdialogs)
 6. [Displaying an Icon](https://github.com/afollestad/material-dialogs#displaying-an-icon)
-7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#stacked-action-buttons)
+7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#s1tacked-action-buttons)
+    1. [Stacking Behavior](https://github.com/afollestad/material-dialogs#stacking-behavior)
 8. [Neutral Action Button](https://github.com/afollestad/material-dialogs#neutral-action-button)
 9. [Callbacks](https://github.com/afollestad/material-dialogs#callbacks)
 10. [List Dialogs](https://github.com/afollestad/material-dialogs#list-dialogs)
@@ -98,7 +99,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.8.6.1'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
 }
 ```
 
@@ -110,7 +111,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.8.6.1'
+    compile 'com.afollestad.material-dialogs:commons:0.8.6.2'
 }
 ```
 
@@ -250,7 +251,16 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-You can also force the dialog to stack its buttons with the `forceStacking()` method of the `Builder`.
+### Stacking Behavior
+
+You can set stacking behavior from the `Builder`:
+
+```java
+new MaterialDialog.Builder(this)
+    ...
+    .stackingBehavior(StackingBehavior.ADAPTIVE)  // the default value
+    .show();
+```
 
 ---
 

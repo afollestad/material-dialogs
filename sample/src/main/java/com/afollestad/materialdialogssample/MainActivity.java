@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.StackingBehavior;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.color.CircleView;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements
                 .positiveText(R.string.speedBoost)
                 .negativeText(R.string.noThanks)
                 .btnStackedGravity(GravityEnum.END)
-                .forceStacking(true)  // this generally should not be forced, but is used for demo purposes
+                .stackingBehavior(StackingBehavior.ALWAYS)  // this generally should not be forced, but is used for demo purposes
                 .show();
     }
 
@@ -358,6 +359,39 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.multiChoice_disabledItems)
+    public void showMultiChoiceDisabledItems() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallbackMultiChoice(new Integer[]{0, 1, 2}, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        StringBuilder str = new StringBuilder();
+                        for (int i = 0; i < which.length; i++) {
+                            if (i > 0) str.append('\n');
+                            str.append(which[i]);
+                            str.append(": ");
+                            str.append(text[i]);
+                        }
+                        showToast(str.toString());
+                        return true; // allow selection
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.clearSelectedIndices();
+                    }
+                })
+                .alwaysCallMultiChoiceCallback()
+                .positiveText(R.string.md_choose_label)
+                .autoDismiss(false)
+                .neutralText(R.string.clear_selection)
+                .itemsDisabledIndices(0, 1)
+                .show();
+    }
+
     @OnClick(R.id.simpleList)
     public void showSimpleList() {
         final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
@@ -448,10 +482,10 @@ public class MainActivity extends AppCompatActivity implements
 
         int widgetColor = ThemeSingleton.get().widgetColor;
         MDTintHelper.setTint(checkbox,
-                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_teal_a400) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_blue) : widgetColor);
 
         MDTintHelper.setTint(passwordInput,
-                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_teal_a400) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_blue) : widgetColor);
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
@@ -461,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements
     public void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
-            accentColor = ContextCompat.getColor(this, R.color.material_teal_a400);
+            accentColor = ContextCompat.getColor(this, R.color.material_blue);
         ChangelogDialog.create(false, accentColor)
                 .show(getSupportFragmentManager(), "changelog");
     }
@@ -543,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .backgroundColorRes(R.color.material_blue_grey_800)
-                .dividerColorRes(R.color.material_teal_a400)
+                .dividerColorRes(R.color.material_blue)
                 .btnSelector(R.drawable.md_btn_selector_custom, DialogAction.POSITIVE)
                 .positiveColor(Color.WHITE)
                 .negativeColorAttr(android.R.attr.textColorSecondaryInverse)

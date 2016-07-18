@@ -28,12 +28,17 @@ import java.lang.reflect.Field;
 public class MDTintHelper {
 
     public static void setTint(@NonNull RadioButton radioButton, @ColorInt int color) {
+        final int disabledColor = DialogUtils.getDisabledColor(radioButton.getContext());
         ColorStateList sl = new ColorStateList(new int[][]{
-                new int[]{-android.R.attr.state_checked},
-                new int[]{android.R.attr.state_checked}
+                new int[]{android.R.attr.state_enabled, -android.R.attr.state_checked},
+                new int[]{android.R.attr.state_enabled, android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_enabled, -android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_enabled, android.R.attr.state_checked}
         }, new int[]{
                 DialogUtils.resolveColor(radioButton.getContext(), R.attr.colorControlNormal),
-                color
+                color,
+                disabledColor,
+                disabledColor
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             radioButton.setButtonTintList(sl);
@@ -120,12 +125,17 @@ public class MDTintHelper {
     }
 
     public static void setTint(@NonNull CheckBox box, @ColorInt int color) {
+        final int disabledColor = DialogUtils.getDisabledColor(box.getContext());
         ColorStateList sl = new ColorStateList(new int[][]{
-                new int[]{-android.R.attr.state_checked},
-                new int[]{android.R.attr.state_checked}
+                new int[]{android.R.attr.state_enabled, -android.R.attr.state_checked},
+                new int[]{android.R.attr.state_enabled, android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_enabled, -android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_enabled, android.R.attr.state_checked}
         }, new int[]{
                 DialogUtils.resolveColor(box.getContext(), R.attr.colorControlNormal),
-                color
+                color,
+                disabledColor,
+                disabledColor
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             box.setButtonTintList(sl);

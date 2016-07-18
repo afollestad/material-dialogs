@@ -222,7 +222,7 @@ class DialogInit {
         // Setup action buttons
         dialog.view.setButtonGravity(builder.buttonsGravity);
         dialog.view.setButtonStackedGravity(builder.btnStackedGravity);
-        dialog.view.setForceStack(builder.forceStacking);
+        dialog.view.setStackingBehavior(builder.stackingBehavior);
         boolean textAllCaps;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             textAllCaps = DialogUtils.resolveBoolean(builder.context, android.R.attr.textAllCaps, true);
@@ -353,6 +353,17 @@ class DialogInit {
         dialog.checkIfListInitScroll();
     }
 
+    private static void fixCanvasScalingWhenHardwareAccelerated(ProgressBar pb) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            // Canvas scaling when hardware accelerated results in artifacts on older API levels, so
+            // we need to use software rendering
+            if (pb.isHardwareAccelerated() && pb.getLayerType() != View.LAYER_TYPE_SOFTWARE) {
+                pb.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            }
+        }
+    }
+
     private static void setupProgressDialog(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
         if (builder.indeterminateProgress || builder.progress > -2) {
@@ -412,6 +423,10 @@ class DialogInit {
                 }
             }
         }
+
+        if (dialog.mProgress != null) {
+            fixCanvasScalingWhenHardwareAccelerated(dialog.mProgress);
+        }
     }
 
     private static void setupInputDialog(final MaterialDialog dialog) {
@@ -430,7 +445,7 @@ class DialogInit {
 
         if (builder.inputType != -1) {
             dialog.input.setInputType(builder.inputType);
-            if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD  &&
+            if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD &&
                     (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
                 // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
                 dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());

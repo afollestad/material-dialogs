@@ -163,11 +163,16 @@ public class MaterialDialog extends DialogBase implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (!view.isEnabled()) return;
         if (mBuilder.listCallbackCustom != null) {
             // Custom adapter
             CharSequence text = null;
-            if (view instanceof TextView)
+            if (view instanceof TextView) {
                 text = ((TextView) view).getText();
+            } else {
+                final TextView tv = (TextView) view.findViewById(android.R.id.title);
+                if (tv != null) text = tv.getText();
+            }
             mBuilder.listCallbackCustom.onSelection(this, view, position, text);
         } else if (listType == null || listType == ListType.REGULAR) {
             // Default adapter, non choice mode
@@ -181,8 +186,9 @@ public class MaterialDialog extends DialogBase implements
         } else {
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
-                final boolean shouldBeChecked = !selectedIndicesList.contains(position);
                 final CheckBox cb = (CheckBox) view.findViewById(R.id.control);
+                if (!cb.isEnabled()) return;
+                final boolean shouldBeChecked = !selectedIndicesList.contains(position);
                 if (shouldBeChecked) {
                     // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
                     selectedIndicesList.add(position);
@@ -206,9 +212,10 @@ public class MaterialDialog extends DialogBase implements
                         sendMultichoiceCallback();
                 }
             } else if (listType == ListType.SINGLE) {
+                final RadioButton radio = (RadioButton) view.findViewById(R.id.control);
+                if (!radio.isEnabled()) return;
                 boolean allowSelection = true;
                 final DefaultAdapter adapter = (DefaultAdapter) mBuilder.adapter;
-                final RadioButton radio = (RadioButton) view.findViewById(R.id.control);
 
                 if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
                     // If auto dismiss is enabled, and no action button is visible to approve the selection, dismiss the dialog
@@ -350,7 +357,7 @@ public class MaterialDialog extends DialogBase implements
                 }
                 if (mBuilder.onNegativeCallback != null)
                     mBuilder.onNegativeCallback.onClick(this, tag);
-                if (mBuilder.autoDismiss) dismiss();
+                if (mBuilder.autoDismiss) cancel();
                 break;
             }
             case NEUTRAL: {
@@ -411,6 +418,7 @@ public class MaterialDialog extends DialogBase implements
         protected float contentLineSpacingMultiplier = 1.2f;
         protected int selectedIndex = -1;
         protected Integer[] selectedIndices = null;
+        protected Integer[] disabledIndices = null;
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
@@ -422,7 +430,7 @@ public class MaterialDialog extends DialogBase implements
         protected OnCancelListener cancelListener;
         protected OnKeyListener keyListener;
         protected OnShowListener showListener;
-        protected boolean forceStacking;
+        protected StackingBehavior stackingBehavior;
         protected boolean wrapCustomViewInScroll;
         protected int dividerColor;
         protected int backgroundColor;
@@ -852,6 +860,18 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
+         * Sets indices of items that are not clickable. If they are checkboxes or radio buttons,
+         * they will not be toggleable.
+         *
+         * @param disabledIndices The item indices that will be disabled from selection.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder itemsDisabledIndices(@Nullable Integer... disabledIndices) {
+            this.disabledIndices = disabledIndices;
+            return this;
+        }
+
+        /**
          * By default, the multi choice callback is only called when the user clicks the positive button
          * or if there are no buttons. Call this to force it to always call on item clicks even if the
          * positive button exists.
@@ -1101,7 +1121,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder widgetColorAttr(@AttrRes int colorAttr) {
-            return widgetColorRes(DialogUtils.resolveColor(this.context, colorAttr));
+            return widgetColor(DialogUtils.resolveColor(this.context, colorAttr));
         }
 
         public Builder dividerColor(@ColorInt int color) {
@@ -1237,9 +1257,25 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder forceStacking(boolean stacked) {
-            this.forceStacking = stacked;
+        /**
+         * Sets action button stacking behavior.
+         *
+         * @param behavior The behavior of the action button stacking logic.
+         * @return The Builder instance so you can chain calls to it.
+         */
+        public Builder stackingBehavior(@NonNull StackingBehavior behavior) {
+            this.stackingBehavior = behavior;
             return this;
+        }
+
+        /**
+         * @param stacked When true, action button stacking is forced.
+         * @return The Builder instance so you can chain calls to it.
+         * @deprecated Use {@link #stackingBehavior(StackingBehavior)} instead.
+         */
+        @Deprecated
+        public Builder forceStacking(boolean stacked) {
+            return stackingBehavior(stacked ? StackingBehavior.ALWAYS : StackingBehavior.ADAPTIVE);
         }
 
         public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
