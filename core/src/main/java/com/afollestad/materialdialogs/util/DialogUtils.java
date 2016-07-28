@@ -14,6 +14,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -121,12 +122,7 @@ public class DialogUtils {
      */
     @ColorInt
     public static int getColor(Context context, @ColorRes int colorId) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            //noinspection deprecation
-            return context.getResources().getColor(colorId);
-        } else {
-            return context.getColor(colorId);
-        }
+        return ContextCompat.getColor(context, colorId);
     }
 
     public static String resolveString(Context context, @AttrRes int attr) {
