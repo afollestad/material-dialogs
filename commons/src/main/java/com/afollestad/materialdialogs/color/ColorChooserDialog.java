@@ -367,24 +367,24 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
         final MaterialDialog dialog = bd.build();
         final View v = dialog.getCustomView();
-        mGrid = (GridView) v.findViewById(R.id.grid);
+        mGrid = (GridView) v.findViewById(R.id.md_grid);
 
         if (builder.mAllowUserCustom) {
             mSelectedCustomColor = preselectColor;
-            mColorChooserCustomFrame = v.findViewById(R.id.colorChooserCustomFrame);
-            mCustomColorHex = (EditText) v.findViewById(R.id.hexInput);
-            mCustomColorIndicator = v.findViewById(R.id.colorIndicator);
-            mCustomSeekA = (SeekBar) v.findViewById(R.id.colorA);
-            mCustomSeekAValue = (TextView) v.findViewById(R.id.colorAValue);
-            mCustomSeekR = (SeekBar) v.findViewById(R.id.colorR);
-            mCustomSeekRValue = (TextView) v.findViewById(R.id.colorRValue);
-            mCustomSeekG = (SeekBar) v.findViewById(R.id.colorG);
-            mCustomSeekGValue = (TextView) v.findViewById(R.id.colorGValue);
-            mCustomSeekB = (SeekBar) v.findViewById(R.id.colorB);
-            mCustomSeekBValue = (TextView) v.findViewById(R.id.colorBValue);
+            mColorChooserCustomFrame = v.findViewById(R.id.md_colorChooserCustomFrame);
+            mCustomColorHex = (EditText) v.findViewById(R.id.md_hexInput);
+            mCustomColorIndicator = v.findViewById(R.id.md_colorIndicator);
+            mCustomSeekA = (SeekBar) v.findViewById(R.id.md_colorA);
+            mCustomSeekAValue = (TextView) v.findViewById(R.id.md_colorAValue);
+            mCustomSeekR = (SeekBar) v.findViewById(R.id.md_colorR);
+            mCustomSeekRValue = (TextView) v.findViewById(R.id.md_colorRValue);
+            mCustomSeekG = (SeekBar) v.findViewById(R.id.md_colorG);
+            mCustomSeekGValue = (TextView) v.findViewById(R.id.md_colorGValue);
+            mCustomSeekB = (SeekBar) v.findViewById(R.id.md_colorB);
+            mCustomSeekBValue = (TextView) v.findViewById(R.id.md_colorBValue);
 
             if (!builder.mAllowUserCustomAlpha) {
-                v.findViewById(R.id.colorALabel).setVisibility(View.GONE);
+                v.findViewById(R.id.md_colorALabel).setVisibility(View.GONE);
                 mCustomSeekA.setVisibility(View.GONE);
                 mCustomSeekAValue.setVisibility(View.GONE);
                 mCustomColorHex.setHint("2196F3");
