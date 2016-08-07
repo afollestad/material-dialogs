@@ -54,7 +54,7 @@ class ButtonItemAdapter extends BaseAdapter implements View.OnClickListener {
         if (convertView == null)
             convertView = View.inflate(mContext, R.layout.dialog_customlistitem, null);
         ((TextView) convertView.findViewById(R.id.md_title)).setText(mItems[position] + " (" + position + ")");
-        Button button = (Button) convertView.findViewById(R.id.button);
+        Button button = (Button) convertView.findViewById(R.id.md_button);
         button.setTag(position);
         button.setOnClickListener(this);
         return convertView;
