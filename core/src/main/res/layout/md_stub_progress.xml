@@ -4,7 +4,7 @@
     tools:ignore="UnusedAttribute">
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/md_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -26,7 +26,7 @@
             android:paddingBottom="2dp" />
 
         <TextView
-            android:id="@+id/label"
+            android:id="@+id/md_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="36dp"
@@ -40,7 +40,7 @@
             android:layout_below="@android:id/progress" />
 
         <TextView
-            android:id="@+id/minMax"
+            android:id="@+id/md_minMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="48dp"

@@ -124,16 +124,16 @@ class DialogInit {
             builder.itemColor = DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
 
         // Retrieve references to views
-        dialog.title = (TextView) dialog.view.findViewById(R.id.title);
-        dialog.icon = (ImageView) dialog.view.findViewById(R.id.icon);
-        dialog.titleFrame = dialog.view.findViewById(R.id.titleFrame);
-        dialog.content = (TextView) dialog.view.findViewById(R.id.content);
-        dialog.listView = (ListView) dialog.view.findViewById(R.id.contentListView);
+        dialog.title = (TextView) dialog.view.findViewById(R.id.md_title);
+        dialog.icon = (ImageView) dialog.view.findViewById(R.id.md_icon);
+        dialog.titleFrame = dialog.view.findViewById(R.id.md_titleFrame);
+        dialog.content = (TextView) dialog.view.findViewById(R.id.md_content);
+        dialog.listView = (ListView) dialog.view.findViewById(R.id.md_contentListView);
 
         // Button views initially used by checkIfStackingNeeded()
-        dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultPositive);
-        dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNeutral);
-        dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.buttonDefaultNegative);
+        dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultPositive);
+        dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultNeutral);
+        dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultNegative);
 
         // Don't allow the submit button to not be shown for input dialogs
         if (builder.inputCallback != null && builder.positiveText == null)
@@ -302,8 +302,8 @@ class DialogInit {
 
         // Setup custom views
         if (builder.customView != null) {
-            ((MDRootLayout) dialog.view.findViewById(R.id.root)).noTitleNoPadding();
-            FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.customViewFrame);
+            ((MDRootLayout) dialog.view.findViewById(R.id.md_root)).noTitleNoPadding();
+            FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.md_customViewFrame);
             dialog.customViewFrame = frame;
             View innerView = builder.customView;
             if (innerView.getParent() != null)
@@ -397,13 +397,13 @@ class DialogInit {
                 dialog.mProgress.setIndeterminate(builder.indeterminateIsHorizontalProgress);
                 dialog.mProgress.setProgress(0);
                 dialog.mProgress.setMax(builder.progressMax);
-                dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.label);
+                dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.md_label);
                 if (dialog.mProgressLabel != null) {
                     dialog.mProgressLabel.setTextColor(builder.contentColor);
                     dialog.setTypeface(dialog.mProgressLabel, builder.mediumFont);
                     dialog.mProgressLabel.setText(builder.progressPercentFormat.format(0));
                 }
-                dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
+                dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
                 if (dialog.mProgressMinMax != null) {
                     dialog.mProgressMinMax.setTextColor(builder.contentColor);
                     dialog.setTypeface(dialog.mProgressMinMax, builder.regularFont);
@@ -452,7 +452,7 @@ class DialogInit {
             }
         }
 
-        dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.minMax);
+        dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
         if (builder.inputMinLength > 0 || builder.inputMaxLength > -1) {
             dialog.invalidateInputMinMaxIndicator(dialog.input.getText().toString().length(),
                     !builder.inputAllowEmpty);

@@ -115,13 +115,13 @@ public class MDRootLayout extends ViewGroup {
         super.onFinishInflate();
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
-            if (v.getId() == R.id.titleFrame) {
+            if (v.getId() == R.id.md_titleFrame) {
                 mTitleBar = v;
-            } else if (v.getId() == R.id.buttonDefaultNeutral) {
+            } else if (v.getId() == R.id.md_buttonDefaultNeutral) {
                 mButtons[INDEX_NEUTRAL] = (MDButton) v;
-            } else if (v.getId() == R.id.buttonDefaultNegative) {
+            } else if (v.getId() == R.id.md_buttonDefaultNegative) {
                 mButtons[INDEX_NEGATIVE] = (MDButton) v;
-            } else if (v.getId() == R.id.buttonDefaultPositive) {
+            } else if (v.getId() == R.id.md_buttonDefaultPositive) {
                 mButtons[INDEX_POSITIVE] = (MDButton) v;
             } else {
                 mContent = v;

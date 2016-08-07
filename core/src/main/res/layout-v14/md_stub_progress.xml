@@ -4,7 +4,7 @@
     tools:ignore="UnusedAttribute">
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/md_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/label"
+            android:id="@+id/md_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@android:id/progress"
@@ -39,7 +39,7 @@
             tools:text="100%" />
 
         <TextView
-            android:id="@+id/minMax"
+            android:id="@+id/md_minMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@android:id/progress"

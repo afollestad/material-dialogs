@@ -13,13 +13,13 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/contentScrollView"
+            android:id="@+id/md_contentScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false">
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/md_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/md_dialog_frame_margin"
@@ -32,12 +32,12 @@
         </ScrollView>
 
         <FrameLayout
-            android:id="@+id/contentListViewFrame"
+            android:id="@+id/md_contentListViewFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ListView
-                android:id="@+id/contentListView"
+                android:id="@+id/md_contentListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarStyle="outsideOverlay"

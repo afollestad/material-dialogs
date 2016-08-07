@@ -60,11 +60,11 @@ class DefaultAdapter extends BaseAdapter {
             view = LayoutInflater.from(dialog.getContext()).inflate(layout, parent, false);
         boolean disabled = DialogUtils.isIn(index, dialog.mBuilder.disabledIndices);
 
-        TextView tv = (TextView) view.findViewById(R.id.title);
+        TextView tv = (TextView) view.findViewById(R.id.md_title);
         switch (dialog.listType) {
             case SINGLE: {
                 @SuppressLint("CutPasteId")
-                RadioButton radio = (RadioButton) view.findViewById(R.id.control);
+                RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
                 boolean selected = dialog.mBuilder.selectedIndex == index;
                 MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
@@ -73,7 +73,7 @@ class DefaultAdapter extends BaseAdapter {
             }
             case MULTI: {
                 @SuppressLint("CutPasteId")
-                CheckBox checkbox = (CheckBox) view.findViewById(R.id.control);
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.md_control);
                 boolean selected = dialog.selectedIndicesList.contains(index);
                 MDTintHelper.setTint(checkbox, dialog.mBuilder.widgetColor);
                 checkbox.setChecked(selected);

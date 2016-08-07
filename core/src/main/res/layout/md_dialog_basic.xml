@@ -10,7 +10,7 @@
     <include layout="@layout/md_stub_titleframe" />
 
     <ScrollView
-        android:id="@+id/contentScrollView"
+        android:id="@+id/md_contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -18,7 +18,7 @@
         android:paddingBottom="@dimen/md_content_padding_bottom">
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/md_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/md_dialog_frame_margin"

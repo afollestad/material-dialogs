@@ -186,7 +186,7 @@ public class MaterialDialog extends DialogBase implements
         } else {
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
-                final CheckBox cb = (CheckBox) view.findViewById(R.id.control);
+                final CheckBox cb = (CheckBox) view.findViewById(R.id.md_control);
                 if (!cb.isEnabled()) return;
                 final boolean shouldBeChecked = !selectedIndicesList.contains(position);
                 if (shouldBeChecked) {
@@ -212,7 +212,7 @@ public class MaterialDialog extends DialogBase implements
                         sendMultichoiceCallback();
                 }
             } else if (listType == ListType.SINGLE) {
-                final RadioButton radio = (RadioButton) view.findViewById(R.id.control);
+                final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
                 if (!radio.isEnabled()) return;
                 boolean allowSelection = true;
                 final DefaultAdapter adapter = (DefaultAdapter) mBuilder.adapter;

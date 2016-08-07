@@ -4,7 +4,7 @@
     tools:ignore="UnusedAttribute">
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/md_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -12,7 +12,7 @@
     tools:gravity="start|center_vertical">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/md_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -25,7 +25,7 @@
         tools:text="Item" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/control"
+        android:id="@+id/md_control"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@null"
