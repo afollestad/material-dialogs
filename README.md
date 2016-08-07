@@ -466,35 +466,33 @@ You can also pass a literal integer array (`int[]`) in place of an array resourc
 # Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
-exactly how you want your list to work.
+exactly how you want your list to work. **Note that Material Dialogs only
 
 ```java
 new MaterialDialog.Builder(this)
         .title(R.string.socialNetworks)
-        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
-                new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        Toast.makeText(MainActivity.this, "Clicked item " + which, Toast.LENGTH_SHORT).show();
-                    }
-                })
+        .adapter(new ButtonItemAdapter(this, R.array.socialNetworks), null)
         .show();
 ```
 
-If you need access to the `ListView`, you can use the `MaterialDialog` instance:
+**Note** that with newer releases, Material Dialogs no longer supports `ListView` and `ListAdapter`.
+It's about time that everyone uses `RecyclerView`. *Your custom adapters will have to handle item click
+events on their own; this library's classes have some good examples of how that is done correctly.*
+
+If you need access to the `RecyclerView`, you can use the `MaterialDialog` instance:
 
 ```java
 MaterialDialog dialog = new MaterialDialog.Builder(this)
         ...
         .build();
 
-ListView list = dialog.getListView();
+RecyclerView list = dialog.getRecyclerView();
 // Do something with it
 
 dialog.show();
 ```
 
-Note that you don't need to be using a custom adapter in order to access the `ListView`, it's there for single/multi choice dialogs, regular list dialogs, etc.
+Note that you don't need to be using a custom adapter in order to access the `RecyclerView`, it's there for single/multi choice dialogs, regular list dialogs, etc.
 
 ---
 
@@ -1276,7 +1274,13 @@ Simple List Dialogs are a specific style of list dialogs taken from the Material
 This library's implementation is just a pre-made adapter that you can pass to the `MaterialDialog.Builder`.
 
 ```java
-final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
+final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(new MaterialSimpleListAdapter.Callback() {
+    @Override
+    public void onMaterialListItemSelected(int index, MaterialSimpleListItem item) {
+        // TODO
+    }
+});
+
 adapter.add(new MaterialSimpleListItem.Builder(this)
     .content("username@gmail.com")
     .icon(R.drawable.ic_account_circle)
@@ -1295,13 +1299,7 @@ adapter.add(new MaterialSimpleListItem.Builder(this)
 
 new MaterialDialog.Builder(this)
     .title(R.string.set_backup)
-    .adapter(adapter, new MaterialDialog.ListCallback() {
-        @Override
-        public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-            MaterialSimpleListItem item = adapter.getItem(which);
-            // TODO
-        }
-    })
+    .adapter(adapter, null)
     .show();
 ```
 

@@ -22,6 +22,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -30,13 +33,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -61,10 +62,10 @@ import java.util.Locale;
  * @author Aidan Follestad (afollestad)
  */
 public class MaterialDialog extends DialogBase implements
-        View.OnClickListener, AdapterView.OnItemClickListener {
+        View.OnClickListener, DefaultRvAdapter.InternalListCallback {
 
     protected final Builder mBuilder;
-    protected ListView listView;
+    protected RecyclerView recyclerView;
     protected ImageView icon;
     protected TextView title;
     protected View titleFrame;
@@ -104,16 +105,17 @@ public class MaterialDialog extends DialogBase implements
     }
 
     protected final void checkIfListInitScroll() {
-        if (listView == null)
+        if (recyclerView == null)
             return;
-        listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onGlobalLayout() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     //noinspection deprecation
-                    listView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    recyclerView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
-                    listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
 
                 if (listType == ListType.SINGLE || listType == ListType.MULTI) {
@@ -128,17 +130,30 @@ public class MaterialDialog extends DialogBase implements
                         Collections.sort(selectedIndicesList);
                         selectedIndex = selectedIndicesList.get(0);
                     }
-                    if (listView.getLastVisiblePosition() < selectedIndex) {
-                        final int totalVisible = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
+
+                    int lastVisiblePosition;
+                    int firstVisiblePosition;
+                    if (mBuilder.layoutManager instanceof LinearLayoutManager) {
+                        lastVisiblePosition = ((LinearLayoutManager) mBuilder.layoutManager).findLastVisibleItemPosition();
+                        firstVisiblePosition = ((LinearLayoutManager) mBuilder.layoutManager).findFirstVisibleItemPosition();
+                    } else if (mBuilder.layoutManager instanceof GridLayoutManager) {
+                        lastVisiblePosition = ((GridLayoutManager) mBuilder.layoutManager).findLastVisibleItemPosition();
+                        firstVisiblePosition = ((GridLayoutManager) mBuilder.layoutManager).findFirstVisibleItemPosition();
+                    } else {
+                        throw new IllegalStateException("Unsupported layout manager type: " + mBuilder.layoutManager.getClass().getName());
+                    }
+
+                    if (lastVisiblePosition < selectedIndex) {
+                        final int totalVisible = lastVisiblePosition - firstVisiblePosition;
                         // Scroll so that the selected index appears in the middle (vertically) of the ListView
                         int scrollIndex = selectedIndex - (totalVisible / 2);
                         if (scrollIndex < 0) scrollIndex = 0;
                         final int fScrollIndex = scrollIndex;
-                        listView.post(new Runnable() {
+                        recyclerView.post(new Runnable() {
                             @Override
                             public void run() {
-                                listView.requestFocus();
-                                listView.setSelection(fScrollIndex);
+                                recyclerView.requestFocus();
+                                recyclerView.scrollToPosition(fScrollIndex);
                             }
                         });
                     }
@@ -148,33 +163,26 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Sets the dialog ListView's adapter and it's item click listener.
+     * Sets the dialog RecyclerView's adapter/layout manager, and it's item click listener.
      */
     protected final void invalidateList() {
-        if (listView == null)
+        if (recyclerView == null)
             return;
         else if ((mBuilder.items == null || mBuilder.items.length == 0) && mBuilder.adapter == null)
             return;
-        // Set up list with adapter
-        listView.setAdapter(mBuilder.adapter);
-        if (listType != null || mBuilder.listCallbackCustom != null)
-            listView.setOnItemClickListener(this);
+        if (mBuilder.layoutManager == null)
+            mBuilder.layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mBuilder.layoutManager);
+        recyclerView.setAdapter(mBuilder.adapter);
+        if (listType != null) {
+            ((DefaultRvAdapter) mBuilder.adapter).setCallback(this);
+        }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(MaterialDialog dialog, View view, int position, CharSequence text) {
         if (!view.isEnabled()) return;
-        if (mBuilder.listCallbackCustom != null) {
-            // Custom adapter
-            CharSequence text = null;
-            if (view instanceof TextView) {
-                text = ((TextView) view).getText();
-            } else {
-                final TextView tv = (TextView) view.findViewById(android.R.id.title);
-                if (tv != null) text = tv.getText();
-            }
-            mBuilder.listCallbackCustom.onSelection(this, view, position, text);
-        } else if (listType == null || listType == ListType.REGULAR) {
+        if (listType == null || listType == ListType.REGULAR) {
             // Default adapter, non choice mode
             if (mBuilder.autoDismiss) {
                 // If auto dismiss is enabled, dismiss the dialog when a list item is selected
@@ -215,7 +223,7 @@ public class MaterialDialog extends DialogBase implements
                 final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
                 if (!radio.isEnabled()) return;
                 boolean allowSelection = true;
-                final DefaultAdapter adapter = (DefaultAdapter) mBuilder.adapter;
+                final int oldSelected = mBuilder.selectedIndex;
 
                 if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
                     // If auto dismiss is enabled, and no action button is visible to approve the selection, dismiss the dialog
@@ -226,7 +234,6 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.selectedIndex = position;
                     sendSingleChoiceCallback(view);
                 } else if (mBuilder.alwaysCallSingleChoiceCallback) {
-                    int oldSelected = mBuilder.selectedIndex;
                     // Temporarily set the new index so the callback uses the right one
                     mBuilder.selectedIndex = position;
                     // Only allow the radio button to be checked if the callback returns true
@@ -238,7 +245,7 @@ public class MaterialDialog extends DialogBase implements
                 if (allowSelection) {
                     mBuilder.selectedIndex = position;
                     radio.setChecked(true);
-                    adapter.notifyDataSetChanged();
+                    mBuilder.adapter.notifyItemChanged(oldSelected);
                 }
             }
 
@@ -263,6 +270,10 @@ public class MaterialDialog extends DialogBase implements
         final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
         if (d != null) return d;
         return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 
     /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
@@ -409,7 +420,6 @@ public class MaterialDialog extends DialogBase implements
         protected ListCallback listCallback;
         protected ListCallbackSingleChoice listCallbackSingleChoice;
         protected ListCallbackMultiChoice listCallbackMultiChoice;
-        protected ListCallback listCallbackCustom;
         protected boolean alwaysCallMultiChoiceCallback = false;
         protected boolean alwaysCallSingleChoiceCallback = false;
         protected Theme theme = Theme.LIGHT;
@@ -425,7 +435,8 @@ public class MaterialDialog extends DialogBase implements
         protected Drawable icon;
         protected boolean limitIconToDefaultSize;
         protected int maxIconSize = -1;
-        protected ListAdapter adapter;
+        protected RecyclerView.Adapter<?> adapter;
+        protected RecyclerView.LayoutManager layoutManager;
         protected OnDismissListener dismissListener;
         protected OnCancelListener cancelListener;
         protected OnKeyListener keyListener;
@@ -1206,17 +1217,20 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Sets a custom {@link android.widget.ListAdapter} for the dialog's list
+         * Sets a custom {@link android.support.v7.widget.RecyclerView.Adapter} for the dialog's list
          *
-         * @param adapter  The adapter to set to the list.
-         * @param callback The callback invoked when an item in the list is selected.
+         * @param adapter       The adapter to set to the list.
+         * @param layoutManager The layout manager to use in the RecyclerView. Pass null to use the default linear manager.
          * @return This Builder object to allow for chaining of calls to set methods
          */
-        public Builder adapter(@NonNull ListAdapter adapter, @Nullable ListCallback callback) {
+        @SuppressWarnings("ConstantConditions")
+        public Builder adapter(@NonNull RecyclerView.Adapter<?> adapter, @Nullable RecyclerView.LayoutManager layoutManager) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set adapter() when you're using a custom view.");
+            if (layoutManager != null && !(layoutManager instanceof LinearLayoutManager) && !(layoutManager instanceof GridLayoutManager))
+                throw new IllegalStateException("You can currently only use LinearLayoutManager and GridLayoutManager with this library.");
             this.adapter = adapter;
-            this.listCallbackCustom = callback;
+            this.layoutManager = layoutManager;
             return this;
         }
 
@@ -1416,11 +1430,6 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Nullable
-    public final ListView getListView() {
-        return listView;
-    }
-
-    @Nullable
     public final EditText getInputEditText() {
         return input;
     }
@@ -1586,12 +1595,10 @@ public class MaterialDialog extends DialogBase implements
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
         mBuilder.items = items;
-        if (mBuilder.adapter instanceof DefaultAdapter) {
-            mBuilder.adapter = new DefaultAdapter(this, ListType.getLayoutForType(listType));
-        } else {
+        if (!(mBuilder.adapter instanceof DefaultRvAdapter)) {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
-        listView.setAdapter(mBuilder.adapter);
+        mBuilder.adapter.notifyDataSetChanged();
     }
 
     public final int getCurrentProgress() {
@@ -1703,8 +1710,8 @@ public class MaterialDialog extends DialogBase implements
     @UiThread
     public void setSelectedIndex(int index) {
         mBuilder.selectedIndex = index;
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
-            ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
+            mBuilder.adapter.notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndex() with the default adapter implementation.");
         }
@@ -1720,8 +1727,8 @@ public class MaterialDialog extends DialogBase implements
     @UiThread
     public void setSelectedIndices(@NonNull Integer[] indices) {
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
-            ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
+            mBuilder.adapter.notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
@@ -1742,10 +1749,10 @@ public class MaterialDialog extends DialogBase implements
     public void clearSelectedIndices(boolean sendCallback) {
         if (listType == null || listType != ListType.MULTI)
             throw new IllegalStateException("You can only use clearSelectedIndices() with multi choice list dialogs.");
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
             if (selectedIndicesList != null)
                 selectedIndicesList.clear();
-            ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+            mBuilder.adapter.notifyDataSetChanged();
             if (sendCallback && mBuilder.listCallbackMultiChoice != null)
                 sendMultichoiceCallback();
         } else {
@@ -1768,14 +1775,14 @@ public class MaterialDialog extends DialogBase implements
     public void selectAllIndicies(boolean sendCallback) {
         if (listType == null || listType != ListType.MULTI)
             throw new IllegalStateException("You can only use selectAllIndicies() with multi choice list dialogs.");
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultAdapter) {
+        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
             if (selectedIndicesList == null)
                 selectedIndicesList = new ArrayList<>();
-            for (int i = 0; i < mBuilder.adapter.getCount(); i++) {
+            for (int i = 0; i < mBuilder.adapter.getItemCount(); i++) {
                 if (!selectedIndicesList.contains(i))
                     selectedIndicesList.add(i);
             }
-            ((DefaultAdapter) mBuilder.adapter).notifyDataSetChanged();
+            mBuilder.adapter.notifyDataSetChanged();
             if (sendCallback && mBuilder.listCallbackMultiChoice != null)
                 sendMultichoiceCallback();
         } else {
@@ -1868,7 +1875,7 @@ public class MaterialDialog extends DialogBase implements
      * A callback used for regular list dialogs.
      */
     public interface ListCallback {
-        void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text);
+        void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text);
     }
 
     /**

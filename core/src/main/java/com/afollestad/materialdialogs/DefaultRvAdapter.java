@@ -5,11 +5,11 @@ import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -19,52 +19,47 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-class DefaultAdapter extends BaseAdapter {
+/**
+ * @author Aidan Follestad (afollestad)
+ */
+class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> {
+
+    public interface InternalListCallback {
+        void onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text);
+    }
 
     private final MaterialDialog dialog;
     @LayoutRes
     private final int layout;
-
     private final GravityEnum itemGravity;
+    private InternalListCallback callback;
 
-    public DefaultAdapter(MaterialDialog dialog, @LayoutRes int layout) {
+    public DefaultRvAdapter(MaterialDialog dialog, @LayoutRes int layout) {
         this.dialog = dialog;
         this.layout = layout;
         this.itemGravity = dialog.mBuilder.itemsGravity;
     }
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
+    public void setCallback(InternalListCallback callback) {
+        this.callback = callback;
     }
 
     @Override
-    public int getCount() {
-        return dialog.mBuilder.items != null ? dialog.mBuilder.items.length : 0;
+    public DefaultVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
+                .inflate(layout, parent, false);
+        DialogUtils.setBackgroundCompat(view, dialog.getListSelector());
+        return new DefaultVH(view, this);
     }
 
     @Override
-    public Object getItem(int position) {
-        return dialog.mBuilder.items[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @SuppressLint("WrongViewCast")
-    @Override
-    public View getView(final int index, View view, ViewGroup parent) {
-        if (view == null)
-            view = LayoutInflater.from(dialog.getContext()).inflate(layout, parent, false);
+    public void onBindViewHolder(DefaultVH holder, int index) {
+        final View view = holder.itemView;
         boolean disabled = DialogUtils.isIn(index, dialog.mBuilder.disabledIndices);
-
-        TextView tv = (TextView) view.findViewById(R.id.md_title);
         switch (dialog.listType) {
             case SINGLE: {
                 @SuppressLint("CutPasteId")
-                RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
+                RadioButton radio = (RadioButton) holder.control;
                 boolean selected = dialog.mBuilder.selectedIndex == index;
                 MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
                 radio.setChecked(selected);
@@ -73,7 +68,7 @@ class DefaultAdapter extends BaseAdapter {
             }
             case MULTI: {
                 @SuppressLint("CutPasteId")
-                CheckBox checkbox = (CheckBox) view.findViewById(R.id.md_control);
+                CheckBox checkbox = (CheckBox) holder.control;
                 boolean selected = dialog.selectedIndicesList.contains(index);
                 MDTintHelper.setTint(checkbox, dialog.mBuilder.widgetColor);
                 checkbox.setChecked(selected);
@@ -82,11 +77,10 @@ class DefaultAdapter extends BaseAdapter {
             }
         }
 
-        tv.setText(dialog.mBuilder.items[index]);
-        tv.setTextColor(dialog.mBuilder.itemColor);
-        dialog.setTypeface(tv, dialog.mBuilder.regularFont);
+        holder.title.setText(dialog.mBuilder.items[index]);
+        holder.title.setTextColor(dialog.mBuilder.itemColor);
+        dialog.setTypeface(holder.title, dialog.mBuilder.regularFont);
 
-        view.setTag(index + ":" + dialog.mBuilder.items[index]);
         setupGravity((ViewGroup) view);
 
         if (dialog.mBuilder.itemIds != null) {
@@ -105,8 +99,11 @@ class DefaultAdapter extends BaseAdapter {
                     group.getChildAt(1).setBackground(null);
             }
         }
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return dialog.mBuilder.items != null ? dialog.mBuilder.items.length : 0;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -148,5 +145,30 @@ class DefaultAdapter extends BaseAdapter {
             return false;
         Configuration config = dialog.getBuilder().getContext().getResources().getConfiguration();
         return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+    }
+
+    public static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        final CompoundButton control;
+        final TextView title;
+        final DefaultRvAdapter adapter;
+
+        public DefaultVH(View itemView, DefaultRvAdapter adapter) {
+            super(itemView);
+            control = (CompoundButton) itemView.findViewById(R.id.md_control);
+            title = (TextView) itemView.findViewById(R.id.md_title);
+            this.adapter = adapter;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (adapter.callback != null) {
+                CharSequence text = null;
+                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.length)
+                    text = adapter.dialog.mBuilder.items[getAdapterPosition()];
+                adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text);
+            }
+        }
     }
 }

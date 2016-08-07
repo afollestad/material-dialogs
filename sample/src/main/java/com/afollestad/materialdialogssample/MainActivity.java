@@ -23,6 +23,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -394,7 +395,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @OnClick(R.id.simpleList)
     public void showSimpleList() {
-        final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(this);
+        final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(new MaterialSimpleListAdapter.Callback() {
+            @Override
+            public void onMaterialListItemSelected(int index, MaterialSimpleListItem item) {
+                showToast(item.getContent().toString());
+            }
+        });
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content("username@gmail.com")
                 .icon(R.drawable.ic_account_circle)
@@ -413,27 +419,28 @@ public class MainActivity extends AppCompatActivity implements
 
         new MaterialDialog.Builder(this)
                 .title(R.string.set_backup)
-                .adapter(adapter, new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        MaterialSimpleListItem item = adapter.getItem(which);
-                        showToast(item.getContent().toString());
-                    }
-                })
+                .adapter(adapter, null)
                 .show();
     }
 
     @OnClick(R.id.customListItems)
     public void showCustomList() {
+        final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
+        adapter.setCallback(new ButtonItemAdapter.Callback() {
+            @Override
+            public void onItemClicked(int index) {
+                showToast("Item clicked: " + index);
+            }
+
+            @Override
+            public void onButtonClicked(int index) {
+                showToast("Button clicked: " + index);
+            }
+        });
+
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
-                .adapter(new ButtonItemAdapter(this, R.array.socialNetworks),
-                        new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                showToast("Clicked item " + which);
-                            }
-                        })
+                .adapter(adapter, null)
                 .show();
     }
 

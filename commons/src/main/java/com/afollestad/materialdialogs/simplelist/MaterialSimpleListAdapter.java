@@ -1,10 +1,10 @@
 package com.afollestad.materialdialogs.simplelist;
 
-import android.content.Context;
 import android.graphics.PorterDuff;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,18 +12,42 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * See the sample project to understand how this is used. Mimics the Simple List dialog style
  * displayed on Google's guidelines site: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialSimpleListAdapter extends ArrayAdapter<MaterialSimpleListItem> implements MDAdapter {
+public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
+
+    public interface Callback {
+        void onMaterialListItemSelected(int index, MaterialSimpleListItem item);
+    }
 
     private MaterialDialog dialog;
+    private List<MaterialSimpleListItem> mItems;
+    private Callback mCallback;
 
-    public MaterialSimpleListAdapter(Context context) {
-        super(context, R.layout.md_simplelist_item, android.R.id.title);
+    public MaterialSimpleListAdapter(Callback callback) {
+        mItems = new ArrayList<>(4);
+        mCallback = callback;
+    }
+
+    public void add(MaterialSimpleListItem item) {
+        mItems.add(item);
+        notifyItemInserted(mItems.size() - 1);
+    }
+
+    public void clear() {
+        mItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public MaterialSimpleListItem getItem(int index) {
+        return mItems.get(index);
     }
 
     @Override
@@ -32,43 +56,54 @@ public class MaterialSimpleListAdapter extends ArrayAdapter<MaterialSimpleListIt
     }
 
     @Override
-    public boolean hasStableIds() {
-        return true;
+    public SimpleListVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.md_simplelist_item, parent, false);
+        return new SimpleListVH(view, this);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(final int index, View convertView, ViewGroup parent) {
-        final View view = super.getView(index, convertView, parent);
+    public void onBindViewHolder(SimpleListVH holder, int position) {
         if (dialog != null) {
-            final MaterialSimpleListItem item = getItem(index);
-            ImageView ic = (ImageView) view.findViewById(android.R.id.icon);
+            final MaterialSimpleListItem item = mItems.get(position);
             if (item.getIcon() != null) {
-                ic.setImageDrawable(item.getIcon());
-                ic.setPadding(item.getIconPadding(), item.getIconPadding(),
+                holder.icon.setImageDrawable(item.getIcon());
+                holder.icon.setPadding(item.getIconPadding(), item.getIconPadding(),
                         item.getIconPadding(), item.getIconPadding());
-                ic.getBackground().setColorFilter(item.getBackgroundColor(),
+                holder.icon.getBackground().setColorFilter(item.getBackgroundColor(),
                         PorterDuff.Mode.SRC_ATOP);
             } else {
-                ic.setVisibility(View.GONE);
+                holder.icon.setVisibility(View.GONE);
             }
-            TextView tv = (TextView) view.findViewById(android.R.id.title);
-            tv.setTextColor(dialog.getBuilder().getItemColor());
-            tv.setText(item.getContent());
-            dialog.setTypeface(tv, dialog.getBuilder().getRegularFont());
+            holder.title.setTextColor(dialog.getBuilder().getItemColor());
+            holder.title.setText(item.getContent());
+            dialog.setTypeface(holder.title, dialog.getBuilder().getRegularFont());
         }
-        return view;
     }
 
-//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-//    private boolean isRTL() {
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
-//            return false;
-//        Configuration config = getContext().getResources().getConfiguration();
-//        return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-//    }
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    public static class SimpleListVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        final ImageView icon;
+        final TextView title;
+        final MaterialSimpleListAdapter adapter;
+
+        public SimpleListVH(View itemView, MaterialSimpleListAdapter adapter) {
+            super(itemView);
+            icon = (ImageView) itemView.findViewById(android.R.id.icon);
+            title = (TextView) itemView.findViewById(android.R.id.title);
+            this.adapter = adapter;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (adapter.mCallback != null)
+                adapter.mCallback.onMaterialListItemSelected(getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+        }
+    }
 }

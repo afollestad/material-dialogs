@@ -3,68 +3,83 @@ package com.afollestad.materialdialogssample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.ArrayRes;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Simple adapter example for custom items in the dialog
  */
-class ButtonItemAdapter extends BaseAdapter implements View.OnClickListener {
+class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
-    private Toast mToast;
-    private final Context mContext;
-    private final CharSequence[] mItems;
+    public interface Callback {
+        void onItemClicked(int index);
 
-    public ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
-        this(context, context.getResources().getTextArray(arrayResId));
+        void onButtonClicked(int index);
     }
 
-    private ButtonItemAdapter(Context context, CharSequence[] items) {
-        this.mContext = context;
+    private final CharSequence[] mItems;
+    private Callback mCallback;
+
+    public ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
+        this(context.getResources().getTextArray(arrayResId));
+    }
+
+    private ButtonItemAdapter(CharSequence[] items) {
         this.mItems = items;
     }
 
+    public void setCallback(Callback mCallback) {
+        this.mCallback = mCallback;
+    }
+
     @Override
-    public int getCount() {
+    public ButtonVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.dialog_customlistitem, parent, false);
+        return new ButtonVH(view, this);
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onBindViewHolder(ButtonVH holder, int position) {
+        holder.title.setText(mItems[position] + " (" + position + ")");
+        holder.button.setTag(position);
+    }
+
+    @Override
+    public int getItemCount() {
         return mItems.length;
     }
 
-    @Override
-    public CharSequence getItem(int position) {
-        return mItems[position];
-    }
+    public static class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+        final TextView title;
+        final Button button;
+        final ButtonItemAdapter adapter;
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
+        public ButtonVH(View itemView, ButtonItemAdapter adapter) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.md_title);
+            button = (Button) itemView.findViewById(R.id.md_button);
 
-    @SuppressLint("ViewHolder")
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = View.inflate(mContext, R.layout.dialog_customlistitem, null);
-        ((TextView) convertView.findViewById(R.id.md_title)).setText(mItems[position] + " (" + position + ")");
-        Button button = (Button) convertView.findViewById(R.id.md_button);
-        button.setTag(position);
-        button.setOnClickListener(this);
-        return convertView;
-    }
+            this.adapter = adapter;
+            itemView.setOnClickListener(this);
+            button.setOnClickListener(this);
+        }
 
-    @Override
-    public void onClick(View v) {
-        Integer index = (Integer) v.getTag();
-        if (mToast != null) mToast.cancel();
-        mToast = Toast.makeText(mContext, "Clicked button " + index, Toast.LENGTH_SHORT);
-        mToast.show();
+        @Override
+        public void onClick(View view) {
+            if (adapter.mCallback == null)
+                return;
+            if (view instanceof Button) {
+                adapter.mCallback.onButtonClicked(getAdapterPosition());
+            } else {
+                adapter.mCallback.onItemClicked(getAdapterPosition());
+            }
+        }
     }
 }

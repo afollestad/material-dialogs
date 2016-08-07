@@ -8,6 +8,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.annotation.UiThread;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -128,7 +128,7 @@ class DialogInit {
         dialog.icon = (ImageView) dialog.view.findViewById(R.id.md_icon);
         dialog.titleFrame = dialog.view.findViewById(R.id.md_titleFrame);
         dialog.content = (TextView) dialog.view.findViewById(R.id.md_content);
-        dialog.listView = (ListView) dialog.view.findViewById(R.id.md_contentListView);
+        dialog.recyclerView = (RecyclerView) dialog.view.findViewById(R.id.md_contentRecyclerView);
 
         // Button views initially used by checkIfStackingNeeded()
         dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultPositive);
@@ -268,11 +268,7 @@ class DialogInit {
         // Setup list dialog stuff
         if (builder.listCallbackMultiChoice != null)
             dialog.selectedIndicesList = new ArrayList<>();
-        if (dialog.listView != null && (builder.items != null && builder.items.length > 0 || builder.adapter != null)) {
-            dialog.listView.setSelector(dialog.getListSelector());
-
-            // No custom adapter specified, setup the list with a MaterialDialogAdapter.
-            // Which supports regular lists and single/multi choice dialogs.
+        if (dialog.recyclerView != null) {
             if (builder.adapter == null) {
                 // Determine list type
                 if (builder.listCallbackSingleChoice != null) {
@@ -286,7 +282,7 @@ class DialogInit {
                 } else {
                     dialog.listType = MaterialDialog.ListType.REGULAR;
                 }
-                builder.adapter = new DefaultAdapter(dialog,
+                builder.adapter = new DefaultRvAdapter(dialog,
                         MaterialDialog.ListType.getLayoutForType(dialog.listType));
             } else if (builder.adapter instanceof MDAdapter) {
                 // Notify simple list adapter of the dialog it belongs to

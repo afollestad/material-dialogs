@@ -36,13 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ListView
-                android:id="@+id/md_contentListView"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/md_contentRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarStyle="outsideOverlay"
-                android:divider="@null"
-                android:dividerHeight="0dp"
+                android:scrollbars="vertical"
                 android:clipToPadding="false"
                 android:paddingTop="@dimen/md_content_padding_top"
                 android:paddingBottom="@dimen/md_content_padding_bottom" />
