@@ -100,7 +100,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.0'
 }
 ```
 
@@ -112,7 +112,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.8.6.2'
+    compile 'com.afollestad.material-dialogs:commons:0.9.0.0'
 }
 ```
 
@@ -490,18 +490,19 @@ You can also pass a literal integer array (`int[]`) in place of an array resourc
 # Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
-exactly how you want your list to work. **Note that Material Dialogs only
+exactly how you want your list to work.
 
 ```java
 new MaterialDialog.Builder(this)
         .title(R.string.socialNetworks)
+         // second parameter is an optional layout manager. Must be a LinearLayoutManager or GridLayoutManager.
         .adapter(new ButtonItemAdapter(this, R.array.socialNetworks), null)
         .show();
 ```
 
 **Note** that with newer releases, Material Dialogs no longer supports `ListView` and `ListAdapter`.
-It's about time that everyone uses `RecyclerView`. *Your custom adapters will have to handle item click
-events on their own; this library's classes have some good examples of how that is done correctly.*
+It's about time that everyone uses `RecyclerView`. **Your custom adapters will have to handle item click
+events on their own; this library's classes and sample project have some good examples of how that is done correctly.**
 
 If you need access to the `RecyclerView`, you can use the `MaterialDialog` instance:
 

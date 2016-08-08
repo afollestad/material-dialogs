@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements
     @OnClick(R.id.basicIcon)
     public void showBasicIcon() {
         new MaterialDialog.Builder(this)
-                .iconRes(R.drawable.ic_launcher)
+                .iconRes(R.mipmap.ic_launcher)
                 .limitIconToDefaultSize() // limits the displayed icon size to 48dp
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements
     @OnClick(R.id.basicCheckPrompt)
     public void showBasicCheckPrompt() {
         new MaterialDialog.Builder(this)
-                .iconRes(R.drawable.ic_launcher)
+                .iconRes(R.mipmap.ic_launcher)
                 .limitIconToDefaultSize()
                 .title(Html.fromHtml(getString(R.string.permissionSample, getString(R.string.app_name))))
                 .positiveText(R.string.allow)
@@ -507,10 +507,10 @@ public class MainActivity extends AppCompatActivity implements
 
         int widgetColor = ThemeSingleton.get().widgetColor;
         MDTintHelper.setTint(checkbox,
-                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_blue) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
 
         MDTintHelper.setTint(passwordInput,
-                widgetColor == 0 ? ContextCompat.getColor(this, R.color.material_blue) : widgetColor);
+                widgetColor == 0 ? ContextCompat.getColor(this, R.color.accent) : widgetColor);
 
         dialog.show();
         positiveAction.setEnabled(false); // disabled by default
@@ -520,7 +520,7 @@ public class MainActivity extends AppCompatActivity implements
     public void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
-            accentColor = ContextCompat.getColor(this, R.color.material_blue);
+            accentColor = ContextCompat.getColor(this, R.color.accent);
         ChangelogDialog.create(false, accentColor)
                 .show(getSupportFragmentManager(), "changelog");
     }
@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity implements
                 .titleColorRes(R.color.material_red_400)
                 .contentColorRes(android.R.color.white)
                 .backgroundColorRes(R.color.material_blue_grey_800)
-                .dividerColorRes(R.color.material_blue)
+                .dividerColorRes(R.color.accent)
                 .btnSelector(R.drawable.md_btn_selector_custom, DialogAction.POSITIVE)
                 .positiveColor(Color.WHITE)
                 .negativeColorAttr(android.R.attr.textColorSecondaryInverse)
