@@ -525,6 +525,17 @@ public class MainActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), "changelog");
     }
 
+    @OnClick(R.id.customView_datePicker)
+    public void showCustomDatePicker() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.date_picker)
+                .customView(R.layout.dialog_datepicker, false)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+//                .stackingBehavior(StackingBehavior.ALWAYS)
+                .show();
+    }
+
     @OnClick(R.id.colorChooser_primary)
     public void showColorChooserPrimary() {
         new ColorChooserDialog.Builder(this, R.string.color_palette)

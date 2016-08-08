@@ -200,6 +200,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/customView_webView" />
 
+        <Button
+            android:id="@+id/customView_datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/customView_datePicker" />
+
         <!-- Color Chooser -->
 
         <TextView

@@ -53,7 +53,8 @@
     <string name="folder_chooser">Folder Chooser</string>
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
     <string name="changelog">Changelog</string>
-    <string name="customView_webView">Custom View No Scroll #1</string>
+    <string name="customView_webView">Custom View (No Scroll, WebView)</string>
+    <string name="customView_datePicker">Custom View (No Scroll, DatePicker)</string>
     <string name="color_chooser_primary">Color Chooser (Primary)</string>
     <string name="color_chooser_accent">Color Chooser (Accent)</string>
     <string name="ssid">SSID</string>
@@ -192,5 +193,6 @@
     <string name="deny">Deny</string>
     <string name="allow">Allow</string>
     <string name="permissionSample"><![CDATA[Allow <b>%1$s</b> to show you a sample of a checkbox prompt?]]></string>
+    <string name="date_picker">Date Picker</string>
 
 </resources>
