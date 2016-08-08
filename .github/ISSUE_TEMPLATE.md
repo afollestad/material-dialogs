@@ -4,8 +4,8 @@
 - [ ] I have read over the documentation (before asking questions on how to do something).
 
 ###### Include the following:
- - Material Dialogs version: `0.8.5.8`
- - Device OS version: `6.0.1`
+ - Material Dialogs version: `0.x.x.x`
+ - Device OS version: `7.0`
  - Device Manufacturer: `Huawei`
  - Device Name: `Nexus 6P`
 
