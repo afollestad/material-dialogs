@@ -17,13 +17,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -154,6 +154,24 @@ public class MainActivity extends AppCompatActivity implements
                 .content(R.string.useGoogleLocationServicesPrompt)
                 .positiveText(R.string.agree)
                 .negativeText(R.string.disagree)
+                .show();
+    }
+
+    @OnClick(R.id.basicCheckPrompt)
+    public void showBasicCheckPrompt() {
+        new MaterialDialog.Builder(this)
+                .iconRes(R.drawable.ic_launcher)
+                .limitIconToDefaultSize()
+                .title(Html.fromHtml(getString(R.string.permissionSample, getString(R.string.app_name))))
+                .positiveText(R.string.allow)
+                .negativeText(R.string.deny)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showToast("Prompt checked? " + dialog.isPromptCheckBoxChecked());
+                    }
+                })
+                .checkBoxPromptRes(R.string.dont_ask_again, false, null)
                 .show();
     }
 

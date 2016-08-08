@@ -37,7 +37,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -76,6 +75,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView content;
     protected EditText input;
     protected TextView inputMinMax;
+    protected CheckBox checkBoxPrompt;
 
     protected MDButton positiveButton;
     protected MDButton neutralButton;
@@ -276,6 +276,15 @@ public class MaterialDialog extends DialogBase implements
         return recyclerView;
     }
 
+    public boolean isPromptCheckBoxChecked() {
+        return checkBoxPrompt != null && checkBoxPrompt.isChecked();
+    }
+
+    public void setPromptCheckBoxChecked(boolean checked) {
+        if (checkBoxPrompt != null)
+            checkBoxPrompt.setChecked(checked);
+    }
+
     /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
         if (isStacked) {
             if (mBuilder.btnSelectorStacked != 0)
@@ -460,6 +469,9 @@ public class MaterialDialog extends DialogBase implements
         protected int inputMaxLength = -1;
         protected int inputRangeErrorColor = 0;
         protected int[] itemIds;
+        protected CharSequence checkBoxPrompt;
+        protected boolean checkBoxPromptInitiallyChecked;
+        protected CheckBox.OnCheckedChangeListener checkBoxPromptListener;
 
         protected String progressNumberFormat;
         protected NumberFormat progressPercentFormat;
@@ -1037,6 +1049,17 @@ public class MaterialDialog extends DialogBase implements
         public Builder btnStackedGravity(@NonNull GravityEnum gravity) {
             this.btnStackedGravity = gravity;
             return this;
+        }
+
+        public Builder checkBoxPrompt(@NonNull CharSequence prompt, boolean initiallyChecked, @Nullable CheckBox.OnCheckedChangeListener checkListener) {
+            this.checkBoxPrompt = prompt;
+            this.checkBoxPromptInitiallyChecked = initiallyChecked;
+            this.checkBoxPromptListener = checkListener;
+            return this;
+        }
+
+        public Builder checkBoxPromptRes(@StringRes int prompt, boolean initiallyChecked, @Nullable CheckBox.OnCheckedChangeListener checkListener) {
+            return checkBoxPrompt(context.getResources().getText(prompt), initiallyChecked, checkListener);
         }
 
         public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {

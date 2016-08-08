@@ -23,38 +23,39 @@
     1. [Stacking Behavior](https://github.com/afollestad/material-dialogs#stacking-behavior)
 8. [Neutral Action Button](https://github.com/afollestad/material-dialogs#neutral-action-button)
 9. [Callbacks](https://github.com/afollestad/material-dialogs#callbacks)
-10. [List Dialogs](https://github.com/afollestad/material-dialogs#list-dialogs)
-11. [Single Choice List Dialogs](https://github.com/afollestad/material-dialogs#single-choice-list-dialogs)
+10. [CheckBox Prompts](https://github.com/afollestad/material-dialogs#checkbox-prompts)
+11. [List Dialogs](https://github.com/afollestad/material-dialogs#list-dialogs)
+12. [Single Choice List Dialogs](https://github.com/afollestad/material-dialogs#single-choice-list-dialogs)
     1. [Coloring Radio Buttons](https://github.com/afollestad/material-dialogs#coloring-radio-buttons)
-12. [Multi Choice List Dialogs](https://github.com/afollestad/material-dialogs#multi-choice-list-dialogs)
+13. [Multi Choice List Dialogs](https://github.com/afollestad/material-dialogs#multi-choice-list-dialogs)
     1. [Coloring Check Boxes](https://github.com/afollestad/material-dialogs#coloring-check-boxes)
-13. [Assigning IDs to List Item Views](https://github.com/afollestad/material-dialogs#assigning-ids-to-list-item-views)
-13. [Custom List Dialogs](https://github.com/afollestad/material-dialogs#custom-list-dialogs)
-14. [Custom Views](https://github.com/afollestad/material-dialogs#custom-views)
+14. [Assigning IDs to List Item Views](https://github.com/afollestad/material-dialogs#assigning-ids-to-list-item-views)
+15. [Custom List Dialogs](https://github.com/afollestad/material-dialogs#custom-list-dialogs)
+16. [Custom Views](https://github.com/afollestad/material-dialogs#custom-views)
     1. [Later Access](https://github.com/afollestad/material-dialogs#later-access)
-15. [Typefaces](https://github.com/afollestad/material-dialogs#typefaces)
-16. [Getting and Setting Action Buttons](https://github.com/afollestad/material-dialogs#getting-and-setting-action-buttons)
-17. [Theming](https://github.com/afollestad/material-dialogs#theming)
+17. [Typefaces](https://github.com/afollestad/material-dialogs#typefaces)
+18. [Getting and Setting Action Buttons](https://github.com/afollestad/material-dialogs#getting-and-setting-action-buttons)
+19. [Theming](https://github.com/afollestad/material-dialogs#theming)
     1. [Basics](https://github.com/afollestad/material-dialogs#basics)
     2. [Colors](https://github.com/afollestad/material-dialogs#colors)
     3. [Selectors](https://github.com/afollestad/material-dialogs#selectors)
     4. [Gravity](https://github.com/afollestad/material-dialogs#gravity)
     5. [Material Palette](https://github.com/afollestad/material-dialogs#material-palette)
-18. [Global Theming](https://github.com/afollestad/material-dialogs#global-theming)
-19. [Show, Cancel, and Dismiss Callbacks](https://github.com/afollestad/material-dialogs#show-cancel-and-dismiss-callbacks)
-20. [Input Dialogs](https://github.com/afollestad/material-dialogs#input-dialogs)
+20. [Global Theming](https://github.com/afollestad/material-dialogs#global-theming)
+21. [Show, Cancel, and Dismiss Callbacks](https://github.com/afollestad/material-dialogs#show-cancel-and-dismiss-callbacks)
+22. [Input Dialogs](https://github.com/afollestad/material-dialogs#input-dialogs)
     1. [Coloring the EditText](https://github.com/afollestad/material-dialogs#coloring-the-edittext)
     2. [Limiting Input Length](https://github.com/afollestad/material-dialogs#limiting-input-length)
     3. [Custom Invalidation](https://github.com/afollestad/material-dialogs#custom-invalidation)
-21. [Progress Dialogs](https://github.com/afollestad/material-dialogs#progress-dialogs)
+23. [Progress Dialogs](https://github.com/afollestad/material-dialogs#progress-dialogs)
     1. [Proguard](https://github.com/afollestad/material-dialogs#proguard)
     2. [Indeterminate Progress Dialogs](https://github.com/afollestad/material-dialogs#indeterminate-progress-dialogs)
     3. [Determinate (Seek Bar) Progress Dialogs](https://github.com/afollestad/material-dialogs#determinate-seek-bar-progress-dialogs)
     4. [Make an Indeterminate Dialog Horizontal](https://github.com/afollestad/material-dialogs#make-an-indeterminate-dialog-horizontal)
     5. [Coloring the Progress Bar](https://github.com/afollestad/material-dialogs#coloring-the-progress-bar)
     6. [Custom Number and Progress Formats](https://github.com/afollestad/material-dialogs#custom-number-and-progress-formats)
-22. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
-23. [Misc](https://github.com/afollestad/material-dialogs#misc)
+24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
+25. [Misc](https://github.com/afollestad/material-dialogs#misc)
 
 # Table of Contents (Commons)
 
@@ -320,6 +321,29 @@ If you are listening for all three action buttons, you could just use `onAny()`.
  parameter will tell you which button was pressed.
 
 If `autoDismiss` is turned off, then you must manually dismiss the dialog in these callbacks. Auto dismiss is on by default.
+
+---
+
+# CheckBox Prompts
+
+Checkbox prompts allow you to display a UI similar to what Android uses to ask for a permission on API 23+.
+
+```java
+new MaterialDialog.Builder(this)
+    .iconRes(R.drawable.ic_launcher)
+    .limitIconToDefaultSize()
+    .title(R.string.example_title)
+    .positiveText(R.string.allow)
+    .negativeText(R.string.deny)
+    .onAny(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            showToast("Prompt checked? " + dialog.isPromptCheckBoxChecked());
+        }
+    })
+    .checkBoxPromptRes(R.string.dont_ask_again, false, null)
+    .show();
+```
 
 ---
 

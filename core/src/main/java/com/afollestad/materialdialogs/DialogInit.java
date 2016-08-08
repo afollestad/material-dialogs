@@ -14,6 +14,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -63,6 +64,8 @@ class DialogInit {
             return R.layout.md_dialog_progress_indeterminate;
         } else if (builder.inputCallback != null) {
             return R.layout.md_dialog_input;
+        } else if (builder.checkBoxPrompt != null) {
+            return R.layout.md_dialog_basic_check;
         } else {
             return R.layout.md_dialog_basic;
         }
@@ -99,26 +102,10 @@ class DialogInit {
         if (!builder.titleColorSet) {
             final int titleColorFallback = DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
             builder.titleColor = DialogUtils.resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
-//            if (builder.titleColor == titleColorFallback) {
-//                // Only check for light/dark if color wasn't set to md_title_color
-//                if (DialogUtils.isColorDark(builder.titleColor)) {
-//                    if (builder.theme == Theme.DARK)
-//                        builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
-//                } else if (builder.theme == Theme.LIGHT)
-//                    builder.titleColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorPrimaryInverse);
-//            }
         }
         if (!builder.contentColorSet) {
             final int contentColorFallback = DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
             builder.contentColor = DialogUtils.resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
-//            if (builder.contentColor == contentColorFallback) {
-//                // Only check for light/dark if color wasn't set to md_content_color
-//                if (DialogUtils.isColorDark(builder.contentColor)) {
-//                    if (builder.theme == Theme.DARK)
-//                        builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
-//                } else if (builder.theme == Theme.LIGHT)
-//                    builder.contentColor = DialogUtils.resolveColor(builder.context, android.R.attr.textColorSecondaryInverse);
-//            }
         }
         if (!builder.itemColorSet)
             builder.itemColor = DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
@@ -129,6 +116,7 @@ class DialogInit {
         dialog.titleFrame = dialog.view.findViewById(R.id.md_titleFrame);
         dialog.content = (TextView) dialog.view.findViewById(R.id.md_content);
         dialog.recyclerView = (RecyclerView) dialog.view.findViewById(R.id.md_contentRecyclerView);
+        dialog.checkBoxPrompt = (CheckBox) dialog.view.findViewById(R.id.md_promptCheckbox);
 
         // Button views initially used by checkIfStackingNeeded()
         dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultPositive);
@@ -217,6 +205,16 @@ class DialogInit {
             } else {
                 dialog.content.setVisibility(View.GONE);
             }
+        }
+
+        // Setup prompt checkbox
+        if (dialog.checkBoxPrompt != null) {
+            dialog.checkBoxPrompt.setText(builder.checkBoxPrompt);
+            dialog.checkBoxPrompt.setChecked(builder.checkBoxPromptInitiallyChecked);
+            dialog.checkBoxPrompt.setOnCheckedChangeListener(builder.checkBoxPromptListener);
+            dialog.setTypeface(dialog.checkBoxPrompt, builder.regularFont);
+            dialog.checkBoxPrompt.setTextColor(builder.contentColor);
+            MDTintHelper.setTint(dialog.checkBoxPrompt, builder.widgetColor);
         }
 
         // Setup action buttons
