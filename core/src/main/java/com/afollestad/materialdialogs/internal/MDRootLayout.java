@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -425,14 +426,13 @@ public class MDRootLayout extends ViewGroup {
                 }
             });
         } else if (view instanceof RecyclerView) {
-            /* Scroll offset detection for RecyclerView isn't reliable b/c the OnScrollChangedListener
-            isn't always called on scroll. We can't set a OnScrollListener either because that will
-            override the user's OnScrollListener if they set one.*/
             boolean canScroll = canRecyclerViewScroll((RecyclerView) view);
             if (setForTop)
                 mDrawTopDivider = canScroll;
             if (setForBottom)
                 mDrawBottomDivider = canScroll;
+            if (canScroll)
+                addScrollListener((ViewGroup) view, setForTop, setForBottom);
         } else if (view instanceof ViewGroup) {
             View topView = getTopView((ViewGroup) view);
             setUpDividersVisibility(topView, setForTop, setForBottom);
@@ -446,32 +446,52 @@ public class MDRootLayout extends ViewGroup {
     private void addScrollListener(final ViewGroup vg, final boolean setForTop, final boolean setForBottom) {
         if ((!setForBottom && mTopOnScrollChangedListener == null
                 || (setForBottom && mBottomOnScrollChangedListener == null))) {
-            ViewTreeObserver.OnScrollChangedListener onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-                @Override
-                public void onScrollChanged() {
-                    boolean hasButtons = false;
-                    for (MDButton button : mButtons) {
-                        if (button != null && button.getVisibility() != View.GONE) {
-                            hasButtons = true;
-                            break;
+            if (vg instanceof RecyclerView) {
+                RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        boolean hasButtons = false;
+                        for (MDButton button : mButtons) {
+                            if (button != null && button.getVisibility() != View.GONE) {
+                                hasButtons = true;
+                                break;
+                            }
                         }
-                    }
-                    if (vg instanceof WebView) {
-                        invalidateDividersForWebView((WebView) vg, setForTop, setForBottom, hasButtons);
-                    } else {
                         invalidateDividersForScrollingView(vg, setForTop, setForBottom, hasButtons);
+                        invalidate();
                     }
-                    invalidate();
-                }
-            };
-            if (!setForBottom) {
-                mTopOnScrollChangedListener = onScrollChangedListener;
-                vg.getViewTreeObserver().addOnScrollChangedListener(mTopOnScrollChangedListener);
+                };
+                ((RecyclerView) vg).addOnScrollListener(scrollListener);
+                scrollListener.onScrolled((RecyclerView) vg, 0, 0);
             } else {
-                mBottomOnScrollChangedListener = onScrollChangedListener;
-                vg.getViewTreeObserver().addOnScrollChangedListener(mBottomOnScrollChangedListener);
+                ViewTreeObserver.OnScrollChangedListener onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        boolean hasButtons = false;
+                        for (MDButton button : mButtons) {
+                            if (button != null && button.getVisibility() != View.GONE) {
+                                hasButtons = true;
+                                break;
+                            }
+                        }
+                        if (vg instanceof WebView) {
+                            invalidateDividersForWebView((WebView) vg, setForTop, setForBottom, hasButtons);
+                        } else {
+                            invalidateDividersForScrollingView(vg, setForTop, setForBottom, hasButtons);
+                        }
+                        invalidate();
+                    }
+                };
+                if (!setForBottom) {
+                    mTopOnScrollChangedListener = onScrollChangedListener;
+                    vg.getViewTreeObserver().addOnScrollChangedListener(mTopOnScrollChangedListener);
+                } else {
+                    mBottomOnScrollChangedListener = onScrollChangedListener;
+                    vg.getViewTreeObserver().addOnScrollChangedListener(mBottomOnScrollChangedListener);
+                }
+                onScrollChangedListener.onScrollChanged();
             }
-            onScrollChangedListener.onScrollChanged();
         }
     }
 
@@ -503,6 +523,7 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static boolean canRecyclerViewScroll(RecyclerView view) {
         if (view == null || view.getAdapter() == null || view.getLayoutManager() == null)
             return false;
@@ -513,8 +534,11 @@ public class MDRootLayout extends ViewGroup {
         if (lm instanceof LinearLayoutManager) {
             LinearLayoutManager llm = (LinearLayoutManager) lm;
             lastVisible = llm.findLastVisibleItemPosition();
+        } else if (lm instanceof GridLayoutManager) {
+            GridLayoutManager glm = (GridLayoutManager) lm;
+            lastVisible = glm.findLastVisibleItemPosition();
         } else {
-            throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager. Please report any new layout managers.");
+            throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager/GridLayoutManager. Please report any new layout managers.");
         }
 
         if (lastVisible == -1)
