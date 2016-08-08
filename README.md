@@ -1237,7 +1237,6 @@ The Builder is used like this:
 ```java
 // Pass AppCompatActivity which implements FileCallback
 new FileChooserDialog.Builder(this)
-    .chooseButton(R.string.md_choose_label)  // changes label of the choose button
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .mimeType("image/*") // Optional MIME type filter
     .tag("optional-identifier")
@@ -1287,6 +1286,19 @@ public class MyActivity implements FolderChooserDialog.FolderCallback {
         final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
     }
 }
+```
+
+---
+
+Optionally, you can allow users to have the ability to create new folders from this dialog:
+
+```java
+new FolderChooserDialog.Builder(this)
+    .chooseButton(R.string.md_choose_label)  // changes label of the choose button
+    .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
+    .tag("optional-identifier")
+    .allowNewFolder(true, R.string.new_folder)  // pass 0 in the second parameter to use default button label
+    .show();
 ```
 
 ---

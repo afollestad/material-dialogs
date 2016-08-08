@@ -661,13 +661,14 @@ public class MainActivity extends AppCompatActivity implements
     @OnClick(R.id.folder_chooser)
     public void showFolderChooser() {
         chooserDialog = R.id.folder_chooser;
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
             return;
         }
         new FolderChooserDialog.Builder(MainActivity.this)
                 .chooseButton(R.string.md_choose_label)
+                .allowNewFolder(true, 0)
                 .show();
     }
 
