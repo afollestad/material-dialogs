@@ -246,6 +246,7 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.selectedIndex = position;
                     radio.setChecked(true);
                     mBuilder.adapter.notifyItemChanged(oldSelected);
+                    mBuilder.adapter.notifyItemChanged(position);
                 }
             }
 
