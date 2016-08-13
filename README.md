@@ -17,7 +17,6 @@
 3. [What's New](https://github.com/afollestad/material-dialogs#whats-new)
 4. [Basic Dialog](https://github.com/afollestad/material-dialogs#basic-dialog)
 5. [Dismissing Dialogs](https://github.com/afollestad/material-dialogs#dismissing-dialogs)
-5. [Migration from AlertDialogs](https://github.com/afollestad/material-dialogs#migration-from-alertdialogs)
 6. [Displaying an Icon](https://github.com/afollestad/material-dialogs#displaying-an-icon)
 7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#s1tacked-action-buttons)
     1. [Stacking Behavior](https://github.com/afollestad/material-dialogs#stacking-behavior)
@@ -94,13 +93,13 @@ jCenter is the default Maven repository used by Android Studio.
 
 ### Core
 
-The *core* module contains all the major classes of this library, including `MaterialDialog` and `AlertDialogWrapper`.
+The *core* module contains all the major classes of this library, including `MaterialDialog`.
 You can create basic, list, single/multi choice, progress, input, etc. dialogs with core.
 
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.9.0.0'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
 }
 ```
 
@@ -112,7 +111,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.9.0.0'
+    compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
 }
 ```
 
@@ -132,9 +131,7 @@ If you Watch this repository, GitHub will send you an email every time I publish
 
 # Basic Dialog
 
-First of all, note that `MaterialDialog` extends `DialogBase`, which extends `AlertDialog`. While
-a very small number of the stock methods are purposely deprecated and don't work, you have access
-to methods such as `dismiss()`, `setTitle()`, `setIcon()`, `setCancelable()`, etc. Alternatives are discussed below.
+First of all, note that `MaterialDialog` extends `DialogBase`, which extends `android.app.Dialog`.
 
 Here's a basic example that mimics the dialog you see on Google's Material design guidelines
 (here: http://www.google.com/design/spec/components/dialogs.html#dialogs-usage). Note that you can
@@ -150,8 +147,9 @@ new MaterialDialog.Builder(this)
         .show();
 ```
 
-On Lollipop (API 21+) or if you use AppCompat, the Material dialog will automatically match the `positiveColor`
-(which is used on the positive action button) to the `colorAccent` attribute of your styles.xml theme.
+**Your Activities need to inherit the AppCompat themes in order to work correctly with this library.**
+The Material dialog will automatically match the `positiveColor` (which is used on the positive action
+button) to the `colorAccent` attribute of your styles.xml theme.
 
 If the content is long enough, it will become scrollable and a divider will be displayed above the action buttons.
 
@@ -197,26 +195,6 @@ dialog.dismiss();
 
 There are other various places where the `MaterialDialog` instance is given, such as in some callbacks
  that are discussed in future sections below.
-
----
-
-# Migration from AlertDialogs
-
-If you're migrating old dialogs you could use ```AlertDialogWrapper```. You need change imports and replace ```AlertDialog.Builder``` with ```AlertDialogWrapper.Builder```:
-
-```java
-new AlertDialogWrapper.Builder(this)
-        .setTitle(R.string.title)
-        .setMessage(R.string.message)
-        .setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).show();
-```
-
-But it's highly recommended to use original ```MaterialDialog``` API for new usages.
 
 ---
 
