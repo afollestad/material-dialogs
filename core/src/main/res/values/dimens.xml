@@ -38,6 +38,8 @@
          This plus md_content_padding_top should equals md_dialog_frame_margin -->
     <dimen name="md_notitle_vertical_padding">16dp</dimen>
 
+    <dimen name="md_notitle_vertical_padding_more">20dp</dimen>
+
     <dimen name="md_content_padding_top">8dp</dimen>
     <dimen name="md_simplelistitem_padding_top">8dp</dimen>
 

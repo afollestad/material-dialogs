@@ -55,6 +55,8 @@ class DialogInit {
         if (builder.customView != null) {
             return R.layout.md_dialog_custom;
         } else if (builder.items != null && builder.items.length > 0 || builder.adapter != null) {
+            if (builder.checkBoxPrompt != null)
+                return R.layout.md_dialog_list_check;
             return R.layout.md_dialog_list;
         } else if (builder.progress > -2) {
             return R.layout.md_dialog_progress;
@@ -63,6 +65,8 @@ class DialogInit {
                 return R.layout.md_dialog_progress_indeterminate_horizontal;
             return R.layout.md_dialog_progress_indeterminate;
         } else if (builder.inputCallback != null) {
+            if (builder.checkBoxPrompt != null)
+                return R.layout.md_dialog_input_check;
             return R.layout.md_dialog_input;
         } else if (builder.checkBoxPrompt != null) {
             return R.layout.md_dialog_basic_check;

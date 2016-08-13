@@ -1,0 +1,63 @@
+<com.afollestad.materialdialogs.internal.MDRootLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include layout="@layout/md_stub_titleframe_lesspadding" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/md_contentScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+            <TextView
+                android:id="@+id/md_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/md_dialog_frame_margin"
+                android:paddingTop="@dimen/md_content_padding_top"
+                android:paddingRight="@dimen/md_dialog_frame_margin"
+                android:paddingBottom="@dimen/md_content_padding_bottom"
+                android:textSize="@dimen/md_content_textsize"
+                tools:text="Content" />
+
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/md_contentListViewFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/md_contentRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/md_content_padding_top"
+                android:paddingBottom="@dimen/md_content_padding_bottom" />
+
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/md_promptCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/md_notitle_vertical_padding"
+            android:layout_marginRight="@dimen/md_notitle_vertical_padding"
+            tools:text="Don't ask again" />
+
+    </LinearLayout>
+
+    <include layout="@layout/md_stub_actionbuttons" />
+
+</com.afollestad.materialdialogs.internal.MDRootLayout>

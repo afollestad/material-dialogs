@@ -271,6 +271,22 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.list_checkPrompt)
+    public void showListCheckPrompt() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                    }
+                })
+                .checkBoxPromptRes(R.string.example_prompt, true, null)
+                .negativeText(android.R.string.cancel)
+                .show();
+    }
+
     @OnClick(R.id.singleChoice)
     public void showSingleChoice() {
         new MaterialDialog.Builder(this)
@@ -728,6 +744,26 @@ public class MainActivity extends AppCompatActivity implements
                         }
                     }
                 }).show();
+    }
+
+    @OnClick(R.id.input_checkPrompt)
+    public void showInputDialogCheckPrompt() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.input)
+                .content(R.string.input_content)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .inputRange(2, 16)
+                .positiveText(R.string.submit)
+                .input(R.string.input_hint, R.string.input_hint, false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        showToast("Hello, " + input.toString() + "!");
+                    }
+                })
+                .checkBoxPromptRes(R.string.example_prompt, true, null)
+                .show();
     }
 
     @OnClick(R.id.progress1)
