@@ -1387,6 +1387,8 @@ public class MaterialDialog extends DialogBase implements
             } else {
                 this.inputRangeErrorColor = errorColor;
             }
+            if (this.inputMinLength > 0)
+                this.inputAllowEmpty = false;
             return this;
         }
 
