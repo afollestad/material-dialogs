@@ -133,7 +133,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void topIndex(int value) {
-        if (topIndex() != value && value > -1)
+        if (value > -1)
             findSubIndexForColor(value, mColorsTop[value]);
         getArguments().putInt("top_index", value);
     }
