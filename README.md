@@ -306,6 +306,8 @@ If `autoDismiss` is turned off, then you must manually dismiss the dialog in the
 
 Checkbox prompts allow you to display a UI similar to what Android uses to ask for a permission on API 23+.
 
+**Note:** you can use checkbox prompts with list dialogs and input dialogs, too.
+
 ```java
 new MaterialDialog.Builder(this)
     .iconRes(R.drawable.ic_launcher)
