@@ -343,6 +343,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                         if (isInSub()) {
                             dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
                             isInSub(false);
+                            subIndex(-1); // Do this to avoid ArrayIndexOutOfBoundsException
                             invalidate();
                         } else {
                             dialog.cancel();
