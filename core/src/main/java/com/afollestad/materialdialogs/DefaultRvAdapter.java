@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -25,7 +26,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> {
 
     public interface InternalListCallback {
-        void onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text);
+        boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
     }
 
     private final MaterialDialog dialog;
@@ -77,7 +78,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
             }
         }
 
-        holder.title.setText(dialog.mBuilder.items[index]);
+        holder.title.setText(dialog.mBuilder.items.get(index));
         holder.title.setTextColor(dialog.mBuilder.itemColor);
         dialog.setTypeface(holder.title, dialog.mBuilder.regularFont);
 
@@ -103,7 +104,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
     @Override
     public int getItemCount() {
-        return dialog.mBuilder.items != null ? dialog.mBuilder.items.length : 0;
+        return dialog.mBuilder.items != null ? dialog.mBuilder.items.size() : 0;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -147,7 +148,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
-    public static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         final CompoundButton control;
         final TextView title;
@@ -159,16 +160,29 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
             title = (TextView) itemView.findViewById(R.id.md_title);
             this.adapter = adapter;
             itemView.setOnClickListener(this);
+            if (adapter.dialog.mBuilder.listLongCallback != null)
+                itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (adapter.callback != null) {
                 CharSequence text = null;
-                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.length)
-                    text = adapter.dialog.mBuilder.items[getAdapterPosition()];
-                adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text);
+                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.size())
+                    text = adapter.dialog.mBuilder.items.get(getAdapterPosition());
+                adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, false);
             }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (adapter.callback != null) {
+                CharSequence text = null;
+                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.size())
+                    text = adapter.dialog.mBuilder.items.get(getAdapterPosition());
+                return adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
+            }
+            return false;
         }
     }
 }

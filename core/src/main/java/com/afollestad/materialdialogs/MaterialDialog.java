@@ -168,7 +168,7 @@ public class MaterialDialog extends DialogBase implements
     protected final void invalidateList() {
         if (recyclerView == null)
             return;
-        else if ((mBuilder.items == null || mBuilder.items.length == 0) && mBuilder.adapter == null)
+        else if ((mBuilder.items == null || mBuilder.items.size() == 0) && mBuilder.adapter == null)
             return;
         if (mBuilder.layoutManager == null)
             mBuilder.layoutManager = new LinearLayoutManager(getContext());
@@ -180,22 +180,25 @@ public class MaterialDialog extends DialogBase implements
     }
 
     @Override
-    public void onItemSelected(MaterialDialog dialog, View view, int position, CharSequence text) {
-        if (!view.isEnabled()) return;
+    public boolean onItemSelected(MaterialDialog dialog, View view, int position, CharSequence text, boolean longPress) {
+        if (!view.isEnabled()) return false;
         if (listType == null || listType == ListType.REGULAR) {
             // Default adapter, non choice mode
             if (mBuilder.autoDismiss) {
                 // If auto dismiss is enabled, dismiss the dialog when a list item is selected
                 dismiss();
             }
-            if (mBuilder.listCallback != null) {
-                mBuilder.listCallback.onSelection(this, view, position, mBuilder.items[position]);
+            if (!longPress && mBuilder.listCallback != null) {
+                mBuilder.listCallback.onSelection(this, view, position, mBuilder.items.get(position));
+            }
+            if (longPress && mBuilder.listLongCallback != null) {
+                return mBuilder.listLongCallback.onLongSelection(this, view, position, mBuilder.items.get(position));
             }
         } else {
             // Default adapter, choice mode
             if (listType == ListType.MULTI) {
                 final CheckBox cb = (CheckBox) view.findViewById(R.id.md_control);
-                if (!cb.isEnabled()) return;
+                if (!cb.isEnabled()) return false;
                 final boolean shouldBeChecked = !selectedIndicesList.contains(position);
                 if (shouldBeChecked) {
                     // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
@@ -221,7 +224,7 @@ public class MaterialDialog extends DialogBase implements
                 }
             } else if (listType == ListType.SINGLE) {
                 final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
-                if (!radio.isEnabled()) return;
+                if (!radio.isEnabled()) return false;
                 boolean allowSelection = true;
                 final int oldSelected = mBuilder.selectedIndex;
 
@@ -249,8 +252,8 @@ public class MaterialDialog extends DialogBase implements
                     mBuilder.adapter.notifyItemChanged(position);
                 }
             }
-
         }
+        return true;
     }
 
     public static class NotImplementedException extends Error {
@@ -332,19 +335,19 @@ public class MaterialDialog extends DialogBase implements
     private boolean sendSingleChoiceCallback(View v) {
         if (mBuilder.listCallbackSingleChoice == null) return false;
         CharSequence text = null;
-        if (mBuilder.selectedIndex >= 0 && mBuilder.selectedIndex < mBuilder.items.length) {
-            text = mBuilder.items[mBuilder.selectedIndex];
+        if (mBuilder.selectedIndex >= 0 && mBuilder.selectedIndex < mBuilder.items.size()) {
+            text = mBuilder.items.get(mBuilder.selectedIndex);
         }
         return mBuilder.listCallbackSingleChoice.onSelection(this, v, mBuilder.selectedIndex, text);
     }
 
     private boolean sendMultichoiceCallback() {
         if (mBuilder.listCallbackMultiChoice == null) return false;
-        Collections.sort(selectedIndicesList); // make sure the indicies are in order
+        Collections.sort(selectedIndicesList); // make sure the indices are in order
         List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
-            if (i < 0 || i > mBuilder.items.length - 1) continue;
-            selectedTitles.add(mBuilder.items[i]);
+            if (i < 0 || i > mBuilder.items.size() - 1) continue;
+            selectedTitles.add(mBuilder.items.get(i));
         }
         return mBuilder.listCallbackMultiChoice.onSelection(this,
                 selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
@@ -412,7 +415,7 @@ public class MaterialDialog extends DialogBase implements
         protected int titleColor = -1;
         protected int contentColor = -1;
         protected CharSequence content;
-        protected CharSequence[] items;
+        protected ArrayList<CharSequence> items;
         protected CharSequence positiveText;
         protected CharSequence neutralText;
         protected CharSequence negativeText;
@@ -428,6 +431,7 @@ public class MaterialDialog extends DialogBase implements
         protected SingleButtonCallback onNeutralCallback;
         protected SingleButtonCallback onAnyCallback;
         protected ListCallback listCallback;
+        protected ListLongCallback listLongCallback;
         protected ListCallbackSingleChoice listCallbackSingleChoice;
         protected ListCallbackMultiChoice listCallbackMultiChoice;
         protected boolean alwaysCallMultiChoiceCallback = false;
@@ -771,12 +775,20 @@ public class MaterialDialog extends DialogBase implements
         public Builder items(@NonNull CharSequence... items) {
             if (this.customView != null)
                 throw new IllegalStateException("You cannot set items() when you're using a custom view.");
-            this.items = items;
+            this.items = new ArrayList<>();
+            Collections.addAll(this.items, items);
             return this;
         }
 
         public Builder itemsCallback(@NonNull ListCallback callback) {
             this.listCallback = callback;
+            this.listCallbackSingleChoice = null;
+            this.listCallbackMultiChoice = null;
+            return this;
+        }
+
+        public Builder itemsLongCallback(@NonNull ListLongCallback callback) {
+            this.listLongCallback = callback;
             this.listCallbackSingleChoice = null;
             this.listCallbackMultiChoice = null;
             return this;
@@ -1616,14 +1628,39 @@ public class MaterialDialog extends DialogBase implements
         setContent(message);
     }
 
+    @Nullable
+    public final ArrayList<CharSequence> getItems() {
+        return mBuilder.items;
+    }
+
     @UiThread
     public final void setItems(CharSequence... items) {
         if (mBuilder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
-        mBuilder.items = items;
+        if (items != null) {
+            mBuilder.items = new ArrayList<>(items.length);
+            Collections.addAll(mBuilder.items, items);
+        } else {
+            mBuilder.items = null;
+        }
         if (!(mBuilder.adapter instanceof DefaultRvAdapter)) {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
+        notifyItemsChanged();
+    }
+
+    @UiThread
+    public final void notifyItemInserted(@IntRange(from = 0, to = Integer.MAX_VALUE) int index) {
+        mBuilder.adapter.notifyItemInserted(index);
+    }
+
+    @UiThread
+    public final void notifyItemChanged(@IntRange(from = 0, to = Integer.MAX_VALUE) int index) {
+        mBuilder.adapter.notifyItemChanged(index);
+    }
+
+    @UiThread
+    public final void notifyItemsChanged() {
         mBuilder.adapter.notifyDataSetChanged();
     }
 
@@ -1902,6 +1939,13 @@ public class MaterialDialog extends DialogBase implements
      */
     public interface ListCallback {
         void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text);
+    }
+
+    /**
+     * A callback used for regular list dialogs.
+     */
+    public interface ListLongCallback {
+        boolean onLongSelection(MaterialDialog dialog, View itemView, int position, CharSequence text);
     }
 
     /**

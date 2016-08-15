@@ -287,6 +287,42 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    static int index = 0;
+
+    @SuppressWarnings("ConstantConditions")
+    @OnClick(R.id.list_longPress)
+    public void showListLongPress() {
+        index = 0;
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                    }
+                })
+                .autoDismiss(false)
+                .itemsLongCallback(new MaterialDialog.ListLongCallback() {
+                    @Override
+                    public boolean onLongSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        dialog.getItems().remove(position);
+                        dialog.notifyItemsChanged();
+                        return false;
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        index++;
+                        dialog.getItems().add("Item " + index);
+                        dialog.notifyItemInserted(dialog.getItems().size() - 1);
+                    }
+                })
+                .neutralText(R.string.add_item)
+                .show();
+    }
+
     @OnClick(R.id.singleChoice)
     public void showSingleChoice() {
         new MaterialDialog.Builder(this)

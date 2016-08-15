@@ -119,6 +119,13 @@
             android:layout_marginTop="@dimen/sample_button_spacing"
             android:text="@string/list_checkPrompt" />
 
+        <Button
+            android:id="@+id/list_longPress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/list_longPress" />
+
         <!-- Choice Lists -->
 
         <TextView

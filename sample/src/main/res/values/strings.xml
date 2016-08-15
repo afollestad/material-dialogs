@@ -197,5 +197,7 @@
     <string name="list_checkPrompt">Basic List (CheckBox Prompt)</string>
     <string name="input_checkPrompt">Input (CheckBox Prompt)</string>
     <string name="example_prompt">Example check prompt</string>
+    <string name="list_longPress">Basic List (Long Press)</string>
+    <string name="add_item">Add Item</string>
 
 </resources>
