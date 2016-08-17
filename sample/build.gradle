@@ -12,7 +12,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     PUBLISH_VERSION = '0.9.0.1'
-    SUPPORT_LIBRARY_VERSION = '24.1.1'
+    SUPPORT_LIBRARY_VERSION = '24.2.0'
     BUILD_TOOLS = "24.0.0"
     TARGET_SDK = 24
 }
