@@ -48,11 +48,11 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     String[] getContentsArray() {
         if (parentContents == null) {
             if (canGoUp)
-                return new String[]{"..."};
+                return new String[]{getBuilder().mGoUpLabel};
             return new String[]{};
         }
         String[] results = new String[parentContents.length + (canGoUp ? 1 : 0)];
-        if (canGoUp) results[0] = "...";
+        if (canGoUp) results[0] = getBuilder().mGoUpLabel;
         for (int i = 0; i < parentContents.length; i++)
             results[canGoUp ? i + 1 : i] = parentContents[i].getName();
         return results;
@@ -207,12 +207,14 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         protected String mInitialPath;
         protected String mMimeType;
         protected String mTag;
+        protected String mGoUpLabel;
 
         public <ActivityType extends AppCompatActivity & FileCallback> Builder(@NonNull ActivityType context) {
             mContext = context;
             mCancelButton = android.R.string.cancel;
             mInitialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             mMimeType = null;
+            mGoUpLabel = "...";
         }
 
         @NonNull
@@ -240,6 +242,12 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             if (tag == null)
                 tag = DEFAULT_TAG;
             mTag = tag;
+            return this;
+        }
+
+        @NonNull
+        public Builder goUpLabel(String text) {
+            mGoUpLabel = text;
             return this;
         }
 
