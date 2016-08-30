@@ -1221,6 +1221,7 @@ new FileChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .mimeType("image/*") // Optional MIME type filter
     .tag("optional-identifier")
+    .goUpLabel("Up") // custom go up label, default label is "..."
     .show();
 ```
 
@@ -1251,6 +1252,7 @@ new FolderChooserDialog.Builder(this)
     .chooseButton(R.string.md_choose_label)  // changes label of the choose button
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .tag("optional-identifier")
+    .goUpLabel("Up") // custom go up label, default label is "..."
     .show();
 ```
 
