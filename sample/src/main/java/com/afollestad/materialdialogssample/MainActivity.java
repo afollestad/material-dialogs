@@ -426,7 +426,11 @@ public class MainActivity extends AppCompatActivity implements
                             str.append(": ");
                             str.append(text[i]);
                         }
+                        if (str != "") {
                         showToast(str.toString());
+                        } else {
+                        showToast("No data Selected")
+                        }
                         return true; // allow selection
                     }
                 })
