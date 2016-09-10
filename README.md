@@ -18,7 +18,7 @@
 4. [Basic Dialog](https://github.com/afollestad/material-dialogs#basic-dialog)
 5. [Dismissing Dialogs](https://github.com/afollestad/material-dialogs#dismissing-dialogs)
 6. [Displaying an Icon](https://github.com/afollestad/material-dialogs#displaying-an-icon)
-7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#s1tacked-action-buttons)
+7. [Stacked Action Buttons](https://github.com/afollestad/material-dialogs#stacked-action-buttons)
     1. [Stacking Behavior](https://github.com/afollestad/material-dialogs#stacking-behavior)
 8. [Neutral Action Button](https://github.com/afollestad/material-dialogs#neutral-action-button)
 9. [Callbacks](https://github.com/afollestad/material-dialogs#callbacks)
