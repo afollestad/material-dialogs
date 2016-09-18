@@ -491,7 +491,7 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
         ...
         .build();
 
-RecyclerView list = dialog.getRecyclerView();
+RecyclerView recyclerView = dialog.getRecyclerView();
 // Do something with it
 
 dialog.show();
