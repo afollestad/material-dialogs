@@ -467,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements
     public void showSimpleList() {
         final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(new MaterialSimpleListAdapter.Callback() {
             @Override
-            public void onMaterialListItemSelected(int index, MaterialSimpleListItem item) {
+            public void onMaterialListItemSelected(MaterialDialog dialog, int index, MaterialSimpleListItem item) {
                 showToast(item.getContent().toString());
             }
         });
