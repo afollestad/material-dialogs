@@ -756,7 +756,7 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder items(@NonNull Collection collection) {
             if (collection.size() > 0) {
-                final String[] array = new String[collection.size()];
+                final CharSequence[] array = new CharSequence[collection.size()];
                 int i = 0;
                 for (Object obj : collection) {
                     array[i] = obj.toString();

@@ -99,7 +99,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
 }
 ```
 
@@ -111,7 +111,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
+    compile 'com.afollestad.material-dialogs:commons:0.9.0.2'
 }
 ```
 
@@ -1220,6 +1220,7 @@ The Builder is used like this:
 new FileChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .mimeType("image/*") // Optional MIME type filter
+    .extensions(".png", ".jpg") // Optional extension filter, will override mimeType()
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
     .show();
@@ -1295,7 +1296,7 @@ This library's implementation is just a pre-made adapter that you can pass to th
 ```java
 final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(new MaterialSimpleListAdapter.Callback() {
     @Override
-    public void onMaterialListItemSelected(int index, MaterialSimpleListItem item) {
+    public void onMaterialListItemSelected(MaterialDialog dialog, int index, MaterialSimpleListItem item) {
         // TODO
     }
 });

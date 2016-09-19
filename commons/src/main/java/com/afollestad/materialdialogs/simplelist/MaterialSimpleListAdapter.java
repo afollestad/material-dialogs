@@ -24,7 +24,7 @@ import java.util.List;
 public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
 
     public interface Callback {
-        void onMaterialListItemSelected(int index, MaterialSimpleListItem item);
+        void onMaterialListItemSelected(MaterialDialog dialog, int index, MaterialSimpleListItem item);
     }
 
     private MaterialDialog dialog;
@@ -103,7 +103,7 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
         @Override
         public void onClick(View view) {
             if (adapter.mCallback != null)
-                adapter.mCallback.onMaterialListItemSelected(getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+                adapter.mCallback.onMaterialListItemSelected(adapter.dialog, getAdapterPosition(), adapter.getItem(getAdapterPosition()));
         }
     }
 }
