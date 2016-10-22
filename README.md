@@ -1220,7 +1220,7 @@ The Builder is used like this:
 new FileChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .mimeType("image/*") // Optional MIME type filter
-    .extensions(".png", ".jpg") // Optional extension filter, will override mimeType()
+    .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
     .show();
