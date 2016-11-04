@@ -26,6 +26,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -724,7 +725,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes, Object... formatArgs) {
-            content(this.context.getString(contentRes, formatArgs));
+            String str = String.format(this.context.getString(contentRes), formatArgs);
+            content(Html.fromHtml(str));
             return this;
         }
 
