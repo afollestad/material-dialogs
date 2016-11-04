@@ -14,7 +14,7 @@ android {
     buildToolsVersion BUILD_TOOLS
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 13
         targetSdkVersion TARGET_SDK
         versionCode 1
         versionName PUBLISH_VERSION
@@ -27,11 +27,11 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+    compile "com.android.support:support-v13:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    compile "me.zhanghai.android.materialprogressbar:library:1.1.7"
+    compile "me.zhanghai.android.materialprogressbar:library:1.3.0"
 }
 
 apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'

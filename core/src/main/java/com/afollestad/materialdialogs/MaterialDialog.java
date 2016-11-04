@@ -919,9 +919,9 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        public Builder positiveText(@StringRes int postiveRes) {
-            if (postiveRes == 0) return this;
-            positiveText(this.context.getText(postiveRes));
+        public Builder positiveText(@StringRes int positiveRes) {
+            if (positiveRes == 0) return this;
+            positiveText(this.context.getText(positiveRes));
             return this;
         }
 
@@ -1408,7 +1408,7 @@ public class MaterialDialog extends DialogBase implements
          * Same as #{@link #inputRange(int, int, int)}, but it takes a color resource ID for the error color.
          */
         public Builder inputRangeRes(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-                                     @IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength,
+                                     @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
                                      @ColorRes int errorColor) {
             return inputRange(minLength, maxLength, DialogUtils.getColor(context, errorColor));
         }
