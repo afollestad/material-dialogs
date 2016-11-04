@@ -25,7 +25,7 @@ public class AboutDialog extends DialogFragment {
         return new MaterialDialog.Builder(getActivity())
                 .title(R.string.about)
                 .positiveText(R.string.dismiss)
-                .content(Html.fromHtml(getString(R.string.about_body)))
+                .content(R.string.about_body)
                 .contentLineSpacing(1.6f)
                 .build();
     }
