@@ -3,10 +3,10 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
     PUBLISH_ARTIFACT_ID = 'commons'
-    PUBLISH_VERSION = '0.9.0.2'
-    SUPPORT_LIBRARY_VERSION = '24.2.1'
+    PUBLISH_VERSION = '0.9.1.0'
+    SUPPORT_LIBRARY_VERSION = '25.0.0'
     BUILD_TOOLS = "24.0.3"
-    TARGET_SDK = 24
+    TARGET_SDK = 25
 }
 
 android {
