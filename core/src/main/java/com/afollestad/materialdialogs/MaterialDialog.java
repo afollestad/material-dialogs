@@ -105,7 +105,7 @@ public class MaterialDialog extends DialogBase implements
         target.setTypeface(t);
     }
 
-    protected final void checkIfListInitScroll() {
+    final void checkIfListInitScroll() {
         if (recyclerView == null)
             return;
         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -132,32 +132,14 @@ public class MaterialDialog extends DialogBase implements
                         selectedIndex = selectedIndicesList.get(0);
                     }
 
-                    int lastVisiblePosition;
-                    int firstVisiblePosition;
-                    if (mBuilder.layoutManager instanceof LinearLayoutManager) {
-                        lastVisiblePosition = ((LinearLayoutManager) mBuilder.layoutManager).findLastVisibleItemPosition();
-                        firstVisiblePosition = ((LinearLayoutManager) mBuilder.layoutManager).findFirstVisibleItemPosition();
-                    } else if (mBuilder.layoutManager instanceof GridLayoutManager) {
-                        lastVisiblePosition = ((GridLayoutManager) mBuilder.layoutManager).findLastVisibleItemPosition();
-                        firstVisiblePosition = ((GridLayoutManager) mBuilder.layoutManager).findFirstVisibleItemPosition();
-                    } else {
-                        throw new IllegalStateException("Unsupported layout manager type: " + mBuilder.layoutManager.getClass().getName());
-                    }
-
-                    if (lastVisiblePosition < selectedIndex) {
-                        final int totalVisible = lastVisiblePosition - firstVisiblePosition;
-                        // Scroll so that the selected index appears in the middle (vertically) of the ListView
-                        int scrollIndex = selectedIndex - (totalVisible / 2);
-                        if (scrollIndex < 0) scrollIndex = 0;
-                        final int fScrollIndex = scrollIndex;
-                        recyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                recyclerView.requestFocus();
-                                recyclerView.scrollToPosition(fScrollIndex);
-                            }
-                        });
-                    }
+                    final int fSelectedIndex = selectedIndex;
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.requestFocus();
+                            mBuilder.layoutManager.scrollToPosition(fSelectedIndex);
+                        }
+                    });
                 }
             }
         });
@@ -166,7 +148,7 @@ public class MaterialDialog extends DialogBase implements
     /**
      * Sets the dialog RecyclerView's adapter/layout manager, and it's item click listener.
      */
-    protected final void invalidateList() {
+    final void invalidateList() {
         if (recyclerView == null)
             return;
         else if ((mBuilder.items == null || mBuilder.items.size() == 0) && mBuilder.adapter == null)
@@ -257,14 +239,8 @@ public class MaterialDialog extends DialogBase implements
         return true;
     }
 
-    public static class NotImplementedException extends Error {
-        public NotImplementedException(@SuppressWarnings("SameParameterValue") String message) {
-            super(message);
-        }
-    }
-
-    public static class DialogException extends WindowManager.BadTokenException {
-        public DialogException(@SuppressWarnings("SameParameterValue") String message) {
+    private static class DialogException extends WindowManager.BadTokenException {
+        DialogException(@SuppressWarnings("SameParameterValue") String message) {
             super(message);
         }
     }
@@ -403,6 +379,7 @@ public class MaterialDialog extends DialogBase implements
     /**
      * The class used to construct a MaterialDialog.
      */
+    @SuppressWarnings({"WeakerAccess", "unused"})
     public static class Builder {
 
         protected final Context context;
@@ -1828,8 +1805,8 @@ public class MaterialDialog extends DialogBase implements
     /**
      * Selects all checkboxes in multi choice list dialogs.
      */
-    public void selectAllIndicies() {
-        selectAllIndicies(true);
+    public void selectAllIndices() {
+        selectAllIndices(true);
     }
 
     /**
@@ -1837,9 +1814,9 @@ public class MaterialDialog extends DialogBase implements
      *
      * @param sendCallback Defaults to true. True will notify the multi-choice callback, if any.
      */
-    public void selectAllIndicies(boolean sendCallback) {
+    public void selectAllIndices(boolean sendCallback) {
         if (listType == null || listType != ListType.MULTI)
-            throw new IllegalStateException("You can only use selectAllIndicies() with multi choice list dialogs.");
+            throw new IllegalStateException("You can only use selectAllIndices() with multi choice list dialogs.");
         if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
             if (selectedIndicesList == null)
                 selectedIndicesList = new ArrayList<>();
@@ -1851,7 +1828,7 @@ public class MaterialDialog extends DialogBase implements
             if (sendCallback && mBuilder.listCallbackMultiChoice != null)
                 sendMultichoiceCallback();
         } else {
-            throw new IllegalStateException("You can only use selectAllIndicies() with the default adapter implementation.");
+            throw new IllegalStateException("You can only use selectAllIndices() with the default adapter implementation.");
         }
     }
 
@@ -1919,7 +1896,7 @@ public class MaterialDialog extends DialogBase implements
         super.dismiss();
     }
 
-    protected enum ListType {
+    enum ListType {
         REGULAR, SINGLE, MULTI;
 
         public static int getLayoutForType(ListType type) {
@@ -1985,6 +1962,7 @@ public class MaterialDialog extends DialogBase implements
      *
      * @deprecated Use the individual onPositive, onNegative, onNeutral, or onAny Builder methods instead.
      */
+    @SuppressWarnings("WeakerAccess")
     @Deprecated
     public static abstract class ButtonCallback {
 

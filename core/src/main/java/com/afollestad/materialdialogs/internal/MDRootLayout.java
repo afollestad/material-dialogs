@@ -9,8 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ScrollView;
 
 import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.StackingBehavior;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -523,30 +520,8 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     public static boolean canRecyclerViewScroll(RecyclerView view) {
-        if (view == null || view.getAdapter() == null || view.getLayoutManager() == null)
-            return false;
-        final RecyclerView.LayoutManager lm = view.getLayoutManager();
-        final int count = view.getAdapter().getItemCount();
-        int lastVisible;
-
-        if (lm instanceof LinearLayoutManager) {
-            LinearLayoutManager llm = (LinearLayoutManager) lm;
-            lastVisible = llm.findLastVisibleItemPosition();
-        } else if (lm instanceof GridLayoutManager) {
-            GridLayoutManager glm = (GridLayoutManager) lm;
-            lastVisible = glm.findLastVisibleItemPosition();
-        } else {
-            throw new MaterialDialog.NotImplementedException("Material Dialogs currently only supports LinearLayoutManager/GridLayoutManager. Please report any new layout managers.");
-        }
-
-        if (lastVisible == -1)
-            return false;
-        /* We scroll if the last item is not visible */
-        final boolean lastItemVisible = lastVisible == count - 1;
-        return !lastItemVisible ||
-                (view.getChildCount() > 0 && view.getChildAt(view.getChildCount() - 1).getBottom() > view.getHeight() - view.getPaddingBottom());
+        return view != null && view.getLayoutManager() != null && view.getLayoutManager().canScrollVertically();
     }
 
     private static boolean canScrollViewScroll(ScrollView sv) {

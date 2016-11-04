@@ -44,14 +44,14 @@ import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 class DialogInit {
 
     @StyleRes
-    public static int getTheme(@NonNull MaterialDialog.Builder builder) {
+    static int getTheme(@NonNull MaterialDialog.Builder builder) {
         boolean darkTheme = DialogUtils.resolveBoolean(builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
         builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
         return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
     }
 
     @LayoutRes
-    public static int getInflateLayout(MaterialDialog.Builder builder) {
+    static int getInflateLayout(MaterialDialog.Builder builder) {
         if (builder.customView != null) {
             return R.layout.md_dialog_custom;
         } else if (builder.items != null && builder.items.size() > 0 || builder.adapter != null) {
@@ -75,6 +75,7 @@ class DialogInit {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @UiThread
     public static void init(final MaterialDialog dialog) {
         final MaterialDialog.Builder builder = dialog.mBuilder;
