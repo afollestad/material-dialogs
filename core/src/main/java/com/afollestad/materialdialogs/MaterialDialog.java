@@ -713,7 +713,7 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes) {
-            content(this.context.getText(contentRes));
+            content(Html.fromHtml(this.context.getString(contentRes)));
             return this;
         }
 

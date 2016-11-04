@@ -22,7 +22,7 @@
     <string name="password">Password</string>
     <string name="showPassword">Show password</string>
     <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
-    <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
+    <string name="useGoogleLocationServicesPrompt"><![CDATA[Let Google help apps determine location. <b>This means sending anonymous location data to Google</b>, even when no apps are running.]]></string>
     <string name="socialNetworks">Social Networks</string>
     <string name="choose">Choose</string>
     <string name="speedBoost">Turn on speed boost now!</string>
