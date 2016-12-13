@@ -1666,7 +1666,6 @@ public class MaterialDialog extends DialogBase implements
             @Override
             public void run() {
                 if (mProgressLabel != null) {
-//                    final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
                     mProgressLabel.setText(mBuilder.progressPercentFormat.format(
                             (float) getCurrentProgress() / (float) getMaxProgress()));
                 }
