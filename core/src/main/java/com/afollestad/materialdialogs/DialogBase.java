@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +17,7 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
     protected MDRootLayout view;
     private OnShowListener mShowListener;
 
-    protected DialogBase(Context context, int theme) {
+    DialogBase(Context context, int theme) {
         super(context, theme);
     }
 
@@ -30,11 +31,11 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
         mShowListener = listener;
     }
 
-    protected final void setOnShowListenerInternal() {
+    final void setOnShowListenerInternal() {
         super.setOnShowListener(this);
     }
 
-    protected final void setViewInternal(View view) {
+    final void setViewInternal(View view) {
         super.setContentView(view);
     }
 
@@ -52,13 +53,13 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
     @Override
     @Deprecated
-    public void setContentView(View view) throws IllegalAccessError {
+    public void setContentView(@NonNull View view) throws IllegalAccessError {
         throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
     }
 
     @Override
     @Deprecated
-    public void setContentView(View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
+    public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
         throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
     }
 }
