@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -38,7 +39,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
     private File parentFolder;
     private File[] parentContents;
-    private boolean canGoUp = true;
+    private boolean canGoUp = false;
     private FolderCallback mCallback;
 
     public interface FolderCallback {
@@ -87,16 +88,16 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                     .positiveText(android.R.string.ok)
                     .build();
         }
-
         if (getArguments() == null || !getArguments().containsKey("builder"))
             throw new IllegalStateException("You must create a FolderChooserDialog using the Builder.");
         if (!getArguments().containsKey("current_path"))
             getArguments().putString("current_path", getBuilder().mInitialPath);
         parentFolder = new File(getArguments().getString("current_path"));
+        checkIfCanGoUp();
         parentContents = listFiles();
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .title(parentFolder.getAbsolutePath())
-                .items(getContentsArray())
+                .items((CharSequence[]) getContentsArray())
                 .itemsCallback(this)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
@@ -123,6 +124,9 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                 }
             });
         }
+        if (Objects.equals(getBuilder().mInitialPath, "/")) {
+            canGoUp = false;
+        }
         return builder.build();
     }
 
@@ -135,7 +139,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                         //noinspection ResultOfMethodCallIgnored
                         final File newFi = new File(parentFolder, input.toString());
                         if (!newFi.mkdir())
-                            Toast.makeText(getActivity(), "Unable to create folder " + newFi.getAbsolutePath() + ", make sure you have the WRITE_EXTERNAL_STORAGE permission.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Unable to create folder " + newFi.getAbsolutePath() + ", make sure you have the WRITE_EXTERNAL_STORAGE permission or root permissions.", Toast.LENGTH_LONG).show();
                         else reload();
                     }
                 }).show();
@@ -157,12 +161,22 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         reload();
     }
 
+    private void checkIfCanGoUp() {
+        try {
+            String path = parentFolder.getPath().split("/")[1];
+            canGoUp = true;
+        } catch (IndexOutOfBoundsException e) {
+            canGoUp = false;
+        }
+    }
+
     private void reload() {
+
         parentContents = listFiles();
         MaterialDialog dialog = (MaterialDialog) getDialog();
         dialog.setTitle(parentFolder.getAbsolutePath());
         getArguments().putString("current_path", parentFolder.getAbsolutePath());
-        dialog.setItems(getContentsArray());
+        dialog.setItems((CharSequence[]) getContentsArray());
     }
 
     @Override
@@ -189,7 +203,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         @StringRes
         protected int mChooseButton;
         @StringRes
-        protected int mCancelButton;
+        int mCancelButton;
         protected String mInitialPath;
         protected String mTag;
         protected boolean mAllowNewFolder;
