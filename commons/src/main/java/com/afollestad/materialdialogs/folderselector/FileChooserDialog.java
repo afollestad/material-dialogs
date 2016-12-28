@@ -151,6 +151,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         if (!getArguments().containsKey("current_path"))
             getArguments().putString("current_path", getBuilder().mInitialPath);
         parentFolder = new File(getArguments().getString("current_path"));
+        checkIfCanGoUp();
         parentContents = listFiles(getBuilder().mMimeType, getBuilder().mExtensions);
         return new MaterialDialog.Builder(getActivity())
                 .title(parentFolder.getAbsolutePath())
@@ -189,6 +190,16 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             dialog.setTitle(parentFolder.getAbsolutePath());
             getArguments().putString("current_path", parentFolder.getAbsolutePath());
             dialog.setItems(getContentsArray());
+        }
+    }
+
+
+    private void checkIfCanGoUp() {
+        try {
+            String path = parentFolder.getPath().split("/")[1];
+            canGoUp = true;
+        } catch (IndexOutOfBoundsException e) {
+            canGoUp = false;
         }
     }
 
