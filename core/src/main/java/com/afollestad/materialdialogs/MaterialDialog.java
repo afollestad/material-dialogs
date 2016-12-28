@@ -424,6 +424,7 @@ public class MaterialDialog extends DialogBase implements
         protected boolean autoDismiss = true;
         protected Typeface regularFont;
         protected Typeface mediumFont;
+        protected Typeface buttonFont;
         protected Drawable icon;
         protected boolean limitIconToDefaultSize;
         protected int maxIconSize = -1;
@@ -550,6 +551,9 @@ public class MaterialDialog extends DialogBase implements
                 } catch (Exception ignored) {
                 }
             }
+            if (this.buttonFont == null) {
+                this.buttonFont = this.mediumFont;
+            }
         }
 
         private void checkSingleton() {
@@ -644,12 +648,18 @@ public class MaterialDialog extends DialogBase implements
          *
          * @param medium  The font used on titles and action buttons. Null uses device default.
          * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
+         * @param button The font used on action buttons. Null uses medium.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder typeface(@Nullable Typeface medium, @Nullable Typeface regular) {
+        public Builder typeface(@Nullable Typeface medium, @Nullable Typeface regular, @Nullable Typeface button) {
             this.mediumFont = medium;
             this.regularFont = regular;
+            this.buttonFont = button;
             return this;
+        }
+
+        public Builder typeface(@Nullable Typeface medium, @Nullable Typeface regular) {
+            return typeface(medium, regular, null);
         }
 
         /**
@@ -658,9 +668,10 @@ public class MaterialDialog extends DialogBase implements
          *
          * @param medium  The name of font in assets/fonts used on titles and action buttons (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium]
          * @param regular The name of font in assets/fonts used everywhere else, like content and list items (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
+         * @param button The font used on action buttons. Null uses medium.
          * @return The Builder instance so you can chain calls to it.
          */
-        public Builder typeface(@Nullable String medium, @Nullable String regular) {
+        public Builder typeface(@Nullable String medium, @Nullable String regular, @Nullable String button) {
             if (medium != null) {
                 this.mediumFont = TypefaceHelper.get(this.context, medium);
                 if (this.mediumFont == null)
@@ -671,7 +682,16 @@ public class MaterialDialog extends DialogBase implements
                 if (this.regularFont == null)
                     throw new IllegalArgumentException("No font asset found for " + regular);
             }
+            if (button != null) {
+                this.buttonFont = TypefaceHelper.get(this.context, regular);
+                if (this.buttonFont == null)
+                    throw new IllegalArgumentException("No font asset found for " + regular);
+            }
             return this;
+        }
+
+        public Builder typeface(@Nullable String medium, @Nullable String regular) {
+            return typeface(medium, regular, null);
         }
 
         public Builder icon(@NonNull Drawable icon) {
