@@ -199,11 +199,20 @@ public class MaterialDialog extends DialogBase implements
                         cb.setChecked(true);
                     }
                 } else {
-                    // The checkbox was unchecked
+                    // Remove the selection from the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
                     selectedIndicesList.remove(Integer.valueOf(position));
-                    cb.setChecked(false);
-                    if (mBuilder.alwaysCallMultiChoiceCallback)
-                        sendMultichoiceCallback();
+                    if (mBuilder.alwaysCallMultiChoiceCallback) {
+                        // If the checkbox was previously selected, and the callback returns true, remove it from the states and uncheck it
+                        if (sendMultichoiceCallback()) {
+                            cb.setChecked(false);
+                        } else {
+                            // The callback cancelled selection, add it to the states
+                            selectedIndicesList.add(position);
+                        }
+                    } else {
+                        // The callback was not used to check if selection is allowed, just unselect it
+                        cb.setChecked(false);
+                    }
                 }
             } else if (listType == ListType.SINGLE) {
                 final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);

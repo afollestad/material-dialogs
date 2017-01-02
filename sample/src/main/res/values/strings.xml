@@ -149,6 +149,8 @@
     <string name="optional_dialog_message">This is an optional dialog message.</string>
     <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
     <string name="selection_limit_reached">Selection limit reached!</string>
+    <string name="multiChoiceSelectedOneOrMore">Multi Choice (Select one or more)</string>
+    <string name="select_one_or_more">Select one or more!</string>
 
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->
     <string name="back_button_label">Back</string>
