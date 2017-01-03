@@ -84,6 +84,7 @@ public class MaterialDialog extends DialogBase implements
     protected TextView title;
     protected TextView content;
     protected EditText input;
+    private final Handler handler;
 
     public final Builder getBuilder() {
         return builder;
@@ -92,7 +93,7 @@ public class MaterialDialog extends DialogBase implements
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));
-        mHandler = new Handler();
+        handler = new Handler();
         this.builder = builder;
         final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
@@ -104,6 +105,11 @@ public class MaterialDialog extends DialogBase implements
         int flags = target.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG;
         target.setPaintFlags(flags);
         target.setTypeface(t);
+    }
+
+    @Nullable
+    public Object getTag() {
+        return builder.tag;
     }
 
     final void checkIfListInitScroll() {
@@ -482,6 +488,8 @@ public class MaterialDialog extends DialogBase implements
         protected int btnSelectorNeutral;
         @DrawableRes
         protected int btnSelectorNegative;
+
+        protected Object tag;
 
         public final Context getContext() {
             return context;
@@ -1424,6 +1432,11 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder tag(@Nullable Object tag) {
+            this.tag = tag;
+            return this;
+        }
+
         @UiThread
         public MaterialDialog build() {
             return new MaterialDialog(this);
@@ -1684,15 +1697,13 @@ public class MaterialDialog extends DialogBase implements
         setProgress(getCurrentProgress() + by);
     }
 
-    private final Handler mHandler;
-
     public final void setProgress(final int progress) {
         if (builder.progress <= -2) {
             Log.w("MaterialDialog", "Calling setProgress(int) on an indeterminate progress dialog has no effect!");
             return;
         }
         progressBar.setProgress(progress);
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 if (progressLabel != null) {
