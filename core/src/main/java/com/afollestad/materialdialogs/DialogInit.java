@@ -393,7 +393,7 @@ class DialogInit {
             }
 
             if (!builder.indeterminateProgress || builder.indeterminateIsHorizontalProgress) {
-                dialog.progressBar.setIndeterminate(builder.indeterminateIsHorizontalProgress);
+                dialog.progressBar.setIndeterminate(builder.indeterminateProgress && builder.indeterminateIsHorizontalProgress);
                 dialog.progressBar.setProgress(0);
                 dialog.progressBar.setMax(builder.progressMax);
                 dialog.progressLabel = (TextView) dialog.view.findViewById(R.id.md_label);
