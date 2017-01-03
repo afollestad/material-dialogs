@@ -70,7 +70,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                     if (extensions != null) {
                         boolean found = false;
                         for (String ext : extensions) {
-                            if (fi.getName().toLowerCase().contains(ext.toLowerCase())) {
+                            if (fi.getName().toLowerCase().endsWith(ext.toLowerCase())) {
                                 found = true;
                                 break;
                             }
