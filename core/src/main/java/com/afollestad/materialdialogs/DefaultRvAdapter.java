@@ -15,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -38,7 +37,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     DefaultRvAdapter(MaterialDialog dialog, @LayoutRes int layout) {
         this.dialog = dialog;
         this.layout = layout;
-        this.itemGravity = dialog.mBuilder.itemsGravity;
+        this.itemGravity = dialog.builder.itemsGravity;
     }
 
     void setCallback(InternalListCallback callback) {
@@ -56,13 +55,13 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     @Override
     public void onBindViewHolder(DefaultVH holder, int index) {
         final View view = holder.itemView;
-        boolean disabled = DialogUtils.isIn(index, dialog.mBuilder.disabledIndices);
+        boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
         switch (dialog.listType) {
             case SINGLE: {
                 @SuppressLint("CutPasteId")
                 RadioButton radio = (RadioButton) holder.control;
-                boolean selected = dialog.mBuilder.selectedIndex == index;
-                MDTintHelper.setTint(radio, dialog.mBuilder.widgetColor);
+                boolean selected = dialog.builder.selectedIndex == index;
+                MDTintHelper.setTint(radio, dialog.builder.widgetColor);
                 radio.setChecked(selected);
                 radio.setEnabled(!disabled);
                 break;
@@ -71,22 +70,22 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
                 @SuppressLint("CutPasteId")
                 CheckBox checkbox = (CheckBox) holder.control;
                 boolean selected = dialog.selectedIndicesList.contains(index);
-                MDTintHelper.setTint(checkbox, dialog.mBuilder.widgetColor);
+                MDTintHelper.setTint(checkbox, dialog.builder.widgetColor);
                 checkbox.setChecked(selected);
                 checkbox.setEnabled(!disabled);
                 break;
             }
         }
 
-        holder.title.setText(dialog.mBuilder.items.get(index));
-        holder.title.setTextColor(dialog.mBuilder.itemColor);
-        dialog.setTypeface(holder.title, dialog.mBuilder.regularFont);
+        holder.title.setText(dialog.builder.items.get(index));
+        holder.title.setTextColor(dialog.builder.itemColor);
+        dialog.setTypeface(holder.title, dialog.builder.regularFont);
 
         setupGravity((ViewGroup) view);
 
-        if (dialog.mBuilder.itemIds != null) {
-            if (index < dialog.mBuilder.itemIds.length)
-                view.setId(dialog.mBuilder.itemIds[index]);
+        if (dialog.builder.itemIds != null) {
+            if (index < dialog.builder.itemIds.length)
+                view.setId(dialog.builder.itemIds[index]);
             else view.setId(-1);
         }
 
@@ -104,7 +103,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
     @Override
     public int getItemCount() {
-        return dialog.mBuilder.items != null ? dialog.mBuilder.items.size() : 0;
+        return dialog.builder.items != null ? dialog.builder.items.size() : 0;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -160,7 +159,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
             title = (TextView) itemView.findViewById(R.id.md_title);
             this.adapter = adapter;
             itemView.setOnClickListener(this);
-            if (adapter.dialog.mBuilder.listLongCallback != null)
+            if (adapter.dialog.builder.listLongCallback != null)
                 itemView.setOnLongClickListener(this);
         }
 
@@ -168,8 +167,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         public void onClick(View view) {
             if (adapter.callback != null) {
                 CharSequence text = null;
-                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.size())
-                    text = adapter.dialog.mBuilder.items.get(getAdapterPosition());
+                if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
+                    text = adapter.dialog.builder.items.get(getAdapterPosition());
                 adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, false);
             }
         }
@@ -178,8 +177,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         public boolean onLongClick(View view) {
             if (adapter.callback != null) {
                 CharSequence text = null;
-                if (adapter.dialog.mBuilder.items != null && getAdapterPosition() < adapter.dialog.mBuilder.items.size())
-                    text = adapter.dialog.mBuilder.items.get(getAdapterPosition());
+                if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
+                    text = adapter.dialog.builder.items.get(getAdapterPosition());
                 return adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
             }
             return false;

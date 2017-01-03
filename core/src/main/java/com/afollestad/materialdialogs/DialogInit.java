@@ -78,7 +78,7 @@ class DialogInit {
     @SuppressWarnings("ConstantConditions")
     @UiThread
     public static void init(final MaterialDialog dialog) {
-        final MaterialDialog.Builder builder = dialog.mBuilder;
+        final MaterialDialog.Builder builder = dialog.builder;
 
         // Set cancelable flag and dialog background color
         dialog.setCancelable(builder.cancelable);
@@ -364,58 +364,58 @@ class DialogInit {
     }
 
     private static void setupProgressDialog(final MaterialDialog dialog) {
-        final MaterialDialog.Builder builder = dialog.mBuilder;
+        final MaterialDialog.Builder builder = dialog.builder;
         if (builder.indeterminateProgress || builder.progress > -2) {
-            dialog.mProgress = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
-            if (dialog.mProgress == null) return;
+            dialog.progressBar = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
+            if (dialog.progressBar == null) return;
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 if (builder.indeterminateProgress) {
                     if (builder.indeterminateIsHorizontalProgress) {
                         IndeterminateHorizontalProgressDrawable d = new IndeterminateHorizontalProgressDrawable(builder.getContext());
                         d.setTint(builder.widgetColor);
-                        dialog.mProgress.setProgressDrawable(d);
-                        dialog.mProgress.setIndeterminateDrawable(d);
+                        dialog.progressBar.setProgressDrawable(d);
+                        dialog.progressBar.setIndeterminateDrawable(d);
                     } else {
                         IndeterminateProgressDrawable d = new IndeterminateProgressDrawable(builder.getContext());
                         d.setTint(builder.widgetColor);
-                        dialog.mProgress.setProgressDrawable(d);
-                        dialog.mProgress.setIndeterminateDrawable(d);
+                        dialog.progressBar.setProgressDrawable(d);
+                        dialog.progressBar.setIndeterminateDrawable(d);
                     }
                 } else {
                     HorizontalProgressDrawable d = new HorizontalProgressDrawable(builder.getContext());
                     d.setTint(builder.widgetColor);
-                    dialog.mProgress.setProgressDrawable(d);
-                    dialog.mProgress.setIndeterminateDrawable(d);
+                    dialog.progressBar.setProgressDrawable(d);
+                    dialog.progressBar.setIndeterminateDrawable(d);
                 }
             } else {
-                MDTintHelper.setTint(dialog.mProgress, builder.widgetColor);
+                MDTintHelper.setTint(dialog.progressBar, builder.widgetColor);
             }
 
             if (!builder.indeterminateProgress || builder.indeterminateIsHorizontalProgress) {
-                dialog.mProgress.setIndeterminate(builder.indeterminateIsHorizontalProgress);
-                dialog.mProgress.setProgress(0);
-                dialog.mProgress.setMax(builder.progressMax);
-                dialog.mProgressLabel = (TextView) dialog.view.findViewById(R.id.md_label);
-                if (dialog.mProgressLabel != null) {
-                    dialog.mProgressLabel.setTextColor(builder.contentColor);
-                    dialog.setTypeface(dialog.mProgressLabel, builder.mediumFont);
-                    dialog.mProgressLabel.setText(builder.progressPercentFormat.format(0));
+                dialog.progressBar.setIndeterminate(builder.indeterminateIsHorizontalProgress);
+                dialog.progressBar.setProgress(0);
+                dialog.progressBar.setMax(builder.progressMax);
+                dialog.progressLabel = (TextView) dialog.view.findViewById(R.id.md_label);
+                if (dialog.progressLabel != null) {
+                    dialog.progressLabel.setTextColor(builder.contentColor);
+                    dialog.setTypeface(dialog.progressLabel, builder.mediumFont);
+                    dialog.progressLabel.setText(builder.progressPercentFormat.format(0));
                 }
-                dialog.mProgressMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
-                if (dialog.mProgressMinMax != null) {
-                    dialog.mProgressMinMax.setTextColor(builder.contentColor);
-                    dialog.setTypeface(dialog.mProgressMinMax, builder.regularFont);
+                dialog.progressMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
+                if (dialog.progressMinMax != null) {
+                    dialog.progressMinMax.setTextColor(builder.contentColor);
+                    dialog.setTypeface(dialog.progressMinMax, builder.regularFont);
 
                     if (builder.showMinMax) {
-                        dialog.mProgressMinMax.setVisibility(View.VISIBLE);
-                        dialog.mProgressMinMax.setText(String.format(builder.progressNumberFormat,
+                        dialog.progressMinMax.setVisibility(View.VISIBLE);
+                        dialog.progressMinMax.setText(String.format(builder.progressNumberFormat,
                                 0, builder.progressMax));
-                        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) dialog.mProgress.getLayoutParams();
+                        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) dialog.progressBar.getLayoutParams();
                         lp.leftMargin = 0;
                         lp.rightMargin = 0;
                     } else {
-                        dialog.mProgressMinMax.setVisibility(View.GONE);
+                        dialog.progressMinMax.setVisibility(View.GONE);
                     }
                 } else {
                     builder.showMinMax = false;
@@ -423,13 +423,13 @@ class DialogInit {
             }
         }
 
-        if (dialog.mProgress != null) {
-            fixCanvasScalingWhenHardwareAccelerated(dialog.mProgress);
+        if (dialog.progressBar != null) {
+            fixCanvasScalingWhenHardwareAccelerated(dialog.progressBar);
         }
     }
 
     private static void setupInputDialog(final MaterialDialog dialog) {
-        final MaterialDialog.Builder builder = dialog.mBuilder;
+        final MaterialDialog.Builder builder = dialog.builder;
         dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
         if (dialog.input == null) return;
         dialog.setTypeface(dialog.input, builder.regularFont);
@@ -440,7 +440,7 @@ class DialogInit {
         dialog.input.setSingleLine();
         dialog.input.setTextColor(builder.contentColor);
         dialog.input.setHintTextColor(DialogUtils.adjustAlpha(builder.contentColor, 0.3f));
-        MDTintHelper.setTint(dialog.input, dialog.mBuilder.widgetColor);
+        MDTintHelper.setTint(dialog.input, dialog.builder.widgetColor);
 
         if (builder.inputType != -1) {
             dialog.input.setInputType(builder.inputType);

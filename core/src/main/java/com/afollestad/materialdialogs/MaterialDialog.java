@@ -64,35 +64,35 @@ import java.util.Locale;
 public class MaterialDialog extends DialogBase implements
         View.OnClickListener, DefaultRvAdapter.InternalListCallback {
 
-    protected final Builder mBuilder;
-    protected RecyclerView recyclerView;
+    RecyclerView recyclerView;
+    View titleFrame;
+    FrameLayout customViewFrame;
+    ProgressBar progressBar;
+    TextView progressLabel;
+    TextView progressMinMax;
+    TextView inputMinMax;
+    CheckBox checkBoxPrompt;
+    MDButton positiveButton;
+    MDButton neutralButton;
+    MDButton negativeButton;
+    ListType listType;
+    List<Integer> selectedIndicesList;
+
+    protected final Builder builder;
     protected ImageView icon;
     protected TextView title;
-    protected View titleFrame;
-    protected FrameLayout customViewFrame;
-    protected ProgressBar mProgress;
-    protected TextView mProgressLabel;
-    protected TextView mProgressMinMax;
     protected TextView content;
     protected EditText input;
-    protected TextView inputMinMax;
-    protected CheckBox checkBoxPrompt;
-
-    protected MDButton positiveButton;
-    protected MDButton neutralButton;
-    protected MDButton negativeButton;
-    protected ListType listType;
-    protected List<Integer> selectedIndicesList;
 
     public final Builder getBuilder() {
-        return mBuilder;
+        return builder;
     }
 
     @SuppressLint("InflateParams")
     protected MaterialDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));
         mHandler = new Handler();
-        mBuilder = builder;
+        this.builder = builder;
         final LayoutInflater inflater = LayoutInflater.from(builder.context);
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
@@ -122,9 +122,9 @@ public class MaterialDialog extends DialogBase implements
                 if (listType == ListType.SINGLE || listType == ListType.MULTI) {
                     int selectedIndex;
                     if (listType == ListType.SINGLE) {
-                        if (mBuilder.selectedIndex < 0)
+                        if (builder.selectedIndex < 0)
                             return;
-                        selectedIndex = mBuilder.selectedIndex;
+                        selectedIndex = builder.selectedIndex;
                     } else {
                         if (selectedIndicesList == null || selectedIndicesList.size() == 0)
                             return;
@@ -137,7 +137,7 @@ public class MaterialDialog extends DialogBase implements
                         @Override
                         public void run() {
                             recyclerView.requestFocus();
-                            mBuilder.layoutManager.scrollToPosition(fSelectedIndex);
+                            builder.layoutManager.scrollToPosition(fSelectedIndex);
                         }
                     });
                 }
@@ -151,14 +151,14 @@ public class MaterialDialog extends DialogBase implements
     final void invalidateList() {
         if (recyclerView == null)
             return;
-        else if ((mBuilder.items == null || mBuilder.items.size() == 0) && mBuilder.adapter == null)
+        else if ((builder.items == null || builder.items.size() == 0) && builder.adapter == null)
             return;
-        if (mBuilder.layoutManager == null)
-            mBuilder.layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mBuilder.layoutManager);
-        recyclerView.setAdapter(mBuilder.adapter);
+        if (builder.layoutManager == null)
+            builder.layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(builder.layoutManager);
+        recyclerView.setAdapter(builder.adapter);
         if (listType != null) {
-            ((DefaultRvAdapter) mBuilder.adapter).setCallback(this);
+            ((DefaultRvAdapter) builder.adapter).setCallback(this);
         }
     }
 
@@ -167,15 +167,15 @@ public class MaterialDialog extends DialogBase implements
         if (!view.isEnabled()) return false;
         if (listType == null || listType == ListType.REGULAR) {
             // Default adapter, non choice mode
-            if (mBuilder.autoDismiss) {
+            if (builder.autoDismiss) {
                 // If auto dismiss is enabled, dismiss the dialog when a list item is selected
                 dismiss();
             }
-            if (!longPress && mBuilder.listCallback != null) {
-                mBuilder.listCallback.onSelection(this, view, position, mBuilder.items.get(position));
+            if (!longPress && builder.listCallback != null) {
+                builder.listCallback.onSelection(this, view, position, builder.items.get(position));
             }
-            if (longPress && mBuilder.listLongCallback != null) {
-                return mBuilder.listLongCallback.onLongSelection(this, view, position, mBuilder.items.get(position));
+            if (longPress && builder.listLongCallback != null) {
+                return builder.listLongCallback.onLongSelection(this, view, position, builder.items.get(position));
             }
         } else {
             // Default adapter, choice mode
@@ -186,7 +186,7 @@ public class MaterialDialog extends DialogBase implements
                 if (shouldBeChecked) {
                     // Add the selection to the states first so the callback includes it (when alwaysCallMultiChoiceCallback)
                     selectedIndicesList.add(position);
-                    if (mBuilder.alwaysCallMultiChoiceCallback) {
+                    if (builder.alwaysCallMultiChoiceCallback) {
                         // If the checkbox wasn't previously selected, and the callback returns true, add it to the states and check it
                         if (sendMultichoiceCallback()) {
                             cb.setChecked(true);
@@ -202,37 +202,37 @@ public class MaterialDialog extends DialogBase implements
                     // The checkbox was unchecked
                     selectedIndicesList.remove(Integer.valueOf(position));
                     cb.setChecked(false);
-                    if (mBuilder.alwaysCallMultiChoiceCallback)
+                    if (builder.alwaysCallMultiChoiceCallback)
                         sendMultichoiceCallback();
                 }
             } else if (listType == ListType.SINGLE) {
                 final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
                 if (!radio.isEnabled()) return false;
                 boolean allowSelection = true;
-                final int oldSelected = mBuilder.selectedIndex;
+                final int oldSelected = builder.selectedIndex;
 
-                if (mBuilder.autoDismiss && mBuilder.positiveText == null) {
+                if (builder.autoDismiss && builder.positiveText == null) {
                     // If auto dismiss is enabled, and no action button is visible to approve the selection, dismiss the dialog
                     dismiss();
                     // Don't allow the selection to be updated since the dialog is being dismissed anyways
                     allowSelection = false;
                     // Update selected index and send callback
-                    mBuilder.selectedIndex = position;
+                    builder.selectedIndex = position;
                     sendSingleChoiceCallback(view);
-                } else if (mBuilder.alwaysCallSingleChoiceCallback) {
+                } else if (builder.alwaysCallSingleChoiceCallback) {
                     // Temporarily set the new index so the callback uses the right one
-                    mBuilder.selectedIndex = position;
+                    builder.selectedIndex = position;
                     // Only allow the radio button to be checked if the callback returns true
                     allowSelection = sendSingleChoiceCallback(view);
                     // Restore the old selected index, so the state is updated below
-                    mBuilder.selectedIndex = oldSelected;
+                    builder.selectedIndex = oldSelected;
                 }
                 // Update the checked states
                 if (allowSelection) {
-                    mBuilder.selectedIndex = position;
+                    builder.selectedIndex = position;
                     radio.setChecked(true);
-                    mBuilder.adapter.notifyItemChanged(oldSelected);
-                    mBuilder.adapter.notifyItemChanged(position);
+                    builder.adapter.notifyItemChanged(oldSelected);
+                    builder.adapter.notifyItemChanged(position);
                 }
             }
         }
@@ -247,9 +247,9 @@ public class MaterialDialog extends DialogBase implements
     }
 
     protected final Drawable getListSelector() {
-        if (mBuilder.listSelector != 0)
-            return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.listSelector, null);
-        final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_list_selector);
+        if (builder.listSelector != 0)
+            return ResourcesCompat.getDrawable(builder.context.getResources(), builder.listSelector, null);
+        final Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_list_selector);
         if (d != null) return d;
         return DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
     }
@@ -269,41 +269,41 @@ public class MaterialDialog extends DialogBase implements
 
     /* package */ Drawable getButtonSelector(DialogAction which, boolean isStacked) {
         if (isStacked) {
-            if (mBuilder.btnSelectorStacked != 0)
-                return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorStacked, null);
-            final Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_stacked_selector);
+            if (builder.btnSelectorStacked != 0)
+                return ResourcesCompat.getDrawable(builder.context.getResources(), builder.btnSelectorStacked, null);
+            final Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_stacked_selector);
             if (d != null) return d;
             return DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
         } else {
             switch (which) {
                 default: {
-                    if (mBuilder.btnSelectorPositive != 0)
-                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorPositive, null);
-                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_positive_selector);
+                    if (builder.btnSelectorPositive != 0)
+                        return ResourcesCompat.getDrawable(builder.context.getResources(), builder.btnSelectorPositive, null);
+                    Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_positive_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
+                        RippleHelper.applyColor(d, builder.buttonRippleColor);
                     return d;
                 }
                 case NEUTRAL: {
-                    if (mBuilder.btnSelectorNeutral != 0)
-                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNeutral, null);
-                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_neutral_selector);
+                    if (builder.btnSelectorNeutral != 0)
+                        return ResourcesCompat.getDrawable(builder.context.getResources(), builder.btnSelectorNeutral, null);
+                    Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_neutral_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
+                        RippleHelper.applyColor(d, builder.buttonRippleColor);
                     return d;
                 }
                 case NEGATIVE: {
-                    if (mBuilder.btnSelectorNegative != 0)
-                        return ResourcesCompat.getDrawable(mBuilder.context.getResources(), mBuilder.btnSelectorNegative, null);
-                    Drawable d = DialogUtils.resolveDrawable(mBuilder.context, R.attr.md_btn_negative_selector);
+                    if (builder.btnSelectorNegative != 0)
+                        return ResourcesCompat.getDrawable(builder.context.getResources(), builder.btnSelectorNegative, null);
+                    Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_negative_selector);
                     if (d != null) return d;
                     d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        RippleHelper.applyColor(d, mBuilder.buttonRippleColor);
+                        RippleHelper.applyColor(d, builder.buttonRippleColor);
                     return d;
                 }
             }
@@ -311,23 +311,23 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private boolean sendSingleChoiceCallback(View v) {
-        if (mBuilder.listCallbackSingleChoice == null) return false;
+        if (builder.listCallbackSingleChoice == null) return false;
         CharSequence text = null;
-        if (mBuilder.selectedIndex >= 0 && mBuilder.selectedIndex < mBuilder.items.size()) {
-            text = mBuilder.items.get(mBuilder.selectedIndex);
+        if (builder.selectedIndex >= 0 && builder.selectedIndex < builder.items.size()) {
+            text = builder.items.get(builder.selectedIndex);
         }
-        return mBuilder.listCallbackSingleChoice.onSelection(this, v, mBuilder.selectedIndex, text);
+        return builder.listCallbackSingleChoice.onSelection(this, v, builder.selectedIndex, text);
     }
 
     private boolean sendMultichoiceCallback() {
-        if (mBuilder.listCallbackMultiChoice == null) return false;
+        if (builder.listCallbackMultiChoice == null) return false;
         Collections.sort(selectedIndicesList); // make sure the indices are in order
         List<CharSequence> selectedTitles = new ArrayList<>();
         for (Integer i : selectedIndicesList) {
-            if (i < 0 || i > mBuilder.items.size() - 1) continue;
-            selectedTitles.add(mBuilder.items.get(i));
+            if (i < 0 || i > builder.items.size() - 1) continue;
+            selectedTitles.add(builder.items.get(i));
         }
-        return mBuilder.listCallbackMultiChoice.onSelection(this,
+        return builder.listCallbackMultiChoice.onSelection(this,
                 selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
                 selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
@@ -337,44 +337,44 @@ public class MaterialDialog extends DialogBase implements
         DialogAction tag = (DialogAction) v.getTag();
         switch (tag) {
             case POSITIVE: {
-                if (mBuilder.callback != null) {
-                    mBuilder.callback.onAny(this);
-                    mBuilder.callback.onPositive(this);
+                if (builder.callback != null) {
+                    builder.callback.onAny(this);
+                    builder.callback.onPositive(this);
                 }
-                if (mBuilder.onPositiveCallback != null)
-                    mBuilder.onPositiveCallback.onClick(this, tag);
-                if (!mBuilder.alwaysCallSingleChoiceCallback)
+                if (builder.onPositiveCallback != null)
+                    builder.onPositiveCallback.onClick(this, tag);
+                if (!builder.alwaysCallSingleChoiceCallback)
                     sendSingleChoiceCallback(v);
-                if (!mBuilder.alwaysCallMultiChoiceCallback)
+                if (!builder.alwaysCallMultiChoiceCallback)
                     sendMultichoiceCallback();
-                if (mBuilder.inputCallback != null && input != null && !mBuilder.alwaysCallInputCallback)
-                    mBuilder.inputCallback.onInput(this, input.getText());
-                if (mBuilder.autoDismiss) dismiss();
+                if (builder.inputCallback != null && input != null && !builder.alwaysCallInputCallback)
+                    builder.inputCallback.onInput(this, input.getText());
+                if (builder.autoDismiss) dismiss();
                 break;
             }
             case NEGATIVE: {
-                if (mBuilder.callback != null) {
-                    mBuilder.callback.onAny(this);
-                    mBuilder.callback.onNegative(this);
+                if (builder.callback != null) {
+                    builder.callback.onAny(this);
+                    builder.callback.onNegative(this);
                 }
-                if (mBuilder.onNegativeCallback != null)
-                    mBuilder.onNegativeCallback.onClick(this, tag);
-                if (mBuilder.autoDismiss) cancel();
+                if (builder.onNegativeCallback != null)
+                    builder.onNegativeCallback.onClick(this, tag);
+                if (builder.autoDismiss) cancel();
                 break;
             }
             case NEUTRAL: {
-                if (mBuilder.callback != null) {
-                    mBuilder.callback.onAny(this);
-                    mBuilder.callback.onNeutral(this);
+                if (builder.callback != null) {
+                    builder.callback.onAny(this);
+                    builder.callback.onNeutral(this);
                 }
-                if (mBuilder.onNeutralCallback != null)
-                    mBuilder.onNeutralCallback.onClick(this, tag);
-                if (mBuilder.autoDismiss) dismiss();
+                if (builder.onNeutralCallback != null)
+                    builder.onNeutralCallback.onClick(this, tag);
+                if (builder.autoDismiss) dismiss();
                 break;
             }
         }
-        if (mBuilder.onAnyCallback != null)
-            mBuilder.onAnyCallback.onClick(this, tag);
+        if (builder.onAnyCallback != null)
+            builder.onAnyCallback.onClick(this, tag);
     }
 
     /**
@@ -1100,6 +1100,7 @@ public class MaterialDialog extends DialogBase implements
                 this.indeterminateProgress = true;
                 this.progress = -2;
             } else {
+                this.indeterminateIsHorizontalProgress = false;
                 this.indeterminateProgress = false;
                 this.progress = -1;
                 this.progressMax = max;
@@ -1501,7 +1502,7 @@ public class MaterialDialog extends DialogBase implements
      */
     @Nullable
     public final View getCustomView() {
-        return mBuilder.customView;
+        return builder.customView;
     }
 
     /**
@@ -1515,17 +1516,17 @@ public class MaterialDialog extends DialogBase implements
     public final void setActionButton(@NonNull final DialogAction which, final CharSequence title) {
         switch (which) {
             default:
-                mBuilder.positiveText = title;
+                builder.positiveText = title;
                 positiveButton.setText(title);
                 positiveButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
             case NEUTRAL:
-                mBuilder.neutralText = title;
+                builder.neutralText = title;
                 neutralButton.setText(title);
                 neutralButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
             case NEGATIVE:
-                mBuilder.negativeText = title;
+                builder.negativeText = title;
                 negativeButton.setText(title);
                 negativeButton.setVisibility(title == null ? View.GONE : View.VISIBLE);
                 break;
@@ -1559,11 +1560,11 @@ public class MaterialDialog extends DialogBase implements
      */
     public final int numberOfActionButtons() {
         int number = 0;
-        if (mBuilder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE)
+        if (builder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE)
             number++;
-        if (mBuilder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE)
+        if (builder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE)
             number++;
-        if (mBuilder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE)
+        if (builder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE)
             number++;
         return number;
     }
@@ -1577,12 +1578,12 @@ public class MaterialDialog extends DialogBase implements
     @UiThread
     @Override
     public final void setTitle(@StringRes int newTitleRes) {
-        setTitle(mBuilder.context.getString(newTitleRes));
+        setTitle(builder.context.getString(newTitleRes));
     }
 
     @UiThread
     public final void setTitle(@StringRes int newTitleRes, @Nullable Object... formatArgs) {
-        setTitle(mBuilder.context.getString(newTitleRes, formatArgs));
+        setTitle(builder.context.getString(newTitleRes, formatArgs));
     }
 
     @UiThread
@@ -1599,7 +1600,7 @@ public class MaterialDialog extends DialogBase implements
 
     @UiThread
     public void setIconAttribute(@AttrRes int attrId) {
-        Drawable d = DialogUtils.resolveDrawable(mBuilder.context, attrId);
+        Drawable d = DialogUtils.resolveDrawable(builder.context, attrId);
         setIcon(d);
     }
 
@@ -1611,12 +1612,12 @@ public class MaterialDialog extends DialogBase implements
 
     @UiThread
     public final void setContent(@StringRes int newContentRes) {
-        setContent(mBuilder.context.getString(newContentRes));
+        setContent(builder.context.getString(newContentRes));
     }
 
     @UiThread
     public final void setContent(@StringRes int newContentRes, @Nullable Object... formatArgs) {
-        setContent(mBuilder.context.getString(newContentRes, formatArgs));
+        setContent(builder.context.getString(newContentRes, formatArgs));
     }
 
     /**
@@ -1629,20 +1630,20 @@ public class MaterialDialog extends DialogBase implements
 
     @Nullable
     public final ArrayList<CharSequence> getItems() {
-        return mBuilder.items;
+        return builder.items;
     }
 
     @UiThread
     public final void setItems(CharSequence... items) {
-        if (mBuilder.adapter == null)
+        if (builder.adapter == null)
             throw new IllegalStateException("This MaterialDialog instance does not yet have an adapter set to it. You cannot use setItems().");
         if (items != null) {
-            mBuilder.items = new ArrayList<>(items.length);
-            Collections.addAll(mBuilder.items, items);
+            builder.items = new ArrayList<>(items.length);
+            Collections.addAll(builder.items, items);
         } else {
-            mBuilder.items = null;
+            builder.items = null;
         }
-        if (!(mBuilder.adapter instanceof DefaultRvAdapter)) {
+        if (!(builder.adapter instanceof DefaultRvAdapter)) {
             throw new IllegalStateException("When using a custom adapter, setItems() cannot be used. Set items through the adapter instead.");
         }
         notifyItemsChanged();
@@ -1650,26 +1651,26 @@ public class MaterialDialog extends DialogBase implements
 
     @UiThread
     public final void notifyItemInserted(@IntRange(from = 0, to = Integer.MAX_VALUE) int index) {
-        mBuilder.adapter.notifyItemInserted(index);
+        builder.adapter.notifyItemInserted(index);
     }
 
     @UiThread
     public final void notifyItemChanged(@IntRange(from = 0, to = Integer.MAX_VALUE) int index) {
-        mBuilder.adapter.notifyItemChanged(index);
+        builder.adapter.notifyItemChanged(index);
     }
 
     @UiThread
     public final void notifyItemsChanged() {
-        mBuilder.adapter.notifyDataSetChanged();
+        builder.adapter.notifyDataSetChanged();
     }
 
     public final int getCurrentProgress() {
-        if (mProgress == null) return -1;
-        return mProgress.getProgress();
+        if (progressBar == null) return -1;
+        return progressBar.getProgress();
     }
 
     public ProgressBar getProgressBar() {
-        return mProgress;
+        return progressBar;
     }
 
     public final void incrementProgress(final int by) {
@@ -1679,19 +1680,19 @@ public class MaterialDialog extends DialogBase implements
     private final Handler mHandler;
 
     public final void setProgress(final int progress) {
-        if (mBuilder.progress <= -2)
+        if (builder.progress <= -2)
             throw new IllegalStateException("Cannot use setProgress() on this dialog.");
-        mProgress.setProgress(progress);
+        progressBar.setProgress(progress);
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mProgressLabel != null) {
+                if (progressLabel != null) {
 //                    final int percentage = (int) (((float) getCurrentProgress() / (float) getMaxProgress()) * 100f);
-                    mProgressLabel.setText(mBuilder.progressPercentFormat.format(
+                    progressLabel.setText(builder.progressPercentFormat.format(
                             (float) getCurrentProgress() / (float) getMaxProgress()));
                 }
-                if (mProgressMinMax != null) {
-                    mProgressMinMax.setText(String.format(mBuilder.progressNumberFormat,
+                if (progressMinMax != null) {
+                    progressMinMax.setText(String.format(builder.progressNumberFormat,
                             getCurrentProgress(), getMaxProgress()));
                 }
             }
@@ -1699,18 +1700,18 @@ public class MaterialDialog extends DialogBase implements
     }
 
     public final void setMaxProgress(final int max) {
-        if (mBuilder.progress <= -2)
+        if (builder.progress <= -2)
             throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
-        mProgress.setMax(max);
+        progressBar.setMax(max);
     }
 
     public final boolean isIndeterminateProgress() {
-        return mBuilder.indeterminateProgress;
+        return builder.indeterminateProgress;
     }
 
     public final int getMaxProgress() {
-        if (mProgress == null) return -1;
-        return mProgress.getMax();
+        if (progressBar == null) return -1;
+        return progressBar.getMax();
     }
 
     /**
@@ -1718,7 +1719,7 @@ public class MaterialDialog extends DialogBase implements
      * NumberFormat.getPercentageInstance().
      */
     public final void setProgressPercentFormat(NumberFormat format) {
-        mBuilder.progressPercentFormat = format;
+        builder.progressPercentFormat = format;
         setProgress(getCurrentProgress()); // invalidates display
     }
 
@@ -1727,7 +1728,7 @@ public class MaterialDialog extends DialogBase implements
      * default is "%1d/%2d".
      */
     public final void setProgressNumberFormat(String format) {
-        mBuilder.progressNumberFormat = format;
+        builder.progressNumberFormat = format;
         setProgress(getCurrentProgress()); // invalidates display
     }
 
@@ -1742,8 +1743,8 @@ public class MaterialDialog extends DialogBase implements
      * choice list
      */
     public int getSelectedIndex() {
-        if (mBuilder.listCallbackSingleChoice != null) {
-            return mBuilder.selectedIndex;
+        if (builder.listCallbackSingleChoice != null) {
+            return builder.selectedIndex;
         } else {
             return -1;
         }
@@ -1757,7 +1758,7 @@ public class MaterialDialog extends DialogBase implements
      */
     @Nullable
     public Integer[] getSelectedIndices() {
-        if (mBuilder.listCallbackMultiChoice != null) {
+        if (builder.listCallbackMultiChoice != null) {
             return selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]);
         } else {
             return null;
@@ -1774,9 +1775,9 @@ public class MaterialDialog extends DialogBase implements
      */
     @UiThread
     public void setSelectedIndex(int index) {
-        mBuilder.selectedIndex = index;
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
-            mBuilder.adapter.notifyDataSetChanged();
+        builder.selectedIndex = index;
+        if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
+            builder.adapter.notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndex() with the default adapter implementation.");
         }
@@ -1793,8 +1794,8 @@ public class MaterialDialog extends DialogBase implements
     @UiThread
     public void setSelectedIndices(@NonNull Integer[] indices) {
         selectedIndicesList = new ArrayList<>(Arrays.asList(indices));
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
-            mBuilder.adapter.notifyDataSetChanged();
+        if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
+            builder.adapter.notifyDataSetChanged();
         } else {
             throw new IllegalStateException("You can only use setSelectedIndices() with the default adapter implementation.");
         }
@@ -1815,11 +1816,11 @@ public class MaterialDialog extends DialogBase implements
     public void clearSelectedIndices(boolean sendCallback) {
         if (listType == null || listType != ListType.MULTI)
             throw new IllegalStateException("You can only use clearSelectedIndices() with multi choice list dialogs.");
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
+        if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
             if (selectedIndicesList != null)
                 selectedIndicesList.clear();
-            mBuilder.adapter.notifyDataSetChanged();
-            if (sendCallback && mBuilder.listCallbackMultiChoice != null)
+            builder.adapter.notifyDataSetChanged();
+            if (sendCallback && builder.listCallbackMultiChoice != null)
                 sendMultichoiceCallback();
         } else {
             throw new IllegalStateException("You can only use clearSelectedIndices() with the default adapter implementation.");
@@ -1841,15 +1842,15 @@ public class MaterialDialog extends DialogBase implements
     public void selectAllIndices(boolean sendCallback) {
         if (listType == null || listType != ListType.MULTI)
             throw new IllegalStateException("You can only use selectAllIndices() with multi choice list dialogs.");
-        if (mBuilder.adapter != null && mBuilder.adapter instanceof DefaultRvAdapter) {
+        if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
             if (selectedIndicesList == null)
                 selectedIndicesList = new ArrayList<>();
-            for (int i = 0; i < mBuilder.adapter.getItemCount(); i++) {
+            for (int i = 0; i < builder.adapter.getItemCount(); i++) {
                 if (!selectedIndicesList.contains(i))
                     selectedIndicesList.add(i);
             }
-            mBuilder.adapter.notifyDataSetChanged();
-            if (sendCallback && mBuilder.listCallbackMultiChoice != null)
+            builder.adapter.notifyDataSetChanged();
+            if (sendCallback && builder.listCallbackMultiChoice != null)
                 sendMultichoiceCallback();
         } else {
             throw new IllegalStateException("You can only use selectAllIndices() with the default adapter implementation.");
@@ -1859,7 +1860,7 @@ public class MaterialDialog extends DialogBase implements
     @Override
     public final void onShow(DialogInterface dialog) {
         if (input != null) {
-            DialogUtils.showKeyboard(this, mBuilder);
+            DialogUtils.showKeyboard(this, builder);
             if (input.getText().length() > 0)
                 input.setSelection(input.getText().length());
         }
@@ -1878,14 +1879,14 @@ public class MaterialDialog extends DialogBase implements
 
                 final int length = s.toString().length();
                 boolean emptyDisabled = false;
-                if (!mBuilder.inputAllowEmpty) {
+                if (!builder.inputAllowEmpty) {
                     emptyDisabled = length == 0;
                     final View positiveAb = getActionButton(DialogAction.POSITIVE);
                     positiveAb.setEnabled(!emptyDisabled);
                 }
                 invalidateInputMinMaxIndicator(length, emptyDisabled);
-                if (mBuilder.alwaysCallInputCallback)
-                    mBuilder.inputCallback.onInput(MaterialDialog.this, s);
+                if (builder.alwaysCallInputCallback)
+                    builder.inputCallback.onInput(MaterialDialog.this, s);
             }
 
             @Override
@@ -1896,16 +1897,16 @@ public class MaterialDialog extends DialogBase implements
 
     protected void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
         if (inputMinMax != null) {
-            if (mBuilder.inputMaxLength > 0) {
-                inputMinMax.setText(String.format(Locale.getDefault(), "%d/%d", currentLength, mBuilder.inputMaxLength));
+            if (builder.inputMaxLength > 0) {
+                inputMinMax.setText(String.format(Locale.getDefault(), "%d/%d", currentLength, builder.inputMaxLength));
                 inputMinMax.setVisibility(View.VISIBLE);
             } else inputMinMax.setVisibility(View.GONE);
             final boolean isDisabled = (emptyDisabled && currentLength == 0) ||
-                    (mBuilder.inputMaxLength > 0 && currentLength > mBuilder.inputMaxLength) ||
-                    currentLength < mBuilder.inputMinLength;
-            final int colorText = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.contentColor;
-            final int colorWidget = isDisabled ? mBuilder.inputRangeErrorColor : mBuilder.widgetColor;
-            if (mBuilder.inputMaxLength > 0)
+                    (builder.inputMaxLength > 0 && currentLength > builder.inputMaxLength) ||
+                    currentLength < builder.inputMinLength;
+            final int colorText = isDisabled ? builder.inputRangeErrorColor : builder.contentColor;
+            final int colorWidget = isDisabled ? builder.inputRangeErrorColor : builder.widgetColor;
+            if (builder.inputMaxLength > 0)
                 inputMinMax.setTextColor(colorText);
             MDTintHelper.setTint(input, colorWidget);
             final View positiveAb = getActionButton(DialogAction.POSITIVE);
@@ -1916,7 +1917,7 @@ public class MaterialDialog extends DialogBase implements
     @Override
     public void dismiss() {
         if (input != null)
-            DialogUtils.hideKeyboard(this, mBuilder);
+            DialogUtils.hideKeyboard(this, builder);
         super.dismiss();
     }
 
