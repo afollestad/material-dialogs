@@ -385,7 +385,7 @@ the single choice callback when user presses the positive action button. The dia
 unless auto dismiss is turned off.
 
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
-every time the user selects an item.
+every time the user selects/unselects an item.
 
 ## Coloring Radio Buttons
 
@@ -419,7 +419,8 @@ new MaterialDialog.Builder(this)
             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                 /**
                  * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
-                 * returning false here won't allow the newly selected check box to actually be selected.
+                 * returning false here won't allow the newly selected check box to actually be selected
+                 * (or the newly unselected check box to be unchecked).
                  * See the limited multi choice dialog example in the sample project for details.
                  **/
                  return true;
@@ -438,7 +439,7 @@ the multi choice callback when user presses the positive action button. The dial
 unless auto dismiss is turned off.
 
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
-every time the user selects an item.
+every time the user selects/unselects an item.
 
 ## Coloring Check Boxes
 

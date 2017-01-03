@@ -148,7 +148,8 @@
     <string name="please_wait">Please wait…</string>
     <string name="optional_dialog_message">This is an optional dialog message.</string>
     <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
-    <string name="selection_limit_reached">Selection limit reached!</string>
+    <string name="selection_limit_reached">You cannot select anymore items!</string>
+    <string name="selection_min_limit_reached">You must select at least 1 item!</string>
 
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->
     <string name="back_button_label">Back</string>
@@ -199,5 +200,6 @@
     <string name="example_prompt">Example check prompt</string>
     <string name="list_longPress">Basic List (Long Press)</string>
     <string name="add_item">Add Item</string>
+    <string name="multiChoiceLimitedMin">Multi Choice (Min Selections)</string>
 
 </resources>

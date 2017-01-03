@@ -2,13 +2,9 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     PUBLISH_VERSION = '0.9.2.0'
@@ -27,6 +23,14 @@ android {
         targetSdkVersion TARGET_SDK
         versionCode 169
         versionName PUBLISH_VERSION
+
+        jackOptions {
+            enabled true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     lintOptions {
         abortOnError false
@@ -45,5 +49,5 @@ dependencies {
     compile project(':commons')
     compile "com.android.support:gridlayout-v7:$SUPPORT_LIBRARY_VERSION"
     compile 'com.jakewharton:butterknife:8.1.0'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 }

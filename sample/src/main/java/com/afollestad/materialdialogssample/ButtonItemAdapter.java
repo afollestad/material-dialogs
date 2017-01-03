@@ -15,25 +15,31 @@ import android.widget.TextView;
  */
 class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
-    public interface Callback {
-        void onItemClicked(int index);
+    interface ItemCallback {
 
-        void onButtonClicked(int index);
+        void onItemClicked(int itemIndex);
     }
 
-    private final CharSequence[] mItems;
-    private Callback mCallback;
+    interface ButtonCallback {
 
-    public ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
+        void onButtonClicked(int buttonIndex);
+    }
+
+    private final CharSequence[] items;
+    private ItemCallback itemCallback;
+    private ButtonCallback buttonCallback;
+
+    ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
         this(context.getResources().getTextArray(arrayResId));
     }
 
     private ButtonItemAdapter(CharSequence[] items) {
-        this.mItems = items;
+        this.items = items;
     }
 
-    public void setCallback(Callback mCallback) {
-        this.mCallback = mCallback;
+    void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
+        this.itemCallback = itemCallback;
+        this.buttonCallback = buttonCallback;
     }
 
     @Override
@@ -46,22 +52,22 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ButtonVH holder, int position) {
-        holder.title.setText(mItems[position] + " (" + position + ")");
+        holder.title.setText(items[position] + " (" + position + ")");
         holder.button.setTag(position);
     }
 
     @Override
     public int getItemCount() {
-        return mItems.length;
+        return items.length;
     }
 
-    public static class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView title;
         final Button button;
         final ButtonItemAdapter adapter;
 
-        public ButtonVH(View itemView, ButtonItemAdapter adapter) {
+        ButtonVH(View itemView, ButtonItemAdapter adapter) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.md_title);
             button = (Button) itemView.findViewById(R.id.md_button);
@@ -73,12 +79,12 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
 
         @Override
         public void onClick(View view) {
-            if (adapter.mCallback == null)
+            if (adapter.itemCallback == null)
                 return;
             if (view instanceof Button) {
-                adapter.mCallback.onButtonClicked(getAdapterPosition());
+                adapter.buttonCallback.onButtonClicked(getAdapterPosition());
             } else {
-                adapter.mCallback.onItemClicked(getAdapterPosition());
+                adapter.itemCallback.onItemClicked(getAdapterPosition());
             }
         }
     }
