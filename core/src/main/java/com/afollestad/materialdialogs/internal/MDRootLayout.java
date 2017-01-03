@@ -33,35 +33,36 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 public class MDRootLayout extends ViewGroup {
 
-    private View mTitleBar;
-    private View mContent;
-
     private static final int INDEX_NEUTRAL = 0;
     private static final int INDEX_NEGATIVE = 1;
     private static final int INDEX_POSITIVE = 2;
-    private boolean mDrawTopDivider = false;
-    private boolean mDrawBottomDivider = false;
-    private final MDButton[] mButtons = new MDButton[3];
-    private StackingBehavior mStackBehavior = StackingBehavior.ADAPTIVE;
-    private boolean mIsStacked = false;
-    private boolean mUseFullPadding = true;
-    private boolean mReducePaddingNoTitleNoButtons;
-    private boolean mNoTitleNoPadding;
 
-    private int mNoTitlePaddingFull;
-    private int mButtonPaddingFull;
-    private int mButtonBarHeight;
+    private View titleBar;
+    private View content;
 
-    private GravityEnum mButtonGravity = GravityEnum.START;
+    private boolean drawTopDivider = false;
+    private boolean drawBottomDivider = false;
+    private final MDButton[] buttons = new MDButton[3];
+    private StackingBehavior stackBehavior = StackingBehavior.ADAPTIVE;
+    private boolean isStacked = false;
+    private boolean useFullPadding = true;
+    private boolean reducePaddingNoTitleNoButtons;
+    private boolean noTitleNoPadding;
+
+    private int noTitlePaddingFull;
+    private int buttonPaddingFull;
+    private int buttonBarHeight;
+
+    private GravityEnum buttonGravity = GravityEnum.START;
 
     /* Margin from dialog frame to first button */
-    private int mButtonHorizontalEdgeMargin;
+    private int buttonHorizontalEdgeMargin;
 
-    private Paint mDividerPaint;
+    private Paint dividerPaint;
 
-    private ViewTreeObserver.OnScrollChangedListener mTopOnScrollChangedListener;
-    private ViewTreeObserver.OnScrollChangedListener mBottomOnScrollChangedListener;
-    private int mDividerWidth;
+    private ViewTreeObserver.OnScrollChangedListener topOnScrollChangedListener;
+    private ViewTreeObserver.OnScrollChangedListener bottomOnScrollChangedListener;
+    private int dividerWidth;
 
     public MDRootLayout(Context context) {
         super(context);
@@ -89,23 +90,23 @@ public class MDRootLayout extends ViewGroup {
         Resources r = context.getResources();
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MDRootLayout, defStyleAttr, 0);
-        mReducePaddingNoTitleNoButtons = a.getBoolean(R.styleable.MDRootLayout_md_reduce_padding_no_title_no_buttons, true);
+        reducePaddingNoTitleNoButtons = a.getBoolean(R.styleable.MDRootLayout_md_reduce_padding_no_title_no_buttons, true);
         a.recycle();
 
-        mNoTitlePaddingFull = r.getDimensionPixelSize(R.dimen.md_notitle_vertical_padding);
-        mButtonPaddingFull = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
+        noTitlePaddingFull = r.getDimensionPixelSize(R.dimen.md_notitle_vertical_padding);
+        buttonPaddingFull = r.getDimensionPixelSize(R.dimen.md_button_frame_vertical_padding);
 
-        mButtonHorizontalEdgeMargin = r.getDimensionPixelSize(R.dimen.md_button_padding_frame_side);
-        mButtonBarHeight = r.getDimensionPixelSize(R.dimen.md_button_height);
+        buttonHorizontalEdgeMargin = r.getDimensionPixelSize(R.dimen.md_button_padding_frame_side);
+        buttonBarHeight = r.getDimensionPixelSize(R.dimen.md_button_height);
 
-        mDividerPaint = new Paint();
-        mDividerWidth = r.getDimensionPixelSize(R.dimen.md_divider_height);
-        mDividerPaint.setColor(DialogUtils.resolveColor(context, R.attr.md_divider_color));
+        dividerPaint = new Paint();
+        dividerWidth = r.getDimensionPixelSize(R.dimen.md_divider_height);
+        dividerPaint.setColor(DialogUtils.resolveColor(context, R.attr.md_divider_color));
         setWillNotDraw(false);
     }
 
     public void noTitleNoPadding() {
-        mNoTitleNoPadding = true;
+        noTitleNoPadding = true;
     }
 
     @Override
@@ -114,15 +115,15 @@ public class MDRootLayout extends ViewGroup {
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             if (v.getId() == R.id.md_titleFrame) {
-                mTitleBar = v;
+                titleBar = v;
             } else if (v.getId() == R.id.md_buttonDefaultNeutral) {
-                mButtons[INDEX_NEUTRAL] = (MDButton) v;
+                buttons[INDEX_NEUTRAL] = (MDButton) v;
             } else if (v.getId() == R.id.md_buttonDefaultNegative) {
-                mButtons[INDEX_NEGATIVE] = (MDButton) v;
+                buttons[INDEX_NEGATIVE] = (MDButton) v;
             } else if (v.getId() == R.id.md_buttonDefaultPositive) {
-                mButtons[INDEX_POSITIVE] = (MDButton) v;
+                buttons[INDEX_POSITIVE] = (MDButton) v;
             } else {
-                mContent = v;
+                content = v;
             }
         }
     }
@@ -132,17 +133,17 @@ public class MDRootLayout extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        mUseFullPadding = true;
+        useFullPadding = true;
         boolean hasButtons = false;
 
         final boolean stacked;
-        if (mStackBehavior == StackingBehavior.ALWAYS) {
+        if (stackBehavior == StackingBehavior.ALWAYS) {
             stacked = true;
-        } else if (mStackBehavior == StackingBehavior.NEVER) {
+        } else if (stackBehavior == StackingBehavior.NEVER) {
             stacked = false;
         } else {
             int buttonsWidth = 0;
-            for (MDButton button : mButtons) {
+            for (MDButton button : buttons) {
                 if (button != null && isVisible(button)) {
                     button.setStacked(false, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
@@ -158,9 +159,9 @@ public class MDRootLayout extends ViewGroup {
         }
 
         int stackedHeight = 0;
-        mIsStacked = stacked;
+        isStacked = stacked;
         if (stacked) {
-            for (MDButton button : mButtons) {
+            for (MDButton button : buttons) {
                 if (button != null && isVisible(button)) {
                     button.setStacked(true, false);
                     measureChild(button, widthMeasureSpec, heightMeasureSpec);
@@ -174,42 +175,42 @@ public class MDRootLayout extends ViewGroup {
         int fullPadding = 0;
         int minPadding = 0;
         if (hasButtons) {
-            if (mIsStacked) {
+            if (isStacked) {
                 availableHeight -= stackedHeight;
-                fullPadding += 2 * mButtonPaddingFull;
-                minPadding += 2 * mButtonPaddingFull;
+                fullPadding += 2 * buttonPaddingFull;
+                minPadding += 2 * buttonPaddingFull;
             } else {
-                availableHeight -= mButtonBarHeight;
-                fullPadding += 2 * mButtonPaddingFull;
+                availableHeight -= buttonBarHeight;
+                fullPadding += 2 * buttonPaddingFull;
                 /* No minPadding */
             }
         } else {
             /* Content has 8dp, we add 16dp and get 24dp, the frame margin */
-            fullPadding += 2 * mButtonPaddingFull;
+            fullPadding += 2 * buttonPaddingFull;
         }
 
-        if (isVisible(mTitleBar)) {
-            mTitleBar.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+        if (isVisible(titleBar)) {
+            titleBar.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.UNSPECIFIED);
-            availableHeight -= mTitleBar.getMeasuredHeight();
-        } else if (!mNoTitleNoPadding) {
-            fullPadding += mNoTitlePaddingFull;
+            availableHeight -= titleBar.getMeasuredHeight();
+        } else if (!noTitleNoPadding) {
+            fullPadding += noTitlePaddingFull;
         }
 
-        if (isVisible(mContent)) {
-            mContent.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+        if (isVisible(content)) {
+            content.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(availableHeight - minPadding, MeasureSpec.AT_MOST));
 
-            if (mContent.getMeasuredHeight() <= availableHeight - fullPadding) {
-                if (!mReducePaddingNoTitleNoButtons || isVisible(mTitleBar) || hasButtons) {
-                    mUseFullPadding = true;
-                    availableHeight -= mContent.getMeasuredHeight() + fullPadding;
+            if (content.getMeasuredHeight() <= availableHeight - fullPadding) {
+                if (!reducePaddingNoTitleNoButtons || isVisible(titleBar) || hasButtons) {
+                    useFullPadding = true;
+                    availableHeight -= content.getMeasuredHeight() + fullPadding;
                 } else {
-                    mUseFullPadding = false;
-                    availableHeight -= mContent.getMeasuredHeight() + minPadding;
+                    useFullPadding = false;
+                    availableHeight -= content.getMeasuredHeight() + minPadding;
                 }
             } else {
-                mUseFullPadding = false;
+                useFullPadding = false;
                 availableHeight = 0;
             }
 
@@ -229,35 +230,35 @@ public class MDRootLayout extends ViewGroup {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mContent != null) {
-            if (mDrawTopDivider) {
-                int y = mContent.getTop();
-                canvas.drawRect(0, y - mDividerWidth, getMeasuredWidth(), y, mDividerPaint);
+        if (content != null) {
+            if (drawTopDivider) {
+                int y = content.getTop();
+                canvas.drawRect(0, y - dividerWidth, getMeasuredWidth(), y, dividerPaint);
             }
 
-            if (mDrawBottomDivider) {
-                int y = mContent.getBottom();
-                canvas.drawRect(0, y, getMeasuredWidth(), y + mDividerWidth, mDividerPaint);
+            if (drawBottomDivider) {
+                int y = content.getBottom();
+                canvas.drawRect(0, y, getMeasuredWidth(), y + dividerWidth, dividerPaint);
             }
         }
     }
 
     @Override
     protected void onLayout(boolean changed, final int l, int t, final int r, int b) {
-        if (isVisible(mTitleBar)) {
-            int height = mTitleBar.getMeasuredHeight();
-            mTitleBar.layout(l, t, r, t + height);
+        if (isVisible(titleBar)) {
+            int height = titleBar.getMeasuredHeight();
+            titleBar.layout(l, t, r, t + height);
             t += height;
-        } else if (!mNoTitleNoPadding && mUseFullPadding) {
-            t += mNoTitlePaddingFull;
+        } else if (!noTitleNoPadding && useFullPadding) {
+            t += noTitlePaddingFull;
         }
 
-        if (isVisible(mContent))
-            mContent.layout(l, t, r, t + mContent.getMeasuredHeight());
+        if (isVisible(content))
+            content.layout(l, t, r, t + content.getMeasuredHeight());
 
-        if (mIsStacked) {
-            b -= mButtonPaddingFull;
-            for (MDButton mButton : mButtons) {
+        if (isStacked) {
+            b -= buttonPaddingFull;
+            for (MDButton mButton : buttons) {
                 if (isVisible(mButton)) {
                     mButton.layout(l, b - mButton.getMeasuredHeight(), r, b);
                     b -= mButton.getMeasuredHeight();
@@ -266,9 +267,9 @@ public class MDRootLayout extends ViewGroup {
         } else {
             int barTop;
             int barBottom = b;
-            if (mUseFullPadding)
-                barBottom -= mButtonPaddingFull;
-            barTop = barBottom - mButtonBarHeight;
+            if (useFullPadding)
+                barBottom -= buttonPaddingFull;
+            barTop = barBottom - buttonBarHeight;
             /* START:
                Neutral   Negative  Positive
 
@@ -280,82 +281,82 @@ public class MDRootLayout extends ViewGroup {
 
                (With no Positive, Negative takes it's place except for CENTER)
              */
-            int offset = mButtonHorizontalEdgeMargin;
+            int offset = buttonHorizontalEdgeMargin;
 
             /* Used with CENTER gravity */
             int neutralLeft = -1;
             int neutralRight = -1;
 
-            if (isVisible(mButtons[INDEX_POSITIVE])) {
+            if (isVisible(buttons[INDEX_POSITIVE])) {
                 int bl, br;
-                if (mButtonGravity == GravityEnum.END) {
+                if (buttonGravity == GravityEnum.END) {
                     bl = l + offset;
-                    br = bl + mButtons[INDEX_POSITIVE].getMeasuredWidth();
+                    br = bl + buttons[INDEX_POSITIVE].getMeasuredWidth();
                 } else { /* START || CENTER */
                     br = r - offset;
-                    bl = br - mButtons[INDEX_POSITIVE].getMeasuredWidth();
+                    bl = br - buttons[INDEX_POSITIVE].getMeasuredWidth();
                     neutralRight = bl;
                 }
-                mButtons[INDEX_POSITIVE].layout(bl, barTop, br, barBottom);
-                offset += mButtons[INDEX_POSITIVE].getMeasuredWidth();
+                buttons[INDEX_POSITIVE].layout(bl, barTop, br, barBottom);
+                offset += buttons[INDEX_POSITIVE].getMeasuredWidth();
             }
 
-            if (isVisible(mButtons[INDEX_NEGATIVE])) {
+            if (isVisible(buttons[INDEX_NEGATIVE])) {
                 int bl, br;
-                if (mButtonGravity == GravityEnum.END) {
+                if (buttonGravity == GravityEnum.END) {
                     bl = l + offset;
-                    br = bl + mButtons[INDEX_NEGATIVE].getMeasuredWidth();
-                } else if (mButtonGravity == GravityEnum.START) {
+                    br = bl + buttons[INDEX_NEGATIVE].getMeasuredWidth();
+                } else if (buttonGravity == GravityEnum.START) {
                     br = r - offset;
-                    bl = br - mButtons[INDEX_NEGATIVE].getMeasuredWidth();
+                    bl = br - buttons[INDEX_NEGATIVE].getMeasuredWidth();
                 } else { /* CENTER */
-                    bl = l + mButtonHorizontalEdgeMargin;
-                    br = bl + mButtons[INDEX_NEGATIVE].getMeasuredWidth();
+                    bl = l + buttonHorizontalEdgeMargin;
+                    br = bl + buttons[INDEX_NEGATIVE].getMeasuredWidth();
                     neutralLeft = br;
                 }
-                mButtons[INDEX_NEGATIVE].layout(bl, barTop, br, barBottom);
+                buttons[INDEX_NEGATIVE].layout(bl, barTop, br, barBottom);
             }
 
-            if (isVisible(mButtons[INDEX_NEUTRAL])) {
+            if (isVisible(buttons[INDEX_NEUTRAL])) {
                 int bl, br;
-                if (mButtonGravity == GravityEnum.END) {
-                    br = r - mButtonHorizontalEdgeMargin;
-                    bl = br - mButtons[INDEX_NEUTRAL].getMeasuredWidth();
-                } else if (mButtonGravity == GravityEnum.START) {
-                    bl = l + mButtonHorizontalEdgeMargin;
-                    br = bl + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
+                if (buttonGravity == GravityEnum.END) {
+                    br = r - buttonHorizontalEdgeMargin;
+                    bl = br - buttons[INDEX_NEUTRAL].getMeasuredWidth();
+                } else if (buttonGravity == GravityEnum.START) {
+                    bl = l + buttonHorizontalEdgeMargin;
+                    br = bl + buttons[INDEX_NEUTRAL].getMeasuredWidth();
                 } else { /* CENTER */
                     if (neutralLeft == -1 && neutralRight != -1) {
-                        neutralLeft = neutralRight - mButtons[INDEX_NEUTRAL].getMeasuredWidth();
+                        neutralLeft = neutralRight - buttons[INDEX_NEUTRAL].getMeasuredWidth();
                     } else if (neutralRight == -1 && neutralLeft != -1) {
-                        neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
+                        neutralRight = neutralLeft + buttons[INDEX_NEUTRAL].getMeasuredWidth();
                     } else if (neutralRight == -1) {
-                        neutralLeft = (r - l) / 2 - mButtons[INDEX_NEUTRAL].getMeasuredWidth() / 2;
-                        neutralRight = neutralLeft + mButtons[INDEX_NEUTRAL].getMeasuredWidth();
+                        neutralLeft = (r - l) / 2 - buttons[INDEX_NEUTRAL].getMeasuredWidth() / 2;
+                        neutralRight = neutralLeft + buttons[INDEX_NEUTRAL].getMeasuredWidth();
                     }
                     bl = neutralLeft;
                     br = neutralRight;
                 }
 
-                mButtons[INDEX_NEUTRAL].layout(bl, barTop, br, barBottom);
+                buttons[INDEX_NEUTRAL].layout(bl, barTop, br, barBottom);
             }
         }
 
-        setUpDividersVisibility(mContent, true, true);
+        setUpDividersVisibility(content, true, true);
     }
 
     public void setStackingBehavior(StackingBehavior behavior) {
-        mStackBehavior = behavior;
+        stackBehavior = behavior;
         invalidate();
     }
 
     public void setDividerColor(int color) {
-        mDividerPaint.setColor(color);
+        dividerPaint.setColor(color);
         invalidate();
     }
 
     public void setButtonGravity(GravityEnum gravity) {
-        mButtonGravity = gravity;
+        buttonGravity = gravity;
         invertGravityIfNecessary();
     }
 
@@ -363,19 +364,19 @@ public class MDRootLayout extends ViewGroup {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) return;
         Configuration config = getResources().getConfiguration();
         if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-            switch (mButtonGravity) {
+            switch (buttonGravity) {
                 case START:
-                    mButtonGravity = GravityEnum.END;
+                    buttonGravity = GravityEnum.END;
                     break;
                 case END:
-                    mButtonGravity = GravityEnum.START;
+                    buttonGravity = GravityEnum.START;
                     break;
             }
         }
     }
 
     public void setButtonStackedGravity(GravityEnum gravity) {
-        for (MDButton mButton : mButtons) {
+        for (MDButton mButton : buttons) {
             if (mButton != null)
                 mButton.setStackedGravity(gravity);
         }
@@ -390,9 +391,9 @@ public class MDRootLayout extends ViewGroup {
                 addScrollListener(sv, setForTop, setForBottom);
             } else {
                 if (setForTop)
-                    mDrawTopDivider = false;
+                    drawTopDivider = false;
                 if (setForBottom)
-                    mDrawBottomDivider = false;
+                    drawBottomDivider = false;
             }
         } else if (view instanceof AdapterView) {
             final AdapterView sv = (AdapterView) view;
@@ -400,9 +401,9 @@ public class MDRootLayout extends ViewGroup {
                 addScrollListener(sv, setForTop, setForBottom);
             } else {
                 if (setForTop)
-                    mDrawTopDivider = false;
+                    drawTopDivider = false;
                 if (setForBottom)
-                    mDrawBottomDivider = false;
+                    drawBottomDivider = false;
             }
         } else if (view instanceof WebView) {
             view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -411,9 +412,9 @@ public class MDRootLayout extends ViewGroup {
                     if (view.getMeasuredHeight() != 0) {
                         if (!canWebViewScroll((WebView) view)) {
                             if (setForTop)
-                                mDrawTopDivider = false;
+                                drawTopDivider = false;
                             if (setForBottom)
-                                mDrawBottomDivider = false;
+                                drawBottomDivider = false;
                         } else {
                             addScrollListener((ViewGroup) view, setForTop, setForBottom);
                         }
@@ -425,9 +426,9 @@ public class MDRootLayout extends ViewGroup {
         } else if (view instanceof RecyclerView) {
             boolean canScroll = canRecyclerViewScroll((RecyclerView) view);
             if (setForTop)
-                mDrawTopDivider = canScroll;
+                drawTopDivider = canScroll;
             if (setForBottom)
-                mDrawBottomDivider = canScroll;
+                drawBottomDivider = canScroll;
             if (canScroll)
                 addScrollListener((ViewGroup) view, setForTop, setForBottom);
         } else if (view instanceof ViewGroup) {
@@ -441,15 +442,15 @@ public class MDRootLayout extends ViewGroup {
     }
 
     private void addScrollListener(final ViewGroup vg, final boolean setForTop, final boolean setForBottom) {
-        if ((!setForBottom && mTopOnScrollChangedListener == null
-                || (setForBottom && mBottomOnScrollChangedListener == null))) {
+        if ((!setForBottom && topOnScrollChangedListener == null
+                || (setForBottom && bottomOnScrollChangedListener == null))) {
             if (vg instanceof RecyclerView) {
                 RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
                         boolean hasButtons = false;
-                        for (MDButton button : mButtons) {
+                        for (MDButton button : buttons) {
                             if (button != null && button.getVisibility() != View.GONE) {
                                 hasButtons = true;
                                 break;
@@ -466,7 +467,7 @@ public class MDRootLayout extends ViewGroup {
                     @Override
                     public void onScrollChanged() {
                         boolean hasButtons = false;
-                        for (MDButton button : mButtons) {
+                        for (MDButton button : buttons) {
                             if (button != null && button.getVisibility() != View.GONE) {
                                 hasButtons = true;
                                 break;
@@ -481,11 +482,11 @@ public class MDRootLayout extends ViewGroup {
                     }
                 };
                 if (!setForBottom) {
-                    mTopOnScrollChangedListener = onScrollChangedListener;
-                    vg.getViewTreeObserver().addOnScrollChangedListener(mTopOnScrollChangedListener);
+                    topOnScrollChangedListener = onScrollChangedListener;
+                    vg.getViewTreeObserver().addOnScrollChangedListener(topOnScrollChangedListener);
                 } else {
-                    mBottomOnScrollChangedListener = onScrollChangedListener;
-                    vg.getViewTreeObserver().addOnScrollChangedListener(mBottomOnScrollChangedListener);
+                    bottomOnScrollChangedListener = onScrollChangedListener;
+                    vg.getViewTreeObserver().addOnScrollChangedListener(bottomOnScrollChangedListener);
                 }
                 onScrollChangedListener.onScrollChanged();
             }
@@ -494,28 +495,28 @@ public class MDRootLayout extends ViewGroup {
 
     private void invalidateDividersForScrollingView(ViewGroup view, final boolean setForTop, boolean setForBottom, boolean hasButtons) {
         if (setForTop && view.getChildCount() > 0) {
-            mDrawTopDivider = mTitleBar != null &&
-                    mTitleBar.getVisibility() != View.GONE &&
+            drawTopDivider = titleBar != null &&
+                    titleBar.getVisibility() != View.GONE &&
                     //Not scrolled to the top.
                     view.getScrollY() + view.getPaddingTop() > view.getChildAt(0).getTop();
 
         }
         if (setForBottom && view.getChildCount() > 0) {
-            mDrawBottomDivider = hasButtons &&
+            drawBottomDivider = hasButtons &&
                     view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view.getChildAt(view.getChildCount() - 1).getBottom();
         }
     }
 
     private void invalidateDividersForWebView(WebView view, final boolean setForTop, boolean setForBottom, boolean hasButtons) {
         if (setForTop) {
-            mDrawTopDivider = mTitleBar != null &&
-                    mTitleBar.getVisibility() != View.GONE &&
+            drawTopDivider = titleBar != null &&
+                    titleBar.getVisibility() != View.GONE &&
                     //Not scrolled to the top.
                     view.getScrollY() + view.getPaddingTop() > 0;
         }
         if (setForBottom) {
             //noinspection deprecation
-            mDrawBottomDivider = hasButtons &&
+            drawBottomDivider = hasButtons &&
                     view.getScrollY() + view.getMeasuredHeight() - view.getPaddingBottom() < view.getContentHeight() * view.getScale();
         }
     }

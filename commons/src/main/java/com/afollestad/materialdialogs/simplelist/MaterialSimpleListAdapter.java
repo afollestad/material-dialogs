@@ -28,26 +28,26 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
     }
 
     private MaterialDialog dialog;
-    private List<MaterialSimpleListItem> mItems;
-    private Callback mCallback;
+    private List<MaterialSimpleListItem> items;
+    private Callback callback;
 
     public MaterialSimpleListAdapter(Callback callback) {
-        mItems = new ArrayList<>(4);
-        mCallback = callback;
+        items = new ArrayList<>(4);
+        this.callback = callback;
     }
 
     public void add(MaterialSimpleListItem item) {
-        mItems.add(item);
-        notifyItemInserted(mItems.size() - 1);
+        items.add(item);
+        notifyItemInserted(items.size() - 1);
     }
 
     public void clear() {
-        mItems.clear();
+        items.clear();
         notifyDataSetChanged();
     }
 
     public MaterialSimpleListItem getItem(int index) {
-        return mItems.get(index);
+        return items.get(index);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
     @Override
     public void onBindViewHolder(SimpleListVH holder, int position) {
         if (dialog != null) {
-            final MaterialSimpleListItem item = mItems.get(position);
+            final MaterialSimpleListItem item = items.get(position);
             if (item.getIcon() != null) {
                 holder.icon.setImageDrawable(item.getIcon());
                 holder.icon.setPadding(item.getIconPadding(), item.getIconPadding(),
@@ -83,16 +83,16 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return items.size();
     }
 
-    public static class SimpleListVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class SimpleListVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final ImageView icon;
         final TextView title;
         final MaterialSimpleListAdapter adapter;
 
-        public SimpleListVH(View itemView, MaterialSimpleListAdapter adapter) {
+        SimpleListVH(View itemView, MaterialSimpleListAdapter adapter) {
             super(itemView);
             icon = (ImageView) itemView.findViewById(android.R.id.icon);
             title = (TextView) itemView.findViewById(android.R.id.title);
@@ -102,8 +102,8 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
 
         @Override
         public void onClick(View view) {
-            if (adapter.mCallback != null)
-                adapter.mCallback.onMaterialListItemSelected(adapter.dialog, getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+            if (adapter.callback != null)
+                adapter.callback.onMaterialListItemSelected(adapter.dialog, getAdapterPosition(), adapter.getItem(getAdapterPosition()));
         }
     }
 }

@@ -21,106 +21,106 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 public class MaterialSimpleListItem {
 
-    private final Builder mBuilder;
+    private final Builder builder;
 
     private MaterialSimpleListItem(Builder builder) {
-        mBuilder = builder;
+        this.builder = builder;
     }
 
     public Drawable getIcon() {
-        return mBuilder.mIcon;
+        return builder.icon;
     }
 
     public CharSequence getContent() {
-        return mBuilder.mContent;
+        return builder.content;
     }
 
     public int getIconPadding() {
-        return mBuilder.mIconPadding;
+        return builder.iconPadding;
     }
 
     @ColorInt
     public int getBackgroundColor() {
-        return mBuilder.mBackgroundColor;
+        return builder.backgroundColor;
     }
 
     public long getId() {
-        return mBuilder.mId;
+        return builder.id;
     }
 
     @Nullable
     public Object getTag() {
-        return mBuilder.mTag;
+        return builder.tag;
     }
 
     public static class Builder {
 
-        private final Context mContext;
-        protected Drawable mIcon;
-        protected CharSequence mContent;
-        protected int mIconPadding;
-        protected int mBackgroundColor;
-        protected long mId;
-        protected Object mTag;
+        private final Context context;
+        protected Drawable icon;
+        protected CharSequence content;
+        protected int iconPadding;
+        protected int backgroundColor;
+        protected long id;
+        protected Object tag;
 
         public Builder(Context context) {
-            mContext = context;
-            mBackgroundColor = Color.parseColor("#BCBCBC");
+            this.context = context;
+            backgroundColor = Color.parseColor("#BCBCBC");
         }
 
         public Builder icon(Drawable icon) {
-            this.mIcon = icon;
+            this.icon = icon;
             return this;
         }
 
         public Builder icon(@DrawableRes int iconRes) {
-            return icon(ContextCompat.getDrawable(mContext, iconRes));
+            return icon(ContextCompat.getDrawable(context, iconRes));
         }
 
         public Builder iconPadding(@IntRange(from = 0, to = Integer.MAX_VALUE) int padding) {
-            this.mIconPadding = padding;
+            this.iconPadding = padding;
             return this;
         }
 
         public Builder iconPaddingDp(@IntRange(from = 0, to = Integer.MAX_VALUE) int paddingDp) {
-            this.mIconPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingDp,
-                    mContext.getResources().getDisplayMetrics());
+            this.iconPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingDp,
+                    context.getResources().getDisplayMetrics());
             return this;
         }
 
         public Builder iconPaddingRes(@DimenRes int paddingRes) {
-            return iconPadding(mContext.getResources().getDimensionPixelSize(paddingRes));
+            return iconPadding(context.getResources().getDimensionPixelSize(paddingRes));
         }
 
         public Builder content(CharSequence content) {
-            this.mContent = content;
+            this.content = content;
             return this;
         }
 
         public Builder content(@StringRes int contentRes) {
-            return content(mContext.getString(contentRes));
+            return content(context.getString(contentRes));
         }
 
         public Builder backgroundColor(@ColorInt int color) {
-            this.mBackgroundColor = color;
+            this.backgroundColor = color;
             return this;
         }
 
         public Builder backgroundColorRes(@ColorRes int colorRes) {
-            return backgroundColor(DialogUtils.getColor(mContext, colorRes));
+            return backgroundColor(DialogUtils.getColor(context, colorRes));
         }
 
         public Builder backgroundColorAttr(@AttrRes int colorAttr) {
-            return backgroundColor(DialogUtils.resolveColor(mContext, colorAttr));
+            return backgroundColor(DialogUtils.resolveColor(context, colorAttr));
         }
 
         public Builder id(long id) {
-            mId = id;
+            this.id = id;
             return this;
         }
 
         public Builder tag(@Nullable Object tag) {
-            mTag = tag;
+            this.tag = tag;
             return this;
         }
 

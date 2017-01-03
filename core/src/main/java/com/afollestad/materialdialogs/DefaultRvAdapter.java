@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> {
 
-    public interface InternalListCallback {
+    interface InternalListCallback {
         boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
     }
 
@@ -35,13 +35,13 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     private final GravityEnum itemGravity;
     private InternalListCallback callback;
 
-    public DefaultRvAdapter(MaterialDialog dialog, @LayoutRes int layout) {
+    DefaultRvAdapter(MaterialDialog dialog, @LayoutRes int layout) {
         this.dialog = dialog;
         this.layout = layout;
         this.itemGravity = dialog.mBuilder.itemsGravity;
     }
 
-    public void setCallback(InternalListCallback callback) {
+    void setCallback(InternalListCallback callback) {
         this.callback = callback;
     }
 
@@ -148,13 +148,13 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
-    public static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         final CompoundButton control;
         final TextView title;
         final DefaultRvAdapter adapter;
 
-        public DefaultVH(View itemView, DefaultRvAdapter adapter) {
+        DefaultVH(View itemView, DefaultRvAdapter adapter) {
             super(itemView);
             control = (CompoundButton) itemView.findViewById(R.id.md_control);
             title = (TextView) itemView.findViewById(R.id.md_title);

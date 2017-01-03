@@ -15,7 +15,7 @@ import com.afollestad.materialdialogs.internal.MDRootLayout;
 class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
     protected MDRootLayout view;
-    private OnShowListener mShowListener;
+    private OnShowListener showListener;
 
     DialogBase(Context context, int theme) {
         super(context, theme);
@@ -28,7 +28,7 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
     @Override
     public final void setOnShowListener(OnShowListener listener) {
-        mShowListener = listener;
+        showListener = listener;
     }
 
     final void setOnShowListenerInternal() {
@@ -41,8 +41,8 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
     @Override
     public void onShow(DialogInterface dialog) {
-        if (mShowListener != null)
-            mShowListener.onShow(dialog);
+        if (showListener != null)
+            showListener.onShow(dialog);
     }
 
     @Override

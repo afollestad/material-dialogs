@@ -18,33 +18,27 @@ import com.afollestad.materialdialogs.util.DialogUtils;
  */
 public class MDButton extends TextView {
 
-    private boolean mStacked = false;
-    private GravityEnum mStackedGravity;
+    private boolean stacked = false;
+    private GravityEnum stackedGravity;
 
-    private int mStackedEndPadding;
-    private Drawable mStackedBackground;
-    private Drawable mDefaultBackground;
+    private int stackedEndPadding;
+    private Drawable stackedBackground;
+    private Drawable defaultBackground;
 
     public MDButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context);
     }
 
     public MDButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public MDButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        mStackedEndPadding = context.getResources()
+    private void init(Context context) {
+        stackedEndPadding = context.getResources()
                 .getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
-        mStackedGravity = GravityEnum.END;
+        stackedGravity = GravityEnum.END;
     }
 
     /**
@@ -53,36 +47,36 @@ public class MDButton extends TextView {
      * after calling this.
      */
     /* package */ void setStacked(boolean stacked, boolean force) {
-        if (mStacked != stacked || force) {
+        if (this.stacked != stacked || force) {
 
-            setGravity(stacked ? (Gravity.CENTER_VERTICAL | mStackedGravity.getGravityInt()) : Gravity.CENTER);
+            setGravity(stacked ? (Gravity.CENTER_VERTICAL | stackedGravity.getGravityInt()) : Gravity.CENTER);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 //noinspection ResourceType
-                setTextAlignment(stacked ? mStackedGravity.getTextAlignment() : TEXT_ALIGNMENT_CENTER);
+                setTextAlignment(stacked ? stackedGravity.getTextAlignment() : TEXT_ALIGNMENT_CENTER);
             }
 
-            DialogUtils.setBackgroundCompat(this, stacked ? mStackedBackground : mDefaultBackground);
+            DialogUtils.setBackgroundCompat(this, stacked ? stackedBackground : defaultBackground);
             if (stacked) {
-                setPadding(mStackedEndPadding, getPaddingTop(), mStackedEndPadding, getPaddingBottom());
+                setPadding(stackedEndPadding, getPaddingTop(), stackedEndPadding, getPaddingBottom());
             } /* Else the padding was properly reset by the drawable */
 
-            mStacked = stacked;
+            this.stacked = stacked;
         }
     }
 
     public void setStackedGravity(GravityEnum gravity) {
-        mStackedGravity = gravity;
+        stackedGravity = gravity;
     }
 
     public void setStackedSelector(Drawable d) {
-        mStackedBackground = d;
-        if (mStacked)
+        stackedBackground = d;
+        if (stacked)
             setStacked(true, true);
     }
 
     public void setDefaultSelector(Drawable d) {
-        mDefaultBackground = d;
-        if (!mStacked)
+        defaultBackground = d;
+        if (!stacked)
             setStacked(false, true);
     }
 
