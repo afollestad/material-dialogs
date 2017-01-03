@@ -401,6 +401,7 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence negativeText;
         protected View customView;
         protected int widgetColor;
+        protected ColorStateList choiceWidgetColor;
         protected ColorStateList positiveColor;
         protected ColorStateList negativeColor;
         protected ColorStateList neutralColor;
@@ -1165,6 +1166,11 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder widgetColorAttr(@AttrRes int colorAttr) {
             return widgetColor(DialogUtils.resolveColor(this.context, colorAttr));
+        }
+
+        public Builder choiceWidgetColor(@Nullable ColorStateList colorStateList) {
+            this.choiceWidgetColor = colorStateList;
+            return this;
         }
 
         public Builder dividerColor(@ColorInt int color) {

@@ -391,7 +391,12 @@ every time the user selects an item.
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
- and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ `widgetColorAttr()`, and `choiceWidgetColor()` method. Their names and parameter annotations make them self explanatory.
+
+`widgetColor` is the same color that affects other UI elements. `choiceWidgetColor` is specific to
+single and multiple choice dialogs, it only affects radio buttons and checkboxes. You provide a
+`ColorStateList` rather than a single color which is used to generate a `ColorStateList`.
+
  Note that by default, radio buttons will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
@@ -439,8 +444,13 @@ every time the user selects an item.
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
- and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory. 
- Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ `widgetColorAttr()`, and `choiceWidgetColor()` method. Their names and parameter annotations make them self explanatory.
+
+`widgetColor` is the same color that affects other UI elements. `choiceWidgetColor` is specific to
+single and multiple choice dialogs, it only affects radio buttons and checkboxes. You provide a
+`ColorStateList` rather than a single color which is used to generate a `ColorStateList`.
+
+ Note that by default, radio buttons will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.

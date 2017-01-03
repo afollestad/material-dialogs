@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> {
 
     interface InternalListCallback {
+
         boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
     }
 
@@ -61,7 +62,11 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
                 @SuppressLint("CutPasteId")
                 RadioButton radio = (RadioButton) holder.control;
                 boolean selected = dialog.builder.selectedIndex == index;
-                MDTintHelper.setTint(radio, dialog.builder.widgetColor);
+                if (dialog.builder.choiceWidgetColor != null) {
+                    MDTintHelper.setTint(radio, dialog.builder.choiceWidgetColor);
+                } else {
+                    MDTintHelper.setTint(radio, dialog.builder.widgetColor);
+                }
                 radio.setChecked(selected);
                 radio.setEnabled(!disabled);
                 break;
@@ -70,7 +75,11 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
                 @SuppressLint("CutPasteId")
                 CheckBox checkbox = (CheckBox) holder.control;
                 boolean selected = dialog.selectedIndicesList.contains(index);
-                MDTintHelper.setTint(checkbox, dialog.builder.widgetColor);
+                if (dialog.builder.choiceWidgetColor != null) {
+                    MDTintHelper.setTint(checkbox, dialog.builder.choiceWidgetColor);
+                } else {
+                    MDTintHelper.setTint(checkbox, dialog.builder.widgetColor);
+                }
                 checkbox.setChecked(selected);
                 checkbox.setEnabled(!disabled);
                 break;
