@@ -407,6 +407,26 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
+    @OnClick(R.id.multiChoiceSelectedOneOrMore)
+    public void showMultiChoiceSelectedOneOrMore() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.socialNetworks)
+                .items(R.array.socialNetworks)
+                .itemsCallbackMultiChoice(new Integer[]{1}, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        boolean allowSelection = which.length > 0; //
+                        if (!allowSelection) {
+                            showToast(R.string.select_one_or_more);
+                        }
+                        return allowSelection;
+                    }
+                })
+                .positiveText(R.string.dismiss)
+                .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if selection is still allowed
+                .show();
+    }
+
     @OnClick(R.id.multiChoice_longItems)
     public void showMultiChoiceLongItems() {
         new MaterialDialog.Builder(this)

@@ -161,6 +161,13 @@
             android:text="@string/multiChoiceLimited" />
 
         <Button
+            android:id="@+id/multiChoiceSelectedOneOrMore"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/multiChoiceSelectedOneOrMore" />
+
+        <Button
             android:id="@+id/multiChoice_longItems"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sample_button_height"
