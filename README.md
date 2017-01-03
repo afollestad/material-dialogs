@@ -88,7 +88,7 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ### Repository
 
-The Gradle dependency is available via [jCenter](https://bintray.com/drummer-aidan/maven/material-dialogs/view).
+The Gradle dependency is available via [jCenter](https://bintray.com/drummer-aidan/maven/material-dialogs:core/view).
 jCenter is the default Maven repository used by Android Studio.
 
 The minimum API level supported by this library is API 13 (Honeycomb).
