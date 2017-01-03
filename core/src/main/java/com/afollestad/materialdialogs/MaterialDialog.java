@@ -29,6 +29,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1680,8 +1681,10 @@ public class MaterialDialog extends DialogBase implements
     private final Handler mHandler;
 
     public final void setProgress(final int progress) {
-        if (builder.progress <= -2)
-            throw new IllegalStateException("Cannot use setProgress() on this dialog.");
+        if (builder.progress <= -2) {
+            Log.w("MaterialDialog", "Calling setProgress(int) on an indeterminate progress dialog has no effect!");
+            return;
+        }
         progressBar.setProgress(progress);
         mHandler.post(new Runnable() {
             @Override
