@@ -240,6 +240,7 @@ public class MaterialDialog extends DialogBase implements
     }
 
     private static class DialogException extends WindowManager.BadTokenException {
+
         DialogException(@SuppressWarnings("SameParameterValue") String message) {
             super(message);
         }
@@ -639,11 +640,12 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String, String)} instead,
-         * to avoid duplicate Typeface allocations and high memory usage.
+         * Sets the fonts used in the dialog. It's recommended that you use {@link #typeface(String,
+         * String)} instead, to avoid duplicate Typeface allocations and high memory usage.
          *
          * @param medium  The font used on titles and action buttons. Null uses device default.
-         * @param regular The font used everywhere else, like on the content and list items. Null uses device default.
+         * @param regular The font used everywhere else, like on the content and list items. Null
+         *                uses device default.
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder typeface(@Nullable Typeface medium, @Nullable Typeface regular) {
@@ -656,8 +658,10 @@ public class MaterialDialog extends DialogBase implements
          * Sets the fonts used in the dialog, by file names. This also uses TypefaceHelper in order
          * to avoid any un-needed allocations (it recycles typefaces for you).
          *
-         * @param medium  The name of font in assets/fonts used on titles and action buttons (null uses device default). E.g. [your-project]/app/main/assets/fonts/[medium]
-         * @param regular The name of font in assets/fonts used everywhere else, like content and list items (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
+         * @param medium  The name of font in assets/fonts used on titles and action buttons (null
+         *                uses device default). E.g. [your-project]/app/main/assets/fonts/[medium]
+         * @param regular The name of font in assets/fonts used everywhere else, like content and
+         *                list items (null uses device default). E.g. [your-project]/app/main/assets/fonts/[regular]
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder typeface(@Nullable String medium, @Nullable String regular) {
@@ -690,7 +694,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes) {
-            content(Html.fromHtml(this.context.getString(contentRes)));
+            content(Html.fromHtml(this.context.getString(contentRes)
+                    .replace("\n", "<br/>")));
             return this;
         }
 
@@ -702,9 +707,9 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes, Object... formatArgs) {
-            String str = String.format(this.context.getString(contentRes), formatArgs);
-            content(Html.fromHtml(str));
-            return this;
+            String str = String.format(this.context.getString(contentRes), formatArgs)
+                    .replace("\n", "<br/>");
+            return content(Html.fromHtml(str));
         }
 
         public Builder contentColor(@ColorInt int color) {
@@ -831,11 +836,12 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Pass anything below 0 (such as -1) for the selected index to leave all options unselected initially.
-         * Otherwise pass the index of an item that will be selected initially.
+         * Pass anything below 0 (such as -1) for the selected index to leave all options unselected
+         * initially. Otherwise pass the index of an item that will be selected initially.
          *
          * @param selectedIndex The checkbox index that will be selected initially.
-         * @param callback      The callback that will be called when the presses the positive button.
+         * @param callback      The callback that will be called when the presses the positive
+         *                      button.
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemsCallbackSingleChoice(int selectedIndex, @NonNull ListCallbackSingleChoice callback) {
@@ -847,9 +853,9 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * By default, the single choice callback is only called when the user clicks the positive button
-         * or if there are no buttons. Call this to force it to always call on item clicks even if the
-         * positive button exists.
+         * By default, the single choice callback is only called when the user clicks the positive
+         * button or if there are no buttons. Call this to force it to always call on item clicks
+         * even if the positive button exists.
          *
          * @return The Builder instance so you can chain calls to it.
          */
@@ -859,11 +865,12 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Pass null for the selected indices to leave all options unselected initially. Otherwise pass
-         * an array of indices that will be selected initially.
+         * Pass null for the selected indices to leave all options unselected initially. Otherwise
+         * pass an array of indices that will be selected initially.
          *
          * @param selectedIndices The radio button indices that will be selected initially.
-         * @param callback        The callback that will be called when the presses the positive button.
+         * @param callback        The callback that will be called when the presses the positive
+         *                        button.
          * @return The Builder instance so you can chain calls to it.
          */
         public Builder itemsCallbackMultiChoice(@Nullable Integer[] selectedIndices, @NonNull ListCallbackMultiChoice callback) {
@@ -887,9 +894,9 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * By default, the multi choice callback is only called when the user clicks the positive button
-         * or if there are no buttons. Call this to force it to always call on item clicks even if the
-         * positive button exists.
+         * By default, the multi choice callback is only called when the user clicks the positive
+         * button or if there are no buttons. Call this to force it to always call on item clicks
+         * even if the positive button exists.
          *
          * @return The Builder instance so you can chain calls to it.
          */
@@ -1033,7 +1040,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Sets the gravity used for the text in stacked action buttons. By default, it's #{@link GravityEnum#END}.
+         * Sets the gravity used for the text in stacked action buttons. By default, it's #{@link
+         * GravityEnum#END}.
          *
          * @param gravity The gravity to use.
          * @return The Builder instance so calls can be chained.
@@ -1078,8 +1086,11 @@ public class MaterialDialog extends DialogBase implements
         /**
          * Makes this dialog a progress dialog.
          *
-         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
-         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a
+         *                      horizontal progress bar is shown that is incremented or set via the
+         *                      built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress
+         *                      bar can get to.
          * @return An instance of the Builder so calls can be chained.
          */
         public Builder progress(boolean indeterminate, int max) {
@@ -1099,9 +1110,13 @@ public class MaterialDialog extends DialogBase implements
         /**
          * Makes this dialog a progress dialog.
          *
-         * @param indeterminate If true, an infinite circular spinner is shown. If false, a horizontal progress bar is shown that is incremented or set via the built MaterialDialog instance.
-         * @param max           When indeterminate is false, the max value the horizontal progress bar can get to.
-         * @param showMinMax    For determinate dialogs, the min and max will be displayed to the left (start) of the progress bar, e.g. 50/100.
+         * @param indeterminate If true, an infinite circular spinner is shown. If false, a
+         *                      horizontal progress bar is shown that is incremented or set via the
+         *                      built MaterialDialog instance.
+         * @param max           When indeterminate is false, the max value the horizontal progress
+         *                      bar can get to.
+         * @param showMinMax    For determinate dialogs, the min and max will be displayed to the
+         *                      left (start) of the progress bar, e.g. 50/100.
          * @return An instance of the Builder so calls can be chained.
          */
         public Builder progress(boolean indeterminate, int max, boolean showMinMax) {
@@ -1110,8 +1125,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * hange the format of the small text showing current and maximum units of progress.
-         * The default is "%1d/%2d".
+         * hange the format of the small text showing current and maximum units of progress. The
+         * default is "%1d/%2d".
          */
         public Builder progressNumberFormat(@NonNull String format) {
             this.progressNumberFormat = format;
@@ -1119,8 +1134,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Change the format of the small text showing the percentage of progress.
-         * The default is NumberFormat.getPercentageInstance().
+         * Change the format of the small text showing the percentage of progress. The default is
+         * NumberFormat.getPercentageInstance().
          */
         public Builder progressPercentFormat(@NonNull NumberFormat format) {
             this.progressPercentFormat = format;
@@ -1128,8 +1143,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * By default, indeterminate progress dialogs will use a circular indicator. You
-         * can change it to use a horizontal progress indicator.
+         * By default, indeterminate progress dialogs will use a circular indicator. You can change
+         * it to use a horizontal progress indicator.
          */
         public Builder progressIndeterminateStyle(boolean horizontal) {
             this.indeterminateIsHorizontalProgress = horizontal;
@@ -1220,8 +1235,8 @@ public class MaterialDialog extends DialogBase implements
 
         /**
          * This defaults to true. If set to false, the dialog will not automatically be dismissed
-         * when an action button is pressed, and not automatically dismissed when the user selects
-         * a list item.
+         * when an action button is pressed, and not automatically dismissed when the user selects a
+         * list item.
          *
          * @param dismiss Whether or not to dismiss the dialog automatically.
          * @return The Builder instance so you can chain calls to it.
@@ -1232,10 +1247,12 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Sets a custom {@link android.support.v7.widget.RecyclerView.Adapter} for the dialog's list
+         * Sets a custom {@link android.support.v7.widget.RecyclerView.Adapter} for the dialog's
+         * list
          *
          * @param adapter       The adapter to set to the list.
-         * @param layoutManager The layout manager to use in the RecyclerView. Pass null to use the default linear manager.
+         * @param layoutManager The layout manager to use in the RecyclerView. Pass null to use the
+         *                      default linear manager.
          * @return This Builder object to allow for chaining of calls to set methods
          */
         @SuppressWarnings("ConstantConditions")
@@ -1364,7 +1381,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * @param errorColor Pass in 0 for the default red error color (as specified in guidelines).
+         * @param errorColor Pass in 0 for the default red error color (as specified in
+         *                   guidelines).
          */
         public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
                                   @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
@@ -1384,7 +1402,8 @@ public class MaterialDialog extends DialogBase implements
         }
 
         /**
-         * Same as #{@link #inputRange(int, int, int)}, but it takes a color resource ID for the error color.
+         * Same as #{@link #inputRange(int, int, int)}, but it takes a color resource ID for the
+         * error color.
          */
         public Builder inputRangeRes(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
                                      @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
@@ -1421,9 +1440,9 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Retrieves the view of an action button, allowing you to modify properties such as whether or not it's enabled.
-     * Use {@link #setActionButton(DialogAction, int)} to change text, since the view returned here is not
-     * the view that displays text.
+     * Retrieves the view of an action button, allowing you to modify properties such as whether or
+     * not it's enabled. Use {@link #setActionButton(DialogAction, int)} to change text, since the
+     * view returned here is not the view that displays text.
      *
      * @param which The action button of which to get the view for.
      * @return The view from the dialog's layout representing this action button.
@@ -1452,8 +1471,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Retrieves the TextView that contains the dialog title. If you want to update the
-     * title, use #{@link #setTitle(CharSequence)} instead.
+     * Retrieves the TextView that contains the dialog title. If you want to update the title, use
+     * #{@link #setTitle(CharSequence)} instead.
      */
     public final TextView getTitleView() {
         return title;
@@ -1467,8 +1486,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Retrieves the TextView that contains the dialog content. If you want to update the
-     * content (message), use #{@link #setContent(CharSequence)} instead.
+     * Retrieves the TextView that contains the dialog content. If you want to update the content
+     * (message), use #{@link #setContent(CharSequence)} instead.
      */
     @Nullable
     public final TextView getContentView() {
@@ -1486,8 +1505,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
-     * Setting an action button's text to null is a shortcut for hiding it, too.
+     * Updates an action button's title, causing invalidation to check if the action buttons should
+     * be stacked. Setting an action button's text to null is a shortcut for hiding it, too.
      *
      * @param which The action button to update.
      * @param title The new title of the action button.
@@ -1514,7 +1533,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Updates an action button's title, causing invalidation to check if the action buttons should be stacked.
+     * Updates an action button's title, causing invalidation to check if the action buttons should
+     * be stacked.
      *
      * @param which    The action button to update.
      * @param titleRes The string resource of the new title of the action button.
@@ -1694,8 +1714,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Change the format of the small text showing the percentage of progress.
-     * The default is NumberFormat.getPercentageInstance().
+     * Change the format of the small text showing the percentage of progress. The default is
+     * NumberFormat.getPercentageInstance().
      */
     public final void setProgressPercentFormat(NumberFormat format) {
         mBuilder.progressPercentFormat = format;
@@ -1703,8 +1723,8 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Change the format of the small text showing current and maximum units of progress.
-     * The default is "%1d/%2d".
+     * Change the format of the small text showing current and maximum units of progress. The
+     * default is "%1d/%2d".
      */
     public final void setProgressNumberFormat(String format) {
         mBuilder.progressNumberFormat = format;
@@ -1718,7 +1738,8 @@ public class MaterialDialog extends DialogBase implements
     /**
      * Convenience method for getting the currently selected index of a single choice list.
      *
-     * @return Currently selected index of a single choice list, or -1 if not showing a single choice list
+     * @return Currently selected index of a single choice list, or -1 if not showing a single
+     * choice list
      */
     public int getSelectedIndex() {
         if (mBuilder.listCallbackSingleChoice != null) {
@@ -1731,7 +1752,8 @@ public class MaterialDialog extends DialogBase implements
     /**
      * Convenience method for getting the currently selected indices of a multi choice list
      *
-     * @return Currently selected index of a multi choice list, or null if not showing a multi choice list
+     * @return Currently selected index of a multi choice list, or null if not showing a multi
+     * choice list
      */
     @Nullable
     public Integer[] getSelectedIndices() {
@@ -1743,9 +1765,10 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Convenience method for setting the currently selected index of a single choice list.
-     * This only works if you are not using a custom adapter; if you're using a custom adapter,
-     * an IllegalStateException is thrown. Note that this does not call the respective single choice callback.
+     * Convenience method for setting the currently selected index of a single choice list. This
+     * only works if you are not using a custom adapter; if you're using a custom adapter, an
+     * IllegalStateException is thrown. Note that this does not call the respective single choice
+     * callback.
      *
      * @param index The index of the list item to check.
      */
@@ -1760,9 +1783,10 @@ public class MaterialDialog extends DialogBase implements
     }
 
     /**
-     * Convenience method for setting the currently selected indices of a multi choice list.
-     * This only works if you are not using a custom adapter; if you're using a custom adapter,
-     * an IllegalStateException is thrown. Note that this does not call the respective multi choice callback.
+     * Convenience method for setting the currently selected indices of a multi choice list. This
+     * only works if you are not using a custom adapter; if you're using a custom adapter, an
+     * IllegalStateException is thrown. Note that this does not call the respective multi choice
+     * callback.
      *
      * @param indices The indices of the list items to check.
      */
@@ -1897,7 +1921,9 @@ public class MaterialDialog extends DialogBase implements
     }
 
     enum ListType {
-        REGULAR, SINGLE, MULTI;
+        REGULAR,
+        SINGLE,
+        MULTI;
 
         public static int getLayoutForType(ListType type) {
             switch (type) {
@@ -1917,6 +1943,7 @@ public class MaterialDialog extends DialogBase implements
      * A callback used for regular list dialogs.
      */
     public interface ListCallback {
+
         void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text);
     }
 
@@ -1924,6 +1951,7 @@ public class MaterialDialog extends DialogBase implements
      * A callback used for regular list dialogs.
      */
     public interface ListLongCallback {
+
         boolean onLongSelection(MaterialDialog dialog, View itemView, int position, CharSequence text);
     }
 
@@ -1931,8 +1959,10 @@ public class MaterialDialog extends DialogBase implements
      * A callback used for multi choice (check box) list dialogs.
      */
     public interface ListCallbackSingleChoice {
+
         /**
-         * Return true to allow the radio button to be checked, if the alwaysCallSingleChoice() option is used.
+         * Return true to allow the radio button to be checked, if the alwaysCallSingleChoice()
+         * option is used.
          *
          * @param dialog The dialog of which a list item was selected.
          * @param which  The index of the item that was selected.
@@ -1946,8 +1976,10 @@ public class MaterialDialog extends DialogBase implements
      * A callback used for multi choice (check box) list dialogs.
      */
     public interface ListCallbackMultiChoice {
+
         /**
-         * Return true to allow the check box to be checked, if the alwaysCallSingleChoice() option is used.
+         * Return true to allow the check box to be checked, if the alwaysCallSingleChoice() option
+         * is used.
          *
          * @param dialog The dialog of which a list item was selected.
          * @param which  The indices of the items that were selected.
@@ -1960,7 +1992,8 @@ public class MaterialDialog extends DialogBase implements
     /**
      * Override these as needed, so no needing to sub empty methods from an interface
      *
-     * @deprecated Use the individual onPositive, onNegative, onNeutral, or onAny Builder methods instead.
+     * @deprecated Use the individual onPositive, onNegative, onNeutral, or onAny Builder methods
+     * instead.
      */
     @SuppressWarnings("WeakerAccess")
     @Deprecated
