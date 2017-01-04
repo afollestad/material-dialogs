@@ -35,12 +35,6 @@ android {
     lintOptions {
         abortOnError false
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            shrinkResources true
-        }
-    }
 }
 
 dependencies {
