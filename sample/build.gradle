@@ -9,7 +9,7 @@ apply plugin: 'com.android.application'
 ext {
     PUBLISH_VERSION = '0.9.2.0'
     SUPPORT_LIBRARY_VERSION = '25.1.0'
-    BUILD_TOOLS = "24.0.3"
+    BUILD_TOOLS = "25.0.1"
     TARGET_SDK = 25
 }
 
