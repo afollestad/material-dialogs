@@ -90,7 +90,7 @@ class DialogInit {
             GradientDrawable drawable = new GradientDrawable();
             drawable.setCornerRadius(builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
             drawable.setColor(builder.backgroundColor);
-            DialogUtils.setBackgroundCompat(dialog.view, drawable);
+            dialog.getWindow().setBackgroundDrawable(drawable);
         }
 
         // Retrieve color theme attributes
