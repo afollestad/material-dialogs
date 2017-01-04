@@ -1165,6 +1165,8 @@ public class MaterialDialog extends DialogBase implements
         /**
          * By default, indeterminate progress dialogs will use a circular indicator. You can change
          * it to use a horizontal progress indicator.
+         *
+         * Has no effect if the dialog progress is not in indeterminate mode.
          */
         public Builder progressIndeterminateStyle(boolean horizontal) {
             this.indeterminateIsHorizontalProgress = horizontal;
