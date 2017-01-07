@@ -24,12 +24,9 @@ import com.afollestad.materialdialogs.StackingBehavior;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 /**
- * @author Kevin Barry (teslacoil) 4/02/2015
- *         This is the top level view for all MaterialDialogs
- *         It handles the layout of:
- *         titleFrame (md_stub_titleframe)
- *         content (text, custom view, listview, etc)
- *         buttonDefault... (either stacked or horizontal)
+ * @author Kevin Barry (teslacoil) 4/02/2015 This is the top level view for all MaterialDialogs It
+ *         handles the layout of: titleFrame (md_stub_titleframe) content (text, custom view,
+ *         listview, etc) buttonDefault... (either stacked or horizontal)
  */
 public class MDRootLayout extends ViewGroup {
 
@@ -37,6 +34,7 @@ public class MDRootLayout extends ViewGroup {
     private static final int INDEX_NEGATIVE = 1;
     private static final int INDEX_POSITIVE = 2;
 
+    private int maxHeight;
     private View titleBar;
     private View content;
 
@@ -105,6 +103,10 @@ public class MDRootLayout extends ViewGroup {
         setWillNotDraw(false);
     }
 
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
     public void noTitleNoPadding() {
         noTitleNoPadding = true;
     }
@@ -132,6 +134,10 @@ public class MDRootLayout extends ViewGroup {
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (height > maxHeight) {
+            height = maxHeight;
+        }
 
         useFullPadding = true;
         boolean hasButtons = false;

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="md_dialog_max_width">446dp</dimen>
+
+</resources>
