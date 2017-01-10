@@ -7,7 +7,7 @@ buildscript {
 apply plugin: 'com.android.application'
 
 ext {
-    PUBLISH_VERSION = '0.9.2.2'
+    PUBLISH_VERSION = '0.9.2.3'
     SUPPORT_LIBRARY_VERSION = '25.1.0'
     BUILD_TOOLS = "25.0.1"
     TARGET_SDK = 25
@@ -21,7 +21,7 @@ android {
         applicationId "com.afollestad.materialdialogssample"
         minSdkVersion 13
         targetSdkVersion TARGET_SDK
-        versionCode 170
+        versionCode 171
         versionName PUBLISH_VERSION
 
         jackOptions {

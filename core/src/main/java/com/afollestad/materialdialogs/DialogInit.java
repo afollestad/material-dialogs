@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -355,19 +354,24 @@ class DialogInit {
         dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
-        dialog.getWindow().setAttributes(lp);
-
-        int windowPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56,
-                builder.context.getResources().getDisplayMetrics());
+        // Min height and max width calculations
         WindowManager wm = dialog.getWindow().getWindowManager();
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int height = size.y;
-        dialog.view.setMaxHeight(height - windowPadding * 2);
+        final int windowWidth = size.x;
+        final int windowHeight = size.y;
+
+        final int windowVerticalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
+        final int windowHorizontalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
+        final int maxWidth = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
+        final int calculatedWidth = windowWidth - (windowHorizontalPadding * 2);
+
+        dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = Math.min(maxWidth, calculatedWidth);
+        dialog.getWindow().setAttributes(lp);
     }
 
     private static void fixCanvasScalingWhenHardwareAccelerated(ProgressBar pb) {

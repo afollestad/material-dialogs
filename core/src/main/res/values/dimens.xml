@@ -77,5 +77,7 @@
     <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
 
     <dimen name="md_dialog_max_width">356dp</dimen>
+    <dimen name="md_dialog_vertical_margin">52dp</dimen>
+    <dimen name="md_dialog_horizontal_margin">28dp</dimen>
 
 </resources>
