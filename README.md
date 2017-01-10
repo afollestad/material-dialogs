@@ -101,7 +101,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.9.2.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.2.3'
 }
 ```
 
@@ -113,7 +113,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.9.2.2'
+    compile 'com.afollestad.material-dialogs:commons:0.9.2.3'
 }
 ```
 
