@@ -174,7 +174,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
         @Override
         public void onClick(View view) {
-            if (adapter.callback != null) {
+            if (adapter.callback != null && getAdapterPosition()!=RecyclerView.NO_POSITION) {
                 CharSequence text = null;
                 if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
                     text = adapter.dialog.builder.items.get(getAdapterPosition());
@@ -184,7 +184,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
         @Override
         public boolean onLongClick(View view) {
-            if (adapter.callback != null) {
+            if (adapter.callback != null && getAdapterPosition()!=RecyclerView.NO_POSITION) {
                 CharSequence text = null;
                 if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
                     text = adapter.dialog.builder.items.get(getAdapterPosition());
