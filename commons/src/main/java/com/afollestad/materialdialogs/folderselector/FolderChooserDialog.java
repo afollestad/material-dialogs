@@ -52,14 +52,18 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
     String[] getContentsArray() {
         if (parentContents == null) {
-            if (canGoUp)
+            if (canGoUp) {
                 return new String[]{getBuilder().goUpLabel};
+            }
             return new String[]{};
         }
         String[] results = new String[parentContents.length + (canGoUp ? 1 : 0)];
-        if (canGoUp) results[0] = "...";
-        for (int i = 0; i < parentContents.length; i++)
-            results[canGoUp ? i + 1 : i] = parentContents[i].getName();
+        if (canGoUp) {
+            results[0] = getBuilder().goUpLabel;
+        }
+        for (int i = canGoUp ? 1 : 0; i < parentContents.length; i++) {
+            results[i] = parentContents[i].getName();
+        }
         return results;
     }
 
