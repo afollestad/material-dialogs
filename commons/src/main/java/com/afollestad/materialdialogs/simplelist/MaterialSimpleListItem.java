@@ -2,7 +2,6 @@ package com.afollestad.materialdialogs.simplelist;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
@@ -14,13 +13,9 @@ import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 
-import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
-
-import static android.support.v4.content.res.ResourcesCompat.getColor;
 
 /**
  * @author Aidan Follestad (afollestad)
