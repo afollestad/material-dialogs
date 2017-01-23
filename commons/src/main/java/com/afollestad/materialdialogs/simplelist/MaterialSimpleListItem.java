@@ -1,6 +1,8 @@
 package com.afollestad.materialdialogs.simplelist;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
@@ -12,9 +14,13 @@ import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 
+import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
+
+import static android.support.v4.content.res.ResourcesCompat.getColor;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -48,6 +54,9 @@ public class MaterialSimpleListItem {
         return builder.id;
     }
 
+    @ColorInt
+    public Integer getIconTint() { return builder.iconTint; }
+
     @Nullable
     public Object getTag() {
         return builder.tag;
@@ -59,6 +68,7 @@ public class MaterialSimpleListItem {
         protected Drawable icon;
         protected CharSequence content;
         protected int iconPadding;
+        protected Integer iconTint;
         protected int backgroundColor;
         protected long id;
         protected Object tag;
@@ -88,8 +98,24 @@ public class MaterialSimpleListItem {
             return this;
         }
 
+        @TargetApi(21)
         public Builder iconPaddingRes(@DimenRes int paddingRes) {
             return iconPadding(context.getResources().getDimensionPixelSize(paddingRes));
+        }
+
+        @TargetApi(21)
+        public Builder iconTintRes(@ColorRes int colorRes) {
+            return iconTintColor(DialogUtils.getColor(context, colorRes));
+        }
+
+        @TargetApi(21)
+        public Builder iconTintAttr(@AttrRes int colorAttr) {
+            return iconTintColor(DialogUtils.resolveColor(context, colorAttr));
+        }
+
+        public Builder iconTintColor(@ColorInt int color) {
+            iconTint = color;
+            return this;
         }
 
         public Builder content(CharSequence content) {

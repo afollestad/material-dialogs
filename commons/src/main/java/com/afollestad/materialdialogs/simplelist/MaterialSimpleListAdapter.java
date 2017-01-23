@@ -1,6 +1,9 @@
 package com.afollestad.materialdialogs.simplelist;
 
+import android.annotation.TargetApi;
+import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +75,10 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
                         item.getIconPadding(), item.getIconPadding());
                 holder.icon.getBackground().setColorFilter(item.getBackgroundColor(),
                         PorterDuff.Mode.SRC_ATOP);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && item.getIconTint() != null) {
+                    holder.icon.setImageTintList(ColorStateList.valueOf(item.getIconTint()));
+                }
             } else {
                 holder.icon.setVisibility(View.GONE);
             }
