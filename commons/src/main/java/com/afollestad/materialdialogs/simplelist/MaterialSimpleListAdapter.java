@@ -1,6 +1,5 @@
 package com.afollestad.materialdialogs.simplelist;
 
-import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Build;
