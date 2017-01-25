@@ -93,7 +93,6 @@ public class MaterialSimpleListItem {
             return this;
         }
 
-        @TargetApi(21)
         public Builder iconPaddingRes(@DimenRes int paddingRes) {
             return iconPadding(context.getResources().getDimensionPixelSize(paddingRes));
         }
@@ -108,6 +107,7 @@ public class MaterialSimpleListItem {
             return iconTintColor(DialogUtils.resolveColor(context, colorAttr));
         }
 
+        @TargetApi(21)
         public Builder iconTintColor(@ColorInt int color) {
             iconTint = color;
             return this;
