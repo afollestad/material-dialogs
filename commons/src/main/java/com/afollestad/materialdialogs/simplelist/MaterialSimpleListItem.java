@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogs.simplelist;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -48,6 +49,9 @@ public class MaterialSimpleListItem {
         return builder.id;
     }
 
+    @ColorInt
+    public Integer getIconTint() { return builder.iconTint; }
+
     @Nullable
     public Object getTag() {
         return builder.tag;
@@ -59,6 +63,7 @@ public class MaterialSimpleListItem {
         protected Drawable icon;
         protected CharSequence content;
         protected int iconPadding;
+        protected Integer iconTint;
         protected int backgroundColor;
         protected long id;
         protected Object tag;
@@ -90,6 +95,22 @@ public class MaterialSimpleListItem {
 
         public Builder iconPaddingRes(@DimenRes int paddingRes) {
             return iconPadding(context.getResources().getDimensionPixelSize(paddingRes));
+        }
+
+        @TargetApi(21)
+        public Builder iconTintRes(@ColorRes int colorRes) {
+            return iconTintColor(DialogUtils.getColor(context, colorRes));
+        }
+
+        @TargetApi(21)
+        public Builder iconTintAttr(@AttrRes int colorAttr) {
+            return iconTintColor(DialogUtils.resolveColor(context, colorAttr));
+        }
+
+        @TargetApi(21)
+        public Builder iconTintColor(@ColorInt int color) {
+            iconTint = color;
+            return this;
         }
 
         public Builder content(CharSequence content) {
