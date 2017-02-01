@@ -766,6 +766,8 @@ public class MaterialDialog extends DialogBase implements
                     i++;
                 }
                 items(array);
+            }else if(collection.size()==0){
+                items = new ArrayList<>();
             }
             return this;
         }
