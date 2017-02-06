@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.EditTextPreference;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
@@ -31,16 +30,14 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-import java.lang.reflect.Method;
-
 /**
  * @author Aidan Follestad (afollestad)
  */
 public class MaterialEditTextPreference extends EditTextPreference {
 
-    private int mColor = 0;
-    private MaterialDialog mDialog;
-    private EditText mEditText;
+    private int color = 0;
+    private MaterialDialog dialog;
+    private EditText editText;
 
     public MaterialEditTextPreference(Context context) {
         super(context);
@@ -72,12 +69,12 @@ public class MaterialEditTextPreference extends EditTextPreference {
             fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);
         else fallback = 0;
         fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
-        mColor = DialogUtils.resolveColor(context, R.attr.md_widget_color, fallback);
+        color = DialogUtils.resolveColor(context, R.attr.md_widget_color, fallback);
 
-        mEditText = new AppCompatEditText(context, attrs);
+        editText = new AppCompatEditText(context, attrs);
         // Give it an ID so it can be saved/restored
-        mEditText.setId(android.R.id.edit);
-        mEditText.setEnabled(true);
+        editText.setId(android.R.id.edit);
+        editText.setEnabled(true);
     }
 
     @Override
@@ -89,7 +86,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onBindDialogView(@NonNull View view) {
-        EditText editText = mEditText;
+        EditText editText = this.editText;
         editText.setText(getText());
         // Initialize cursor to end of text
         if (editText.getText().length() > 0)
@@ -102,27 +99,23 @@ public class MaterialEditTextPreference extends EditTextPreference {
         }
     }
 
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
+    @Override protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            String value = mEditText.getText().toString();
+            String value = editText.getText().toString();
             if (callChangeListener(value))
                 setText(value);
         }
     }
 
-    @Override
-    public EditText getEditText() {
-        return mEditText;
+    @Override public EditText getEditText() {
+        return editText;
     }
 
-    @Override
-    public Dialog getDialog() {
-        return mDialog;
+    @Override public Dialog getDialog() {
+        return dialog;
     }
 
-    @Override
-    protected void showDialog(Bundle state) {
+    @Override protected void showDialog(Bundle state) {
         Builder mBuilder = new MaterialDialog.Builder(getContext())
                 .title(getDialogTitle())
                 .icon(getDialogIcon())
@@ -151,7 +144,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
         onBindDialogView(layout);
 
-        MDTintHelper.setTint(mEditText, mColor);
+        MDTintHelper.setTint(editText, color);
 
         TextView message = (TextView) layout.findViewById(android.R.id.message);
         if (getDialogMessage() != null && getDialogMessage().toString().length() > 0) {
@@ -164,16 +157,15 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
         PrefUtil.registerOnActivityDestroyListener(this, this);
 
-        mDialog = mBuilder.build();
+        dialog = mBuilder.build();
         if (state != null)
-            mDialog.onRestoreInstanceState(state);
-        requestInputMethod(mDialog);
+            dialog.onRestoreInstanceState(state);
+        requestInputMethod(dialog);
 
-        mDialog.show();
+        dialog.show();
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
+    @Override public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
@@ -183,18 +175,18 @@ public class MaterialEditTextPreference extends EditTextPreference {
      */
     private void requestInputMethod(Dialog dialog) {
         Window window = dialog.getWindow();
+        if (window == null) return;
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     @Override
     public void onActivityDestroy() {
         super.onActivityDestroy();
-        if (mDialog != null && mDialog.isShowing())
-            mDialog.dismiss();
+        if (dialog != null && dialog.isShowing())
+            dialog.dismiss();
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
+    @Override protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
         Dialog dialog = getDialog();
         if (dialog == null || !dialog.isShowing()) {
@@ -207,8 +199,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
         return myState;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    @Override protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state);
@@ -224,23 +215,23 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
     // From DialogPreference
     private static class SavedState extends BaseSavedState {
+
         boolean isDialogShowing;
         Bundle dialogBundle;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             isDialogShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
         }
 
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
+        @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(isDialogShowing ? 1 : 0);
             dest.writeBundle(dialogBundle);
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

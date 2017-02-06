@@ -30,8 +30,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     }
 
     private final MaterialDialog dialog;
-    @LayoutRes
-    private final int layout;
+    @LayoutRes private final int layout;
     private final GravityEnum itemGravity;
     private InternalListCallback callback;
 
@@ -45,16 +44,14 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         this.callback = callback;
     }
 
-    @Override
-    public DefaultVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public DefaultVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(layout, parent, false);
         DialogUtils.setBackgroundCompat(view, dialog.getListSelector());
         return new DefaultVH(view, this);
     }
 
-    @Override
-    public void onBindViewHolder(DefaultVH holder, int index) {
+    @Override public void onBindViewHolder(DefaultVH holder, int index) {
         final View view = holder.itemView;
         boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
         switch (dialog.listType) {
@@ -110,13 +107,11 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return dialog.builder.items != null ? dialog.builder.items.size() : 0;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void setupGravity(ViewGroup view) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1) private void setupGravity(ViewGroup view) {
         final LinearLayout itemRoot = (LinearLayout) view;
         final int gravityInt = itemGravity.getGravityInt();
         itemRoot.setGravity(gravityInt | Gravity.CENTER_VERTICAL);
@@ -148,8 +143,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private boolean isRTL() {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1) private boolean isRTL() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
             return false;
         Configuration config = dialog.getBuilder().getContext().getResources().getConfiguration();
@@ -172,8 +166,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
                 itemView.setOnLongClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
+        @Override public void onClick(View view) {
             if (adapter.callback != null) {
                 CharSequence text = null;
                 if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
@@ -182,8 +175,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
             }
         }
 
-        @Override
-        public boolean onLongClick(View view) {
+        @Override public boolean onLongClick(View view) {
             if (adapter.callback != null) {
                 CharSequence text = null;
                 if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())

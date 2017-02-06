@@ -54,8 +54,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         init(context, attrs);
     }
 
-    @Override
-    public void setEntries(CharSequence[] entries) {
+    @Override public void setEntries(CharSequence[] entries) {
         super.setEntries(entries);
         if (mDialog != null)
             mDialog.setItems(entries);
@@ -68,13 +67,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             setWidgetLayoutResource(0);
     }
 
-    @Override
-    public Dialog getDialog() {
+    @Override public Dialog getDialog() {
         return mDialog;
     }
 
-    @Override
-    protected void showDialog(Bundle state) {
+    @Override protected void showDialog(Bundle state) {
         List<Integer> indices = new ArrayList<>();
         for (String s : getValues()) {
             int index = findIndexOfValue(s);
@@ -135,21 +132,18 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         mDialog.show();
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
+    @Override public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
-    @Override
-    public void onActivityDestroy() {
+    @Override public void onActivityDestroy() {
         super.onActivityDestroy();
         if (mDialog != null && mDialog.isShowing())
             mDialog.dismiss();
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
+    @Override protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
         Dialog dialog = getDialog();
         if (dialog == null || !dialog.isShowing()) {
@@ -162,8 +156,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         return myState;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    @Override protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state);
@@ -179,10 +172,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
     // From DialogPreference
     private static class SavedState extends BaseSavedState {
+
         boolean isDialogShowing;
         Bundle dialogBundle;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             isDialogShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
@@ -195,7 +189,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             dest.writeBundle(dialogBundle);
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

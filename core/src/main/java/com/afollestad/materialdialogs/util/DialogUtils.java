@@ -37,15 +37,14 @@ public class DialogUtils {
 //        }
 //    }
 
-    @ColorInt
-    public static int getDisabledColor(Context context) {
+    @ColorInt public static int getDisabledColor(Context context) {
         final int primaryColor = resolveColor(context, android.R.attr.textColorPrimary);
         final int disabledColor = isColorDark(primaryColor) ? Color.BLACK : Color.WHITE;
         return adjustAlpha(disabledColor, 0.3f);
     }
 
-    @ColorInt
-    public static int adjustAlpha(@ColorInt int color, @SuppressWarnings("SameParameterValue") float factor) {
+    @ColorInt public static int adjustAlpha(@ColorInt int color,
+                                            @SuppressWarnings("SameParameterValue") float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
         int red = Color.red(color);
         int green = Color.green(color);
@@ -53,13 +52,11 @@ public class DialogUtils {
         return Color.argb(alpha, red, green, blue);
     }
 
-    @ColorInt
-    public static int resolveColor(Context context, @AttrRes int attr) {
+    @ColorInt public static int resolveColor(Context context, @AttrRes int attr) {
         return resolveColor(context, attr, 0);
     }
 
-    @ColorInt
-    public static int resolveColor(Context context, @AttrRes int attr, int fallback) {
+    @ColorInt public static int resolveColor(Context context, @AttrRes int attr, int fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getColor(0, fallback);
@@ -69,7 +66,8 @@ public class DialogUtils {
     }
 
     // Try to resolve the colorAttr attribute.
-    public static ColorStateList resolveActionTextColorStateList(Context context, @AttrRes int colorAttr, ColorStateList fallback) {
+    public static ColorStateList resolveActionTextColorStateList(
+            Context context, @AttrRes int colorAttr, ColorStateList fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{colorAttr});
         try {
             final TypedValue value = a.peekValue(0);
@@ -120,8 +118,7 @@ public class DialogUtils {
      *                entry. The value 0 is an invalid identifier.
      * @return A single color value in the form 0xAARRGGBB.
      */
-    @ColorInt
-    public static int getColor(Context context, @ColorRes int colorId) {
+    @ColorInt public static int getColor(Context context, @ColorRes int colorId) {
         return ContextCompat.getColor(context, colorId);
     }
 
@@ -142,7 +139,9 @@ public class DialogUtils {
         }
     }
 
-    public static GravityEnum resolveGravityEnum(Context context, @AttrRes int attr, GravityEnum defaultGravity) {
+    public static GravityEnum resolveGravityEnum(Context context,
+                                                 @AttrRes int attr,
+                                                 GravityEnum defaultGravity) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             switch (a.getInt(0, gravityEnumToAttrInt(defaultGravity))) {
@@ -162,7 +161,10 @@ public class DialogUtils {
         return resolveDrawable(context, attr, null);
     }
 
-    private static Drawable resolveDrawable(Context context, @AttrRes int attr, @SuppressWarnings("SameParameterValue") Drawable fallback) {
+    private static Drawable resolveDrawable(Context context,
+                                            @AttrRes int attr,
+                                            @SuppressWarnings(
+                                                    "SameParameterValue") Drawable fallback) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             Drawable d = a.getDrawable(0);
@@ -214,7 +216,8 @@ public class DialogUtils {
         }
     }
 
-    public static void showKeyboard(@NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
+    public static void showKeyboard(@NonNull final DialogInterface di,
+                                    @NonNull final MaterialDialog.Builder builder) {
         final MaterialDialog dialog = (MaterialDialog) di;
         if (dialog.getInputEditText() == null) return;
         dialog.getInputEditText().post(new Runnable() {
@@ -228,7 +231,8 @@ public class DialogUtils {
         });
     }
 
-    public static void hideKeyboard(@NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
+    public static void hideKeyboard(@NonNull final DialogInterface di,
+                                    @NonNull final MaterialDialog.Builder builder) {
         final MaterialDialog dialog = (MaterialDialog) di;
         if (dialog.getInputEditText() == null) return;
         InputMethodManager imm = (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

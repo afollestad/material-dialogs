@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs.folderselector;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.ActivityCompat;
+import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -40,6 +41,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
     public interface FileCallback {
         void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file);
+
+        void onFileChooserDismissed(@NonNull FileChooserDialog dialog);
     }
 
     public FileChooserDialog() {
@@ -168,6 +171,13 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                 .build();
     }
 
+    @Override public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (callback != null) {
+            callback.onFileChooserDismissed(this);
+        }
+    }
+
     @Override
     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence s) {
         if (canGoUp && i == 0) {
@@ -202,8 +212,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         }
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
         callback = (FileCallback) activity;
     }
@@ -237,48 +246,41 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             goUpLabel = "...";
         }
 
-        @NonNull
-        public Builder cancelButton(@StringRes int text) {
+        @NonNull public Builder cancelButton(@StringRes int text) {
             cancelButton = text;
             return this;
         }
 
-        @NonNull
-        public Builder initialPath(@Nullable String initialPath) {
+        @NonNull public Builder initialPath(@Nullable String initialPath) {
             if (initialPath == null)
                 initialPath = File.separator;
             this.initialPath = initialPath;
             return this;
         }
 
-        @NonNull
-        public Builder mimeType(@Nullable String type) {
+        @NonNull public Builder mimeType(@Nullable String type) {
             mimeType = type;
             return this;
         }
 
-        @NonNull
-        public Builder extensionsFilter(@Nullable String... extensions) {
+        @NonNull public Builder extensionsFilter(@Nullable String... extensions) {
             this.extensions = extensions;
             return this;
         }
 
-        @NonNull
-        public Builder tag(@Nullable String tag) {
+        @NonNull public Builder tag(@Nullable String tag) {
             if (tag == null)
                 tag = DEFAULT_TAG;
             this.tag = tag;
             return this;
         }
 
-        @NonNull
-        public Builder goUpLabel(String text) {
+        @NonNull public Builder goUpLabel(String text) {
             goUpLabel = text;
             return this;
         }
 
-        @NonNull
-        public FileChooserDialog build() {
+        @NonNull public FileChooserDialog build() {
             FileChooserDialog dialog = new FileChooserDialog();
             Bundle args = new Bundle();
             args.putSerializable("builder", this);
@@ -286,16 +288,14 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             return dialog;
         }
 
-        @NonNull
-        public FileChooserDialog show() {
+        @NonNull public FileChooserDialog show() {
             FileChooserDialog dialog = build();
             dialog.show(context);
             return dialog;
         }
     }
 
-    @NonNull
-    public String getInitialPath() {
+    @NonNull public String getInitialPath() {
         return getBuilder().initialPath;
     }
 
@@ -306,8 +306,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     }
 
     private static class FileSorter implements Comparator<File> {
-        @Override
-        public int compare(File lhs, File rhs) {
+        @Override public int compare(File lhs, File rhs) {
             if (lhs.isDirectory() && !rhs.isDirectory()) {
                 return -1;
             } else if (!lhs.isDirectory() && rhs.isDirectory()) {

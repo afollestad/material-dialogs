@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
     PUBLISH_ARTIFACT_ID = 'commons'
-    PUBLISH_VERSION = '0.9.2.3'
-    SUPPORT_LIBRARY_VERSION = '25.1.0'
+    PUBLISH_VERSION = '0.9.3.0'
+    SUPPORT_LIBRARY_VERSION = '25.1.1'
     BUILD_TOOLS = "25.0.1"
     TARGET_SDK = 25
 }
@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
+    compile "com.android.support:support-v13:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile project(':core')
 }

@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
 public class MaterialListPreference extends ListPreference {
 
     private Context context;
-    private MaterialDialog mDialog;
+    private MaterialDialog dialog;
 
     public MaterialListPreference(Context context) {
         super(context);
@@ -56,16 +56,14 @@ public class MaterialListPreference extends ListPreference {
             setWidgetLayoutResource(0);
     }
 
-    @Override
-    public void setEntries(CharSequence[] entries) {
+    @Override public void setEntries(CharSequence[] entries) {
         super.setEntries(entries);
-        if (mDialog != null)
-            mDialog.setItems(entries);
+        if (dialog != null)
+            dialog.setItems(entries);
     }
 
-    @Override
-    public Dialog getDialog() {
-        return mDialog;
+    @Override public Dialog getDialog() {
+        return dialog;
     }
 
     public RecyclerView getRecyclerView() {
@@ -73,8 +71,7 @@ public class MaterialListPreference extends ListPreference {
         return ((MaterialDialog) getDialog()).getRecyclerView();
     }
 
-    @Override
-    protected void showDialog(Bundle state) {
+    @Override protected void showDialog(Bundle state) {
         if (getEntries() == null || getEntryValues() == null) {
             throw new IllegalStateException(
                     "ListPreference requires an entries array and an entryValues array.");
@@ -131,28 +128,25 @@ public class MaterialListPreference extends ListPreference {
 
         PrefUtil.registerOnActivityDestroyListener(this, this);
 
-        mDialog = builder.build();
+        dialog = builder.build();
         if (state != null)
-            mDialog.onRestoreInstanceState(state);
-        onClick(mDialog, DialogInterface.BUTTON_NEGATIVE);
-        mDialog.show();
+            dialog.onRestoreInstanceState(state);
+        onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+        dialog.show();
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
+    @Override public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
-    @Override
-    public void onActivityDestroy() {
+    @Override public void onActivityDestroy() {
         super.onActivityDestroy();
-        if (mDialog != null && mDialog.isShowing())
-            mDialog.dismiss();
+        if (dialog != null && dialog.isShowing())
+            dialog.dismiss();
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
+    @Override protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
         Dialog dialog = getDialog();
         if (dialog == null || !dialog.isShowing()) {
@@ -165,8 +159,7 @@ public class MaterialListPreference extends ListPreference {
         return myState;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    @Override protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state);
@@ -182,10 +175,11 @@ public class MaterialListPreference extends ListPreference {
 
     // From DialogPreference
     private static class SavedState extends BaseSavedState {
+
         boolean isDialogShowing;
         Bundle dialogBundle;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             isDialogShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
@@ -198,7 +192,7 @@ public class MaterialListPreference extends ListPreference {
             dest.writeBundle(dialogBundle);
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

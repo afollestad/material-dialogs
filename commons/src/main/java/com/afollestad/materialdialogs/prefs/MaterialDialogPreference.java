@@ -22,7 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 public class MaterialDialogPreference extends DialogPreference {
 
     private Context context;
-    private MaterialDialog mDialog;
+    private MaterialDialog dialog;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialDialogPreference(Context context) {
@@ -41,7 +41,8 @@ public class MaterialDialogPreference extends DialogPreference {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public MaterialDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public MaterialDialogPreference(Context context, AttributeSet attrs,
+                                    int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -52,13 +53,11 @@ public class MaterialDialogPreference extends DialogPreference {
         PrefUtil.setLayoutResource(context, this, attrs);
     }
 
-    @Override
-    public Dialog getDialog() {
-        return mDialog;
+    @Override public Dialog getDialog() {
+        return dialog;
     }
 
-    @Override
-    protected void showDialog(Bundle state) {
+    @Override protected void showDialog(Bundle state) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(getDialogTitle())
                 .icon(getDialogIcon())
@@ -93,27 +92,24 @@ public class MaterialDialogPreference extends DialogPreference {
 
         PrefUtil.registerOnActivityDestroyListener(this, this);
 
-        mDialog = builder.build();
+        dialog = builder.build();
         if (state != null)
-            mDialog.onRestoreInstanceState(state);
-        mDialog.show();
+            dialog.onRestoreInstanceState(state);
+        dialog.show();
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
+    @Override public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         PrefUtil.unregisterOnActivityDestroyListener(this, this);
     }
 
-    @Override
-    public void onActivityDestroy() {
+    @Override public void onActivityDestroy() {
         super.onActivityDestroy();
-        if (mDialog != null && mDialog.isShowing())
-            mDialog.dismiss();
+        if (dialog != null && dialog.isShowing())
+            dialog.dismiss();
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
+    @Override protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
         Dialog dialog = getDialog();
         if (dialog == null || !dialog.isShowing()) {
@@ -126,8 +122,7 @@ public class MaterialDialogPreference extends DialogPreference {
         return myState;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    @Override protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state);
@@ -146,7 +141,7 @@ public class MaterialDialogPreference extends DialogPreference {
         boolean isDialogShowing;
         Bundle dialogBundle;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             isDialogShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
@@ -159,7 +154,7 @@ public class MaterialDialogPreference extends DialogPreference {
             dest.writeBundle(dialogBundle);
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

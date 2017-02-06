@@ -7,7 +7,7 @@ import android.graphics.Color;
  */
 class ColorPalette {
 
-    public final static int[] PRIMARY_COLORS = new int[]{
+    final static int[] PRIMARY_COLORS = new int[]{
             Color.parseColor("#F44336"),
             Color.parseColor("#E91E63"),
             Color.parseColor("#9C27B0"),
@@ -29,7 +29,7 @@ class ColorPalette {
             Color.parseColor("#607D8B")
     };
 
-    public final static int[][] PRIMARY_COLORS_SUB = new int[][]{
+    final static int[][] PRIMARY_COLORS_SUB = new int[][]{
             new int[]{
                     Color.parseColor("#FFEBEE"),
                     Color.parseColor("#FFCDD2"),
@@ -260,7 +260,7 @@ class ColorPalette {
             }
     };
 
-    public final static int[] ACCENT_COLORS = new int[]{
+    final static int[] ACCENT_COLORS = new int[]{
             Color.parseColor("#FF1744"),
             Color.parseColor("#F50057"),
             Color.parseColor("#D500F9"),
@@ -279,7 +279,7 @@ class ColorPalette {
             Color.parseColor("#FF3D00")
     };
 
-    public final static int[][] ACCENT_COLORS_SUB = new int[][]{
+    final static int[][] ACCENT_COLORS_SUB = new int[][]{
             new int[]{
                     Color.parseColor("#FF8A80"),
                     Color.parseColor("#FF5252"),

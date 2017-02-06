@@ -50,20 +50,17 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
         return items.get(index);
     }
 
-    @Override
-    public void setDialog(MaterialDialog dialog) {
+    @Override public void setDialog(MaterialDialog dialog) {
         this.dialog = dialog;
     }
 
-    @Override
-    public SimpleListVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public SimpleListVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.md_simplelist_item, parent, false);
         return new SimpleListVH(view, this);
     }
 
-    @Override
-    public void onBindViewHolder(SimpleListVH holder, int position) {
+    @Override public void onBindViewHolder(SimpleListVH holder, int position) {
         if (dialog != null) {
             final MaterialSimpleListItem item = items.get(position);
             if (item.getIcon() != null) {
@@ -81,8 +78,7 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return items.size();
     }
 
@@ -102,8 +98,10 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
 
         @Override
         public void onClick(View view) {
-            if (adapter.callback != null)
-                adapter.callback.onMaterialListItemSelected(adapter.dialog, getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+            if (adapter.callback != null) {
+                adapter.callback.onMaterialListItemSelected(adapter.dialog,
+                        getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+            }
         }
     }
 }

@@ -111,8 +111,7 @@ public class MDRootLayout extends ViewGroup {
         noTitleNoPadding = true;
     }
 
-    @Override
-    public void onFinishInflate() {
+    @Override public void onFinishInflate() {
         super.onFinishInflate();
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
@@ -130,8 +129,7 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
@@ -232,8 +230,7 @@ public class MDRootLayout extends ViewGroup {
         return visible;
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
+    @Override public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if (content != null) {
@@ -249,8 +246,7 @@ public class MDRootLayout extends ViewGroup {
         }
     }
 
-    @Override
-    protected void onLayout(boolean changed, final int l, int t, final int r, int b) {
+    @Override protected void onLayout(boolean changed, final int l, int t, final int r, int b) {
         if (isVisible(titleBar)) {
             int height = titleBar.getMeasuredHeight();
             titleBar.layout(l, t, r, t + height);
@@ -571,8 +567,7 @@ public class MDRootLayout extends ViewGroup {
      *
      * @return View touching the bottom of this ViewGroup or null
      */
-    @Nullable
-    private static View getBottomView(ViewGroup viewGroup) {
+    @Nullable private static View getBottomView(ViewGroup viewGroup) {
         if (viewGroup == null || viewGroup.getChildCount() == 0)
             return null;
         View bottomView = null;
@@ -586,8 +581,7 @@ public class MDRootLayout extends ViewGroup {
         return bottomView;
     }
 
-    @Nullable
-    private static View getTopView(ViewGroup viewGroup) {
+    @Nullable private static View getTopView(ViewGroup viewGroup) {
         if (viewGroup == null || viewGroup.getChildCount() == 0)
             return null;
         View topView = null;

@@ -3,6 +3,7 @@ package com.afollestad.materialdialogs.folderselector;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,11 +41,13 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     private File parentFolder;
     private File[] parentContents;
     private boolean canGoUp = false;
-    private FolderCallback mCallback;
+    private FolderCallback callback;
 
     public interface FolderCallback {
 
         void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File folder);
+
+        void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog);
     }
 
     public FolderChooserDialog() {
@@ -104,7 +107,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
-                        mCallback.onFolderSelection(FolderChooserDialog.this, parentFolder);
+                        callback.onFolderSelection(FolderChooserDialog.this, parentFolder);
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -131,6 +134,13 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         return builder.build();
     }
 
+    @Override public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (callback != null) {
+            callback.onFolderChooserDismissed(this);
+        }
+    }
+
     private void createNewFolder() {
         new MaterialDialog.Builder(getActivity())
                 .title(getBuilder().newFolderButton)
@@ -139,9 +149,13 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         //noinspection ResultOfMethodCallIgnored
                         final File newFi = new File(parentFolder, input.toString());
-                        if (!newFi.mkdir())
-                            Toast.makeText(getActivity(), "Unable to create folder " + newFi.getAbsolutePath() + ", make sure you have the WRITE_EXTERNAL_STORAGE permission or root permissions.", Toast.LENGTH_LONG).show();
-                        else reload();
+                        if (!newFi.mkdir()) {
+                            String msg = "Unable to create folder " + newFi.getAbsolutePath() +
+                                    ", make sure you have the WRITE_EXTERNAL_STORAGE permission or root permissions.";
+                            Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+                        } else {
+                            reload();
+                        }
                     }
                 }).show();
     }
@@ -171,7 +185,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     }
 
     private void reload() {
-
         parentContents = listFiles();
         MaterialDialog dialog = (MaterialDialog) getDialog();
         dialog.setTitle(parentFolder.getAbsolutePath());
@@ -179,10 +192,9 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         dialog.setItems((CharSequence[]) getContentsArray());
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mCallback = (FolderCallback) activity;
+        callback = (FolderCallback) activity;
     }
 
     public void show(FragmentActivity context) {
@@ -215,26 +227,22 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         }
 
-        @NonNull
-        public Builder chooseButton(@StringRes int text) {
+        @NonNull public Builder chooseButton(@StringRes int text) {
             chooseButton = text;
             return this;
         }
 
-        @NonNull
-        public Builder cancelButton(@StringRes int text) {
+        @NonNull public Builder cancelButton(@StringRes int text) {
             cancelButton = text;
             return this;
         }
 
-        @NonNull
-        public Builder goUpLabel(String text) {
+        @NonNull public Builder goUpLabel(String text) {
             goUpLabel = text;
             return this;
         }
 
-        @NonNull
-        public Builder allowNewFolder(boolean allow, @StringRes int buttonLabel) {
+        @NonNull public Builder allowNewFolder(boolean allow, @StringRes int buttonLabel) {
             allowNewFolder = allow;
             if (buttonLabel == 0)
                 buttonLabel = R.string.new_folder;
@@ -242,24 +250,21 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             return this;
         }
 
-        @NonNull
-        public Builder initialPath(@Nullable String initialPath) {
+        @NonNull public Builder initialPath(@Nullable String initialPath) {
             if (initialPath == null)
                 initialPath = File.separator;
             this.initialPath = initialPath;
             return this;
         }
 
-        @NonNull
-        public Builder tag(@Nullable String tag) {
+        @NonNull public Builder tag(@Nullable String tag) {
             if (tag == null)
                 tag = DEFAULT_TAG;
             this.tag = tag;
             return this;
         }
 
-        @NonNull
-        public FolderChooserDialog build() {
+        @NonNull public FolderChooserDialog build() {
             FolderChooserDialog dialog = new FolderChooserDialog();
             Bundle args = new Bundle();
             args.putSerializable("builder", this);
@@ -267,8 +272,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             return dialog;
         }
 
-        @NonNull
-        public FolderChooserDialog show() {
+        @NonNull public FolderChooserDialog show() {
             FolderChooserDialog dialog = build();
             dialog.show(context);
             return dialog;
@@ -283,8 +287,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
     private static class FolderSorter implements Comparator<File> {
 
-        @Override
-        public int compare(File lhs, File rhs) {
+        @Override public int compare(File lhs, File rhs) {
             return lhs.getName().compareTo(rhs.getName());
         }
     }

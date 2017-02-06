@@ -58,10 +58,11 @@ public class MaterialSimpleListItem {
         private final Context context;
         protected Drawable icon;
         protected CharSequence content;
-        protected int iconPadding;
-        protected int backgroundColor;
         protected long id;
-        protected Object tag;
+
+        int iconPadding;
+        int backgroundColor;
+        Object tag;
 
         public Builder(Context context) {
             this.context = context;
@@ -129,8 +130,7 @@ public class MaterialSimpleListItem {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         if (getContent() != null)
             return getContent().toString();
         else return "(no content)";

@@ -21,13 +21,11 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
         super(context, theme);
     }
 
-    @Override
-    public View findViewById(int id) {
+    @Override public View findViewById(int id) {
         return view.findViewById(id);
     }
 
-    @Override
-    public final void setOnShowListener(OnShowListener listener) {
+    @Override public final void setOnShowListener(OnShowListener listener) {
         showListener = listener;
     }
 
@@ -39,8 +37,7 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
         super.setContentView(view);
     }
 
-    @Override
-    public void onShow(DialogInterface dialog) {
+    @Override public void onShow(DialogInterface dialog) {
         if (showListener != null)
             showListener.onShow(dialog);
     }

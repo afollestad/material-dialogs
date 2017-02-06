@@ -210,7 +210,7 @@ public class MaterialDialog extends DialogBase implements
                     selectedIndicesList.remove(Integer.valueOf(position));
                     if (builder.alwaysCallMultiChoiceCallback) {
                         // If the checkbox was previously selected, and the callback returns true, remove it from the states and uncheck it
-                        if(sendMultichoiceCallback()) {
+                        if (sendMultichoiceCallback()) {
                             cb.setChecked(false);
                         } else {
                             // The callback cancelled unselection, re-add it to the states
@@ -713,9 +713,15 @@ public class MaterialDialog extends DialogBase implements
         }
 
         public Builder content(@StringRes int contentRes) {
-            content(Html.fromHtml(this.context.getString(contentRes)
-                    .replace("\n", "<br/>")));
-            return this;
+            return content(contentRes, false);
+        }
+
+        public Builder content(@StringRes int contentRes, boolean html) {
+            CharSequence text = this.context.getText(contentRes);
+            if (html) {
+                text = Html.fromHtml(text.toString().replace("\n", "<br/>"));
+            }
+            return content(text);
         }
 
         public Builder content(@NonNull CharSequence content) {
@@ -1388,7 +1394,8 @@ public class MaterialDialog extends DialogBase implements
          * @deprecated in favor of {@link #inputRange(int, int, int)}
          */
         @Deprecated
-        public Builder inputMaxLength(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength, @ColorInt int errorColor) {
+        public Builder inputMaxLength(@IntRange(from = 1,
+                to = Integer.MAX_VALUE) int maxLength, @ColorInt int errorColor) {
             return inputRange(0, maxLength, errorColor);
         }
 
@@ -1396,7 +1403,8 @@ public class MaterialDialog extends DialogBase implements
          * @deprecated in favor of {@link #inputRangeRes(int, int, int)}
          */
         @Deprecated
-        public Builder inputMaxLengthRes(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength, @ColorRes int errorColor) {
+        public Builder inputMaxLengthRes(@IntRange(from = 1,
+                to = Integer.MAX_VALUE) int maxLength, @ColorRes int errorColor) {
             return inputRangeRes(0, maxLength, errorColor);
         }
 

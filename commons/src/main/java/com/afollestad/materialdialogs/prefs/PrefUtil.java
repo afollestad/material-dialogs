@@ -21,7 +21,7 @@ class PrefUtil {
     private PrefUtil() {
     }
 
-    public static void setLayoutResource(@NonNull Context context, @NonNull Preference preference, @Nullable AttributeSet attrs) {
+    static void setLayoutResource(@NonNull Context context, @NonNull Preference preference, @Nullable AttributeSet attrs) {
         boolean foundLayout = false;
         if (attrs != null) {
             for (int i = 0; i < attrs.getAttributeCount(); i++) {
@@ -48,7 +48,7 @@ class PrefUtil {
             preference.setLayoutResource(R.layout.md_preference_custom);
     }
 
-    public static void registerOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+    static void registerOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
         try {
             PreferenceManager pm = preference.getPreferenceManager();
             Method method = pm.getClass().getDeclaredMethod(
@@ -60,7 +60,7 @@ class PrefUtil {
         }
     }
 
-    public static void unregisterOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+    static void unregisterOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
         try {
             PreferenceManager pm = preference.getPreferenceManager();
             Method method = pm.getClass().getDeclaredMethod(

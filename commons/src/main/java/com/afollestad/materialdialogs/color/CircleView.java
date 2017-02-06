@@ -34,7 +34,7 @@ public class CircleView extends FrameLayout {
     private final Paint outerPaint;
     private final Paint whitePaint;
     private final Paint innerPaint;
-    private boolean mSelected;
+    private boolean selected;
 
     public CircleView(Context context) {
         this(context, null, 0);
@@ -79,15 +79,13 @@ public class CircleView extends FrameLayout {
         }
     }
 
-    @Override
-    public void setBackgroundColor(@ColorInt int color) {
+    @Override public void setBackgroundColor(@ColorInt int color) {
         update(color);
         requestLayout();
         invalidate();
     }
 
-    @Override
-    public void setBackgroundResource(@ColorRes int color) {
+    @Override public void setBackgroundResource(@ColorRes int color) {
         setBackgroundColor(DialogUtils.getColor(getContext(), color));
     }
 
@@ -121,22 +119,20 @@ public class CircleView extends FrameLayout {
     }
 
     public void setSelected(boolean selected) {
-        mSelected = selected;
+        this.selected = selected;
         requestLayout();
         invalidate();
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
         setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth());
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         final int outerRadius = getMeasuredWidth() / 2;
-        if (mSelected) {
+        if (selected) {
             final int whiteRadius = outerRadius - borderWidthLarge;
             final int innerRadius = whiteRadius - borderWidthSmall;
             canvas.drawCircle(getMeasuredWidth() / 2,
@@ -159,8 +155,7 @@ public class CircleView extends FrameLayout {
         }
     }
 
-    @ColorInt
-    private static int translucentColor(int color) {
+    @ColorInt private static int translucentColor(int color) {
         final float factor = 0.7f;
         int alpha = Math.round(Color.alpha(color) * factor);
         int red = Color.red(color);
@@ -177,8 +172,8 @@ public class CircleView extends FrameLayout {
         return stateListDrawable;
     }
 
-    @ColorInt
-    public static int shiftColor(@ColorInt int color, @FloatRange(from = 0.0f, to = 2.0f) float by) {
+    @ColorInt public static int shiftColor(@ColorInt int color,
+                                           @FloatRange(from = 0.0f, to = 2.0f) float by) {
         if (by == 1f) return color;
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
@@ -186,13 +181,11 @@ public class CircleView extends FrameLayout {
         return Color.HSVToColor(hsv);
     }
 
-    @ColorInt
-    public static int shiftColorDown(@ColorInt int color) {
+    @ColorInt public static int shiftColorDown(@ColorInt int color) {
         return shiftColor(color, 0.9f);
     }
 
-    @ColorInt
-    public static int shiftColorUp(@ColorInt int color) {
+    @ColorInt public static int shiftColorUp(@ColorInt int color) {
         return shiftColor(color, 1.1f);
     }
 

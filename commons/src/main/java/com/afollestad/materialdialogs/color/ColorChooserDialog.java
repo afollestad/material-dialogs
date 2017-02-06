@@ -38,6 +38,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -83,24 +84,24 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     public ColorChooserDialog() {
     }
 
-    private int mCircleSize;
-    private ColorCallback mCallback;
-    private GridView mGrid;
+    private int circleSize;
+    private ColorCallback callback;
+    private GridView grid;
 
-    private View mColorChooserCustomFrame;
-    private EditText mCustomColorHex;
-    private View mCustomColorIndicator;
-    private TextWatcher mCustomColorTextWatcher;
-    private SeekBar mCustomSeekA;
-    private TextView mCustomSeekAValue;
-    private SeekBar mCustomSeekR;
-    private TextView mCustomSeekRValue;
-    private SeekBar mCustomSeekG;
-    private TextView mCustomSeekGValue;
-    private SeekBar mCustomSeekB;
-    private TextView mCustomSeekBValue;
-    private SeekBar.OnSeekBarChangeListener mCustomColorRgbListener;
-    private int mSelectedCustomColor;
+    private View colorChooserCustomFrame;
+    private EditText customColorHex;
+    private View customColorIndicator;
+    private TextWatcher customColorTextWatcher;
+    private SeekBar customSeekA;
+    private TextView customSeekAValue;
+    private SeekBar customSeekR;
+    private TextView customSeekRValue;
+    private SeekBar customSeekG;
+    private TextView customSeekGValue;
+    private SeekBar customSeekB;
+    private TextView customSeekBValue;
+    private SeekBar.OnSeekBarChangeListener customColorRgbListener;
+    private int selectedCustomColor;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -108,8 +109,8 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         outState.putInt("top_index", topIndex());
         outState.putBoolean("in_sub", isInSub());
         outState.putInt("sub_index", subIndex());
-        outState.putBoolean("in_custom", mColorChooserCustomFrame != null &&
-                mColorChooserCustomFrame.getVisibility() == View.VISIBLE);
+        outState.putBoolean("in_custom", colorChooserCustomFrame != null &&
+                colorChooserCustomFrame.getVisibility() == View.VISIBLE);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         super.onAttach(activity);
         if (!(activity instanceof ColorCallback))
             throw new IllegalStateException("ColorChooserDialog needs to be shown from an Activity implementing ColorCallback.");
-        mCallback = (ColorCallback) activity;
+        callback = (ColorCallback) activity;
     }
 
     private boolean isInSub() {
@@ -188,14 +189,13 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             }
 
             if (builder.mAllowUserCustom)
-                mSelectedCustomColor = getSelectedColor();
+                selectedCustomColor = getSelectedColor();
             invalidateDynamicButtonColors();
             invalidate();
         }
     }
 
-    @Override
-    public boolean onLongClick(View v) {
+    @Override public boolean onLongClick(View v) {
         if (v.getTag() != null) {
             final String[] tag = ((String) v.getTag()).split(":");
             final int color = Integer.parseInt(tag[1]);
@@ -225,20 +225,21 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor);
             }
 
-            if (mCustomSeekR != null) {
-                if (mCustomSeekA.getVisibility() == View.VISIBLE)
-                    MDTintHelper.setTint(mCustomSeekA, selectedColor);
-                MDTintHelper.setTint(mCustomSeekR, selectedColor);
-                MDTintHelper.setTint(mCustomSeekG, selectedColor);
-                MDTintHelper.setTint(mCustomSeekB, selectedColor);
+            if (customSeekR != null) {
+                if (customSeekA.getVisibility() == View.VISIBLE)
+                    MDTintHelper.setTint(customSeekA, selectedColor);
+                MDTintHelper.setTint(customSeekR, selectedColor);
+                MDTintHelper.setTint(customSeekG, selectedColor);
+                MDTintHelper.setTint(customSeekB, selectedColor);
             }
         }
     }
 
-    @ColorInt
-    private int getSelectedColor() {
-        if (mColorChooserCustomFrame != null && mColorChooserCustomFrame.getVisibility() == View.VISIBLE)
-            return mSelectedCustomColor;
+    @ColorInt private int getSelectedColor() {
+        if (colorChooserCustomFrame != null &&
+                colorChooserCustomFrame.getVisibility() == View.VISIBLE) {
+            return selectedCustomColor;
+        }
 
         int color = 0;
         if (subIndex() > -1)
@@ -255,7 +256,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     public interface ColorCallback {
+
         void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor);
+
+        void onColorChooserDismissed(@NonNull ColorChooserDialog dialog);
     }
 
     private void findSubIndexForColor(int topIndex, int color) {
@@ -320,7 +324,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             }
         }
 
-        mCircleSize = getResources().getDimensionPixelSize(R.dimen.md_colorchooser_circlesize);
+        circleSize = getResources().getDimensionPixelSize(R.dimen.md_colorchooser_circlesize);
         final Builder builder = getBuilder();
 
         MaterialDialog.Builder bd = new MaterialDialog.Builder(getActivity())
@@ -333,7 +337,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mCallback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
+                        callback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
                         dismiss();
                     }
                 })
@@ -368,31 +372,31 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
         final MaterialDialog dialog = bd.build();
         final View v = dialog.getCustomView();
-        mGrid = (GridView) v.findViewById(R.id.md_grid);
+        grid = (GridView) v.findViewById(R.id.md_grid);
 
         if (builder.mAllowUserCustom) {
-            mSelectedCustomColor = preselectColor;
-            mColorChooserCustomFrame = v.findViewById(R.id.md_colorChooserCustomFrame);
-            mCustomColorHex = (EditText) v.findViewById(R.id.md_hexInput);
-            mCustomColorIndicator = v.findViewById(R.id.md_colorIndicator);
-            mCustomSeekA = (SeekBar) v.findViewById(R.id.md_colorA);
-            mCustomSeekAValue = (TextView) v.findViewById(R.id.md_colorAValue);
-            mCustomSeekR = (SeekBar) v.findViewById(R.id.md_colorR);
-            mCustomSeekRValue = (TextView) v.findViewById(R.id.md_colorRValue);
-            mCustomSeekG = (SeekBar) v.findViewById(R.id.md_colorG);
-            mCustomSeekGValue = (TextView) v.findViewById(R.id.md_colorGValue);
-            mCustomSeekB = (SeekBar) v.findViewById(R.id.md_colorB);
-            mCustomSeekBValue = (TextView) v.findViewById(R.id.md_colorBValue);
+            selectedCustomColor = preselectColor;
+            colorChooserCustomFrame = v.findViewById(R.id.md_colorChooserCustomFrame);
+            customColorHex = (EditText) v.findViewById(R.id.md_hexInput);
+            customColorIndicator = v.findViewById(R.id.md_colorIndicator);
+            customSeekA = (SeekBar) v.findViewById(R.id.md_colorA);
+            customSeekAValue = (TextView) v.findViewById(R.id.md_colorAValue);
+            customSeekR = (SeekBar) v.findViewById(R.id.md_colorR);
+            customSeekRValue = (TextView) v.findViewById(R.id.md_colorRValue);
+            customSeekG = (SeekBar) v.findViewById(R.id.md_colorG);
+            customSeekGValue = (TextView) v.findViewById(R.id.md_colorGValue);
+            customSeekB = (SeekBar) v.findViewById(R.id.md_colorB);
+            customSeekBValue = (TextView) v.findViewById(R.id.md_colorBValue);
 
             if (!builder.mAllowUserCustomAlpha) {
                 v.findViewById(R.id.md_colorALabel).setVisibility(View.GONE);
-                mCustomSeekA.setVisibility(View.GONE);
-                mCustomSeekAValue.setVisibility(View.GONE);
-                mCustomColorHex.setHint("2196F3");
-                mCustomColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+                customSeekA.setVisibility(View.GONE);
+                customSeekAValue.setVisibility(View.GONE);
+                customColorHex.setHint("2196F3");
+                customColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
             } else {
-                mCustomColorHex.setHint("FF2196F3");
-                mCustomColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
+                customColorHex.setHint("FF2196F3");
+                customColorHex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
             }
 
             if (!foundPreselectColor) {
@@ -408,14 +412,14 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     private void toggleCustom(MaterialDialog dialog) {
         if (dialog == null)
             dialog = (MaterialDialog) getDialog();
-        if (mGrid.getVisibility() == View.VISIBLE) {
+        if (grid.getVisibility() == View.VISIBLE) {
             dialog.setTitle(getBuilder().mCustomBtn);
             dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().mPresetsBtn);
             dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
-            mGrid.setVisibility(View.INVISIBLE);
-            mColorChooserCustomFrame.setVisibility(View.VISIBLE);
+            grid.setVisibility(View.INVISIBLE);
+            colorChooserCustomFrame.setVisibility(View.VISIBLE);
 
-            mCustomColorTextWatcher = new TextWatcher() {
+            customColorTextWatcher = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
@@ -423,26 +427,26 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     try {
-                        mSelectedCustomColor = Color.parseColor("#" + s.toString());
+                        selectedCustomColor = Color.parseColor("#" + s.toString());
                     } catch (IllegalArgumentException e) {
-                        mSelectedCustomColor = Color.BLACK;
+                        selectedCustomColor = Color.BLACK;
                     }
-                    mCustomColorIndicator.setBackgroundColor(mSelectedCustomColor);
-                    if (mCustomSeekA.getVisibility() == View.VISIBLE) {
-                        int alpha = Color.alpha(mSelectedCustomColor);
-                        mCustomSeekA.setProgress(alpha);
-                        mCustomSeekAValue.setText(String.format("%d", alpha));
+                    customColorIndicator.setBackgroundColor(selectedCustomColor);
+                    if (customSeekA.getVisibility() == View.VISIBLE) {
+                        int alpha = Color.alpha(selectedCustomColor);
+                        customSeekA.setProgress(alpha);
+                        customSeekAValue.setText(String.format(Locale.US, "%d", alpha));
                     }
-                    if (mCustomSeekA.getVisibility() == View.VISIBLE) {
-                        int alpha = Color.alpha(mSelectedCustomColor);
-                        mCustomSeekA.setProgress(alpha);
+                    if (customSeekA.getVisibility() == View.VISIBLE) {
+                        int alpha = Color.alpha(selectedCustomColor);
+                        customSeekA.setProgress(alpha);
                     }
-                    int red = Color.red(mSelectedCustomColor);
-                    mCustomSeekR.setProgress(red);
-                    int green = Color.green(mSelectedCustomColor);
-                    mCustomSeekG.setProgress(green);
-                    int blue = Color.blue(mSelectedCustomColor);
-                    mCustomSeekB.setProgress(blue);
+                    int red = Color.red(selectedCustomColor);
+                    customSeekR.setProgress(red);
+                    int green = Color.green(selectedCustomColor);
+                    customSeekG.setProgress(green);
+                    int blue = Color.blue(selectedCustomColor);
+                    customSeekB.setProgress(blue);
                     isInSub(false);
                     topIndex(-1);
                     subIndex(-1);
@@ -454,49 +458,47 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                 }
             };
 
-            mCustomColorHex.addTextChangedListener(mCustomColorTextWatcher);
-            mCustomColorRgbListener = new SeekBar.OnSeekBarChangeListener() {
+            customColorHex.addTextChangedListener(customColorTextWatcher);
+            customColorRgbListener = new SeekBar.OnSeekBarChangeListener() {
 
                 @SuppressLint("DefaultLocale")
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if (fromUser) {
                         if (getBuilder().mAllowUserCustomAlpha) {
-                            int color = Color.argb(mCustomSeekA.getProgress(),
-                                    mCustomSeekR.getProgress(),
-                                    mCustomSeekG.getProgress(),
-                                    mCustomSeekB.getProgress());
-                            mCustomColorHex.setText(String.format("%08X", color));
+                            int color = Color.argb(customSeekA.getProgress(),
+                                    customSeekR.getProgress(),
+                                    customSeekG.getProgress(),
+                                    customSeekB.getProgress());
+                            customColorHex.setText(String.format("%08X", color));
                         } else {
-                            int color = Color.rgb(mCustomSeekR.getProgress(),
-                                    mCustomSeekG.getProgress(),
-                                    mCustomSeekB.getProgress());
-                            mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & color));
+                            int color = Color.rgb(customSeekR.getProgress(),
+                                    customSeekG.getProgress(),
+                                    customSeekB.getProgress());
+                            customColorHex.setText(String.format("%06X", 0xFFFFFF & color));
                         }
                     }
-                    mCustomSeekAValue.setText(String.format("%d", mCustomSeekA.getProgress()));
-                    mCustomSeekRValue.setText(String.format("%d", mCustomSeekR.getProgress()));
-                    mCustomSeekGValue.setText(String.format("%d", mCustomSeekG.getProgress()));
-                    mCustomSeekBValue.setText(String.format("%d", mCustomSeekB.getProgress()));
+                    customSeekAValue.setText(String.format("%d", customSeekA.getProgress()));
+                    customSeekRValue.setText(String.format("%d", customSeekR.getProgress()));
+                    customSeekGValue.setText(String.format("%d", customSeekG.getProgress()));
+                    customSeekBValue.setText(String.format("%d", customSeekB.getProgress()));
                 }
 
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
+                @Override public void onStartTrackingTouch(SeekBar seekBar) {
                 }
 
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
+                @Override public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             };
 
-            mCustomSeekR.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomSeekG.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            mCustomSeekB.setOnSeekBarChangeListener(mCustomColorRgbListener);
-            if (mCustomSeekA.getVisibility() == View.VISIBLE) {
-                mCustomSeekA.setOnSeekBarChangeListener(mCustomColorRgbListener);
-                mCustomColorHex.setText(String.format("%08X", mSelectedCustomColor));
+            customSeekR.setOnSeekBarChangeListener(customColorRgbListener);
+            customSeekG.setOnSeekBarChangeListener(customColorRgbListener);
+            customSeekB.setOnSeekBarChangeListener(customColorRgbListener);
+            if (customSeekA.getVisibility() == View.VISIBLE) {
+                customSeekA.setOnSeekBarChangeListener(customColorRgbListener);
+                customColorHex.setText(String.format("%08X", selectedCustomColor));
             } else {
-                mCustomColorHex.setText(String.format("%06X", 0xFFFFFF & mSelectedCustomColor));
+                customColorHex.setText(String.format("%06X", 0xFFFFFF & selectedCustomColor));
             }
         } else {
             dialog.setTitle(getBuilder().mTitle);
@@ -504,45 +506,42 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             if (isInSub())
                 dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mBackBtn);
             else dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().mCancelBtn);
-            mGrid.setVisibility(View.VISIBLE);
-            mColorChooserCustomFrame.setVisibility(View.GONE);
-            mCustomColorHex.removeTextChangedListener(mCustomColorTextWatcher);
-            mCustomColorTextWatcher = null;
-            mCustomSeekR.setOnSeekBarChangeListener(null);
-            mCustomSeekG.setOnSeekBarChangeListener(null);
-            mCustomSeekB.setOnSeekBarChangeListener(null);
-            mCustomColorRgbListener = null;
+            grid.setVisibility(View.VISIBLE);
+            colorChooserCustomFrame.setVisibility(View.GONE);
+            customColorHex.removeTextChangedListener(customColorTextWatcher);
+            customColorTextWatcher = null;
+            customSeekR.setOnSeekBarChangeListener(null);
+            customSeekG.setOnSeekBarChangeListener(null);
+            customSeekB.setOnSeekBarChangeListener(null);
+            customColorRgbListener = null;
         }
     }
 
     private void invalidate() {
-        if (mGrid.getAdapter() == null) {
-            mGrid.setAdapter(new ColorGridAdapter());
-            mGrid.setSelector(ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
-        } else ((BaseAdapter) mGrid.getAdapter()).notifyDataSetChanged();
+        if (grid.getAdapter() == null) {
+            grid.setAdapter(new ColorGridAdapter());
+            grid.setSelector(ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
+        } else ((BaseAdapter) grid.getAdapter()).notifyDataSetChanged();
         if (getDialog() != null)
             getDialog().setTitle(getTitle());
     }
 
     private class ColorGridAdapter extends BaseAdapter {
 
-        public ColorGridAdapter() {
+        ColorGridAdapter() {
         }
 
-        @Override
-        public int getCount() {
+        @Override public int getCount() {
             if (isInSub()) return mColorsSub[topIndex()].length;
             else return mColorsTop.length;
         }
 
-        @Override
-        public Object getItem(int position) {
+        @Override public Object getItem(int position) {
             if (isInSub()) return mColorsSub[topIndex()][position];
             else return mColorsTop[position];
         }
 
-        @Override
-        public long getItemId(int position) {
+        @Override public long getItemId(int position) {
             return position;
         }
 
@@ -551,7 +550,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = new CircleView(getContext());
-                convertView.setLayoutParams(new GridView.LayoutParams(mCircleSize, mCircleSize));
+                convertView.setLayoutParams(new GridView.LayoutParams(circleSize, circleSize));
             }
             CircleView child = (CircleView) convertView;
             @ColorInt
@@ -569,139 +568,111 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
     public static class Builder implements Serializable {
 
-        @NonNull
-        protected final transient AppCompatActivity mContext;
-        @StringRes
-        protected final int mTitle;
-        @StringRes
-        protected int mTitleSub;
-        @ColorInt
-        protected int mPreselect;
-        @StringRes
-        protected int mDoneBtn = R.string.md_done_label;
-        @StringRes
-        protected int mBackBtn = R.string.md_back_label;
-        @StringRes
-        protected int mCancelBtn = R.string.md_cancel_label;
-        @StringRes
-        protected int mCustomBtn = R.string.md_custom_label;
-        @StringRes
-        protected int mPresetsBtn = R.string.md_presets_label;
-        @Nullable
-        protected int[] mColorsTop;
-        @Nullable
-        protected int[][] mColorsSub;
-        @Nullable
-        protected String mTag;
-        @Nullable
-        protected Theme mTheme;
+        @NonNull final transient AppCompatActivity mContext;
+        @StringRes final int mTitle;
+        @StringRes int mTitleSub;
+        @ColorInt int mPreselect;
+        @StringRes int mDoneBtn = R.string.md_done_label;
+        @StringRes int mBackBtn = R.string.md_back_label;
+        @StringRes int mCancelBtn = R.string.md_cancel_label;
+        @StringRes int mCustomBtn = R.string.md_custom_label;
+        @StringRes int mPresetsBtn = R.string.md_presets_label;
+        @Nullable int[] mColorsTop;
+        @Nullable int[][] mColorsSub;
+        @Nullable String mTag;
+        @Nullable Theme mTheme;
 
-        protected boolean mAccentMode = false;
-        protected boolean mDynamicButtonColor = true;
-        protected boolean mAllowUserCustom = true;
-        protected boolean mAllowUserCustomAlpha = true;
-        protected boolean mSetPreselectionColor = false;
+        boolean mAccentMode = false;
+        boolean mDynamicButtonColor = true;
+        boolean mAllowUserCustom = true;
+        boolean mAllowUserCustomAlpha = true;
+        boolean mSetPreselectionColor = false;
 
-        public <ActivityType extends AppCompatActivity & ColorCallback> Builder(@NonNull ActivityType context, @StringRes int title) {
+        public <ActivityType extends AppCompatActivity & ColorCallback> Builder(
+                @NonNull ActivityType context, @StringRes int title) {
             mContext = context;
             mTitle = title;
         }
 
-        @NonNull
-        public Builder titleSub(@StringRes int titleSub) {
+        @NonNull public Builder titleSub(@StringRes int titleSub) {
             mTitleSub = titleSub;
             return this;
         }
 
-        @NonNull
-        public Builder tag(@Nullable String tag) {
+        @NonNull public Builder tag(@Nullable String tag) {
             mTag = tag;
             return this;
         }
 
-        @NonNull
-        public Builder theme(@NonNull Theme theme) {
+        @NonNull public Builder theme(@NonNull Theme theme) {
             mTheme = theme;
             return this;
         }
 
-        @NonNull
-        public Builder preselect(@ColorInt int preselect) {
+        @NonNull public Builder preselect(@ColorInt int preselect) {
             mPreselect = preselect;
             mSetPreselectionColor = true;
             return this;
         }
 
-        @NonNull
-        public Builder accentMode(boolean accentMode) {
+        @NonNull public Builder accentMode(boolean accentMode) {
             mAccentMode = accentMode;
             return this;
         }
 
-        @NonNull
-        public Builder doneButton(@StringRes int text) {
+        @NonNull public Builder doneButton(@StringRes int text) {
             mDoneBtn = text;
             return this;
         }
 
-        @NonNull
-        public Builder backButton(@StringRes int text) {
+        @NonNull public Builder backButton(@StringRes int text) {
             mBackBtn = text;
             return this;
         }
 
-        @NonNull
-        public Builder cancelButton(@StringRes int text) {
+        @NonNull public Builder cancelButton(@StringRes int text) {
             mCancelBtn = text;
             return this;
         }
 
-        @NonNull
-        public Builder customButton(@StringRes int text) {
+        @NonNull public Builder customButton(@StringRes int text) {
             mCustomBtn = text;
             return this;
         }
 
-        @NonNull
-        public Builder presetsButton(@StringRes int text) {
+        @NonNull public Builder presetsButton(@StringRes int text) {
             mPresetsBtn = text;
             return this;
         }
 
-        @NonNull
-        public Builder dynamicButtonColor(boolean enabled) {
+        @NonNull public Builder dynamicButtonColor(boolean enabled) {
             mDynamicButtonColor = enabled;
             return this;
         }
 
-        @NonNull
-        public Builder customColors(@NonNull int[] topLevel, @Nullable int[][] subLevel) {
+        @NonNull public Builder customColors(@NonNull int[] topLevel, @Nullable int[][] subLevel) {
             mColorsTop = topLevel;
             mColorsSub = subLevel;
             return this;
         }
 
-        @NonNull
-        public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
+        @NonNull public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
             mColorsTop = DialogUtils.getColorArray(mContext, topLevel);
             mColorsSub = subLevel;
             return this;
         }
 
-        @NonNull
-        public Builder allowUserColorInput(boolean allow) {
+        @NonNull public Builder allowUserColorInput(boolean allow) {
             mAllowUserCustom = allow;
             return this;
         }
 
-        @NonNull
-        public Builder allowUserColorInputAlpha(boolean allow) {
+        @NonNull public Builder allowUserColorInputAlpha(boolean allow) {
             mAllowUserCustomAlpha = allow;
             return this;
         }
 
-        @NonNull
-        public ColorChooserDialog build() {
+        @NonNull public ColorChooserDialog build() {
             ColorChooserDialog dialog = new ColorChooserDialog();
             Bundle args = new Bundle();
             args.putSerializable("builder", this);
@@ -709,8 +680,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
             return dialog;
         }
 
-        @NonNull
-        public ColorChooserDialog show() {
+        @NonNull public ColorChooserDialog show() {
             ColorChooserDialog dialog = build();
             dialog.show(mContext);
             return dialog;
@@ -731,16 +701,15 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
     }
 
-    @Nullable
-    public static ColorChooserDialog findVisible(@NonNull AppCompatActivity context, @ColorChooserTag String tag) {
+    @Nullable public static ColorChooserDialog findVisible(
+            @NonNull AppCompatActivity context, @ColorChooserTag String tag) {
         Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
         if (frag != null && frag instanceof ColorChooserDialog)
             return (ColorChooserDialog) frag;
         return null;
     }
 
-    @NonNull
-    public ColorChooserDialog show(AppCompatActivity context) {
+    @NonNull public ColorChooserDialog show(AppCompatActivity context) {
         String tag;
         Builder builder = getBuilder();
         if (builder.mColorsTop != null)
