@@ -91,8 +91,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // BEGIN SAMPLE
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -102,21 +101,18 @@ public class MainActivity extends AppCompatActivity implements
         accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         handler = null;
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         if (thread != null && !thread.isInterrupted() && thread.isAlive())
             thread.interrupt();
     }
 
-    @OnClick(R.id.basicNoTitle)
-    public void showBasicNoTitle() {
+    @OnClick(R.id.basicNoTitle) public void showBasicNoTitle() {
         new MaterialDialog.Builder(this)
                 .content(R.string.shareLocationPrompt)
                 .positiveText(R.string.agree)
@@ -124,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.basic)
-    public void showBasic() {
+    @OnClick(R.id.basic) public void showBasic() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -134,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.basicLongContent)
-    public void showBasicLongContent() {
+    @OnClick(R.id.basicLongContent) public void showBasicLongContent() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.loremIpsum)
@@ -156,8 +150,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.basicCheckPrompt)
-    public void showBasicCheckPrompt() {
+    @OnClick(R.id.basicCheckPrompt) public void showBasicCheckPrompt() {
         new MaterialDialog.Builder(this)
                 .iconRes(R.mipmap.ic_launcher)
                 .limitIconToDefaultSize()
@@ -169,8 +162,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.stacked)
-    public void showStacked() {
+    @OnClick(R.id.stacked) public void showStacked() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -181,8 +173,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.neutral)
-    public void showNeutral() {
+    @OnClick(R.id.neutral) public void showNeutral() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -192,8 +183,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.callbacks)
-    public void showCallbacks() {
+    @OnClick(R.id.callbacks) public void showCallbacks() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -204,8 +194,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.list)
-    public void showList() {
+    @OnClick(R.id.list) public void showList() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -213,16 +202,14 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.listNoTitle)
-    public void showListNoTitle() {
+    @OnClick(R.id.listNoTitle) public void showListNoTitle() {
         new MaterialDialog.Builder(this)
                 .items(R.array.socialNetworks)
                 .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
                 .show();
     }
 
-    @OnClick(R.id.longList)
-    public void showLongList() {
+    @OnClick(R.id.longList) public void showLongList() {
         new MaterialDialog.Builder(this).title(R.string.states)
                 .items(R.array.states)
                 .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -231,8 +218,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    @OnClick(R.id.list_longItems)
-    public void showListLongItems() {
+    @OnClick(R.id.list_longItems) public void showListLongItems() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks_longItems)
@@ -240,8 +226,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.list_checkPrompt)
-    public void showListCheckPrompt() {
+    @OnClick(R.id.list_checkPrompt) public void showListCheckPrompt() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -276,8 +261,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.singleChoice)
-    public void showSingleChoice() {
+    @OnClick(R.id.singleChoice) public void showSingleChoice() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -289,8 +273,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.singleChoice_longItems)
-    public void showSingleChoiceLongItems() {
+    @OnClick(R.id.singleChoice_longItems) public void showSingleChoiceLongItems() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks_longItems)
@@ -302,8 +285,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.multiChoice)
-    public void showMultiChoice() {
+    @OnClick(R.id.multiChoice) public void showMultiChoice() {
         new MaterialDialog.Builder(this).title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
                 .itemsCallbackMultiChoice(new Integer[]{1, 3}, (dialog, which, text) -> {
@@ -326,8 +308,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.multiChoiceLimited)
-    public void showMultiChoiceLimited() {
+    @OnClick(R.id.multiChoiceLimited) public void showMultiChoiceLimited() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -343,8 +324,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.multiChoiceLimitedMin)
-    public void showMultiChoiceLimitedMin() {
+    @OnClick(R.id.multiChoiceLimitedMin) public void showMultiChoiceLimitedMin() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -360,8 +340,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.multiChoice_longItems)
-    public void showMultiChoiceLongItems() {
+    @OnClick(R.id.multiChoice_longItems) public void showMultiChoiceLongItems() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks_longItems)
@@ -380,8 +359,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.multiChoice_disabledItems)
-    public void showMultiChoiceDisabledItems() {
+    @OnClick(R.id.multiChoice_disabledItems) public void showMultiChoiceDisabledItems() {
         new MaterialDialog.Builder(this)
                 .title(R.string.socialNetworks)
                 .items(R.array.socialNetworks)
@@ -405,8 +383,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.simpleList)
-    public void showSimpleList() {
+    @OnClick(R.id.simpleList) public void showSimpleList() {
         final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter((dialog, index1, item) -> showToast(item.getContent().toString()));
         adapter.add(new MaterialSimpleListItem.Builder(this)
                 .content("username@gmail.com")
@@ -430,8 +407,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.customListItems)
-    public void showCustomList() {
+    @OnClick(R.id.customListItems) public void showCustomList() {
         final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
         adapter.setCallbacks(
                 itemIndex -> showToast("Item clicked: " + itemIndex),
@@ -488,8 +464,7 @@ public class MainActivity extends AppCompatActivity implements
         positiveAction.setEnabled(false); // disabled by default
     }
 
-    @OnClick(R.id.customView_webView)
-    public void showCustomWebView() {
+    @OnClick(R.id.customView_webView) public void showCustomWebView() {
         int accentColor = ThemeSingleton.get().widgetColor;
         if (accentColor == 0)
             accentColor = ContextCompat.getColor(this, R.color.accent);
@@ -497,8 +472,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), "changelog");
     }
 
-    @OnClick(R.id.customView_datePicker)
-    public void showCustomDatePicker() {
+    @OnClick(R.id.customView_datePicker) public void showCustomDatePicker() {
         new MaterialDialog.Builder(this)
                 .title(R.string.date_picker)
                 .customView(R.layout.dialog_datepicker, false)
@@ -507,16 +481,14 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.colorChooser_primary)
-    public void showColorChooserPrimary() {
+    @OnClick(R.id.colorChooser_primary) public void showColorChooserPrimary() {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .preselect(primaryPreselect)
                 .show();
     }
 
-    @OnClick(R.id.colorChooser_accent)
-    public void showColorChooserAccent() {
+    @OnClick(R.id.colorChooser_accent) public void showColorChooserAccent() {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .accentMode(true)
@@ -524,8 +496,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.colorChooser_customColors)
-    public void showColorChooserCustomColors() {
+    @OnClick(R.id.colorChooser_customColors) public void showColorChooserCustomColors() {
         int[][] subColors = new int[][]{
                 new int[]{Color.parseColor("#EF5350"),
                         Color.parseColor("#F44336"),
@@ -554,8 +525,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.colorChooser_customColorsNoSub)
-    public void showColorChooserCustomColorsNoSub() {
+    @OnClick(R.id.colorChooser_customColorsNoSub) public void showColorChooserCustomColorsNoSub() {
         new ColorChooserDialog.Builder(this, R.string.color_palette)
                 .titleSub(R.string.colors)
                 .preselect(primaryPreselect)
@@ -583,8 +553,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @OnClick(R.id.themed)
-    public void showThemed() {
+    @Override public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+
+    }
+
+    @OnClick(R.id.themed) public void showThemed() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -604,8 +577,7 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.showCancelDismiss)
-    public void showShowCancelDismissCallbacks() {
+    @OnClick(R.id.showCancelDismiss) public void showShowCancelDismissCallbacks() {
         new MaterialDialog.Builder(this)
                 .title(R.string.useGoogleLocationServices)
                 .content(R.string.useGoogleLocationServicesPrompt)
@@ -631,9 +603,12 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+    @Override public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
         showToast(file.getAbsolutePath());
+    }
+
+    @Override public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
+
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -656,8 +631,11 @@ public class MainActivity extends AppCompatActivity implements
         showToast(folder.getAbsolutePath());
     }
 
-    @OnClick(R.id.input)
-    public void showInputDialog() {
+    @Override public void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog) {
+
+    }
+
+    @OnClick(R.id.input) public void showInputDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input)
                 .content(R.string.input_content)
@@ -666,11 +644,11 @@ public class MainActivity extends AppCompatActivity implements
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .inputRange(2, 16)
                 .positiveText(R.string.submit)
-                .input(R.string.input_hint, R.string.input_hint, false, (dialog, input) -> showToast("Hello, " + input.toString() + "!")).show();
+                .input(R.string.input_hint, R.string.input_hint, false, (dialog, input) ->
+                        showToast("Hello, " + input.toString() + "!")).show();
     }
 
-    @OnClick(R.id.input_custominvalidation)
-    public void showInputDialogCustomInvalidation() {
+    @OnClick(R.id.input_custominvalidation) public void showInputDialogCustomInvalidation() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input)
                 .content(R.string.input_content_custominvalidation)
@@ -690,8 +668,7 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    @OnClick(R.id.input_checkPrompt)
-    public void showInputDialogCheckPrompt() {
+    @OnClick(R.id.input_checkPrompt) public void showInputDialogCheckPrompt() {
         new MaterialDialog.Builder(this)
                 .title(R.string.input)
                 .content(R.string.input_content)
@@ -700,13 +677,13 @@ public class MainActivity extends AppCompatActivity implements
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .inputRange(2, 16)
                 .positiveText(R.string.submit)
-                .input(R.string.input_hint, R.string.input_hint, false, (dialog, input) -> showToast("Hello, " + input.toString() + "!"))
+                .input(R.string.input_hint, R.string.input_hint, false, (dialog, input) ->
+                        showToast("Hello, " + input.toString() + "!"))
                 .checkBoxPromptRes(R.string.example_prompt, true, null)
                 .show();
     }
 
-    @OnClick(R.id.progress1)
-    public void showProgressDeterminateDialog() {
+    @OnClick(R.id.progress1) public void showProgressDeterminateDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.progress_dialog)
                 .content(R.string.please_wait)
@@ -739,13 +716,11 @@ public class MainActivity extends AppCompatActivity implements
                 }).show();
     }
 
-    @OnClick(R.id.progress2)
-    public void showProgressIndeterminateDialog() {
+    @OnClick(R.id.progress2) public void showProgressIndeterminateDialog() {
         showIndeterminateProgressDialog(false);
     }
 
-    @OnClick(R.id.progress3)
-    public void showProgressHorizontalIndeterminateDialog() {
+    @OnClick(R.id.progress3) public void showProgressHorizontalIndeterminateDialog() {
         showIndeterminateProgressDialog(true);
     }
 
@@ -758,22 +733,19 @@ public class MainActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.preference_dialogs)
-    public void showPreferenceDialogs() {
+    @OnClick(R.id.preference_dialogs) public void showPreferenceDialogs() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1)
             startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
         else
             startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about) {
             AboutDialog.show(this);
             return true;
@@ -781,14 +753,16 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode,
+                                                     @NonNull String[] permissions,
+                                                     @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_RC) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 handler.postDelayed(() -> findViewById(chooserDialog).performClick(), 1000);
             } else {
-                Toast.makeText(this, "The folder or file chooser will not work without permission to read external storage.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "The folder or file chooser will not work without " +
+                        "permission to read external storage.", Toast.LENGTH_LONG).show();
             }
         }
     }
