@@ -56,8 +56,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
         switch (dialog.listType) {
             case SINGLE: {
-                @SuppressLint("CutPasteId")
-                RadioButton radio = (RadioButton) holder.control;
+                @SuppressLint("CutPasteId") RadioButton radio = (RadioButton) holder.control;
                 boolean selected = dialog.builder.selectedIndex == index;
                 if (dialog.builder.choiceWidgetColor != null) {
                     MDTintHelper.setTint(radio, dialog.builder.choiceWidgetColor);
@@ -69,8 +68,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
                 break;
             }
             case MULTI: {
-                @SuppressLint("CutPasteId")
-                CheckBox checkbox = (CheckBox) holder.control;
+                @SuppressLint("CutPasteId") CheckBox checkbox = (CheckBox) holder.control;
                 boolean selected = dialog.selectedIndicesList.contains(index);
                 if (dialog.builder.choiceWidgetColor != null) {
                     MDTintHelper.setTint(checkbox, dialog.builder.choiceWidgetColor);
@@ -167,19 +165,23 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         }
 
         @Override public void onClick(View view) {
-            if (adapter.callback != null) {
+            if (adapter.callback != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                 CharSequence text = null;
-                if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
+                if (adapter.dialog.builder.items != null &&
+                        getAdapterPosition() < adapter.dialog.builder.items.size()) {
                     text = adapter.dialog.builder.items.get(getAdapterPosition());
+                }
                 adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, false);
             }
         }
 
         @Override public boolean onLongClick(View view) {
-            if (adapter.callback != null) {
+            if (adapter.callback != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                 CharSequence text = null;
-                if (adapter.dialog.builder.items != null && getAdapterPosition() < adapter.dialog.builder.items.size())
+                if (adapter.dialog.builder.items != null &&
+                        getAdapterPosition() < adapter.dialog.builder.items.size()) {
                     text = adapter.dialog.builder.items.get(getAdapterPosition());
+                }
                 return adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
             }
             return false;

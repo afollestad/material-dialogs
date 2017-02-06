@@ -55,7 +55,7 @@ class DialogInit {
     @LayoutRes static int getInflateLayout(MaterialDialog.Builder builder) {
         if (builder.customView != null) {
             return R.layout.md_dialog_custom;
-        } else if (builder.items != null && builder.items.size() > 0 || builder.adapter != null) {
+        } else if (builder.items != null || builder.adapter != null) {
             if (builder.checkBoxPrompt != null)
                 return R.layout.md_dialog_list_check;
             return R.layout.md_dialog_list;
