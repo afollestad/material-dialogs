@@ -24,8 +24,18 @@ public class AboutDialog extends DialogFragment {
         return new MaterialDialog.Builder(getActivity())
                 .title(R.string.about)
                 .positiveText(R.string.dismiss)
-                .content(R.string.about_body)
+                 .content(fromHtml(getString(R.string.about_body)))
                 .contentLineSpacing(1.6f)
                 .build();
+    }
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
     }
 }
