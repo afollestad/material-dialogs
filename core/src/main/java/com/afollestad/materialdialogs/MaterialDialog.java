@@ -1371,11 +1371,11 @@ public class MaterialDialog extends DialogBase implements
             return input(hint, prefill, true, callback);
         }
 
-        public Builder input(@StringRes int hint, @StringRes int prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
-            return input(hint == 0 ? null : context.getText(hint), prefill == 0 ? null : context.getText(prefill), allowEmptyInput, callback);
+        public Builder input(@StringRes @Nullable Integer hint, @StringRes @Nullable Integer prefill, boolean allowEmptyInput, @NonNull InputCallback callback) {
+            return input((hint == 0 || hint == null) ? null : context.getText(hint), (prefill == 0 || prefill == null) ? null : context.getText(prefill), allowEmptyInput, callback);
         }
 
-        public Builder input(@StringRes int hint, @StringRes int prefill, @NonNull InputCallback callback) {
+        public Builder input(@StringRes @Nullable Integer hint, @StringRes @Nullable Integer prefill, @NonNull InputCallback callback) {
             return input(hint, prefill, true, callback);
         }
 
