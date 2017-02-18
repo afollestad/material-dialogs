@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -132,7 +131,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
                 }
             });
         }
-        if (Objects.equals(getBuilder().initialPath, "/")) {
+        if (getBuilder().initialPath.equals("/")) {
             canGoUp = false;
         }
         return builder.build();
