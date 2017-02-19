@@ -140,7 +140,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                ActivityCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) !=
                         PackageManager.PERMISSION_GRANTED) {
             return new MaterialDialog.Builder(getActivity())
                     .title(R.string.md_error_label)
@@ -162,7 +163,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
                 .itemsCallback(this)
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
                         dialog.dismiss();
                     }
                 })
@@ -178,8 +180,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         }
     }
 
-    @Override
-    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence s) {
+    @Override public void onSelection
+            (MaterialDialog materialDialog, View view, int i, CharSequence s) {
         if (canGoUp && i == 0) {
             parentFolder = parentFolder.getParentFile();
             if (parentFolder.getAbsolutePath().equals("/storage/emulated"))
@@ -238,7 +240,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         String tag;
         String goUpLabel;
 
-        public <ActivityType extends AppCompatActivity & FileCallback> Builder(@NonNull ActivityType context) {
+        public <ActivityType extends AppCompatActivity & FileCallback> Builder(
+                @NonNull ActivityType context) {
             this.context = context;
             cancelButton = android.R.string.cancel;
             initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
