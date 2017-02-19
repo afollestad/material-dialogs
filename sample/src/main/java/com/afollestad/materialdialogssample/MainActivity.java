@@ -554,7 +554,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
-
+        showToast("Color chooser dismissed!");
     }
 
     @OnClick(R.id.themed) public void showThemed() {
@@ -608,7 +608,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
-
+        showToast("File chooser dismissed!");
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -632,7 +632,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override public void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog) {
-
+        showToast("Folder chooser dismissed!");
     }
 
     @OnClick(R.id.input) public void showInputDialog() {

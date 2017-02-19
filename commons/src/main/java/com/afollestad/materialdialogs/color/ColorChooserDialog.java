@@ -149,8 +149,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         getArguments().putInt("sub_index", value);
     }
 
-    @StringRes
-    public int getTitle() {
+    @StringRes public int getTitle() {
         Builder builder = getBuilder();
         int title;
         if (isInSub()) title = builder.mTitleSub;
@@ -170,8 +169,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         return getBuilder().mAccentMode;
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         if (v.getTag() != null) {
             final String[] tag = ((String) v.getTag()).split(":");
             final int index = Integer.parseInt(tag[0]);
@@ -407,6 +405,13 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
         invalidate();
         return dialog;
+    }
+
+    @Override public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (callback != null) {
+            callback.onColorChooserDismissed(this);
+        }
     }
 
     private void toggleCustom(MaterialDialog dialog) {
