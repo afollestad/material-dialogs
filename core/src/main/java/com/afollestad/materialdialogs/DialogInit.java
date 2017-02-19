@@ -352,29 +352,30 @@ class DialogInit {
         dialog.setViewInternal(dialog.view);
         dialog.checkIfListInitScroll();
 
-        // Min height and max width calculations
-        WindowManager wm = dialog.getWindow().getWindowManager();
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        final int windowWidth = size.x;
-        final int windowHeight = size.y;
+        if (!builder.wrapContent) {
+            // Min height and max width calculations
+            WindowManager wm = dialog.getWindow().getWindowManager();
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            final int windowWidth = size.x;
+            final int windowHeight = size.y;
 
-        final int windowVerticalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
-        final int windowHorizontalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
-        final int maxWidth = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
-        final int calculatedWidth = windowWidth - (windowHorizontalPadding * 2);
+            final int windowVerticalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
+            final int windowHorizontalPadding = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
+            final int maxWidth = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
+            final int calculatedWidth = windowWidth - (windowHorizontalPadding * 2);
 
-        dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = Math.min(maxWidth, calculatedWidth);
-        dialog.getWindow().setAttributes(lp);
+            dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(dialog.getWindow().getAttributes());
+            lp.width = Math.min(maxWidth, calculatedWidth);
+            dialog.getWindow().setAttributes(lp);
+        }
     }
 
     private static void fixCanvasScalingWhenHardwareAccelerated(ProgressBar pb) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
             // Canvas scaling when hardware accelerated results in artifacts on older API levels, so
             // we need to use software rendering
             if (pb.isHardwareAccelerated() && pb.getLayerType() != View.LAYER_TYPE_SOFTWARE) {

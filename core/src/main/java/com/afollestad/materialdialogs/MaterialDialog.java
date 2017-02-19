@@ -533,6 +533,7 @@ public class MaterialDialog extends DialogBase implements
         @DrawableRes protected int btnSelectorNegative;
 
         protected Object tag;
+        protected boolean wrapContent;
 
         public final Context getContext() {
             return context;
@@ -866,14 +867,6 @@ public class MaterialDialog extends DialogBase implements
             this.itemColor = color;
             this.itemColorSet = true;
             return this;
-        }
-
-        /**
-         * Renamed to {@link #itemsColor(int)} for consistency.
-         */
-        @Deprecated
-        public Builder itemColor(@ColorInt int color) {
-            return itemsColor(color);
         }
 
         public Builder itemsColorRes(@ColorRes int colorRes) {
@@ -1334,9 +1327,9 @@ public class MaterialDialog extends DialogBase implements
          *                      default linear manager.
          * @return This Builder object to allow for chaining of calls to set methods
          */
-        @SuppressWarnings("ConstantConditions")
-        public Builder adapter(@NonNull RecyclerView.Adapter<?> adapter,
-                               @Nullable RecyclerView.LayoutManager layoutManager) {
+        @SuppressWarnings("ConstantConditions") public Builder adapter(
+                @NonNull RecyclerView.Adapter<?> adapter,
+                @Nullable RecyclerView.LayoutManager layoutManager) {
             if (this.customView != null) {
                 throw new IllegalStateException("You cannot set adapter() when " +
                         "you're using a custom view.");
@@ -1399,17 +1392,6 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
-        /**
-         * @param stacked When true, action button stacking is forced.
-         * @return The Builder instance so you can chain calls to it.
-         * @deprecated Use {@link #stackingBehavior(StackingBehavior)} instead.
-         */
-        @Deprecated
-        public Builder forceStacking(boolean stacked) {
-            return stackingBehavior(stacked ?
-                    StackingBehavior.ALWAYS : StackingBehavior.ADAPTIVE);
-        }
-
         public Builder input(@Nullable CharSequence hint, @Nullable CharSequence prefill,
                              boolean allowEmptyInput, @NonNull InputCallback callback) {
             if (this.customView != null) {
@@ -1442,32 +1424,6 @@ public class MaterialDialog extends DialogBase implements
         public Builder inputType(int type) {
             this.inputType = type;
             return this;
-        }
-
-        /**
-         * @deprecated in favor of {@link #inputRange(int, int)}
-         */
-        @Deprecated
-        public Builder inputMaxLength(@IntRange(from = 1, to = Integer.MAX_VALUE) int maxLength) {
-            return inputRange(0, maxLength, 0);
-        }
-
-        /**
-         * @deprecated in favor of {@link #inputRange(int, int, int)}
-         */
-        @Deprecated
-        public Builder inputMaxLength(@IntRange(from = 1,
-                to = Integer.MAX_VALUE) int maxLength, @ColorInt int errorColor) {
-            return inputRange(0, maxLength, errorColor);
-        }
-
-        /**
-         * @deprecated in favor of {@link #inputRangeRes(int, int, int)}
-         */
-        @Deprecated
-        public Builder inputMaxLengthRes(@IntRange(from = 1,
-                to = Integer.MAX_VALUE) int maxLength, @ColorRes int errorColor) {
-            return inputRangeRes(0, maxLength, errorColor);
         }
 
         public Builder inputRange(@IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
@@ -1512,6 +1468,11 @@ public class MaterialDialog extends DialogBase implements
 
         public Builder alwaysCallInputCallback() {
             this.alwaysCallInputCallback = true;
+            return this;
+        }
+
+        public Builder wrapContent(boolean wrapContent) {
+            this.wrapContent = wrapContent;
             return this;
         }
 
