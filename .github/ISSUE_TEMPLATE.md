@@ -5,9 +5,9 @@
 
 ###### Include the following:
  - Material Dialogs version: `0.x.x.x`
- - Device OS version: `7.0`
- - Device Manufacturer: `Huawei`
- - Device Name: `Nexus 6P`
+ - Device OS version: `7.1.1`
+ - Device Manufacturer: `Google`
+ - Device Name: `Pixel XL`
 
 Also, please wrap Java with correct syntax highlighting.
 
