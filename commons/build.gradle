@@ -31,4 +31,16 @@ dependencies {
     compile project(':core')
 }
 
+// Changes to this block must be applyed in core/build.gradle and commons/build.gradle
+task("javadoc", type: Javadoc) {
+    description "Generates Javadoc API documentation for the main source code."
+    source = android.sourceSets.main.java.srcDirs
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath += files(ext.androidJar)
+    exclude "**/BuildConfig.java"
+    exclude "**/R.java"
+    options.links("http://docs.oracle.com/javase/7/docs/api/");
+    options.links("http://d.android.com/reference/");
+}
+
 apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'

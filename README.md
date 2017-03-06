@@ -8,7 +8,7 @@
 
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/readmeshowcase.png)
 
-# Table of Contents (Core)
+## Table of Contents (Core)
 
 1. [Sample Project](https://github.com/afollestad/material-dialogs#sample-project)
 2. [Gradle Dependency](https://github.com/afollestad/material-dialogs#gradle-dependency)
@@ -57,7 +57,7 @@
 24. [Tint Helper](https://github.com/afollestad/material-dialogs#tint-helper)
 25. [Misc](https://github.com/afollestad/material-dialogs#misc)
 
-# Table of Contents (Commons)
+## Table of Contents (Commons)
 
 1. [Color Chooser Dialogs](https://github.com/afollestad/material-dialogs#color-chooser-dialogs)
     1. [Finding Visible Dialogs](https://github.com/afollestad/material-dialogs#finding-visible-dialogs)
@@ -69,7 +69,7 @@
 
 ------
 
-# Sample Project
+## Sample Project
 
 You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
 
@@ -85,7 +85,7 @@ repository will allow GitHub to email you whenever I publish a release.
 
 ---
 
-# Gradle Dependency
+## Gradle Dependency
 
 ### Repository
 
@@ -122,7 +122,7 @@ It's likely that new extensions will be added to commons later.
 
 ---
 
-# What's New
+## What's New
 
 See the project's Releases page for a list of versions with their changelogs.
 
@@ -130,9 +130,16 @@ See the project's Releases page for a list of versions with their changelogs.
 
 If you Watch this repository, GitHub will send you an email every time I publish an update.
 
+## Documentation
+
+We use Javadocs, which are not yet online.
+You can build them locally using `./gradlew javadoc` on UNIX and
+`gradlew.bat javadoc` on Windows. This generates the docs into
+the folders `core/build/docs/javadoc` and `commons/build/docs/javadoc`.
+
 ---
 
-# Basic Dialog
+## Basic Dialog
 
 First of all, note that `MaterialDialog` extends `DialogBase`, which extends `android.app.Dialog`.
 
@@ -158,7 +165,7 @@ If the content is long enough, it will become scrollable and a divider will be d
 
 ---
 
-# Dismissing Dialogs
+## Dismissing Dialogs
 
 I've had lots of issues asking how you dismiss a dialog. It works the same way that `AlertDialog` does, as
 both `AlertDialog` and `MaterialDialog` are an instance of `android.app.Dialog` (which is where `dismiss()`
@@ -201,7 +208,7 @@ There are other various places where the `MaterialDialog` instance is given, suc
 
 ---
 
-# Displaying an Icon
+## Displaying an Icon
 
 MaterialDialog supports the display of an icon just like the stock AlertDialog; it will go to the left of the title.
 
@@ -219,7 +226,7 @@ You can limit the maximum size of the icon using the `limitIconToDefaultSize()`,
 
 ---
 
-# Stacked Action Buttons
+## Stacked Action Buttons
 
 If you have multiple action buttons that together are too wide to fit on one line, the dialog will stack the
 buttons to be vertically oriented.
@@ -246,7 +253,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-# Neutral Action Button
+## Neutral Action Button
 
 You can specify neutral text in addition to the positive and negative text. It will show the neutral
 action on the far left.
@@ -263,7 +270,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-# Callbacks
+## Callbacks
 
 **As of version 0.8.2.0, the `callback()` Builder method is deprecated in favor of the individual callback methods
   discussed below. Earlier versions will still require use of `ButtonCallback`.**
@@ -305,7 +312,7 @@ If `autoDismiss` is turned off, then you must manually dismiss the dialog in the
 
 ---
 
-# CheckBox Prompts
+## CheckBox Prompts
 
 Checkbox prompts allow you to display a UI similar to what Android uses to ask for a permission on API 23+.
 
@@ -330,7 +337,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-# List Dialogs
+## List Dialogs
 
 Creating a list dialog only requires passing in an array of strings. The callback (`itemsCallback`) is
 also very simple.
@@ -353,7 +360,7 @@ below your list, however this is only useful in some specific cases.
 
 ---
 
-# Single Choice List Dialogs
+## Single Choice List Dialogs
 
 Single choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackSingleChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
@@ -405,7 +412,7 @@ There's also a global theming attribute as shown in the Global Theming section o
 
 ---
 
-# Multi Choice List Dialogs
+## Multi Choice List Dialogs
 
 Multiple choice list dialogs are almost identical to regular list dialogs. The only difference is that
 you use `itemsCallbackMultiChoice` to set a callback rather than `itemsCallback`. That signals the dialog to
@@ -459,7 +466,7 @@ There's also a global theming attribute as shown in the Global Theming section o
 
 ---
 
-# Assigning IDs to List Item Views
+## Assigning IDs to List Item Views
 
 If you need to keep track of list items by ID rather than index, you can assign item IDs from an integer array:
 
@@ -481,7 +488,7 @@ You can also pass a literal integer array (`int[]`) in place of an array resourc
 
 ---
 
-# Custom List Dialogs
+## Custom List Dialogs
 
 Like Android's native dialogs, you can also pass in your own adapter via `.adapter()` to customize
 exactly how you want your list to work.
@@ -515,7 +522,7 @@ Note that you don't need to be using a custom adapter in order to access the `Re
 
 ---
 
-# Custom Views
+## Custom Views
 
 Custom views are very easy to implement.
 
@@ -550,7 +557,7 @@ View view = dialog.getCustomView();
 
 ---
 
-# Typefaces
+## Typefaces
 
 If you want to use custom fonts, you can make a call to `typeface(String, String)` when
 using the `Builder`. This will pull fonts from files in your project's `assets/fonts` folder. For example,
@@ -563,7 +570,7 @@ your app, also.
 
 ---
 
-# Getting and Setting Action Buttons
+## Getting and Setting Action Buttons
 
 If you want to get a reference to one of the dialog action buttons after the dialog is built and shown (e.g. to enable or disable buttons):
 
@@ -583,7 +590,7 @@ dialog.setActionButton(DialogAction.NEGATIVE, "New Title");
 
 ---
 
-# Theming
+## Theming
 
 Before Lollipop, theming AlertDialogs was basically impossible without using reflection and custom drawables.
 Since KitKat, Android became more color neutral but AlertDialogs continued to use Holo Blue for the title and
@@ -705,7 +712,7 @@ To see colors that fit the Material design palette, see this page: http://www.go
 
 ---
 
-# Global Theming
+## Global Theming
 
 Most of the theming aspects discussed in the above section can be automatically applied to all dialogs
 you show from an Activity which has a theme containing any of these attributes:
@@ -884,7 +891,7 @@ the color will override that behavior.
 
 ---
 
-# Show, Cancel, and Dismiss Callbacks
+## Show, Cancel, and Dismiss Callbacks
 
 You can directly setup show/cancel/dismiss listeners from the `Builder` rather than on the resulting
 `MaterialDialog` instance.
@@ -917,7 +924,7 @@ new MaterialDialog.Builder(this)
 
 ---
 
-# Input Dialogs
+## Input Dialogs
 
 An input dialog is pretty self explanatory, it retrieves input from the user of your application with
 an input field (EditText). You can also display content above the EditText if you desire.
@@ -991,7 +998,7 @@ dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
 
 ---
 
-# Progress Dialogs
+## Progress Dialogs
 
 This library allows you to display progress dialogs with Material design that even use your app's
 accent color to color the progress bars (if you use AppCompat to theme your app, or the Material theme on Lollipop).
@@ -1094,7 +1101,7 @@ The values passed above are the default.
 
 ---
 
-# Tint Helper
+## Tint Helper
 
 You can use the `MDTintHelper` class to dynamically color check boxes, radio buttons, edit texts, and progress bars 
 (to get around not being able to change `styles.xml` at runtime). It is used in the library to dynamically color
@@ -1102,7 +1109,7 @@ UI elements to match your set `widgetColor`.
 
 ---
 
-# Misc
+## Misc
 
 If you don't want the dialog to automatically be dismissed when an action button is pressed or when
 the user selects a list item:
@@ -1116,7 +1123,7 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
 
 ---
 
-# Color Chooser Dialogs
+## Color Chooser Dialogs
 
 The Builder is used like this:
 
@@ -1209,7 +1216,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
 
 ---
 
-# Preference Dialogs
+## Preference Dialogs
 
 Android's `EditTextPreference`, `ListPreference`, and `MultiSelectListPreference` allow you to associate a preference activity's settings
 with user input that's received through typing or selection. Material Dialogs includes `MaterialEditTextPreference`,
@@ -1225,7 +1232,7 @@ app:useStockLayout="true"
 
 ---
 
-# File Selector Dialogs
+## File Selector Dialogs
 
 The Builder is used like this:
 
@@ -1257,7 +1264,7 @@ public class MyActivity implements FileChooserDialog.FileCallback {
 
 ---
 
-# Folder Selector Dialogs
+## Folder Selector Dialogs
 
 The Builder is used like this:
 
@@ -1301,7 +1308,7 @@ new FolderChooserDialog.Builder(this)
 
 ---
 
-# Simple List Dialogs
+## Simple List Dialogs
 
 Simple List Dialogs are a specific style of list dialogs taken from the Material Design Guidelines: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
 
