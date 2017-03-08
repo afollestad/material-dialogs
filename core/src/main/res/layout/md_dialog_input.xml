@@ -43,7 +43,6 @@
                 android:layout_marginLeft="-2dp"
                 android:layout_marginRight="-2dp"
                 android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:textSize="@dimen/md_content_textsize"
                 tools:ignore="TextFields"/>
 

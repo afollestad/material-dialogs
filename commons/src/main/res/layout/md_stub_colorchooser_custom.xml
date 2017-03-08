@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:digits="0123456789abcdefABCDEF"
             android:focusable="true"
-            android:focusableInTouchMode="true"
             android:hint="FF0099CC"
             android:textSize="@dimen/md_title_textsize"
             tools:ignore="HardcodedText"/>
@@ -79,7 +78,6 @@
             android:layout_toRightOf="@+id/md_colorALabel"
             android:layout_toStartOf="@+id/md_colorAValue"
             android:focusable="true"
-            android:focusableInTouchMode="true"
             android:max="255"/>
 
         <TextView
@@ -125,7 +123,6 @@
             android:layout_toRightOf="@+id/md_colorRLabel"
             android:layout_toStartOf="@+id/md_colorRValue"
             android:focusable="true"
-            android:focusableInTouchMode="true"
             android:max="255"/>
 
         <TextView
@@ -171,7 +168,6 @@
             android:layout_toRightOf="@+id/md_colorGLabel"
             android:layout_toStartOf="@+id/md_colorGValue"
             android:focusable="true"
-            android:focusableInTouchMode="true"
             android:max="255"/>
 
         <TextView

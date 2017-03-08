@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:gravity="start|center_vertical"
     android:minHeight="@dimen/md_simpleitem_height"
     android:orientation="horizontal"

@@ -6,7 +6,6 @@
     android:background="?selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:minHeight="@dimen/md_listitem_height"
     android:orientation="horizontal"
     android:paddingEnd="@dimen/md_dialog_frame_margin"
@@ -22,7 +21,6 @@
         android:background="@null"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"
         android:gravity="center_vertical"/>
 
     <TextView

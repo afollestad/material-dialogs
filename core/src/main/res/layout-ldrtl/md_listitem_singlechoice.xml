@@ -32,7 +32,6 @@
         android:background="@null"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"
         android:gravity="center_vertical"
         android:minHeight="@dimen/md_listitem_height" />
 

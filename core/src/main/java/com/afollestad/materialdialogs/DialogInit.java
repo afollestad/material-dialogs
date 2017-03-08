@@ -142,11 +142,8 @@ class DialogInit {
 
     // Set up the focus of action buttons
     dialog.positiveButton.setFocusable(true);
-    dialog.positiveButton.setFocusableInTouchMode(true);
     dialog.neutralButton.setFocusable(true);
-    dialog.neutralButton.setFocusableInTouchMode(true);
     dialog.negativeButton.setFocusable(true);
-    dialog.negativeButton.setFocusableInTouchMode(true);
     if (builder.positiveFocus) {
       dialog.positiveButton.requestFocus();
     }

@@ -19,7 +19,6 @@
         android:layout_marginBottom="@dimen/md_content_padding_bottom"
         android:layout_marginTop="4dp"
         android:focusable="true"
-        android:focusableInTouchMode="true"
         android:fontFamily="sans-serif"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
