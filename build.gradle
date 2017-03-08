@@ -1,9 +1,14 @@
+apply from: './dependencies.gradle'
+
 buildscript {
+    apply from: './dependencies.gradle'
+
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
+        classpath 'com.novoda:bintray-release:' + versions.bintrayRelease
     }
 }
 

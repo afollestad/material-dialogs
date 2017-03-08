@@ -1,23 +1,16 @@
 apply plugin: 'com.android.library'
-
-ext {
-    PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
-    PUBLISH_ARTIFACT_ID = 'commons'
-    PUBLISH_VERSION = '0.9.3.0'
-    SUPPORT_LIBRARY_VERSION = '25.2.0'
-    BUILD_TOOLS = "25.0.2"
-    TARGET_SDK = 25
-}
+apply from: '../dependencies.gradle'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion TARGET_SDK
-    buildToolsVersion BUILD_TOOLS
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 13
-        targetSdkVersion TARGET_SDK
-        versionCode 1
-        versionName PUBLISH_VERSION
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
     }
     lintOptions {
         abortOnError false
@@ -26,9 +19,15 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v13:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+    compile 'com.android.support:support-v13:' + versions.supportLib
+    compile 'com.android.support:appcompat-v7:' + versions.supportLib
     compile project(':core')
 }
 
-apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'
+//publish {
+//    userOrg = 'drummer-aidan'
+//    groupId = 'com.afollesetad'
+//    artifactId = 'material-dialogs:commons'
+//    publishVersion = versions.publishVersion
+//    website = 'https://github.com/afollestad/material-dialogs'
+//}

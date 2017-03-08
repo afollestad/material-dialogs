@@ -1,36 +1,27 @@
+apply from: '../dependencies.gradle'
+
 buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+    }
 }
 
 apply plugin: 'com.android.application'
-
-ext {
-    PUBLISH_VERSION = '0.9.3.0'
-    SUPPORT_LIBRARY_VERSION = '25.2.0'
-    BUILD_TOOLS = "25.0.2"
-    TARGET_SDK = 25
-}
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion TARGET_SDK
-    buildToolsVersion BUILD_TOOLS
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion 13
-        targetSdkVersion TARGET_SDK
-        versionCode 171
-        versionName PUBLISH_VERSION
-
-        jackOptions {
-            enabled true
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
     }
     lintOptions {
         abortOnError false
@@ -46,7 +37,9 @@ android {
 dependencies {
     compile project(':core')
     compile project(':commons')
-    compile "com.android.support:gridlayout-v7:$SUPPORT_LIBRARY_VERSION"
-    compile 'com.jakewharton:butterknife:8.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
+
+    compile 'com.android.support:gridlayout-v7:' + versions.supportLib
+
+    compile 'com.jakewharton:butterknife:' + versions.butterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 }
