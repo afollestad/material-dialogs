@@ -453,6 +453,9 @@ public class MaterialDialog extends DialogBase implements
         protected CharSequence positiveText;
         protected CharSequence neutralText;
         protected CharSequence negativeText;
+        protected boolean positiveFocus;
+        protected boolean neutralFocus;
+        protected boolean negativeFocus;
         protected View customView;
         protected int widgetColor;
         protected ColorStateList choiceWidgetColor;
@@ -997,6 +1000,11 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder positiveFocus(boolean isFocusedDefault){
+            this.positiveFocus = isFocusedDefault;
+            return this;
+        }
+
         public Builder neutralText(@StringRes int neutralRes) {
             if (neutralRes == 0) return this;
             return neutralText(this.context.getText(neutralRes));
@@ -1035,6 +1043,11 @@ public class MaterialDialog extends DialogBase implements
             return this;
         }
 
+        public Builder negativeFocus(boolean isFocusedDefault){
+            this.negativeFocus = isFocusedDefault;
+            return this;
+        }
+
         public Builder neutralColor(@ColorInt int color) {
             return neutralColor(DialogUtils.getActionTextStateList(context, color));
         }
@@ -1050,6 +1063,11 @@ public class MaterialDialog extends DialogBase implements
         public Builder neutralColor(@NonNull ColorStateList colorStateList) {
             this.neutralColor = colorStateList;
             this.neutralColorSet = true;
+            return this;
+        }
+
+        public Builder neutralFocus(boolean isFocusedDefault){
+            this.neutralFocus = isFocusedDefault;
             return this;
         }
 
