@@ -1,6 +1,11 @@
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
-apply plugin: 'com.novoda.bintray-release'
+
+ext {
+    PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
+    PUBLISH_ARTIFACT_ID = 'commons'
+    PUBLISH_VERSION = versions.publishVersion
+}
 
 android {
     compileSdkVersion versions.compileSdk
@@ -24,10 +29,4 @@ dependencies {
     compile project(':core')
 }
 
-publish {
-    userOrg = 'drummer-aidan'
-    groupId = 'com.afollesetad'
-    artifactId = 'material-dialogs:commons'
-    publishVersion = versions.publishVersion
-    website = 'https://github.com/afollestad/material-dialogs'
-}
+apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'
