@@ -138,6 +138,23 @@ class DialogInit {
         dialog.neutralButton.setVisibility(builder.neutralText != null ? View.VISIBLE : View.GONE);
         dialog.negativeButton.setVisibility(builder.negativeText != null ? View.VISIBLE : View.GONE);
 
+        // Set up the focus of action buttons
+        dialog.positiveButton.setFocusable(true);
+        dialog.positiveButton.setFocusableInTouchMode(true);
+        dialog.neutralButton.setFocusable(true);
+        dialog.neutralButton.setFocusableInTouchMode(true);
+        dialog.negativeButton.setFocusable(true);
+        dialog.negativeButton.setFocusableInTouchMode(true);
+        if (builder.positiveFocus){
+            dialog.positiveButton.requestFocus();
+        }
+        if (builder.neutralFocus){
+            dialog.neutralButton.requestFocus();
+        }
+        if (builder.negativeFocus){
+            dialog.negativeButton.requestFocus();
+        }
+
         // Setup icon
         if (builder.icon != null) {
             dialog.icon.setVisibility(View.VISIBLE);
