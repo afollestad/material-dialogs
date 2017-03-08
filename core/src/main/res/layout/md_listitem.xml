@@ -1,8 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center_vertical|start"
     android:minHeight="@dimen/md_listitem_height"
     android:orientation="horizontal">
@@ -20,6 +23,6 @@
         android:paddingBottom="@dimen/md_listitem_vertical_margin"
         android:paddingTop="@dimen/md_listitem_vertical_margin"
         android:textSize="@dimen/md_listitem_textsize"
-        tools:text="Item" />
+        tools:text="Item"/>
 
 </LinearLayout>

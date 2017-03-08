@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/md_colorChooserCustomFrame"
     android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:id="@+id/md_colorIndicator"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        tools:background="@color/md_material_blue_600" />
+        tools:background="@color/md_material_blue_600"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,16 +32,18 @@
             android:textColor="?android:textColorPrimary"
             android:textColorHint="?android:textColorSecondary"
             android:textSize="@dimen/md_title_textsize"
-            tools:ignore="HardcodedText,TextViewEdits" />
+            tools:ignore="HardcodedText,TextViewEdits"/>
 
         <EditText
             android:id="@+id/md_hexInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:digits="0123456789abcdefABCDEF"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="FF0099CC"
             android:textSize="@dimen/md_title_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
     </LinearLayout>
 
@@ -64,7 +67,7 @@
             android:text="A"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <SeekBar
             android:id="@+id/md_colorA"
@@ -75,7 +78,9 @@
             android:layout_toLeftOf="@+id/md_colorAValue"
             android:layout_toRightOf="@+id/md_colorALabel"
             android:layout_toStartOf="@+id/md_colorAValue"
-            android:max="255" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:max="255"/>
 
         <TextView
             android:id="@+id/md_colorAValue"
@@ -92,7 +97,7 @@
             android:text="0"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <!-- Red -->
 
@@ -107,7 +112,7 @@
             android:text="R"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <SeekBar
             android:id="@+id/md_colorR"
@@ -119,7 +124,9 @@
             android:layout_toLeftOf="@+id/md_colorRValue"
             android:layout_toRightOf="@+id/md_colorRLabel"
             android:layout_toStartOf="@+id/md_colorRValue"
-            android:max="255" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:max="255"/>
 
         <TextView
             android:id="@+id/md_colorRValue"
@@ -136,7 +143,7 @@
             android:text="0"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <!-- Green -->
 
@@ -151,7 +158,7 @@
             android:text="G"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <SeekBar
             android:id="@+id/md_colorG"
@@ -163,7 +170,9 @@
             android:layout_toLeftOf="@+id/md_colorGValue"
             android:layout_toRightOf="@+id/md_colorGLabel"
             android:layout_toStartOf="@+id/md_colorGValue"
-            android:max="255" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:max="255"/>
 
         <TextView
             android:id="@+id/md_colorGValue"
@@ -180,7 +189,7 @@
             android:text="0"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <!-- Blue -->
 
@@ -195,7 +204,7 @@
             android:text="B"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <SeekBar
             android:id="@+id/md_colorB"
@@ -207,7 +216,7 @@
             android:layout_toLeftOf="@+id/md_colorBValue"
             android:layout_toRightOf="@+id/md_colorBLabel"
             android:layout_toStartOf="@+id/md_colorBValue"
-            android:max="255" />
+            android:max="255"/>
 
         <TextView
             android:id="@+id/md_colorBValue"
@@ -224,7 +233,7 @@
             android:text="0"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/md_content_textsize"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
     </RelativeLayout>
 

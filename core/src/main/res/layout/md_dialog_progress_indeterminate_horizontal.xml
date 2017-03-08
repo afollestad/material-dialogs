@@ -6,7 +6,7 @@
     android:orientation="vertical"
     app:md_reduce_padding_no_title_no_buttons="false">
 
-    <include layout="@layout/md_stub_titleframe" />
+    <include layout="@layout/md_stub_titleframe"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,10 +18,10 @@
         android:paddingRight="@dimen/md_dialog_frame_margin"
         android:paddingTop="@dimen/md_content_padding_top">
 
-        <include layout="@layout/md_stub_progress_indeterminate_horizontal" />
+        <include layout="@layout/md_stub_progress_indeterminate_horizontal"/>
 
     </LinearLayout>
 
-    <include layout="@layout/md_stub_actionbuttons" />
+    <include layout="@layout/md_stub_actionbuttons"/>
 
 </com.afollestad.materialdialogs.internal.MDRootLayout>

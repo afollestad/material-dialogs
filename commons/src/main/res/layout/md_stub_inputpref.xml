@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="start"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/md_content_padding_bottom"
     android:paddingLeft="@dimen/md_dialog_frame_margin"
     android:paddingRight="@dimen/md_dialog_frame_margin"
-    android:paddingTop="@dimen/md_content_padding_top"
-    android:paddingBottom="@dimen/md_content_padding_bottom">
+    android:paddingTop="@dimen/md_content_padding_top">
 
     <TextView
         android:id="@android:id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textSize="@dimen/md_content_textsize"
-        android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/md_content_padding_bottom"
+        android:layout_marginTop="4dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="sans-serif"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        tools:text="Message"
-        android:layout_gravity="center_horizontal"
-        tools:ignore="UnusedAttribute" />
+        android:textSize="@dimen/md_content_textsize"
+        tools:ignore="UnusedAttribute"
+        tools:text="Message"/>
 
 </LinearLayout>

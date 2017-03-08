@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="start|center_vertical"
     android:minHeight="@dimen/md_simpleitem_height"
     android:orientation="horizontal"
@@ -22,7 +25,7 @@
         android:background="@drawable/gray_circle"
         android:scaleType="fitXY"
         tools:background="#f5f5f5"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@android:id/title"
@@ -30,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/md_simplelist_textsize"
-        tools:text="Title" />
+        tools:text="Title"/>
 
 </LinearLayout>

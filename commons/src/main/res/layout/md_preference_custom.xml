@@ -41,7 +41,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:fontFamily="sans-serif"
-            android:singleLine="true"
+            android:lines="1"
             android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             tools:text="Title" />

@@ -5,13 +5,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/md_stub_titleframe" />
+    <include layout="@layout/md_stub_titleframe"/>
 
     <FrameLayout
         android:id="@+id/md_customViewFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
-    <include layout="@layout/md_stub_actionbuttons" />
+    <include layout="@layout/md_stub_actionbuttons"/>
 
 </com.afollestad.materialdialogs.internal.MDRootLayout>
