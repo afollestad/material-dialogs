@@ -5,6 +5,7 @@ ext.versions = [
         publishVersion: '0.9.3.0',
         publishVersionCode: 171,
         gradlePlugin: '2.3.0',
+
         supportLib: '25.2.0',
         mdProgressBar: '1.3.0',
         butterKnife: '8.1.0',
