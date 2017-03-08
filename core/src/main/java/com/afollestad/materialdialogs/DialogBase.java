@@ -14,49 +14,52 @@ import com.afollestad.materialdialogs.internal.MDRootLayout;
  */
 class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
-    protected MDRootLayout view;
-    private OnShowListener showListener;
+  protected MDRootLayout view;
+  private OnShowListener showListener;
 
-    DialogBase(Context context, int theme) {
-        super(context, theme);
-    }
+  DialogBase(Context context, int theme) {
+    super(context, theme);
+  }
 
-    @Override public View findViewById(int id) {
-        return view.findViewById(id);
-    }
+  @Override
+  public View findViewById(int id) {
+    return view.findViewById(id);
+  }
 
-    @Override public final void setOnShowListener(OnShowListener listener) {
-        showListener = listener;
-    }
+  @Override
+  public final void setOnShowListener(OnShowListener listener) {
+    showListener = listener;
+  }
 
-    final void setOnShowListenerInternal() {
-        super.setOnShowListener(this);
-    }
+  final void setOnShowListenerInternal() {
+    super.setOnShowListener(this);
+  }
 
-    final void setViewInternal(View view) {
-        super.setContentView(view);
-    }
+  final void setViewInternal(View view) {
+    super.setContentView(view);
+  }
 
-    @Override public void onShow(DialogInterface dialog) {
-        if (showListener != null)
-            showListener.onShow(dialog);
-    }
+  @Override
+  public void onShow(DialogInterface dialog) {
+    if (showListener != null)
+      showListener.onShow(dialog);
+  }
 
-    @Override
-    @Deprecated
-    public void setContentView(int layoutResID) throws IllegalAccessError {
-        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
-    }
+  @Override
+  @Deprecated
+  public void setContentView(int layoutResID) throws IllegalAccessError {
+    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+  }
 
-    @Override
-    @Deprecated
-    public void setContentView(@NonNull View view) throws IllegalAccessError {
-        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
-    }
+  @Override
+  @Deprecated
+  public void setContentView(@NonNull View view) throws IllegalAccessError {
+    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+  }
 
-    @Override
-    @Deprecated
-    public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
-        throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
-    }
+  @Override
+  @Deprecated
+  public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
+    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+  }
 }

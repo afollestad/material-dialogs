@@ -15,77 +15,75 @@ import android.widget.TextView;
  */
 class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
-    interface ItemCallback {
+  private final CharSequence[] items;
+  private ItemCallback itemCallback;
+  private ButtonCallback buttonCallback;
+  ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
+    this(context.getResources().getTextArray(arrayResId));
+  }
+  private ButtonItemAdapter(CharSequence[] items) {
+    this.items = items;
+  }
 
-        void onItemClicked(int itemIndex);
-    }
+  void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
+    this.itemCallback = itemCallback;
+    this.buttonCallback = buttonCallback;
+  }
 
-    interface ButtonCallback {
+  @Override
+  public ButtonVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    final View view = LayoutInflater.from(parent.getContext())
+        .inflate(R.layout.dialog_customlistitem, parent, false);
+    return new ButtonVH(view, this);
+  }
 
-        void onButtonClicked(int buttonIndex);
-    }
+  @SuppressLint("SetTextI18n")
+  @Override
+  public void onBindViewHolder(ButtonVH holder, int position) {
+    holder.title.setText(items[position] + " (" + position + ")");
+    holder.button.setTag(position);
+  }
 
-    private final CharSequence[] items;
-    private ItemCallback itemCallback;
-    private ButtonCallback buttonCallback;
+  @Override
+  public int getItemCount() {
+    return items.length;
+  }
 
-    ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
-        this(context.getResources().getTextArray(arrayResId));
-    }
+  interface ItemCallback {
 
-    private ButtonItemAdapter(CharSequence[] items) {
-        this.items = items;
-    }
+    void onItemClicked(int itemIndex);
+  }
 
-    void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
-        this.itemCallback = itemCallback;
-        this.buttonCallback = buttonCallback;
+  interface ButtonCallback {
+
+    void onButtonClicked(int buttonIndex);
+  }
+
+  static class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    final TextView title;
+    final Button button;
+    final ButtonItemAdapter adapter;
+
+    ButtonVH(View itemView, ButtonItemAdapter adapter) {
+      super(itemView);
+      title = (TextView) itemView.findViewById(R.id.md_title);
+      button = (Button) itemView.findViewById(R.id.md_button);
+
+      this.adapter = adapter;
+      itemView.setOnClickListener(this);
+      button.setOnClickListener(this);
     }
 
     @Override
-    public ButtonVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.dialog_customlistitem, parent, false);
-        return new ButtonVH(view, this);
+    public void onClick(View view) {
+      if (adapter.itemCallback == null)
+        return;
+      if (view instanceof Button) {
+        adapter.buttonCallback.onButtonClicked(getAdapterPosition());
+      } else {
+        adapter.itemCallback.onItemClicked(getAdapterPosition());
+      }
     }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onBindViewHolder(ButtonVH holder, int position) {
-        holder.title.setText(items[position] + " (" + position + ")");
-        holder.button.setTag(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.length;
-    }
-
-    static class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        final TextView title;
-        final Button button;
-        final ButtonItemAdapter adapter;
-
-        ButtonVH(View itemView, ButtonItemAdapter adapter) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.md_title);
-            button = (Button) itemView.findViewById(R.id.md_button);
-
-            this.adapter = adapter;
-            itemView.setOnClickListener(this);
-            button.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (adapter.itemCallback == null)
-                return;
-            if (view instanceof Button) {
-                adapter.buttonCallback.onButtonClicked(getAdapterPosition());
-            } else {
-                adapter.itemCallback.onItemClicked(getAdapterPosition());
-            }
-        }
-    }
+  }
 }
