@@ -17,7 +17,6 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
-
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.StackingBehavior;
@@ -84,18 +83,21 @@ public class MDRootLayout extends ViewGroup {
 
   private static boolean isVisible(View v) {
     boolean visible = v != null && v.getVisibility() != View.GONE;
-    if (visible && v instanceof MDButton)
+    if (visible && v instanceof MDButton) {
       visible = ((MDButton) v).getText().toString().trim().length() > 0;
+    }
     return visible;
   }
 
   public static boolean canRecyclerViewScroll(RecyclerView view) {
-    return view != null && view.getLayoutManager() != null && view.getLayoutManager().canScrollVertically();
+    return view != null && view.getLayoutManager() != null && view.getLayoutManager()
+        .canScrollVertically();
   }
 
   private static boolean canScrollViewScroll(ScrollView sv) {
-    if (sv.getChildCount() == 0)
+    if (sv.getChildCount() == 0) {
       return false;
+    }
     final int childHeight = sv.getChildAt(0).getMeasuredHeight();
     return sv.getMeasuredHeight() - sv.getPaddingTop() - sv.getPaddingBottom() < childHeight;
   }
@@ -107,8 +109,9 @@ public class MDRootLayout extends ViewGroup {
 
   private static boolean canAdapterViewScroll(AdapterView lv) {
         /* Force it to layout it's children */
-    if (lv.getLastVisiblePosition() == -1)
+    if (lv.getLastVisiblePosition() == -1) {
       return false;
+    }
 
         /* We can scroll if the first or last item is not visible */
     boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
@@ -116,8 +119,9 @@ public class MDRootLayout extends ViewGroup {
 
     if (firstItemVisible && lastItemVisible && lv.getChildCount() > 0) {
             /* Or the first item's top is above or own top */
-      if (lv.getChildAt(0).getTop() < lv.getPaddingTop())
+      if (lv.getChildAt(0).getTop() < lv.getPaddingTop()) {
         return true;
+      }
             /* or the last item's bottom is beyond our own bottom */
       return lv.getChildAt(lv.getChildCount() - 1).getBottom() >
           lv.getHeight() - lv.getPaddingBottom();
@@ -135,12 +139,14 @@ public class MDRootLayout extends ViewGroup {
    */
   @Nullable
   private static View getBottomView(ViewGroup viewGroup) {
-    if (viewGroup == null || viewGroup.getChildCount() == 0)
+    if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
+    }
     View bottomView = null;
     for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
       View child = viewGroup.getChildAt(i);
-      if (child.getVisibility() == View.VISIBLE && child.getBottom() == viewGroup.getMeasuredHeight()) {
+      if (child.getVisibility() == View.VISIBLE && child.getBottom() == viewGroup
+          .getMeasuredHeight()) {
         bottomView = child;
         break;
       }
@@ -150,8 +156,9 @@ public class MDRootLayout extends ViewGroup {
 
   @Nullable
   private static View getTopView(ViewGroup viewGroup) {
-    if (viewGroup == null || viewGroup.getChildCount() == 0)
+    if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
+    }
     View topView = null;
     for (int i = viewGroup.getChildCount() - 1; i >= 0; i--) {
       View child = viewGroup.getChildAt(i);
@@ -167,7 +174,8 @@ public class MDRootLayout extends ViewGroup {
     Resources r = context.getResources();
 
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MDRootLayout, defStyleAttr, 0);
-    reducePaddingNoTitleNoButtons = a.getBoolean(R.styleable.MDRootLayout_md_reduce_padding_no_title_no_buttons, true);
+    reducePaddingNoTitleNoButtons = a
+        .getBoolean(R.styleable.MDRootLayout_md_reduce_padding_no_title_no_buttons, true);
     a.recycle();
 
     noTitlePaddingFull = r.getDimensionPixelSize(R.dimen.md_notitle_vertical_padding);
@@ -331,8 +339,9 @@ public class MDRootLayout extends ViewGroup {
       t += noTitlePaddingFull;
     }
 
-    if (isVisible(content))
+    if (isVisible(content)) {
       content.layout(l, t, r, t + content.getMeasuredHeight());
+    }
 
     if (isStacked) {
       b -= buttonPaddingFull;
@@ -345,8 +354,9 @@ public class MDRootLayout extends ViewGroup {
     } else {
       int barTop;
       int barBottom = b;
-      if (useFullPadding)
+      if (useFullPadding) {
         barBottom -= buttonPaddingFull;
+      }
       barTop = barBottom - buttonBarHeight;
             /* START:
                Neutral   Negative  Positive
@@ -439,7 +449,9 @@ public class MDRootLayout extends ViewGroup {
   }
 
   private void invertGravityIfNecessary() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) return;
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+      return;
+    }
     Configuration config = getResources().getConfiguration();
     if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
       switch (buttonGravity) {
@@ -455,33 +467,40 @@ public class MDRootLayout extends ViewGroup {
 
   public void setButtonStackedGravity(GravityEnum gravity) {
     for (MDButton mButton : buttons) {
-      if (mButton != null)
+      if (mButton != null) {
         mButton.setStackedGravity(gravity);
+      }
     }
   }
 
-  private void setUpDividersVisibility(final View view, final boolean setForTop, final boolean setForBottom) {
-    if (view == null)
+  private void setUpDividersVisibility(final View view, final boolean setForTop,
+      final boolean setForBottom) {
+    if (view == null) {
       return;
+    }
     if (view instanceof ScrollView) {
       final ScrollView sv = (ScrollView) view;
       if (canScrollViewScroll(sv)) {
         addScrollListener(sv, setForTop, setForBottom);
       } else {
-        if (setForTop)
+        if (setForTop) {
           drawTopDivider = false;
-        if (setForBottom)
+        }
+        if (setForBottom) {
           drawBottomDivider = false;
+        }
       }
     } else if (view instanceof AdapterView) {
       final AdapterView sv = (AdapterView) view;
       if (canAdapterViewScroll(sv)) {
         addScrollListener(sv, setForTop, setForBottom);
       } else {
-        if (setForTop)
+        if (setForTop) {
           drawTopDivider = false;
-        if (setForBottom)
+        }
+        if (setForBottom) {
           drawBottomDivider = false;
+        }
       }
     } else if (view instanceof WebView) {
       view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -489,10 +508,12 @@ public class MDRootLayout extends ViewGroup {
         public boolean onPreDraw() {
           if (view.getMeasuredHeight() != 0) {
             if (!canWebViewScroll((WebView) view)) {
-              if (setForTop)
+              if (setForTop) {
                 drawTopDivider = false;
-              if (setForBottom)
+              }
+              if (setForBottom) {
                 drawBottomDivider = false;
+              }
             } else {
               addScrollListener((ViewGroup) view, setForTop, setForBottom);
             }
@@ -503,12 +524,15 @@ public class MDRootLayout extends ViewGroup {
       });
     } else if (view instanceof RecyclerView) {
       boolean canScroll = canRecyclerViewScroll((RecyclerView) view);
-      if (setForTop)
+      if (setForTop) {
         drawTopDivider = canScroll;
-      if (setForBottom)
+      }
+      if (setForBottom) {
         drawBottomDivider = canScroll;
-      if (canScroll)
+      }
+      if (canScroll) {
         addScrollListener((ViewGroup) view, setForTop, setForBottom);
+      }
     } else if (view instanceof ViewGroup) {
       View topView = getTopView((ViewGroup) view);
       setUpDividersVisibility(topView, setForTop, setForBottom);
@@ -519,7 +543,8 @@ public class MDRootLayout extends ViewGroup {
     }
   }
 
-  private void addScrollListener(final ViewGroup vg, final boolean setForTop, final boolean setForBottom) {
+  private void addScrollListener(final ViewGroup vg, final boolean setForTop,
+      final boolean setForBottom) {
     if ((!setForBottom && topOnScrollChangedListener == null
         || (setForBottom && bottomOnScrollChangedListener == null))) {
       if (vg instanceof RecyclerView) {
@@ -571,7 +596,8 @@ public class MDRootLayout extends ViewGroup {
     }
   }
 
-  private void invalidateDividersForScrollingView(ViewGroup view, final boolean setForTop, boolean setForBottom, boolean hasButtons) {
+  private void invalidateDividersForScrollingView(ViewGroup view, final boolean setForTop,
+      boolean setForBottom, boolean hasButtons) {
     if (setForTop && view.getChildCount() > 0) {
       drawTopDivider = titleBar != null &&
           titleBar.getVisibility() != View.GONE &&
@@ -581,11 +607,13 @@ public class MDRootLayout extends ViewGroup {
     }
     if (setForBottom && view.getChildCount() > 0) {
       drawBottomDivider = hasButtons &&
-          view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view.getChildAt(view.getChildCount() - 1).getBottom();
+          view.getScrollY() + view.getHeight() - view.getPaddingBottom() < view
+              .getChildAt(view.getChildCount() - 1).getBottom();
     }
   }
 
-  private void invalidateDividersForWebView(WebView view, final boolean setForTop, boolean setForBottom, boolean hasButtons) {
+  private void invalidateDividersForWebView(WebView view, final boolean setForTop,
+      boolean setForBottom, boolean hasButtons) {
     if (setForTop) {
       drawTopDivider = titleBar != null &&
           titleBar.getVisibility() != View.GONE &&
@@ -595,7 +623,8 @@ public class MDRootLayout extends ViewGroup {
     if (setForBottom) {
       //noinspection deprecation
       drawBottomDivider = hasButtons &&
-          view.getScrollY() + view.getMeasuredHeight() - view.getPaddingBottom() < view.getContentHeight() * view.getScale();
+          view.getScrollY() + view.getMeasuredHeight() - view.getPaddingBottom()
+              < view.getContentHeight() * view.getScale();
     }
   }
 }

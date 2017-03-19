@@ -15,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
@@ -29,6 +28,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
   private final int layout;
   private final GravityEnum itemGravity;
   private InternalListCallback callback;
+
   DefaultRvAdapter(MaterialDialog dialog, @LayoutRes int layout) {
     this.dialog = dialog;
     this.layout = layout;
@@ -85,19 +85,22 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     setupGravity((ViewGroup) view);
 
     if (dialog.builder.itemIds != null) {
-      if (index < dialog.builder.itemIds.length)
+      if (index < dialog.builder.itemIds.length) {
         view.setId(dialog.builder.itemIds[index]);
-      else view.setId(-1);
+      } else {
+        view.setId(-1);
+      }
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       ViewGroup group = (ViewGroup) view;
       if (group.getChildCount() == 2) {
         // Remove circular selector from check boxes and radio buttons on Lollipop
-        if (group.getChildAt(0) instanceof CompoundButton)
+        if (group.getChildAt(0) instanceof CompoundButton) {
           group.getChildAt(0).setBackground(null);
-        else if (group.getChildAt(1) instanceof CompoundButton)
+        } else if (group.getChildAt(1) instanceof CompoundButton) {
           group.getChildAt(1).setBackground(null);
+        }
       }
     }
   }
@@ -114,7 +117,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     itemRoot.setGravity(gravityInt | Gravity.CENTER_VERTICAL);
 
     if (view.getChildCount() == 2) {
-      if (itemGravity == GravityEnum.END && !isRTL() && view.getChildAt(0) instanceof CompoundButton) {
+      if (itemGravity == GravityEnum.END && !isRTL() && view
+          .getChildAt(0) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(0);
         view.removeView(first);
 
@@ -125,7 +129,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
         view.addView(second);
         view.addView(first);
-      } else if (itemGravity == GravityEnum.START && isRTL() && view.getChildAt(1) instanceof CompoundButton) {
+      } else if (itemGravity == GravityEnum.START && isRTL() && view
+          .getChildAt(1) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(1);
         view.removeView(first);
 
@@ -142,18 +147,21 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   private boolean isRTL() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
       return false;
+    }
     Configuration config = dialog.getBuilder().getContext().getResources().getConfiguration();
     return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
   }
 
   interface InternalListCallback {
 
-    boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
+    boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text,
+        boolean longPress);
   }
 
-  static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+  static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener,
+      View.OnLongClickListener {
 
     final CompoundButton control;
     final TextView title;
@@ -165,8 +173,9 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
       title = (TextView) itemView.findViewById(R.id.md_title);
       this.adapter = adapter;
       itemView.setOnClickListener(this);
-      if (adapter.dialog.builder.listLongCallback != null)
+      if (adapter.dialog.builder.listLongCallback != null) {
         itemView.setOnLongClickListener(this);
+      }
     }
 
     @Override
@@ -189,7 +198,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
             getAdapterPosition() < adapter.dialog.builder.items.size()) {
           text = adapter.dialog.builder.items.get(getAdapterPosition());
         }
-        return adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
+        return adapter.callback
+            .onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
       }
       return false;
     }

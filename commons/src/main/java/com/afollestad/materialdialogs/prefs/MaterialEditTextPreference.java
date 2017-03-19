@@ -22,7 +22,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
@@ -56,7 +55,8 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+  public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr,
+      int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
@@ -65,9 +65,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
   private void init(Context context, AttributeSet attrs) {
     PrefUtil.setLayoutResource(context, this, attrs);
     int fallback;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       fallback = DialogUtils.resolveColor(context, android.R.attr.colorAccent);
-    else fallback = 0;
+    } else {
+      fallback = 0;
+    }
     fallback = DialogUtils.resolveColor(context, R.attr.colorAccent, fallback);
     color = DialogUtils.resolveColor(context, R.attr.md_widget_color, fallback);
 
@@ -89,12 +91,14 @@ public class MaterialEditTextPreference extends EditTextPreference {
     EditText editText = this.editText;
     editText.setText(getText());
     // Initialize cursor to end of text
-    if (editText.getText().length() > 0)
+    if (editText.getText().length() > 0) {
       editText.setSelection(editText.length());
+    }
     ViewParent oldParent = editText.getParent();
     if (oldParent != view) {
-      if (oldParent != null)
+      if (oldParent != null) {
         ((ViewGroup) oldParent).removeView(editText);
+      }
       onAddEditTextToDialogView(view, editText);
     }
   }
@@ -103,8 +107,9 @@ public class MaterialEditTextPreference extends EditTextPreference {
   protected void onDialogClosed(boolean positiveResult) {
     if (positiveResult) {
       String value = editText.getText().toString();
-      if (callChangeListener(value))
+      if (callChangeListener(value)) {
         setText(value);
+      }
     }
   }
 
@@ -162,8 +167,9 @@ public class MaterialEditTextPreference extends EditTextPreference {
     PrefUtil.registerOnActivityDestroyListener(this, this);
 
     dialog = mBuilder.build();
-    if (state != null)
+    if (state != null) {
       dialog.onRestoreInstanceState(state);
+    }
     requestInputMethod(dialog);
 
     dialog.show();
@@ -180,15 +186,18 @@ public class MaterialEditTextPreference extends EditTextPreference {
    */
   private void requestInputMethod(Dialog dialog) {
     Window window = dialog.getWindow();
-    if (window == null) return;
+    if (window == null) {
+      return;
+    }
     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
   }
 
   @Override
   public void onActivityDestroy() {
     super.onActivityDestroy();
-    if (dialog != null && dialog.isShowing())
+    if (dialog != null && dialog.isShowing()) {
       dialog.dismiss();
+    }
   }
 
   @Override

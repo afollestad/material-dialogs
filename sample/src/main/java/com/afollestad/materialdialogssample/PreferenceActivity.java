@@ -16,7 +16,8 @@ public class PreferenceActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-      getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+      getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment())
+          .commit();
     }
   }
 
@@ -30,6 +31,7 @@ public class PreferenceActivity extends AppCompatActivity {
   }
 
   public static class SettingsFragment extends PreferenceFragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);

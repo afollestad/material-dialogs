@@ -16,10 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
-
 import java.lang.reflect.Field;
 
 /**
@@ -28,7 +26,7 @@ import java.lang.reflect.Field;
 public class MDTintHelper {
 
   public static void setTint(@NonNull RadioButton radioButton,
-                             @NonNull ColorStateList colors) {
+      @NonNull ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       radioButton.setButtonTintList(colors);
     } else {
@@ -41,7 +39,7 @@ public class MDTintHelper {
   }
 
   public static void setTint(@NonNull RadioButton radioButton,
-                             @ColorInt int color) {
+      @ColorInt int color) {
     final int disabledColor = DialogUtils.getDisabledColor(radioButton.getContext());
     ColorStateList sl = new ColorStateList(new int[][]{
         new int[]{android.R.attr.state_enabled, -android.R.attr.state_checked},
@@ -58,7 +56,7 @@ public class MDTintHelper {
   }
 
   public static void setTint(@NonNull CheckBox box,
-                             @NonNull ColorStateList colors) {
+      @NonNull ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       box.setButtonTintList(colors);
     } else {
@@ -105,36 +103,41 @@ public class MDTintHelper {
       if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
         mode = PorterDuff.Mode.MULTIPLY;
       }
-      if (seekBar.getIndeterminateDrawable() != null)
+      if (seekBar.getIndeterminateDrawable() != null) {
         seekBar.getIndeterminateDrawable().setColorFilter(color, mode);
-      if (seekBar.getProgressDrawable() != null)
+      }
+      if (seekBar.getProgressDrawable() != null) {
         seekBar.getProgressDrawable().setColorFilter(color, mode);
+      }
     }
   }
 
   public static void setTint(@NonNull ProgressBar progressBar,
-                             @ColorInt int color) {
+      @ColorInt int color) {
     setTint(progressBar, color, false);
   }
 
   private static void setTint(@NonNull ProgressBar progressBar,
-                              @ColorInt int color,
-                              boolean skipIndeterminate) {
+      @ColorInt int color,
+      boolean skipIndeterminate) {
     ColorStateList sl = ColorStateList.valueOf(color);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       progressBar.setProgressTintList(sl);
       progressBar.setSecondaryProgressTintList(sl);
-      if (!skipIndeterminate)
+      if (!skipIndeterminate) {
         progressBar.setIndeterminateTintList(sl);
+      }
     } else {
       PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
       if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
         mode = PorterDuff.Mode.MULTIPLY;
       }
-      if (!skipIndeterminate && progressBar.getIndeterminateDrawable() != null)
+      if (!skipIndeterminate && progressBar.getIndeterminateDrawable() != null) {
         progressBar.getIndeterminateDrawable().setColorFilter(color, mode);
-      if (progressBar.getProgressDrawable() != null)
+      }
+      if (progressBar.getProgressDrawable() != null) {
         progressBar.getProgressDrawable().setColorFilter(color, mode);
+      }
     }
   }
 
@@ -155,7 +158,8 @@ public class MDTintHelper {
   }
 
   public static void setTint(@NonNull EditText editText, @ColorInt int color) {
-    ColorStateList editTextColorStateList = createEditTextColorStateList(editText.getContext(), color);
+    ColorStateList editTextColorStateList = createEditTextColorStateList(editText.getContext(),
+        color);
     if (editText instanceof AppCompatEditText) {
       ((AppCompatEditText) editText).setSupportBackgroundTintList(editTextColorStateList);
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

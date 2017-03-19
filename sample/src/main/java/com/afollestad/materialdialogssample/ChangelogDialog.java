@@ -10,10 +10,8 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -56,8 +54,9 @@ public class ChangelogDialog extends DialogFragment {
       InputStream json = getActivity().getAssets().open("changelog.html");
       BufferedReader in = new BufferedReader(new InputStreamReader(json, "UTF-8"));
       String str;
-      while ((str = in.readLine()) != null)
+      while ((str = in.readLine()) != null) {
         buf.append(str);
+      }
       in.close();
 
       // Inject color values for WebView body background and links
@@ -70,7 +69,8 @@ public class ChangelogDialog extends DialogFragment {
               .replace("{link-color-active}", colorToHex(accentColor))
           , "text/html", "UTF-8");
     } catch (Throwable e) {
-      webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html", "UTF-8");
+      webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html",
+          "UTF-8");
     }
     return dialog;
   }

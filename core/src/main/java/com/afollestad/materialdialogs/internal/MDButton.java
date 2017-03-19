@@ -7,7 +7,6 @@ import android.support.v7.text.AllCapsTransformationMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -48,7 +47,8 @@ public class MDButton extends TextView {
     /* package */ void setStacked(boolean stacked, boolean force) {
     if (this.stacked != stacked || force) {
 
-      setGravity(stacked ? (Gravity.CENTER_VERTICAL | stackedGravity.getGravityInt()) : Gravity.CENTER);
+      setGravity(
+          stacked ? (Gravity.CENTER_VERTICAL | stackedGravity.getGravityInt()) : Gravity.CENTER);
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         //noinspection ResourceType
         setTextAlignment(stacked ? stackedGravity.getTextAlignment() : TEXT_ALIGNMENT_CENTER);
@@ -69,24 +69,27 @@ public class MDButton extends TextView {
 
   public void setStackedSelector(Drawable d) {
     stackedBackground = d;
-    if (stacked)
+    if (stacked) {
       setStacked(true, true);
+    }
   }
 
   public void setDefaultSelector(Drawable d) {
     defaultBackground = d;
-    if (!stacked)
+    if (!stacked) {
       setStacked(false, true);
+    }
   }
 
   public void setAllCapsCompat(boolean allCaps) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
       setAllCaps(allCaps);
     } else {
-      if (allCaps)
+      if (allCaps) {
         setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-      else
+      } else {
         setTransformationMethod(null);
+      }
     }
   }
 }

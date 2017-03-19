@@ -27,14 +27,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
-
 import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -44,7 +42,8 @@ import java.util.Locale;
  * @author Aidan Follestad (afollestad)
  */
 @SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
-public class ColorChooserDialog extends DialogFragment implements View.OnClickListener, View.OnLongClickListener {
+public class ColorChooserDialog extends DialogFragment implements View.OnClickListener,
+    View.OnLongClickListener {
 
   public final static String TAG_PRIMARY = "[MD_COLOR_CHOOSER]";
   public final static String TAG_ACCENT = "[MD_COLOR_CHOOSER]";
@@ -69,6 +68,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   private TextView customSeekBValue;
   private SeekBar.OnSeekBarChangeListener customColorRgbListener;
   private int selectedCustomColor;
+
   public ColorChooserDialog() {
   }
 
@@ -76,8 +76,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   public static ColorChooserDialog findVisible(
       @NonNull AppCompatActivity context, @ColorChooserTag String tag) {
     Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
-    if (frag != null && frag instanceof ColorChooserDialog)
+    if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
+    }
     return null;
   }
 
@@ -111,8 +112,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
-    if (!(activity instanceof ColorCallback))
-      throw new IllegalStateException("ColorChooserDialog needs to be shown from an Activity implementing ColorCallback.");
+    if (!(activity instanceof ColorCallback)) {
+      throw new IllegalStateException(
+          "ColorChooserDialog needs to be shown from an Activity implementing ColorCallback.");
+    }
     callback = (ColorCallback) activity;
   }
 
@@ -129,18 +132,23 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   }
 
   private void topIndex(int value) {
-    if (value > -1)
+    if (value > -1) {
       findSubIndexForColor(value, colorsTop[value]);
+    }
     getArguments().putInt("top_index", value);
   }
 
   private int subIndex() {
-    if (colorsSub == null) return -1;
+    if (colorsSub == null) {
+      return -1;
+    }
     return getArguments().getInt("sub_index", -1);
   }
 
   private void subIndex(int value) {
-    if (colorsSub == null) return;
+    if (colorsSub == null) {
+      return;
+    }
     getArguments().putInt("sub_index", value);
   }
 
@@ -148,17 +156,24 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   public int getTitle() {
     Builder builder = getBuilder();
     int title;
-    if (isInSub()) title = builder.titleSub;
-    else title = builder.title;
-    if (title == 0) title = builder.title;
+    if (isInSub()) {
+      title = builder.titleSub;
+    } else {
+      title = builder.title;
+    }
+    if (title == 0) {
+      title = builder.title;
+    }
     return title;
   }
 
   public String tag() {
     Builder builder = getBuilder();
-    if (builder.tag != null)
+    if (builder.tag != null) {
       return builder.tag;
-    else return super.getTag();
+    } else {
+      return super.getTag();
+    }
   }
 
   public boolean isAccentMode() {
@@ -183,8 +198,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         }
       }
 
-      if (builder.allowUserCustom)
+      if (builder.allowUserCustom) {
         selectedCustomColor = getSelectedColor();
+      }
       invalidateDynamicButtonColors();
       invalidate();
     }
@@ -203,7 +219,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
   private void invalidateDynamicButtonColors() {
     final MaterialDialog dialog = (MaterialDialog) getDialog();
-    if (dialog == null) return;
+    if (dialog == null) {
+      return;
+    }
     final Builder builder = getBuilder();
     if (builder.dynamicButtonColor) {
       int selectedColor = getSelectedColor();
@@ -223,8 +241,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
       }
 
       if (customSeekR != null) {
-        if (customSeekA.getVisibility() == View.VISIBLE)
+        if (customSeekA.getVisibility() == View.VISIBLE) {
           MDTintHelper.setTint(customSeekA, selectedColor);
+        }
         MDTintHelper.setTint(customSeekR, selectedColor);
         MDTintHelper.setTint(customSeekG, selectedColor);
         MDTintHelper.setTint(customSeekB, selectedColor);
@@ -240,22 +259,25 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     }
 
     int color = 0;
-    if (subIndex() > -1)
+    if (subIndex() > -1) {
       color = colorsSub[topIndex()][subIndex()];
-    else if (topIndex() > -1)
+    } else if (topIndex() > -1) {
       color = colorsTop[topIndex()];
+    }
     if (color == 0) {
       int fallback = 0;
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         fallback = DialogUtils.resolveColor(getActivity(), android.R.attr.colorAccent);
+      }
       color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent, fallback);
     }
     return color;
   }
 
   private void findSubIndexForColor(int topIndex, int color) {
-    if (colorsSub == null || colorsSub.length - 1 < topIndex)
+    if (colorsSub == null || colorsSub.length - 1 < topIndex) {
       return;
+    }
     int[] subColors = colorsSub[topIndex];
     for (int subIndex = 0; subIndex < subColors.length; subIndex++) {
       if (subColors[subIndex] == color) {
@@ -268,8 +290,10 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    if (getArguments() == null || !getArguments().containsKey("builder"))
-      throw new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
+    if (getArguments() == null || !getArguments().containsKey("builder")) {
+      throw new IllegalStateException(
+          "ColorChooserDialog should be created using its Builder interface.");
+    }
     generateColors();
 
     int preselectColor;
@@ -305,7 +329,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
                   break;
                 }
               }
-              if (foundPreselectColor) break;
+              if (foundPreselectColor) {
+                break;
+              }
             }
           }
         }
@@ -358,8 +384,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
           }
         });
 
-    if (builder.theme != null)
+    if (builder.theme != null) {
       bd.theme(builder.theme);
+    }
 
     final MaterialDialog dialog = bd.build();
     final View v = dialog.getCustomView();
@@ -409,8 +436,9 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   }
 
   private void toggleCustom(MaterialDialog dialog) {
-    if (dialog == null)
+    if (dialog == null) {
       dialog = (MaterialDialog) getDialog();
+    }
     if (grid.getVisibility() == View.VISIBLE) {
       dialog.setTitle(getBuilder().customBtn);
       dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().presetsBtn);
@@ -504,9 +532,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
     } else {
       dialog.setTitle(getBuilder().title);
       dialog.setActionButton(DialogAction.NEUTRAL, getBuilder().customBtn);
-      if (isInSub())
+      if (isInSub()) {
         dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().backBtn);
-      else dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().cancelBtn);
+      } else {
+        dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().cancelBtn);
+      }
       grid.setVisibility(View.VISIBLE);
       colorChooserCustomFrame.setVisibility(View.GONE);
       customColorHex.removeTextChangedListener(customColorTextWatcher);
@@ -521,14 +551,20 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   private void invalidate() {
     if (grid.getAdapter() == null) {
       grid.setAdapter(new ColorGridAdapter());
-      grid.setSelector(ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
-    } else ((BaseAdapter) grid.getAdapter()).notifyDataSetChanged();
-    if (getDialog() != null)
+      grid.setSelector(
+          ResourcesCompat.getDrawable(getResources(), R.drawable.md_transparent, null));
+    } else {
+      ((BaseAdapter) grid.getAdapter()).notifyDataSetChanged();
+    }
+    if (getDialog() != null) {
       getDialog().setTitle(getTitle());
+    }
   }
 
   private Builder getBuilder() {
-    if (getArguments() == null || !getArguments().containsKey("builder")) return null;
+    if (getArguments() == null || !getArguments().containsKey("builder")) {
+      return null;
+    }
     return (Builder) getArguments().getSerializable("builder");
   }
 
@@ -545,11 +581,13 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
   public ColorChooserDialog show(AppCompatActivity context) {
     String tag;
     Builder builder = getBuilder();
-    if (builder.colorsTop != null)
+    if (builder.colorsTop != null) {
       tag = TAG_CUSTOM;
-    else if (builder.accentMode)
+    } else if (builder.accentMode) {
       tag = TAG_ACCENT;
-    else tag = TAG_PRIMARY;
+    } else {
+      tag = TAG_PRIMARY;
+    }
     dismissIfNecessary(context, tag);
     show(context.getSupportFragmentManager(), tag);
     return this;
@@ -562,6 +600,7 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
       TAG_CUSTOM
   })
   public @interface ColorChooserTag {
+
   }
 
   public interface ColorCallback {
@@ -729,14 +768,20 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public int getCount() {
-      if (isInSub()) return colorsSub[topIndex()].length;
-      else return colorsTop.length;
+      if (isInSub()) {
+        return colorsSub[topIndex()].length;
+      } else {
+        return colorsTop.length;
+      }
     }
 
     @Override
     public Object getItem(int position) {
-      if (isInSub()) return colorsSub[topIndex()][position];
-      else return colorsTop[position];
+      if (isInSub()) {
+        return colorsSub[topIndex()][position];
+      } else {
+        return colorsTop[position];
+      }
     }
 
     @Override
@@ -755,9 +800,11 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
       @ColorInt
       final int color = isInSub() ? colorsSub[topIndex()][position] : colorsTop[position];
       child.setBackgroundColor(color);
-      if (isInSub())
+      if (isInSub()) {
         child.setSelected(subIndex() == position);
-      else child.setSelected(topIndex() == position);
+      } else {
+        child.setSelected(topIndex() == position);
+      }
       child.setTag(String.format("%d:%d", position, color));
       child.setOnClickListener(ColorChooserDialog.this);
       child.setOnLongClickListener(ColorChooserDialog.this);

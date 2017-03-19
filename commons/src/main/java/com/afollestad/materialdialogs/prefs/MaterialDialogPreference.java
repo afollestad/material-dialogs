@@ -12,7 +12,6 @@ import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -42,7 +41,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   public MaterialDialogPreference(Context context, AttributeSet attrs,
-                                  int defStyleAttr, int defStyleRes) {
+      int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
@@ -95,8 +94,9 @@ public class MaterialDialogPreference extends DialogPreference {
     PrefUtil.registerOnActivityDestroyListener(this, this);
 
     dialog = builder.build();
-    if (state != null)
+    if (state != null) {
       dialog.onRestoreInstanceState(state);
+    }
     dialog.show();
   }
 
@@ -109,8 +109,9 @@ public class MaterialDialogPreference extends DialogPreference {
   @Override
   public void onActivityDestroy() {
     super.onActivityDestroy();
-    if (dialog != null && dialog.isShowing())
+    if (dialog != null && dialog.isShowing()) {
       dialog.dismiss();
+    }
   }
 
   @Override
@@ -144,6 +145,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
   // From DialogPreference
   private static class SavedState extends BaseSavedState {
+
     public static final Creator<SavedState> CREATOR =
         new Creator<SavedState>() {
           public SavedState createFromParcel(Parcel in) {

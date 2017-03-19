@@ -18,11 +18,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -67,7 +65,9 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     List<File> results = new ArrayList<>();
     if (contents != null) {
       for (File fi : contents) {
-        if (fi.isDirectory()) results.add(fi);
+        if (fi.isDirectory()) {
+          results.add(fi);
+        }
       }
       Collections.sort(results, new FolderSorter());
       return results.toArray(new File[results.size()]);
@@ -89,10 +89,12 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
           .positiveText(android.R.string.ok)
           .build();
     }
-    if (getArguments() == null || !getArguments().containsKey("builder"))
+    if (getArguments() == null || !getArguments().containsKey("builder")) {
       throw new IllegalStateException("You must create a FolderChooserDialog using the Builder.");
-    if (!getArguments().containsKey("current_path"))
+    }
+    if (!getArguments().containsKey("current_path")) {
       getArguments().putString("current_path", getBuilder().initialPath);
+    }
     parentFolder = new File(getArguments().getString("current_path"));
     checkIfCanGoUp();
     parentContents = listFiles();
@@ -110,7 +112,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
         .onNegative(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog,
-                              @NonNull DialogAction which) {
+              @NonNull DialogAction which) {
             dialog.dismiss();
           }
         })
@@ -164,14 +166,16 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       MaterialDialog materialDialog, View view, int i, CharSequence s) {
     if (canGoUp && i == 0) {
       parentFolder = parentFolder.getParentFile();
-      if (parentFolder.getAbsolutePath().equals("/storage/emulated"))
+      if (parentFolder.getAbsolutePath().equals("/storage/emulated")) {
         parentFolder = parentFolder.getParentFile();
+      }
       canGoUp = parentFolder.getParent() != null;
     } else {
       parentFolder = parentContents[canGoUp ? i - 1 : i];
       canGoUp = true;
-      if (parentFolder.getAbsolutePath().equals("/storage/emulated"))
+      if (parentFolder.getAbsolutePath().equals("/storage/emulated")) {
         parentFolder = Environment.getExternalStorageDirectory();
+      }
     }
     reload();
   }
@@ -237,7 +241,8 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     int newFolderButton;
     String goUpLabel;
 
-    public <ActivityType extends AppCompatActivity & FolderCallback> Builder(@NonNull ActivityType context) {
+    public <ActivityType extends AppCompatActivity & FolderCallback> Builder(
+        @NonNull ActivityType context) {
       this.context = context;
       chooseButton = R.string.md_choose_label;
       cancelButton = android.R.string.cancel;
@@ -266,24 +271,27 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     @NonNull
     public Builder allowNewFolder(boolean allow, @StringRes int buttonLabel) {
       allowNewFolder = allow;
-      if (buttonLabel == 0)
+      if (buttonLabel == 0) {
         buttonLabel = R.string.new_folder;
+      }
       newFolderButton = buttonLabel;
       return this;
     }
 
     @NonNull
     public Builder initialPath(@Nullable String initialPath) {
-      if (initialPath == null)
+      if (initialPath == null) {
         initialPath = File.separator;
+      }
       this.initialPath = initialPath;
       return this;
     }
 
     @NonNull
     public Builder tag(@Nullable String tag) {
-      if (tag == null)
+      if (tag == null) {
         tag = DEFAULT_TAG;
+      }
       this.tag = tag;
       return this;
     }

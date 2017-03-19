@@ -46,4 +46,6 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:' + versions.butterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
+
+    compile 'com.facebook.stetho:stetho:1.4.2'
 }

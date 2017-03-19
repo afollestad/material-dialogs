@@ -1,55 +1,54 @@
-<com.afollestad.materialdialogs.internal.MDRootLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.afollestad.materialdialogs.internal.MDRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <include layout="@layout/md_stub_titleframe_lesspadding" />
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/md_stub_titleframe_lesspadding"/>
+    <ScrollView
+      android:id="@+id/md_contentScrollView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clipToPadding="false">
 
-    <LinearLayout
+      <TextView
+        android:id="@+id/md_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/md_content_padding_bottom"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin"
+        android:paddingTop="@dimen/md_content_padding_top"
+        android:textSize="@dimen/md_content_textsize"
+        tools:text="Content" />
 
-        <ScrollView
-            android:id="@+id/md_contentScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false">
+    </ScrollView>
 
-            <TextView
-                android:id="@+id/md_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/md_content_padding_bottom"
-                android:paddingLeft="@dimen/md_dialog_frame_margin"
-                android:paddingRight="@dimen/md_dialog_frame_margin"
-                android:paddingTop="@dimen/md_content_padding_top"
-                android:textSize="@dimen/md_content_textsize"
-                tools:text="Content"/>
+    <FrameLayout
+      android:id="@+id/md_contentListViewFrame"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-        </ScrollView>
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/md_contentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/md_content_padding_bottom"
+        android:paddingTop="@dimen/md_content_padding_top"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical" />
 
-        <FrameLayout
-            android:id="@+id/md_contentListViewFrame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </FrameLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/md_contentRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/md_content_padding_bottom"
-                android:paddingTop="@dimen/md_content_padding_top"
-                android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="vertical"/>
+  </LinearLayout>
 
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <include layout="@layout/md_stub_actionbuttons"/>
+  <include layout="@layout/md_stub_actionbuttons" />
 
 </com.afollestad.materialdialogs.internal.MDRootLayout>

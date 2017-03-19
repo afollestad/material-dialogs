@@ -13,10 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.lang.reflect.Field;
 
 /**
@@ -44,7 +42,8 @@ public class MaterialListPreference extends ListPreference {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+  public MaterialListPreference(Context context, AttributeSet attrs, int defStyleAttr,
+      int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
@@ -52,15 +51,17 @@ public class MaterialListPreference extends ListPreference {
   private void init(Context context, AttributeSet attrs) {
     this.context = context;
     PrefUtil.setLayoutResource(context, this, attrs);
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
       setWidgetLayoutResource(0);
+    }
   }
 
   @Override
   public void setEntries(CharSequence[] entries) {
     super.setEntries(entries);
-    if (dialog != null)
+    if (dialog != null) {
       dialog.setItems(entries);
+    }
   }
 
   @Override
@@ -69,7 +70,9 @@ public class MaterialListPreference extends ListPreference {
   }
 
   public RecyclerView getRecyclerView() {
-    if (getDialog() == null) return null;
+    if (getDialog() == null) {
+      return null;
+    }
     return ((MaterialDialog) getDialog()).getRecyclerView();
   }
 
@@ -106,11 +109,13 @@ public class MaterialListPreference extends ListPreference {
         .autoDismiss(true) // immediately close the dialog after selection
         .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallbackSingleChoice() {
           @Override
-          public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+          public boolean onSelection(MaterialDialog dialog, View itemView, int which,
+              CharSequence text) {
             onClick(null, DialogInterface.BUTTON_POSITIVE);
             if (which >= 0 && getEntryValues() != null) {
               try {
-                Field clickedIndex = ListPreference.class.getDeclaredField("mClickedDialogEntryIndex");
+                Field clickedIndex = ListPreference.class
+                    .getDeclaredField("mClickedDialogEntryIndex");
                 clickedIndex.setAccessible(true);
                 clickedIndex.set(MaterialListPreference.this, which);
               } catch (Exception e) {
@@ -132,8 +137,9 @@ public class MaterialListPreference extends ListPreference {
     PrefUtil.registerOnActivityDestroyListener(this, this);
 
     dialog = builder.build();
-    if (state != null)
+    if (state != null) {
       dialog.onRestoreInstanceState(state);
+    }
     onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
     dialog.show();
   }
@@ -147,8 +153,9 @@ public class MaterialListPreference extends ListPreference {
   @Override
   public void onActivityDestroy() {
     super.onActivityDestroy();
-    if (dialog != null && dialog.isShowing())
+    if (dialog != null && dialog.isShowing()) {
       dialog.dismiss();
+    }
   }
 
   @Override

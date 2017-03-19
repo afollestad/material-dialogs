@@ -8,9 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-
 import com.afollestad.materialdialogs.commons.R;
-
 import java.lang.reflect.Method;
 
 /**
@@ -21,7 +19,8 @@ class PrefUtil {
   private PrefUtil() {
   }
 
-  static void setLayoutResource(@NonNull Context context, @NonNull Preference preference, @Nullable AttributeSet attrs) {
+  static void setLayoutResource(@NonNull Context context, @NonNull Preference preference,
+      @Nullable AttributeSet attrs) {
     boolean foundLayout = false;
     if (attrs != null) {
       for (int i = 0; i < attrs.getAttributeCount(); i++) {
@@ -44,11 +43,13 @@ class PrefUtil {
       }
     }
 
-    if (!foundLayout && !useStockLayout)
+    if (!foundLayout && !useStockLayout) {
       preference.setLayoutResource(R.layout.md_preference_custom);
+    }
   }
 
-  static void registerOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+  static void registerOnActivityDestroyListener(@NonNull Preference preference,
+      @NonNull PreferenceManager.OnActivityDestroyListener listener) {
     try {
       PreferenceManager pm = preference.getPreferenceManager();
       Method method = pm.getClass().getDeclaredMethod(
@@ -60,7 +61,8 @@ class PrefUtil {
     }
   }
 
-  static void unregisterOnActivityDestroyListener(@NonNull Preference preference, @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+  static void unregisterOnActivityDestroyListener(@NonNull Preference preference,
+      @NonNull PreferenceManager.OnActivityDestroyListener listener) {
     try {
       PreferenceManager pm = preference.getPreferenceManager();
       Method method = pm.getClass().getDeclaredMethod(

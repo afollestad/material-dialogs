@@ -14,7 +14,8 @@ import android.support.annotation.ColorInt;
 public class RippleHelper {
 
   public static void applyColor(Drawable d, @ColorInt int color) {
-    if (d instanceof RippleDrawable)
+    if (d instanceof RippleDrawable) {
       ((RippleDrawable) d).setColor(ColorStateList.valueOf(color));
+    }
   }
 }

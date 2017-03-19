@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +19,13 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
+public class MaterialSimpleListAdapter extends
+    RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
 
   private MaterialDialog dialog;
   private List<MaterialSimpleListItem> items;
   private Callback callback;
+
   public MaterialSimpleListAdapter(Callback callback) {
     items = new ArrayList<>(4);
     this.callback = callback;
@@ -82,6 +82,7 @@ public class MaterialSimpleListAdapter extends RecyclerView.Adapter<MaterialSimp
   }
 
   public interface Callback {
+
     void onMaterialListItemSelected(MaterialDialog dialog, int index, MaterialSimpleListItem item);
   }
 

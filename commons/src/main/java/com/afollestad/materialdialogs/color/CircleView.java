@@ -23,7 +23,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 public class CircleView extends FrameLayout {
@@ -47,8 +46,10 @@ public class CircleView extends FrameLayout {
   public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     final Resources r = getResources();
-    borderWidthSmall = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, r.getDisplayMetrics());
-    borderWidthLarge = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+    borderWidthSmall = (int) TypedValue
+        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, r.getDisplayMetrics());
+    borderWidthLarge = (int) TypedValue
+        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
 
     whitePaint = new Paint();
     whitePaint.setAntiAlias(true);
@@ -74,8 +75,10 @@ public class CircleView extends FrameLayout {
 
   @ColorInt
   public static int shiftColor(@ColorInt int color,
-                               @FloatRange(from = 0.0f, to = 2.0f) float by) {
-    if (by == 1f) return color;
+      @FloatRange(from = 0.0f, to = 2.0f) float by) {
+    if (by == 1f) {
+      return color;
+    }
     float[] hsv = new float[3];
     Color.colorToHSV(color, hsv);
     hsv[2] *= by; // value component
@@ -211,7 +214,8 @@ public class CircleView extends FrameLayout {
       final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
       referenceX = screenWidth - referenceX; // mirror
     }
-    Toast cheatSheet = Toast.makeText(context, String.format("#%06X", 0xFFFFFF & color), Toast.LENGTH_SHORT);
+    Toast cheatSheet = Toast
+        .makeText(context, String.format("#%06X", 0xFFFFFF & color), Toast.LENGTH_SHORT);
     if (midy < displayFrame.height()) {
       // Show along the top; follow action buttons
       cheatSheet.setGravity(Gravity.TOP | GravityCompat.END, referenceX,

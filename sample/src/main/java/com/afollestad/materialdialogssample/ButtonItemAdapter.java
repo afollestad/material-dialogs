@@ -18,9 +18,11 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
   private final CharSequence[] items;
   private ItemCallback itemCallback;
   private ButtonCallback buttonCallback;
+
   ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
     this(context.getResources().getTextArray(arrayResId));
   }
+
   private ButtonItemAdapter(CharSequence[] items) {
     this.items = items;
   }
@@ -77,8 +79,9 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
 
     @Override
     public void onClick(View view) {
-      if (adapter.itemCallback == null)
+      if (adapter.itemCallback == null) {
         return;
+      }
       if (view instanceof Button) {
         adapter.buttonCallback.onButtonClicked(getAdapterPosition());
       } else {

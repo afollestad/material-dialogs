@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 
 /**
@@ -41,25 +40,30 @@ class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
   @Override
   public void onShow(DialogInterface dialog) {
-    if (showListener != null)
+    if (showListener != null) {
       showListener.onShow(dialog);
+    }
   }
 
   @Override
   @Deprecated
   public void setContentView(int layoutResID) throws IllegalAccessError {
-    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+    throw new IllegalAccessError(
+        "setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
   }
 
   @Override
   @Deprecated
   public void setContentView(@NonNull View view) throws IllegalAccessError {
-    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+    throw new IllegalAccessError(
+        "setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
   }
 
   @Override
   @Deprecated
-  public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) throws IllegalAccessError {
-    throw new IllegalAccessError("setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
+  public void setContentView(@NonNull View view, ViewGroup.LayoutParams params)
+      throws IllegalAccessError {
+    throw new IllegalAccessError(
+        "setContentView() is not supported in MaterialDialog. Specify a custom view in the Builder instead.");
   }
 }

@@ -2,6 +2,8 @@ package com.afollestad.materialdialogssample;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -26,7 +28,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -41,17 +44,14 @@ import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 import com.afollestad.materialdialogs.util.DialogUtils;
-
 import java.io.File;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
 public class MainActivity extends AppCompatActivity implements
-    FolderChooserDialog.FolderCallback, FileChooserDialog.FileCallback, ColorChooserDialog.ColorCallback {
+    FolderChooserDialog.FolderCallback, FileChooserDialog.FileCallback,
+    ColorChooserDialog.ColorCallback {
 
   private final static int STORAGE_PERMISSION_RC = 69;
   static int index = 0;
@@ -77,8 +77,9 @@ public class MainActivity extends AppCompatActivity implements
   }
 
   private void startThread(Runnable run) {
-    if (thread != null)
+    if (thread != null) {
       thread.interrupt();
+    }
     thread = new Thread(run);
     thread.start();
   }
@@ -98,6 +99,31 @@ public class MainActivity extends AppCompatActivity implements
     handler = new Handler();
     primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
     accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
+
+    new MyDialog().show(getFragmentManager(), "TEST");
+  }
+
+  public static class MyDialog extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      return new MaterialDialog.Builder(getActivity())
+          .title("Title")
+          .progress(true, 0)
+          .positiveText("Cancel")
+          .onPositive((dialog, which) -> {
+            //Code
+          })
+          .showListener(dialogInterface -> {
+            //Code
+          })
+          .buttonsGravity(GravityEnum.CENTER)
+          .progress(true, -1)
+          .progressIndeterminateStyle(false)
+          .autoDismiss(true)
+          .cancelable(false)
+          .build();
+    }
   }
 
   @Override
@@ -109,8 +135,9 @@ public class MainActivity extends AppCompatActivity implements
   @Override
   protected void onPause() {
     super.onPause();
-    if (thread != null && !thread.isInterrupted() && thread.isAlive())
+    if (thread != null && !thread.isInterrupted() && thread.isAlive()) {
       thread.interrupt();
+    }
   }
 
   @OnClick(R.id.basicNoTitle)
@@ -175,7 +202,8 @@ public class MainActivity extends AppCompatActivity implements
         .positiveText(R.string.speedBoost)
         .negativeText(R.string.noThanks)
         .btnStackedGravity(GravityEnum.END)
-        .stackingBehavior(StackingBehavior.ALWAYS)  // this generally should not be forced, but is used for demo purposes
+        .stackingBehavior(
+            StackingBehavior.ALWAYS)  // this generally should not be forced, but is used for demo purposes
         .show();
   }
 
@@ -304,7 +332,9 @@ public class MainActivity extends AppCompatActivity implements
         .itemsCallbackMultiChoice(new Integer[]{1, 3}, (dialog, which, text) -> {
           StringBuilder str = new StringBuilder();
           for (int i = 0; i < which.length; i++) {
-            if (i > 0) str.append('\n');
+            if (i > 0) {
+              str.append('\n');
+            }
             str.append(which[i]);
             str.append(": ");
             str.append(text[i]);
@@ -327,7 +357,8 @@ public class MainActivity extends AppCompatActivity implements
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(new Integer[]{1}, (dialog, which, text) -> {
-          boolean allowSelectionChange = which.length <= 2; // limit selection to 2, the new (un)selection is included in the which array
+          boolean allowSelectionChange = which.length
+              <= 2; // limit selection to 2, the new (un)selection is included in the which array
           if (!allowSelectionChange) {
             showToast(R.string.selection_limit_reached);
           }
@@ -344,7 +375,8 @@ public class MainActivity extends AppCompatActivity implements
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(new Integer[]{1}, (dialog, which, text) -> {
-          boolean allowSelectionChange = which.length >= 1; // selection count must stay above 1, the new (un)selection is included in the which array
+          boolean allowSelectionChange = which.length
+              >= 1; // selection count must stay above 1, the new (un)selection is included in the which array
           if (!allowSelectionChange) {
             showToast(R.string.selection_min_limit_reached);
           }
@@ -363,7 +395,9 @@ public class MainActivity extends AppCompatActivity implements
         .itemsCallbackMultiChoice(new Integer[]{1, 3}, (dialog, which, text) -> {
           StringBuilder str = new StringBuilder();
           for (int i = 0; i < which.length; i++) {
-            if (i > 0) str.append('\n');
+            if (i > 0) {
+              str.append('\n');
+            }
             str.append(which[i]);
             str.append(": ");
             str.append(text[i]);
@@ -383,7 +417,9 @@ public class MainActivity extends AppCompatActivity implements
         .itemsCallbackMultiChoice(new Integer[]{0, 1, 2}, (dialog, which, text) -> {
           StringBuilder str = new StringBuilder();
           for (int i = 0; i < which.length; i++) {
-            if (i > 0) str.append('\n');
+            if (i > 0) {
+              str.append('\n');
+            }
             str.append(which[i]);
             str.append(": ");
             str.append(text[i]);
@@ -402,7 +438,8 @@ public class MainActivity extends AppCompatActivity implements
 
   @OnClick(R.id.simpleList)
   public void showSimpleList() {
-    final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter((dialog, index1, item) -> showToast(item.getContent().toString()));
+    final MaterialSimpleListAdapter adapter = new MaterialSimpleListAdapter(
+        (dialog, index1, item) -> showToast(item.getContent().toString()));
     adapter.add(new MaterialSimpleListItem.Builder(this)
         .content("username@gmail.com")
         .icon(R.drawable.ic_account_circle)
@@ -445,7 +482,9 @@ public class MainActivity extends AppCompatActivity implements
         .customView(R.layout.dialog_customview, true)
         .positiveText(R.string.connect)
         .negativeText(android.R.string.cancel)
-        .onPositive((dialog1, which) -> showToast("Password: " + passwordInput.getText().toString())).build();
+        .onPositive(
+            (dialog1, which) -> showToast("Password: " + passwordInput.getText().toString()))
+        .build();
 
     positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
     //noinspection ConstantConditions
@@ -468,8 +507,10 @@ public class MainActivity extends AppCompatActivity implements
     // Toggling the show password CheckBox will mask or unmask the password input EditText
     CheckBox checkbox = (CheckBox) dialog.getCustomView().findViewById(R.id.showPassword);
     checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-      passwordInput.setInputType(!isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT);
-      passwordInput.setTransformationMethod(!isChecked ? PasswordTransformationMethod.getInstance() : null);
+      passwordInput.setInputType(
+          !isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT);
+      passwordInput
+          .setTransformationMethod(!isChecked ? PasswordTransformationMethod.getInstance() : null);
     });
 
     int widgetColor = ThemeSingleton.get().widgetColor;
@@ -486,8 +527,9 @@ public class MainActivity extends AppCompatActivity implements
   @OnClick(R.id.customView_webView)
   public void showCustomWebView() {
     int accentColor = ThemeSingleton.get().widgetColor;
-    if (accentColor == 0)
+    if (accentColor == 0) {
       accentColor = ContextCompat.getColor(this, R.color.accent);
+    }
     ChangelogDialog.create(false, accentColor)
         .show(getSupportFragmentManager(), "changelog");
   }
@@ -569,8 +611,9 @@ public class MainActivity extends AppCompatActivity implements
       ThemeSingleton.get().widgetColor = color;
     } else {
       primaryPreselect = color;
-      if (getSupportActionBar() != null)
+      if (getSupportActionBar() != null) {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+      }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         getWindow().setStatusBarColor(CircleView.shiftColorDown(color));
         getWindow().setNavigationBarColor(color);
@@ -622,9 +665,11 @@ public class MainActivity extends AppCompatActivity implements
   @OnClick(R.id.file_chooser)
   public void showFileChooser() {
     chooserDialog = R.id.file_chooser;
-    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+    if (ActivityCompat
+        .checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
         PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+      ActivityCompat.requestPermissions(MainActivity.this,
+          new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
       return;
     }
     new FileChooserDialog.Builder(this)
@@ -645,9 +690,11 @@ public class MainActivity extends AppCompatActivity implements
   @OnClick(R.id.folder_chooser)
   public void showFolderChooser() {
     chooserDialog = R.id.folder_chooser;
-    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+    if (ActivityCompat
+        .checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
         PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
+      ActivityCompat.requestPermissions(MainActivity.this,
+          new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_RC);
       return;
     }
     new FolderChooserDialog.Builder(MainActivity.this)
@@ -725,16 +772,18 @@ public class MainActivity extends AppCompatActivity implements
         .contentGravity(GravityEnum.CENTER)
         .progress(false, 150, true)
         .cancelListener(dialog -> {
-          if (thread != null)
+          if (thread != null) {
             thread.interrupt();
+          }
         })
         .showListener(dialogInterface -> {
           final MaterialDialog dialog = (MaterialDialog) dialogInterface;
           startThread(() -> {
             while (dialog.getCurrentProgress() != dialog.getMaxProgress() &&
                 !Thread.currentThread().isInterrupted()) {
-              if (dialog.isCancelled())
+              if (dialog.isCancelled()) {
                 break;
+              }
               try {
                 Thread.sleep(50);
               } catch (InterruptedException e) {
@@ -772,10 +821,11 @@ public class MainActivity extends AppCompatActivity implements
 
   @OnClick(R.id.preference_dialogs)
   public void showPreferenceDialogs() {
-    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1)
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
       startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
-    else
+    } else {
       startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
+    }
   }
 
   @Override
@@ -795,8 +845,8 @@ public class MainActivity extends AppCompatActivity implements
 
   @Override
   public void onRequestPermissionsResult(int requestCode,
-                                         @NonNull String[] permissions,
-                                         @NonNull int[] grantResults) {
+      @NonNull String[] permissions,
+      @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == STORAGE_PERMISSION_RC) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

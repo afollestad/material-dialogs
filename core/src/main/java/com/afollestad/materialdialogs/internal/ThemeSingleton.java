@@ -4,11 +4,11 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
-
 import com.afollestad.materialdialogs.GravityEnum;
 
 /**
- * Use of this is discouraged for now; for internal use only. See the Global Theming section of the README.
+ * Use of this is discouraged for now; for internal use only. See the Global Theming section of the
+ * README.
  */
 public class ThemeSingleton {
 
@@ -48,8 +48,9 @@ public class ThemeSingleton {
   public GravityEnum buttonsGravity = GravityEnum.START;
 
   public static ThemeSingleton get(boolean createIfNull) {
-    if (singleton == null && createIfNull)
+    if (singleton == null && createIfNull) {
       singleton = new ThemeSingleton();
+    }
     return singleton;
   }
 
