@@ -200,7 +200,7 @@ public class MaterialDialog extends DialogBase implements
           selectedIndicesList.add(position);
           if (builder.alwaysCallMultiChoiceCallback) {
             // If the checkbox wasn't previously selected, and the callback returns true, add it to the states and check it
-            if (sendMultichoiceCallback()) {
+            if (sendMultiChoiceCallback()) {
               cb.setChecked(true);
             } else {
               // The callback cancelled selection, remove it from the states
@@ -215,7 +215,7 @@ public class MaterialDialog extends DialogBase implements
           selectedIndicesList.remove(Integer.valueOf(position));
           if (builder.alwaysCallMultiChoiceCallback) {
             // If the checkbox was previously selected, and the callback returns true, remove it from the states and uncheck it
-            if (sendMultichoiceCallback()) {
+            if (sendMultiChoiceCallback()) {
               cb.setChecked(false);
             } else {
               // The callback cancelled unselection, re-add it to the states
@@ -364,7 +364,7 @@ public class MaterialDialog extends DialogBase implements
     return builder.listCallbackSingleChoice.onSelection(this, v, builder.selectedIndex, text);
   }
 
-  private boolean sendMultichoiceCallback() {
+  private boolean sendMultiChoiceCallback() {
     if (builder.listCallbackMultiChoice == null) {
       return false;
     }
@@ -397,7 +397,7 @@ public class MaterialDialog extends DialogBase implements
           sendSingleChoiceCallback(v);
         }
         if (!builder.alwaysCallMultiChoiceCallback) {
-          sendMultichoiceCallback();
+          sendMultiChoiceCallback();
         }
         if (builder.inputCallback != null && input != null &&
             !builder.alwaysCallInputCallback) {
@@ -858,7 +858,7 @@ public class MaterialDialog extends DialogBase implements
         selectedIndicesList.clear();
       builder.adapter.notifyDataSetChanged();
       if (sendCallback && builder.listCallbackMultiChoice != null)
-        sendMultichoiceCallback();
+        sendMultiChoiceCallback();
     } else {
       throw new IllegalStateException("You can only use clearSelectedIndices() " +
           "with the default adapter implementation.");
@@ -894,7 +894,7 @@ public class MaterialDialog extends DialogBase implements
       }
       builder.adapter.notifyDataSetChanged();
       if (sendCallback && builder.listCallbackMultiChoice != null) {
-        sendMultichoiceCallback();
+        sendMultiChoiceCallback();
       }
     } else {
       throw new IllegalStateException("You can only use selectAllIndices() with the " +
