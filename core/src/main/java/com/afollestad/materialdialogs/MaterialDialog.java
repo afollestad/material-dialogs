@@ -306,7 +306,9 @@ public class MaterialDialog extends DialogBase implements
           }
           Drawable d = DialogUtils.resolveDrawable(builder.context,
               R.attr.md_btn_positive_selector);
-          if (d != null) return d;
+          if (d != null) {
+            return d;
+          }
           d = DialogUtils.resolveDrawable(getContext(),
               R.attr.md_btn_positive_selector);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -321,7 +323,9 @@ public class MaterialDialog extends DialogBase implements
           }
           Drawable d = DialogUtils.resolveDrawable(builder.context,
               R.attr.md_btn_neutral_selector);
-          if (d != null) return d;
+          if (d != null) {
+            return d;
+          }
           d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             RippleHelper.applyColor(d, builder.buttonRippleColor);
@@ -335,7 +339,9 @@ public class MaterialDialog extends DialogBase implements
           }
           Drawable d = DialogUtils.resolveDrawable(builder.context,
               R.attr.md_btn_negative_selector);
-          if (d != null) return d;
+          if (d != null) {
+            return d;
+          }
           d = DialogUtils.resolveDrawable(getContext(),
               R.attr.md_btn_negative_selector);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -348,7 +354,9 @@ public class MaterialDialog extends DialogBase implements
   }
 
   private boolean sendSingleChoiceCallback(View v) {
-    if (builder.listCallbackSingleChoice == null) return false;
+    if (builder.listCallbackSingleChoice == null) {
+      return false;
+    }
     CharSequence text = null;
     if (builder.selectedIndex >= 0 && builder.selectedIndex < builder.items.size()) {
       text = builder.items.get(builder.selectedIndex);
@@ -357,11 +365,15 @@ public class MaterialDialog extends DialogBase implements
   }
 
   private boolean sendMultichoiceCallback() {
-    if (builder.listCallbackMultiChoice == null) return false;
+    if (builder.listCallbackMultiChoice == null) {
+      return false;
+    }
     Collections.sort(selectedIndicesList); // make sure the indices are in order
     List<CharSequence> selectedTitles = new ArrayList<>();
     for (Integer i : selectedIndicesList) {
-      if (i < 0 || i > builder.items.size() - 1) continue;
+      if (i < 0 || i > builder.items.size() - 1) {
+        continue;
+      }
       selectedTitles.add(builder.items.get(i));
     }
     return builder.listCallbackMultiChoice.onSelection(this,
@@ -563,12 +575,15 @@ public class MaterialDialog extends DialogBase implements
   @SuppressWarnings("WeakerAccess")
   public final int numberOfActionButtons() {
     int number = 0;
-    if (builder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE)
+    if (builder.positiveText != null && positiveButton.getVisibility() == View.VISIBLE) {
       number++;
-    if (builder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE)
+    }
+    if (builder.neutralText != null && neutralButton.getVisibility() == View.VISIBLE) {
       number++;
-    if (builder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE)
+    }
+    if (builder.negativeText != null && negativeButton.getVisibility() == View.VISIBLE) {
       number++;
+    }
     return number;
   }
 
@@ -669,7 +684,9 @@ public class MaterialDialog extends DialogBase implements
   }
 
   public final int getCurrentProgress() {
-    if (progressBar == null) return -1;
+    if (progressBar == null) {
+      return -1;
+    }
     return progressBar.getProgress();
   }
 
@@ -710,14 +727,17 @@ public class MaterialDialog extends DialogBase implements
   }
 
   public final int getMaxProgress() {
-    if (progressBar == null) return -1;
+    if (progressBar == null) {
+      return -1;
+    }
     return progressBar.getMax();
   }
 
   @SuppressWarnings("unused")
   public final void setMaxProgress(final int max) {
-    if (builder.progress <= -2)
+    if (builder.progress <= -2) {
       throw new IllegalStateException("Cannot use setMaxProgress() on this dialog.");
+    }
     progressBar.setMax(max);
   }
 
@@ -864,15 +884,18 @@ public class MaterialDialog extends DialogBase implements
       throw new IllegalStateException("You can only use selectAllIndices() with " +
           "multi choice list dialogs.");
     if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
-      if (selectedIndicesList == null)
+      if (selectedIndicesList == null) {
         selectedIndicesList = new ArrayList<>();
+      }
       for (int i = 0; i < builder.adapter.getItemCount(); i++) {
-        if (!selectedIndicesList.contains(i))
+        if (!selectedIndicesList.contains(i)) {
           selectedIndicesList.add(i);
+        }
       }
       builder.adapter.notifyDataSetChanged();
-      if (sendCallback && builder.listCallbackMultiChoice != null)
+      if (sendCallback && builder.listCallbackMultiChoice != null) {
         sendMultichoiceCallback();
+      }
     } else {
       throw new IllegalStateException("You can only use selectAllIndices() with the " +
           "default adapter implementation.");
@@ -883,14 +906,17 @@ public class MaterialDialog extends DialogBase implements
   public final void onShow(DialogInterface dialog) {
     if (input != null) {
       DialogUtils.showKeyboard(this, builder);
-      if (input.getText().length() > 0)
+      if (input.getText().length() > 0) {
         input.setSelection(input.getText().length());
+      }
     }
     super.onShow(dialog);
   }
 
   void setInternalInputCallback() {
-    if (input == null) return;
+    if (input == null) {
+      return;
+    }
     input.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
