@@ -2,8 +2,6 @@ package com.afollestad.materialdialogssample;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -99,31 +97,6 @@ public class MainActivity extends AppCompatActivity implements
     handler = new Handler();
     primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
     accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
-
-    new MyDialog().show(getFragmentManager(), "TEST");
-  }
-
-  public static class MyDialog extends DialogFragment {
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-      return new MaterialDialog.Builder(getActivity())
-          .title("Title")
-          .progress(true, 0)
-          .positiveText("Cancel")
-          .onPositive((dialog, which) -> {
-            //Code
-          })
-          .showListener(dialogInterface -> {
-            //Code
-          })
-          .buttonsGravity(GravityEnum.CENTER)
-          .progress(true, -1)
-          .progressIndeterminateStyle(false)
-          .autoDismiss(true)
-          .cancelable(false)
-          .build();
-    }
   }
 
   @Override
