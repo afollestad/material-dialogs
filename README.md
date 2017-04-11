@@ -101,7 +101,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 
 ```gradle
 dependencies {
-	// ... other dependencies here
+    // ... other dependencies here
     compile 'com.afollestad.material-dialogs:core:0.9.4.2'
 }
 ```
