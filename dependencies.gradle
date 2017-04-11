@@ -7,6 +7,6 @@ ext.versions = [
         gradlePlugin: '2.3.0',
 
         supportLib: '25.3.1',
-        mdProgressBar: '1.3.0',
-        butterKnife: '8.1.0'
+        mdProgressBar: '1.4.0',
+        butterKnife: '8.5.1'
 ]
