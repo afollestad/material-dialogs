@@ -32,8 +32,8 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import me.zhanghai.android.materialprogressbar.HorizontalProgressDrawable;
+import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDrawable;
 import me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable;
-import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 
 /**
  * Used by MaterialDialog while initializing the dialog. Offloads some of the code to make the main
@@ -456,7 +456,7 @@ class DialogInit {
             dialog.progressBar.setProgressDrawable(d);
             dialog.progressBar.setIndeterminateDrawable(d);
           } else {
-            IndeterminateProgressDrawable d = new IndeterminateProgressDrawable(
+            IndeterminateCircularProgressDrawable d = new IndeterminateCircularProgressDrawable(
                 builder.getContext());
             d.setTint(builder.widgetColor);
             dialog.progressBar.setProgressDrawable(d);
