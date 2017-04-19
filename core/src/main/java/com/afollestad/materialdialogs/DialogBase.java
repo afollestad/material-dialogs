@@ -6,11 +6,10 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 class DialogBase extends Dialog implements DialogInterface.OnShowListener {
 
   protected MDRootLayout view;

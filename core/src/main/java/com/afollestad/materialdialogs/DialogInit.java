@@ -24,13 +24,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.internal.MDAdapter;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import me.zhanghai.android.materialprogressbar.HorizontalProgressDrawable;
 import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDrawable;
 import me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable;
@@ -45,8 +48,9 @@ class DialogInit {
 
   @StyleRes
   static int getTheme(@NonNull MaterialDialog.Builder builder) {
-    boolean darkTheme = DialogUtils
-        .resolveBoolean(builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
+    boolean darkTheme =
+        DialogUtils.resolveBoolean(
+            builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
     builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
     return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
   }
@@ -88,8 +92,10 @@ class DialogInit {
     dialog.setCancelable(builder.cancelable);
     dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
     if (builder.backgroundColor == 0) {
-      builder.backgroundColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_background_color,
+      builder.backgroundColor =
+          DialogUtils.resolveColor(
+              builder.context,
+              R.attr.md_background_color,
               DialogUtils.resolveColor(dialog.getContext(), R.attr.colorBackgroundFloating));
     }
     if (builder.backgroundColor != 0) {
@@ -102,41 +108,41 @@ class DialogInit {
 
     // Retrieve color theme attributes
     if (!builder.positiveColorSet) {
-      builder.positiveColor = DialogUtils
-          .resolveActionTextColorStateList(builder.context, R.attr.md_positive_color,
-              builder.positiveColor);
+      builder.positiveColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_positive_color, builder.positiveColor);
     }
     if (!builder.neutralColorSet) {
-      builder.neutralColor = DialogUtils
-          .resolveActionTextColorStateList(builder.context, R.attr.md_neutral_color,
-              builder.neutralColor);
+      builder.neutralColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_neutral_color, builder.neutralColor);
     }
     if (!builder.negativeColorSet) {
-      builder.negativeColor = DialogUtils
-          .resolveActionTextColorStateList(builder.context, R.attr.md_negative_color,
-              builder.negativeColor);
+      builder.negativeColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_negative_color, builder.negativeColor);
     }
     if (!builder.widgetColorSet) {
-      builder.widgetColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
+      builder.widgetColor =
+          DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
     }
 
     // Retrieve default title/content colors
     if (!builder.titleColorSet) {
-      final int titleColorFallback = DialogUtils
-          .resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
-      builder.titleColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
+      final int titleColorFallback =
+          DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
+      builder.titleColor =
+          DialogUtils.resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
     }
     if (!builder.contentColorSet) {
-      final int contentColorFallback = DialogUtils
-          .resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
-      builder.contentColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
+      final int contentColorFallback =
+          DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
+      builder.contentColor =
+          DialogUtils.resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
     }
     if (!builder.itemColorSet) {
-      builder.itemColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
+      builder.itemColor =
+          DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
     }
 
     // Retrieve references to views
@@ -195,8 +201,8 @@ class DialogInit {
     if (maxIconSize == -1) {
       maxIconSize = DialogUtils.resolveDimension(builder.context, R.attr.md_icon_max_size);
     }
-    if (builder.limitIconToDefaultSize || DialogUtils
-        .resolveBoolean(builder.context, R.attr.md_icon_limit_icon_to_default_size)) {
+    if (builder.limitIconToDefaultSize
+        || DialogUtils.resolveBoolean(builder.context, R.attr.md_icon_limit_icon_to_default_size)) {
       maxIconSize = builder.context.getResources().getDimensionPixelSize(R.dimen.md_icon_max_size);
     }
     if (maxIconSize > -1) {
@@ -209,8 +215,8 @@ class DialogInit {
     // Setup divider color in case content scrolls
     if (!builder.dividerColorSet) {
       final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
-      builder.dividerColor = DialogUtils
-          .resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
+      builder.dividerColor =
+          DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
     }
     dialog.view.setDividerColor(builder.dividerColor);
 
@@ -288,8 +294,8 @@ class DialogInit {
     positiveTextView.setText(builder.positiveText);
     positiveTextView.setTextColor(builder.positiveColor);
     dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
-    dialog.positiveButton
-        .setDefaultSelector(dialog.getButtonSelector(DialogAction.POSITIVE, false));
+    dialog.positiveButton.setDefaultSelector(
+        dialog.getButtonSelector(DialogAction.POSITIVE, false));
     dialog.positiveButton.setTag(DialogAction.POSITIVE);
     dialog.positiveButton.setOnClickListener(dialog);
     dialog.positiveButton.setVisibility(View.VISIBLE);
@@ -300,8 +306,8 @@ class DialogInit {
     negativeTextView.setText(builder.negativeText);
     negativeTextView.setTextColor(builder.negativeColor);
     dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
-    dialog.negativeButton
-        .setDefaultSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, false));
+    dialog.negativeButton.setDefaultSelector(
+        dialog.getButtonSelector(DialogAction.NEGATIVE, false));
     dialog.negativeButton.setTag(DialogAction.NEGATIVE);
     dialog.negativeButton.setOnClickListener(dialog);
     dialog.negativeButton.setVisibility(View.VISIBLE);
@@ -335,8 +341,8 @@ class DialogInit {
         } else {
           dialog.listType = MaterialDialog.ListType.REGULAR;
         }
-        builder.adapter = new DefaultRvAdapter(dialog,
-            MaterialDialog.ListType.getLayoutForType(dialog.listType));
+        builder.adapter =
+            new DefaultRvAdapter(dialog, MaterialDialog.ListType.getLayoutForType(dialog.listType));
       } else if (builder.adapter instanceof MDAdapter) {
         // Notify simple list adapter of the dialog it belongs to
         ((MDAdapter) builder.adapter).setDialog(dialog);
@@ -359,8 +365,8 @@ class DialogInit {
         ((ViewGroup) innerView.getParent()).removeView(innerView);
       }
       if (builder.wrapCustomViewInScroll) {
-                /* Apply the frame padding to the content, this allows the ScrollView to draw it's
-                   over scroll glow without clipping */
+        /* Apply the frame padding to the content, this allows the ScrollView to draw it's
+        over scroll glow without clipping */
         final Resources r = dialog.getContext().getResources();
         final int framePadding = r.getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
         final ScrollView sv = new ScrollView(dialog.getContext());
@@ -375,13 +381,16 @@ class DialogInit {
           sv.setPadding(0, paddingTop, 0, paddingBottom);
           innerView.setPadding(framePadding, 0, framePadding, 0);
         }
-        sv.addView(innerView, new ScrollView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT));
+        sv.addView(
+            innerView,
+            new ScrollView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         innerView = sv;
       }
-      frame.addView(innerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.WRAP_CONTENT));
+      frame.addView(
+          innerView,
+          new ViewGroup.LayoutParams(
+              ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     // Setup user listeners
@@ -414,12 +423,12 @@ class DialogInit {
     final int windowWidth = size.x;
     final int windowHeight = size.y;
 
-    final int windowVerticalPadding = builder.context.getResources()
-        .getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
-    final int windowHorizontalPadding = builder.context.getResources()
-        .getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
-    final int maxWidth = builder.context.getResources()
-        .getDimensionPixelSize(R.dimen.md_dialog_max_width);
+    final int windowVerticalPadding =
+        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
+    final int windowHorizontalPadding =
+        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
+    final int maxWidth =
+        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
     final int calculatedWidth = windowWidth - (windowHorizontalPadding * 2);
 
     dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
@@ -450,14 +459,14 @@ class DialogInit {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
         if (builder.indeterminateProgress) {
           if (builder.indeterminateIsHorizontalProgress) {
-            IndeterminateHorizontalProgressDrawable d = new IndeterminateHorizontalProgressDrawable(
-                builder.getContext());
+            IndeterminateHorizontalProgressDrawable d =
+                new IndeterminateHorizontalProgressDrawable(builder.getContext());
             d.setTint(builder.widgetColor);
             dialog.progressBar.setProgressDrawable(d);
             dialog.progressBar.setIndeterminateDrawable(d);
           } else {
-            IndeterminateCircularProgressDrawable d = new IndeterminateCircularProgressDrawable(
-                builder.getContext());
+            IndeterminateCircularProgressDrawable d =
+                new IndeterminateCircularProgressDrawable(builder.getContext());
             d.setTint(builder.widgetColor);
             dialog.progressBar.setProgressDrawable(d);
             dialog.progressBar.setIndeterminateDrawable(d);
@@ -490,10 +499,10 @@ class DialogInit {
 
           if (builder.showMinMax) {
             dialog.progressMinMax.setVisibility(View.VISIBLE);
-            dialog.progressMinMax.setText(String.format(builder.progressNumberFormat,
-                0, builder.progressMax));
-            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) dialog.progressBar
-                .getLayoutParams();
+            dialog.progressMinMax.setText(
+                String.format(builder.progressNumberFormat, 0, builder.progressMax));
+            ViewGroup.MarginLayoutParams lp =
+                (ViewGroup.MarginLayoutParams) dialog.progressBar.getLayoutParams();
             lp.leftMargin = 0;
             lp.rightMargin = 0;
           } else {
@@ -529,8 +538,8 @@ class DialogInit {
 
     if (builder.inputType != -1) {
       dialog.input.setInputType(builder.inputType);
-      if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD &&
-          (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD)
+      if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+          && (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD)
               == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
         // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
         dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -539,8 +548,8 @@ class DialogInit {
 
     dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
     if (builder.inputMinLength > 0 || builder.inputMaxLength > -1) {
-      dialog.invalidateInputMinMaxIndicator(dialog.input.getText().toString().length(),
-          !builder.inputAllowEmpty);
+      dialog.invalidateInputMinMaxIndicator(
+          dialog.input.getText().toString().length(), !builder.inputAllowEmpty);
     } else {
       dialog.inputMinMax.setVisibility(View.GONE);
       dialog.inputMinMax = null;

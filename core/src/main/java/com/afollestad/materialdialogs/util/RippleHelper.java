@@ -7,9 +7,7 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class RippleHelper {
 

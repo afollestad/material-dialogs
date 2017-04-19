@@ -1,19 +1,19 @@
 package com.afollestad.materialdialogs.internal;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.text.AllCapsTransformationMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * @author Kevin Barry (teslacoil) 4/02/2015
- */
+/** @author Kevin Barry (teslacoil) 4/02/2015 */
+@SuppressLint("AppCompatCustomView")
 public class MDButton extends TextView {
 
   private boolean stacked = false;
@@ -34,17 +34,16 @@ public class MDButton extends TextView {
   }
 
   private void init(Context context) {
-    stackedEndPadding = context.getResources()
-        .getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
+    stackedEndPadding =
+        context.getResources().getDimensionPixelSize(R.dimen.md_dialog_frame_margin);
     stackedGravity = GravityEnum.END;
   }
 
   /**
-   * Set if the button should be displayed in stacked mode.
-   * This should only be called from MDRootLayout's onMeasure, and we must be measured
-   * after calling this.
+   * Set if the button should be displayed in stacked mode. This should only be called from
+   * MDRootLayout's onMeasure, and we must be measured after calling this.
    */
-    /* package */ void setStacked(boolean stacked, boolean force) {
+  /* package */ void setStacked(boolean stacked, boolean force) {
     if (this.stacked != stacked || force) {
 
       setGravity(

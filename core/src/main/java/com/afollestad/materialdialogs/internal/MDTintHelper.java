@@ -16,52 +16,52 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.R;
 import com.afollestad.materialdialogs.util.DialogUtils;
+
 import java.lang.reflect.Field;
 
-/**
- * Tints widgets
- */
+/** Tints widgets */
 public class MDTintHelper {
 
-  public static void setTint(@NonNull RadioButton radioButton,
-      @NonNull ColorStateList colors) {
+  public static void setTint(@NonNull RadioButton radioButton, @NonNull ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       radioButton.setButtonTintList(colors);
     } else {
-      Drawable radioDrawable = ContextCompat.getDrawable(radioButton.getContext(),
-          R.drawable.abc_btn_radio_material);
+      Drawable radioDrawable =
+          ContextCompat.getDrawable(radioButton.getContext(), R.drawable.abc_btn_radio_material);
       Drawable d = DrawableCompat.wrap(radioDrawable);
       DrawableCompat.setTintList(d, colors);
       radioButton.setButtonDrawable(d);
     }
   }
 
-  public static void setTint(@NonNull RadioButton radioButton,
-      @ColorInt int color) {
+  public static void setTint(@NonNull RadioButton radioButton, @ColorInt int color) {
     final int disabledColor = DialogUtils.getDisabledColor(radioButton.getContext());
-    ColorStateList sl = new ColorStateList(new int[][]{
-        new int[]{android.R.attr.state_enabled, -android.R.attr.state_checked},
-        new int[]{android.R.attr.state_enabled, android.R.attr.state_checked},
-        new int[]{-android.R.attr.state_enabled, -android.R.attr.state_checked},
-        new int[]{-android.R.attr.state_enabled, android.R.attr.state_checked}
-    }, new int[]{
-        DialogUtils.resolveColor(radioButton.getContext(), R.attr.colorControlNormal),
-        color,
-        disabledColor,
-        disabledColor
-    });
+    ColorStateList sl =
+        new ColorStateList(
+            new int[][] {
+              new int[] {android.R.attr.state_enabled, -android.R.attr.state_checked},
+              new int[] {android.R.attr.state_enabled, android.R.attr.state_checked},
+              new int[] {-android.R.attr.state_enabled, -android.R.attr.state_checked},
+              new int[] {-android.R.attr.state_enabled, android.R.attr.state_checked}
+            },
+            new int[] {
+              DialogUtils.resolveColor(radioButton.getContext(), R.attr.colorControlNormal),
+              color,
+              disabledColor,
+              disabledColor
+            });
     setTint(radioButton, sl);
   }
 
-  public static void setTint(@NonNull CheckBox box,
-      @NonNull ColorStateList colors) {
+  public static void setTint(@NonNull CheckBox box, @NonNull ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       box.setButtonTintList(colors);
     } else {
-      Drawable checkDrawable = ContextCompat.getDrawable(box.getContext(),
-          R.drawable.abc_btn_check_material);
+      Drawable checkDrawable =
+          ContextCompat.getDrawable(box.getContext(), R.drawable.abc_btn_check_material);
       Drawable drawable = DrawableCompat.wrap(checkDrawable);
       DrawableCompat.setTintList(drawable, colors);
       box.setButtonDrawable(drawable);
@@ -70,17 +70,20 @@ public class MDTintHelper {
 
   public static void setTint(@NonNull CheckBox box, @ColorInt int color) {
     final int disabledColor = DialogUtils.getDisabledColor(box.getContext());
-    ColorStateList sl = new ColorStateList(new int[][]{
-        new int[]{android.R.attr.state_enabled, -android.R.attr.state_checked},
-        new int[]{android.R.attr.state_enabled, android.R.attr.state_checked},
-        new int[]{-android.R.attr.state_enabled, -android.R.attr.state_checked},
-        new int[]{-android.R.attr.state_enabled, android.R.attr.state_checked}
-    }, new int[]{
-        DialogUtils.resolveColor(box.getContext(), R.attr.colorControlNormal),
-        color,
-        disabledColor,
-        disabledColor
-    });
+    ColorStateList sl =
+        new ColorStateList(
+            new int[][] {
+              new int[] {android.R.attr.state_enabled, -android.R.attr.state_checked},
+              new int[] {android.R.attr.state_enabled, android.R.attr.state_checked},
+              new int[] {-android.R.attr.state_enabled, -android.R.attr.state_checked},
+              new int[] {-android.R.attr.state_enabled, android.R.attr.state_checked}
+            },
+            new int[] {
+              DialogUtils.resolveColor(box.getContext(), R.attr.colorControlNormal),
+              color,
+              disabledColor,
+              disabledColor
+            });
     setTint(box, sl);
   }
 
@@ -112,14 +115,12 @@ public class MDTintHelper {
     }
   }
 
-  public static void setTint(@NonNull ProgressBar progressBar,
-      @ColorInt int color) {
+  public static void setTint(@NonNull ProgressBar progressBar, @ColorInt int color) {
     setTint(progressBar, color, false);
   }
 
-  private static void setTint(@NonNull ProgressBar progressBar,
-      @ColorInt int color,
-      boolean skipIndeterminate) {
+  private static void setTint(
+      @NonNull ProgressBar progressBar, @ColorInt int color, boolean skipIndeterminate) {
     ColorStateList sl = ColorStateList.valueOf(color);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       progressBar.setProgressTintList(sl);
@@ -146,20 +147,20 @@ public class MDTintHelper {
     int[][] states = new int[3][];
     int[] colors = new int[3];
     int i = 0;
-    states[i] = new int[]{-android.R.attr.state_enabled};
+    states[i] = new int[] {-android.R.attr.state_enabled};
     colors[i] = DialogUtils.resolveColor(context, R.attr.colorControlNormal);
     i++;
-    states[i] = new int[]{-android.R.attr.state_pressed, -android.R.attr.state_focused};
+    states[i] = new int[] {-android.R.attr.state_pressed, -android.R.attr.state_focused};
     colors[i] = DialogUtils.resolveColor(context, R.attr.colorControlNormal);
     i++;
-    states[i] = new int[]{};
+    states[i] = new int[] {};
     colors[i] = color;
     return new ColorStateList(states, colors);
   }
 
   public static void setTint(@NonNull EditText editText, @ColorInt int color) {
-    ColorStateList editTextColorStateList = createEditTextColorStateList(editText.getContext(),
-        color);
+    ColorStateList editTextColorStateList =
+        createEditTextColorStateList(editText.getContext(), color);
     if (editText instanceof AppCompatEditText) {
       ((AppCompatEditText) editText).setSupportBackgroundTintList(editTextColorStateList);
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

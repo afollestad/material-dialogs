@@ -15,17 +15,15 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> {
 
   private final MaterialDialog dialog;
-  @LayoutRes
-  private final int layout;
+  @LayoutRes private final int layout;
   private final GravityEnum itemGravity;
   private InternalListCallback callback;
 
@@ -41,8 +39,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
   @Override
   public DefaultVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = LayoutInflater.from(parent.getContext())
-        .inflate(layout, parent, false);
+    final View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
     DialogUtils.setBackgroundCompat(view, dialog.getListSelector());
     return new DefaultVH(view, this);
   }
@@ -52,30 +49,34 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     final View view = holder.itemView;
     boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
     switch (dialog.listType) {
-      case SINGLE: {
-        @SuppressLint("CutPasteId") RadioButton radio = (RadioButton) holder.control;
-        boolean selected = dialog.builder.selectedIndex == index;
-        if (dialog.builder.choiceWidgetColor != null) {
-          MDTintHelper.setTint(radio, dialog.builder.choiceWidgetColor);
-        } else {
-          MDTintHelper.setTint(radio, dialog.builder.widgetColor);
+      case SINGLE:
+        {
+          @SuppressLint("CutPasteId")
+          RadioButton radio = (RadioButton) holder.control;
+          boolean selected = dialog.builder.selectedIndex == index;
+          if (dialog.builder.choiceWidgetColor != null) {
+            MDTintHelper.setTint(radio, dialog.builder.choiceWidgetColor);
+          } else {
+            MDTintHelper.setTint(radio, dialog.builder.widgetColor);
+          }
+          radio.setChecked(selected);
+          radio.setEnabled(!disabled);
+          break;
         }
-        radio.setChecked(selected);
-        radio.setEnabled(!disabled);
-        break;
-      }
-      case MULTI: {
-        @SuppressLint("CutPasteId") CheckBox checkbox = (CheckBox) holder.control;
-        boolean selected = dialog.selectedIndicesList.contains(index);
-        if (dialog.builder.choiceWidgetColor != null) {
-          MDTintHelper.setTint(checkbox, dialog.builder.choiceWidgetColor);
-        } else {
-          MDTintHelper.setTint(checkbox, dialog.builder.widgetColor);
+      case MULTI:
+        {
+          @SuppressLint("CutPasteId")
+          CheckBox checkbox = (CheckBox) holder.control;
+          boolean selected = dialog.selectedIndicesList.contains(index);
+          if (dialog.builder.choiceWidgetColor != null) {
+            MDTintHelper.setTint(checkbox, dialog.builder.choiceWidgetColor);
+          } else {
+            MDTintHelper.setTint(checkbox, dialog.builder.widgetColor);
+          }
+          checkbox.setChecked(selected);
+          checkbox.setEnabled(!disabled);
+          break;
         }
-        checkbox.setChecked(selected);
-        checkbox.setEnabled(!disabled);
-        break;
-      }
     }
 
     holder.title.setText(dialog.builder.items.get(index));
@@ -117,27 +118,35 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     itemRoot.setGravity(gravityInt | Gravity.CENTER_VERTICAL);
 
     if (view.getChildCount() == 2) {
-      if (itemGravity == GravityEnum.END && !isRTL() && view
-          .getChildAt(0) instanceof CompoundButton) {
+      if (itemGravity == GravityEnum.END
+          && !isRTL()
+          && view.getChildAt(0) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(0);
         view.removeView(first);
 
         TextView second = (TextView) view.getChildAt(0);
         view.removeView(second);
-        second.setPadding(second.getPaddingRight(), second.getPaddingTop(),
-            second.getPaddingLeft(), second.getPaddingBottom());
+        second.setPadding(
+            second.getPaddingRight(),
+            second.getPaddingTop(),
+            second.getPaddingLeft(),
+            second.getPaddingBottom());
 
         view.addView(second);
         view.addView(first);
-      } else if (itemGravity == GravityEnum.START && isRTL() && view
-          .getChildAt(1) instanceof CompoundButton) {
+      } else if (itemGravity == GravityEnum.START
+          && isRTL()
+          && view.getChildAt(1) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(1);
         view.removeView(first);
 
         TextView second = (TextView) view.getChildAt(0);
         view.removeView(second);
-        second.setPadding(second.getPaddingRight(), second.getPaddingTop(),
-            second.getPaddingRight(), second.getPaddingBottom());
+        second.setPadding(
+            second.getPaddingRight(),
+            second.getPaddingTop(),
+            second.getPaddingRight(),
+            second.getPaddingBottom());
 
         view.addView(first);
         view.addView(second);
@@ -156,12 +165,12 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
   interface InternalListCallback {
 
-    boolean onItemSelected(MaterialDialog dialog, View itemView, int position, CharSequence text,
-        boolean longPress);
+    boolean onItemSelected(
+        MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
   }
 
-  static class DefaultVH extends RecyclerView.ViewHolder implements View.OnClickListener,
-      View.OnLongClickListener {
+  static class DefaultVH extends RecyclerView.ViewHolder
+      implements View.OnClickListener, View.OnLongClickListener {
 
     final CompoundButton control;
     final TextView title;
@@ -182,8 +191,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     public void onClick(View view) {
       if (adapter.callback != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
         CharSequence text = null;
-        if (adapter.dialog.builder.items != null &&
-            getAdapterPosition() < adapter.dialog.builder.items.size()) {
+        if (adapter.dialog.builder.items != null
+            && getAdapterPosition() < adapter.dialog.builder.items.size()) {
           text = adapter.dialog.builder.items.get(getAdapterPosition());
         }
         adapter.callback.onItemSelected(adapter.dialog, view, getAdapterPosition(), text, false);
@@ -194,12 +203,12 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     public boolean onLongClick(View view) {
       if (adapter.callback != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
         CharSequence text = null;
-        if (adapter.dialog.builder.items != null &&
-            getAdapterPosition() < adapter.dialog.builder.items.size()) {
+        if (adapter.dialog.builder.items != null
+            && getAdapterPosition() < adapter.dialog.builder.items.size()) {
           text = adapter.dialog.builder.items.get(getAdapterPosition());
         }
-        return adapter.callback
-            .onItemSelected(adapter.dialog, view, getAdapterPosition(), text, true);
+        return adapter.callback.onItemSelected(
+            adapter.dialog, view, getAdapterPosition(), text, true);
       }
       return false;
     }

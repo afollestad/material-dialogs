@@ -32,8 +32,7 @@ public class TypefaceHelper {
     synchronized (cache) {
       if (!cache.containsKey(name)) {
         try {
-          Typeface t = Typeface.createFromAsset(
-              c.getAssets(), String.format("fonts/%s", name));
+          Typeface t = Typeface.createFromAsset(c.getAssets(), String.format("fonts/%s", name));
           cache.put(name, t);
           return t;
         } catch (RuntimeException e) {
@@ -44,4 +43,3 @@ public class TypefaceHelper {
     }
   }
 }
-
