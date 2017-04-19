@@ -1,5 +1,6 @@
 package com.afollestad.materialdialogs.internal;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -23,6 +25,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import java.lang.reflect.Field;
 
 /** Tints widgets */
+@SuppressLint("PrivateResource")
 public class MDTintHelper {
 
   public static void setTint(@NonNull RadioButton radioButton, @NonNull ColorStateList colors) {
@@ -162,6 +165,7 @@ public class MDTintHelper {
     ColorStateList editTextColorStateList =
         createEditTextColorStateList(editText.getContext(), color);
     if (editText instanceof AppCompatEditText) {
+      //noinspection RestrictedApi
       ((AppCompatEditText) editText).setSupportBackgroundTintList(editTextColorStateList);
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       editText.setBackgroundTintList(editTextColorStateList);
@@ -186,8 +190,11 @@ public class MDTintHelper {
       drawables[0].setColorFilter(color, PorterDuff.Mode.SRC_IN);
       drawables[1].setColorFilter(color, PorterDuff.Mode.SRC_IN);
       fCursorDrawable.set(editor, drawables);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (NoSuchFieldException e1) {
+      Log.d("MDTintHelper", "Device issue with cursor tinting: " + e1.getMessage());
+      e1.printStackTrace();
+    } catch (Exception e2) {
+      e2.printStackTrace();
     }
   }
 }
