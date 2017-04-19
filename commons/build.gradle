@@ -21,6 +21,12 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
+    sourceSets {
+        main.res.srcDirs = [
+            'src/main/res',
+            'src/main/res-public'
+        ]
+    }
 }
 
 dependencies {
