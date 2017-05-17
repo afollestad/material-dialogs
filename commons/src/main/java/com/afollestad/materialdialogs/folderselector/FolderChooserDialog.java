@@ -99,6 +99,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     parentContents = listFiles();
     MaterialDialog.Builder builder =
         new MaterialDialog.Builder(getActivity())
+            .typeface(getBuilder().mediumFont, getBuilder().regularFont)
             .title(parentFolder.getAbsolutePath())
             .items((CharSequence[]) getContentsArray())
             .itemsCallback(this)
@@ -243,6 +244,8 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     boolean allowNewFolder;
     @StringRes int newFolderButton;
     String goUpLabel;
+    @Nullable String mediumFont;
+    @Nullable String regularFont;
 
     public <ActivityType extends AppCompatActivity & FolderCallback> Builder(
         @NonNull ActivityType context) {
@@ -251,6 +254,13 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       cancelButton = android.R.string.cancel;
       goUpLabel = "...";
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    @NonNull
+    public Builder typeface(@Nullable String medium, @Nullable String regular) {
+      this.mediumFont = medium;
+      this.regularFont = regular;
+      return this;
     }
 
     @NonNull

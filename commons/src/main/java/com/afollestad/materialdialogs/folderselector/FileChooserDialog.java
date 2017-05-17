@@ -161,6 +161,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     parentContents = listFiles(getBuilder().mimeType, getBuilder().extensions);
     return new MaterialDialog.Builder(getActivity())
         .title(parentFolder.getAbsolutePath())
+        .typeface(getBuilder().mediumFont, getBuilder().regularFont)
         .items(getContentsArray())
         .itemsCallback(this)
         .onNegative(
@@ -261,6 +262,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     String[] extensions;
     String tag;
     String goUpLabel;
+    @Nullable String mediumFont;
+    @Nullable String regularFont;
 
     public <ActivityType extends AppCompatActivity & FileCallback> Builder(
         @NonNull ActivityType context) {
@@ -269,6 +272,13 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
       mimeType = null;
       goUpLabel = "...";
+    }
+
+    @NonNull
+    public Builder typeface(@Nullable String medium, @Nullable String regular) {
+      this.mediumFont = medium;
+      this.regularFont = regular;
+      return this;
     }
 
     @NonNull

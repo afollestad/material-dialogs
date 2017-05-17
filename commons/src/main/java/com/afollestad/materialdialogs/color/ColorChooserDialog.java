@@ -351,6 +351,7 @@ public class ColorChooserDialog extends DialogFragment
             .negativeText(builder.cancelBtn)
             .positiveText(builder.doneBtn)
             .neutralText(builder.allowUserCustom ? builder.customBtn : 0)
+            .typeface(builder.mediumFont, builder.regularFont)
             .onPositive(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
@@ -612,6 +613,8 @@ public class ColorChooserDialog extends DialogFragment
   public static class Builder implements Serializable {
 
     @NonNull final transient AppCompatActivity context;
+    @Nullable String mediumFont;
+    @Nullable String regularFont;
     @StringRes final int title;
     @StringRes int titleSub;
     @ColorInt int preselectColor;
@@ -635,6 +638,13 @@ public class ColorChooserDialog extends DialogFragment
         @NonNull ActivityType context, @StringRes int title) {
       this.context = context;
       this.title = title;
+    }
+
+    @NonNull
+    public Builder typeface(@Nullable String medium, @Nullable String regular) {
+      this.mediumFont = medium;
+      this.regularFont = regular;
+      return this;
     }
 
     @NonNull
