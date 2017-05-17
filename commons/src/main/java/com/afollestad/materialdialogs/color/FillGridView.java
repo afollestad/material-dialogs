@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class FillGridView extends GridView {
 
   public FillGridView(Context context) {
@@ -23,8 +21,7 @@ public class FillGridView extends GridView {
 
   @Override
   public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-        MeasureSpec.AT_MOST);
+    int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
     super.onMeasure(widthMeasureSpec, expandSpec);
   }
 }

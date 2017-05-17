@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Simple adapter example for custom items in the dialog
- */
+/** Simple adapter example for custom items in the dialog */
 class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
   private final CharSequence[] items;
@@ -34,8 +32,9 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
 
   @Override
   public ButtonVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.dialog_customlistitem, parent, false);
+    final View view =
+        LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.dialog_customlistitem, parent, false);
     return new ButtonVH(view, this);
   }
 

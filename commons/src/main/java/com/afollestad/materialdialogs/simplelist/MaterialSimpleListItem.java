@@ -13,11 +13,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
+
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class MaterialSimpleListItem {
 
   private final Builder builder;
@@ -92,8 +91,12 @@ public class MaterialSimpleListItem {
     }
 
     public Builder iconPaddingDp(@IntRange(from = 0, to = Integer.MAX_VALUE) int paddingDp) {
-      this.iconPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingDp,
-          context.getResources().getDisplayMetrics());
+      this.iconPadding =
+          (int)
+              TypedValue.applyDimension(
+                  TypedValue.COMPLEX_UNIT_DIP,
+                  paddingDp,
+                  context.getResources().getDisplayMetrics());
       return this;
     }
 

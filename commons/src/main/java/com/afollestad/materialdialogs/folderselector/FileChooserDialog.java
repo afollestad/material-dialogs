@@ -18,9 +18,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,22 +32,21 @@ import java.util.List;
 
 public class FileChooserDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
-  private final static String DEFAULT_TAG = "[MD_FILE_SELECTOR]";
+  private static final String DEFAULT_TAG = "[MD_FILE_SELECTOR]";
 
   private File parentFolder;
   private File[] parentContents;
   private boolean canGoUp = true;
   private FileCallback callback;
 
-  public FileChooserDialog() {
-  }
+  public FileChooserDialog() {}
 
   CharSequence[] getContentsArray() {
     if (parentContents == null) {
       if (canGoUp) {
-        return new String[]{getBuilder().goUpLabel};
+        return new String[] {getBuilder().goUpLabel};
       }
-      return new String[]{};
+      return new String[] {};
     }
     String[] results = new String[parentContents.length + (canGoUp ? 1 : 0)];
     if (canGoUp) {
@@ -138,10 +139,10 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-        ActivityCompat.checkSelfPermission(getActivity(),
-            Manifest.permission.READ_EXTERNAL_STORAGE) !=
-            PackageManager.PERMISSION_GRANTED) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        && ActivityCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
       return new MaterialDialog.Builder(getActivity())
           .title(R.string.md_error_label)
           .content(R.string.md_storage_perm_error)
@@ -162,13 +163,13 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         .title(parentFolder.getAbsolutePath())
         .items(getContentsArray())
         .itemsCallback(this)
-        .onNegative(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog,
-              @NonNull DialogAction which) {
-            dialog.dismiss();
-          }
-        })
+        .onNegative(
+            new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                dialog.dismiss();
+              }
+            })
         .autoDismiss(false)
         .negativeText(getBuilder().cancelButton)
         .build();
@@ -183,8 +184,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   }
 
   @Override
-  public void onSelection
-      (MaterialDialog materialDialog, View view, int i, CharSequence s) {
+  public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence s) {
     if (canGoUp && i == 0) {
       parentFolder = parentFolder.getParentFile();
       if (parentFolder.getAbsolutePath().equals("/storage/emulated")) {
@@ -229,8 +229,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
     if (frag != null) {
       ((DialogFragment) frag).dismiss();
-      context.getSupportFragmentManager().beginTransaction()
-          .remove(frag).commit();
+      context.getSupportFragmentManager().beginTransaction().remove(frag).commit();
     }
     show(context.getSupportFragmentManager(), tag);
   }
@@ -255,10 +254,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
   public static class Builder implements Serializable {
 
-    @NonNull
-    final transient AppCompatActivity context;
-    @StringRes
-    int cancelButton;
+    @NonNull final transient AppCompatActivity context;
+    @StringRes int cancelButton;
     String initialPath;
     String mimeType;
     String[] extensions;

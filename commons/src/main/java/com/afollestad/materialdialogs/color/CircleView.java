@@ -23,6 +23,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 public class CircleView extends FrameLayout {
@@ -46,10 +47,10 @@ public class CircleView extends FrameLayout {
   public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     final Resources r = getResources();
-    borderWidthSmall = (int) TypedValue
-        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, r.getDisplayMetrics());
-    borderWidthLarge = (int) TypedValue
-        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+    borderWidthSmall =
+        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, r.getDisplayMetrics());
+    borderWidthLarge =
+        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
 
     whitePaint = new Paint();
     whitePaint.setAntiAlias(true);
@@ -74,8 +75,7 @@ public class CircleView extends FrameLayout {
   }
 
   @ColorInt
-  public static int shiftColor(@ColorInt int color,
-      @FloatRange(from = 0.0f, to = 2.0f) float by) {
+  public static int shiftColor(@ColorInt int color, @FloatRange(from = 0.0f, to = 2.0f) float by) {
     if (by == 1f) {
       return color;
     }
@@ -101,10 +101,8 @@ public class CircleView extends FrameLayout {
 
     Drawable selector = createSelector(color);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      int[][] states = new int[][]{
-          new int[]{android.R.attr.state_pressed}
-      };
-      int[] colors = new int[]{shiftColorUp(color)};
+      int[][] states = new int[][] {new int[] {android.R.attr.state_pressed}};
+      int[] colors = new int[] {shiftColorUp(color)};
       ColorStateList rippleColors = new ColorStateList(states, colors);
       setForeground(new RippleDrawable(rippleColors, selector, null));
     } else {
@@ -124,18 +122,14 @@ public class CircleView extends FrameLayout {
     setBackgroundColor(DialogUtils.getColor(getContext(), color));
   }
 
-  /**
-   * @deprecated
-   */
+  /** @deprecated */
   @Deprecated
   @Override
   public void setBackground(Drawable background) {
     throw new IllegalStateException("Cannot use setBackground() on CircleView.");
   }
 
-  /**
-   * @deprecated
-   */
+  /** @deprecated */
   @SuppressWarnings("deprecation")
   @Deprecated
   @Override
@@ -143,9 +137,7 @@ public class CircleView extends FrameLayout {
     throw new IllegalStateException("Cannot use setBackgroundDrawable() on CircleView.");
   }
 
-  /**
-   * @deprecated
-   */
+  /** @deprecated */
   @SuppressWarnings("deprecation")
   @Deprecated
   @Override
@@ -172,23 +164,11 @@ public class CircleView extends FrameLayout {
     if (selected) {
       final int whiteRadius = outerRadius - borderWidthLarge;
       final int innerRadius = whiteRadius - borderWidthSmall;
-      canvas.drawCircle(getMeasuredWidth() / 2,
-          getMeasuredHeight() / 2,
-          outerRadius,
-          outerPaint);
-      canvas.drawCircle(getMeasuredWidth() / 2,
-          getMeasuredHeight() / 2,
-          whiteRadius,
-          whitePaint);
-      canvas.drawCircle(getMeasuredWidth() / 2,
-          getMeasuredHeight() / 2,
-          innerRadius,
-          innerPaint);
+      canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, outerRadius, outerPaint);
+      canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, whiteRadius, whitePaint);
+      canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, innerRadius, innerPaint);
     } else {
-      canvas.drawCircle(getMeasuredWidth() / 2,
-          getMeasuredHeight() / 2,
-          outerRadius,
-          innerPaint);
+      canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, outerRadius, innerPaint);
     }
   }
 
@@ -196,7 +176,7 @@ public class CircleView extends FrameLayout {
     ShapeDrawable darkerCircle = new ShapeDrawable(new OvalShape());
     darkerCircle.getPaint().setColor(translucentColor(shiftColorUp(color)));
     StateListDrawable stateListDrawable = new StateListDrawable();
-    stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, darkerCircle);
+    stateListDrawable.addState(new int[] {android.R.attr.state_pressed}, darkerCircle);
     return stateListDrawable;
   }
 
@@ -214,12 +194,12 @@ public class CircleView extends FrameLayout {
       final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
       referenceX = screenWidth - referenceX; // mirror
     }
-    Toast cheatSheet = Toast
-        .makeText(context, String.format("#%06X", 0xFFFFFF & color), Toast.LENGTH_SHORT);
+    Toast cheatSheet =
+        Toast.makeText(context, String.format("#%06X", 0xFFFFFF & color), Toast.LENGTH_SHORT);
     if (midy < displayFrame.height()) {
       // Show along the top; follow action buttons
-      cheatSheet.setGravity(Gravity.TOP | GravityCompat.END, referenceX,
-          screenPos[1] + height - displayFrame.top);
+      cheatSheet.setGravity(
+          Gravity.TOP | GravityCompat.END, referenceX, screenPos[1] + height - displayFrame.top);
     } else {
       // Show along the bottom center
       cheatSheet.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, height);

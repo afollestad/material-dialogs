@@ -383,7 +383,7 @@ public class MDRootLayout extends ViewGroup {
           bl = l + offset;
           br = bl + buttons[INDEX_POSITIVE].getMeasuredWidth();
         } else {
-            /* START || CENTER */
+          /* START || CENTER */
           br = r - offset;
           bl = br - buttons[INDEX_POSITIVE].getMeasuredWidth();
           neutralRight = bl;
@@ -401,7 +401,7 @@ public class MDRootLayout extends ViewGroup {
           br = r - offset;
           bl = br - buttons[INDEX_NEGATIVE].getMeasuredWidth();
         } else {
-            /* CENTER */
+          /* CENTER */
           bl = l + buttonHorizontalEdgeMargin;
           br = bl + buttons[INDEX_NEGATIVE].getMeasuredWidth();
           neutralLeft = br;
@@ -418,7 +418,7 @@ public class MDRootLayout extends ViewGroup {
           bl = l + buttonHorizontalEdgeMargin;
           br = bl + buttons[INDEX_NEUTRAL].getMeasuredWidth();
         } else {
-            /* CENTER */
+          /* CENTER */
           if (neutralLeft == -1 && neutralRight != -1) {
             neutralLeft = neutralRight - buttons[INDEX_NEUTRAL].getMeasuredWidth();
           } else if (neutralRight == -1 && neutralLeft != -1) {

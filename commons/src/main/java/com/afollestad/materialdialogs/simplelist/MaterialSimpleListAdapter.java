@@ -7,20 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * See the sample project to understand how this is used. Mimics the Simple List dialog style
- * displayed on Google's guidelines site: https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
+ * displayed on Google's guidelines site:
+ * https://www.google.com/design/spec/components/dialogs.html#dialogs-simple-dialogs
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MaterialSimpleListAdapter extends
-    RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
+public class MaterialSimpleListAdapter
+    extends RecyclerView.Adapter<MaterialSimpleListAdapter.SimpleListVH> implements MDAdapter {
 
   private MaterialDialog dialog;
   private List<MaterialSimpleListItem> items;
@@ -52,8 +55,9 @@ public class MaterialSimpleListAdapter extends
 
   @Override
   public SimpleListVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.md_simplelist_item, parent, false);
+    final View view =
+        LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.md_simplelist_item, parent, false);
     return new SimpleListVH(view, this);
   }
 
@@ -63,10 +67,15 @@ public class MaterialSimpleListAdapter extends
       final MaterialSimpleListItem item = items.get(position);
       if (item.getIcon() != null) {
         holder.icon.setImageDrawable(item.getIcon());
-        holder.icon.setPadding(item.getIconPadding(), item.getIconPadding(),
-            item.getIconPadding(), item.getIconPadding());
-        holder.icon.getBackground().setColorFilter(item.getBackgroundColor(),
-            PorterDuff.Mode.SRC_ATOP);
+        holder.icon.setPadding(
+            item.getIconPadding(),
+            item.getIconPadding(),
+            item.getIconPadding(),
+            item.getIconPadding());
+        holder
+            .icon
+            .getBackground()
+            .setColorFilter(item.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
       } else {
         holder.icon.setVisibility(View.GONE);
       }
@@ -103,8 +112,8 @@ public class MaterialSimpleListAdapter extends
     @Override
     public void onClick(View view) {
       if (adapter.callback != null) {
-        adapter.callback.onMaterialListItemSelected(adapter.dialog,
-            getAdapterPosition(), adapter.getItem(getAdapterPosition()));
+        adapter.callback.onMaterialListItemSelected(
+            adapter.dialog, getAdapterPosition(), adapter.getItem(getAdapterPosition()));
       }
     }
   }

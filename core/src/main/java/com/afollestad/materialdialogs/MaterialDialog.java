@@ -1229,7 +1229,10 @@ public class MaterialDialog extends DialogBase
 
       final String mediumFont = DialogUtils.resolveString(context, R.attr.md_medium_font);
       final String regularFont = DialogUtils.resolveString(context, R.attr.md_regular_font);
-      typeface(mediumFont, regularFont);
+      try {
+        typeface(mediumFont, regularFont);
+      } catch(Throwable ignored) {
+      }
 
       if (this.mediumFont == null) {
         try {
@@ -1238,14 +1241,14 @@ public class MaterialDialog extends DialogBase
           } else {
             this.mediumFont = Typeface.create("sans-serif", Typeface.BOLD);
           }
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
           this.mediumFont = Typeface.DEFAULT_BOLD;
         }
       }
       if (this.regularFont == null) {
         try {
           this.regularFont = Typeface.create("sans-serif", Typeface.NORMAL);
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
           this.regularFont = Typeface.SANS_SERIF;
           if (this.regularFont == null) {
             this.regularFont = Typeface.DEFAULT;
@@ -1398,16 +1401,16 @@ public class MaterialDialog extends DialogBase
      * @return The Builder instance so you can chain calls to it.
      */
     public Builder typeface(@Nullable String medium, @Nullable String regular) {
-      if (medium != null) {
+      if (medium != null && !medium.trim().isEmpty()) {
         this.mediumFont = TypefaceHelper.get(this.context, medium);
         if (this.mediumFont == null) {
-          throw new IllegalArgumentException("No font asset found for " + medium);
+          throw new IllegalArgumentException("No font asset found for \"" + medium + "\"");
         }
       }
-      if (regular != null) {
+      if (regular != null && !regular.trim().isEmpty()) {
         this.regularFont = TypefaceHelper.get(this.context, regular);
         if (this.regularFont == null) {
-          throw new IllegalArgumentException("No font asset found for " + regular);
+          throw new IllegalArgumentException("No font asset found for \"" + regular + "\"");
         }
       }
       return this;

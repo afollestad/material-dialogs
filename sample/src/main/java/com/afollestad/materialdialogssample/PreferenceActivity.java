@@ -16,7 +16,9 @@ public class PreferenceActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-      getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment())
+      getFragmentManager()
+          .beginTransaction()
+          .replace(R.id.content_frame, new SettingsFragment())
           .commit();
     }
   }

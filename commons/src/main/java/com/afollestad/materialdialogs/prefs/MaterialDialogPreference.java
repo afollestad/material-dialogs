@@ -12,12 +12,11 @@ import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class MaterialDialogPreference extends DialogPreference {
 
   private Context context;
@@ -40,12 +39,11 @@ public class MaterialDialogPreference extends DialogPreference {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialDialogPreference(Context context, AttributeSet attrs,
-      int defStyleAttr, int defStyleRes) {
+  public MaterialDialogPreference(
+      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
-
 
   private void init(Context context, AttributeSet attrs) {
     this.context = context;
@@ -59,29 +57,34 @@ public class MaterialDialogPreference extends DialogPreference {
 
   @Override
   protected void showDialog(Bundle state) {
-    MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
-        .title(getDialogTitle())
-        .icon(getDialogIcon())
-        .dismissListener(this)
-        .onAny(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            switch (which) {
-              default:
-                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                break;
-              case NEUTRAL:
-                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                break;
-              case NEGATIVE:
-                MaterialDialogPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                break;
-            }
-          }
-        })
-        .positiveText(getPositiveButtonText())
-        .negativeText(getNegativeButtonText())
-        .autoDismiss(true); // immediately close the dialog after selection
+    MaterialDialog.Builder builder =
+        new MaterialDialog.Builder(context)
+            .title(getDialogTitle())
+            .icon(getDialogIcon())
+            .dismissListener(this)
+            .onAny(
+                new MaterialDialog.SingleButtonCallback() {
+                  @Override
+                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (which) {
+                      default:
+                        MaterialDialogPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_POSITIVE);
+                        break;
+                      case NEUTRAL:
+                        MaterialDialogPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEUTRAL);
+                        break;
+                      case NEGATIVE:
+                        MaterialDialogPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEGATIVE);
+                        break;
+                    }
+                  }
+                })
+            .positiveText(getPositiveButtonText())
+            .negativeText(getNegativeButtonText())
+            .autoDismiss(true); // immediately close the dialog after selection
 
     final View contentView = onCreateDialogView();
     if (contentView != null) {

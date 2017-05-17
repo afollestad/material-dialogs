@@ -12,8 +12,10 @@ import android.preference.MultiSelectListPreference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,8 +49,8 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialMultiSelectListPreference(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
+  public MaterialMultiSelectListPreference(
+      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
@@ -83,49 +85,52 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         indices.add(findIndexOfValue(s));
       }
     }
-    MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
-        .title(getDialogTitle())
-        .icon(getDialogIcon())
-        .negativeText(getNegativeButtonText())
-        .positiveText(getPositiveButtonText())
-        .onAny(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            switch (which) {
-              default:
-                MaterialMultiSelectListPreference.this
-                    .onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                break;
-              case NEUTRAL:
-                MaterialMultiSelectListPreference.this
-                    .onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                break;
-              case NEGATIVE:
-                MaterialMultiSelectListPreference.this
-                    .onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                break;
-            }
-          }
-        })
-        .items(getEntries())
-        .itemsCallbackMultiChoice(indices.toArray(new Integer[indices.size()]),
-            new MaterialDialog.ListCallbackMultiChoice() {
-              @Override
-              public boolean onSelection(MaterialDialog dialog, Integer[] which,
-                  CharSequence[] text) {
-                onClick(null, DialogInterface.BUTTON_POSITIVE);
-                dialog.dismiss();
-                final Set<String> values = new HashSet<>();
-                for (int i : which) {
-                  values.add(getEntryValues()[i].toString());
-                }
-                if (callChangeListener(values)) {
-                  setValues(values);
-                }
-                return true;
-              }
-            })
-        .dismissListener(this);
+    MaterialDialog.Builder builder =
+        new MaterialDialog.Builder(context)
+            .title(getDialogTitle())
+            .icon(getDialogIcon())
+            .negativeText(getNegativeButtonText())
+            .positiveText(getPositiveButtonText())
+            .onAny(
+                new MaterialDialog.SingleButtonCallback() {
+                  @Override
+                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (which) {
+                      default:
+                        MaterialMultiSelectListPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_POSITIVE);
+                        break;
+                      case NEUTRAL:
+                        MaterialMultiSelectListPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEUTRAL);
+                        break;
+                      case NEGATIVE:
+                        MaterialMultiSelectListPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEGATIVE);
+                        break;
+                    }
+                  }
+                })
+            .items(getEntries())
+            .itemsCallbackMultiChoice(
+                indices.toArray(new Integer[indices.size()]),
+                new MaterialDialog.ListCallbackMultiChoice() {
+                  @Override
+                  public boolean onSelection(
+                      MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                    onClick(null, DialogInterface.BUTTON_POSITIVE);
+                    dialog.dismiss();
+                    final Set<String> values = new HashSet<>();
+                    for (int i : which) {
+                      values.add(getEntryValues()[i].toString());
+                    }
+                    if (callChangeListener(values)) {
+                      setValues(values);
+                    }
+                    return true;
+                  }
+                })
+            .dismissListener(this);
 
     final View contentView = onCreateDialogView();
     if (contentView != null) {

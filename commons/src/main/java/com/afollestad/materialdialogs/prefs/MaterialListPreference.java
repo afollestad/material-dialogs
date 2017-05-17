@@ -13,13 +13,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.lang.reflect.Field;
 
-/**
- * @author Marc Holder Kluver (marchold), Aidan Follestad (afollestad)
- */
+/** @author Marc Holder Kluver (marchold), Aidan Follestad (afollestad) */
 public class MaterialListPreference extends ListPreference {
 
   private Context context;
@@ -42,8 +42,8 @@ public class MaterialListPreference extends ListPreference {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialListPreference(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
+  public MaterialListPreference(
+      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
@@ -84,47 +84,53 @@ public class MaterialListPreference extends ListPreference {
     }
 
     int preselect = findIndexOfValue(getValue());
-    MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
-        .title(getDialogTitle())
-        .icon(getDialogIcon())
-        .dismissListener(this)
-        .onAny(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            switch (which) {
-              default:
-                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                break;
-              case NEUTRAL:
-                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                break;
-              case NEGATIVE:
-                MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                break;
-            }
-          }
-        })
-        .negativeText(getNegativeButtonText())
-        .items(getEntries())
-        .autoDismiss(true) // immediately close the dialog after selection
-        .itemsCallbackSingleChoice(preselect, new MaterialDialog.ListCallbackSingleChoice() {
-          @Override
-          public boolean onSelection(MaterialDialog dialog, View itemView, int which,
-              CharSequence text) {
-            onClick(null, DialogInterface.BUTTON_POSITIVE);
-            if (which >= 0 && getEntryValues() != null) {
-              try {
-                Field clickedIndex = ListPreference.class
-                    .getDeclaredField("mClickedDialogEntryIndex");
-                clickedIndex.setAccessible(true);
-                clickedIndex.set(MaterialListPreference.this, which);
-              } catch (Exception e) {
-                e.printStackTrace();
-              }
-            }
-            return true;
-          }
-        });
+    MaterialDialog.Builder builder =
+        new MaterialDialog.Builder(context)
+            .title(getDialogTitle())
+            .icon(getDialogIcon())
+            .dismissListener(this)
+            .onAny(
+                new MaterialDialog.SingleButtonCallback() {
+                  @Override
+                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (which) {
+                      default:
+                        MaterialListPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_POSITIVE);
+                        break;
+                      case NEUTRAL:
+                        MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                        break;
+                      case NEGATIVE:
+                        MaterialListPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEGATIVE);
+                        break;
+                    }
+                  }
+                })
+            .negativeText(getNegativeButtonText())
+            .items(getEntries())
+            .autoDismiss(true) // immediately close the dialog after selection
+            .itemsCallbackSingleChoice(
+                preselect,
+                new MaterialDialog.ListCallbackSingleChoice() {
+                  @Override
+                  public boolean onSelection(
+                      MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                    onClick(null, DialogInterface.BUTTON_POSITIVE);
+                    if (which >= 0 && getEntryValues() != null) {
+                      try {
+                        Field clickedIndex =
+                            ListPreference.class.getDeclaredField("mClickedDialogEntryIndex");
+                        clickedIndex.setAccessible(true);
+                        clickedIndex.set(MaterialListPreference.this, which);
+                      } catch (Exception e) {
+                        e.printStackTrace();
+                      }
+                    }
+                    return true;
+                  }
+                });
 
     final View contentView = onCreateDialogView();
     if (contentView != null) {

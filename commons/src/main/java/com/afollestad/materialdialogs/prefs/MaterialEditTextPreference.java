@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
@@ -29,9 +30,7 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class MaterialEditTextPreference extends EditTextPreference {
 
   private int color = 0;
@@ -55,12 +54,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
+  public MaterialEditTextPreference(
+      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     init(context, attrs);
   }
-
 
   private void init(Context context, AttributeSet attrs) {
     PrefUtil.setLayoutResource(context, this, attrs);
@@ -81,8 +79,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
   @Override
   protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
-    ((ViewGroup) dialogView).addView(editText, new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    ((ViewGroup) dialogView)
+        .addView(
+            editText,
+            new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
   }
 
   @SuppressLint("MissingSuperCall")
@@ -125,29 +126,34 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
   @Override
   protected void showDialog(Bundle state) {
-    Builder mBuilder = new MaterialDialog.Builder(getContext())
-        .title(getDialogTitle())
-        .icon(getDialogIcon())
-        .positiveText(getPositiveButtonText())
-        .negativeText(getNegativeButtonText())
-        .dismissListener(this)
-        .onAny(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            switch (which) {
-              default:
-                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                break;
-              case NEUTRAL:
-                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                break;
-              case NEGATIVE:
-                MaterialEditTextPreference.this.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                break;
-            }
-          }
-        })
-        .dismissListener(this);
+    Builder mBuilder =
+        new MaterialDialog.Builder(getContext())
+            .title(getDialogTitle())
+            .icon(getDialogIcon())
+            .positiveText(getPositiveButtonText())
+            .negativeText(getNegativeButtonText())
+            .dismissListener(this)
+            .onAny(
+                new MaterialDialog.SingleButtonCallback() {
+                  @Override
+                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (which) {
+                      default:
+                        MaterialEditTextPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_POSITIVE);
+                        break;
+                      case NEUTRAL:
+                        MaterialEditTextPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEUTRAL);
+                        break;
+                      case NEGATIVE:
+                        MaterialEditTextPreference.this.onClick(
+                            dialog, DialogInterface.BUTTON_NEGATIVE);
+                        break;
+                    }
+                  }
+                })
+            .dismissListener(this);
 
     @SuppressLint("InflateParams")
     View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
@@ -181,9 +187,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     PrefUtil.unregisterOnActivityDestroyListener(this, this);
   }
 
-  /**
-   * Copied from DialogPreference.java
-   */
+  /** Copied from DialogPreference.java */
   private void requestInputMethod(Dialog dialog) {
     Window window = dialog.getWindow();
     if (window == null) {

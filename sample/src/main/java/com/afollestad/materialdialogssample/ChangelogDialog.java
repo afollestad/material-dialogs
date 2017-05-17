@@ -10,15 +10,15 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ChangelogDialog extends DialogFragment {
 
   public static ChangelogDialog create(boolean darkTheme, int accentColor) {
@@ -40,12 +40,13 @@ public class ChangelogDialog extends DialogFragment {
     } catch (InflateException e) {
       throw new IllegalStateException("This device does not support Web Views.");
     }
-    MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-        .theme(getArguments().getBoolean("dark_theme") ? Theme.DARK : Theme.LIGHT)
-        .title(R.string.changelog)
-        .customView(customView, false)
-        .positiveText(android.R.string.ok)
-        .build();
+    MaterialDialog dialog =
+        new MaterialDialog.Builder(getActivity())
+            .theme(getArguments().getBoolean("dark_theme") ? Theme.DARK : Theme.LIGHT)
+            .title(R.string.changelog)
+            .customView(customView, false)
+            .positiveText(android.R.string.ok)
+            .build();
 
     final WebView webView = (WebView) customView.findViewById(R.id.webview);
     try {
@@ -61,16 +62,20 @@ public class ChangelogDialog extends DialogFragment {
 
       // Inject color values for WebView body background and links
       final int accentColor = getArguments().getInt("accent_color");
-      webView.loadData(buf.toString()
-              .replace("{style-placeholder}", getArguments().getBoolean("dark_theme") ?
-                  "body { background-color: #444444; color: #fff; }" :
-                  "body { background-color: #fff; color: #000; }")
+      webView.loadData(
+          buf.toString()
+              .replace(
+                  "{style-placeholder}",
+                  getArguments().getBoolean("dark_theme")
+                      ? "body { background-color: #444444; color: #fff; }"
+                      : "body { background-color: #fff; color: #000; }")
               .replace("{link-color}", colorToHex(shiftColor(accentColor, true)))
-              .replace("{link-color-active}", colorToHex(accentColor))
-          , "text/html", "UTF-8");
-    } catch (Throwable e) {
-      webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html",
+              .replace("{link-color-active}", colorToHex(accentColor)),
+          "text/html",
           "UTF-8");
+    } catch (Throwable e) {
+      webView.loadData(
+          "<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html", "UTF-8");
     }
     return dialog;
   }
