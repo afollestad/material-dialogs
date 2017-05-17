@@ -48,6 +48,12 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
   public void onBindViewHolder(DefaultVH holder, int index) {
     final View view = holder.itemView;
     boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
+    int itemTextColor =
+        disabled
+            ? DialogUtils.adjustAlpha(dialog.builder.itemColor, 0.4f)
+            : dialog.builder.itemColor;
+    holder.itemView.setEnabled(!disabled);
+
     switch (dialog.listType) {
       case SINGLE:
         {
@@ -80,7 +86,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
     }
 
     holder.title.setText(dialog.builder.items.get(index));
-    holder.title.setTextColor(dialog.builder.itemColor);
+    holder.title.setTextColor(itemTextColor);
     dialog.setTypeface(holder.title, dialog.builder.regularFont);
 
     setupGravity((ViewGroup) view);

@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity
     new MaterialDialog.Builder(this)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
+        .itemsDisabledIndices(1, 3)
         .itemsCallbackSingleChoice(
             2,
             (dialog, view, which, text) -> {
