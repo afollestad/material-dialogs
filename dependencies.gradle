@@ -8,5 +8,5 @@ ext.versions = [
 
         supportLib: '25.3.1',
         mdProgressBar: '1.4.1',
-        butterKnife: '8.5.1'
+        butterKnife: '8.6.0'
 ]
