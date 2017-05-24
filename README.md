@@ -534,7 +534,7 @@ when you don't want that behavior. This mostly consists of cases when you'd have
 including ListViews, RecyclerViews, WebViews, GridViews, etc. The sample project contains examples of using both true
  and false for this parameter.
 
-Your custom view will automatically have padding put around it when `wrapInScrollView` is true. Otherwise
+Your custom view will automatically have top and bottom padding put around it when `wrapInScrollView` is true. Otherwise
 you're responsible for using padding values that look good with your content.
 
 ## Later Access
