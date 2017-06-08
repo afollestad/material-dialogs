@@ -120,6 +120,21 @@ dependencies {
 
 It's likely that new extensions will be added to commons later.
 
+### Install
+
+[![JitPack](https://img.shields.io/github/release/afollestad/material-dialogs.svg?label=JitPack) ](https://jitpack.io/#afollestad/material-dialogs)
+
+You can also install using [JitPack](https://jitpack.io/#afollestad/material-dialogs):
+
+```Gradle
+repositories {
+    maven { url "https://jitpack.io" }
+}
+dependencies {
+    compile 'com.github.afollestad:material-dialogs:v0.7.3.1'
+}
+```
+
 ---
 
 # What's New
