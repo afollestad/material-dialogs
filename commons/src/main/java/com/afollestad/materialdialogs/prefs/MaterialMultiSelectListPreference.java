@@ -12,10 +12,8 @@ import android.preference.MultiSelectListPreference;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

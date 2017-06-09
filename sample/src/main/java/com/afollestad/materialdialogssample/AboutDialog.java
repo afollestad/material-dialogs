@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 
 /** @author Aidan Follestad (afollestad) */

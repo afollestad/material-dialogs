@@ -8,9 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-
 import com.afollestad.materialdialogs.commons.R;
-
 import java.lang.reflect.Method;
 
 /** @author Aidan Follestad (afollestad) */
