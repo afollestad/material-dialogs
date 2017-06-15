@@ -467,10 +467,6 @@ public class ColorChooserDialog extends DialogFragment
                 customSeekA.setProgress(alpha);
                 customSeekAValue.setText(String.format(Locale.US, "%d", alpha));
               }
-              if (customSeekA.getVisibility() == View.VISIBLE) {
-                int alpha = Color.alpha(selectedCustomColor);
-                customSeekA.setProgress(alpha);
-              }
               int red = Color.red(selectedCustomColor);
               customSeekR.setProgress(red);
               int green = Color.green(selectedCustomColor);
