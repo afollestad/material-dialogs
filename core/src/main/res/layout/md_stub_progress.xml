@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   tools:ignore="UnusedAttribute">
 
@@ -12,7 +13,7 @@
     android:layout_marginTop="4dp"
     android:fontFamily="sans-serif"
     android:textSize="@dimen/md_content_textsize"
-    tools:text="Message" />
+    tools:text="Message"/>
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -23,7 +24,7 @@
       style="?android:progressBarStyleHorizontal"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingBottom="2dp" />
+      android:paddingBottom="2dp"/>
 
     <TextView
       android:id="@+id/md_label"
@@ -37,7 +38,7 @@
       android:textAlignment="viewStart"
       android:textSize="@dimen/md_content_textsize"
       android:textStyle="bold"
-      tools:text="100%" />
+      tools:text="100%"/>
 
     <TextView
       android:id="@+id/md_minMax"
@@ -50,7 +51,7 @@
       android:minWidth="48dp"
       android:textAlignment="viewEnd"
       android:textSize="@dimen/md_content_textsize"
-      tools:text="100%" />
+      tools:text="100%"/>
 
   </RelativeLayout>
 

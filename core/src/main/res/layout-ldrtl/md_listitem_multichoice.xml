@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -23,7 +24,7 @@
     android:paddingTop="@dimen/md_listitem_vertical_margin_choice"
     android:textSize="@dimen/md_listitem_textsize"
     tools:ignore="RtlSymmetry"
-    tools:text="Item" />
+    tools:text="Item"/>
 
   <android.support.v7.widget.AppCompatCheckBox
     android:id="@+id/md_control"
@@ -33,6 +34,6 @@
     android:clickable="false"
     android:focusable="false"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/md_listitem_height" />
+    android:minHeight="@dimen/md_listitem_height"/>
 
 </LinearLayout>

@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/md_titleFrame"
   android:layout_width="match_parent"
@@ -17,13 +18,13 @@
     android:layout_marginEnd="@dimen/md_icon_margin"
     android:layout_marginRight="@dimen/md_icon_margin"
     android:scaleType="fitXY"
-    tools:ignore="ContentDescription" />
+    tools:ignore="ContentDescription"/>
 
   <TextView
     android:id="@+id/md_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="@dimen/md_title_textsize"
-    tools:text="Title" />
+    tools:text="Title"/>
 
 </LinearLayout>
