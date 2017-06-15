@@ -168,7 +168,9 @@ public class MaterialDialog extends DialogBase
     if (builder.layoutManager == null) {
       builder.layoutManager = new LinearLayoutManager(getContext());
     }
-    recyclerView.setLayoutManager(builder.layoutManager);
+    if (recyclerView.getLayoutManager() == null) {
+      recyclerView.setLayoutManager(builder.layoutManager);
+    }
     recyclerView.setAdapter(builder.adapter);
     if (listType != null) {
       ((DefaultRvAdapter) builder.adapter).setCallback(this);
