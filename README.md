@@ -1121,7 +1121,7 @@ MaterialDialog dialog = new MaterialDialog.Builder(this)
 The Builder is used like this:
 
 ```java
-// Pass AppCompatActivity which implements ColorCallback, along with the title of the dialog
+// Pass a context, along with the title of the dialog
 new ColorChooserDialog.Builder(this, R.string.color_palette)
     .titleSub(R.string.colors)  // title of dialog when viewing shades of a color
     .accentMode(accent)  // when true, will display accent palette instead of primary palette
@@ -1130,10 +1130,10 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .backButton(R.string.md_back_label)  // changes label of the back button
     .preselect(accent ? accentPreselect : primaryPreselect)  // optionally preselects a color
     .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
-The Activity you show the dialog in must implement `ColorCallback`:
+The Activity/Fragment you show the dialog in must implement `ColorCallback`:
 
 ```java
 public class MyActivity implements ColorChooserDialog.ColorCallback {
@@ -1163,7 +1163,7 @@ int[][] secondary = new int[][] {
 new ColorChooserDialog.Builder(this, R.string.color_palette)
     .titleSub(R.string.colors)
     .customColors(primary, secondary)
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
 The first parameter for primary colors can also take an array resource (`R.array.colors`), which can be
@@ -1172,16 +1172,16 @@ for top level colors.
 
 ## Finding Visible Dialogs
 
-Since the `ColorChooserDialog` is a `DialogFragment`, it attaches to your Activity through its `FragmentManager`.
+Since the `ColorChooserDialog` is a `DialogFragment`, it attaches to your Activity/Fragment through its `FragmentManager`.
 `ColorChooserDialog` has a utility method called `findVisible(AppCompatActivity, String)` that will
 find a visible color chooser if any is visible:
 
 ```java
-ColorChooserDialog primary = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_PRIMARY);
+ColorChooserDialog primary = ColorChooserDialog.findVisible(getSupportFragmentManager(), ColorChooserDialog.TAG_PRIMARY);
 
-ColorChooserDialog accent = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_ACCENT);
+ColorChooserDialog accent = ColorChooserDialog.findVisible(getSupportFragmentManager(), ColorChooserDialog.TAG_ACCENT);
 
-ColorChooserDialog custom = ColorChooserDialog.findVisible(this, ColorChooserDialog.TAG_CUSTOM);
+ColorChooserDialog custom = ColorChooserDialog.findVisible(getSupportFragmentManager(), ColorChooserDialog.TAG_CUSTOM);
 ```
 
 ## User Color Input
@@ -1194,7 +1194,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .allowUserColorInput(false)
     .customButton(R.string.md_custom_label)
     .presetsButton(R.string.md_presets_label)
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
 If you want the user to be able to input a custom color, but don't want them to be able to change transparency (alpha):
@@ -1204,7 +1204,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .allowUserColorInputAlpha(false)
     .customButton(R.string.md_custom_label)
     .presetsButton(R.string.md_presets_label)
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
 ---
@@ -1230,17 +1230,16 @@ app:useStockLayout="true"
 The Builder is used like this:
 
 ```java
-// Pass AppCompatActivity which implements FileCallback
 new FileChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .mimeType("image/*") // Optional MIME type filter
     .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
-The Activity you show the dialog in must implement `FileCallback`:
+The Activity/Fragment you show the dialog in must implement `FileCallback`:
 
 ```java
 public class MyActivity implements FileChooserDialog.FileCallback {
@@ -1268,10 +1267,10 @@ new FolderChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
-The Activity you show the dialog in must implement `FolderCallback`:
+The Activity/Fragment you show the dialog in must implement `FolderCallback`:
 
 ```java
 public class MyActivity implements FolderChooserDialog.FolderCallback {
@@ -1296,7 +1295,7 @@ new FolderChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .tag("optional-identifier")
     .allowNewFolder(true, R.string.new_folder)  // pass 0 in the second parameter to use default button label
-    .show();
+    .show(getSupportFragmentManager());
 ```
 
 ---
