@@ -68,11 +68,13 @@
 
     <CheckBox
       android:id="@+id/md_promptCheckbox"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_gravity="start|center_vertical"
       android:layout_marginLeft="@dimen/md_notitle_vertical_padding_more"
       android:layout_marginRight="@dimen/md_notitle_vertical_padding_more"
       android:focusable="true"
+      android:gravity="start"
       tools:text="Don't ask again"/>
 
   </LinearLayout>
