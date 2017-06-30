@@ -1130,7 +1130,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .backButton(R.string.md_back_label)  // changes label of the back button
     .preselect(accent ? accentPreselect : primaryPreselect)  // optionally preselects a color
     .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
-    .show(getSupportFragmentManager());
+    .show(this); // an AppCompatActivity which implements ColorCallback
 ```
 
 The Activity/Fragment you show the dialog in must implement `ColorCallback`:
@@ -1163,7 +1163,7 @@ int[][] secondary = new int[][] {
 new ColorChooserDialog.Builder(this, R.string.color_palette)
     .titleSub(R.string.colors)
     .customColors(primary, secondary)
-    .show(getSupportFragmentManager());
+    .show(this);
 ```
 
 The first parameter for primary colors can also take an array resource (`R.array.colors`), which can be
@@ -1194,7 +1194,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .allowUserColorInput(false)
     .customButton(R.string.md_custom_label)
     .presetsButton(R.string.md_presets_label)
-    .show(getSupportFragmentManager());
+    .show(this);
 ```
 
 If you want the user to be able to input a custom color, but don't want them to be able to change transparency (alpha):
@@ -1204,7 +1204,7 @@ new ColorChooserDialog.Builder(this, R.string.color_palette)
     .allowUserColorInputAlpha(false)
     .customButton(R.string.md_custom_label)
     .presetsButton(R.string.md_presets_label)
-    .show(getSupportFragmentManager());
+    .show(this);
 ```
 
 ---
@@ -1236,7 +1236,7 @@ new FileChooserDialog.Builder(this)
     .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
-    .show(getSupportFragmentManager());
+    .show(this); // an AppCompatActivity which implements ColorCallback
 ```
 
 The Activity/Fragment you show the dialog in must implement `FileCallback`:
@@ -1267,7 +1267,7 @@ new FolderChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
-    .show(getSupportFragmentManager());
+    .show(this);
 ```
 
 The Activity/Fragment you show the dialog in must implement `FolderCallback`:
@@ -1295,7 +1295,7 @@ new FolderChooserDialog.Builder(this)
     .initialPath("/sdcard/Download")  // changes initial path, defaults to external storage directory
     .tag("optional-identifier")
     .allowNewFolder(true, R.string.new_folder)  // pass 0 in the second parameter to use default button label
-    .show(getSupportFragmentManager());
+    .show(this);
 ```
 
 ---

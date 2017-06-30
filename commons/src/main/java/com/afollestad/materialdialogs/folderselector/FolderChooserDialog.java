@@ -14,6 +14,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Toast;
@@ -215,6 +216,10 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     }
   }
 
+  public void show(FragmentActivity fragmentActivity) {
+    show(fragmentActivity.getSupportFragmentManager());
+  }
+
   public void show(FragmentManager fragmentManager) {
     final String tag = getBuilder().tag;
     Fragment frag = fragmentManager.findFragmentByTag(tag);
@@ -326,6 +331,11 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       FolderChooserDialog dialog = build();
       dialog.show(fragmentManager);
       return dialog;
+    }
+
+    @NonNull
+    public FolderChooserDialog show(FragmentActivity fragmentActivity) {
+      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 

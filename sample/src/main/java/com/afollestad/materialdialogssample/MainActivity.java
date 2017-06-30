@@ -542,7 +542,7 @@ public class MainActivity extends AppCompatActivity
     new ColorChooserDialog.Builder(this, R.string.color_palette)
         .titleSub(R.string.colors)
         .preselect(primaryPreselect)
-        .show(getSupportFragmentManager());
+        .show(this);
   }
 
   @OnClick(R.id.colorChooser_accent)
@@ -551,7 +551,7 @@ public class MainActivity extends AppCompatActivity
         .titleSub(R.string.colors)
         .accentMode(true)
         .preselect(accentPreselect)
-        .show(getSupportFragmentManager());
+        .show(this);
   }
 
   @OnClick(R.id.colorChooser_customColors)
@@ -582,7 +582,7 @@ public class MainActivity extends AppCompatActivity
         .titleSub(R.string.colors)
         .preselect(primaryPreselect)
         .customColors(R.array.custom_colors, subColors)
-        .show(getSupportFragmentManager());
+        .show(this);
   }
 
   @OnClick(R.id.colorChooser_customColorsNoSub)
@@ -591,7 +591,7 @@ public class MainActivity extends AppCompatActivity
         .titleSub(R.string.colors)
         .preselect(primaryPreselect)
         .customColors(R.array.custom_colors, null)
-        .show(getSupportFragmentManager());
+        .show(this);
   }
 
   // Receives callback from color chooser dialog
@@ -668,7 +668,7 @@ public class MainActivity extends AppCompatActivity
           STORAGE_PERMISSION_RC);
       return;
     }
-    new FileChooserDialog.Builder(this).show(getSupportFragmentManager());
+    new FileChooserDialog.Builder(this).show(this);
   }
 
   @Override
@@ -697,7 +697,7 @@ public class MainActivity extends AppCompatActivity
     new FolderChooserDialog.Builder(MainActivity.this)
         .chooseButton(R.string.md_choose_label)
         .allowNewFolder(true, 0)
-        .show(getSupportFragmentManager());
+        .show(this);
   }
 
   @Override

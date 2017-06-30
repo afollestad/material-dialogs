@@ -1,7 +1,6 @@
 package com.afollestad.materialdialogs.folderselector;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import android.support.annotation.StringRes;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -230,12 +230,6 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     }
   }
 
-  @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    callback = (FileCallback) activity;
-  }
-
   public void show(FragmentManager fragmentManager) {
     final String tag = getBuilder().tag;
     Fragment frag = fragmentManager.findFragmentByTag(tag);
@@ -244,6 +238,10 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       fragmentManager.beginTransaction().remove(frag).commit();
     }
     show(fragmentManager, tag);
+  }
+
+  public void show(FragmentActivity fragmentActivity) {
+    show(fragmentActivity.getSupportFragmentManager());
   }
 
   @NonNull
@@ -347,6 +345,11 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       FileChooserDialog dialog = build();
       dialog.show(fragmentManager);
       return dialog;
+    }
+
+    @NonNull
+    public FileChooserDialog show(FragmentActivity fragmentActivity) {
+      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 

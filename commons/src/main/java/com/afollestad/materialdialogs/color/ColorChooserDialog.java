@@ -15,6 +15,7 @@ import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
@@ -596,6 +597,11 @@ public class ColorChooserDialog extends DialogFragment
     return this;
   }
 
+  @NonNull
+  public ColorChooserDialog show(FragmentActivity fragmentActivity) {
+    return show(fragmentActivity.getSupportFragmentManager());
+  }
+
   @Retention(RetentionPolicy.SOURCE)
   @StringDef({TAG_PRIMARY, TAG_ACCENT, TAG_CUSTOM})
   public @interface ColorChooserTag {}
@@ -750,6 +756,11 @@ public class ColorChooserDialog extends DialogFragment
       ColorChooserDialog dialog = build();
       dialog.show(fragmentManager);
       return dialog;
+    }
+
+    @NonNull
+    public ColorChooserDialog show(FragmentActivity fragmentActivity) {
+      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 
