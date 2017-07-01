@@ -1,8 +1,8 @@
 package com.afollestad.materialdialogs.color;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
@@ -15,8 +15,9 @@ import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -70,8 +71,8 @@ public class ColorChooserDialog extends DialogFragment
 
   @Nullable
   public static ColorChooserDialog findVisible(
-      @NonNull AppCompatActivity context, @ColorChooserTag String tag) {
-    Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
+      @NonNull FragmentManager fragmentManager, @ColorChooserTag String tag) {
+    Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
     }
@@ -107,13 +108,16 @@ public class ColorChooserDialog extends DialogFragment
   }
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    if (!(activity instanceof ColorCallback)) {
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (getActivity() instanceof ColorCallback) {
+      callback = (ColorCallback) getActivity();
+    } else if (getParentFragment() instanceof ColorCallback) {
+      callback = (ColorCallback) getParentFragment();
+    } else {
       throw new IllegalStateException(
-          "ColorChooserDialog needs to be shown from an Activity implementing ColorCallback.");
+          "ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
     }
-    callback = (ColorCallback) activity;
   }
 
   private boolean isInSub() {
@@ -569,16 +573,16 @@ public class ColorChooserDialog extends DialogFragment
     return (Builder) getArguments().getSerializable("builder");
   }
 
-  private void dismissIfNecessary(AppCompatActivity context, String tag) {
-    Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
+  private void dismissIfNecessary(FragmentManager fragmentManager, String tag) {
+    Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null) {
       ((DialogFragment) frag).dismiss();
-      context.getSupportFragmentManager().beginTransaction().remove(frag).commit();
+      fragmentManager.beginTransaction().remove(frag).commit();
     }
   }
 
   @NonNull
-  public ColorChooserDialog show(AppCompatActivity context) {
+  public ColorChooserDialog show(FragmentManager fragmentManager) {
     String tag;
     Builder builder = getBuilder();
     if (builder.colorsTop != null) {
@@ -588,9 +592,14 @@ public class ColorChooserDialog extends DialogFragment
     } else {
       tag = TAG_PRIMARY;
     }
-    dismissIfNecessary(context, tag);
-    show(context.getSupportFragmentManager(), tag);
+    dismissIfNecessary(fragmentManager, tag);
+    show(fragmentManager, tag);
     return this;
+  }
+
+  @NonNull
+  public ColorChooserDialog show(FragmentActivity fragmentActivity) {
+    return show(fragmentActivity.getSupportFragmentManager());
   }
 
   @Retention(RetentionPolicy.SOURCE)
@@ -606,7 +615,7 @@ public class ColorChooserDialog extends DialogFragment
 
   public static class Builder implements Serializable {
 
-    @NonNull final transient AppCompatActivity context;
+    @NonNull final transient Context context;
     @Nullable String mediumFont;
     @Nullable String regularFont;
     @StringRes final int title;
@@ -628,8 +637,7 @@ public class ColorChooserDialog extends DialogFragment
     boolean allowUserCustomAlpha = true;
     boolean setPreselectionColor = false;
 
-    public <ActivityType extends AppCompatActivity & ColorCallback> Builder(
-        @NonNull ActivityType context, @StringRes int title) {
+    public Builder(@NonNull Context context, @StringRes int title) {
       this.context = context;
       this.title = title;
     }
@@ -744,10 +752,15 @@ public class ColorChooserDialog extends DialogFragment
     }
 
     @NonNull
-    public ColorChooserDialog show() {
+    public ColorChooserDialog show(FragmentManager fragmentManager) {
       ColorChooserDialog dialog = build();
-      dialog.show(context);
+      dialog.show(fragmentManager);
       return dialog;
+    }
+
+    @NonNull
+    public ColorChooserDialog show(FragmentActivity fragmentActivity) {
+      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 

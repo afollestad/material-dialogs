@@ -1,8 +1,8 @@
 package com.afollestad.materialdialogs.folderselector;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,7 +15,7 @@ import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import com.afollestad.materialdialogs.DialogAction;
@@ -218,19 +218,30 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   }
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    callback = (FileCallback) activity;
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (getActivity() instanceof FileCallback) {
+      callback = (FileCallback) getActivity();
+    } else if (getParentFragment() instanceof FileCallback) {
+      callback = (FileCallback) getParentFragment();
+    } else {
+      throw new IllegalStateException(
+          "FileChooserDialog needs to be shown from an Activity/Fragment implementing FileCallback.");
+    }
   }
 
-  public void show(FragmentActivity context) {
+  public void show(FragmentManager fragmentManager) {
     final String tag = getBuilder().tag;
-    Fragment frag = context.getSupportFragmentManager().findFragmentByTag(tag);
+    Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null) {
       ((DialogFragment) frag).dismiss();
-      context.getSupportFragmentManager().beginTransaction().remove(frag).commit();
+      fragmentManager.beginTransaction().remove(frag).commit();
     }
-    show(context.getSupportFragmentManager(), tag);
+    show(fragmentManager, tag);
+  }
+
+  public void show(FragmentActivity fragmentActivity) {
+    show(fragmentActivity.getSupportFragmentManager());
   }
 
   @NonNull
@@ -253,7 +264,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
   public static class Builder implements Serializable {
 
-    @NonNull final transient AppCompatActivity context;
+    @NonNull final transient Context context;
     @StringRes int cancelButton;
     String initialPath;
     String mimeType;
@@ -263,8 +274,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     @Nullable String mediumFont;
     @Nullable String regularFont;
 
-    public <ActivityType extends AppCompatActivity & FileCallback> Builder(
-        @NonNull ActivityType context) {
+    public Builder(@NonNull Context context) {
       this.context = context;
       cancelButton = android.R.string.cancel;
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -331,10 +341,15 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     }
 
     @NonNull
-    public FileChooserDialog show() {
+    public FileChooserDialog show(FragmentManager fragmentManager) {
       FileChooserDialog dialog = build();
-      dialog.show(context);
+      dialog.show(fragmentManager);
       return dialog;
+    }
+
+    @NonNull
+    public FileChooserDialog show(FragmentActivity fragmentActivity) {
+      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 
