@@ -71,7 +71,7 @@ public class ColorChooserDialog extends DialogFragment
 
   @Nullable
   public static ColorChooserDialog findVisible(
-          @NonNull FragmentManager fragmentManager, @ColorChooserTag String tag) {
+      @NonNull FragmentManager fragmentManager, @ColorChooserTag String tag) {
     Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
@@ -110,13 +110,13 @@ public class ColorChooserDialog extends DialogFragment
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    if (getActivity() instanceof ColorCallback){
+    if (getActivity() instanceof ColorCallback) {
       callback = (ColorCallback) getActivity();
-    } else if (getParentFragment() instanceof ColorCallback){
+    } else if (getParentFragment() instanceof ColorCallback) {
       callback = (ColorCallback) getParentFragment();
     } else {
       throw new IllegalStateException(
-              "ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
+          "ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
     }
   }
 

@@ -220,13 +220,13 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    if (getActivity() instanceof FileCallback){
+    if (getActivity() instanceof FileCallback) {
       callback = (FileCallback) getActivity();
-    } else if (getParentFragment() instanceof FileCallback){
+    } else if (getParentFragment() instanceof FileCallback) {
       callback = (FileCallback) getParentFragment();
     } else {
       throw new IllegalStateException(
-              "FileChooserDialog needs to be shown from an Activity/Fragment implementing FileCallback.");
+          "FileChooserDialog needs to be shown from an Activity/Fragment implementing FileCallback.");
     }
   }
 

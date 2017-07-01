@@ -206,13 +206,13 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    if (getActivity() instanceof FolderCallback){
+    if (getActivity() instanceof FolderCallback) {
       callback = (FolderCallback) getActivity();
-    } else if (getParentFragment() instanceof FolderCallback){
+    } else if (getParentFragment() instanceof FolderCallback) {
       callback = (FolderCallback) getParentFragment();
     } else {
       throw new IllegalStateException(
-              "FolderChooserDialog needs to be shown from an Activity/Fragment implementing FolderCallback.");
+          "FolderChooserDialog needs to be shown from an Activity/Fragment implementing FolderCallback.");
     }
   }
 
