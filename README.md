@@ -1236,7 +1236,7 @@ new FileChooserDialog.Builder(this)
     .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
     .tag("optional-identifier")
     .goUpLabel("Up") // custom go up label, default label is "..."
-    .show(this); // an AppCompatActivity which implements ColorCallback
+    .show(this); // an AppCompatActivity which implements FileCallback
 ```
 
 The Activity/Fragment you show the dialog in must implement `FileCallback`:
