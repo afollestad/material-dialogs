@@ -77,7 +77,7 @@ public class MaterialSimpleListAdapter
       } else {
         holder.icon.setVisibility(View.GONE);
       }
-      holder.title.setTextColor(dialog.getBuilder().getItemColor());
+      holder.title.setTextColor(dialog.getBuilder().getItemColor(position));
       holder.title.setText(item.getContent());
       dialog.setTypeface(holder.title, dialog.getBuilder().getRegularFont());
     }
