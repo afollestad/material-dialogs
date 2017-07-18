@@ -44,13 +44,13 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
   }
 
   @Override
-  public void onBindViewHolder(DefaultVH holder, int index) {
+  public void onBindViewHolder(DefaultVH holder, int position) {
     final View view = holder.itemView;
-    boolean disabled = DialogUtils.isIn(index, dialog.builder.disabledIndices);
+    boolean disabled = DialogUtils.isIn(position, dialog.builder.disabledIndices);
     int itemTextColor =
         disabled
-            ? DialogUtils.adjustAlpha(dialog.builder.itemColor, 0.4f)
-            : dialog.builder.itemColor;
+            ? DialogUtils.adjustAlpha(dialog.getBuilder().getItemColor(position), 0.4f)
+            : dialog.getBuilder().getItemColor(position);
     holder.itemView.setEnabled(!disabled);
 
     switch (dialog.listType) {
@@ -58,7 +58,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         {
           @SuppressLint("CutPasteId")
           RadioButton radio = (RadioButton) holder.control;
-          boolean selected = dialog.builder.selectedIndex == index;
+          boolean selected = dialog.builder.selectedIndex == position;
           if (dialog.builder.choiceWidgetColor != null) {
             MDTintHelper.setTint(radio, dialog.builder.choiceWidgetColor);
           } else {
@@ -72,7 +72,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         {
           @SuppressLint("CutPasteId")
           CheckBox checkbox = (CheckBox) holder.control;
-          boolean selected = dialog.selectedIndicesList.contains(index);
+          boolean selected = dialog.selectedIndicesList.contains(position);
           if (dialog.builder.choiceWidgetColor != null) {
             MDTintHelper.setTint(checkbox, dialog.builder.choiceWidgetColor);
           } else {
@@ -84,15 +84,15 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         }
     }
 
-    holder.title.setText(dialog.builder.items.get(index));
+    holder.title.setText(dialog.builder.items.get(position));
     holder.title.setTextColor(itemTextColor);
     dialog.setTypeface(holder.title, dialog.builder.regularFont);
 
     setupGravity((ViewGroup) view);
 
     if (dialog.builder.itemIds != null) {
-      if (index < dialog.builder.itemIds.length) {
-        view.setId(dialog.builder.itemIds[index]);
+      if (position < dialog.builder.itemIds.length) {
+        view.setId(dialog.builder.itemIds[position]);
       } else {
         view.setId(-1);
       }

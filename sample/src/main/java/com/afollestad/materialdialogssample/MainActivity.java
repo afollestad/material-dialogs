@@ -220,6 +220,15 @@ public class MainActivity extends AppCompatActivity
         .show();
   }
 
+  @OnClick(R.id.list_multi_colors)
+  public void showListMultiColors() {
+    new MaterialDialog.Builder(this)
+        .items(R.array.actions)
+        .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
+        .itemsColor(new int[] {0, 0, Color.RED})
+        .show();
+  }
+
   @OnClick(R.id.longList)
   public void showLongList() {
     new MaterialDialog.Builder(this)

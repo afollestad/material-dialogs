@@ -67,6 +67,12 @@
         <item>Facebook</item>
     </string-array>
 
+    <string-array name="actions">
+        <item>Edit</item>
+        <item>Report</item>
+        <item>Delete</item>
+    </string-array>
+
     <string-array name="socialNetworks_longItems">
         <item>Twitter is an online social networking service that enables users to send and read short 140-character messages called "tweets".</item>
         <item>Google+ is an interest-based social network that is owned and operated by Google Inc. The service is Google\'s fourth foray into social networking.</item>
@@ -201,5 +207,6 @@
     <string name="list_longPress">Basic List (Long Press)</string>
     <string name="add_item">Add Item</string>
     <string name="multiChoiceLimitedMin">Multi Choice (Min Selections)</string>
+    <string name="basic_list_multi_colors">Basic list (multi color items)</string>
 
 </resources>

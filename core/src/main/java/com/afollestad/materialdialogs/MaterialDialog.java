@@ -1136,6 +1136,7 @@ public class MaterialDialog extends DialogBase
     protected int dividerColor;
     protected int backgroundColor;
     protected int itemColor;
+    protected int[] itemColors;
     protected boolean indeterminateProgress;
     protected boolean showMinMax;
     protected int progress = -2;
@@ -1261,7 +1262,18 @@ public class MaterialDialog extends DialogBase
       return context;
     }
 
+    /**
+     * Use getItemColor(int position) instead
+     */
+    @Deprecated
     public final int getItemColor() {
+      return itemColor;
+    }
+
+    public final int getItemColor(int position) {
+      if (itemColors != null && position < itemColors.length && itemColors[position] != 0) {
+        return itemColors[position];
+      }
       return itemColor;
     }
 
@@ -1535,12 +1547,33 @@ public class MaterialDialog extends DialogBase
       return this;
     }
 
+    public Builder itemsColor(@ColorInt int[] colors) {
+      this.itemColors = colors;
+      return this;
+    }
+
     public Builder itemsColorRes(@ColorRes int colorRes) {
       return itemsColor(DialogUtils.getColor(this.context, colorRes));
     }
 
+    public Builder itemsColorRes(@ColorRes int[] colorsRes) {
+      int[] colors = new int[colorsRes.length];
+      for(int i = 0; i < colorsRes.length ; i++) {
+          colors[i] = colorsRes[i] == 0 ? colorsRes[i] : DialogUtils.getColor(this.context, colorsRes[i]);
+      }
+      return itemsColor(colors);
+    }
+
     public Builder itemsColorAttr(@AttrRes int colorAttr) {
       return itemsColor(DialogUtils.resolveColor(this.context, colorAttr));
+    }
+
+    public Builder itemsColorAttr(@AttrRes int[] colorsAttr) {
+      int[] colors = new int[colorsAttr.length];
+      for(int i = 0; i < colorsAttr.length ; i++) {
+        colors[i] = colorsAttr[i] == 0 ? colorsAttr[i] : DialogUtils.resolveColor(this.context, colorsAttr[i]);
+      }
+      return itemsColor(colors);
     }
 
     public Builder itemsGravity(@NonNull GravityEnum gravity) {
