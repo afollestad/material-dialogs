@@ -5,7 +5,7 @@
     <string name="library_materialdialogs_authorWebsite">http://aidanfollestad.com/</string>
     <string name="library_materialdialogs_libraryName">Material Dialogs</string>
     <string name="library_materialdialogs_libraryDescription">A beautiful, easy-to-use, and customizable dialogs API, enabling you to use Material designed
-        dialogs down to API 8
+        dialogs down to API 13 (Honeycomb)
     </string>
     <string name="library_materialdialogs_libraryWebsite">https://github.com/afollestad/material-dialogs</string>
     <string name="library_materialdialogs_isOpenSource">true</string>
