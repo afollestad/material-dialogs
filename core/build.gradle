@@ -17,6 +17,7 @@ android {
         versionCode versions.publishVersionCode
         versionName versions.publishVersion
         consumerProguardFiles 'progress-proguard.txt'
+        resValue "string", "library_materialdialogs_libraryVersion", versions.publishVersion
     }
     lintOptions {
         abortOnError false
