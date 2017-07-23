@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
-    <string name="define_int_materialdialogs">year;owner</string>
+    <string name="define_materialdialogs">year;owner</string>
     <string name="library_materialdialogs_author">Aidan Follestad</string>
     <string name="library_materialdialogs_authorWebsite">http://aidanfollestad.com/</string>
     <string name="library_materialdialogs_libraryName">Material Dialogs</string>
