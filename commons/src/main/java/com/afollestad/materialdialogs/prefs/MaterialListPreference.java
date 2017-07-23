@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.ListPreference;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MaterialListPreference extends ListPreference {
 
   private Context context;
   private MaterialDialog dialog;
+  private MaterialDialog.Builder builder;
 
   public MaterialListPreference(Context context) {
     super(context);
@@ -73,6 +75,65 @@ public class MaterialListPreference extends ListPreference {
     }
     return ((MaterialDialog) getDialog()).getRecyclerView();
   }
+  
+  public MaterialDialog.Builder resetBuilder() {
+      int preselect = findIndexOfValue(getValue());
+      return builder =
+              new MaterialDialog.Builder(context)
+                      .title(getDialogTitle())
+                      .icon(getDialogIcon())
+                      .dismissListener(this)
+                      .onAny(
+                          new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                              switch (which) {
+                                default:
+                                  MaterialListPreference.this.onClick(
+                                      dialog, DialogInterface.BUTTON_POSITIVE);
+                                  break;
+                                case NEUTRAL:
+                                  MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                  break;
+                                case NEGATIVE:
+                                  MaterialListPreference.this.onClick(
+                                      dialog, DialogInterface.BUTTON_NEGATIVE);
+                                  break;
+                              }
+                            }
+                          })
+                      .negativeText(getNegativeButtonText())
+                      .items(getEntries())
+                      .autoDismiss(true) // immediately close the dialog after selection
+                      .itemsCallbackSingleChoice(
+                          preselect,
+                          new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(
+                                MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                              onClick(null, DialogInterface.BUTTON_POSITIVE);
+                              if (which >= 0 && getEntryValues() != null) {
+                                try {
+                                  Field clickedIndex =
+                                      ListPreference.class.getDeclaredField("mClickedDialogEntryIndex");
+                                  clickedIndex.setAccessible(true);
+                                  clickedIndex.set(MaterialListPreference.this, which);
+                                } catch (Exception e) {
+                                  e.printStackTrace();
+                                }
+                              }
+                              return true;
+                            }
+                          });
+  }
+
+  /**
+   * @param builder receiving null is the same that resetBuilder()
+   */
+  public MaterialDialog.Builder setBuilder(@Nullable final MaterialDialog.Builder builder) {
+    this.builder = builder;
+    return builder;
+  }
 
   @Override
   protected void showDialog(Bundle state) {
@@ -81,55 +142,10 @@ public class MaterialListPreference extends ListPreference {
           "ListPreference requires an entries array and an entryValues array.");
     }
 
-    int preselect = findIndexOfValue(getValue());
-    MaterialDialog.Builder builder =
-        new MaterialDialog.Builder(context)
-            .title(getDialogTitle())
-            .icon(getDialogIcon())
-            .dismissListener(this)
-            .onAny(
-                new MaterialDialog.SingleButtonCallback() {
-                  @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    switch (which) {
-                      default:
-                        MaterialListPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_POSITIVE);
-                        break;
-                      case NEUTRAL:
-                        MaterialListPreference.this.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                        break;
-                      case NEGATIVE:
-                        MaterialListPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_NEGATIVE);
-                        break;
-                    }
-                  }
-                })
-            .negativeText(getNegativeButtonText())
-            .items(getEntries())
-            .autoDismiss(true) // immediately close the dialog after selection
-            .itemsCallbackSingleChoice(
-                preselect,
-                new MaterialDialog.ListCallbackSingleChoice() {
-                  @Override
-                  public boolean onSelection(
-                      MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                    onClick(null, DialogInterface.BUTTON_POSITIVE);
-                    if (which >= 0 && getEntryValues() != null) {
-                      try {
-                        Field clickedIndex =
-                            ListPreference.class.getDeclaredField("mClickedDialogEntryIndex");
-                        clickedIndex.setAccessible(true);
-                        clickedIndex.set(MaterialListPreference.this, which);
-                      } catch (Exception e) {
-                        e.printStackTrace();
-                      }
-                    }
-                    return true;
-                  }
-                });
-
+    if (builder == null) {
+      resetBuilder();
+    }
+        
     final View contentView = onCreateDialogView();
     if (contentView != null) {
       onBindDialogView(contentView);
