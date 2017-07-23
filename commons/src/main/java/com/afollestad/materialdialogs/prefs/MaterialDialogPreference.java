@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
@@ -20,6 +21,7 @@ public class MaterialDialogPreference extends DialogPreference {
 
   private Context context;
   private MaterialDialog dialog;
+  private MaterialDialog.Builder builder;
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   public MaterialDialogPreference(Context context) {
@@ -53,37 +55,51 @@ public class MaterialDialogPreference extends DialogPreference {
   public Dialog getDialog() {
     return dialog;
   }
+  
+  public MaterialDialog.Builder resetBuilder() {
+    return builder =
+            new MaterialDialog.Builder(context)
+                    .title(getDialogTitle())
+                    .icon(getDialogIcon())
+                    .dismissListener(this)
+                    .onAny(
+                        new MaterialDialog.SingleButtonCallback() {
+                          @Override
+                          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            switch (which) {
+                              default:
+                                MaterialDialogPreference.this.onClick(
+                                    dialog, DialogInterface.BUTTON_POSITIVE);
+                                break;
+                              case NEUTRAL:
+                                MaterialDialogPreference.this.onClick(
+                                    dialog, DialogInterface.BUTTON_NEUTRAL);
+                                break;
+                              case NEGATIVE:
+                                MaterialDialogPreference.this.onClick(
+                                    dialog, DialogInterface.BUTTON_NEGATIVE);
+                                break;
+                            }
+                          }
+                        })
+                    .positiveText(getPositiveButtonText())
+                    .negativeText(getNegativeButtonText())
+                    .autoDismiss(true); // immediately close the dialog after selection
+  }
+
+  /**
+   * @param builder receiving null is the same that resetBuilder()
+   */
+  public MaterialDialog.Builder setBuilder(@Nullable final MaterialDialog.Builder builder) {
+    this.builder = builder;
+    return builder;
+  }
 
   @Override
   protected void showDialog(Bundle state) {
-    MaterialDialog.Builder builder =
-        new MaterialDialog.Builder(context)
-            .title(getDialogTitle())
-            .icon(getDialogIcon())
-            .dismissListener(this)
-            .onAny(
-                new MaterialDialog.SingleButtonCallback() {
-                  @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    switch (which) {
-                      default:
-                        MaterialDialogPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_POSITIVE);
-                        break;
-                      case NEUTRAL:
-                        MaterialDialogPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_NEUTRAL);
-                        break;
-                      case NEGATIVE:
-                        MaterialDialogPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_NEGATIVE);
-                        break;
-                    }
-                  }
-                })
-            .positiveText(getPositiveButtonText())
-            .negativeText(getNegativeButtonText())
-            .autoDismiss(true); // immediately close the dialog after selection
+    if (builder == null) {
+      resetBuilder();
+    }
 
     final View contentView = onCreateDialogView();
     if (contentView != null) {
@@ -99,6 +115,7 @@ public class MaterialDialogPreference extends DialogPreference {
     if (state != null) {
       dialog.onRestoreInstanceState(state);
     }
+
     dialog.show();
   }
 
