@@ -30,9 +30,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:' + versions.supportLib
-    compile 'com.android.support:appcompat-v7:' + versions.supportLib
-    compile project(':core')
+    implementation 'com.android.support:support-v13:' + versions.supportLib
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+    implementation project(':core')
 }
 
 apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'

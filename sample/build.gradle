@@ -39,13 +39,13 @@ android {
 }
 
 dependencies {
-    compile project(':core')
-    compile project(':commons')
+    implementation project(':core')
+    implementation project(':commons')
 
-    compile 'com.android.support:gridlayout-v7:' + versions.supportLib
+    implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
 
-    compile 'com.jakewharton:butterknife:' + versions.butterKnife
+    implementation 'com.jakewharton:butterknife:' + versions.butterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 
-    compile 'com.facebook.stetho:stetho:1.4.2'
+    implementation 'com.facebook.stetho:stetho:1.4.2'
 }
