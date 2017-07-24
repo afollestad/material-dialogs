@@ -199,7 +199,7 @@ public class MaterialDialog extends DialogBase
     } else {
       // Default adapter, choice mode
       if (listType == ListType.MULTI) {
-        final CheckBox cb = (CheckBox) view.findViewById(R.id.md_control);
+        final CheckBox cb = view.findViewById(R.id.md_control);
         if (!cb.isEnabled()) {
           return false;
         }
@@ -236,7 +236,7 @@ public class MaterialDialog extends DialogBase
           }
         }
       } else if (listType == ListType.SINGLE) {
-        final RadioButton radio = (RadioButton) view.findViewById(R.id.md_control);
+        final RadioButton radio = view.findViewById(R.id.md_control);
         if (!radio.isEnabled()) {
           return false;
         }

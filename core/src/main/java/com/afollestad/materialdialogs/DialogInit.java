@@ -143,17 +143,17 @@ class DialogInit {
     }
 
     // Retrieve references to views
-    dialog.title = (TextView) dialog.view.findViewById(R.id.md_title);
-    dialog.icon = (ImageView) dialog.view.findViewById(R.id.md_icon);
+    dialog.title = dialog.view.findViewById(R.id.md_title);
+    dialog.icon = dialog.view.findViewById(R.id.md_icon);
     dialog.titleFrame = dialog.view.findViewById(R.id.md_titleFrame);
-    dialog.content = (TextView) dialog.view.findViewById(R.id.md_content);
-    dialog.recyclerView = (RecyclerView) dialog.view.findViewById(R.id.md_contentRecyclerView);
-    dialog.checkBoxPrompt = (CheckBox) dialog.view.findViewById(R.id.md_promptCheckbox);
+    dialog.content = dialog.view.findViewById(R.id.md_content);
+    dialog.recyclerView = dialog.view.findViewById(R.id.md_contentRecyclerView);
+    dialog.checkBoxPrompt = dialog.view.findViewById(R.id.md_promptCheckbox);
 
     // Button views initially used by checkIfStackingNeeded()
-    dialog.positiveButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultPositive);
-    dialog.neutralButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultNeutral);
-    dialog.negativeButton = (MDButton) dialog.view.findViewById(R.id.md_buttonDefaultNegative);
+    dialog.positiveButton = dialog.view.findViewById(R.id.md_buttonDefaultPositive);
+    dialog.neutralButton = dialog.view.findViewById(R.id.md_buttonDefaultNeutral);
+    dialog.negativeButton = dialog.view.findViewById(R.id.md_buttonDefaultNegative);
 
     // Don't allow the submit button to not be shown for input dialogs
     if (builder.inputCallback != null && builder.positiveText == null) {
@@ -355,7 +355,7 @@ class DialogInit {
     // Setup custom views
     if (builder.customView != null) {
       ((MDRootLayout) dialog.view.findViewById(R.id.md_root)).noTitleNoPadding();
-      FrameLayout frame = (FrameLayout) dialog.view.findViewById(R.id.md_customViewFrame);
+      FrameLayout frame = dialog.view.findViewById(R.id.md_customViewFrame);
       dialog.customViewFrame = frame;
       View innerView = builder.customView;
       if (innerView.getParent() != null) {
@@ -448,7 +448,7 @@ class DialogInit {
   private static void setupProgressDialog(final MaterialDialog dialog) {
     final MaterialDialog.Builder builder = dialog.builder;
     if (builder.indeterminateProgress || builder.progress > -2) {
-      dialog.progressBar = (ProgressBar) dialog.view.findViewById(android.R.id.progress);
+      dialog.progressBar = dialog.view.findViewById(android.R.id.progress);
       if (dialog.progressBar == null) {
         return;
       }
@@ -483,13 +483,13 @@ class DialogInit {
             builder.indeterminateProgress && builder.indeterminateIsHorizontalProgress);
         dialog.progressBar.setProgress(0);
         dialog.progressBar.setMax(builder.progressMax);
-        dialog.progressLabel = (TextView) dialog.view.findViewById(R.id.md_label);
+        dialog.progressLabel = dialog.view.findViewById(R.id.md_label);
         if (dialog.progressLabel != null) {
           dialog.progressLabel.setTextColor(builder.contentColor);
           dialog.setTypeface(dialog.progressLabel, builder.mediumFont);
           dialog.progressLabel.setText(builder.progressPercentFormat.format(0));
         }
-        dialog.progressMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
+        dialog.progressMinMax = dialog.view.findViewById(R.id.md_minMax);
         if (dialog.progressMinMax != null) {
           dialog.progressMinMax.setTextColor(builder.contentColor);
           dialog.setTypeface(dialog.progressMinMax, builder.regularFont);
@@ -518,7 +518,7 @@ class DialogInit {
 
   private static void setupInputDialog(final MaterialDialog dialog) {
     final MaterialDialog.Builder builder = dialog.builder;
-    dialog.input = (EditText) dialog.view.findViewById(android.R.id.input);
+    dialog.input = dialog.view.findViewById(android.R.id.input);
     if (dialog.input == null) {
       return;
     }
@@ -543,7 +543,7 @@ class DialogInit {
       }
     }
 
-    dialog.inputMinMax = (TextView) dialog.view.findViewById(R.id.md_minMax);
+    dialog.inputMinMax = dialog.view.findViewById(R.id.md_minMax);
     if (builder.inputMinLength > 0 || builder.inputMaxLength > -1) {
       dialog.invalidateInputMinMaxIndicator(
           dialog.input.getText().toString().length(), !builder.inputAllowEmpty);

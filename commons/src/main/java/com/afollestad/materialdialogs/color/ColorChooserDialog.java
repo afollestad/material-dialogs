@@ -397,21 +397,21 @@ public class ColorChooserDialog extends DialogFragment
 
     final MaterialDialog dialog = bd.build();
     final View v = dialog.getCustomView();
-    grid = (GridView) v.findViewById(R.id.md_grid);
+    grid = v.findViewById(R.id.md_grid);
 
     if (builder.allowUserCustom) {
       selectedCustomColor = preselectColor;
       colorChooserCustomFrame = v.findViewById(R.id.md_colorChooserCustomFrame);
-      customColorHex = (EditText) v.findViewById(R.id.md_hexInput);
+      customColorHex = v.findViewById(R.id.md_hexInput);
       customColorIndicator = v.findViewById(R.id.md_colorIndicator);
-      customSeekA = (SeekBar) v.findViewById(R.id.md_colorA);
-      customSeekAValue = (TextView) v.findViewById(R.id.md_colorAValue);
-      customSeekR = (SeekBar) v.findViewById(R.id.md_colorR);
-      customSeekRValue = (TextView) v.findViewById(R.id.md_colorRValue);
-      customSeekG = (SeekBar) v.findViewById(R.id.md_colorG);
-      customSeekGValue = (TextView) v.findViewById(R.id.md_colorGValue);
-      customSeekB = (SeekBar) v.findViewById(R.id.md_colorB);
-      customSeekBValue = (TextView) v.findViewById(R.id.md_colorBValue);
+      customSeekA = v.findViewById(R.id.md_colorA);
+      customSeekAValue = v.findViewById(R.id.md_colorAValue);
+      customSeekR = v.findViewById(R.id.md_colorR);
+      customSeekRValue = v.findViewById(R.id.md_colorRValue);
+      customSeekG = v.findViewById(R.id.md_colorG);
+      customSeekGValue = v.findViewById(R.id.md_colorGValue);
+      customSeekB = v.findViewById(R.id.md_colorB);
+      customSeekBValue = v.findViewById(R.id.md_colorBValue);
 
       if (!builder.allowUserCustomAlpha) {
         v.findViewById(R.id.md_colorALabel).setVisibility(View.GONE);

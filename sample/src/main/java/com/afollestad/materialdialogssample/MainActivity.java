@@ -485,7 +485,7 @@ public class MainActivity extends AppCompatActivity
 
     positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
     //noinspection ConstantConditions
-    passwordInput = (EditText) dialog.getCustomView().findViewById(R.id.password);
+    passwordInput = dialog.getCustomView().findViewById(R.id.password);
     passwordInput.addTextChangedListener(
         new TextWatcher() {
           @Override
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity
         });
 
     // Toggling the show password CheckBox will mask or unmask the password input EditText
-    CheckBox checkbox = (CheckBox) dialog.getCustomView().findViewById(R.id.showPassword);
+    CheckBox checkbox = dialog.getCustomView().findViewById(R.id.showPassword);
     checkbox.setOnCheckedChangeListener(
         (buttonView, isChecked) -> {
           passwordInput.setInputType(
@@ -628,7 +628,7 @@ public class MainActivity extends AppCompatActivity
   public void showThemed() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .positiveColorRes(R.color.material_red_400)
@@ -841,11 +841,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.preference_dialogs)
   public void showPreferenceDialogs() {
-    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-      startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
-    } else {
-      startActivity(new Intent(getApplicationContext(), PreferenceActivityCompat.class));
-    }
+    startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
   }
 
   @Override
