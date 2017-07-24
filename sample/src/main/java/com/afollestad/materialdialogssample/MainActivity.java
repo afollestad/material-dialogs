@@ -26,8 +26,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,7 +41,11 @@ import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 import com.afollestad.materialdialogs.util.DialogUtils;
+
 import java.io.File;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /** @author Aidan Follestad (afollestad) */
 public class MainActivity extends AppCompatActivity
@@ -125,7 +128,7 @@ public class MainActivity extends AppCompatActivity
   public void showBasic() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .show();
@@ -138,6 +141,7 @@ public class MainActivity extends AppCompatActivity
         .content(R.string.loremIpsum)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
+        .checkBoxPrompt("Hello, world!", true, null)
         .show();
   }
 
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity
         .iconRes(R.mipmap.ic_launcher)
         .limitIconToDefaultSize() // limits the displayed icon size to 48dp
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .show();
@@ -170,7 +174,7 @@ public class MainActivity extends AppCompatActivity
   public void showStacked() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.speedBoost)
         .negativeText(R.string.noThanks)
         .btnStackedGravity(GravityEnum.END)
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity
   public void showNeutral() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .neutralText(R.string.more_info)
@@ -195,7 +199,7 @@ public class MainActivity extends AppCompatActivity
   public void showCallbacks() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .neutralText(R.string.more_info)
