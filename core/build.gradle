@@ -31,11 +31,11 @@ android {
 }
 
 dependencies {
-    api 'com.android.support:support-v13:' + versions.supportLib
-    api 'com.android.support:appcompat-v7:' + versions.supportLib
-    api 'com.android.support:recyclerview-v7:' + versions.supportLib
-    api 'com.android.support:support-annotations:' + versions.supportLib
-    api 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
+    implementation 'com.android.support:support-annotations:' + versions.supportLib
+    implementation 'com.android.support:support-v13:' + versions.supportLib
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+    implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+    implementation 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
 }
 
 apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'
