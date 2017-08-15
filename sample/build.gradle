@@ -39,6 +39,8 @@ dependencies {
     implementation project(':commons')
 
     implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+    implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
 
     implementation 'com.jakewharton:butterknife:' + versions.butterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
