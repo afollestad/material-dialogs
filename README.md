@@ -92,7 +92,7 @@ repository will allow GitHub to email you whenever I publish a release.
 The Gradle dependency is available via [jCenter](https://bintray.com/drummer-aidan/maven/material-dialogs:core/view).
 jCenter is the default Maven repository used by Android Studio.
 
-The minimum API level supported by this library is API 13 (Honeycomb).
+The minimum API level supported by this library is API 14.
 
 ### Core
 
@@ -102,7 +102,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.9.4.6'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.7'
 }
 ```
 
@@ -114,7 +114,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.9.4.6'
+    compile 'com.afollestad.material-dialogs:commons:0.9.4.7'
 }
 ```
 
