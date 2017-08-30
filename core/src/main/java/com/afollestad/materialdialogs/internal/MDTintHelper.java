@@ -27,7 +27,7 @@ import java.lang.reflect.Field;
 public class MDTintHelper {
 
   public static void setTint(@NonNull RadioButton radioButton, @NonNull ColorStateList colors) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
       radioButton.setButtonTintList(colors);
     } else {
       Drawable radioDrawable =
@@ -58,7 +58,7 @@ public class MDTintHelper {
   }
 
   public static void setTint(@NonNull CheckBox box, @NonNull ColorStateList colors) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
       box.setButtonTintList(colors);
     } else {
       Drawable checkDrawable =
