@@ -11,11 +11,11 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import com.afollestad.materialdialogs.DialogAction;
@@ -138,7 +138,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-        && ActivityCompat.checkSelfPermission(
+        && ContextCompat.checkSelfPermission(
                 getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
       return new MaterialDialog.Builder(getActivity())
