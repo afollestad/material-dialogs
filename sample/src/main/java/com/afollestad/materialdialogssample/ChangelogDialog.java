@@ -19,11 +19,12 @@ import java.io.InputStreamReader;
 /** @author Aidan Follestad (afollestad) */
 public class ChangelogDialog extends DialogFragment {
 
-  public static ChangelogDialog create(boolean darkTheme, int accentColor) {
+  public static ChangelogDialog create(boolean darkTheme, int accentColor, boolean bottom) {
     ChangelogDialog dialog = new ChangelogDialog();
     Bundle args = new Bundle();
     args.putBoolean("dark_theme", darkTheme);
     args.putInt("accent_color", accentColor);
+    args.putBoolean("bottom", bottom);
     dialog.setArguments(args);
     return dialog;
   }
@@ -39,7 +40,7 @@ public class ChangelogDialog extends DialogFragment {
       throw new IllegalStateException("This device does not support Web Views.");
     }
     MaterialDialog dialog =
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(getActivity(), getArguments().getBoolean("bottom"))
             .theme(getArguments().getBoolean("dark_theme") ? Theme.DARK : Theme.LIGHT)
             .title(R.string.changelog)
             .customView(customView, false)

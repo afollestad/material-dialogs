@@ -201,5 +201,6 @@
     <string name="list_longPress">Basic List (Long Press)</string>
     <string name="add_item">Add Item</string>
     <string name="multiChoiceLimitedMin">Multi Choice (Min Selections)</string>
+    <string name="bottom">Bottom</string>
 
 </resources>

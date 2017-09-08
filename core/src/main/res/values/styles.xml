@@ -24,6 +24,11 @@
     <item name="android:backgroundDimEnabled">true</item>
   </style>
 
+  <style name="MD_Bottom" >
+    <item name="android:windowEnterAnimation">@anim/slide_up</item>
+    <item name="android:windowExitAnimation">@anim/slide_down</item>
+  </style>
+
   <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton" tools:ignore="NewApi">
     <item name="android:layout_width">match_parent</item>
     <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>

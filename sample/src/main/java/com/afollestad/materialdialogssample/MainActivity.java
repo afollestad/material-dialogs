@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity
   private Handler handler;
   private int chooserDialog;
 
+  private boolean bottom = false;
+
   private void showToast(String message) {
     if (toast != null) {
       toast.cancel();
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.basicNoTitle)
   public void showBasicNoTitle() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .content(R.string.shareLocationPrompt)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.basic)
   public void showBasic() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.basicLongContent)
   public void showBasicLongContent() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.loremIpsum)
         .positiveText(R.string.agree)
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.basicIcon)
   public void showBasicIcon() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .iconRes(R.mipmap.ic_launcher)
         .limitIconToDefaultSize() // limits the displayed icon size to 48dp
         .title(R.string.useGoogleLocationServices)
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.basicCheckPrompt)
   public void showBasicCheckPrompt() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .iconRes(R.mipmap.ic_launcher)
         .limitIconToDefaultSize()
         .title(Html.fromHtml(getString(R.string.permissionSample, getString(R.string.app_name))))
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.stacked)
   public void showStacked() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.speedBoost)
@@ -183,7 +185,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.neutral)
   public void showNeutral() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.callbacks)
   public void showCallbacks() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.list)
   public void showList() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.listNoTitle)
   public void showListNoTitle() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .items(R.array.socialNetworks)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
         .show();
@@ -223,7 +225,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.longList)
   public void showLongList() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.states)
         .items(R.array.states)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.list_longItems)
   public void showListLongItems() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks_longItems)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -242,7 +244,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.list_checkPrompt)
   public void showListCheckPrompt() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -255,7 +257,7 @@ public class MainActivity extends AppCompatActivity
   @OnClick(R.id.list_longPress)
   public void showListLongPress() {
     index = 0;
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
@@ -278,7 +280,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.singleChoice)
   public void showSingleChoice() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsDisabledIndices(1, 3)
@@ -294,7 +296,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.singleChoice_longItems)
   public void showSingleChoiceLongItems() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks_longItems)
         .itemsCallbackSingleChoice(
@@ -309,7 +311,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.multiChoice)
   public void showMultiChoice() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(
@@ -338,7 +340,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.multiChoiceLimited)
   public void showMultiChoiceLimited() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(
@@ -359,7 +361,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.multiChoiceLimitedMin)
   public void showMultiChoiceLimitedMin() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(
@@ -380,7 +382,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.multiChoice_longItems)
   public void showMultiChoiceLongItems() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks_longItems)
         .itemsCallbackMultiChoice(
@@ -404,7 +406,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.multiChoice_disabledItems)
   public void showMultiChoiceDisabledItems() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.socialNetworks)
         .items(R.array.socialNetworks)
         .itemsCallbackMultiChoice(
@@ -455,7 +457,7 @@ public class MainActivity extends AppCompatActivity
             .iconPaddingDp(8)
             .build());
 
-    new MaterialDialog.Builder(this).title(R.string.set_backup).adapter(adapter, null).show();
+    new MaterialDialog.Builder(this, bottom).title(R.string.set_backup).adapter(adapter, null).show();
   }
 
   @OnClick(R.id.customListItems)
@@ -464,14 +466,14 @@ public class MainActivity extends AppCompatActivity
     adapter.setCallbacks(
         itemIndex -> showToast("Item clicked: " + itemIndex),
         buttonIndex -> showToast("Button clicked: " + buttonIndex));
-    new MaterialDialog.Builder(this).title(R.string.socialNetworks).adapter(adapter, null).show();
+    new MaterialDialog.Builder(this, bottom).title(R.string.socialNetworks).adapter(adapter, null).show();
   }
 
   @SuppressWarnings("ResourceAsColor")
   @OnClick(R.id.customView)
   public void showCustomView() {
     MaterialDialog dialog =
-        new MaterialDialog.Builder(this)
+        new MaterialDialog.Builder(this, bottom)
             .title(R.string.googleWifi)
             .customView(R.layout.dialog_customview, true)
             .positiveText(R.string.connect)
@@ -525,12 +527,12 @@ public class MainActivity extends AppCompatActivity
     if (accentColor == 0) {
       accentColor = ContextCompat.getColor(this, R.color.accent);
     }
-    ChangelogDialog.create(false, accentColor).show(getSupportFragmentManager(), "changelog");
+    ChangelogDialog.create(false, accentColor, bottom).show(getSupportFragmentManager(), "changelog");
   }
 
   @OnClick(R.id.customView_datePicker)
   public void showCustomDatePicker() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.date_picker)
         .customView(R.layout.dialog_datepicker, false)
         .positiveText(android.R.string.ok)
@@ -623,7 +625,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.themed)
   public void showThemed() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
@@ -644,7 +646,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.showCancelDismiss)
   public void showShowCancelDismissCallbacks() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.useGoogleLocationServices)
         .content(R.string.useGoogleLocationServicesPrompt)
         .positiveText(R.string.agree)
@@ -713,7 +715,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.input)
   public void showInputDialog() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.input)
         .content(R.string.input_content)
         .inputType(
@@ -732,7 +734,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.input_custominvalidation)
   public void showInputDialogCustomInvalidation() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.input)
         .content(R.string.input_content_custominvalidation)
         .inputType(
@@ -759,7 +761,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.input_checkPrompt)
   public void showInputDialogCheckPrompt() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.input)
         .content(R.string.input_content)
         .inputType(
@@ -779,7 +781,7 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.progress1)
   public void showProgressDeterminateDialog() {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.progress_dialog)
         .content(R.string.please_wait)
         .contentGravity(GravityEnum.CENTER)
@@ -828,7 +830,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   private void showIndeterminateProgressDialog(boolean horizontal) {
-    new MaterialDialog.Builder(this)
+    new MaterialDialog.Builder(this, bottom)
         .title(R.string.progress_dialog)
         .content(R.string.please_wait)
         .progress(true, 0)
@@ -851,6 +853,11 @@ public class MainActivity extends AppCompatActivity
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.about) {
       AboutDialog.show(this);
+      return true;
+    }
+    if (item.getItemId() == R.id.bottom) {
+      item.setChecked(!item.isChecked());
+      bottom = item.isChecked();
       return true;
     }
     return super.onOptionsItemSelected(item);
