@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v13:' + versions.supportLib
     implementation 'com.android.support:appcompat-v7:' + versions.supportLib
     implementation 'com.android.support:support-annotations:' + versions.supportLib
     implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
