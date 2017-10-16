@@ -1,0 +1,84 @@
+<com.afollestad.materialdialogs.internal.MDRootLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  app:md_reduce_padding_no_title_no_buttons="false">
+
+  <include layout="@layout/md_stub_titleframe"/>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/md_content_padding_bottom"
+    android:paddingTop="@dimen/md_content_padding_top">
+
+    <TextView
+      android:id="@+id/md_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/md_content_padding_bottom"
+      android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+      android:layout_marginRight="@dimen/md_dialog_frame_margin"
+      android:layout_marginTop="4dp"
+      android:fontFamily="sans-serif"
+      android:textSize="@dimen/md_content_textsize"
+      tools:ignore="UnusedAttribute"
+      tools:text="Message"/>
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/md_dialog_frame_margin"
+      android:layout_marginRight="@dimen/md_dialog_frame_margin">
+
+      <EditText
+        android:id="@android:id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginRight="-2dp"
+        android:textSize="@dimen/md_content_textsize"
+        tools:ignore="TextFields"/>
+
+      <TextView
+        android:id="@+id/md_minMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@android:id/input"
+        android:layout_alignRight="@android:id/input"
+        android:layout_below="@android:id/input"
+        android:fontFamily="sans-serif"
+        android:gravity="end"
+        android:minWidth="48dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:textAlignment="viewEnd"
+        android:textSize="12sp"
+        tools:ignore="RtlSymmetry,UnusedAttribute"
+        tools:text="50/100"/>
+
+    </RelativeLayout>
+
+    <CheckBox
+      android:id="@+id/md_promptCheckbox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="start|center_vertical"
+      android:layout_marginLeft="@dimen/md_notitle_vertical_padding_more"
+      android:layout_marginRight="@dimen/md_notitle_vertical_padding_more"
+      android:focusable="true"
+      android:gravity="start"
+      tools:text="Don't ask again"/>
+
+  </LinearLayout>
+
+  <include layout="@layout/md_stub_actionbuttons"/>
+
+</com.afollestad.materialdialogs.internal.MDRootLayout>

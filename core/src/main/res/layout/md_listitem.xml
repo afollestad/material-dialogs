@@ -1,24 +1,27 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical|start"
-    android:minHeight="@dimen/md_listitem_height"
-    android:orientation="horizontal">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="?selectableItemBackground"
+  android:focusable="true"
+  android:gravity="center_vertical|start"
+  android:minHeight="@dimen/md_listitem_height"
+  android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
-        android:layout_marginLeft="@dimen/md_listitem_margin_left"
-        android:layout_marginRight="@dimen/md_dialog_frame_margin"
-        android:layout_marginStart="@dimen/md_listitem_margin_left"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/md_listitem_vertical_margin"
-        android:paddingTop="@dimen/md_listitem_vertical_margin"
-        android:textSize="@dimen/md_listitem_textsize"
-        tools:text="Item" />
+  <TextView
+    android:id="@+id/md_title"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:layout_marginEnd="@dimen/md_dialog_frame_margin"
+    android:layout_marginLeft="@dimen/md_listitem_margin_left"
+    android:layout_marginRight="@dimen/md_dialog_frame_margin"
+    android:layout_marginStart="@dimen/md_listitem_margin_left"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/md_listitem_vertical_margin"
+    android:paddingTop="@dimen/md_listitem_vertical_margin"
+    android:textSize="@dimen/md_listitem_textsize"
+    tools:text="Item"/>
 
 </LinearLayout>

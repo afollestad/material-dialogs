@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">MaterialDialogs</string>
+    <string name="app_name">Material Dialogs</string>
 
     <string name="agree">Agree</string>
     <string name="disagree">Disagree</string>
@@ -22,7 +22,7 @@
     <string name="password">Password</string>
     <string name="showPassword">Show password</string>
     <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
-    <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
+    <string name="useGoogleLocationServicesPrompt"><![CDATA[Let Google help apps determine location. <b>This means sending anonymous location data to Google</b>, even when no apps are running.]]></string>
     <string name="socialNetworks">Social Networks</string>
     <string name="choose">Choose</string>
     <string name="speedBoost">Turn on speed boost now!</string>
@@ -53,7 +53,8 @@
     <string name="folder_chooser">Folder Chooser</string>
     <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
     <string name="changelog">Changelog</string>
-    <string name="customView_webView">Custom View No Scroll #1</string>
+    <string name="customView_webView">Custom View (No Scroll, WebView)</string>
+    <string name="customView_datePicker">Custom View (No Scroll, DatePicker)</string>
     <string name="color_chooser_primary">Color Chooser (Primary)</string>
     <string name="color_chooser_accent">Color Chooser (Accent)</string>
     <string name="ssid">SSID</string>
@@ -147,7 +148,8 @@
     <string name="please_wait">Please wait…</string>
     <string name="optional_dialog_message">This is an optional dialog message.</string>
     <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
-    <string name="selection_limit_reached">Selection limit reached!</string>
+    <string name="selection_limit_reached">You cannot select anymore items!</string>
+    <string name="selection_min_limit_reached">You must select at least 1 item!</string>
 
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->
     <string name="back_button_label">Back</string>
@@ -183,7 +185,21 @@
     <string name="choice_lists">Choice Lists</string>
     <string name="advanced_lists">Advanced Lists</string>
     <string name="list_longItems">Basic List (Long Items)</string>
+    <string name="multiChoice_disabledItems">Multi Choice (Disabled Items)</string>
     <string name="singleChoice_longItems">Single Choice (Long Items)</string>
     <string name="multiChoice_longItems">Multi Choice (Long Items)</string>
+    <string name="file_chooser">File Chooser</string>
+    <string name="basic_checkbox_prompt">Basic (CheckBox Prompt)</string>
+    <string name="dont_ask_again">Don\'t ask again</string>
+    <string name="deny">Deny</string>
+    <string name="allow">Allow</string>
+    <string name="permissionSample"><![CDATA[Allow <b>%1$s</b> to show you a sample of a checkbox prompt?]]></string>
+    <string name="date_picker">Date Picker</string>
+    <string name="list_checkPrompt">Basic List (CheckBox Prompt)</string>
+    <string name="input_checkPrompt">Input (CheckBox Prompt)</string>
+    <string name="example_prompt">Example check prompt</string>
+    <string name="list_longPress">Basic List (Long Press)</string>
+    <string name="add_item">Add Item</string>
+    <string name="multiChoiceLimitedMin">Multi Choice (Min Selections)</string>
 
 </resources>

@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.afollestad.materialdialogs.prefs.MaterialDialogPreference
-        android:dialogIcon="@drawable/ic_launcher"
+        android:dialogIcon="@mipmap/ic_launcher"
         android:dialogMessage="@string/preference_dialog_message"
         android:dialogTitle="@string/preference_dialog_title"
         android:key="unused_key00"

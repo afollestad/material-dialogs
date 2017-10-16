@@ -1,53 +1,40 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply from: '../dependencies.gradle'
 
-group='com.afollestad'
+ext {
+    PUBLISH_GROUP_ID = 'com.afollestad.material-dialogs'
+    PUBLISH_ARTIFACT_ID = 'core'
+    PUBLISH_VERSION = versions.publishVersion
+}
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 23
-        versionCode 1
-        versionName "0.8.5.1"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
         consumerProguardFiles 'progress-proguard.txt'
     }
     lintOptions {
         abortOnError false
         checkReleaseBuilds false
     }
+    sourceSets {
+        main.res.srcDirs = [
+            'src/main/res',
+            'src/main/res-public'
+        ]
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:support-annotations:23.1.1'
-    compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
+    implementation 'com.android.support:support-annotations:' + versions.supportLib
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+    implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+    implementation 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
 }
 
-// build a jar with source files
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-// build a jar with javadoc
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.getDestinationDir()
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
+apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'

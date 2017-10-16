@@ -2,9 +2,9 @@
 <resources>
 
     <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-    <color name="material_indigo_500">#3F51B5</color>
-    <color name="material_indigo_600">#3949AB</color>
-    <color name="material_teal_a400">#1DE9B6</color>
+    <color name="primary">#7B1FA2</color>
+    <color name="primaryDark">#6A1B9A</color>
+    <color name="accent">#DD2C00</color>
     <color name="material_red_400">#EF5350</color>
 
 </resources>

@@ -1,45 +1,49 @@
+apply from: '../dependencies.gradle'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
-    signingConfigs {
-        production {
-            keyAlias 'afollestad'
-            keyPassword 'aidan1995'
-            storeFile file('./keystore.jks')
-            storePassword 'aidan1995'
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
         applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 152
-        versionName "0.8.5.1"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
     }
     lintOptions {
         abortOnError false
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.production
-        }
         release {
-            signingConfig signingConfigs.production
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            shrinkResources false
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':core')
-    compile 'com.android.support:gridlayout-v7:23.1.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile project(':commons')
+    implementation project(':core')
+    implementation project(':commons')
+
+    implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+    implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+
+    implementation 'com.jakewharton:butterknife:' + versions.butterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
+
+    implementation 'com.facebook.stetho:stetho:1.4.2'
 }

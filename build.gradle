@@ -1,18 +1,41 @@
+apply from: './dependencies.gradle'
+
 buildscript {
+    apply from: './dependencies.gradle'
+
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+        classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:" + versions.spotlessPlugin
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
+    }
+
+    buildscript {
+        repositories {
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+    }
+    apply plugin: "com.diffplug.gradle.spotless"
+    spotless {
+        java {
+            target "**/*.java"
+            trimTrailingWhitespace()
+            removeUnusedImports()
+            googleJavaFormat()
+            endWithNewline()
+        }
     }
 }
 
-apply plugin: 'com.github.ben-manes.versions'
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
