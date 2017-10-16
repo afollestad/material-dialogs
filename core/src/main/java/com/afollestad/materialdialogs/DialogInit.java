@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs;
 
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -9,10 +10,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.annotation.UiThread;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -91,10 +94,15 @@ class DialogInit {
               R.attr.md_background_color,
               DialogUtils.resolveColor(dialog.getContext(), R.attr.colorBackgroundFloating));
     }
+
+    boolean isTablet = builder.context.getResources().getBoolean(R.bool.md_is_tablet);
+
     if (builder.backgroundColor != 0) {
       GradientDrawable drawable = new GradientDrawable();
-      drawable.setCornerRadius(
-          builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
+      if (!builder.bottom) {
+        drawable.setCornerRadius(
+                builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
+      }
       drawable.setColor(builder.backgroundColor);
       dialog.getWindow().setBackgroundDrawable(drawable);
     }
@@ -429,6 +437,15 @@ class DialogInit {
     lp.copyFrom(dialog.getWindow().getAttributes());
     lp.width = Math.min(maxWidth, calculatedWidth);
     dialog.getWindow().setAttributes(lp);
+
+    if (builder.bottom) {
+      dialog.getWindow().setGravity(Gravity.BOTTOM);
+      if (!isTablet) {
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+      }
+      dialog.getWindow().getAttributes().windowAnimations = R.style.MD_Bottom;
+    }
+
   }
 
   private static void fixCanvasScalingWhenHardwareAccelerated(ProgressBar pb) {
