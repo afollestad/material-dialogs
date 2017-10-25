@@ -78,7 +78,7 @@ class DialogInit {
 
   @SuppressWarnings("ConstantConditions")
   @UiThread
-  public static void init(final MaterialDialog dialog) {
+  static void init(final MaterialDialog dialog) {
     final MaterialDialog.Builder builder = dialog.builder;
 
     // Set cancelable flag and dialog background color
@@ -291,7 +291,6 @@ class DialogInit {
         dialog.getButtonSelector(DialogAction.POSITIVE, false));
     dialog.positiveButton.setTag(DialogAction.POSITIVE);
     dialog.positiveButton.setOnClickListener(dialog);
-    dialog.positiveButton.setVisibility(View.VISIBLE);
 
     MDButton negativeTextView = dialog.negativeButton;
     dialog.setTypeface(negativeTextView, builder.mediumFont);
@@ -303,7 +302,6 @@ class DialogInit {
         dialog.getButtonSelector(DialogAction.NEGATIVE, false));
     dialog.negativeButton.setTag(DialogAction.NEGATIVE);
     dialog.negativeButton.setOnClickListener(dialog);
-    dialog.negativeButton.setVisibility(View.VISIBLE);
 
     MDButton neutralTextView = dialog.neutralButton;
     dialog.setTypeface(neutralTextView, builder.mediumFont);
@@ -314,7 +312,6 @@ class DialogInit {
     dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
     dialog.neutralButton.setTag(DialogAction.NEUTRAL);
     dialog.neutralButton.setOnClickListener(dialog);
-    dialog.neutralButton.setVisibility(View.VISIBLE);
 
     // Setup list dialog stuff
     if (builder.listCallbackMultiChoice != null) {
