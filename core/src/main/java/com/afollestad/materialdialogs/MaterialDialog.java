@@ -718,23 +718,24 @@ public class MaterialDialog extends DialogBase
     if (builder.progress <= -2) {
       Log.w(
           "MaterialDialog",
-          "Calling setProgress(int) on an " + "indeterminate progress dialog has no effect!");
+          "Calling setProgress(int) on an indeterminate progress dialog has no effect!");
       return;
     }
     progressBar.setProgress(progress);
+    final String progressNumberFormat = builder.progressNumberFormat;
+    final NumberFormat progressPercentFormat = builder.progressPercentFormat;
     handler.post(
         new Runnable() {
           @Override
           public void run() {
             if (progressLabel != null) {
               progressLabel.setText(
-                  builder.progressPercentFormat.format(
+                  progressPercentFormat.format(
                       (float) getCurrentProgress() / (float) getMaxProgress()));
             }
             if (progressMinMax != null) {
               progressMinMax.setText(
-                  String.format(
-                      builder.progressNumberFormat, getCurrentProgress(), getMaxProgress()));
+                  String.format(progressNumberFormat, getCurrentProgress(), getMaxProgress()));
             }
           }
         });
