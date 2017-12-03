@@ -303,4 +303,11 @@ public class DialogUtils {
     }
     return false;
   }
+
+  public static <T> T checkNotNull(@Nullable T value, String name) {
+    if (value == null) {
+      throw new IllegalStateException(name + " == null");
+    }
+    return value;
+  }
 }

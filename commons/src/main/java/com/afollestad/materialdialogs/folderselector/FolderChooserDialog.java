@@ -1,5 +1,7 @@
 package com.afollestad.materialdialogs.folderselector;
 
+import static com.afollestad.materialdialogs.util.DialogUtils.checkNotNull;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -142,7 +144,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
   }
 
   private void createNewFolder() {
-    new MaterialDialog.Builder(getActivity())
+    new MaterialDialog.Builder(checkNotNull(getActivity(), "activity"))
         .title(getBuilder().newFolderButton)
         .input(
             0,
@@ -197,7 +199,8 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     parentContents = listFiles();
     MaterialDialog dialog = (MaterialDialog) getDialog();
     dialog.setTitle(parentFolder.getAbsolutePath());
-    getArguments().putString("current_path", parentFolder.getAbsolutePath());
+    checkNotNull(getArguments(), "arguments")
+        .putString("current_path", parentFolder.getAbsolutePath());
     dialog.setItems((CharSequence[]) getContentsArray());
   }
 
@@ -233,9 +236,8 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     show(fragmentManager, tag);
   }
 
-  @SuppressWarnings("ConstantConditions")
   private Builder getBuilder() {
-    return (Builder) getArguments().getSerializable("builder");
+    return (Builder) checkNotNull(getArguments(), "arguments").getSerializable("builder");
   }
 
   public interface FolderCallback {
@@ -245,6 +247,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     void onFolderChooserDismissed(FolderChooserDialog dialog);
   }
 
+  @SuppressWarnings({"unused", "SameParameterValue"})
   public static class Builder implements Serializable {
 
     transient FragmentActivity activity;

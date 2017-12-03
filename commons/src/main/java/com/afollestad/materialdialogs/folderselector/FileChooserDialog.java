@@ -1,5 +1,7 @@
 package com.afollestad.materialdialogs.folderselector;
 
+import static com.afollestad.materialdialogs.util.DialogUtils.checkNotNull;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -27,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class FileChooserDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
   private static final String DEFAULT_TAG = "[MD_FILE_SELECTOR]";
@@ -202,7 +205,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       parentContents = listFiles(getBuilder().mimeType, getBuilder().extensions);
       MaterialDialog dialog = (MaterialDialog) getDialog();
       dialog.setTitle(parentFolder.getAbsolutePath());
-      getArguments().putString("current_path", parentFolder.getAbsolutePath());
+      checkNotNull(getArguments(), "arguments")
+          .putString("current_path", parentFolder.getAbsolutePath());
       dialog.setItems(getContentsArray());
     }
   }
@@ -251,9 +255,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     return getBuilder().initialPath;
   }
 
-  @SuppressWarnings("ConstantConditions")
   private Builder getBuilder() {
-    return (Builder) getArguments().getSerializable("builder");
+    return (Builder) checkNotNull(getArguments(), "arguments").getSerializable("builder");
   }
 
   public interface FileCallback {

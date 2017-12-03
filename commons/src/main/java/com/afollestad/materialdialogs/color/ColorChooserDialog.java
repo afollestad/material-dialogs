@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -34,18 +33,13 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import java.io.Serializable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
 
 /** @author Aidan Follestad (afollestad) */
-@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions", "unused"})
 public class ColorChooserDialog extends DialogFragment
     implements View.OnClickListener, View.OnLongClickListener {
 
-  public static final String TAG_PRIMARY = "[MD_COLOR_CHOOSER]";
-  public static final String TAG_ACCENT = "[MD_COLOR_CHOOSER]";
-  public static final String TAG_CUSTOM = "[MD_COLOR_CHOOSER]";
   private int[] colorsTop;
   @Nullable private int[][] colorsSub;
   private int circleSize;
@@ -68,11 +62,9 @@ public class ColorChooserDialog extends DialogFragment
 
   public ColorChooserDialog() {}
 
-  @SuppressWarnings("unused")
   @Nullable
-  public static ColorChooserDialog findVisible(
-      FragmentManager fragmentManager, @ColorChooserTag String tag) {
-    Fragment frag = fragmentManager.findFragmentByTag(tag);
+  public static ColorChooserDialog findVisible(FragmentManager fragmentManager, Tag tag) {
+    Fragment frag = fragmentManager.findFragmentByTag(tag.toString());
     if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
     }
@@ -489,7 +481,6 @@ public class ColorChooserDialog extends DialogFragment
       customColorHex.addTextChangedListener(customColorTextWatcher);
       customColorRgbListener =
           new SeekBar.OnSeekBarChangeListener() {
-
             @SuppressLint("DefaultLocale")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -581,14 +572,14 @@ public class ColorChooserDialog extends DialogFragment
   }
 
   public ColorChooserDialog show() {
-    String tag;
+    Tag tag;
     Builder builder = getBuilder();
     if (builder.colorsTop != null) {
-      tag = TAG_CUSTOM;
+      tag = Tag.CUSTOM;
     } else if (builder.accentMode) {
-      tag = TAG_ACCENT;
+      tag = Tag.ACCENT;
     } else {
-      tag = TAG_PRIMARY;
+      tag = Tag.PRIMARY;
     }
 
     final FragmentManager fragmentManager =
@@ -599,14 +590,27 @@ public class ColorChooserDialog extends DialogFragment
       setTargetFragment(builder.fragment, 67);
     }
 
-    dismissIfNecessary(fragmentManager, tag);
-    show(fragmentManager, tag);
+    dismissIfNecessary(fragmentManager, tag.toString());
+    show(fragmentManager, tag.toString());
     return this;
   }
 
-  @Retention(RetentionPolicy.SOURCE)
-  @StringDef({TAG_PRIMARY, TAG_ACCENT, TAG_CUSTOM})
-  public @interface ColorChooserTag {}
+  public enum Tag {
+    PRIMARY("COLOR_CHOOSER_PRIMARY"),
+    ACCENT("COLOR_CHOOSER_ACCENT"),
+    CUSTOM("COLOR_CHOOSER_CUSTOM");
+
+    private String value;
+
+    Tag(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return value;
+    }
+  }
 
   public interface ColorCallback {
 
@@ -615,6 +619,7 @@ public class ColorChooserDialog extends DialogFragment
     void onColorChooserDismissed(ColorChooserDialog dialog);
   }
 
+  @SuppressWarnings("SameParameterValue")
   public static class Builder implements Serializable {
 
     @Nullable final transient FragmentActivity activity;
@@ -754,7 +759,6 @@ public class ColorChooserDialog extends DialogFragment
   }
 
   private class ColorGridAdapter extends BaseAdapter {
-
     ColorGridAdapter() {}
 
     @Override
