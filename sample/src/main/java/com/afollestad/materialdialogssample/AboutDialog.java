@@ -2,7 +2,6 @@ package com.afollestad.materialdialogssample;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -15,7 +14,6 @@ public class AboutDialog extends DialogFragment {
     dialog.show(context.getSupportFragmentManager(), "[ABOUT_DIALOG]");
   }
 
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new MaterialDialog.Builder(getActivity())

@@ -12,7 +12,6 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
@@ -222,8 +221,7 @@ public class DialogUtils {
     }
   }
 
-  public static void showKeyboard(
-      @NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
+  public static void showKeyboard(final DialogInterface di, final MaterialDialog.Builder builder) {
     final MaterialDialog dialog = (MaterialDialog) di;
     if (dialog.getInputEditText() == null) {
       return;
@@ -245,8 +243,7 @@ public class DialogUtils {
             });
   }
 
-  public static void hideKeyboard(
-      @NonNull final DialogInterface di, @NonNull final MaterialDialog.Builder builder) {
+  public static void hideKeyboard(final DialogInterface di, final MaterialDialog.Builder builder) {
     final MaterialDialog dialog = (MaterialDialog) di;
     if (dialog.getInputEditText() == null) {
       return;
@@ -282,7 +279,7 @@ public class DialogUtils {
     return new ColorStateList(states, colors);
   }
 
-  public static int[] getColorArray(@NonNull Context context, @ArrayRes int array) {
+  public static int[] getColorArray(Context context, @ArrayRes int array) {
     if (array == 0) {
       return null;
     }
@@ -295,7 +292,7 @@ public class DialogUtils {
     return colors;
   }
 
-  public static <T> boolean isIn(@NonNull T find, @Nullable T[] ary) {
+  public static <T> boolean isIn(T find, @Nullable T[] ary) {
     if (ary == null || ary.length == 0) {
       return false;
     }
@@ -305,5 +302,12 @@ public class DialogUtils {
       }
     }
     return false;
+  }
+
+  public static <T> T checkNotNull(@Nullable T value, String name) {
+    if (value == null) {
+      throw new IllegalStateException(name + " == null");
+    }
+    return value;
   }
 }

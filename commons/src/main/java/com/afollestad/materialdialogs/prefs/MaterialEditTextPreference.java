@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.EditTextPreference;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -77,7 +76,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   @Override
-  protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
+  protected void onAddEditTextToDialogView(View dialogView, EditText editText) {
     ((ViewGroup) dialogView)
         .addView(
             editText,
@@ -87,7 +86,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
   @SuppressLint("MissingSuperCall")
   @Override
-  protected void onBindDialogView(@NonNull View view) {
+  protected void onBindDialogView(View view) {
     EditText editText = this.editText;
     editText.setText(getText());
     // Initialize cursor to end of text
@@ -135,7 +134,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
             .onAny(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     switch (which) {
                       default:
                         MaterialEditTextPreference.this.onClick(
@@ -259,7 +258,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
       super.writeToParcel(dest, flags);
       dest.writeInt(isDialogShowing ? 1 : 0);
       dest.writeBundle(dialogBundle);

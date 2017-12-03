@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -597,7 +596,7 @@ public class MainActivity extends AppCompatActivity
 
   // Receives callback from color chooser dialog
   @Override
-  public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+  public void onColorSelection(ColorChooserDialog dialog, @ColorInt int color) {
     if (dialog.isAccentMode()) {
       accentPreselect = color;
       ThemeSingleton.get().positiveColor = DialogUtils.getActionTextStateList(this, color);
@@ -617,7 +616,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override
-  public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+  public void onColorChooserDismissed(ColorChooserDialog dialog) {
     showToast("Color chooser dismissed!");
   }
 
@@ -673,12 +672,12 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override
-  public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+  public void onFileSelection(FileChooserDialog dialog, File file) {
     showToast(file.getAbsolutePath());
   }
 
   @Override
-  public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
+  public void onFileChooserDismissed(FileChooserDialog dialog) {
     showToast("File chooser dismissed!");
   }
 
@@ -702,12 +701,12 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override
-  public void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File folder) {
+  public void onFolderSelection(FolderChooserDialog dialog, File folder) {
     showToast(folder.getAbsolutePath());
   }
 
   @Override
-  public void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog) {
+  public void onFolderChooserDismissed(FolderChooserDialog dialog) {
     showToast("Folder chooser dismissed!");
   }
 
@@ -858,7 +857,7 @@ public class MainActivity extends AppCompatActivity
 
   @Override
   public void onRequestPermissionsResult(
-      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+      int requestCode, String[] permissions, int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == STORAGE_PERMISSION_RC) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
