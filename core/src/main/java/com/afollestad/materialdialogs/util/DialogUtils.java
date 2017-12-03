@@ -221,7 +221,7 @@ public class DialogUtils {
     }
   }
 
-  public static void showKeyboard(final DialogInterface di, final MaterialDialog.Builder builder) {
+  public static void showKeyboard(final DialogInterface di) {
     final MaterialDialog dialog = (MaterialDialog) di;
     if (dialog.getInputEditText() == null) {
       return;
@@ -235,7 +235,7 @@ public class DialogUtils {
                 dialog.getInputEditText().requestFocus();
                 InputMethodManager imm =
                     (InputMethodManager)
-                        builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        dialog.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                   imm.showSoftInput(dialog.getInputEditText(), InputMethodManager.SHOW_IMPLICIT);
                 }
@@ -243,13 +243,13 @@ public class DialogUtils {
             });
   }
 
-  public static void hideKeyboard(final DialogInterface di, final MaterialDialog.Builder builder) {
+  public static void hideKeyboard(final DialogInterface di) {
     final MaterialDialog dialog = (MaterialDialog) di;
     if (dialog.getInputEditText() == null) {
       return;
     }
     InputMethodManager imm =
-        (InputMethodManager) builder.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        (InputMethodManager) dialog.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
     if (imm != null) {
       final View currentFocus = dialog.getCurrentFocus();
       IBinder windowToken = null;

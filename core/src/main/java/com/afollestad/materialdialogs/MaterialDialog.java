@@ -26,6 +26,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -87,9 +88,12 @@ public class MaterialDialog extends DialogBase
     super(builder.context, DialogInit.getTheme(builder));
     handler = new Handler();
     this.builder = builder;
-    final LayoutInflater inflater = LayoutInflater.from(builder.context);
+    final LayoutInflater inflater = LayoutInflater.from(getContext());
     view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
     DialogInit.init(this);
+
+    // Don't keep a Context reference in the Builder after this point
+    builder.context = null;
   }
 
   public final Builder getBuilder() {
@@ -277,10 +281,9 @@ public class MaterialDialog extends DialogBase
 
   final Drawable getListSelector() {
     if (builder.listSelector != 0) {
-      return ResourcesCompat.getDrawable(
-          builder.context.getResources(), builder.listSelector, null);
+      return ResourcesCompat.getDrawable(getContext().getResources(), builder.listSelector, null);
     }
-    final Drawable d = DialogUtils.resolveDrawable(builder.context, R.attr.md_list_selector);
+    final Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_list_selector);
     if (d != null) {
       return d;
     }
@@ -305,10 +308,9 @@ public class MaterialDialog extends DialogBase
     if (isStacked) {
       if (builder.btnSelectorStacked != 0) {
         return ResourcesCompat.getDrawable(
-            builder.context.getResources(), builder.btnSelectorStacked, null);
+            getContext().getResources(), builder.btnSelectorStacked, null);
       }
-      final Drawable d =
-          DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_stacked_selector);
+      final Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
       if (d != null) {
         return d;
       }
@@ -319,10 +321,9 @@ public class MaterialDialog extends DialogBase
           {
             if (builder.btnSelectorPositive != 0) {
               return ResourcesCompat.getDrawable(
-                  builder.context.getResources(), builder.btnSelectorPositive, null);
+                  getContext().getResources(), builder.btnSelectorPositive, null);
             }
-            Drawable d =
-                DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_positive_selector);
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
             if (d != null) {
               return d;
             }
@@ -336,10 +337,9 @@ public class MaterialDialog extends DialogBase
           {
             if (builder.btnSelectorNeutral != 0) {
               return ResourcesCompat.getDrawable(
-                  builder.context.getResources(), builder.btnSelectorNeutral, null);
+                  getContext().getResources(), builder.btnSelectorNeutral, null);
             }
-            Drawable d =
-                DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_neutral_selector);
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
             if (d != null) {
               return d;
             }
@@ -353,10 +353,9 @@ public class MaterialDialog extends DialogBase
           {
             if (builder.btnSelectorNegative != 0) {
               return ResourcesCompat.getDrawable(
-                  builder.context.getResources(), builder.btnSelectorNegative, null);
+                  getContext().getResources(), builder.btnSelectorNegative, null);
             }
-            Drawable d =
-                DialogUtils.resolveDrawable(builder.context, R.attr.md_btn_negative_selector);
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
             if (d != null) {
               return d;
             }
@@ -592,12 +591,12 @@ public class MaterialDialog extends DialogBase
   @UiThread
   @Override
   public final void setTitle(@StringRes int newTitleRes) {
-    setTitle(builder.context.getString(newTitleRes));
+    setTitle(getContext().getString(newTitleRes));
   }
 
   @UiThread
   public final void setTitle(@StringRes int newTitleRes, @Nullable Object... formatArgs) {
-    setTitle(builder.context.getString(newTitleRes, formatArgs));
+    setTitle(getContext().getString(newTitleRes, formatArgs));
   }
 
   @UiThread
@@ -614,7 +613,7 @@ public class MaterialDialog extends DialogBase
 
   @UiThread
   public void setIconAttribute(@AttrRes int attrId) {
-    Drawable d = DialogUtils.resolveDrawable(builder.context, attrId);
+    Drawable d = DialogUtils.resolveDrawable(getContext(), attrId);
     setIcon(d);
   }
 
@@ -626,12 +625,12 @@ public class MaterialDialog extends DialogBase
 
   @UiThread
   public final void setContent(@StringRes int newContentRes) {
-    setContent(builder.context.getString(newContentRes));
+    setContent(getContext().getString(newContentRes));
   }
 
   @UiThread
   public final void setContent(@StringRes int newContentRes, @Nullable Object... formatArgs) {
-    setContent(builder.context.getString(newContentRes, formatArgs));
+    setContent(getContext().getString(newContentRes, formatArgs));
   }
 
   @Nullable
@@ -890,7 +889,7 @@ public class MaterialDialog extends DialogBase
   @Override
   public final void onShow(DialogInterface dialog) {
     if (input != null) {
-      DialogUtils.showKeyboard(this, builder);
+      DialogUtils.showKeyboard(this);
       if (input.getText().length() > 0) {
         input.setSelection(input.getText().length());
       }
@@ -954,7 +953,7 @@ public class MaterialDialog extends DialogBase
   @Override
   public void dismiss() {
     if (input != null) {
-      DialogUtils.hideKeyboard(this, builder);
+      DialogUtils.hideKeyboard(this);
     }
     super.dismiss();
   }
@@ -1038,7 +1037,7 @@ public class MaterialDialog extends DialogBase
   @SuppressWarnings({"WeakerAccess", "unused", "SameParameterValue", "ConstantConditions"})
   public static class Builder {
 
-    protected final Context context;
+    protected Context context;
     protected CharSequence title;
     protected GravityEnum titleGravity = GravityEnum.START;
     protected GravityEnum contentGravity = GravityEnum.START;
@@ -1114,6 +1113,7 @@ public class MaterialDialog extends DialogBase
     protected CharSequence checkBoxPrompt;
     protected boolean checkBoxPromptInitiallyChecked;
     protected CheckBox.OnCheckedChangeListener checkBoxPromptListener;
+    protected InputFilter[] inputFilters;
 
     protected String progressNumberFormat;
     protected NumberFormat progressPercentFormat;
@@ -2117,6 +2117,11 @@ public class MaterialDialog extends DialogBase
         @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
         @ColorRes int errorColor) {
       return inputRange(minLength, maxLength, DialogUtils.getColor(context, errorColor));
+    }
+
+    public Builder inputFilters(@Nullable InputFilter... filters) {
+      this.inputFilters = filters;
+      return this;
     }
 
     public Builder alwaysCallInputCallback() {
