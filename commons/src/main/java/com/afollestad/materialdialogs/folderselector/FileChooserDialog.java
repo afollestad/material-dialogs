@@ -165,7 +165,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         .onNegative(
             new MaterialDialog.SingleButtonCallback() {
               @Override
-              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              public void onClick(MaterialDialog dialog, DialogAction which) {
                 dialog.dismiss();
               }
             })
@@ -257,14 +257,14 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
   public interface FileCallback {
 
-    void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file);
+    void onFileSelection(FileChooserDialog dialog, File file);
 
-    void onFileChooserDismissed(@NonNull FileChooserDialog dialog);
+    void onFileChooserDismissed(FileChooserDialog dialog);
   }
 
   public static class Builder implements Serializable {
 
-    @NonNull final transient Context context;
+    final transient Context context;
     @StringRes int cancelButton;
     String initialPath;
     String mimeType;
@@ -274,7 +274,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     @Nullable String mediumFont;
     @Nullable String regularFont;
 
-    public Builder(@NonNull Context context) {
+    public Builder(Context context) {
       this.context = context;
       cancelButton = android.R.string.cancel;
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();

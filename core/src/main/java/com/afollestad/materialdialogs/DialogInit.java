@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.annotation.UiThread;
 import android.text.InputType;
@@ -40,7 +39,7 @@ import me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDr
 class DialogInit {
 
   @StyleRes
-  static int getTheme(@NonNull MaterialDialog.Builder builder) {
+  static int getTheme(MaterialDialog.Builder builder) {
     boolean darkTheme =
         DialogUtils.resolveBoolean(
             builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);

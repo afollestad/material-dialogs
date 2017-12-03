@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.ListPreference;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -90,7 +89,7 @@ public class MaterialListPreference extends ListPreference {
             .onAny(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     switch (which) {
                       default:
                         MaterialListPreference.this.onClick(
@@ -218,7 +217,7 @@ public class MaterialListPreference extends ListPreference {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
       super.writeToParcel(dest, flags);
       dest.writeInt(isDialogShowing ? 1 : 0);
       dest.writeBundle(dialogBundle);

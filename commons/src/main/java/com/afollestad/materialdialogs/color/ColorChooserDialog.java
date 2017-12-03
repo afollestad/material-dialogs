@@ -71,7 +71,7 @@ public class ColorChooserDialog extends DialogFragment
 
   @Nullable
   public static ColorChooserDialog findVisible(
-      @NonNull FragmentManager fragmentManager, @ColorChooserTag String tag) {
+      FragmentManager fragmentManager, @ColorChooserTag String tag) {
     Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
@@ -357,7 +357,7 @@ public class ColorChooserDialog extends DialogFragment
             .onPositive(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     callback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
                     dismiss();
                   }
@@ -365,7 +365,7 @@ public class ColorChooserDialog extends DialogFragment
             .onNegative(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     if (isInSub()) {
                       dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().cancelBtn);
                       isInSub(false);
@@ -379,7 +379,7 @@ public class ColorChooserDialog extends DialogFragment
             .onNeutral(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     toggleCustom(dialog);
                   }
                 })
@@ -608,14 +608,14 @@ public class ColorChooserDialog extends DialogFragment
 
   public interface ColorCallback {
 
-    void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor);
+    void onColorSelection(ColorChooserDialog dialog, @ColorInt int selectedColor);
 
-    void onColorChooserDismissed(@NonNull ColorChooserDialog dialog);
+    void onColorChooserDismissed(ColorChooserDialog dialog);
   }
 
   public static class Builder implements Serializable {
 
-    @NonNull final transient Context context;
+    final transient Context context;
     @Nullable String mediumFont;
     @Nullable String regularFont;
     @StringRes final int title;
@@ -637,7 +637,7 @@ public class ColorChooserDialog extends DialogFragment
     boolean allowUserCustomAlpha = true;
     boolean setPreselectionColor = false;
 
-    public Builder(@NonNull Context context, @StringRes int title) {
+    public Builder(Context context, @StringRes int title) {
       this.context = context;
       this.title = title;
     }
@@ -662,7 +662,7 @@ public class ColorChooserDialog extends DialogFragment
     }
 
     @NonNull
-    public Builder theme(@NonNull Theme theme) {
+    public Builder theme(Theme theme) {
       this.theme = theme;
       return this;
     }
@@ -717,7 +717,7 @@ public class ColorChooserDialog extends DialogFragment
     }
 
     @NonNull
-    public Builder customColors(@NonNull int[] topLevel, @Nullable int[][] subLevel) {
+    public Builder customColors(int[] topLevel, @Nullable int[][] subLevel) {
       colorsTop = topLevel;
       colorsSub = subLevel;
       return this;

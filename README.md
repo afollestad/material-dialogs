@@ -274,25 +274,25 @@ To know when the user selects an action button, you set callbacks:
 new MaterialDialog.Builder(this)
     .onPositive(new MaterialDialog.SingleButtonCallback() {
         @Override
-        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        public void onClick(MaterialDialog dialog, DialogAction which) {
             // TODO
         }
     })
     .onNeutral(new MaterialDialog.SingleButtonCallback() {
         @Override
-        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        public void onClick(MaterialDialog dialog, DialogAction which) {
             // TODO
         }
     })
     .onNegative(new MaterialDialog.SingleButtonCallback() {
         @Override
-        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        public void onClick(MaterialDialog dialog, DialogAction which) {
             // TODO
         }
     })
     .onAny(new MaterialDialog.SingleButtonCallback() {
         @Override
-        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        public void onClick(MaterialDialog dialog, DialogAction which) {
             // TODO
         }
     });
@@ -320,7 +320,7 @@ new MaterialDialog.Builder(this)
     .negativeText(R.string.deny)
     .onAny(new MaterialDialog.SingleButtonCallback() {
         @Override
-        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        public void onClick(MaterialDialog dialog, DialogAction which) {
             showToast("Prompt checked? " + dialog.isPromptCheckBoxChecked());
         }
     })
@@ -1141,7 +1141,7 @@ public class MyActivity implements ColorChooserDialog.ColorCallback {
     // ...
 
     @Override
-    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+    public void onColorSelection(ColorChooserDialog dialog, @ColorInt int color) {
         // TODO
     }
 }
@@ -1247,7 +1247,7 @@ public class MyActivity implements FileChooserDialog.FileCallback {
     // ...
 
     @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+    public void onFileSelection(FileChooserDialog dialog, File file) {
         // TODO
         final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
     }
@@ -1278,7 +1278,7 @@ public class MyActivity implements FolderChooserDialog.FolderCallback {
     // ...
 
     @Override
-    public void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File folder) {
+    public void onFolderSelection(FolderChooserDialog dialog, File folder) {
         // TODO
         final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
     }

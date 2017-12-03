@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import com.afollestad.materialdialogs.commons.R;
@@ -17,7 +16,7 @@ class PrefUtil {
   private PrefUtil() {}
 
   static void setLayoutResource(
-      @NonNull Context context, @NonNull Preference preference, @Nullable AttributeSet attrs) {
+      Context context, Preference preference, @Nullable AttributeSet attrs) {
     boolean foundLayout = false;
     if (attrs != null) {
       for (int i = 0; i < attrs.getAttributeCount(); i++) {
@@ -46,8 +45,7 @@ class PrefUtil {
   }
 
   static void registerOnActivityDestroyListener(
-      @NonNull Preference preference,
-      @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+      Preference preference, PreferenceManager.OnActivityDestroyListener listener) {
     try {
       PreferenceManager pm = preference.getPreferenceManager();
       Method method =
@@ -62,8 +60,7 @@ class PrefUtil {
   }
 
   static void unregisterOnActivityDestroyListener(
-      @NonNull Preference preference,
-      @NonNull PreferenceManager.OnActivityDestroyListener listener) {
+      Preference preference, PreferenceManager.OnActivityDestroyListener listener) {
     try {
       PreferenceManager pm = preference.getPreferenceManager();
       Method method =

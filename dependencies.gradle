@@ -6,6 +6,7 @@ ext.versions = [
         publishVersionCode: 179,
         gradlePlugin      : '3.0.1',
         spotlessPlugin    : '3.6.0',
+        findBugs          : '3.0.2',
 
         supportLib        : '27.0.1',
         mdProgressBar     : '1.4.2',

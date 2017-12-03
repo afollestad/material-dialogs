@@ -104,7 +104,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             .onPositive(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     dialog.dismiss();
                     callback.onFolderSelection(FolderChooserDialog.this, parentFolder);
                   }
@@ -112,7 +112,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             .onNegative(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     dialog.dismiss();
                   }
                 })
@@ -124,7 +124,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       builder.onNeutral(
           new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            public void onClick(MaterialDialog dialog, DialogAction which) {
               createNewFolder();
             }
           });
@@ -152,7 +152,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             false,
             new MaterialDialog.InputCallback() {
               @Override
-              public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+              public void onInput(MaterialDialog dialog, CharSequence input) {
                 //noinspection ResultOfMethodCallIgnored
                 final File newFi = new File(parentFolder, input.toString());
                 if (!newFi.mkdir()) {
@@ -238,14 +238,14 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
   public interface FolderCallback {
 
-    void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File folder);
+    void onFolderSelection(FolderChooserDialog dialog, File folder);
 
-    void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog);
+    void onFolderChooserDismissed(FolderChooserDialog dialog);
   }
 
   public static class Builder implements Serializable {
 
-    @NonNull final transient Context context;
+    final transient Context context;
     @StringRes int chooseButton;
     @StringRes int cancelButton;
     String initialPath;
@@ -256,7 +256,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     @Nullable String mediumFont;
     @Nullable String regularFont;
 
-    public Builder(@NonNull Context context) {
+    public Builder(Context context) {
       this.context = context;
       chooseButton = R.string.md_choose_label;
       cancelButton = android.R.string.cancel;
