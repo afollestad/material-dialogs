@@ -86,7 +86,7 @@ class DialogInit {
     if (builder.backgroundColor == 0) {
       builder.backgroundColor =
           DialogUtils.resolveColor(
-              builder.context,
+              dialog.getView().getContext(),
               R.attr.md_background_color,
               DialogUtils.resolveColor(dialog.getContext(), R.attr.colorBackgroundFloating));
     }
