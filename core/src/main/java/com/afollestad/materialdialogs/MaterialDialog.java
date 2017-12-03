@@ -26,6 +26,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -1114,6 +1115,7 @@ public class MaterialDialog extends DialogBase
     protected CharSequence checkBoxPrompt;
     protected boolean checkBoxPromptInitiallyChecked;
     protected CheckBox.OnCheckedChangeListener checkBoxPromptListener;
+    protected InputFilter[] inputFilters;
 
     protected String progressNumberFormat;
     protected NumberFormat progressPercentFormat;
@@ -2117,6 +2119,11 @@ public class MaterialDialog extends DialogBase
         @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
         @ColorRes int errorColor) {
       return inputRange(minLength, maxLength, DialogUtils.getColor(context, errorColor));
+    }
+
+    public Builder inputFilters(@Nullable InputFilter... filters) {
+      this.inputFilters = filters;
+      return this;
     }
 
     public Builder alwaysCallInputCallback() {

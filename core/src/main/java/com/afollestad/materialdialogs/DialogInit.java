@@ -366,7 +366,8 @@ class DialogInit {
           // Setting padding to an EditText causes visual errors, set it to the parent instead
           sv.setPadding(framePadding, paddingTop, framePadding, paddingBottom);
         } else {
-          // Setting padding to scroll view pushes the scroll bars out, don't do it if not necessary (like above)
+          // Setting padding to scroll view pushes the scroll bars out, don't do it if not necessary
+          // (like above)
           sv.setPadding(0, paddingTop, 0, paddingBottom);
           innerView.setPadding(framePadding, 0, framePadding, 0);
         }
@@ -530,7 +531,8 @@ class DialogInit {
       if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
           && (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD)
               == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
-        // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation method automatically
+        // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation
+        // method automatically
         dialog.input.setTransformationMethod(PasswordTransformationMethod.getInstance());
       }
     }
@@ -542,6 +544,10 @@ class DialogInit {
     } else {
       dialog.inputMinMax.setVisibility(View.GONE);
       dialog.inputMinMax = null;
+    }
+
+    if (builder.inputFilters != null) {
+      dialog.input.setFilters(builder.inputFilters);
     }
   }
 }
