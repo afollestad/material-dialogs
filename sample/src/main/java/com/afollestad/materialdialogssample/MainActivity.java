@@ -648,7 +648,7 @@ public class MainActivity extends AppCompatActivity
   public void showShowCancelDismissCallbacks() {
     new MaterialDialog.Builder(this)
         .title(R.string.useGoogleLocationServices)
-        .content(R.string.useGoogleLocationServicesPrompt)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
         .positiveText(R.string.agree)
         .negativeText(R.string.disagree)
         .neutralText(R.string.more_info)
