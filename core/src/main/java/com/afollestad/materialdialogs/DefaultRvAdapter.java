@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -171,7 +172,11 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
   interface InternalListCallback {
 
     boolean onItemSelected(
-        MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
+        MaterialDialog dialog,
+        View itemView,
+        int position,
+        @Nullable CharSequence text,
+        boolean longPress);
   }
 
   static class DefaultVH extends RecyclerView.ViewHolder
@@ -183,8 +188,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
     DefaultVH(View itemView, DefaultRvAdapter adapter) {
       super(itemView);
-      control = (CompoundButton) itemView.findViewById(R.id.md_control);
-      title = (TextView) itemView.findViewById(R.id.md_title);
+      control = itemView.findViewById(R.id.md_control);
+      title = itemView.findViewById(R.id.md_title);
       this.adapter = adapter;
       itemView.setOnClickListener(this);
       if (adapter.dialog.builder.listLongCallback != null) {

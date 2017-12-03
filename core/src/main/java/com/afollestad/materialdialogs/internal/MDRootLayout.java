@@ -139,7 +139,7 @@ public class MDRootLayout extends ViewGroup {
    * @return View touching the bottom of this ViewGroup or null
    */
   @Nullable
-  private static View getBottomView(ViewGroup viewGroup) {
+  private static View getBottomView(@Nullable ViewGroup viewGroup) {
     if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
     }
@@ -156,7 +156,7 @@ public class MDRootLayout extends ViewGroup {
   }
 
   @Nullable
-  private static View getTopView(ViewGroup viewGroup) {
+  private static View getTopView(@Nullable ViewGroup viewGroup) {
     if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
     }

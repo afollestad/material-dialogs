@@ -103,9 +103,6 @@ public class MDTintHelper {
       }
     } else {
       PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        mode = PorterDuff.Mode.MULTIPLY;
-      }
       if (seekBar.getIndeterminateDrawable() != null) {
         seekBar.getIndeterminateDrawable().setColorFilter(color, mode);
       }
@@ -130,9 +127,6 @@ public class MDTintHelper {
       }
     } else {
       PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        mode = PorterDuff.Mode.MULTIPLY;
-      }
       if (!skipIndeterminate && progressBar.getIndeterminateDrawable() != null) {
         progressBar.getIndeterminateDrawable().setColorFilter(color, mode);
       }
@@ -157,6 +151,7 @@ public class MDTintHelper {
     return new ColorStateList(states, colors);
   }
 
+  @SuppressLint("RestrictedApi")
   public static void setTint(EditText editText, @ColorInt int color) {
     ColorStateList editTextColorStateList =
         createEditTextColorStateList(editText.getContext(), color);
