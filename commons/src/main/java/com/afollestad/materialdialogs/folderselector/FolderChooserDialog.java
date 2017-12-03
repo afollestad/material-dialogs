@@ -73,7 +73,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
   }
 
   @SuppressWarnings("ConstantConditions")
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
@@ -208,24 +207,29 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     super.onAttach(context);
     if (getActivity() instanceof FolderCallback) {
       callback = (FolderCallback) getActivity();
-    } else if (getParentFragment() instanceof FolderCallback) {
-      callback = (FolderCallback) getParentFragment();
+    } else if (getTargetFragment() instanceof FolderCallback) {
+      callback = (FolderCallback) getTargetFragment();
     } else {
       throw new IllegalStateException(
           "FolderChooserDialog needs to be shown from an Activity/Fragment implementing FolderCallback.");
     }
   }
 
-  public void show(FragmentActivity fragmentActivity) {
-    show(fragmentActivity.getSupportFragmentManager());
-  }
+  public void show() {
+    final FragmentManager fragmentManager =
+        getBuilder().fragment != null
+            ? getBuilder().fragment.getChildFragmentManager()
+            : getBuilder().activity.getSupportFragmentManager();
 
-  public void show(FragmentManager fragmentManager) {
     final String tag = getBuilder().tag;
     Fragment frag = fragmentManager.findFragmentByTag(tag);
     if (frag != null) {
       ((DialogFragment) frag).dismiss();
       fragmentManager.beginTransaction().remove(frag).commit();
+    }
+
+    if (getBuilder().fragment != null) {
+      setTargetFragment(getBuilder().fragment, 63);
     }
     show(fragmentManager, tag);
   }
@@ -245,7 +249,9 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
   public static class Builder implements Serializable {
 
-    final transient Context context;
+    transient FragmentActivity activity;
+    transient Fragment fragment;
+
     @StringRes int chooseButton;
     @StringRes int cancelButton;
     String initialPath;
@@ -256,12 +262,21 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     @Nullable String mediumFont;
     @Nullable String regularFont;
 
-    public Builder(Context context) {
-      this.context = context;
+    private Builder() {
       chooseButton = R.string.md_choose_label;
       cancelButton = android.R.string.cancel;
       goUpLabel = "...";
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    public <T extends FragmentActivity & FolderCallback> Builder(T activity) {
+      this();
+      this.activity = activity;
+    }
+
+    public <T extends Fragment & FolderCallback> Builder(T fragment) {
+      this();
+      this.fragment = fragment;
     }
 
     @NonNull
@@ -327,20 +342,14 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
     }
 
     @NonNull
-    public FolderChooserDialog show(FragmentManager fragmentManager) {
+    public FolderChooserDialog show() {
       FolderChooserDialog dialog = build();
-      dialog.show(fragmentManager);
+      dialog.show();
       return dialog;
-    }
-
-    @NonNull
-    public FolderChooserDialog show(FragmentActivity fragmentActivity) {
-      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 
   private static class FolderSorter implements Comparator<File> {
-
     @Override
     public int compare(File lhs, File rhs) {
       return lhs.getName().compareTo(rhs.getName());

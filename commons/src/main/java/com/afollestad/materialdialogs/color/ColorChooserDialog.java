@@ -69,6 +69,7 @@ public class ColorChooserDialog extends DialogFragment
 
   public ColorChooserDialog() {}
 
+  @SuppressWarnings("unused")
   @Nullable
   public static ColorChooserDialog findVisible(
       FragmentManager fragmentManager, @ColorChooserTag String tag) {
@@ -112,8 +113,8 @@ public class ColorChooserDialog extends DialogFragment
     super.onAttach(context);
     if (getActivity() instanceof ColorCallback) {
       callback = (ColorCallback) getActivity();
-    } else if (getParentFragment() instanceof ColorCallback) {
-      callback = (ColorCallback) getParentFragment();
+    } else if (getTargetFragment() instanceof ColorCallback) {
+      callback = (ColorCallback) getTargetFragment();
     } else {
       throw new IllegalStateException(
           "ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
@@ -582,7 +583,7 @@ public class ColorChooserDialog extends DialogFragment
   }
 
   @NonNull
-  public ColorChooserDialog show(FragmentManager fragmentManager) {
+  public ColorChooserDialog show() {
     String tag;
     Builder builder = getBuilder();
     if (builder.colorsTop != null) {
@@ -592,14 +593,18 @@ public class ColorChooserDialog extends DialogFragment
     } else {
       tag = TAG_PRIMARY;
     }
+
+    final FragmentManager fragmentManager =
+        builder.fragment != null
+            ? builder.fragment.getChildFragmentManager()
+            : builder.activity.getSupportFragmentManager();
+    if (builder.fragment != null) {
+      setTargetFragment(builder.fragment, 67);
+    }
+
     dismissIfNecessary(fragmentManager, tag);
     show(fragmentManager, tag);
     return this;
-  }
-
-  @NonNull
-  public ColorChooserDialog show(FragmentActivity fragmentActivity) {
-    return show(fragmentActivity.getSupportFragmentManager());
   }
 
   @Retention(RetentionPolicy.SOURCE)
@@ -615,7 +620,9 @@ public class ColorChooserDialog extends DialogFragment
 
   public static class Builder implements Serializable {
 
-    final transient Context context;
+    @Nullable final transient FragmentActivity activity;
+    @Nullable final transient Fragment fragment;
+
     @Nullable String mediumFont;
     @Nullable String regularFont;
     @StringRes final int title;
@@ -637,8 +644,15 @@ public class ColorChooserDialog extends DialogFragment
     boolean allowUserCustomAlpha = true;
     boolean setPreselectionColor = false;
 
-    public Builder(Context context, @StringRes int title) {
-      this.context = context;
+    public <T extends FragmentActivity & ColorCallback> Builder(T activity, @StringRes int title) {
+      this.activity = activity;
+      this.fragment = null;
+      this.title = title;
+    }
+
+    public <T extends Fragment & ColorCallback> Builder(T fragment, @StringRes int title) {
+      this.activity = null;
+      this.fragment = fragment;
       this.title = title;
     }
 
@@ -725,6 +739,7 @@ public class ColorChooserDialog extends DialogFragment
 
     @NonNull
     public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
+      final Context context = fragment != null ? fragment.getContext() : activity;
       colorsTop = DialogUtils.getColorArray(context, topLevel);
       colorsSub = subLevel;
       return this;
@@ -752,15 +767,10 @@ public class ColorChooserDialog extends DialogFragment
     }
 
     @NonNull
-    public ColorChooserDialog show(FragmentManager fragmentManager) {
+    public ColorChooserDialog show() {
       ColorChooserDialog dialog = build();
-      dialog.show(fragmentManager);
+      dialog.show();
       return dialog;
-    }
-
-    @NonNull
-    public ColorChooserDialog show(FragmentActivity fragmentActivity) {
-      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 
