@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
@@ -134,7 +133,6 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
   }
 
   @SuppressWarnings("ConstantConditions")
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
@@ -249,13 +247,11 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     show(fragmentManager, tag);
   }
 
-  @NonNull
   public String getInitialPath() {
     return getBuilder().initialPath;
   }
 
   @SuppressWarnings("ConstantConditions")
-  @NonNull
   private Builder getBuilder() {
     return (Builder) getArguments().getSerializable("builder");
   }
@@ -298,20 +294,17 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       this.fragment = fragment;
     }
 
-    @NonNull
     public Builder typeface(@Nullable String medium, @Nullable String regular) {
       this.mediumFont = medium;
       this.regularFont = regular;
       return this;
     }
 
-    @NonNull
     public Builder cancelButton(@StringRes int text) {
       cancelButton = text;
       return this;
     }
 
-    @NonNull
     public Builder initialPath(@Nullable String initialPath) {
       if (initialPath == null) {
         initialPath = File.separator;
@@ -320,19 +313,16 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       return this;
     }
 
-    @NonNull
     public Builder mimeType(@Nullable String type) {
       mimeType = type;
       return this;
     }
 
-    @NonNull
     public Builder extensionsFilter(@Nullable String... extensions) {
       this.extensions = extensions;
       return this;
     }
 
-    @NonNull
     public Builder tag(@Nullable String tag) {
       if (tag == null) {
         tag = DEFAULT_TAG;
@@ -341,13 +331,11 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       return this;
     }
 
-    @NonNull
     public Builder goUpLabel(String text) {
       goUpLabel = text;
       return this;
     }
 
-    @NonNull
     public FileChooserDialog build() {
       FileChooserDialog dialog = new FileChooserDialog();
       Bundle args = new Bundle();
@@ -356,7 +344,6 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       return dialog;
     }
 
-    @NonNull
     public FileChooserDialog show() {
       FileChooserDialog dialog = build();
       dialog.show();

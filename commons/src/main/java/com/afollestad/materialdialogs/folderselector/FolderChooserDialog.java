@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -235,7 +234,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
   }
 
   @SuppressWarnings("ConstantConditions")
-  @NonNull
   private Builder getBuilder() {
     return (Builder) getArguments().getSerializable("builder");
   }
@@ -279,32 +277,27 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       this.fragment = fragment;
     }
 
-    @NonNull
     public Builder typeface(@Nullable String medium, @Nullable String regular) {
       this.mediumFont = medium;
       this.regularFont = regular;
       return this;
     }
 
-    @NonNull
     public Builder chooseButton(@StringRes int text) {
       chooseButton = text;
       return this;
     }
 
-    @NonNull
     public Builder cancelButton(@StringRes int text) {
       cancelButton = text;
       return this;
     }
 
-    @NonNull
     public Builder goUpLabel(String text) {
       goUpLabel = text;
       return this;
     }
 
-    @NonNull
     public Builder allowNewFolder(boolean allow, @StringRes int buttonLabel) {
       allowNewFolder = allow;
       if (buttonLabel == 0) {
@@ -314,7 +307,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       return this;
     }
 
-    @NonNull
     public Builder initialPath(@Nullable String initialPath) {
       if (initialPath == null) {
         initialPath = File.separator;
@@ -323,7 +315,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       return this;
     }
 
-    @NonNull
     public Builder tag(@Nullable String tag) {
       if (tag == null) {
         tag = DEFAULT_TAG;
@@ -332,7 +323,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       return this;
     }
 
-    @NonNull
     public FolderChooserDialog build() {
       FolderChooserDialog dialog = new FolderChooserDialog();
       Bundle args = new Bundle();
@@ -341,7 +331,6 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
       return dialog;
     }
 
-    @NonNull
     public FolderChooserDialog show() {
       FolderChooserDialog dialog = build();
       dialog.show();

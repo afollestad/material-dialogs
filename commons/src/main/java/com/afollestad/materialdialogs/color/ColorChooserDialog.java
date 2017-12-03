@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
@@ -289,7 +288,6 @@ public class ColorChooserDialog extends DialogFragment
     }
   }
 
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     if (getArguments() == null || !getArguments().containsKey("builder")) {
@@ -582,7 +580,6 @@ public class ColorChooserDialog extends DialogFragment
     }
   }
 
-  @NonNull
   public ColorChooserDialog show() {
     String tag;
     Builder builder = getBuilder();
@@ -656,88 +653,74 @@ public class ColorChooserDialog extends DialogFragment
       this.title = title;
     }
 
-    @NonNull
     public Builder typeface(@Nullable String medium, @Nullable String regular) {
       this.mediumFont = medium;
       this.regularFont = regular;
       return this;
     }
 
-    @NonNull
     public Builder titleSub(@StringRes int titleSub) {
       this.titleSub = titleSub;
       return this;
     }
 
-    @NonNull
     public Builder tag(@Nullable String tag) {
       this.tag = tag;
       return this;
     }
 
-    @NonNull
     public Builder theme(Theme theme) {
       this.theme = theme;
       return this;
     }
 
-    @NonNull
     public Builder preselect(@ColorInt int preselect) {
       preselectColor = preselect;
       setPreselectionColor = true;
       return this;
     }
 
-    @NonNull
     public Builder accentMode(boolean accentMode) {
       this.accentMode = accentMode;
       return this;
     }
 
-    @NonNull
     public Builder doneButton(@StringRes int text) {
       doneBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder backButton(@StringRes int text) {
       backBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder cancelButton(@StringRes int text) {
       cancelBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder customButton(@StringRes int text) {
       customBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder presetsButton(@StringRes int text) {
       presetsBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder dynamicButtonColor(boolean enabled) {
       dynamicButtonColor = enabled;
       return this;
     }
 
-    @NonNull
     public Builder customColors(int[] topLevel, @Nullable int[][] subLevel) {
       colorsTop = topLevel;
       colorsSub = subLevel;
       return this;
     }
 
-    @NonNull
     public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
       final Context context = fragment != null ? fragment.getContext() : activity;
       colorsTop = DialogUtils.getColorArray(context, topLevel);
@@ -745,19 +728,16 @@ public class ColorChooserDialog extends DialogFragment
       return this;
     }
 
-    @NonNull
     public Builder allowUserColorInput(boolean allow) {
       allowUserCustom = allow;
       return this;
     }
 
-    @NonNull
     public Builder allowUserColorInputAlpha(boolean allow) {
       allowUserCustomAlpha = allow;
       return this;
     }
 
-    @NonNull
     public ColorChooserDialog build() {
       ColorChooserDialog dialog = new ColorChooserDialog();
       Bundle args = new Bundle();
@@ -766,7 +746,6 @@ public class ColorChooserDialog extends DialogFragment
       return dialog;
     }
 
-    @NonNull
     public ColorChooserDialog show() {
       ColorChooserDialog dialog = build();
       dialog.show();
