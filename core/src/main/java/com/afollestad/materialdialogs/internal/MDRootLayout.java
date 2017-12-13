@@ -254,14 +254,12 @@ public class MDRootLayout extends ViewGroup {
 
     int stackedHeight = 0;
     isStacked = stacked;
-    if (stacked) {
-      for (MDButton button : buttons) {
-        if (button != null && isVisible(button)) {
-          button.setStacked(true, false);
-          measureChild(button, widthMeasureSpec, heightMeasureSpec);
-          stackedHeight += button.getMeasuredHeight();
-          hasButtons = true;
-        }
+    for (MDButton button : buttons) {
+      if (button != null && isVisible(button)) {
+        button.setStacked(stacked, false);
+        measureChild(button, widthMeasureSpec, heightMeasureSpec);
+        stackedHeight += button.getMeasuredHeight();
+        hasButtons = true;
       }
     }
 

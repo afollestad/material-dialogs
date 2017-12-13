@@ -65,6 +65,14 @@
             android:text="@string/stacked" />
 
         <Button
+            android:id="@+id/neverStacked"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_button_height"
+            android:layout_marginTop="@dimen/sample_button_spacing"
+            android:text="@string/neverStacked" />
+
+
+        <Button
             android:id="@+id/neutral"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sample_button_height"

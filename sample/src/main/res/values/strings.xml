@@ -8,6 +8,7 @@
 
     <string name="basic">Basic</string>
     <string name="stacked">Stacked Buttons</string>
+    <string name="neverStacked">Never Stacked Buttons</string>
     <string name="neutral">Neutral Button</string>
     <string name="callbacks">Callbacks</string>
     <string name="list">Basic List</string>

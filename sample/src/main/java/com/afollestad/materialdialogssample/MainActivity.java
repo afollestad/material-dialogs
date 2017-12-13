@@ -183,6 +183,21 @@ public class MainActivity extends AppCompatActivity
         .show();
   }
 
+  @OnClick(R.id.neverStacked)
+  public void showNeverStacked() {
+    new MaterialDialog.Builder(this)
+        .title(R.string.useGoogleLocationServices)
+        .content(R.string.useGoogleLocationServicesPrompt, true)
+        .positiveText(R.string.speedBoost)
+        .negativeText(R.string.noThanks)
+        .neutralText(R.string.more_info)
+        .btnStackedGravity(GravityEnum.END)
+        .stackingBehavior(
+            StackingBehavior
+                .NEVER) // this generally should not be forced, but is used for demo purposes
+        .show();
+  }
+
   @OnClick(R.id.neutral)
   public void showNeutral() {
     new MaterialDialog.Builder(this)
