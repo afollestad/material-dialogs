@@ -7,7 +7,6 @@ import android.view.View;
 import java.util.Locale;
 
 class AllCapsTransformationMethod implements TransformationMethod {
-
   private Locale mLocale;
 
   AllCapsTransformationMethod(Context context) {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -29,7 +28,6 @@ public class ChangelogDialog extends DialogFragment {
   }
 
   @SuppressLint("InflateParams")
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final View customView;

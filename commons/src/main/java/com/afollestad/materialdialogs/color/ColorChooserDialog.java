@@ -9,9 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -35,18 +33,13 @@ import com.afollestad.materialdialogs.commons.R;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import java.io.Serializable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
 
 /** @author Aidan Follestad (afollestad) */
-@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions", "unused"})
 public class ColorChooserDialog extends DialogFragment
     implements View.OnClickListener, View.OnLongClickListener {
 
-  public static final String TAG_PRIMARY = "[MD_COLOR_CHOOSER]";
-  public static final String TAG_ACCENT = "[MD_COLOR_CHOOSER]";
-  public static final String TAG_CUSTOM = "[MD_COLOR_CHOOSER]";
   private int[] colorsTop;
   @Nullable private int[][] colorsSub;
   private int circleSize;
@@ -70,9 +63,8 @@ public class ColorChooserDialog extends DialogFragment
   public ColorChooserDialog() {}
 
   @Nullable
-  public static ColorChooserDialog findVisible(
-      @NonNull FragmentManager fragmentManager, @ColorChooserTag String tag) {
-    Fragment frag = fragmentManager.findFragmentByTag(tag);
+  public static ColorChooserDialog findVisible(FragmentManager fragmentManager, Tag tag) {
+    Fragment frag = fragmentManager.findFragmentByTag(tag.toString());
     if (frag != null && frag instanceof ColorChooserDialog) {
       return (ColorChooserDialog) frag;
     }
@@ -112,8 +104,8 @@ public class ColorChooserDialog extends DialogFragment
     super.onAttach(context);
     if (getActivity() instanceof ColorCallback) {
       callback = (ColorCallback) getActivity();
-    } else if (getParentFragment() instanceof ColorCallback) {
-      callback = (ColorCallback) getParentFragment();
+    } else if (getTargetFragment() instanceof ColorCallback) {
+      callback = (ColorCallback) getTargetFragment();
     } else {
       throw new IllegalStateException(
           "ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
@@ -288,7 +280,6 @@ public class ColorChooserDialog extends DialogFragment
     }
   }
 
-  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     if (getArguments() == null || !getArguments().containsKey("builder")) {
@@ -357,7 +348,7 @@ public class ColorChooserDialog extends DialogFragment
             .onPositive(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     callback.onColorSelection(ColorChooserDialog.this, getSelectedColor());
                     dismiss();
                   }
@@ -365,7 +356,7 @@ public class ColorChooserDialog extends DialogFragment
             .onNegative(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     if (isInSub()) {
                       dialog.setActionButton(DialogAction.NEGATIVE, getBuilder().cancelBtn);
                       isInSub(false);
@@ -379,7 +370,7 @@ public class ColorChooserDialog extends DialogFragment
             .onNeutral(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     toggleCustom(dialog);
                   }
                 })
@@ -490,7 +481,6 @@ public class ColorChooserDialog extends DialogFragment
       customColorHex.addTextChangedListener(customColorTextWatcher);
       customColorRgbListener =
           new SeekBar.OnSeekBarChangeListener() {
-
             @SuppressLint("DefaultLocale")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -581,41 +571,60 @@ public class ColorChooserDialog extends DialogFragment
     }
   }
 
-  @NonNull
-  public ColorChooserDialog show(FragmentManager fragmentManager) {
-    String tag;
+  public ColorChooserDialog show() {
+    Tag tag;
     Builder builder = getBuilder();
     if (builder.colorsTop != null) {
-      tag = TAG_CUSTOM;
+      tag = Tag.CUSTOM;
     } else if (builder.accentMode) {
-      tag = TAG_ACCENT;
+      tag = Tag.ACCENT;
     } else {
-      tag = TAG_PRIMARY;
+      tag = Tag.PRIMARY;
     }
-    dismissIfNecessary(fragmentManager, tag);
-    show(fragmentManager, tag);
+
+    final FragmentManager fragmentManager =
+        builder.fragment != null
+            ? builder.fragment.getChildFragmentManager()
+            : builder.activity.getSupportFragmentManager();
+    if (builder.fragment != null) {
+      setTargetFragment(builder.fragment, 67);
+    }
+
+    dismissIfNecessary(fragmentManager, tag.toString());
+    show(fragmentManager, tag.toString());
     return this;
   }
 
-  @NonNull
-  public ColorChooserDialog show(FragmentActivity fragmentActivity) {
-    return show(fragmentActivity.getSupportFragmentManager());
-  }
+  public enum Tag {
+    PRIMARY("COLOR_CHOOSER_PRIMARY"),
+    ACCENT("COLOR_CHOOSER_ACCENT"),
+    CUSTOM("COLOR_CHOOSER_CUSTOM");
 
-  @Retention(RetentionPolicy.SOURCE)
-  @StringDef({TAG_PRIMARY, TAG_ACCENT, TAG_CUSTOM})
-  public @interface ColorChooserTag {}
+    private String value;
+
+    Tag(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return value;
+    }
+  }
 
   public interface ColorCallback {
 
-    void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor);
+    void onColorSelection(ColorChooserDialog dialog, @ColorInt int selectedColor);
 
-    void onColorChooserDismissed(@NonNull ColorChooserDialog dialog);
+    void onColorChooserDismissed(ColorChooserDialog dialog);
   }
 
+  @SuppressWarnings("SameParameterValue")
   public static class Builder implements Serializable {
 
-    @NonNull final transient Context context;
+    @Nullable final transient FragmentActivity activity;
+    @Nullable final transient Fragment fragment;
+
     @Nullable String mediumFont;
     @Nullable String regularFont;
     @StringRes final int title;
@@ -637,112 +646,103 @@ public class ColorChooserDialog extends DialogFragment
     boolean allowUserCustomAlpha = true;
     boolean setPreselectionColor = false;
 
-    public Builder(@NonNull Context context, @StringRes int title) {
-      this.context = context;
+    public <T extends FragmentActivity & ColorCallback> Builder(T activity, @StringRes int title) {
+      this.activity = activity;
+      this.fragment = null;
       this.title = title;
     }
 
-    @NonNull
+    public <T extends Fragment & ColorCallback> Builder(T fragment, @StringRes int title) {
+      this.activity = null;
+      this.fragment = fragment;
+      this.title = title;
+    }
+
     public Builder typeface(@Nullable String medium, @Nullable String regular) {
       this.mediumFont = medium;
       this.regularFont = regular;
       return this;
     }
 
-    @NonNull
     public Builder titleSub(@StringRes int titleSub) {
       this.titleSub = titleSub;
       return this;
     }
 
-    @NonNull
     public Builder tag(@Nullable String tag) {
       this.tag = tag;
       return this;
     }
 
-    @NonNull
-    public Builder theme(@NonNull Theme theme) {
+    public Builder theme(Theme theme) {
       this.theme = theme;
       return this;
     }
 
-    @NonNull
     public Builder preselect(@ColorInt int preselect) {
       preselectColor = preselect;
       setPreselectionColor = true;
       return this;
     }
 
-    @NonNull
     public Builder accentMode(boolean accentMode) {
       this.accentMode = accentMode;
       return this;
     }
 
-    @NonNull
     public Builder doneButton(@StringRes int text) {
       doneBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder backButton(@StringRes int text) {
       backBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder cancelButton(@StringRes int text) {
       cancelBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder customButton(@StringRes int text) {
       customBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder presetsButton(@StringRes int text) {
       presetsBtn = text;
       return this;
     }
 
-    @NonNull
     public Builder dynamicButtonColor(boolean enabled) {
       dynamicButtonColor = enabled;
       return this;
     }
 
-    @NonNull
-    public Builder customColors(@NonNull int[] topLevel, @Nullable int[][] subLevel) {
+    public Builder customColors(int[] topLevel, @Nullable int[][] subLevel) {
       colorsTop = topLevel;
       colorsSub = subLevel;
       return this;
     }
 
-    @NonNull
     public Builder customColors(@ArrayRes int topLevel, @Nullable int[][] subLevel) {
+      final Context context = fragment != null ? fragment.getContext() : activity;
       colorsTop = DialogUtils.getColorArray(context, topLevel);
       colorsSub = subLevel;
       return this;
     }
 
-    @NonNull
     public Builder allowUserColorInput(boolean allow) {
       allowUserCustom = allow;
       return this;
     }
 
-    @NonNull
     public Builder allowUserColorInputAlpha(boolean allow) {
       allowUserCustomAlpha = allow;
       return this;
     }
 
-    @NonNull
     public ColorChooserDialog build() {
       ColorChooserDialog dialog = new ColorChooserDialog();
       Bundle args = new Bundle();
@@ -751,21 +751,14 @@ public class ColorChooserDialog extends DialogFragment
       return dialog;
     }
 
-    @NonNull
-    public ColorChooserDialog show(FragmentManager fragmentManager) {
+    public ColorChooserDialog show() {
       ColorChooserDialog dialog = build();
-      dialog.show(fragmentManager);
+      dialog.show();
       return dialog;
-    }
-
-    @NonNull
-    public ColorChooserDialog show(FragmentActivity fragmentActivity) {
-      return show(fragmentActivity.getSupportFragmentManager());
     }
   }
 
   private class ColorGridAdapter extends BaseAdapter {
-
     ColorGridAdapter() {}
 
     @Override

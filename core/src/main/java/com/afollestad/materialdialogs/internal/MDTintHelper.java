@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatEditText;
@@ -26,7 +25,7 @@ import java.lang.reflect.Field;
 @SuppressLint("PrivateResource")
 public class MDTintHelper {
 
-  public static void setTint(@NonNull RadioButton radioButton, @NonNull ColorStateList colors) {
+  public static void setTint(RadioButton radioButton, ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
       radioButton.setButtonTintList(colors);
     } else {
@@ -38,7 +37,7 @@ public class MDTintHelper {
     }
   }
 
-  public static void setTint(@NonNull RadioButton radioButton, @ColorInt int color) {
+  public static void setTint(RadioButton radioButton, @ColorInt int color) {
     final int disabledColor = DialogUtils.getDisabledColor(radioButton.getContext());
     ColorStateList sl =
         new ColorStateList(
@@ -57,7 +56,7 @@ public class MDTintHelper {
     setTint(radioButton, sl);
   }
 
-  public static void setTint(@NonNull CheckBox box, @NonNull ColorStateList colors) {
+  public static void setTint(CheckBox box, ColorStateList colors) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
       box.setButtonTintList(colors);
     } else {
@@ -69,7 +68,7 @@ public class MDTintHelper {
     }
   }
 
-  public static void setTint(@NonNull CheckBox box, @ColorInt int color) {
+  public static void setTint(CheckBox box, @ColorInt int color) {
     final int disabledColor = DialogUtils.getDisabledColor(box.getContext());
     ColorStateList sl =
         new ColorStateList(
@@ -88,7 +87,7 @@ public class MDTintHelper {
     setTint(box, sl);
   }
 
-  public static void setTint(@NonNull SeekBar seekBar, @ColorInt int color) {
+  public static void setTint(SeekBar seekBar, @ColorInt int color) {
     ColorStateList s1 = ColorStateList.valueOf(color);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       seekBar.setThumbTintList(s1);
@@ -104,9 +103,6 @@ public class MDTintHelper {
       }
     } else {
       PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        mode = PorterDuff.Mode.MULTIPLY;
-      }
       if (seekBar.getIndeterminateDrawable() != null) {
         seekBar.getIndeterminateDrawable().setColorFilter(color, mode);
       }
@@ -116,12 +112,12 @@ public class MDTintHelper {
     }
   }
 
-  public static void setTint(@NonNull ProgressBar progressBar, @ColorInt int color) {
+  public static void setTint(ProgressBar progressBar, @ColorInt int color) {
     setTint(progressBar, color, false);
   }
 
   private static void setTint(
-      @NonNull ProgressBar progressBar, @ColorInt int color, boolean skipIndeterminate) {
+      ProgressBar progressBar, @ColorInt int color, boolean skipIndeterminate) {
     ColorStateList sl = ColorStateList.valueOf(color);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       progressBar.setProgressTintList(sl);
@@ -131,9 +127,6 @@ public class MDTintHelper {
       }
     } else {
       PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        mode = PorterDuff.Mode.MULTIPLY;
-      }
       if (!skipIndeterminate && progressBar.getIndeterminateDrawable() != null) {
         progressBar.getIndeterminateDrawable().setColorFilter(color, mode);
       }
@@ -143,8 +136,7 @@ public class MDTintHelper {
     }
   }
 
-  private static ColorStateList createEditTextColorStateList(
-      @NonNull Context context, @ColorInt int color) {
+  private static ColorStateList createEditTextColorStateList(Context context, @ColorInt int color) {
     int[][] states = new int[3][];
     int[] colors = new int[3];
     int i = 0;
@@ -159,7 +151,8 @@ public class MDTintHelper {
     return new ColorStateList(states, colors);
   }
 
-  public static void setTint(@NonNull EditText editText, @ColorInt int color) {
+  @SuppressLint("RestrictedApi")
+  public static void setTint(EditText editText, @ColorInt int color) {
     ColorStateList editTextColorStateList =
         createEditTextColorStateList(editText.getContext(), color);
     if (editText instanceof AppCompatEditText) {
@@ -171,7 +164,7 @@ public class MDTintHelper {
     setCursorTint(editText, color);
   }
 
-  private static void setCursorTint(@NonNull EditText editText, @ColorInt int color) {
+  private static void setCursorTint(EditText editText, @ColorInt int color) {
     try {
       Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
       fCursorDrawableRes.setAccessible(true);

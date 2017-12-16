@@ -2,9 +2,11 @@ package com.afollestad.materialdialogs;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -124,7 +126,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
     if (view.getChildCount() == 2) {
       if (itemGravity == GravityEnum.END
-          && !isRTL()
+          && !isRTL(view.getContext())
           && view.getChildAt(0) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(0);
         view.removeView(first);
@@ -140,7 +142,7 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
         view.addView(second);
         view.addView(first);
       } else if (itemGravity == GravityEnum.START
-          && isRTL()
+          && isRTL(view.getContext())
           && view.getChildAt(1) instanceof CompoundButton) {
         CompoundButton first = (CompoundButton) view.getChildAt(1);
         view.removeView(first);
@@ -160,18 +162,22 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
   }
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-  private boolean isRTL() {
+  private boolean isRTL(Context context) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
       return false;
     }
-    Configuration config = dialog.getBuilder().getContext().getResources().getConfiguration();
+    Configuration config = context.getResources().getConfiguration();
     return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
   }
 
   interface InternalListCallback {
 
     boolean onItemSelected(
-        MaterialDialog dialog, View itemView, int position, CharSequence text, boolean longPress);
+        MaterialDialog dialog,
+        View itemView,
+        int position,
+        @Nullable CharSequence text,
+        boolean longPress);
   }
 
   static class DefaultVH extends RecyclerView.ViewHolder
@@ -183,8 +189,8 @@ class DefaultRvAdapter extends RecyclerView.Adapter<DefaultRvAdapter.DefaultVH> 
 
     DefaultVH(View itemView, DefaultRvAdapter adapter) {
       super(itemView);
-      control = (CompoundButton) itemView.findViewById(R.id.md_control);
-      title = (TextView) itemView.findViewById(R.id.md_title);
+      control = itemView.findViewById(R.id.md_control);
+      title = itemView.findViewById(R.id.md_title);
       this.adapter = adapter;
       itemView.setOnClickListener(this);
       if (adapter.dialog.builder.listLongCallback != null) {

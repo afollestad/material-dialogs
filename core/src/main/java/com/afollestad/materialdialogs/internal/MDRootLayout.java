@@ -81,7 +81,7 @@ public class MDRootLayout extends ViewGroup {
     init(context, attrs, defStyleAttr);
   }
 
-  private static boolean isVisible(View v) {
+  private static boolean isVisible(@Nullable View v) {
     boolean visible = v != null && v.getVisibility() != View.GONE;
     if (visible && v instanceof MDButton) {
       visible = ((MDButton) v).getText().toString().trim().length() > 0;
@@ -89,7 +89,7 @@ public class MDRootLayout extends ViewGroup {
     return visible;
   }
 
-  public static boolean canRecyclerViewScroll(RecyclerView view) {
+  public static boolean canRecyclerViewScroll(@Nullable RecyclerView view) {
     return view != null
         && view.getLayoutManager() != null
         && view.getLayoutManager().canScrollVertically();
@@ -139,7 +139,7 @@ public class MDRootLayout extends ViewGroup {
    * @return View touching the bottom of this ViewGroup or null
    */
   @Nullable
-  private static View getBottomView(ViewGroup viewGroup) {
+  private static View getBottomView(@Nullable ViewGroup viewGroup) {
     if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
     }
@@ -156,7 +156,7 @@ public class MDRootLayout extends ViewGroup {
   }
 
   @Nullable
-  private static View getTopView(ViewGroup viewGroup) {
+  private static View getTopView(@Nullable ViewGroup viewGroup) {
     if (viewGroup == null || viewGroup.getChildCount() == 0) {
       return null;
     }
@@ -171,7 +171,7 @@ public class MDRootLayout extends ViewGroup {
     return topView;
   }
 
-  private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+  private void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     Resources r = context.getResources();
 
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MDRootLayout, defStyleAttr, 0);
@@ -478,7 +478,7 @@ public class MDRootLayout extends ViewGroup {
   }
 
   private void setUpDividersVisibility(
-      final View view, final boolean setForTop, final boolean setForBottom) {
+      @Nullable final View view, final boolean setForTop, final boolean setForBottom) {
     if (view == null) {
       return;
     }
@@ -611,7 +611,7 @@ public class MDRootLayout extends ViewGroup {
           titleBar != null
               && titleBar.getVisibility() != View.GONE
               &&
-              //Not scrolled to the top.
+              // Not scrolled to the top.
               view.getScrollY() + view.getPaddingTop() > view.getChildAt(0).getTop();
     }
     if (setForBottom && view.getChildCount() > 0) {
@@ -629,7 +629,7 @@ public class MDRootLayout extends ViewGroup {
           titleBar != null
               && titleBar.getVisibility() != View.GONE
               &&
-              //Not scrolled to the top.
+              // Not scrolled to the top.
               view.getScrollY() + view.getPaddingTop() > 0;
     }
     if (setForBottom) {

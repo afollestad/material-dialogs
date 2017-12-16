@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation project(':core')
     implementation project(':commons')
+    implementation 'com.google.code.findbugs:jsr305:' + versions.findBugs
 
     implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
     implementation 'com.android.support:appcompat-v7:' + versions.supportLib

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
@@ -64,7 +63,7 @@ public class MaterialDialogPreference extends DialogPreference {
             .onAny(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  public void onClick(MaterialDialog dialog, DialogAction which) {
                     switch (which) {
                       default:
                         MaterialDialogPreference.this.onClick(
@@ -172,7 +171,7 @@ public class MaterialDialogPreference extends DialogPreference {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
       super.writeToParcel(dest, flags);
       dest.writeInt(isDialogShowing ? 1 : 0);
       dest.writeBundle(dialogBundle);
