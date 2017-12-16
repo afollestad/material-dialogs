@@ -101,6 +101,9 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       }
       String fileExtension = filename.substring(dotPos + 1);
       for(String mimeType : mimeTypes) {
+          if(mimeType == null){
+              continue;
+          }
           if(mimeType.equals("*/*")){
               return true;
           }
@@ -312,7 +315,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
     @NonNull
     public Builder mimeType(@Nullable String... types) {
-      mimeTypes = types;
+      this.mimeTypes = types;
       return this;
     }
 
