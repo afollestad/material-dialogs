@@ -325,7 +325,6 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       return this;
     }
 
-    @NonNull
     public Builder mimeType(@Nullable String... types) {
       this.mimeTypes = types;
       return this;
