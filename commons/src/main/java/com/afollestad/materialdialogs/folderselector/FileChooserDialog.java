@@ -102,42 +102,42 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         return false;
       }
       String fileExtension = filename.substring(dotPos + 1);
-      for(String mimeType : mimeTypes) {
-          if(mimeType == null){
-              continue;
-          }
-          if(mimeType.equals("*/*")){
-              return true;
-          }
-          if (fileExtension.endsWith("json")) {
-              return mimeType.startsWith("application/json");
-          }
-          String fileType = mimeTypeMap.getMimeTypeFromExtension(fileExtension);
-          if (fileType == null) {
-              return false;
-          }
-          // check the 'type/subtype' pattern
-          if (fileType.equals(mimeType)) {
-              return true;
-          }
-          // check the 'type/*' pattern
-          int mimeTypeDelimiter = mimeType.lastIndexOf('/');
-          if (mimeTypeDelimiter == -1) {
-              continue;
-          }
-          String mimeTypeMainType = mimeType.substring(0, mimeTypeDelimiter);
-          String mimeTypeSubtype = mimeType.substring(mimeTypeDelimiter + 1);
-          if (!mimeTypeSubtype.equals("*")) {
-              continue;
-          }
-          int fileTypeDelimiter = fileType.lastIndexOf('/');
-          if (fileTypeDelimiter == -1) {
-              continue;
-          }
-          String fileTypeMainType = fileType.substring(0, fileTypeDelimiter);
-          if (fileTypeMainType.equals(mimeTypeMainType)) {
-              return true;
-          }
+      for (String mimeType : mimeTypes) {
+        if (mimeType == null) {
+          continue;
+        }
+        if (mimeType.equals("*/*")) {
+          return true;
+        }
+        if (fileExtension.endsWith("json")) {
+          return mimeType.startsWith("application/json");
+        }
+        String fileType = mimeTypeMap.getMimeTypeFromExtension(fileExtension);
+        if (fileType == null) {
+          return false;
+        }
+        // check the 'type/subtype' pattern
+        if (fileType.equals(mimeType)) {
+          return true;
+        }
+        // check the 'type/*' pattern
+        int mimeTypeDelimiter = mimeType.lastIndexOf('/');
+        if (mimeTypeDelimiter == -1) {
+          continue;
+        }
+        String mimeTypeMainType = mimeType.substring(0, mimeTypeDelimiter);
+        String mimeTypeSubtype = mimeType.substring(mimeTypeDelimiter + 1);
+        if (!mimeTypeSubtype.equals("*")) {
+          continue;
+        }
+        int fileTypeDelimiter = fileType.lastIndexOf('/');
+        if (fileTypeDelimiter == -1) {
+          continue;
+        }
+        String fileTypeMainType = fileType.substring(0, fileTypeDelimiter);
+        if (fileTypeMainType.equals(mimeTypeMainType)) {
+          return true;
+        }
       }
     }
 
