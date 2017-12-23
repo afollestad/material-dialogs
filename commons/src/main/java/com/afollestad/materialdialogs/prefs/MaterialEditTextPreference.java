@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.EditTextPreference;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
   private int color = 0;
   private MaterialDialog dialog;
+  private MaterialDialog.Builder builder;
   private EditText editText;
 
   public MaterialEditTextPreference(Context context) {
@@ -76,7 +79,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   @Override
-  protected void onAddEditTextToDialogView(View dialogView, EditText editText) {
+  protected void onAddEditTextToDialogView(@NonNull View dialogView, @NonNull EditText editText) {
     ((ViewGroup) dialogView)
         .addView(
             editText,
@@ -86,7 +89,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
 
   @SuppressLint("MissingSuperCall")
   @Override
-  protected void onBindDialogView(View view) {
+  protected void onBindDialogView(@NonNull View view) {
     EditText editText = this.editText;
     editText.setText(getText());
     // Initialize cursor to end of text
@@ -122,36 +125,50 @@ public class MaterialEditTextPreference extends EditTextPreference {
     return dialog;
   }
 
+  public MaterialDialog.Builder resetBuilder() {
+    return builder =
+            new MaterialDialog.Builder(getContext())
+                    .title(getDialogTitle())
+                    .icon(getDialogIcon())
+                    .positiveText(getPositiveButtonText())
+                    .negativeText(getNegativeButtonText())
+                    .dismissListener(this)
+                    .onAny(
+                            new MaterialDialog.SingleButtonCallback() {
+                              @Override
+                              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                switch (which) {
+                                  default:
+                                    MaterialEditTextPreference.this.onClick(
+                                            dialog, DialogInterface.BUTTON_POSITIVE);
+                                    break;
+                                  case NEUTRAL:
+                                    MaterialEditTextPreference.this.onClick(
+                                            dialog, DialogInterface.BUTTON_NEUTRAL);
+                                    break;
+                                  case NEGATIVE:
+                                    MaterialEditTextPreference.this.onClick(
+                                            dialog, DialogInterface.BUTTON_NEGATIVE);
+                                    break;
+                                }
+                              }
+                            })
+                    .dismissListener(this);
+  }
+
+  /**
+   * @param builder receiving null is the same that resetBuilder()
+   */
+  public MaterialDialog.Builder setBuilder(@Nullable final MaterialDialog.Builder builder) {
+    this.builder = builder;
+    return builder;
+  }
+
   @Override
   protected void showDialog(Bundle state) {
-    Builder mBuilder =
-        new MaterialDialog.Builder(getContext())
-            .title(getDialogTitle())
-            .icon(getDialogIcon())
-            .positiveText(getPositiveButtonText())
-            .negativeText(getNegativeButtonText())
-            .dismissListener(this)
-            .onAny(
-                new MaterialDialog.SingleButtonCallback() {
-                  @Override
-                  public void onClick(MaterialDialog dialog, DialogAction which) {
-                    switch (which) {
-                      default:
-                        MaterialEditTextPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_POSITIVE);
-                        break;
-                      case NEUTRAL:
-                        MaterialEditTextPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_NEUTRAL);
-                        break;
-                      case NEGATIVE:
-                        MaterialEditTextPreference.this.onClick(
-                            dialog, DialogInterface.BUTTON_NEGATIVE);
-                        break;
-                    }
-                  }
-                })
-            .dismissListener(this);
+    if (builder == null) {
+      resetBuilder();
+    }
 
     @SuppressLint("InflateParams")
     View layout = LayoutInflater.from(getContext()).inflate(R.layout.md_stub_inputpref, null);
@@ -166,11 +183,11 @@ public class MaterialEditTextPreference extends EditTextPreference {
     } else {
       message.setVisibility(View.GONE);
     }
-    mBuilder.customView(layout, false);
+    builder.customView(layout, false);
 
     PrefUtil.registerOnActivityDestroyListener(this, this);
 
-    dialog = mBuilder.build();
+    dialog = builder.build();
     if (state != null) {
       dialog.onRestoreInstanceState(state);
     }
@@ -258,7 +275,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
       super.writeToParcel(dest, flags);
       dest.writeInt(isDialogShowing ? 1 : 0);
       dest.writeBundle(dialogBundle);
