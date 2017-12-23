@@ -521,7 +521,7 @@ class DialogInit {
     }
     dialog.setInternalInputCallback();
     dialog.input.setHint(builder.inputHint);
-    dialog.input.setSingleLine();
+    dialog.input.setSingleLine(builder.inputSingleLine);
     dialog.input.setTextColor(builder.contentColor);
     dialog.input.setHintTextColor(DialogUtils.adjustAlpha(builder.contentColor, 0.3f));
     MDTintHelper.setTint(dialog.input, dialog.builder.widgetColor);
