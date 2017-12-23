@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.MultiSelectListPreference;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
@@ -27,7 +29,8 @@ import java.util.Set;
 public class MaterialMultiSelectListPreference extends MultiSelectListPreference {
 
   private Context context;
-  private MaterialDialog mDialog;
+  private MaterialDialog dialog;
+  private MaterialDialog.Builder builder;
 
   public MaterialMultiSelectListPreference(Context context) {
     super(context);
@@ -55,8 +58,8 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
   @Override
   public void setEntries(CharSequence[] entries) {
     super.setEntries(entries);
-    if (mDialog != null) {
-      mDialog.setItems(entries);
+    if (dialog != null) {
+      dialog.setItems(entries);
     }
   }
 
@@ -70,11 +73,10 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
   @Override
   public Dialog getDialog() {
-    return mDialog;
+    return dialog;
   }
-
-  @Override
-  protected void showDialog(Bundle state) {
+  
+  public MaterialDialog.Builder resetBuilder() {
     List<Integer> indices = new ArrayList<>();
     for (String s : getValues()) {
       int index = findIndexOfValue(s);
@@ -82,8 +84,9 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
         indices.add(findIndexOfValue(s));
       }
     }
-    MaterialDialog.Builder builder =
-        new MaterialDialog.Builder(context)
+
+    return builder =
+            new MaterialDialog.Builder(context)
             .title(getDialogTitle())
             .icon(getDialogIcon())
             .negativeText(getNegativeButtonText())
@@ -91,7 +94,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
             .onAny(
                 new MaterialDialog.SingleButtonCallback() {
                   @Override
-                  public void onClick(MaterialDialog dialog, DialogAction which) {
+                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     switch (which) {
                       default:
                         MaterialMultiSelectListPreference.this.onClick(
@@ -128,6 +131,21 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
                   }
                 })
             .dismissListener(this);
+  }
+
+  /**
+   * @param builder receiving null is the same that resetBuilder()
+   */
+  public MaterialDialog.Builder setBuilder(@Nullable final MaterialDialog.Builder builder) {
+    this.builder = builder;
+    return builder;
+  }
+
+  @Override
+  protected void showDialog(Bundle state) {
+    if (builder == null) {
+      resetBuilder();
+    }
 
     final View contentView = onCreateDialogView();
     if (contentView != null) {
@@ -139,11 +157,11 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
 
     PrefUtil.registerOnActivityDestroyListener(this, this);
 
-    mDialog = builder.build();
+    dialog = builder.build();
     if (state != null) {
-      mDialog.onRestoreInstanceState(state);
+      dialog.onRestoreInstanceState(state);
     }
-    mDialog.show();
+    dialog.show();
   }
 
   @Override
@@ -155,8 +173,8 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
   @Override
   public void onActivityDestroy() {
     super.onActivityDestroy();
-    if (mDialog != null && mDialog.isShowing()) {
-      mDialog.dismiss();
+    if (dialog != null && dialog.isShowing()) {
+      dialog.dismiss();
     }
   }
 
@@ -216,7 +234,7 @@ public class MaterialMultiSelectListPreference extends MultiSelectListPreference
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
       super.writeToParcel(dest, flags);
       dest.writeInt(isDialogShowing ? 1 : 0);
       dest.writeBundle(dialogBundle);

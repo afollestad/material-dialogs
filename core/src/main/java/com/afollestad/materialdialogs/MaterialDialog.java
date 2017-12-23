@@ -1104,6 +1104,7 @@ public class MaterialDialog extends DialogBase
     protected CharSequence inputHint;
     protected InputCallback inputCallback;
     protected boolean inputAllowEmpty;
+    protected boolean inputSingleLine;
     protected int inputType = -1;
     protected boolean alwaysCallInputCallback;
     protected int inputMinLength = -1;
@@ -2042,6 +2043,7 @@ public class MaterialDialog extends DialogBase
         @Nullable CharSequence hint,
         @Nullable CharSequence prefill,
         boolean allowEmptyInput,
+        boolean singleLine,
         InputCallback callback) {
       if (this.customView != null) {
         throw new IllegalStateException(
@@ -2051,28 +2053,31 @@ public class MaterialDialog extends DialogBase
       this.inputHint = hint;
       this.inputPrefill = prefill;
       this.inputAllowEmpty = allowEmptyInput;
+      this.inputSingleLine = singleLine;
       return this;
     }
 
     public Builder input(
         @Nullable CharSequence hint, @Nullable CharSequence prefill, InputCallback callback) {
-      return input(hint, prefill, true, callback);
+      return input(hint, prefill, true, true, callback);
     }
 
     public Builder input(
         @StringRes int hint,
         @StringRes int prefill,
         boolean allowEmptyInput,
+        boolean singleLine,
         InputCallback callback) {
       return input(
           hint == 0 ? null : context.getText(hint),
           prefill == 0 ? null : context.getText(prefill),
           allowEmptyInput,
+          singleLine,
           callback);
     }
 
     public Builder input(@StringRes int hint, @StringRes int prefill, InputCallback callback) {
-      return input(hint, prefill, true, callback);
+      return input(hint, prefill, true, true, callback);
     }
 
     public Builder inputType(int type) {
