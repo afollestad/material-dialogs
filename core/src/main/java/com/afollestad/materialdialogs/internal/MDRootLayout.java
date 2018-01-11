@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ScrollView;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.R;
@@ -36,6 +37,7 @@ public class MDRootLayout extends ViewGroup {
   private int maxHeight;
   private View titleBar;
   private View content;
+  private CheckBox checkPrompt;
   private boolean drawTopDivider = false;
   private boolean drawBottomDivider = false;
   private StackingBehavior stackBehavior = StackingBehavior.ADAPTIVE;
@@ -212,6 +214,8 @@ public class MDRootLayout extends ViewGroup {
         buttons[INDEX_NEGATIVE] = (MDButton) v;
       } else if (v.getId() == R.id.md_buttonDefaultPositive) {
         buttons[INDEX_POSITIVE] = (MDButton) v;
+      } else if (v.getId() == R.id.md_promptCheckbox) {
+        checkPrompt = (CheckBox) v;
       } else {
         content = v;
       }
@@ -325,6 +329,9 @@ public class MDRootLayout extends ViewGroup {
 
       if (drawBottomDivider) {
         int y = content.getBottom();
+        if (checkPrompt != null && checkPrompt.getVisibility() == View.GONE) {
+          y = checkPrompt.getTop();
+        }
         canvas.drawRect(0, y, getMeasuredWidth(), y + dividerWidth, dividerPaint);
       }
     }

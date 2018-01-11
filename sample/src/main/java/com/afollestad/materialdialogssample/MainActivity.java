@@ -25,7 +25,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -40,11 +41,7 @@ import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListAdapter;
 import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 import com.afollestad.materialdialogs.util.DialogUtils;
-
 import java.io.File;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /** @author Aidan Follestad (afollestad) */
 public class MainActivity extends AppCompatActivity
@@ -246,8 +243,10 @@ public class MainActivity extends AppCompatActivity
   public void showListCheckPrompt() {
     new MaterialDialog.Builder(this)
         .title(R.string.socialNetworks)
-        .items(R.array.socialNetworks)
-        .itemsCallback((dialog, view, which, text) -> showToast(which + ": " + text))
+        .items(R.array.states)
+        .itemsCallback(
+            (dialog, view, which, text) ->
+                showToast(which + ": " + text + ", prompt: " + dialog.isPromptCheckBoxChecked()))
         .checkBoxPromptRes(R.string.example_prompt, true, null)
         .negativeText(android.R.string.cancel)
         .show();
@@ -348,14 +347,16 @@ public class MainActivity extends AppCompatActivity
             (dialog, which, text) -> {
               boolean allowSelectionChange =
                   which.length
-                      <= 2; // limit selection to 2, the new (un)selection is included in the which array
+                      <= 2; // limit selection to 2, the new (un)selection is included in the which
+              // array
               if (!allowSelectionChange) {
                 showToast(R.string.selection_limit_reached);
               }
               return allowSelectionChange;
             })
         .positiveText(R.string.dismiss)
-        .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if (un)selection is still allowed
+        .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if
+        // (un)selection is still allowed
         .show();
   }
 
@@ -369,14 +370,16 @@ public class MainActivity extends AppCompatActivity
             (dialog, which, text) -> {
               boolean allowSelectionChange =
                   which.length
-                      >= 1; // selection count must stay above 1, the new (un)selection is included in the which array
+                      >= 1; // selection count must stay above 1, the new (un)selection is included
+              // in the which array
               if (!allowSelectionChange) {
                 showToast(R.string.selection_min_limit_reached);
               }
               return allowSelectionChange;
             })
         .positiveText(R.string.dismiss)
-        .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if (un)selection is still allowed
+        .alwaysCallMultiChoiceCallback() // the callback will always be called, to check if
+        // (un)selection is still allowed
         .show();
   }
 
