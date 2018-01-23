@@ -17,12 +17,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.commons.R;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,6 +85,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             if (fileIsMimeType(fi, mimeType, mimeTypeMap)) {
               results.add(fi);
             }
+          } else { // If user hasn't specified FileType anything should be allowed
+            results.add(fi);
           }
         }
       }
