@@ -14,10 +14,14 @@
  - Device Manufacturer: `Google`
  - Device Name: `Pixel XL`
 
-Also, please wrap Java with correct syntax highlighting.
+Also, please wrap your code with correct syntax highlighting.
 
 ```java
 System.out.println("Hello, world!");
+```
+
+```xml
+<LinearLayout ...></LinearLayout>
 ```
  
 ---
