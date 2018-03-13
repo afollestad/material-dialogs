@@ -74,7 +74,7 @@
       android:layout_marginLeft="@dimen/md_notitle_vertical_padding_more"
       android:layout_marginRight="@dimen/md_notitle_vertical_padding_more"
       android:focusable="true"
-      android:gravity="center"
+      android:gravity="start"
       tools:text="Don't ask again"/>
 
   </LinearLayout>
