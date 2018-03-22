@@ -7,8 +7,9 @@ ext.versions = [
         gradlePlugin      : '3.0.1',
         spotlessPlugin    : '3.6.0',
         findBugs          : '3.0.2',
+        bintrayRelease    : '0.8.0',
 
-        supportLib        : '27.0.1',
+        supportLib        : '27.0.2',
         mdProgressBar     : '1.4.2',
         butterKnife       : '8.8.1'
 ]
