@@ -60,7 +60,7 @@ import java.util.Locale;
 /** @author Aidan Follestad (afollestad) */
 @SuppressWarnings({"WeakerAccess", "SameParameterValue", "unused"})
 public class MaterialDialog extends DialogBase
-        implements View.OnClickListener, DefaultRvAdapter.InternalListCallback {
+    implements View.OnClickListener, DefaultRvAdapter.InternalListCallback {
 
   protected final Builder builder;
   private final Handler handler;
@@ -119,46 +119,46 @@ public class MaterialDialog extends DialogBase
       return;
     }
     recyclerView
-            .getViewTreeObserver()
-            .addOnGlobalLayoutListener(
-                    new ViewTreeObserver.OnGlobalLayoutListener() {
-                      @SuppressWarnings("ConstantConditions")
-                      @Override
-                      public void onGlobalLayout() {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                          //noinspection deprecation
-                          recyclerView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                        } else {
-                          recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        }
+        .getViewTreeObserver()
+        .addOnGlobalLayoutListener(
+            new ViewTreeObserver.OnGlobalLayoutListener() {
+              @SuppressWarnings("ConstantConditions")
+              @Override
+              public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                  //noinspection deprecation
+                  recyclerView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                  recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
 
-                        if (listType == ListType.SINGLE || listType == ListType.MULTI) {
-                          int selectedIndex;
-                          if (listType == ListType.SINGLE) {
-                            if (builder.selectedIndex < 0) {
-                              return;
-                            }
-                            selectedIndex = builder.selectedIndex;
-                          } else {
-                            if (selectedIndicesList == null || selectedIndicesList.size() == 0) {
-                              return;
-                            }
-                            Collections.sort(selectedIndicesList);
-                            selectedIndex = selectedIndicesList.get(0);
-                          }
+                if (listType == ListType.SINGLE || listType == ListType.MULTI) {
+                  int selectedIndex;
+                  if (listType == ListType.SINGLE) {
+                    if (builder.selectedIndex < 0) {
+                      return;
+                    }
+                    selectedIndex = builder.selectedIndex;
+                  } else {
+                    if (selectedIndicesList == null || selectedIndicesList.size() == 0) {
+                      return;
+                    }
+                    Collections.sort(selectedIndicesList);
+                    selectedIndex = selectedIndicesList.get(0);
+                  }
 
-                          final int fSelectedIndex = selectedIndex;
-                          recyclerView.post(
-                                  new Runnable() {
-                                    @Override
-                                    public void run() {
-                                      recyclerView.requestFocus();
-                                      builder.layoutManager.scrollToPosition(fSelectedIndex);
-                                    }
-                                  });
+                  final int fSelectedIndex = selectedIndex;
+                  recyclerView.post(
+                      new Runnable() {
+                        @Override
+                        public void run() {
+                          recyclerView.requestFocus();
+                          builder.layoutManager.scrollToPosition(fSelectedIndex);
                         }
-                      }
-                    });
+                      });
+                }
+              }
+            });
   }
 
   /** Sets the dialog RecyclerView's adapter/layout manager, and it's item click listener. */
@@ -182,7 +182,7 @@ public class MaterialDialog extends DialogBase
 
   @Override
   public boolean onItemSelected(
-          MaterialDialog dialog, View view, int position, CharSequence text, boolean longPress) {
+      MaterialDialog dialog, View view, int position, CharSequence text, boolean longPress) {
     if (!view.isEnabled()) {
       return false;
     }
@@ -197,7 +197,7 @@ public class MaterialDialog extends DialogBase
       }
       if (longPress && builder.listLongCallback != null) {
         return builder.listLongCallback.onLongSelection(
-                this, view, position, builder.items.get(position));
+            this, view, position, builder.items.get(position));
       }
     } else {
       // Default adapter, choice mode
@@ -308,7 +308,7 @@ public class MaterialDialog extends DialogBase
     if (isStacked) {
       if (builder.btnSelectorStacked != 0) {
         return ResourcesCompat.getDrawable(
-                getContext().getResources(), builder.btnSelectorStacked, null);
+            getContext().getResources(), builder.btnSelectorStacked, null);
       }
       final Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_stacked_selector);
       if (d != null) {
@@ -318,53 +318,53 @@ public class MaterialDialog extends DialogBase
     } else {
       switch (which) {
         default:
-        {
-          if (builder.btnSelectorPositive != 0) {
-            return ResourcesCompat.getDrawable(
-                    getContext().getResources(), builder.btnSelectorPositive, null);
-          }
-          Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
-          if (d != null) {
+          {
+            if (builder.btnSelectorPositive != 0) {
+              return ResourcesCompat.getDrawable(
+                  getContext().getResources(), builder.btnSelectorPositive, null);
+            }
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+            if (d != null) {
+              return d;
+            }
+            d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              RippleHelper.applyColor(d, builder.buttonRippleColor);
+            }
             return d;
           }
-          d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_positive_selector);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            RippleHelper.applyColor(d, builder.buttonRippleColor);
-          }
-          return d;
-        }
         case NEUTRAL:
-        {
-          if (builder.btnSelectorNeutral != 0) {
-            return ResourcesCompat.getDrawable(
-                    getContext().getResources(), builder.btnSelectorNeutral, null);
-          }
-          Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
-          if (d != null) {
+          {
+            if (builder.btnSelectorNeutral != 0) {
+              return ResourcesCompat.getDrawable(
+                  getContext().getResources(), builder.btnSelectorNeutral, null);
+            }
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+            if (d != null) {
+              return d;
+            }
+            d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              RippleHelper.applyColor(d, builder.buttonRippleColor);
+            }
             return d;
           }
-          d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_neutral_selector);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            RippleHelper.applyColor(d, builder.buttonRippleColor);
-          }
-          return d;
-        }
         case NEGATIVE:
-        {
-          if (builder.btnSelectorNegative != 0) {
-            return ResourcesCompat.getDrawable(
-                    getContext().getResources(), builder.btnSelectorNegative, null);
-          }
-          Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
-          if (d != null) {
+          {
+            if (builder.btnSelectorNegative != 0) {
+              return ResourcesCompat.getDrawable(
+                  getContext().getResources(), builder.btnSelectorNegative, null);
+            }
+            Drawable d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+            if (d != null) {
+              return d;
+            }
+            d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              RippleHelper.applyColor(d, builder.buttonRippleColor);
+            }
             return d;
           }
-          d = DialogUtils.resolveDrawable(getContext(), R.attr.md_btn_negative_selector);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            RippleHelper.applyColor(d, builder.buttonRippleColor);
-          }
-          return d;
-        }
       }
     }
   }
@@ -393,9 +393,9 @@ public class MaterialDialog extends DialogBase
       selectedTitles.add(builder.items.get(i));
     }
     return builder.listCallbackMultiChoice.onSelection(
-            this,
-            selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
-            selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
+        this,
+        selectedIndicesList.toArray(new Integer[selectedIndicesList.size()]),
+        selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
   }
 
   @Override
@@ -448,8 +448,8 @@ public class MaterialDialog extends DialogBase
       super.show();
     } catch (WindowManager.BadTokenException e) {
       throw new DialogException(
-              "Bad window token, you cannot show a dialog "
-                      + "before an Activity is created or after it's hidden.");
+          "Bad window token, you cannot show a dialog "
+              + "before an Activity is created or after it's hidden.");
     }
   }
 
@@ -642,8 +642,8 @@ public class MaterialDialog extends DialogBase
   public final void setItems(@Nullable CharSequence... items) {
     if (builder.adapter == null) {
       throw new IllegalStateException(
-              "This MaterialDialog instance does not "
-                      + "yet have an adapter set to it. You cannot use setItems().");
+          "This MaterialDialog instance does not "
+              + "yet have an adapter set to it. You cannot use setItems().");
     }
     if (items != null) {
       builder.items = new ArrayList<>(items.length);
@@ -653,8 +653,8 @@ public class MaterialDialog extends DialogBase
     }
     if (!(builder.adapter instanceof DefaultRvAdapter)) {
       throw new IllegalStateException(
-              "When using a custom adapter, setItems() "
-                      + "cannot be used. Set items through the adapter instead.");
+          "When using a custom adapter, setItems() "
+              + "cannot be used. Set items through the adapter instead.");
     }
     notifyItemsChanged();
   }
@@ -692,28 +692,28 @@ public class MaterialDialog extends DialogBase
   public final void setProgress(final int progress) {
     if (builder.progress <= -2) {
       Log.w(
-              "MaterialDialog",
-              "Calling setProgress(int) on an indeterminate progress dialog has no effect!");
+          "MaterialDialog",
+          "Calling setProgress(int) on an indeterminate progress dialog has no effect!");
       return;
     }
     progressBar.setProgress(progress);
     final String progressNumberFormat = builder.progressNumberFormat;
     final NumberFormat progressPercentFormat = builder.progressPercentFormat;
     handler.post(
-            new Runnable() {
-              @Override
-              public void run() {
-                if (progressLabel != null) {
-                  progressLabel.setText(
-                          progressPercentFormat.format(
-                                  (float) getCurrentProgress() / (float) getMaxProgress()));
-                }
-                if (progressMinMax != null) {
-                  progressMinMax.setText(
-                          String.format(progressNumberFormat, getCurrentProgress(), getMaxProgress()));
-                }
-              }
-            });
+        new Runnable() {
+          @Override
+          public void run() {
+            if (progressLabel != null) {
+              progressLabel.setText(
+                  progressPercentFormat.format(
+                      (float) getCurrentProgress() / (float) getMaxProgress()));
+            }
+            if (progressMinMax != null) {
+              progressMinMax.setText(
+                  String.format(progressNumberFormat, getCurrentProgress(), getMaxProgress()));
+            }
+          }
+        });
   }
 
   public final boolean isIndeterminateProgress() {
@@ -785,7 +785,7 @@ public class MaterialDialog extends DialogBase
       builder.adapter.notifyDataSetChanged();
     } else {
       throw new IllegalStateException(
-              "You can only use setSelectedIndex() " + "with the default adapter implementation.");
+          "You can only use setSelectedIndex() " + "with the default adapter implementation.");
     }
   }
 
@@ -819,7 +819,7 @@ public class MaterialDialog extends DialogBase
       builder.adapter.notifyDataSetChanged();
     } else {
       throw new IllegalStateException(
-              "You can only use setSelectedIndices() " + "with the default adapter implementation.");
+          "You can only use setSelectedIndices() " + "with the default adapter implementation.");
     }
   }
 
@@ -836,7 +836,7 @@ public class MaterialDialog extends DialogBase
   public void clearSelectedIndices(boolean sendCallback) {
     if (listType == null || listType != ListType.MULTI) {
       throw new IllegalStateException(
-              "You can only use clearSelectedIndices() " + "with multi choice list dialogs.");
+          "You can only use clearSelectedIndices() " + "with multi choice list dialogs.");
     }
     if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
       if (selectedIndicesList != null) {
@@ -848,7 +848,7 @@ public class MaterialDialog extends DialogBase
       }
     } else {
       throw new IllegalStateException(
-              "You can only use clearSelectedIndices() " + "with the default adapter implementation.");
+          "You can only use clearSelectedIndices() " + "with the default adapter implementation.");
     }
   }
 
@@ -865,7 +865,7 @@ public class MaterialDialog extends DialogBase
   public void selectAllIndices(boolean sendCallback) {
     if (listType == null || listType != ListType.MULTI) {
       throw new IllegalStateException(
-              "You can only use selectAllIndices() with " + "multi choice list dialogs.");
+          "You can only use selectAllIndices() with " + "multi choice list dialogs.");
     }
     if (builder.adapter != null && builder.adapter instanceof DefaultRvAdapter) {
       if (selectedIndicesList == null) {
@@ -882,7 +882,7 @@ public class MaterialDialog extends DialogBase
       }
     } else {
       throw new IllegalStateException(
-              "You can only use selectAllIndices() with the " + "default adapter implementation.");
+          "You can only use selectAllIndices() with the " + "default adapter implementation.");
     }
   }
 
@@ -902,43 +902,43 @@ public class MaterialDialog extends DialogBase
       return;
     }
     input.addTextChangedListener(
-            new TextWatcher() {
-              @Override
-              public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-              @Override
-              public void onTextChanged(CharSequence s, int start, int before, int count) {
-                final int length = s.toString().length();
-                boolean emptyDisabled = false;
-                if (!builder.inputAllowEmpty) {
-                  emptyDisabled = length == 0;
-                  final View positiveAb = getActionButton(DialogAction.POSITIVE);
-                  positiveAb.setEnabled(!emptyDisabled);
-                }
-                invalidateInputMinMaxIndicator(length, emptyDisabled);
-                if (builder.alwaysCallInputCallback) {
-                  builder.inputCallback.onInput(MaterialDialog.this, s);
-                }
-              }
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+            final int length = s.toString().length();
+            boolean emptyDisabled = false;
+            if (!builder.inputAllowEmpty) {
+              emptyDisabled = length == 0;
+              final View positiveAb = getActionButton(DialogAction.POSITIVE);
+              positiveAb.setEnabled(!emptyDisabled);
+            }
+            invalidateInputMinMaxIndicator(length, emptyDisabled);
+            if (builder.alwaysCallInputCallback) {
+              builder.inputCallback.onInput(MaterialDialog.this, s);
+            }
+          }
 
-              @Override
-              public void afterTextChanged(Editable s) {}
-            });
+          @Override
+          public void afterTextChanged(Editable s) {}
+        });
   }
 
   void invalidateInputMinMaxIndicator(int currentLength, boolean emptyDisabled) {
     if (inputMinMax != null) {
       if (builder.inputMaxLength > 0) {
         inputMinMax.setText(
-                String.format(Locale.getDefault(), "%d/%d", currentLength, builder.inputMaxLength));
+            String.format(Locale.getDefault(), "%d/%d", currentLength, builder.inputMaxLength));
         inputMinMax.setVisibility(View.VISIBLE);
       } else {
         inputMinMax.setVisibility(View.GONE);
       }
       final boolean isDisabled =
-              (emptyDisabled && currentLength == 0)
-                      || (builder.inputMaxLength > 0 && currentLength > builder.inputMaxLength)
-                      || currentLength < builder.inputMinLength;
+          (emptyDisabled && currentLength == 0)
+              || (builder.inputMaxLength > 0 && currentLength > builder.inputMaxLength)
+              || currentLength < builder.inputMinLength;
       final int colorText = isDisabled ? builder.inputRangeErrorColor : builder.contentColor;
       final int colorWidget = isDisabled ? builder.inputRangeErrorColor : builder.widgetColor;
       if (builder.inputMaxLength > 0) {
@@ -1000,7 +1000,7 @@ public class MaterialDialog extends DialogBase
      * @return True to allow the radio button to be selected.
      */
     boolean onSelection(
-            MaterialDialog dialog, View itemView, int which, @Nullable CharSequence text);
+        MaterialDialog dialog, View itemView, int which, @Nullable CharSequence text);
   }
 
   /** A callback used for multi choice (check box) list dialogs. */
@@ -1146,25 +1146,25 @@ public class MaterialDialog extends DialogBase
       this.widgetColor = DialogUtils.resolveColor(context, R.attr.colorAccent, materialBlue);
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         this.widgetColor =
-                DialogUtils.resolveColor(context, android.R.attr.colorAccent, this.widgetColor);
+            DialogUtils.resolveColor(context, android.R.attr.colorAccent, this.widgetColor);
       }
 
       this.positiveColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
       this.negativeColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
       this.neutralColor = DialogUtils.getActionTextStateList(context, this.widgetColor);
       this.linkColor =
-              DialogUtils.getActionTextStateList(
-                      context, DialogUtils.resolveColor(context, R.attr.md_link_color, this.widgetColor));
+          DialogUtils.getActionTextStateList(
+              context, DialogUtils.resolveColor(context, R.attr.md_link_color, this.widgetColor));
 
       int fallback = 0;
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         fallback = DialogUtils.resolveColor(context, android.R.attr.colorControlHighlight);
       }
       this.buttonRippleColor =
-              DialogUtils.resolveColor(
-                      context,
-                      R.attr.md_btn_ripple_color,
-                      DialogUtils.resolveColor(context, R.attr.colorControlHighlight, fallback));
+          DialogUtils.resolveColor(
+              context,
+              R.attr.md_btn_ripple_color,
+              DialogUtils.resolveColor(context, R.attr.colorControlHighlight, fallback));
 
       this.progressPercentFormat = NumberFormat.getPercentInstance();
       this.progressNumberFormat = "%1d/%2d";
@@ -1172,7 +1172,7 @@ public class MaterialDialog extends DialogBase
       // Set the default theme based on the Activity theme's primary color darkness (more white or
       // more black)
       final int primaryTextColor =
-              DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
+          DialogUtils.resolveColor(context, android.R.attr.textColorPrimary);
       this.theme = DialogUtils.isColorDark(primaryTextColor) ? Theme.LIGHT : Theme.DARK;
 
       // Load theme values from the ThemeSingleton if needed
@@ -1180,16 +1180,16 @@ public class MaterialDialog extends DialogBase
 
       // Retrieve gravity settings from global theme attributes if needed
       this.titleGravity =
-              DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
+          DialogUtils.resolveGravityEnum(context, R.attr.md_title_gravity, this.titleGravity);
       this.contentGravity =
-              DialogUtils.resolveGravityEnum(context, R.attr.md_content_gravity, this.contentGravity);
+          DialogUtils.resolveGravityEnum(context, R.attr.md_content_gravity, this.contentGravity);
       this.btnStackedGravity =
-              DialogUtils.resolveGravityEnum(
-                      context, R.attr.md_btnstacked_gravity, this.btnStackedGravity);
+          DialogUtils.resolveGravityEnum(
+              context, R.attr.md_btnstacked_gravity, this.btnStackedGravity);
       this.itemsGravity =
-              DialogUtils.resolveGravityEnum(context, R.attr.md_items_gravity, this.itemsGravity);
+          DialogUtils.resolveGravityEnum(context, R.attr.md_items_gravity, this.itemsGravity);
       this.buttonsGravity =
-              DialogUtils.resolveGravityEnum(context, R.attr.md_buttons_gravity, this.buttonsGravity);
+          DialogUtils.resolveGravityEnum(context, R.attr.md_buttons_gravity, this.buttonsGravity);
 
       final String mediumFont = DialogUtils.resolveString(context, R.attr.md_medium_font);
       final String regularFont = DialogUtils.resolveString(context, R.attr.md_regular_font);
@@ -1290,7 +1290,7 @@ public class MaterialDialog extends DialogBase
       if (s.linkColor != null) {
         this.linkColor = s.linkColor;
       }
-      if(s.titleFrameColor != 0){
+      if (s.titleFrameColor != 0) {
         this.titleFrameColor = s.titleFrameColor;
       }
       this.titleGravity = s.titleGravity;
@@ -1413,7 +1413,7 @@ public class MaterialDialog extends DialogBase
     public Builder content(CharSequence content) {
       if (this.customView != null) {
         throw new IllegalStateException(
-                "You cannot set content() " + "when you're using a custom view.");
+            "You cannot set content() " + "when you're using a custom view.");
       }
       this.content = content;
       return this;
@@ -1421,7 +1421,7 @@ public class MaterialDialog extends DialogBase
 
     public Builder content(@StringRes int contentRes, Object... formatArgs) {
       String str =
-              String.format(this.context.getString(contentRes), formatArgs).replace("\n", "<br/>");
+          String.format(this.context.getString(contentRes), formatArgs).replace("\n", "<br/>");
       //noinspection deprecation
       return content(Html.fromHtml(str));
     }
@@ -1475,7 +1475,7 @@ public class MaterialDialog extends DialogBase
     public Builder items(CharSequence... items) {
       if (this.customView != null) {
         throw new IllegalStateException(
-                "You cannot set items()" + " when you're using a custom view.");
+            "You cannot set items()" + " when you're using a custom view.");
       }
       this.items = new ArrayList<>();
       Collections.addAll(this.items, items);
@@ -1496,14 +1496,14 @@ public class MaterialDialog extends DialogBase
       return this;
     }
 
-    public Builder titleFrameColor(@ColorInt int color){
+    public Builder titleFrameColor(@ColorInt int color) {
       this.titleFrameColor = color;
       this.titleFrameColorSet = true;
       return this;
     }
 
     public Builder titleFrameColorRes(@ColorRes int colorRes) {
-      return titleFrameColor(DialogUtils.getColor(this.context,colorRes));
+      return titleFrameColor(DialogUtils.getColor(this.context, colorRes));
     }
 
     public Builder titleFrameColorAttr(@AttrRes int colorAttr) {
@@ -1580,7 +1580,7 @@ public class MaterialDialog extends DialogBase
      * @return The Builder instance so you can chain calls to it.
      */
     public Builder itemsCallbackMultiChoice(
-            @Nullable Integer[] selectedIndices, ListCallbackMultiChoice callback) {
+        @Nullable Integer[] selectedIndices, ListCallbackMultiChoice callback) {
       this.selectedIndices = selectedIndices;
       this.listCallback = null;
       this.listCallbackSingleChoice = null;
@@ -1635,7 +1635,7 @@ public class MaterialDialog extends DialogBase
 
     public Builder positiveColorAttr(@AttrRes int colorAttr) {
       return positiveColor(
-              DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+          DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
     }
 
     public Builder positiveColor(ColorStateList colorStateList) {
@@ -1671,7 +1671,7 @@ public class MaterialDialog extends DialogBase
 
     public Builder negativeColorAttr(@AttrRes int colorAttr) {
       return negativeColor(
-              DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+          DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
     }
 
     public Builder negativeColor(ColorStateList colorStateList) {
@@ -1707,7 +1707,7 @@ public class MaterialDialog extends DialogBase
 
     public Builder neutralColorAttr(@AttrRes int colorAttr) {
       return neutralColor(
-              DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
+          DialogUtils.resolveActionTextColorStateList(this.context, colorAttr, null));
     }
 
     public Builder neutralColor(ColorStateList colorStateList) {
@@ -1783,9 +1783,9 @@ public class MaterialDialog extends DialogBase
     }
 
     public Builder checkBoxPrompt(
-            CharSequence prompt,
-            boolean initiallyChecked,
-            @Nullable CheckBox.OnCheckedChangeListener checkListener) {
+        CharSequence prompt,
+        boolean initiallyChecked,
+        @Nullable CheckBox.OnCheckedChangeListener checkListener) {
       this.checkBoxPrompt = prompt;
       this.checkBoxPromptInitiallyChecked = initiallyChecked;
       this.checkBoxPromptListener = checkListener;
@@ -1793,11 +1793,11 @@ public class MaterialDialog extends DialogBase
     }
 
     public Builder checkBoxPromptRes(
-            @StringRes int prompt,
-            boolean initiallyChecked,
-            @Nullable CheckBox.OnCheckedChangeListener checkListener) {
+        @StringRes int prompt,
+        boolean initiallyChecked,
+        @Nullable CheckBox.OnCheckedChangeListener checkListener) {
       return checkBoxPrompt(
-              context.getResources().getText(prompt), initiallyChecked, checkListener);
+          context.getResources().getText(prompt), initiallyChecked, checkListener);
     }
 
     public Builder customView(@LayoutRes int layoutRes, boolean wrapInScrollView) {
@@ -1834,7 +1834,7 @@ public class MaterialDialog extends DialogBase
     public Builder progress(boolean indeterminate, int max) {
       if (this.customView != null) {
         throw new IllegalStateException(
-                "You cannot set progress() when you're using a custom view.");
+            "You cannot set progress() when you're using a custom view.");
       }
       if (indeterminate) {
         this.indeterminateProgress = true;
@@ -1994,17 +1994,17 @@ public class MaterialDialog extends DialogBase
      * @return This Builder object to allow for chaining of calls to set methods
      */
     public Builder adapter(
-            RecyclerView.Adapter<?> adapter, @Nullable RecyclerView.LayoutManager layoutManager) {
+        RecyclerView.Adapter<?> adapter, @Nullable RecyclerView.LayoutManager layoutManager) {
       if (this.customView != null) {
         throw new IllegalStateException(
-                "You cannot set adapter() when " + "you're using a custom view.");
+            "You cannot set adapter() when " + "you're using a custom view.");
       }
       if (layoutManager != null
-              && !(layoutManager instanceof LinearLayoutManager)
-              && !(layoutManager instanceof GridLayoutManager)) {
+          && !(layoutManager instanceof LinearLayoutManager)
+          && !(layoutManager instanceof GridLayoutManager)) {
         throw new IllegalStateException(
-                "You can currently only use LinearLayoutManager"
-                        + " and GridLayoutManager with this library.");
+            "You can currently only use LinearLayoutManager"
+                + " and GridLayoutManager with this library.");
       }
       this.adapter = adapter;
       this.layoutManager = layoutManager;
@@ -2058,13 +2058,13 @@ public class MaterialDialog extends DialogBase
     }
 
     public Builder input(
-            @Nullable CharSequence hint,
-            @Nullable CharSequence prefill,
-            boolean allowEmptyInput,
-            InputCallback callback) {
+        @Nullable CharSequence hint,
+        @Nullable CharSequence prefill,
+        boolean allowEmptyInput,
+        InputCallback callback) {
       if (this.customView != null) {
         throw new IllegalStateException(
-                "You cannot set content() when " + "you're using a custom view.");
+            "You cannot set content() when " + "you're using a custom view.");
       }
       this.inputCallback = callback;
       this.inputHint = hint;
@@ -2074,20 +2074,20 @@ public class MaterialDialog extends DialogBase
     }
 
     public Builder input(
-            @Nullable CharSequence hint, @Nullable CharSequence prefill, InputCallback callback) {
+        @Nullable CharSequence hint, @Nullable CharSequence prefill, InputCallback callback) {
       return input(hint, prefill, true, callback);
     }
 
     public Builder input(
-            @StringRes int hint,
-            @StringRes int prefill,
-            boolean allowEmptyInput,
-            InputCallback callback) {
+        @StringRes int hint,
+        @StringRes int prefill,
+        boolean allowEmptyInput,
+        InputCallback callback) {
       return input(
-              hint == 0 ? null : context.getText(hint),
-              prefill == 0 ? null : context.getText(prefill),
-              allowEmptyInput,
-              callback);
+          hint == 0 ? null : context.getText(hint),
+          prefill == 0 ? null : context.getText(prefill),
+          allowEmptyInput,
+          callback);
     }
 
     public Builder input(@StringRes int hint, @StringRes int prefill, InputCallback callback) {
@@ -2100,19 +2100,19 @@ public class MaterialDialog extends DialogBase
     }
 
     public Builder inputRange(
-            @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-            @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength) {
+        @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+        @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength) {
       return inputRange(minLength, maxLength, 0);
     }
 
     /** @param errorColor Pass in 0 for the default red error color (as specified in guidelines). */
     public Builder inputRange(
-            @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-            @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
-            @ColorInt int errorColor) {
+        @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+        @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
+        @ColorInt int errorColor) {
       if (minLength < 0) {
         throw new IllegalArgumentException(
-                "Min length for input dialogs " + "cannot be less than 0.");
+            "Min length for input dialogs " + "cannot be less than 0.");
       }
       this.inputMinLength = minLength;
       this.inputMaxLength = maxLength;
@@ -2132,9 +2132,9 @@ public class MaterialDialog extends DialogBase
      * color.
      */
     public Builder inputRangeRes(
-            @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
-            @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
-            @ColorRes int errorColor) {
+        @IntRange(from = 0, to = Integer.MAX_VALUE) int minLength,
+        @IntRange(from = -1, to = Integer.MAX_VALUE) int maxLength,
+        @ColorRes int errorColor) {
       return inputRange(minLength, maxLength, DialogUtils.getColor(context, errorColor));
     }
 
