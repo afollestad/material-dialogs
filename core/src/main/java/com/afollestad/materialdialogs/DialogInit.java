@@ -41,8 +41,8 @@ class DialogInit {
   @StyleRes
   static int getTheme(MaterialDialog.Builder builder) {
     boolean darkTheme =
-        DialogUtils.resolveBoolean(
-            builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
+            DialogUtils.resolveBoolean(
+                    builder.context, R.attr.md_dark_theme, builder.theme == Theme.DARK);
     builder.theme = darkTheme ? Theme.DARK : Theme.LIGHT;
     return darkTheme ? R.style.MD_Dark : R.style.MD_Light;
   }
@@ -85,15 +85,15 @@ class DialogInit {
     dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
     if (builder.backgroundColor == 0) {
       builder.backgroundColor =
-          DialogUtils.resolveColor(
-              dialog.getView().getContext(),
-              R.attr.md_background_color,
-              DialogUtils.resolveColor(dialog.getContext(), R.attr.colorBackgroundFloating));
+              DialogUtils.resolveColor(
+                      dialog.getView().getContext(),
+                      R.attr.md_background_color,
+                      DialogUtils.resolveColor(dialog.getContext(), R.attr.colorBackgroundFloating));
     }
     if (builder.backgroundColor != 0) {
       GradientDrawable drawable = new GradientDrawable();
       drawable.setCornerRadius(
-          builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
+              builder.context.getResources().getDimension(R.dimen.md_bg_corner_radius));
       drawable.setColor(builder.backgroundColor);
       dialog.getWindow().setBackgroundDrawable(drawable);
     }
@@ -101,40 +101,43 @@ class DialogInit {
     // Retrieve color theme attributes
     if (!builder.positiveColorSet) {
       builder.positiveColor =
-          DialogUtils.resolveActionTextColorStateList(
-              builder.context, R.attr.md_positive_color, builder.positiveColor);
+              DialogUtils.resolveActionTextColorStateList(
+                      builder.context, R.attr.md_positive_color, builder.positiveColor);
     }
     if (!builder.neutralColorSet) {
       builder.neutralColor =
-          DialogUtils.resolveActionTextColorStateList(
-              builder.context, R.attr.md_neutral_color, builder.neutralColor);
+              DialogUtils.resolveActionTextColorStateList(
+                      builder.context, R.attr.md_neutral_color, builder.neutralColor);
     }
     if (!builder.negativeColorSet) {
       builder.negativeColor =
-          DialogUtils.resolveActionTextColorStateList(
-              builder.context, R.attr.md_negative_color, builder.negativeColor);
+              DialogUtils.resolveActionTextColorStateList(
+                      builder.context, R.attr.md_negative_color, builder.negativeColor);
     }
     if (!builder.widgetColorSet) {
       builder.widgetColor =
-          DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
+              DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
     }
 
     // Retrieve default title/content colors
     if (!builder.titleColorSet) {
       final int titleColorFallback =
-          DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
+              DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary);
       builder.titleColor =
-          DialogUtils.resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
+              DialogUtils.resolveColor(builder.context, R.attr.md_title_color, titleColorFallback);
     }
     if (!builder.contentColorSet) {
       final int contentColorFallback =
-          DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
+              DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorSecondary);
       builder.contentColor =
-          DialogUtils.resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
+              DialogUtils.resolveColor(builder.context, R.attr.md_content_color, contentColorFallback);
     }
     if (!builder.itemColorSet) {
       builder.itemColor =
-          DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
+              DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
+    }
+    if(!builder.titleFrameColorSet) {
+      DialogUtils.resolveColor(builder.context,R.attr.md_title_frame_color,builder.titleFrameColor);
     }
 
     // Retrieve references to views
@@ -194,7 +197,7 @@ class DialogInit {
       maxIconSize = DialogUtils.resolveDimension(builder.context, R.attr.md_icon_max_size);
     }
     if (builder.limitIconToDefaultSize
-        || DialogUtils.resolveBoolean(builder.context, R.attr.md_icon_limit_icon_to_default_size)) {
+            || DialogUtils.resolveBoolean(builder.context, R.attr.md_icon_limit_icon_to_default_size)) {
       maxIconSize = builder.context.getResources().getDimensionPixelSize(R.dimen.md_icon_max_size);
     }
     if (maxIconSize > -1) {
@@ -208,7 +211,7 @@ class DialogInit {
     if (!builder.dividerColorSet) {
       final int dividerFallback = DialogUtils.resolveColor(dialog.getContext(), R.attr.md_divider);
       builder.dividerColor =
-          DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
+              DialogUtils.resolveColor(builder.context, R.attr.md_divider_color, dividerFallback);
     }
     dialog.view.setDividerColor(builder.dividerColor);
 
@@ -227,6 +230,7 @@ class DialogInit {
       } else {
         dialog.title.setText(builder.title);
         dialog.titleFrame.setVisibility(View.VISIBLE);
+        dialog.titleFrame.setBackgroundColor(builder.titleFrameColor);
       }
     }
 
@@ -237,7 +241,7 @@ class DialogInit {
       dialog.content.setLineSpacing(0f, builder.contentLineSpacingMultiplier);
       if (builder.linkColor == null) {
         dialog.content.setLinkTextColor(
-            DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
+                DialogUtils.resolveColor(dialog.getContext(), android.R.attr.textColorPrimary));
       } else {
         dialog.content.setLinkTextColor(builder.linkColor);
       }
@@ -287,7 +291,7 @@ class DialogInit {
     positiveTextView.setTextColor(builder.positiveColor);
     dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
     dialog.positiveButton.setDefaultSelector(
-        dialog.getButtonSelector(DialogAction.POSITIVE, false));
+            dialog.getButtonSelector(DialogAction.POSITIVE, false));
     dialog.positiveButton.setTag(DialogAction.POSITIVE);
     dialog.positiveButton.setOnClickListener(dialog);
 
@@ -298,7 +302,7 @@ class DialogInit {
     negativeTextView.setTextColor(builder.negativeColor);
     dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
     dialog.negativeButton.setDefaultSelector(
-        dialog.getButtonSelector(DialogAction.NEGATIVE, false));
+            dialog.getButtonSelector(DialogAction.NEGATIVE, false));
     dialog.negativeButton.setTag(DialogAction.NEGATIVE);
     dialog.negativeButton.setOnClickListener(dialog);
 
@@ -331,7 +335,7 @@ class DialogInit {
           dialog.listType = MaterialDialog.ListType.REGULAR;
         }
         builder.adapter =
-            new DefaultRvAdapter(dialog, MaterialDialog.ListType.getLayoutForType(dialog.listType));
+                new DefaultRvAdapter(dialog, MaterialDialog.ListType.getLayoutForType(dialog.listType));
       } else if (builder.adapter instanceof MDAdapter) {
         // Notify simple list adapter of the dialog it belongs to
         ((MDAdapter) builder.adapter).setDialog(dialog);
@@ -372,15 +376,15 @@ class DialogInit {
           innerView.setPadding(framePadding, 0, framePadding, 0);
         }
         sv.addView(
-            innerView,
-            new ScrollView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                innerView,
+                new ScrollView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         innerView = sv;
       }
       frame.addView(
-          innerView,
-          new ViewGroup.LayoutParams(
-              ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+              innerView,
+              new ViewGroup.LayoutParams(
+                      ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     // Setup user listeners
@@ -414,11 +418,11 @@ class DialogInit {
     final int windowHeight = size.y;
 
     final int windowVerticalPadding =
-        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
+            builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_vertical_margin);
     final int windowHorizontalPadding =
-        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
+            builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_horizontal_margin);
     final int maxWidth =
-        builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
+            builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
     final int calculatedWidth = windowWidth - (windowHorizontalPadding * 2);
 
     dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
@@ -450,13 +454,13 @@ class DialogInit {
         if (builder.indeterminateProgress) {
           if (builder.indeterminateIsHorizontalProgress) {
             IndeterminateHorizontalProgressDrawable d =
-                new IndeterminateHorizontalProgressDrawable(builder.getContext());
+                    new IndeterminateHorizontalProgressDrawable(builder.getContext());
             d.setTint(builder.widgetColor);
             dialog.progressBar.setProgressDrawable(d);
             dialog.progressBar.setIndeterminateDrawable(d);
           } else {
             IndeterminateCircularProgressDrawable d =
-                new IndeterminateCircularProgressDrawable(builder.getContext());
+                    new IndeterminateCircularProgressDrawable(builder.getContext());
             d.setTint(builder.widgetColor);
             dialog.progressBar.setProgressDrawable(d);
             dialog.progressBar.setIndeterminateDrawable(d);
@@ -473,7 +477,7 @@ class DialogInit {
 
       if (!builder.indeterminateProgress || builder.indeterminateIsHorizontalProgress) {
         dialog.progressBar.setIndeterminate(
-            builder.indeterminateProgress && builder.indeterminateIsHorizontalProgress);
+                builder.indeterminateProgress && builder.indeterminateIsHorizontalProgress);
         dialog.progressBar.setProgress(0);
         dialog.progressBar.setMax(builder.progressMax);
         dialog.progressLabel = dialog.view.findViewById(R.id.md_label);
@@ -490,9 +494,9 @@ class DialogInit {
           if (builder.showMinMax) {
             dialog.progressMinMax.setVisibility(View.VISIBLE);
             dialog.progressMinMax.setText(
-                String.format(builder.progressNumberFormat, 0, builder.progressMax));
+                    String.format(builder.progressNumberFormat, 0, builder.progressMax));
             ViewGroup.MarginLayoutParams lp =
-                (ViewGroup.MarginLayoutParams) dialog.progressBar.getLayoutParams();
+                    (ViewGroup.MarginLayoutParams) dialog.progressBar.getLayoutParams();
             lp.leftMargin = 0;
             lp.rightMargin = 0;
           } else {
@@ -529,7 +533,7 @@ class DialogInit {
     if (builder.inputType != -1) {
       dialog.input.setInputType(builder.inputType);
       if (builder.inputType != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-          && (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD)
+              && (builder.inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD)
               == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
         // If the flags contain TYPE_TEXT_VARIATION_PASSWORD, apply the password transformation
         // method automatically
@@ -540,7 +544,7 @@ class DialogInit {
     dialog.inputMinMax = dialog.view.findViewById(R.id.md_minMax);
     if (builder.inputMinLength > 0 || builder.inputMaxLength > -1) {
       dialog.invalidateInputMinMaxIndicator(
-          dialog.input.getText().toString().length(), !builder.inputAllowEmpty);
+              dialog.input.getText().toString().length(), !builder.inputAllowEmpty);
     } else {
       dialog.inputMinMax.setVisibility(View.GONE);
       dialog.inputMinMax = null;

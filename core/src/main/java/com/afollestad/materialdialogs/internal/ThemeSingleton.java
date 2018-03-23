@@ -21,6 +21,7 @@ public class ThemeSingleton {
   public ColorStateList negativeColor = null;
   @ColorInt public int widgetColor = 0;
   @ColorInt public int itemColor = 0;
+  @ColorInt public int titleFrameColor = 0;
   public Drawable icon = null;
   @ColorInt public int backgroundColor = 0;
   @ColorInt public int dividerColor = 0;
