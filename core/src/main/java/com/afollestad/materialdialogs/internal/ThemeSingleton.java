@@ -19,6 +19,9 @@ public class ThemeSingleton {
   public ColorStateList positiveColor = null;
   public ColorStateList neutralColor = null;
   public ColorStateList negativeColor = null;
+  public ColorStateList positiveStackedColor = null;
+  public ColorStateList neutralStackedColor = null;
+  public ColorStateList negativeStackedColor = null;
   @ColorInt public int widgetColor = 0;
   @ColorInt public int itemColor = 0;
   public Drawable icon = null;

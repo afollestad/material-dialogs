@@ -2,6 +2,7 @@ package com.afollestad.materialdialogs.internal;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -21,6 +22,9 @@ public class MDButton extends TextView {
   private int stackedEndPadding;
   private Drawable stackedBackground;
   private Drawable defaultBackground;
+
+  private ColorStateList defaultTextColor;
+  private ColorStateList stackedTextColor;
 
   public MDButton(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -57,6 +61,12 @@ public class MDButton extends TextView {
         setPadding(stackedEndPadding, getPaddingTop(), stackedEndPadding, getPaddingBottom());
       } /* Else the padding was properly reset by the drawable */
 
+      if (stacked) {
+        setTextColor(stackedTextColor == null ? defaultTextColor : stackedTextColor);
+      } else {
+        setTextColor(defaultTextColor);
+      }
+
       this.stacked = stacked;
     }
   }
@@ -77,6 +87,21 @@ public class MDButton extends TextView {
     if (!stacked) {
       setStacked(false, true);
     }
+  }
+
+  public void setDefaultTextColor(ColorStateList c) {
+    setDefaultTextColor(c, false);
+  }
+
+  public void setDefaultTextColor(ColorStateList c, boolean applyNow) {
+    defaultTextColor = c;
+    if (applyNow) {
+      setTextColor(c);
+    }
+  }
+
+  public void setStackedTextColor(ColorStateList c) {
+    stackedTextColor = c;
   }
 
   public void setAllCapsCompat(boolean allCaps) {
