@@ -82,6 +82,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             if (fileIsMimeType(fi, mimeType, mimeTypeMap)) {
               results.add(fi);
             }
+          } else { // If user hasn't specified FileType anything should be allowed
+            results.add(fi);
           }
         }
       }
