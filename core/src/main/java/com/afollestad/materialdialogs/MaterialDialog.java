@@ -1061,6 +1061,9 @@ public class MaterialDialog extends DialogBase
     protected ColorStateList positiveColor;
     protected ColorStateList negativeColor;
     protected ColorStateList neutralColor;
+    protected ColorStateList positiveStackedColor;
+    protected ColorStateList negativeStackedColor;
+    protected ColorStateList neutralStackedColor;
     protected ColorStateList linkColor;
     protected SingleButtonCallback onPositiveCallback;
     protected SingleButtonCallback onNegativeCallback;
@@ -1125,6 +1128,9 @@ public class MaterialDialog extends DialogBase
     protected boolean positiveColorSet = false;
     protected boolean neutralColorSet = false;
     protected boolean negativeColorSet = false;
+    protected boolean positiveStackedColorSet = false;
+    protected boolean neutralStackedColorSet = false;
+    protected boolean negativeStackedColorSet = false;
     protected boolean widgetColorSet = false;
     protected boolean dividerColorSet = false;
 
@@ -1254,6 +1260,15 @@ public class MaterialDialog extends DialogBase
       }
       if (s.negativeColor != null) {
         this.negativeColor = s.negativeColor;
+      }
+      if (s.positiveStackedColor != null) {
+        this.positiveStackedColor = s.positiveStackedColor;
+      }
+      if (s.neutralStackedColor != null) {
+        this.neutralStackedColor = s.neutralStackedColor;
+      }
+      if (s.negativeStackedColor != null) {
+        this.negativeStackedColor = s.negativeStackedColor;
       }
       if (s.itemColor != 0) {
         this.itemColor = s.itemColor;
@@ -1625,6 +1640,25 @@ public class MaterialDialog extends DialogBase
       return this;
     }
 
+    public Builder positiveStackedColor(@ColorInt int color) {
+      return positiveStackedColor(DialogUtils.getActionTextStateList(context, color));
+    }
+
+    public Builder positiveStackedColorRes(@ColorRes int colorRes) {
+      return positiveStackedColor(DialogUtils.getActionTextColorStateList(context, colorRes));
+    }
+
+    public Builder positiveStackedColorAttr(@AttrRes int colorAttr) {
+      return positiveStackedColor(
+          DialogUtils.resolveActionTextColorStateList(context, colorAttr, null));
+    }
+
+    public Builder positiveStackedColor(ColorStateList colorStateList) {
+      this.positiveStackedColor = colorStateList;
+      this.positiveStackedColorSet = true;
+      return this;
+    }
+
     public Builder positiveFocus(boolean isFocusedDefault) {
       this.positiveFocus = isFocusedDefault;
       return this;
@@ -1661,6 +1695,25 @@ public class MaterialDialog extends DialogBase
       return this;
     }
 
+    public Builder negativeStackedColor(@ColorInt int color) {
+      return negativeStackedColor(DialogUtils.getActionTextStateList(context, color));
+    }
+
+    public Builder negativeStackedColorRes(@ColorRes int colorRes) {
+      return negativeStackedColor(DialogUtils.getActionTextColorStateList(context, colorRes));
+    }
+
+    public Builder negativeStackedColorAttr(@AttrRes int colorAttr) {
+      return negativeStackedColor(
+          DialogUtils.resolveActionTextColorStateList(context, colorAttr, null));
+    }
+
+    public Builder negativeStackedColor(ColorStateList colorStateList) {
+      this.negativeStackedColor = colorStateList;
+      this.negativeStackedColorSet = true;
+      return this;
+    }
+
     public Builder negativeText(@StringRes int negativeRes) {
       if (negativeRes == 0) {
         return this;
@@ -1694,6 +1747,25 @@ public class MaterialDialog extends DialogBase
     public Builder neutralColor(ColorStateList colorStateList) {
       this.neutralColor = colorStateList;
       this.neutralColorSet = true;
+      return this;
+    }
+
+    public Builder neutralStackedColor(@ColorInt int color) {
+      return neutralStackedColor(DialogUtils.getActionTextStateList(context, color));
+    }
+
+    public Builder neutralStackedColorRes(@ColorRes int colorRes) {
+      return neutralStackedColor(DialogUtils.getActionTextColorStateList(context, colorRes));
+    }
+
+    public Builder neutralStackedColorAttr(@AttrRes int colorAttr) {
+      return neutralStackedColor(
+          DialogUtils.resolveActionTextColorStateList(context, colorAttr, null));
+    }
+
+    public Builder neutralStackedColor(ColorStateList colorStateList) {
+      this.neutralStackedColor = colorStateList;
+      this.neutralStackedColorSet = true;
       return this;
     }
 

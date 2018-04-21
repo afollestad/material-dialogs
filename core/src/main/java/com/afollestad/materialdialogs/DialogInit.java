@@ -114,6 +114,21 @@ class DialogInit {
           DialogUtils.resolveActionTextColorStateList(
               builder.context, R.attr.md_negative_color, builder.negativeColor);
     }
+    if (!builder.positiveStackedColorSet) {
+      builder.positiveStackedColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_positive_stacked_color, builder.positiveStackedColor);
+    }
+    if (!builder.neutralStackedColorSet) {
+      builder.neutralStackedColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_neutral_stacked_color, builder.neutralStackedColor);
+    }
+    if (!builder.negativeStackedColorSet) {
+      builder.negativeStackedColor =
+          DialogUtils.resolveActionTextColorStateList(
+              builder.context, R.attr.md_negative_stacked_color, builder.negativeStackedColor);
+    }
     if (!builder.widgetColorSet) {
       builder.widgetColor =
           DialogUtils.resolveColor(builder.context, R.attr.md_widget_color, builder.widgetColor);
@@ -284,7 +299,8 @@ class DialogInit {
     dialog.setTypeface(positiveTextView, builder.mediumFont);
     positiveTextView.setAllCapsCompat(textAllCaps);
     positiveTextView.setText(builder.positiveText);
-    positiveTextView.setTextColor(builder.positiveColor);
+    positiveTextView.setDefaultTextColor(builder.positiveColor, true);
+    positiveTextView.setStackedTextColor(builder.positiveStackedColor);
     dialog.positiveButton.setStackedSelector(dialog.getButtonSelector(DialogAction.POSITIVE, true));
     dialog.positiveButton.setDefaultSelector(
         dialog.getButtonSelector(DialogAction.POSITIVE, false));
@@ -296,6 +312,8 @@ class DialogInit {
     negativeTextView.setAllCapsCompat(textAllCaps);
     negativeTextView.setText(builder.negativeText);
     negativeTextView.setTextColor(builder.negativeColor);
+    negativeTextView.setDefaultTextColor(builder.negativeColor, true);
+    negativeTextView.setStackedTextColor(builder.negativeStackedColor);
     dialog.negativeButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEGATIVE, true));
     dialog.negativeButton.setDefaultSelector(
         dialog.getButtonSelector(DialogAction.NEGATIVE, false));
@@ -306,7 +324,8 @@ class DialogInit {
     dialog.setTypeface(neutralTextView, builder.mediumFont);
     neutralTextView.setAllCapsCompat(textAllCaps);
     neutralTextView.setText(builder.neutralText);
-    neutralTextView.setTextColor(builder.neutralColor);
+    neutralTextView.setDefaultTextColor(builder.neutralColor, true);
+    neutralTextView.setStackedTextColor(builder.neutralStackedColor);
     dialog.neutralButton.setStackedSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, true));
     dialog.neutralButton.setDefaultSelector(dialog.getButtonSelector(DialogAction.NEUTRAL, false));
     dialog.neutralButton.setTag(DialogAction.NEUTRAL);

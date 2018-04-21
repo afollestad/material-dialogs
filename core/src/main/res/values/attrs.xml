@@ -19,6 +19,9 @@
   <attr name="md_positive_color" format="color" />
   <attr name="md_neutral_color" format="color" />
   <attr name="md_negative_color" format="color" />
+  <attr name="md_positive_stacked_color" format="color" />
+  <attr name="md_neutral_stacked_color" format="color" />
+  <attr name="md_negative_stacked_color" format="color" />
   <attr name="md_widget_color" format="color" />
 
   <attr name="md_item_color" format="color" />
