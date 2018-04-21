@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply from: '../dependencies.gradle'
 apply plugin: 'com.novoda.bintray-release'
+apply from: '../gradle/dependencies.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
