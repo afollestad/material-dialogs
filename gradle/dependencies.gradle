@@ -8,6 +8,7 @@ ext.versions = [
         spotlessPlugin    : '3.10.0',
         findBugs          : '3.0.2',
         bintrayRelease    : '0.8.1',
+        kotlin            : '1.2.40',
 
         supportLib        : '27.1.1',
         mdProgressBar     : '1.4.2',

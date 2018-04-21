@@ -7,6 +7,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -37,6 +38,7 @@ android {
 dependencies {
     implementation project(':core')
     implementation project(':commons')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
     implementation 'com.google.code.findbugs:jsr305:' + versions.findBugs
 
     implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
@@ -47,4 +49,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 
     implementation 'com.facebook.stetho:stetho:1.4.2'
+}
+repositories {
+    mavenCentral()
 }
