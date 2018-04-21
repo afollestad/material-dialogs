@@ -1096,6 +1096,7 @@ public class MaterialDialog extends DialogBase
     protected int dividerColor;
     protected int backgroundColor;
     protected int itemColor;
+    protected int titleFrameColor;
     protected boolean indeterminateProgress;
     protected boolean showMinMax;
     protected int progress = -2;
@@ -1122,6 +1123,7 @@ public class MaterialDialog extends DialogBase
     protected boolean titleColorSet = false;
     protected boolean contentColorSet = false;
     protected boolean itemColorSet = false;
+    protected boolean titleFrameColorSet = false;
     protected boolean positiveColorSet = false;
     protected boolean neutralColorSet = false;
     protected boolean negativeColorSet = false;
@@ -1287,6 +1289,9 @@ public class MaterialDialog extends DialogBase
       }
       if (s.linkColor != null) {
         this.linkColor = s.linkColor;
+      }
+      if (s.titleFrameColor != 0) {
+        this.titleFrameColor = s.titleFrameColor;
       }
       this.titleGravity = s.titleGravity;
       this.contentGravity = s.contentGravity;
@@ -1489,6 +1494,20 @@ public class MaterialDialog extends DialogBase
       this.listCallbackSingleChoice = null;
       this.listCallbackMultiChoice = null;
       return this;
+    }
+
+    public Builder titleFrameColor(@ColorInt int color) {
+      this.titleFrameColor = color;
+      this.titleFrameColorSet = true;
+      return this;
+    }
+
+    public Builder titleFrameColorRes(@ColorRes int colorRes) {
+      return titleFrameColor(DialogUtils.getColor(this.context, colorRes));
+    }
+
+    public Builder titleFrameColorAttr(@AttrRes int colorAttr) {
+      return titleFrameColor(DialogUtils.resolveColor(this.context, colorAttr));
     }
 
     public Builder itemsColor(@ColorInt int color) {

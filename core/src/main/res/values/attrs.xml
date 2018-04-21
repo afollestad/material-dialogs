@@ -23,6 +23,7 @@
 
   <attr name="md_item_color" format="color" />
   <attr name="md_divider_color" format="color" />
+  <attr name="md_title_frame_color" format="color" />
   <attr name="md_list_selector" format="reference" />
 
   <attr name="md_btn_stacked_selector" format="reference" />

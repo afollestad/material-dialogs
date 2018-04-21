@@ -136,6 +136,10 @@ class DialogInit {
       builder.itemColor =
           DialogUtils.resolveColor(builder.context, R.attr.md_item_color, builder.contentColor);
     }
+    if (!builder.titleFrameColorSet) {
+      DialogUtils.resolveColor(
+          builder.context, R.attr.md_title_frame_color, builder.titleFrameColor);
+    }
 
     // Retrieve references to views
     dialog.title = dialog.view.findViewById(R.id.md_title);
@@ -227,6 +231,7 @@ class DialogInit {
       } else {
         dialog.title.setText(builder.title);
         dialog.titleFrame.setVisibility(View.VISIBLE);
+        dialog.titleFrame.setBackgroundColor(builder.titleFrameColor);
       }
     }
 
