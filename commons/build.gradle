@@ -38,4 +38,5 @@ publish {
     artifactId = 'commons'
     publishVersion = versions.publishVersion
     website = 'https://github.com/afollestad/material-dialogs'
+    desc = 'A beautiful, fluid, and customizable dialogs API. '
 }
