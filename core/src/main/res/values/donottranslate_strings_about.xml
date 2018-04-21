@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <string name="define_materialdialogs">year;owner</string>
+    <string name="library_materialdialogs_author">Aidan Follestad</string>
+    <string name="library_materialdialogs_authorWebsite">http://aidanfollestad.com/</string>
+    <string name="library_materialdialogs_libraryName">Material Dialogs</string>
+    <string name="library_materialdialogs_libraryDescription">A beautiful, easy-to-use, and customizable dialogs API, enabling you to use Material designed
+        dialogs down to API 13 (Honeycomb)
+    </string>
+    <string name="library_materialdialogs_libraryWebsite">https://github.com/afollestad/material-dialogs</string>
+    <string name="library_materialdialogs_isOpenSource">true</string>
+    <string name="library_materialdialogs_repositoryLink">https://github.com/afollestad/material-dialogs</string>
+    <string name="library_materialdialogs_classPath">com.afollestad.materialdialogs.MaterialDialog</string>
+    <string name="library_materialdialogs_licenseId">mit</string>
+    <string name="library_materialdialogs_owner">Aidan Follestad</string>
+    <string name="library_materialdialogs_year">2016</string>
+</resources>
