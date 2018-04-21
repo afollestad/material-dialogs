@@ -1251,6 +1251,11 @@ public class MyActivity implements FileChooserDialog.FileCallback {
         // TODO
         final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
     }
+
+    @Override
+    public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
+        // TODO
+    }
 }
 ```
 
