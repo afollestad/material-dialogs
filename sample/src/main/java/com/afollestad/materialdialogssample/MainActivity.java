@@ -731,6 +731,7 @@ public class MainActivity extends AppCompatActivity
             R.string.input_hint,
             R.string.input_hint,
             false,
+            true,
             (dialog, input) -> showToast("Hello, " + input.toString() + "!"))
         .show();
   }
@@ -750,6 +751,7 @@ public class MainActivity extends AppCompatActivity
             R.string.input_hint,
             0,
             false,
+            true,
             (dialog, input) -> {
               if (input.toString().equalsIgnoreCase("hello")) {
                 dialog.setContent("I told you not to type that!");
@@ -777,6 +779,7 @@ public class MainActivity extends AppCompatActivity
             R.string.input_hint,
             R.string.input_hint,
             false,
+            true,
             (dialog, input) -> showToast("Hello, " + input.toString() + "!"))
         .checkBoxPromptRes(R.string.example_prompt, true, null)
         .show();

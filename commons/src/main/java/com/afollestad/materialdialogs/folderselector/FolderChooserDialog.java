@@ -150,6 +150,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
             0,
             0,
             false,
+            true,
             new MaterialDialog.InputCallback() {
               @Override
               public void onInput(MaterialDialog dialog, CharSequence input) {
