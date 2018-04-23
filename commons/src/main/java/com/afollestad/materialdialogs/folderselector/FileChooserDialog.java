@@ -58,7 +58,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     return results;
   }
 
-  File[] listFiles(@Nullable String mimeType, @Nullable String[] extensions) {
+  File[] listFiles(@Nullable String[] mimeTypes, @Nullable String[] extensions) {
     File[] contents = parentFolder.listFiles();
     List<File> results = new ArrayList<>();
     if (contents != null) {
@@ -78,8 +78,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
             if (found) {
               results.add(fi);
             }
-          } else if (mimeType != null) {
-            if (fileIsMimeType(fi, mimeType, mimeTypeMap)) {
+          } else if (mimeTypes != null) {
+            if (fileIsMimeType(fi, mimeTypes, mimeTypeMap)) {
               results.add(fi);
             }
           }
@@ -91,8 +91,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     return null;
   }
 
-  boolean fileIsMimeType(File file, @Nullable String mimeType, MimeTypeMap mimeTypeMap) {
-    if (mimeType == null || mimeType.equals("*/*")) {
+  boolean fileIsMimeType(File file, @Nullable String[] mimeTypes, MimeTypeMap mimeTypeMap) {
+    if (mimeTypes == null) {
       return true;
     } else {
       // get the file mime type
@@ -102,36 +102,45 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         return false;
       }
       String fileExtension = filename.substring(dotPos + 1);
-      if (fileExtension.endsWith("json")) {
-        return mimeType.startsWith("application/json");
-      }
-      String fileType = mimeTypeMap.getMimeTypeFromExtension(fileExtension);
-      if (fileType == null) {
-        return false;
-      }
-      // check the 'type/subtype' pattern
-      if (fileType.equals(mimeType)) {
-        return true;
-      }
-      // check the 'type/*' pattern
-      int mimeTypeDelimiter = mimeType.lastIndexOf('/');
-      if (mimeTypeDelimiter == -1) {
-        return false;
-      }
-      String mimeTypeMainType = mimeType.substring(0, mimeTypeDelimiter);
-      String mimeTypeSubtype = mimeType.substring(mimeTypeDelimiter + 1);
-      if (!mimeTypeSubtype.equals("*")) {
-        return false;
-      }
-      int fileTypeDelimiter = fileType.lastIndexOf('/');
-      if (fileTypeDelimiter == -1) {
-        return false;
-      }
-      String fileTypeMainType = fileType.substring(0, fileTypeDelimiter);
-      if (fileTypeMainType.equals(mimeTypeMainType)) {
-        return true;
+      for (String mimeType : mimeTypes) {
+        if (mimeType == null) {
+          continue;
+        }
+        if (mimeType.equals("*/*")) {
+          return true;
+        }
+        if (fileExtension.endsWith("json")) {
+          return mimeType.startsWith("application/json");
+        }
+        String fileType = mimeTypeMap.getMimeTypeFromExtension(fileExtension);
+        if (fileType == null) {
+          return false;
+        }
+        // check the 'type/subtype' pattern
+        if (fileType.equals(mimeType)) {
+          return true;
+        }
+        // check the 'type/*' pattern
+        int mimeTypeDelimiter = mimeType.lastIndexOf('/');
+        if (mimeTypeDelimiter == -1) {
+          continue;
+        }
+        String mimeTypeMainType = mimeType.substring(0, mimeTypeDelimiter);
+        String mimeTypeSubtype = mimeType.substring(mimeTypeDelimiter + 1);
+        if (!mimeTypeSubtype.equals("*")) {
+          continue;
+        }
+        int fileTypeDelimiter = fileType.lastIndexOf('/');
+        if (fileTypeDelimiter == -1) {
+          continue;
+        }
+        String fileTypeMainType = fileType.substring(0, fileTypeDelimiter);
+        if (fileTypeMainType.equals(mimeTypeMainType)) {
+          return true;
+        }
       }
     }
+
     return false;
   }
 
@@ -157,7 +166,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     }
     parentFolder = new File(getArguments().getString("current_path"));
     checkIfCanGoUp();
-    parentContents = listFiles(getBuilder().mimeType, getBuilder().extensions);
+    parentContents = listFiles(getBuilder().mimeTypes, getBuilder().extensions);
     return new MaterialDialog.Builder(getActivity())
         .title(parentFolder.getAbsolutePath())
         .typeface(getBuilder().mediumFont, getBuilder().regularFont)
@@ -202,7 +211,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       callback.onFileSelection(this, parentFolder);
       dismiss();
     } else {
-      parentContents = listFiles(getBuilder().mimeType, getBuilder().extensions);
+      parentContents = listFiles(getBuilder().mimeTypes, getBuilder().extensions);
       MaterialDialog dialog = (MaterialDialog) getDialog();
       dialog.setTitle(parentFolder.getAbsolutePath());
       checkNotNull(getArguments(), "arguments")
@@ -273,7 +282,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
     @StringRes int cancelButton;
     String initialPath;
-    String mimeType;
+    String[] mimeTypes;
     String[] extensions;
     String tag;
     String goUpLabel;
@@ -283,7 +292,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
     private Builder() {
       cancelButton = android.R.string.cancel;
       initialPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-      mimeType = null;
+      mimeTypes = null;
       goUpLabel = "...";
     }
 
@@ -316,8 +325,8 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
       return this;
     }
 
-    public Builder mimeType(@Nullable String type) {
-      mimeType = type;
+    public Builder mimeType(@Nullable String... types) {
+      this.mimeTypes = types;
       return this;
     }
 
