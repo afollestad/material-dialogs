@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
-apply from: '../dependencies.gradle'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.novoda.bintray-release'
+apply from: '../gradle/dependencies.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -31,6 +32,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:' + versions.supportLib
     implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
     implementation 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 }
 
 publish {
@@ -39,4 +41,8 @@ publish {
     artifactId = 'core'
     publishVersion = versions.publishVersion
     website = 'https://github.com/afollestad/material-dialogs'
+    desc = 'A beautiful, fluid, and customizable dialogs API. '
+}
+repositories {
+    mavenCentral()
 }

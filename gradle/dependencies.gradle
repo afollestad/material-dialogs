@@ -1,15 +1,16 @@
 ext.versions = [
         minSdk            : 14,
         compileSdk        : 27,
-        buildTools        : '27.0.2',
+        buildTools        : '27.0.3',
         publishVersion    : '0.9.6.0',
         publishVersionCode: 179,
-        gradlePlugin      : '3.0.1',
-        spotlessPlugin    : '3.6.0',
+        gradlePlugin      : '3.1.1',
+        spotlessPlugin    : '3.10.0',
         findBugs          : '3.0.2',
-        bintrayRelease    : '0.8.0',
+        bintrayRelease    : '0.8.1',
+        kotlin            : '1.2.40',
 
-        supportLib        : '27.0.2',
+        supportLib        : '27.1.1',
         mdProgressBar     : '1.4.2',
         butterKnife       : '8.8.1'
 ]
