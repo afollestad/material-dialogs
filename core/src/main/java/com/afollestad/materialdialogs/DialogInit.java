@@ -424,7 +424,7 @@ class DialogInit {
     dialog.view.setMaxHeight(windowHeight - windowVerticalPadding * 2);
     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
     lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = Math.min(maxWidth, calculatedWidth);
+    lp.width = Math.min(maxWidth - (windowHorizontalPadding * 2), calculatedWidth);
     dialog.getWindow().setAttributes(lp);
   }
 
