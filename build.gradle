@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
         classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
-        classpath 'com.novoda:bintray-release:' + versions.bintrayRelease
+        //classpath 'com.novoda:bintray-release:' + versions.bintrayRelease
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + versions.kotlin
     }
 }
