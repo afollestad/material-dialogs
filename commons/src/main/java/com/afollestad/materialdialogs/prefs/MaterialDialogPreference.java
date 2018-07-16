@@ -1,7 +1,7 @@
 package com.afollestad.materialdialogs.prefs;
 
 import android.annotation.TargetApi;
-import android.app.Dialog;
+import android.support.v7.app.AppCompatDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -49,7 +49,7 @@ public class MaterialDialogPreference extends DialogPreference {
   }
 
   @Override
-  public Dialog getDialog() {
+  public AppCompatDialog getDialog() {
     return dialog;
   }
 
@@ -118,7 +118,7 @@ public class MaterialDialogPreference extends DialogPreference {
   @Override
   protected Parcelable onSaveInstanceState() {
     final Parcelable superState = super.onSaveInstanceState();
-    Dialog dialog = getDialog();
+    AppCompatDialog dialog = getDialog();
     if (dialog == null || !dialog.isShowing()) {
       return superState;
     }

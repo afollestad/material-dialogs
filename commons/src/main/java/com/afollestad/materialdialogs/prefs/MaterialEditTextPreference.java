@@ -2,7 +2,7 @@ package com.afollestad.materialdialogs.prefs;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Dialog;
+import android.support.v7.app.AppCompatDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -118,7 +118,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   @Override
-  public Dialog getDialog() {
+  public AppCompatDialog getDialog() {
     return dialog;
   }
 
@@ -186,7 +186,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
   }
 
   /** Copied from DialogPreference.java */
-  private void requestInputMethod(Dialog dialog) {
+  private void requestInputMethod(AppCompatDialog dialog) {
     Window window = dialog.getWindow();
     if (window == null) {
       return;
@@ -205,7 +205,7 @@ public class MaterialEditTextPreference extends EditTextPreference {
   @Override
   protected Parcelable onSaveInstanceState() {
     final Parcelable superState = super.onSaveInstanceState();
-    Dialog dialog = getDialog();
+    AppCompatDialog dialog = getDialog();
     if (dialog == null || !dialog.isShowing()) {
       return superState;
     }

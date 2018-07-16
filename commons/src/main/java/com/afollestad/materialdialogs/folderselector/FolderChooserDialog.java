@@ -3,7 +3,7 @@ package com.afollestad.materialdialogs.folderselector;
 import static com.afollestad.materialdialogs.util.DialogUtils.checkNotNull;
 
 import android.Manifest;
-import android.app.Dialog;
+import android.support.v7.app.AppCompatDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -75,7 +75,7 @@ public class FolderChooserDialog extends DialogFragment implements MaterialDialo
 
   @SuppressWarnings("ConstantConditions")
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
         && ActivityCompat.checkSelfPermission(
                 getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)

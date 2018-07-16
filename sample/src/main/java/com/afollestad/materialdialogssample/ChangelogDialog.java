@@ -1,7 +1,7 @@
 package com.afollestad.materialdialogssample;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.support.v7.app.AppCompatDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -29,7 +29,7 @@ public class ChangelogDialog extends DialogFragment {
 
   @SuppressLint("InflateParams")
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
     final View customView;
     try {
       customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_webview, null);

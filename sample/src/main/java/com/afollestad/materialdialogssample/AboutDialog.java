@@ -1,6 +1,6 @@
 package com.afollestad.materialdialogssample;
 
-import android.app.Dialog;
+import android.support.v7.app.AppCompatDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +15,7 @@ public class AboutDialog extends DialogFragment {
   }
 
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
+  public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
     return new MaterialDialog.Builder(getActivity())
         .title(R.string.about)
         .positiveText(R.string.dismiss)
