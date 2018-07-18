@@ -39,7 +39,7 @@ dependencies {
     implementation project(':core')
     implementation project(':commons')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
-    implementation 'com.google.code.findbugs:jsr305:' + versions.findBugs
+    implementation 'com.github.spotbugs:spotbugs:' + versions.spotBugs
 
     implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
     implementation 'com.android.support:appcompat-v7:' + versions.supportLib
@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:' + versions.butterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 
-    implementation 'com.facebook.stetho:stetho:1.4.2'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 }
 repositories {
     mavenCentral()
