@@ -8,6 +8,7 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -46,7 +47,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
 
     implementation 'com.jakewharton:butterknife:' + versions.butterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
+    kapt annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 
     implementation 'com.facebook.stetho:stetho:1.5.0'
 }
