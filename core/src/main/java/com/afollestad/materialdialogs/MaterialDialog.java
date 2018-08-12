@@ -1027,7 +1027,7 @@ public class MaterialDialog extends DialogBase
     void onInput(MaterialDialog dialog, CharSequence input);
   }
 
-  private static class DialogException extends WindowManager.BadTokenException {
+  public static class DialogException extends WindowManager.BadTokenException {
     DialogException(@SuppressWarnings("SameParameterValue") String message) {
       super(message);
     }
