@@ -1,39 +1,26 @@
-apply from: './gradle/dependencies.gradle'
+apply from: './dependencies.gradle'
+apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
-    apply from: './gradle/dependencies.gradle'
+  apply from: './dependencies.gradle'
 
-    repositories {
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
-        classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
-        classpath 'com.novoda:bintray-release:' + versions.bintrayRelease
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + versions.kotlin
-    }
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
+    classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + versions.kotlin
+    classpath 'com.github.ben-manes:gradle-versions-plugin:' + versions.versionPlugin
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:' + versions.bintrayPlugin
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:' + versions.androidMavenPlugin
+  }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-        google()
-    }
-
-    buildscript {
-        repositories {
-            maven { url "https://plugins.gradle.org/m2/" }
-        }
-    }
-    apply plugin: "com.diffplug.gradle.spotless"
-    spotless {
-        java {
-            target "**/*.java"
-            trimTrailingWhitespace()
-            removeUnusedImports()
-            googleJavaFormat()
-            endWithNewline()
-        }
-    }
+  repositories {
+    google()
+    jcenter()
+  }
 }

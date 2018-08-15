@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: '../dependencies.gradle'
+apply plugin: "com.github.ben-manes.versions"
+
+android {
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
+
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.publishVersionCode
+    versionName versions.publishVersion
+  }
+
+  sourceSets {
+    main.res.srcDirs = [
+        'src/main/res',
+        'src/main/res-public'
+    ]
+  }
+}
+
+dependencies {
+  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation project(':core')
+  implementation project(':shared')
+}
+
+apply from: '../spotless.gradle'
+
+ext.shard = 'files'
+apply from: '../publish/info.gradle'
+apply from: '../publish/install.gradle'
+apply from: '../publish/bintray.gradle'

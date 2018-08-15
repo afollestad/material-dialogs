@@ -1,0 +1,47 @@
+if (!project.rootProject.file('local.properties').exists()) {
+  println "Not applying install.gradle"
+  return
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = publishedGroupId
+
+install {
+  repositories.mavenInstaller {
+    // This generates POM.xml with proper parameters
+    pom {
+      project {
+        packaging 'aar'
+        groupId publishedGroupId
+        artifactId artifact
+
+        // Add your description here
+        name libraryName
+        description libraryDescription
+        url siteUrl
+
+        // Set your license
+        licenses {
+          license {
+            name licenseName
+            url licenseUrl
+          }
+        }
+        developers {
+          developer {
+            id developerId
+            name developerName
+            email developerEmail
+          }
+        }
+        scm {
+          connection gitUrl
+          developerConnection gitUrl
+          url siteUrl
+
+        }
+      }
+    }
+  }
+}

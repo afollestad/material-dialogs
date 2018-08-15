@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <!--<color name="content_light">#5E5E5E</color>-->
-  <!--<color name="content_dark">#EDEDED</color>-->
-  <!--<color name="item_light">#535353</color>-->
-  <!--<color name="item_dark">#EDEDED</color>-->
-  <!--<color name="button_light">#3C3C3D</color>-->
-  <!--<color name="button_dark">#FFFFFF</color>-->
-
   <color name="md_btn_selected">#33969696</color>
   <color name="md_btn_selected_dark">#40CBCBCB</color>
 
-  <color name="md_divider_black">#10000000</color>
-  <color name="md_divider_white">#10FFFFFF</color>
+  <color name="md_divider_light_theme">#E0E0E0</color>
+  <color name="md_divider_dark_theme">#1F1F1F</color>
 
-  <color name="md_material_blue_600">#2196F3</color>
-  <color name="md_material_blue_800">#1565C0</color>
-
-  <color name="md_edittext_error">#DD2C00</color>
+  <color name="md_disabled_text_light_theme">#818181</color>
+  <color name="md_disabled_text_dark_theme">#C2C2C2</color>
 
 </resources>

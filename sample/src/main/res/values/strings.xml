@@ -1,205 +1,55 @@
 <resources>
 
-    <string name="app_name">Material Dialogs</string>
+  <string name="app_name">Material Dialogs</string>
 
-    <string name="agree">Agree</string>
-    <string name="disagree">Disagree</string>
-    <string name="more_info">More Info</string>
+  <string name="agree">Agree</string>
+  <string name="disagree">Disagree</string>
+  <string name="more_info">More Info</string>
 
-    <string name="basic">Basic</string>
-    <string name="stacked">Stacked Buttons</string>
-    <string name="neutral">Neutral Button</string>
-    <string name="callbacks">Callbacks</string>
-    <string name="list">Basic List</string>
-    <string name="singleChoice">Single Choice</string>
-    <string name="multiChoice">Multi Choice</string>
-    <string name="customView">Custom View</string>
-    <string name="themed">Themed</string>
-    <string name="signalStrength">Signal strength</string>
-    <string name="excellent">Excellent</string>
-    <string name="security">Security</string>
-    <string name="securityType">802.1x EAP</string>
-    <string name="password">Password</string>
-    <string name="showPassword">Show password</string>
-    <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
-    <string name="useGoogleLocationServicesPrompt"><![CDATA[Let Google help apps determine location. <b>This means sending anonymous location data to Google</b>, even when no apps are running.]]></string>
-    <string name="socialNetworks">Social Networks</string>
-    <string name="choose">Choose</string>
-    <string name="speedBoost">Turn on speed boost now!</string>
-    <string name="noThanks">No thanks</string>
-    <string name="googleWifi">Google Wifi</string>
-    <string name="connect">Connect</string>
+  <string name="choose">Choose</string>
 
-    <string name="about">About</string>
-    <string name="about_body"><![CDATA[
-        material-dialogs, a library  designed by <b>Aidan Follestad</b>.<br/>
-        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
-        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
-        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
-        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
-        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
-    ]]></string>
-    <string name="dismiss">Dismiss</string>
-    <string name="basic_notitle">Basic (No Title)</string>
-    <string name="shareLocationPrompt">This app wants to access your location.</string>
-    <string name="basic_list_long">Basic List (Long)</string>
-    <string name="states">States</string>
-    <string name="custom_listitem_button">A button!</string>
-    <string name="custom_adapter">Custom Adapter</string>
-    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae metus nec sapien elementum interdum ac mollis tortor. Nunc porttitor metus placerat orci auctor, sed dictum magna dapibus. Morbi a lacus ante. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin posuere nisl imperdiet lectus elementum accumsan. Etiam lacinia nisi ut nulla fermentum tempus. Integer ornare lacinia diam non maximus. Vestibulum iaculis urna eu elementum scelerisque. Etiam nisl erat, bibendum vitae magna nec, convallis malesuada erat. Cras non porttitor nibh. Pellentesque rhoncus sem luctus felis tincidunt bibendum. Pellentesque vulputate eros at nulla sollicitudin volutpat. Pellentesque laoreet est sit amet erat laoreet, id molestie nulla efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed varius nisl at imperdiet facilisis.</string>
-    <string name="basic_longContent">Basic (Long Content)</string>
-    <string name="basic_icon">Basic (Icon)</string>
-    <string name="basic_list_notitle">Basic List (No Title)</string>
-    <string name="folder_chooser">Folder Chooser</string>
-    <string name="showCancelDismissCallbacks">Show/Cancel/Dismiss Callbacks</string>
-    <string name="changelog">Changelog</string>
-    <string name="customView_webView">Custom View (No Scroll, WebView)</string>
-    <string name="customView_datePicker">Custom View (No Scroll, DatePicker)</string>
-    <string name="color_chooser_primary">Color Chooser (Primary)</string>
-    <string name="color_chooser_accent">Color Chooser (Accent)</string>
-    <string name="ssid">SSID</string>
-    <string name="ssidLit">Material Dialogs</string>
+  <string name="shareLocationPrompt">This app wants to access your location.</string>
+  <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
+  <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
+  <string name="socialNetworks">Social Networks</string>
+  <string name="states">States</string>
+  <string name="loremIpsum">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae metus nec sapien
+    elementum interdum ac mollis tortor. Nunc porttitor metus placerat orci auctor, sed dictum
+    magna dapibus. Morbi a lacus ante. Cum sociis natoque penatibus et magnis dis parturient montes,
+    nascetur ridiculus mus. Proin posuere nisl imperdiet lectus elementum accumsan. Etiam lacinia
+    nisi ut nulla fermentum tempus. Integer ornare lacinia diam non maximus. Vestibulum iaculis urna
+    eu elementum scelerisque. Etiam nisl erat, bibendum vitae magna nec, convallis malesuada erat.
+    Cras non porttitor nibh. Pellentesque rhoncus sem luctus felis tincidunt bibendum. Pellentesque
+    vulputate eros at nulla sollicitudin volutpat. Pellentesque laoreet est sit amet erat laoreet,
+    id molestie nulla efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed
+    varius nisl at imperdiet facilisis. Nam in elit sit amet metus dignissim aliquam. Nulla et ante
+    molestie, lobortis velit accumsan, ornare massa. Praesent scelerisque quam ipsum, et feugiat
+    ante aliquet eget. Aenean ultricies vulputate sem.
+  </string>
+  <string name="checkboxConfirm">I understand what this means</string>
 
-    <string-array name="socialNetworks">
-        <item>Twitter</item>
-        <item>Google+</item>
-        <item>Instagram</item>
-        <item>Facebook</item>
-    </string-array>
+  <!-- Custom view example -->
+  <string name="signalStrength">Signal strength</string>
+  <string name="excellent">Excellent</string>
+  <string name="security">Security</string>
+  <string name="securityType">802.1x EAP</string>
+  <string name="password">Password</string>
+  <string name="ssid">SSID</string>
+  <string name="ssidLit">Material Dialogs</string>
+  <string name="showPassword">Show password</string>
+  <string name="googleWifi">Google Wifi</string>
+  <string name="connect">Connect</string>
 
-    <string-array name="socialNetworks_longItems">
-        <item>Twitter is an online social networking service that enables users to send and read short 140-character messages called "tweets".</item>
-        <item>Google+ is an interest-based social network that is owned and operated by Google Inc. The service is Google\'s fourth foray into social networking.</item>
-        <item>Instagram is an online mobile photo-sharing, video-sharing and social networking service that enables its users to take pictures and videos, and share them on a variety of social networking platforms.</item>
-        <item>Facebook is an online social networking service headquartered in Menlo Park, California. Its website was launched on February 4, 2004, by Mark Zuckerberg with friends.</item>
-    </string-array>
+  <!-- WebView example -->
+  <string name="changelog">Changelog</string>
 
-    <string-array name="states">
-        <item>Alabama</item>
-        <item>Alaska</item>
-        <item>American Samoa</item>
-        <item>Arizona</item>
-        <item>Arkansas</item>
-        <item>California</item>
-        <item>Colorado</item>
-        <item>Connecticut</item>
-        <item>Delaware</item>
-        <item>District of Columbia</item>
-        <item>Florida</item>
-        <item>Georgia</item>
-        <item>Guam</item>
-        <item>Hawaii</item>
-        <item>Idaho</item>
-        <item>Illinois</item>
-        <item>Indiana</item>
-        <item>Iowa</item>
-        <item>Kansas</item>
-        <item>Kentucky</item>
-        <item>Louisiana</item>
-        <item>Maine</item>
-        <item>Maryland</item>
-        <item>Massachusetts</item>
-        <item>Michigan</item>
-        <item>Minnesota</item>
-        <item>Mississippi</item>
-        <item>Missouri</item>
-        <item>Montana</item>
-        <item>Nebraska</item>
-        <item>Nevada</item>
-        <item>New Hampshire</item>
-        <item>New Jersey</item>
-        <item>New Mexico</item>
-        <item>New York</item>
-        <item>North Carolina</item>
-        <item>North Dakota</item>
-        <item>Northern Marianas Islands</item>
-        <item>Ohio</item>
-        <item>Oklahoma</item>
-        <item>Oregon</item>
-        <item>Pennsylvania</item>
-        <item>Puerto Rico</item>
-        <item>Rhode Island</item>
-        <item>South Carolina</item>
-        <item>South Dakota</item>
-        <item>Tennessee</item>
-        <item>Texas</item>
-        <item>Utah</item>
-        <item>Vermont</item>
-        <item>Virginia</item>
-        <item>Virgin Islands</item>
-        <item>Washington</item>
-        <item>West Virginia</item>
-        <item>Wisconsin</item>
-        <item>Wyoming</item>
-    </string-array>
+  <!-- Color Chooser Examples -->
+  <string name="primary_colors">Primary Colors</string>
+  <string name="accent_colors">Accent Colors</string>
+  <string name="custom_colors">Custom Colors</string>
 
-    <string name="preference_dialogs">Preference Dialogs</string>
-    <string name="list_pref_title">List Preference</string>
-    <string name="list_pref_desc">This is an example of a list preference that automatically uses Material Dialogs to show the list dialog.</string>
-    <string name="multilist_pref_title">Multi Select List Preference</string>
-    <string name="multilist_pref_desc">This is an example of a multi select list preference that automatically uses Material Dialogs to show the list dialog.</string>
-    <string name="edittext_pref_title">EditText Preference</string>
-    <string name="edittext_pref_desc">This is an example of an EditText preference that automatically uses Material Dialogs to show the input dialog.</string>
-    <string name="edittext_pref_dialogtitle">Enter a Name</string>
-    <string name="edittext_pref_optionalvalue">Default value</string>
-    <string name="progress_dialog_indeterminate">Progress Dialog (Indeterminate)</string>
-    <string name="progress_dialog_indeterminate_horizontal">Progress Dialog (Horizontal Indeterminate)</string>
-    <string name="progress_dialog">Progress Dialog</string>
-    <string name="please_wait">Please wait…</string>
-    <string name="optional_dialog_message">This is an optional dialog message.</string>
-    <string name="multiChoiceLimited">Multi Choice (Limit Selections)</string>
-    <string name="selection_limit_reached">You cannot select anymore items!</string>
-    <string name="selection_min_limit_reached">You must select at least 1 item!</string>
-
-    <!--  Strings for possible PreferenceActivity Back/Next buttons -->
-    <string name="back_button_label">Back</string>
-    <string name="next_button_label">Next</string>
-
-    <!-- Optional button to Skip a PreferenceActivity [CHAR LIMIT=20] -->
-    <string name="skip_button_label">Skip</string>
-    <string name="input">Input</string>
-    <string name="input_custominvalidation">Input (Custom Invalidation)</string>
-    <string name="input_hint">John Appleseed</string>
-    <string name="input_content">What\'s your name?</string>
-    <string name="simple_list">Simple Dialog (Guidelines Spec)</string>
-    <string name="set_backup">Set backup account</string>
-    <string name="add_account">Add account</string>
-    <string name="submit">Submit</string>
-    <string name="preference_dialog_message">This is an example of a dialog message.</string>
-    <string name="preference_dialog_title">Dialog Title</string>
-    <string name="material_dialog_pref_title">Dialog Preference</string>
-    <string name="material_dialog_pref_summary">This is an example of a basic dialog preference that automatically uses Material Dialogs to show the dialog.</string>
-    <string name="input_content_custominvalidation">Do not type hello, or else!</string>
-    <string name="clear_selection">Clear</string>
-    <string name="color_palette">Color Palette</string>
-    <string name="colors">Colors</string>
-    <string name="color_chooser_customColors">Color Chooser (Custom Palette)</string>
-    <string name="color_chooser_customColors_noSub">Color Chooser (Custom Palette, No Sub)</string>
-    <string name="action_buttons">Action Buttons</string>
-    <string name="custom_views">Custom Views</string>
-    <string name="color_chooser">Color Choosers</string>
-    <string name="progress">Progress</string>
-    <string name="preferences">Preferences</string>
-    <string name="misc">Miscellaneous</string>
-    <string name="basic_lists">Basic Lists</string>
-    <string name="choice_lists">Choice Lists</string>
-    <string name="advanced_lists">Advanced Lists</string>
-    <string name="list_longItems">Basic List (Long Items)</string>
-    <string name="multiChoice_disabledItems">Multi Choice (Disabled Items)</string>
-    <string name="singleChoice_longItems">Single Choice (Long Items)</string>
-    <string name="multiChoice_longItems">Multi Choice (Long Items)</string>
-    <string name="file_chooser">File Chooser</string>
-    <string name="basic_checkbox_prompt">Basic (CheckBox Prompt)</string>
-    <string name="dont_ask_again">Don\'t ask again</string>
-    <string name="deny">Deny</string>
-    <string name="allow">Allow</string>
-    <string name="permissionSample"><![CDATA[Allow <b>%1$s</b> to show you a sample of a checkbox prompt?]]></string>
-    <string name="date_picker">Date Picker</string>
-    <string name="list_checkPrompt">Basic List (CheckBox Prompt)</string>
-    <string name="input_checkPrompt">Input (CheckBox Prompt)</string>
-    <string name="example_prompt">Example check prompt</string>
-    <string name="list_longPress">Basic List (Long Press)</string>
-    <string name="add_item">Add Item</string>
-    <string name="multiChoiceLimitedMin">Multi Choice (Min Selections)</string>
+  <!-- File and Folder Chooser Examples -->
+  <string name="select">Select</string>
 
 </resources>

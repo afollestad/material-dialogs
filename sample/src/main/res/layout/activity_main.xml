@@ -1,368 +1,494 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/activity_horizontal_margin"
+      tools:context=".MainActivity"
+      tools:ignore="HardcodedText"
+      >
+
+    <!-- Basic -->
+
+    <TextView
+        android:layout_marginTop="0dp"
+        android:text="Basic"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/basic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin"
-        tools:context=".MainActivity">
-
-        <!-- Basic -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:layout_marginTop="0dp"
-            android:text="@string/basic" />
-
-        <Button
-            android:id="@+id/basicNoTitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:text="@string/basic_notitle" />
-
-        <Button
-            android:id="@+id/basic"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic" />
-
-        <Button
-            android:id="@+id/basicLongContent"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_longContent" />
-
-        <Button
-            android:id="@+id/basicIcon"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_icon" />
-
-        <Button
-            android:id="@+id/basicCheckPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_checkbox_prompt" />
-
-        <!-- Action Buttons -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/action_buttons" />
-
-        <Button
-            android:id="@+id/stacked"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/stacked" />
-
-        <Button
-            android:id="@+id/neutral"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/neutral" />
-
-        <Button
-            android:id="@+id/callbacks"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/callbacks" />
-
-        <!-- Basic Lists -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/basic_lists" />
-
-        <Button
-            android:id="@+id/listNoTitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_list_notitle" />
-
-        <Button
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/list" />
-
-        <Button
-            android:id="@+id/longList"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/basic_list_long" />
-
-        <Button
-            android:id="@+id/list_longItems"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/list_longItems" />
-
-        <Button
-            android:id="@+id/list_checkPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/list_checkPrompt" />
-
-        <Button
-            android:id="@+id/list_longPress"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/list_longPress" />
-
-        <!-- Choice Lists -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/choice_lists" />
-
-        <Button
-            android:id="@+id/singleChoice"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/singleChoice" />
-
-        <Button
-            android:id="@+id/singleChoice_longItems"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/singleChoice_longItems" />
-
-        <Button
-            android:id="@+id/multiChoice"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/multiChoice" />
-
-        <Button
-            android:id="@+id/multiChoiceLimited"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/multiChoiceLimited" />
-
-        <Button
-            android:id="@+id/multiChoiceLimitedMin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/multiChoiceLimitedMin" />
-
-        <Button
-            android:id="@+id/multiChoice_longItems"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/multiChoice_longItems" />
-
-        <Button
-            android:id="@+id/multiChoice_disabledItems"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/multiChoice_disabledItems" />
-
-        <!-- Advanced Lists -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/advanced_lists" />
-
-        <Button
-            android:id="@+id/simpleList"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/simple_list" />
-
-        <Button
-            android:id="@+id/customListItems"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/custom_adapter" />
-
-        <!-- Custom Views -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/custom_views" />
-
-        <Button
-            android:id="@+id/customView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/customView" />
-
-        <Button
-            android:id="@+id/customView_webView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/customView_webView" />
-
-        <Button
-            android:id="@+id/customView_datePicker"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/customView_datePicker" />
-
-        <!-- Color Chooser -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/color_chooser" />
-
-        <Button
-            android:id="@+id/colorChooser_primary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/color_chooser_primary" />
-
-        <Button
-            android:id="@+id/colorChooser_accent"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/color_chooser_accent" />
-
-        <Button
-            android:id="@+id/colorChooser_customColors"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/color_chooser_customColors" />
-
-        <Button
-            android:id="@+id/colorChooser_customColorsNoSub"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/color_chooser_customColors_noSub" />
-
-        <!-- Input -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/input" />
-
-        <Button
-            android:id="@+id/input"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/input" />
-
-        <Button
-            android:id="@+id/input_custominvalidation"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/input_custominvalidation" />
-
-        <Button
-            android:id="@+id/input_checkPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/input_checkPrompt" />
-
-        <!-- Progress -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/progress" />
-
-        <Button
-            android:id="@+id/progress1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/progress_dialog" />
-
-        <Button
-            android:id="@+id/progress2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/progress_dialog_indeterminate" />
-
-        <Button
-            android:id="@+id/progress3"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/progress_dialog_indeterminate_horizontal" />
-
-        <!-- Preferences -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/preferences" />
-
-        <Button
-            android:id="@+id/preference_dialogs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/preference_dialogs" />
-
-        <!-- Misc -->
-
-        <TextView
-            style="@style/SampleHeader"
-            android:text="@string/misc" />
-
-        <Button
-            android:id="@+id/themed"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/themed" />
-
-        <Button
-            android:id="@+id/showCancelDismiss"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/showCancelDismissCallbacks" />
-
-        <Button
-            android:id="@+id/file_chooser"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/file_chooser" />
-
-        <Button
-            android:id="@+id/folder_chooser"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_button_height"
-            android:layout_marginTop="@dimen/sample_button_spacing"
-            android:text="@string/folder_chooser" />
-
-    </LinearLayout>
+        android:layout_height="@dimen/sample_button_height"
+        android:text="Basic"
+        />
+
+    <Button
+        android:id="@+id/basic_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + Title"
+        />
+
+    <Button
+        android:id="@+id/basic_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + Buttons"
+        />
+
+    <Button
+        android:id="@+id/basic_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/basic_long"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic Long"
+        />
+
+    <Button
+        android:id="@+id/basic_long_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic Long + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/basic_icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + Icon + Buttons"
+        />
+
+    <Button
+        android:id="@+id/basic_checkbox_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + Title + Checkbox + Buttons"
+        />
+
+    <!-- Basic Lists -->
+
+    <TextView
+        android:text="Lists"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List"
+        />
+
+    <Button
+        android:id="@+id/list_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Title"
+        />
+
+    <Button
+        android:id="@+id/list_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_long"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List Long"
+        />
+
+    <Button
+        android:id="@+id/list_long_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List Long + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_long_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List Long + Title"
+        />
+
+    <Button
+        android:id="@+id/list_long_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List Long + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_long_items"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List, Long Items"
+        />
+
+    <Button
+        android:id="@+id/list_long_items_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List, Long Items + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_long_items_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List, Long Items + Title"
+        />
+
+    <Button
+        android:id="@+id/list_long_items_titled_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List, Long Items + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/list_checkPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Title + Checkbox Prompt"
+        />
+
+    <Button
+        android:id="@+id/list_checkPrompt_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Title + Checkbox Prompt + Buttons"
+        />
+
+    <!-- Single Choice Lists -->
+
+    <TextView
+        android:text="Single Choice Lists"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/single_choice_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Single Choice + Title"
+        />
+
+    <Button
+        android:id="@+id/single_choice_buttons_titled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Single Choice + Title + Buttons"
+        />
+
+    <Button
+        android:id="@+id/single_choice_long_items"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Single Choice, Long Items"
+        />
+
+    <Button
+        android:id="@+id/single_choice_disabled_items"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Single Choice, Disabled Items"
+        />
+
+    <!-- Multiple Choice Lists -->
+
+    <TextView
+        android:text="Multiple Choice Lists"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/multiple_choice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Multiple Choice"
+        />
+
+    <Button
+        android:id="@+id/multiple_choice_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Multiple Choice + Buttons"
+        />
+
+    <Button
+        android:id="@+id/multiple_choice_long_items"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Multiple Choice, Long Items"
+        />
+
+    <Button
+        android:id="@+id/multiple_choice_disabled_items"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Multiple Choice, Disabled Items"
+        />
+
+    <!-- Action Buttons -->
+
+    <TextView
+        android:text="Action Buttons"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/buttons_stacked"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Stacked Buttons"
+        />
+
+    <Button
+        android:id="@+id/buttons_stacked_checkboxPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Stacked Buttons + Checkbox Prompt"
+        />
+
+    <Button
+        android:id="@+id/buttons_neutral"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Neutral Button"
+        />
+
+    <Button
+        android:id="@+id/buttons_callbacks"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Button Callbacks"
+        />
+
+    <TextView
+        android:text="Miscellaneous"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/misc_dialog_callbacks"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Dialog Callbacks"
+        />
+
+    <!-- Input -->
+
+    <TextView
+        android:text="Text Input"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Input"
+        />
+
+    <Button
+        android:id="@+id/input_message"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Input + Message"
+        />
+
+    <Button
+        android:id="@+id/input_counter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Input + Counter"
+        />
+
+    <Button
+        android:id="@+id/input_check_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Input + Checkbox Prompt"
+        />
+
+    <!-- Custom Views -->
+
+    <TextView
+        android:text="Custom Views"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/custom_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Custom View"
+        />
+
+    <Button
+        android:id="@+id/custom_view_webview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Custom View, Web View"
+        />
+
+    <!-- Color Chooser -->
+
+    <TextView
+        android:text="Color"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/colorChooser_primary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Primary"
+        />
+
+    <Button
+        android:id="@+id/colorChooser_accent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Accent"
+        />
+
+    <Button
+        android:id="@+id/colorChooser_customColors"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Custom"
+        />
+
+    <Button
+        android:id="@+id/colorChooser_customColorsNoSub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Custom + No Sub"
+        />
+
+    <!-- File Choosers -->
+
+    <TextView
+        android:text="File Choosers"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/file_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="File Chooser"
+        />
+
+    <Button
+        android:id="@+id/file_chooser_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="File Chooser + Buttons"
+        />
+
+    <Button
+        android:id="@+id/file_chooser_filter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="File Chooser + Filter"
+        />
+
+    <!-- Folder Choosers -->
+
+    <TextView
+        android:text="Folder Choosers"
+        style="@style/SampleHeader"
+        />
+
+    <Button
+        android:id="@+id/folder_chooser_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Folder Chooser + Buttons"
+        />
+
+    <Button
+        android:id="@+id/folder_chooser_filter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Folder Chooser + Filter"
+        />
+
+  </LinearLayout>
 
 </ScrollView>

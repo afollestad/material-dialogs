@@ -1,0 +1,23 @@
+if (shard == null) {
+  throw new IllegalStateException("Must specify a shard in module's build.gradle")
+} else if (versions == null || versions.publishVersion == null) {
+  throw new IllegalStateException("Unable to reference publishVersion")
+}
+
+ext {
+  bintrayRepo = 'maven'
+  bintrayName = "material-dialogs:$shard"
+  publishedGroupId = "com.afollestad.materialdialogs"
+  libraryName = 'material-dialogs'
+  artifact = shard
+  libraryDescription = 'A beautiful, fluid, and customizable dialogs API.'
+  siteUrl = 'https://github.com/afollestad/material-dialogs'
+  gitUrl = 'https://github.com/afollestad/material-dialogs.git'
+  libraryVersion = versions.publishVersion
+  developerId = 'drummer-aidan'
+  developerName = 'Aidan Follestad'
+  developerEmail = 'no-such-email@nope.com'
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}

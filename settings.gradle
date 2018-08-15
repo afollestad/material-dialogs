@@ -1,1 +1,1 @@
-include ':core', ':sample', ':commons'
+include ':core', ':sample', ':files', ':shared', ':color', ':input'
