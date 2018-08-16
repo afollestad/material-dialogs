@@ -7,6 +7,8 @@ versions will no longer receive support.**
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a4acc30a9ce440087f7688735359bb8)](https://www.codacy.com/app/drummeraidan_50/material-dialogs?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=afollestad/material-dialogs&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+#### [View Releases and Changelogs](https://github.com/afollestad/material-dialogs/releases)
+
 ![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase20.jpg)
 
 # Table of Contents - Core
@@ -82,18 +84,22 @@ changed and a lot of things will be broken if you upgrade from the older version
 to note:
 
 1. **This library will be more opinionated. Not every feature request will be implemented.**
-2. There is no longer a separate `Builder` class, it's all-in-one.
-3. All main classes exist in the `core` module, the extension modules take advantage of Kotlin 
+2. Minimum API level is 17 (Android Jellybean MR1).
+3. There is no longer a separate `Builder` class, it's all-in-one.
+4. The whole library was completely re-written in Kotlin. All the layouts and views were remade 
+as well. **This library is now designed specifically to work with Kotlin - it technically will 
+work with Java, but not pleasantly.**
+5. All main classes exist in the `core` module, the extension modules take advantage of Kotlin 
 extensions to append functionality to it (such as input dialogs, color dialogs, etc.). This way,
 you can include only what your app needs.
-4. The use of the neutral button is deprecated to discourage use, see the 
+6. The use of the neutral button is deprecated to discourage use, see the 
 [newer Material guidelines](https://material.io/design/components/dialogs.html#actions).
-5. There is no longer a progress dialog included in library, since they are discouraged by Google, 
+7. *There is no longer a progress dialog included in library*, since they are discouraged by Google, 
 and discouraged by me. You should prefer a non-blocking inline progress indicator.
-6. No dynamic color support, your dialogs will match your app theme. *I will be making sure 
+8. No dynamic color support, your dialogs will match your app theme. *I will be making sure 
 [Aesthetic](https://github.com/afollestad/aesthetic) works correctly with this library if you really 
 need dynamic theming.*
-7. Other things will probably be added here.
+9. Other things will probably be added here.
 
 ## Basics
 
