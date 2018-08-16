@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/md_text_message"
+    style="@style/MD_Dialog_Message"
+    tools:text="Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running."
+    />

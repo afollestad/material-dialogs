@@ -1,0 +1,26 @@
+if (!project.rootProject.file('local.properties').exists()) {
+  println "Not applying install.gradle"
+  return
+}
+
+if (shard == null) {
+  throw new IllegalStateException("Must specify a shard in module's build.gradle")
+} else if (versions == null || versions.publishVersion == null) {
+  throw new IllegalStateException("Unable to reference publishVersion")
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+publish {
+  bintrayUser = properties.getProperty("bintray.user")
+  bintrayKey = properties.getProperty("bintray.apikey")
+  userOrg = 'drummer-aidan'
+  groupId = 'com.afollestad.material-dialogs'
+  uploadName = "material-dialogs:$shard"
+  artifactId = shard
+  publishVersion = versions.publishVersion
+  desc = 'A beautiful, fluid, and customizable dialogs API.'
+  website = 'https://github.com/afollestad/material-dialogs'
+  dryRun = false
+}

@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: '../dependencies.gradle'
+apply plugin: "com.github.ben-manes.versions"
+
+if (project.rootProject.file('local.properties').exists()) {
+  apply plugin: 'com.novoda.bintray-release'
+}
+
+android {
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
+
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.publishVersionCode
+    versionName versions.publishVersion
+  }
+
+  sourceSets {
+    main.res.srcDirs = [
+        'src/main/res',
+        'src/main/res-public'
+    ]
+  }
+}
+
+dependencies {
+  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation project(':core')
+}
+
+apply from: '../spotless.gradle'
+
+ext.shard = 'color'
+apply from: '../bintrayconfig.gradle'

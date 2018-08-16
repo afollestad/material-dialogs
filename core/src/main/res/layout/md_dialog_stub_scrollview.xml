@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.afollestad.materialdialogs.internal.main.DialogScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/md_scrollview_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/md_dialog_frame_margin_vertical"
+    >
+
+  <LinearLayout
+      android:id="@+id/md_scrollview_frame_content"
+      style="@style/MD_Dialog_ScrollView_FrameContent"
+      />
+
+</com.afollestad.materialdialogs.internal.main.DialogScrollView>

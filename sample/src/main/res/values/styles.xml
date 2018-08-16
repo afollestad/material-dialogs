@@ -1,23 +1,29 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primaryDark</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
+  <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primaryDark</item>
+    <item name="colorAccent">@color/accent</item>
+  </style>
 
-    <style name="SampleHeader">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/headerTitle</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
-        <item name="android:layout_marginLeft">@dimen/headerMarginStart</item>
-        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/headerMarginStart
-        </item>
-        <item name="android:layout_marginTop">@dimen/headerMarginVertical</item>
-        <item name="android:layout_marginBottom">@dimen/headerMarginVertical</item>
-    </style>
+  <style name="AppTheme.Dark" parent="Theme.AppCompat">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primaryDark</item>
+    <item name="colorAccent">@color/accent</item>
+  </style>
+
+  <style name="SampleHeader">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textSize">@dimen/headerTitle</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:fontFamily">sans-serif-light</item>
+    <item name="android:layout_marginLeft">@dimen/headerMarginStart</item>
+    <item name="android:layout_marginStart">@dimen/headerMarginStart
+    </item>
+    <item name="android:layout_marginTop">@dimen/headerMarginVertical</item>
+    <item name="android:layout_marginBottom">@dimen/headerMarginVertical</item>
+  </style>
 
 </resources>
