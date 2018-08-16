@@ -1,83 +1,44 @@
+<!-- See https://material.io/archive/guidelines/components/dialogs.html#dialogs-specs -->
 <resources>
-  <!-- See http://www.google.com/design/spec/components/dialogs.html#dialogs-specs -->
 
-  <!-- Notes:
+  <dimen name="md_dialog_bg_corner_radius">2dp</dimen>
+  <dimen name="md_dialog_max_width">356dp</dimen>
+  <dimen name="md_dialog_vertical_margin">52dp</dimen>
+  <dimen name="md_dialog_horizontal_margin">32dp</dimen>
 
-      The specs specify 16dp between the content and the buttons and imply 16dp between
-      the title and the content. Also 24dp above the title and 8dp below the buttons.
+  <dimen name="md_dialog_title_layout_margin_bottom">20dp</dimen>
+  <dimen name="md_dialog_frame_margin_vertical">24dp</dimen>
+  <dimen name="md_dialog_frame_margin_vertical_less">16dp</dimen>
+  <dimen name="md_dialog_frame_margin_horizontal">24dp</dimen>
 
-      Additionally, we interpret:
-       16dp between title and content
-       24dp above content if there is no title
-       24dp below content if there is no button bar
+  <dimen name="md_action_button_frame_padding_neutral">18dp</dimen>
+  <dimen name="md_action_button_frame_padding">8dp</dimen>
 
-      When dialog is large enough to scroll, some padding is removed to make space and
-      keep things symmetrical.
-      Reduced paddings are:
-       8dp above content if there is no title (0dp when scrolled)
-       8dp below content if there is no button bar (0dp when scrolled)
-       8dp between content and button bar
-       0dp below button bar
+  <dimen name="md_action_button_height">36dp</dimen>
+  <dimen name="md_action_button_min_width">64dp</dimen>
+  <dimen name="md_action_button_padding_horizontal">8dp</dimen>
+  <dimen name="md_action_button_spacing">8dp</dimen>
+  <dimen name="md_action_button_corner_radius">2dp</dimen>
+  <dimen name="md_action_button_textsize">14sp</dimen>
 
-      For implementation:
-       Content view gets 8dp vertical padding
-       Title bar gets 24dp top, 8dp bottom
-       Buttons get 8dp bottom
-       Stacked buttons get 24dp end padding, the spec's 16 plus the spec's 8dp button padding
+  <dimen name="md_stacked_action_button_height">48dp</dimen>
+  <dimen name="md_stacked_action_button_padding_horizontal">16dp</dimen>
 
-       MDRootLayout takes care of margins when no title or not button bar,
-       and the margin between buttons and content when not scrolling.
-  -->
-
-  <!-- Margin around the dialog, excluding the button bar -->
-  <dimen name="md_dialog_frame_margin">24dp</dimen>
-  <!-- Total title margin bottom is 16, but we split this between content and title -->
-  <dimen name="md_title_frame_margin_bottom">12dp</dimen>
-  <dimen name="md_title_frame_margin_bottom_less">6dp</dimen>
-  <!-- The desired padding when no title is visible,
-       This plus md_content_padding_top should equals md_dialog_frame_margin -->
-  <dimen name="md_notitle_vertical_padding">16dp</dimen>
-
-  <dimen name="md_notitle_vertical_padding_more">20dp</dimen>
-
-  <dimen name="md_content_padding_top">8dp</dimen>
-  <dimen name="md_simplelistitem_padding_top">8dp</dimen>
-
-  <dimen name="md_button_min_width">72dp</dimen>
-  <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
-  <dimen name="md_button_inset_vertical">6dp</dimen>
-  <dimen name="md_button_inset_horizontal">4dp</dimen>
-  <dimen name="md_button_textpadding_horizontal">1dp</dimen>
-  <dimen name="md_button_padding_horizontal">8dp</dimen>
-  <dimen name="md_button_padding_vertical">4dp</dimen>
-  <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
-  <!-- 16dp - 4dp (inset from background drawable) -->
-  <dimen name="md_button_padding_frame_side">12dp</dimen>
-  <dimen name="md_neutral_button_margin">12dp</dimen>
-
-  <!-- actual content padding bottom is 16dp, but we split between button bar and content -->
-  <dimen name="md_content_padding_bottom">8dp</dimen>
-  <dimen name="md_button_frame_vertical_padding">8dp</dimen>
-  <dimen name="md_button_height">48dp</dimen>
   <dimen name="md_title_textsize">20sp</dimen>
-  <dimen name="md_content_textsize">16sp</dimen>
-  <dimen name="md_button_textsize">14sp</dimen>
+  <dimen name="md_message_textsize">16sp</dimen>
+
+  <dimen name="md_icon_margin">12dp</dimen>
+  <dimen name="md_icon_size">42dp</dimen>
+
+  <dimen name="md_listitem_vertical_margin">12dp</dimen>
+  <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
   <dimen name="md_listitem_textsize">16sp</dimen>
   <dimen name="md_listitem_height">48dp</dimen>
   <dimen name="md_listitem_control_margin">6dp</dimen>
-  <dimen name="md_icon_margin">16dp</dimen>
-  <dimen name="md_icon_max_size">48dp</dimen>
   <dimen name="md_listitem_margin_left">24dp</dimen>
-  <dimen name="md_action_corner_radius">2dp</dimen>
+
+  <dimen name="md_checkbox_prompt_margin_horizontal">16dp</dimen>
+  <dimen name="md_checkbox_prompt_margin_vertical">10dp</dimen>
   <dimen name="md_divider_height">1dp</dimen>
-
-  <dimen name="md_bg_corner_radius">2dp</dimen>
-  <dimen name="circular_progress_border">4dp</dimen>
-  <dimen name="md_listitem_vertical_margin">12dp</dimen>
-  <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
-
-  <dimen name="md_dialog_max_width">356dp</dimen>
-  <dimen name="md_dialog_vertical_margin">52dp</dimen>
-  <dimen name="md_dialog_horizontal_margin">28dp</dimen>
 
 </resources>

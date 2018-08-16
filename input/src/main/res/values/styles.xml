@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="MD_Dialog_Input_Layout">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
+
+  <style name="MD_Dialog_Input_Layout.Message">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/md_message_textsize</item>
+    <item name="android:layout_marginLeft">-4dp</item>
+    <item name="android:layout_marginRight">-4dp</item>
+  </style>
+
+</resources>

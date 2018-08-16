@@ -1,21 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <dimen name="activity_horizontal_margin" tools:ignore="UnusedResources">16dp</dimen>
-    <dimen name="activity_vertical_margin" tools:ignore="UnusedResources">16dp</dimen>
-    <dimen name="customTitle">14sp</dimen>
-    <dimen name="customEntry">18sp</dimen>
-    <dimen name="sample_button_spacing">2dp</dimen>
-    <dimen name="headerTitle">20sp</dimen>
-    <dimen name="headerMarginVertical">16dp</dimen>
-    <dimen name="headerMarginStart">12dp</dimen>
+  <dimen name="activity_horizontal_margin" tools:ignore="UnusedResources">16dp</dimen>
+  <dimen name="activity_vertical_margin" tools:ignore="UnusedResources">16dp</dimen>
+  <dimen name="sample_button_spacing">2dp</dimen>
+  <dimen name="headerTitle">20sp</dimen>
+  <dimen name="headerMarginVertical">16dp</dimen>
+  <dimen name="headerMarginStart">12dp</dimen>
 
-    <!-- Preference fragment padding, bottom -->
-    <dimen name="preference_fragment_padding_bottom">0dp</dimen>
-    <!-- Preference fragment padding, sides -->
-    <dimen name="preference_fragment_padding_side">16dp</dimen>
-    <dimen name="sample_button_height">56dp</dimen>
+  <dimen name="sample_button_height">56dp</dimen>
 
-    <integer name="preference_fragment_scrollbarStyle">0x02000000</integer>
-    <!-- outsideOverlay -->
+  <!-- Custom view example -->
+  <dimen name="customTitle">14sp</dimen>
+  <dimen name="customEntry">18sp</dimen>
 
 </resources>

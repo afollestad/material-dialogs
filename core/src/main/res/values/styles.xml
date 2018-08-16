@@ -1,60 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-  <style name="MD_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
-    <item name="md_divider">@color/md_divider_black</item>
-    <item name="md_list_selector">@drawable/md_selector</item>
-    <item name="md_btn_stacked_selector">@drawable/md_selector</item>
-    <item name="md_btn_positive_selector">@drawable/md_btn_selector</item>
-    <item name="md_btn_neutral_selector">@drawable/md_btn_selector</item>
-    <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
+  <style name="MD_Light" parent="Theme.AppCompat.Light.Dialog.Alert"
+      tools:ignore="PrivateResource">
+    <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
+    <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
+
+    <item name="android:actionModeBackground">@color/primary_material_dark</item>
+    <item name="android:actionModeCloseDrawable">@drawable/md_nav_back</item>
 
     <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     <item name="android:backgroundDimEnabled">true</item>
+
+    <item name="md_divider_color">@color/md_divider_light_theme</item>
+    <item name="md_item_selector">@drawable/md_item_selector</item>
+    <item name="md_button_selector">@drawable/md_btn_selector</item>
   </style>
 
-  <style name="MD_Dark" parent="Theme.AppCompat.Dialog.Alert">
-    <item name="md_divider">@color/md_divider_white</item>
-    <item name="md_list_selector">@drawable/md_selector_dark</item>
-    <item name="md_btn_stacked_selector">@drawable/md_selector_dark</item>
-    <item name="md_btn_positive_selector">@drawable/md_btn_selector_dark</item>
-    <item name="md_btn_neutral_selector">@drawable/md_btn_selector_dark</item>
-    <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
+  <style name="MD_Dark" parent="Theme.AppCompat.Dialog.Alert"
+      tools:ignore="PrivateResource">
+    <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
+    <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
+
+    <item name="android:actionModeBackground">@color/primary_material_dark</item>
+    <item name="android:actionModeCloseDrawable">@drawable/md_nav_back</item>
 
     <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     <item name="android:backgroundDimEnabled">true</item>
-  </style>
 
-  <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton" tools:ignore="NewApi">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
-    <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal
-    </item>
-    <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internalexternal
-    </item>
-    <item name="android:paddingEnd">@dimen/md_button_padding_horizontal_internalexternal</item>
-  </style>
-
-  <style name="MD_ActionButton">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">@dimen/md_button_height</item>
-    <item name="android:layout_gravity">center_vertical</item>
-  </style>
-
-  <style name="MD_ActionButton.Text" tools:ignore="NewApi">
-    <item name="android:textSize">@dimen/md_button_textsize</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:gravity">center</item>
-    <item name="android:stateListAnimator">@null</item>
-    <item name="android:background">@null</item>
-    <item name="android:minWidth">@dimen/md_button_min_width</item>
-    <item name="android:paddingLeft">@dimen/md_button_textpadding_horizontal</item>
-    <item name="android:paddingRight">@dimen/md_button_textpadding_horizontal</item>
+    <item name="md_divider_color">@color/md_divider_dark_theme</item>
+    <item name="md_item_selector">@drawable/md_item_selector_dark</item>
+    <item name="md_button_selector">@drawable/md_btn_selector_dark</item>
   </style>
 
   <style name="MD_WindowAnimation">
     <item name="android:windowEnterAnimation">@anim/popup_enter</item>
     <item name="android:windowExitAnimation">@anim/popup_exit</item>
+  </style>
+
+  <style name="MD_Dialog_Title_Text">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/md_title_textsize</item>
+    <item name="android:fontFamily">sans-serif-medium</item>
+  </style>
+
+  <style name="MD_Dialog_Message">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">@dimen/md_message_textsize</item>
+    <item name="android:paddingLeft">@dimen/md_dialog_frame_margin_horizontal</item>
+    <item name="android:paddingRight">@dimen/md_dialog_frame_margin_horizontal</item>
+  </style>
+
+  <style name="MD_Dialog_ScrollView_FrameContent">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+
+  <style name="MD_ActionButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">@dimen/md_action_button_textsize</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:background">?selectableItemBackground</item>
+    <item name="android:minWidth">@dimen/md_action_button_min_width</item>
+    <item name="android:paddingStart">@dimen/md_action_button_padding_horizontal</item>
+    <item name="android:paddingEnd">@dimen/md_action_button_padding_horizontal</item>
+  </style>
+
+  <style name="MD_ListItem">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:focusable">true</item>
+    <item name="android:clickable">true</item>
+    <item name="android:gravity">center_vertical|start</item>
+    <item name="android:minHeight">@dimen/md_listitem_height</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+
+  <style name="MD_ListItemText">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginTop">@dimen/md_listitem_vertical_margin</item>
+    <item name="android:layout_marginBottom">@dimen/md_listitem_vertical_margin</item>
+    <item name="android:layout_marginStart">@dimen/md_listitem_margin_left</item>
+    <item name="android:layout_marginEnd">@dimen/md_dialog_frame_margin_horizontal</item>
+    <item name="android:textSize">@dimen/md_listitem_textsize</item>
+    <item name="android:textColor">@color/md_list_item_textcolor</item>
+  </style>
+
+  <style name="MD_ListItem.Choice">
+    <item name="android:background">?selectableItemBackground</item>
+    <item name="android:descendantFocusability">blocksDescendants</item>
+    <item name="android:focusable">true</item>
+    <item name="android:minHeight">@dimen/md_listitem_height</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:paddingEnd">@dimen/md_dialog_frame_margin_horizontal</item>
+    <item name="android:paddingStart">@dimen/md_dialog_frame_margin_horizontal</item>
+  </style>
+
+  <style name="MD_ListItem_Control">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:background">@null</item>
+    <item name="android:clickable">false</item>
+    <item name="android:focusable">false</item>
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+  </style>
+
+  <style name="MD_ListItemText.Choice">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:minHeight">@dimen/md_listitem_height</item>
+    <item name="android:paddingBottom">@dimen/md_listitem_vertical_margin_choice</item>
+    <item name="android:paddingStart">@dimen/md_listitem_control_margin</item>
+    <item name="android:paddingTop">@dimen/md_listitem_vertical_margin_choice</item>
+    <item name="android:textSize">@dimen/md_listitem_textsize</item>
+    <item name="android:textColor">@color/md_list_item_textcolor</item>
+    <item name="android:layout_marginTop">0dp</item>
+    <item name="android:layout_marginBottom">0dp</item>
   </style>
 
 </resources>

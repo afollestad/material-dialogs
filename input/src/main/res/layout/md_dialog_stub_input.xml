@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/md_input_layout"
+    android:paddingBottom="@dimen/md_dialog_frame_margin_vertical_less"
+    android:paddingLeft="@dimen/md_dialog_frame_margin_horizontal"
+    android:paddingRight="@dimen/md_dialog_frame_margin_horizontal"
+    app:hintEnabled="false"
+    style="@style/MD_Dialog_Input_Layout"
+    >
+
+  <android.support.design.widget.TextInputEditText
+      android:id="@+id/md_input_message"
+      tools:text="Hello, World!"
+      style="@style/MD_Dialog_Input_Layout.Message"
+      />
+
+</android.support.design.widget.TextInputLayout>

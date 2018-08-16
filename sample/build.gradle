@@ -1,55 +1,37 @@
-apply from: '../gradle/dependencies.gradle'
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
+apply from: '../dependencies.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    defaultConfig {
-        applicationId "com.afollestad.materialdialogssample"
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode versions.publishVersionCode
-        versionName versions.publishVersion
-    }
-    lintOptions {
-        abortOnError false
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            shrinkResources false
-        }
-    }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  defaultConfig {
+    applicationId "com.afollestad.materialdialogssample"
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.publishVersionCode
+    versionName versions.publishVersion
+  }
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':commons')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
-    implementation 'com.google.code.findbugs:jsr305:' + versions.findBugs
+  implementation project(':core')
+  implementation project(':input')
+  implementation project(':files')
+  implementation project(':color')
 
-    implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
-    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
-    implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 
-    implementation 'com.jakewharton:butterknife:' + versions.butterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
-
-    implementation 'com.facebook.stetho:stetho:1.4.2'
+  implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
+  implementation 'com.android.support:appcompat-v7:' + versions.supportLib
+  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
 }
-repositories {
-    mavenCentral()
-}
+
+apply from: '../spotless.gradle'
