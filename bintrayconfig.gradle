@@ -12,9 +12,17 @@ if (shard == null) {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+String publishUser = properties.getProperty("bintray.user")
+String publishKey = properties.getProperty("bintray.apikey")
+
+if (publishUser == null || publishUser.isEmpty() ||
+    publishKey == null || publishKey.isEmpty()) {
+  throw new IllegalStateException("Must specify Bintray user/API key in your local.properties.")
+}
+
 publish {
-  bintrayUser = properties.getProperty("bintray.user")
-  bintrayKey = properties.getProperty("bintray.apikey")
+  bintrayUser = publishUser
+  bintrayKey = publishKey
   userOrg = 'drummer-aidan'
   groupId = 'com.afollestad.material-dialogs'
   uploadName = "material-dialogs:$shard"
