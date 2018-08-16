@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.WhichButton.NEGATIVE
 import com.afollestad.materialdialogs.WhichButton.NEUTRAL
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_NEGATIVE
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_NEUTRAL
@@ -162,7 +163,7 @@ class MaterialDialog(
       positiveListeners.add(click)
     }
 
-    val btn = view.buttonsLayout.actionButtons[INDEX_POSITIVE]
+    val btn = getActionButton(POSITIVE)
     if (res == null && text == null && btn.isVisible()) {
       // Didn't receive text and the button is already setup,
       // so just stop with the added listener.
@@ -196,7 +197,7 @@ class MaterialDialog(
       negativeListeners.add(click)
     }
 
-    val btn = view.buttonsLayout.actionButtons[INDEX_NEGATIVE]
+    val btn = getActionButton(NEGATIVE)
     if (res == null && text == null && btn.isVisible()) {
       // Didn't receive text and the button is already setup,
       // so just stop with the added listener.
@@ -226,7 +227,7 @@ class MaterialDialog(
       neutralListeners.add(click)
     }
 
-    val btn = view.buttonsLayout.actionButtons[INDEX_NEUTRAL]
+    val btn = getActionButton(NEUTRAL)
     if (res == null && text == null && btn.isVisible()) {
       // Didn't receive text and the button is already setup,
       // so just stop with the added listener.
