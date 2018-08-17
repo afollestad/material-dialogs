@@ -442,7 +442,21 @@ MaterialDialog(this)
   .show()
 ```
 
-A larger example won't be shown here, but check out the `files` module for an in-depth example.
+You can retrieve your adapter again later from the dialog instance:
+
+```kotlin
+val dialog: MaterialDialog = // ...
+
+val adapter: RecyclerView.Adapter<*> = dialog.getListAdapter()
+```
+
+You can also retrieve the `RecyclerView` that the adapter is hosted in:
+
+```kotlin
+val dialog: MaterialDialog = // ...
+
+val recyclerView: RecyclerView = dialog.getRecyclerView()
+```
 
 ## Checkbox Prompts
 
