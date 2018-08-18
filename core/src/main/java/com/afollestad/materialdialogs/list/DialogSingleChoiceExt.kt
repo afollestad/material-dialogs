@@ -28,13 +28,13 @@ import com.afollestad.materialdialogs.utilext.getStringArray
 @CheckResult
 fun MaterialDialog.listItemsSingleChoice(
   @ArrayRes res: Int? = null,
-  items: Array<String>? = null,
+  items: List<String>? = null,
   disabledIndices: IntArray? = null,
   initialSelection: Int = -1,
   waitForPositiveButton: Boolean = true,
   selection: SingleChoiceListener = null
 ): MaterialDialog {
-  val array = items ?: getStringArray(res)
+  val array = items ?: getStringArray(res)?.toList()
   val adapter = getListAdapter()
 
   if (adapter is SingleChoiceDialogAdapter) {

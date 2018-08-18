@@ -52,7 +52,7 @@ internal class SingleChoiceViewHolder(
  */
 internal class SingleChoiceDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: Array<String>,
+  internal var items: List<String>,
   disabledItems: IntArray?,
   initialSelection: Int,
   private val waitForActionButton: Boolean,
@@ -114,7 +114,7 @@ internal class SingleChoiceDialogAdapter(
   }
 
   override fun replaceItems(
-    items: Array<String>,
+    items: List<String>,
     listener: SingleChoiceListener
   ) {
     this.items = items

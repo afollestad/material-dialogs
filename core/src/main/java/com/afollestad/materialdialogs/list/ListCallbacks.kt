@@ -9,4 +9,4 @@ typealias SingleChoiceListener =
     ((dialog: MaterialDialog, index: Int, text: String) -> Unit)?
 
 typealias MultiChoiceListener =
-    ((dialog: MaterialDialog, indices: IntArray, items: Array<String>) -> Unit)?
+    ((dialog: MaterialDialog, indices: IntArray, items: List<String>) -> Unit)?

@@ -28,13 +28,13 @@ import com.afollestad.materialdialogs.utilext.getStringArray
 @CheckResult
 fun MaterialDialog.listItemsMultiChoice(
   @ArrayRes res: Int? = null,
-  items: Array<String>? = null,
+  items: List<String>? = null,
   disabledIndices: IntArray? = null,
   initialSelection: IntArray = IntArray(0),
   waitForPositiveButton: Boolean = true,
   selection: MultiChoiceListener = null
 ): MaterialDialog {
-  val array = items ?: getStringArray(res)
+  val array = items ?: getStringArray(res)?.toList()
   val adapter = getListAdapter()
 
   if (adapter is MultiChoiceDialogAdapter) {

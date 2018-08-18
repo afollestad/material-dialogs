@@ -41,7 +41,7 @@ internal class PlainListViewHolder(
  */
 internal class PlainListDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: Array<String>,
+  internal var items: List<String>,
   disabledItems: IntArray?,
   private var waitForActionButton: Boolean,
   internal var selection: ItemListener
@@ -104,7 +104,7 @@ internal class PlainListDialogAdapter(
   }
 
   override fun replaceItems(
-    items: Array<String>,
+    items: List<String>,
     listener: ItemListener
   ) {
     this.items = items

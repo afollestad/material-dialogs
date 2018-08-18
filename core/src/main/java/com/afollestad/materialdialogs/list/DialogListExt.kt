@@ -57,13 +57,13 @@ fun MaterialDialog.customListAdapter(
 @CheckResult
 fun MaterialDialog.listItems(
   @ArrayRes res: Int? = null,
-  items: Array<String>? = null,
+  items: List<String>? = null,
   disabledIndices: IntArray? = null,
   waitForPositiveButton: Boolean = true,
   selection: ItemListener = null
 ): MaterialDialog {
   assertOneSet(res, items)
-  val array = items ?: getStringArray(res)
+  val array = items ?: getStringArray(res)?.toList()
   val adapter = getListAdapter()
 
   if (adapter is PlainListDialogAdapter) {

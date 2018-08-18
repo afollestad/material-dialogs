@@ -52,7 +52,7 @@ internal class MultiChoiceViewHolder(
  */
 internal class MultiChoiceDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: Array<String>,
+  internal var items: List<String>,
   disabledItems: IntArray?,
   initialSelection: IntArray,
   private val waitForActionButton: Boolean,
@@ -133,7 +133,7 @@ internal class MultiChoiceDialogAdapter(
   }
 
   override fun replaceItems(
-    items: Array<String>,
+    items: List<String>,
     listener: MultiChoiceListener
   ) {
     this.items = items
