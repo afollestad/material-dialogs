@@ -77,6 +77,12 @@ dependencies {
 }
 ```
 
+If Gradle is unable to resolve, add this to your repositories:
+
+```gradle
+maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+```
+
 ## Changes in Version 2
 
 The whole library has been rebuilt, layouts and everything. The library is 100% Kotlin. APIs have 
@@ -584,6 +590,12 @@ dependencies {
 }
 ```
 
+If Gradle is unable to resolve, add this to your repositories:
+
+```gradle
+maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+```
+
 ## Text Input
 
 ### Basics
@@ -735,6 +747,12 @@ dependencies {
 }
 ```
 
+If Gradle is unable to resolve, add this to your repositories:
+
+```gradle
+maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+```
+
 ## File Choosers
 
 ### Basics
@@ -863,6 +881,12 @@ dependencies {
 	
     implementation 'com.afollestad.material-dialogs:color:2.0.0-alpha03'
 }
+```
+
+If Gradle is unable to resolve, add this to your repositories:
+
+```gradle
+maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
 ```
 
 ## Color Choosers
