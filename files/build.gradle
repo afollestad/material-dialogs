@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply from: '../dependencies.gradle'
 apply plugin: "com.github.ben-manes.versions"
 
-ext.shard = 'color'
+ext.shard = 'files'
 apply from: '../bintrayconfig.gradle'
 
 android {
