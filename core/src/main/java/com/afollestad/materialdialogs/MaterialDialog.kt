@@ -10,11 +10,10 @@ package com.afollestad.materialdialogs
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.support.annotation.CheckResult
 import android.support.annotation.DrawableRes
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
 import android.support.annotation.StringRes
 import android.view.View
 import android.widget.LinearLayout
@@ -30,14 +29,15 @@ import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.internal.main.DialogScrollView
 import com.afollestad.materialdialogs.list.getListAdapter
-import com.afollestad.materialdialogs.utils.getString
+import com.afollestad.materialdialogs.utils.addContentMessageView
+import com.afollestad.materialdialogs.utils.addContentScrollView
 import com.afollestad.materialdialogs.utils.hideKeyboard
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.isVisible
-import com.afollestad.materialdialogs.utils.preShow
-import com.afollestad.materialdialogs.utils.setDefaults
 import com.afollestad.materialdialogs.utils.populateIcon
 import com.afollestad.materialdialogs.utils.populateText
+import com.afollestad.materialdialogs.utils.preShow
+import com.afollestad.materialdialogs.utils.setDefaults
 import com.afollestad.materialdialogs.utils.setWindowConstraints
 
 internal fun assertOneSet(
@@ -69,8 +69,15 @@ class MaterialDialog(
   var autoDismissEnabled: Boolean = true
     internal set
 
+  var titleFont: Typeface? = null
+    internal set
+  var bodyFont: Typeface? = null
+    internal set
+  var buttonFont: Typeface? = null
+    internal set
+
   internal val view: DialogLayout = inflate(R.layout.md_dialog_base)
-  private var textViewMessage: TextView? = null
+  internal var textViewMessage: TextView? = null
   internal var contentScrollView: DialogScrollView? = null
   internal var contentScrollViewFrame: LinearLayout? = null
   internal var contentRecyclerView: DialogRecyclerView? = null
@@ -127,7 +134,8 @@ class MaterialDialog(
     populateText(
         view.titleLayout.titleView,
         textRes = res,
-        text = text
+        text = text,
+        typeface = this.titleFont
     )
     return this
   }
@@ -179,7 +187,8 @@ class MaterialDialog(
         btn,
         textRes = res,
         text = text,
-        fallback = android.R.string.ok
+        fallback = android.R.string.ok,
+        typeface = this.buttonFont
     )
     return this
   }
@@ -213,7 +222,8 @@ class MaterialDialog(
         btn,
         textRes = res,
         text = text,
-        fallback = android.R.string.cancel
+        fallback = android.R.string.cancel,
+        typeface = this.buttonFont
     )
     return this
   }
@@ -242,7 +252,8 @@ class MaterialDialog(
     populateText(
         btn,
         textRes = res,
-        text = text
+        text = text,
+        typeface = this.buttonFont
     )
     return this
   }
@@ -282,15 +293,6 @@ class MaterialDialog(
     super.dismiss()
   }
 
-  @RestrictTo(Scope.LIBRARY_GROUP)
-  fun invalidateDividers(
-    scrolledDown: Boolean,
-    atBottom: Boolean
-  ) = view.invalidateDividers(scrolledDown, atBottom)
-
-  @RestrictTo(Scope.LIBRARY_GROUP)
-  fun isContentScrollViewAdded() = this.contentScrollView != null
-
   internal fun onActionButtonClicked(which: WhichButton) {
     when (which) {
       POSITIVE -> {
@@ -306,24 +308,4 @@ class MaterialDialog(
     }
   }
 
-  internal fun addContentScrollView() {
-    if (this.contentScrollView == null) {
-      this.contentScrollView = inflate(R.layout.md_dialog_stub_scrollview, this.view)
-      this.contentScrollView!!.rootView = this.view
-      this.contentScrollViewFrame = this.contentScrollView!!.getChildAt(0) as LinearLayout
-      this.view.addView(this.contentScrollView, 1)
-    }
-  }
-
-  private fun addContentMessageView(@StringRes res: Int?, text: CharSequence?) {
-    if (this.textViewMessage == null) {
-      this.textViewMessage = inflate(
-          R.layout.md_dialog_stub_message,
-          this.contentScrollViewFrame!!
-      )
-      this.contentScrollViewFrame!!.addView(this.textViewMessage)
-    }
-    assertOneSet(res, text)
-    this.textViewMessage!!.text = text ?: getString(res)
-  }
 }

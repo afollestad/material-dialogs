@@ -123,6 +123,10 @@ internal class MultiChoiceDialogAdapter(
     holder.controlView.isChecked = currentSelection.contains(position)
     holder.titleView.text = items[position]
     holder.itemView.background = dialog.getItemSelector()
+
+    if (dialog.bodyFont != null) {
+      holder.titleView.typeface = dialog.bodyFont
+    }
   }
 
   override fun positiveButtonClicked() {

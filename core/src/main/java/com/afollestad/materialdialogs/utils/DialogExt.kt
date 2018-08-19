@@ -8,30 +8,25 @@ package com.afollestad.materialdialogs.utils
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Point
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.CheckResult
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
+import android.support.annotation.RestrictTo
+import android.support.annotation.RestrictTo.Scope
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
+import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
-
-@CheckResult
-internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
-  val drawable = GradientDrawable()
-  drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
-  drawable.setColor(color)
-  window!!.setBackgroundDrawable(drawable)
-  return this
-}
 
 internal fun MaterialDialog.setWindowConstraints() {
   val wm = this.window!!.windowManager
@@ -60,8 +55,43 @@ internal fun MaterialDialog.setWindowConstraints() {
 }
 
 internal fun MaterialDialog.setDefaults() {
+  // Background color and corner radius
   val backgroundColor = getColor(attr = R.attr.colorBackgroundFloating)
   colorBackground(color = backgroundColor)
+  // Fonts
+  this.titleFont = font(attr = R.attr.md_font_title)
+  this.bodyFont = font(attr = R.attr.md_font_body)
+  this.buttonFont = font(attr = R.attr.md_font_button)
+}
+
+@RestrictTo(Scope.LIBRARY_GROUP)
+fun MaterialDialog.invalidateDividers(
+  scrolledDown: Boolean,
+  atBottom: Boolean
+) = view.invalidateDividers(scrolledDown, atBottom)
+
+internal fun MaterialDialog.addContentScrollView() {
+  if (this.contentScrollView == null) {
+    this.contentScrollView = inflate(R.layout.md_dialog_stub_scrollview, this.view)
+    this.contentScrollView!!.rootView = this.view
+    this.contentScrollViewFrame = this.contentScrollView!!.getChildAt(0) as LinearLayout
+    this.view.addView(this.contentScrollView, 1)
+  }
+}
+
+internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: CharSequence?) {
+  if (this.textViewMessage == null) {
+    this.textViewMessage = inflate(
+        R.layout.md_dialog_stub_message,
+        this.contentScrollViewFrame!!
+    )
+    this.contentScrollViewFrame!!.addView(this.textViewMessage)
+    if (this.bodyFont != null) {
+      this.textViewMessage?.typeface = this.bodyFont
+    }
+  }
+  assertOneSet(res, text)
+  this.textViewMessage!!.text = text ?: getString(res)
 }
 
 internal fun MaterialDialog.preShow() {
@@ -100,13 +130,17 @@ internal fun MaterialDialog.populateText(
   textView: TextView,
   @StringRes textRes: Int? = null,
   text: CharSequence? = null,
-  @StringRes fallback: Int = 0
+  @StringRes fallback: Int = 0,
+  typeface: Typeface?
 ) {
   val value = text ?: getString(textRes, fallback)
   if (value != null) {
     (textView.parent as View).visibility = View.VISIBLE
     textView.visibility = View.VISIBLE
     textView.text = value
+    if (typeface != null) {
+      textView.typeface = typeface
+    }
   } else {
     textView.visibility = View.GONE
   }
@@ -124,4 +158,12 @@ internal fun MaterialDialog.hideKeyboard() {
   if (windowToken != null) {
     imm.hideSoftInputFromWindow(windowToken, 0)
   }
+}
+
+internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
+  val drawable = GradientDrawable()
+  drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
+  drawable.setColor(color)
+  window!!.setBackgroundDrawable(drawable)
+  return this
 }

@@ -93,6 +93,10 @@ internal class PlainListDialogAdapter(
 
     val activatedIndex = dialog.config[KEY_ACTIVATED_INDEX] as? Int
     holder.itemView.isActivated = activatedIndex != null && activatedIndex == position
+
+    if (dialog.bodyFont != null) {
+      holder.titleView.typeface = dialog.bodyFont
+    }
   }
 
   override fun positiveButtonClicked() {

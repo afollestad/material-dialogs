@@ -11,12 +11,13 @@ import android.support.annotation.LayoutRes
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
+import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.addContentScrollView
 import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.topMargin
 import com.afollestad.materialdialogs.utils.updateMargin
 import com.afollestad.materialdialogs.utils.updatePadding
-import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.utils.inflate
 
 @CheckResult
 fun MaterialDialog.getCustomView(): View? {

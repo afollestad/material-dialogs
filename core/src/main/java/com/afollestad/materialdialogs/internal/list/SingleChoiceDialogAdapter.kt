@@ -105,6 +105,10 @@ internal class SingleChoiceDialogAdapter(
     holder.controlView.isChecked = currentSelection == position
     holder.titleView.text = items[position]
     holder.itemView.background = dialog.getItemSelector()
+
+    if (dialog.bodyFont != null) {
+      holder.titleView.typeface = dialog.bodyFont
+    }
   }
 
   override fun positiveButtonClicked() {
