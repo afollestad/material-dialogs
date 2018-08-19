@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-  <item
-      android:id="@+id/dark_theme"
-      android:checkable="true"
-      android:title="Dark Theme"
-      tools:ignore="HardcodedText"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
   <item
       android:id="@+id/debug_mode"
       android:checkable="true"
-      android:title="Debug Mode"
-      tools:ignore="HardcodedText"/>
+      android:title="Debug Mode"/>
+  <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/light_theme"
+        android:title="Light Theme"/>
+    <item
+        android:id="@+id/dark_theme"
+        android:title="Dark Theme"/>
+    <item
+        android:id="@+id/custom_theme"
+        android:title="Custom Theme"/>
+  </group>
 </menu>

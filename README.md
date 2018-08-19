@@ -29,6 +29,10 @@ versions will no longer receive support.**
 10. [Checkbox Prompts](#checkbox-prompts)
 11. [Custom Views](#custom-views)
 12. [Miscellaneous](#miscellaneous)
+14. [Theming](#theming)
+    1. [Light and Dark](#light-and-dark)
+    2. [Corner Radius](#corner-radius)
+    3. [Fonts](#fonts)
 
 # Table of Contents - Input
 
@@ -572,6 +576,55 @@ MaterialDialog(this)
   .noAutoDismiss()
   .show()
 ```
+
+## Theming
+
+Google's newer mindset with Material Theming (vs the 2014 mindset) is flexible. If you take their 
+["Crane example"](https://material.io/design/components/dialogs.html#theming), you see that they 
+change fonts, corner rounding, etc. 
+
+### Light and Dark
+
+Light and dark theming is automatic based on your app's theme (basically whether `android:textColorPrimary` 
+is more light or more dark):
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.jpg" width="400px" />
+
+### Corner Radius
+
+Corner radius is the rounding of dialog corners:
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/cornerradius.png" width="200px" />
+
+it can be changed with an attribute in your app theme. It defaults to 2dp:
+
+```xml
+<style name="AppTheme.Custom" parent="Theme.AppCompat">
+
+  <item name="md_corner_radius">16dp</item>
+    
+</style>
+```
+
+### Fonts
+
+This library supports using custom fonts, powered by the Support libraries `ResourcesCompat` class. 
+With raw font files or XML font files in your `/res/font` folder, you can use them in Material Dialogs 
+using attributes in your app's theme.
+
+```xml
+<style name="AppTheme.Custom" parent="Theme.AppCompat">
+
+  <item name="md_font_title">@font/your_font</item>
+  <item name="md_font_body">@font/your_font</item>
+  <item name="md_font_button">@font/your_font</item>
+    
+</style>
+```
+
+See the "Custom Theme" example in the sample project (open the overflow menu for the theme switcher).
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/customtheme.png" width="200px" />
 
 ---
 

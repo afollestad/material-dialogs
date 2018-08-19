@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-  <color name="primary">#7B1FA2</color>
-  <color name="primaryDark">#6A1B9A</color>
-  <color name="accent">#DD2C00</color>
+  <!-- https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
+
+  <color name="primary">#6002ee</color>
+  <color name="primaryDark">#0000ba</color>
+  <color name="accent">#9c47ff</color>
+
+  <color name="primary_custom">#26c6da</color>
+  <color name="primaryDark_custom">#0095a8</color>
+  <color name="accent_custom">#6ff9ff</color>
 
 </resources>

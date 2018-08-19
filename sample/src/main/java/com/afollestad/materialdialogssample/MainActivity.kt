@@ -84,8 +84,12 @@ class MainActivity : AppCompatActivity() {
 
   companion object {
     const val KEY_PREFS = "prefs"
-    const val KEY_DARK_THEME = "dark_theme"
+    const val KEY_THEME = "KEY_THEME"
     const val KEY_DEBUG_MODE = "debug_mode"
+
+    const val LIGHT = "light"
+    const val DARK = "dark"
+    const val CUSTOM = "custom"
   }
 
   private var debugMode = false
@@ -95,7 +99,11 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     prefs = getSharedPreferences(KEY_PREFS, MODE_PRIVATE)
     setTheme(
-        if (prefs.boolean(KEY_DARK_THEME)) R.style.AppTheme_Dark else R.style.AppTheme
+        when (prefs.getString(KEY_THEME, LIGHT)) {
+          DARK -> R.style.AppTheme_Dark
+          CUSTOM -> R.style.AppTheme_Custom
+          else -> R.style.AppTheme
+        }
     )
     debugMode = prefs.boolean(KEY_DEBUG_MODE, false)
 
@@ -797,8 +805,13 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.main, menu)
+    val theme = prefs.getString(KEY_THEME, LIGHT)
+    menu.findItem(R.id.light_theme)
+        .isChecked = theme == LIGHT
     menu.findItem(R.id.dark_theme)
-        .isChecked = prefs.boolean(KEY_DARK_THEME)
+        .isChecked = theme == DARK
+    menu.findItem(R.id.custom_theme)
+        .isChecked = theme == CUSTOM
     menu.findItem(R.id.debug_mode)
         .isChecked = debugMode
     return super.onCreateOptionsMenu(menu)
@@ -806,10 +819,23 @@ class MainActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.dark_theme -> {
-        val newIsDark = !prefs.boolean(KEY_DARK_THEME)
+      R.id.light_theme -> {
         prefs.apply {
-          putBoolean(KEY_DARK_THEME, newIsDark)
+          putString(KEY_THEME, LIGHT)
+        }
+        recreate()
+        return true
+      }
+      R.id.dark_theme -> {
+        prefs.apply {
+          putString(KEY_THEME, DARK)
+        }
+        recreate()
+        return true
+      }
+      R.id.custom_theme -> {
+        prefs.apply {
+          putString(KEY_THEME, CUSTOM)
         }
         recreate()
         return true
