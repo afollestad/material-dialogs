@@ -14,8 +14,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.internal.list.MultiChoiceDialogAdapter
-import com.afollestad.materialdialogs.utilext.assertOneSet
-import com.afollestad.materialdialogs.utilext.getStringArray
+import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.getStringArray
 
 /**
  * @param res The string array resource to populate the list with.

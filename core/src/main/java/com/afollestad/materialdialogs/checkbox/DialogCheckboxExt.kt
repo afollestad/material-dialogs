@@ -13,8 +13,8 @@ import android.support.annotation.StringRes
 import android.view.View
 import android.widget.CheckBox
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.utilext.assertOneSet
-import com.afollestad.materialdialogs.utilext.getString
+import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.getString
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
 

@@ -4,7 +4,7 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-package com.afollestad.materialdialogs.utilext
+package com.afollestad.materialdialogs.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable

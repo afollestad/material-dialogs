@@ -19,8 +19,8 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utilext.inflate
-import com.afollestad.materialdialogs.utilext.pullIndices
+import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.pullIndices
 
 /** @author Aidan Follestad (afollestad) */
 internal class MultiChoiceViewHolder(

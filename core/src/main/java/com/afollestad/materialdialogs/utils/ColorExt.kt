@@ -4,7 +4,7 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-package com.afollestad.materialdialogs.utilext
+package com.afollestad.materialdialogs.utils
 
 import android.content.Context
 import android.graphics.Color
@@ -12,6 +12,12 @@ import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
+import com.afollestad.materialdialogs.MaterialDialog
+
+@ColorInt internal fun MaterialDialog.getColor(
+  @ColorRes res: Int? = null,
+  @AttrRes attr: Int? = null
+): Int = getColor(windowContext, res, attr)
 
 @ColorInt
 internal fun getColor(

@@ -4,7 +4,7 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-package com.afollestad.materialdialogs.utilext
+package com.afollestad.materialdialogs.utils
 
 internal inline fun <reified T> List<T>.pullIndices(indices: IntArray): List<T> {
   val result = mutableListOf<T>()

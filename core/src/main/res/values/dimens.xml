@@ -1,7 +1,7 @@
 <!-- See https://material.io/archive/guidelines/components/dialogs.html#dialogs-specs -->
 <resources>
 
-  <dimen name="md_dialog_bg_corner_radius">2dp</dimen>
+  <dimen name="md_dialog_default_corner_radius">2dp</dimen>
   <dimen name="md_dialog_max_width">356dp</dimen>
   <dimen name="md_dialog_vertical_margin">52dp</dimen>
   <dimen name="md_dialog_horizontal_margin">32dp</dimen>

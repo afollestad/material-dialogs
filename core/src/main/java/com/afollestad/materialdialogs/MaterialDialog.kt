@@ -25,24 +25,29 @@ import com.afollestad.materialdialogs.WhichButton.NEUTRAL
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
-import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_NEGATIVE
-import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_NEUTRAL
-import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_POSITIVE
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.internal.main.DialogScrollView
 import com.afollestad.materialdialogs.list.getListAdapter
-import com.afollestad.materialdialogs.utilext.isVisible
-import com.afollestad.materialdialogs.utilext.assertOneSet
-import com.afollestad.materialdialogs.utilext.getString
-import com.afollestad.materialdialogs.utilext.hideKeyboard
-import com.afollestad.materialdialogs.utilext.inflate
-import com.afollestad.materialdialogs.utilext.preShow
-import com.afollestad.materialdialogs.utilext.setDefaults
-import com.afollestad.materialdialogs.utilext.setIcon
-import com.afollestad.materialdialogs.utilext.setText
-import com.afollestad.materialdialogs.utilext.setWindowConstraints
+import com.afollestad.materialdialogs.utils.getString
+import com.afollestad.materialdialogs.utils.hideKeyboard
+import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.isVisible
+import com.afollestad.materialdialogs.utils.preShow
+import com.afollestad.materialdialogs.utils.setDefaults
+import com.afollestad.materialdialogs.utils.populateIcon
+import com.afollestad.materialdialogs.utils.populateText
+import com.afollestad.materialdialogs.utils.setWindowConstraints
+
+internal fun assertOneSet(
+  a: Int?,
+  b: Any?
+) {
+  if ((a == null || a == 0) && b == null) {
+    throw IllegalArgumentException("You must specify a resource ID or literal value.")
+  }
+}
 
 typealias DialogCallback = (MaterialDialog) -> Unit
 
@@ -99,7 +104,7 @@ class MaterialDialog(
     drawable: Drawable? = null
   ): MaterialDialog {
     assertOneSet(res, drawable)
-    setIcon(
+    populateIcon(
         view.titleLayout.iconView,
         iconRes = res,
         icon = drawable
@@ -119,7 +124,7 @@ class MaterialDialog(
     text: String? = null
   ): MaterialDialog {
     assertOneSet(res, text)
-    setText(
+    populateText(
         view.titleLayout.titleView,
         textRes = res,
         text = text
@@ -170,7 +175,7 @@ class MaterialDialog(
       return this
     }
 
-    setText(
+    populateText(
         btn,
         textRes = res,
         text = text,
@@ -204,7 +209,7 @@ class MaterialDialog(
       return this
     }
 
-    setText(
+    populateText(
         btn,
         textRes = res,
         text = text,
@@ -234,7 +239,7 @@ class MaterialDialog(
       return this
     }
 
-    setText(
+    populateText(
         btn,
         textRes = res,
         text = text

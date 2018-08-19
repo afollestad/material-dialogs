@@ -14,10 +14,10 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
-import com.afollestad.materialdialogs.utilext.dimenPx
-import com.afollestad.materialdialogs.utilext.getColor
-import com.afollestad.materialdialogs.utilext.getDrawable
-import com.afollestad.materialdialogs.utilext.updatePadding
+import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.getColor
+import com.afollestad.materialdialogs.utils.getDrawable
+import com.afollestad.materialdialogs.utils.updatePadding
 
 /**
  * Represents an action button in a dialog, positive, negative, or neutral. Handles switching

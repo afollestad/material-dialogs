@@ -1,3 +1,3 @@
 <resources>
-  <public name="dummy2" type="drawable"/>
+  <attr format="dimension" name="md_corner_radius"/>
 </resources>

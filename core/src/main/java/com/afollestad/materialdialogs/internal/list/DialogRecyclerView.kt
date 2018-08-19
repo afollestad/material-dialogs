@@ -14,7 +14,7 @@ import android.util.AttributeSet
 import android.util.Log
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.main.DialogLayout
-import com.afollestad.materialdialogs.utilext.waitForLayout
+import com.afollestad.materialdialogs.utils.waitForLayout
 
 typealias InvalidateDividersDelegate = (scrolledDown: Boolean, atBottom: Boolean) -> Unit
 

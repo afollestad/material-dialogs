@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utilext.inflate
+import com.afollestad.materialdialogs.utils.inflate
 
 private const val KEY_ACTIVATED_INDEX = "activated_index"
 

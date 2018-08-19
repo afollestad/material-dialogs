@@ -14,8 +14,8 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
-import com.afollestad.materialdialogs.utilext.dimenPx
-import com.afollestad.materialdialogs.utilext.getColor
+import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.getColor
 
 internal abstract class BaseSubLayout(
   context: Context,

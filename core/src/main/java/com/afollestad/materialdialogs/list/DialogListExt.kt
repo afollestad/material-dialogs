@@ -16,10 +16,10 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
-import com.afollestad.materialdialogs.utilext.getDrawable
-import com.afollestad.materialdialogs.utilext.assertOneSet
-import com.afollestad.materialdialogs.utilext.getStringArray
-import com.afollestad.materialdialogs.utilext.inflate
+import com.afollestad.materialdialogs.utils.getDrawable
+import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.getStringArray
+import com.afollestad.materialdialogs.utils.inflate
 
 @CheckResult
 fun MaterialDialog.getRecyclerView(): RecyclerView? {

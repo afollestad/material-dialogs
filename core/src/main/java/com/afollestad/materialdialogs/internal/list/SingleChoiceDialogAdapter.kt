@@ -19,7 +19,7 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utilext.inflate
+import com.afollestad.materialdialogs.utils.inflate
 
 /** @author Aidan Follestad (afollestad) */
 internal class SingleChoiceViewHolder(

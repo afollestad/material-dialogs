@@ -4,10 +4,9 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-package com.afollestad.materialdialogs.utilext
+package com.afollestad.materialdialogs.utils
 
 import android.content.Context
-import android.support.annotation.DimenRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.RestrictTo
 import android.support.annotation.RestrictTo.Scope
@@ -19,6 +18,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Button
+import com.afollestad.materialdialogs.MaterialDialog
 
 @Suppress("UNCHECKED_CAST")
 internal fun <R : View> ViewGroup.inflate(
@@ -26,6 +26,14 @@ internal fun <R : View> ViewGroup.inflate(
   @LayoutRes res: Int
 ): R {
   return LayoutInflater.from(ctxt).inflate(res, this, false) as R
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun <T> MaterialDialog.inflate(
+  @LayoutRes res: Int,
+  root: ViewGroup? = null
+): T {
+  return LayoutInflater.from(windowContext).inflate(res, root, false) as T
 }
 
 internal fun <T : View> T.updatePadding(
@@ -81,10 +89,6 @@ internal inline fun <T : View> T.waitForLayout(crossinline f: T.() -> Unit) =
       }
     })
   }
-
-internal fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
-  return context.resources.getDimensionPixelSize(res)
-}
 
 internal fun <T : View> T.isVisible(): Boolean {
   return if (this is Button) {

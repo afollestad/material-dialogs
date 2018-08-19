@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.title.DialogTitleLayout
-import com.afollestad.materialdialogs.utilext.dimenPx
+import com.afollestad.materialdialogs.utils.dimenPx
 
 val DEBUG_COLOR_PINK = Color.parseColor("#EAA3CF")
 val DEBUG_COLOR_DARK_PINK = Color.parseColor("#E066B1")

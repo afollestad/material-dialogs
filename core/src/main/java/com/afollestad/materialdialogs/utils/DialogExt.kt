@@ -4,25 +4,17 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-package com.afollestad.materialdialogs.utilext
+package com.afollestad.materialdialogs.utils
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ArrayRes
-import android.support.annotation.AttrRes
 import android.support.annotation.CheckResult
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
 import android.support.annotation.StringRes
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -32,34 +24,11 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 
-@Suppress("UNCHECKED_CAST")
-internal fun <T> MaterialDialog.inflate(
-  @LayoutRes res: Int,
-  root: ViewGroup? = null
-): T {
-  return LayoutInflater.from(windowContext).inflate(res, root, false) as T
-}
-
-internal fun assertOneSet(
-  a: Int?,
-  b: Any?
-) {
-  if ((a == null || a == 0) && b == null) {
-    throw IllegalArgumentException("You must specify a resource ID or literal value.")
-  }
-}
-
 @CheckResult
-internal fun MaterialDialog.colorBackground(
-  @ColorInt color: Int? = null,
-  @ColorRes colorRes: Int = 0
-): MaterialDialog {
-  assertOneSet(colorRes, color)
-  val colorValue = color ?: getColor(res = colorRes)
+internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
   val drawable = GradientDrawable()
-  drawable.cornerRadius = context.resources
-      .getDimension(R.dimen.md_dialog_bg_corner_radius)
-  drawable.setColor(colorValue)
+  drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
+  drawable.setColor(color)
   window!!.setBackgroundDrawable(drawable)
   return this
 }
@@ -112,26 +81,7 @@ internal fun MaterialDialog.preShow() {
   }
 }
 
-@ColorInt internal fun MaterialDialog.getColor(
-  @ColorRes res: Int? = null,
-  @AttrRes attr: Int? = null
-): Int = getColor(windowContext, res, attr)
-
-internal fun MaterialDialog.getString(
-  @StringRes res: Int? = null,
-  @StringRes fallback: Int? = null
-): CharSequence? {
-  val resourceId = res ?: (fallback ?: 0)
-  if (resourceId == 0) return null
-  return windowContext.resources.getText(resourceId)
-}
-
-internal fun MaterialDialog.getStringArray(@ArrayRes res: Int?): Array<String>? {
-  if (res == null) return emptyArray()
-  return windowContext.resources.getStringArray(res)
-}
-
-internal fun MaterialDialog.setIcon(
+internal fun MaterialDialog.populateIcon(
   imageView: ImageView,
   @DrawableRes iconRes: Int?,
   icon: Drawable?
@@ -146,7 +96,7 @@ internal fun MaterialDialog.setIcon(
   }
 }
 
-internal fun MaterialDialog.setText(
+internal fun MaterialDialog.populateText(
   textView: TextView,
   @StringRes textRes: Int? = null,
   text: CharSequence? = null,
