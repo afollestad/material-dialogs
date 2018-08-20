@@ -67,8 +67,8 @@
     <item name="android:gravity">center</item>
     <item name="android:background">?selectableItemBackground</item>
     <item name="android:minWidth">@dimen/md_action_button_min_width</item>
-    <item name="android:paddingStart">@dimen/md_action_button_padding_horizontal</item>
-    <item name="android:paddingEnd">@dimen/md_action_button_padding_horizontal</item>
+    <item name="android:paddingLeft">@dimen/md_action_button_padding_horizontal</item>
+    <item name="android:paddingRight">@dimen/md_action_button_padding_horizontal</item>
   </style>
 
   <style name="MD_ListItem">
@@ -81,14 +81,16 @@
     <item name="android:orientation">vertical</item>
   </style>
 
-  <style name="MD_ListItemText">
+  <style name="MD_ListItemText" tools:ignore="NewApi">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:layout_gravity">center_vertical</item>
     <item name="android:layout_marginTop">@dimen/md_listitem_vertical_margin</item>
     <item name="android:layout_marginBottom">@dimen/md_listitem_vertical_margin</item>
+    <item name="android:layout_marginLeft">@dimen/md_listitem_margin_left</item>
     <item name="android:layout_marginStart">@dimen/md_listitem_margin_left</item>
+    <item name="android:layout_marginRight">@dimen/md_dialog_frame_margin_horizontal</item>
     <item name="android:layout_marginEnd">@dimen/md_dialog_frame_margin_horizontal</item>
     <item name="android:textSize">@dimen/md_listitem_textsize</item>
     <item name="android:textColor">@color/md_list_item_textcolor</item>
@@ -100,8 +102,8 @@
     <item name="android:focusable">true</item>
     <item name="android:minHeight">@dimen/md_listitem_height</item>
     <item name="android:orientation">horizontal</item>
-    <item name="android:paddingEnd">@dimen/md_dialog_frame_margin_horizontal</item>
-    <item name="android:paddingStart">@dimen/md_dialog_frame_margin_horizontal</item>
+    <item name="android:paddingLeft">@dimen/md_dialog_frame_margin_horizontal</item>
+    <item name="android:paddingRight">@dimen/md_dialog_frame_margin_horizontal</item>
   </style>
 
   <style name="MD_ListItem_Control">
@@ -114,13 +116,14 @@
     <item name="android:layout_gravity">center_vertical</item>
   </style>
 
-  <style name="MD_ListItemText.Choice">
+  <style name="MD_ListItemText.Choice" tools:ignore="NewApi">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:layout_gravity">center_vertical</item>
     <item name="android:minHeight">@dimen/md_listitem_height</item>
     <item name="android:paddingBottom">@dimen/md_listitem_vertical_margin_choice</item>
+    <item name="android:paddingLeft">@dimen/md_listitem_control_margin</item>
     <item name="android:paddingStart">@dimen/md_listitem_control_margin</item>
     <item name="android:paddingTop">@dimen/md_listitem_vertical_margin_choice</item>
     <item name="android:textSize">@dimen/md_listitem_textsize</item>

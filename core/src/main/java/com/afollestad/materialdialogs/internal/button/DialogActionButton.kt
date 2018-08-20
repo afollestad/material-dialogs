@@ -9,7 +9,9 @@ package com.afollestad.materialdialogs.internal.button
 import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
-import android.view.View
+import android.view.Gravity.CENTER
+import android.view.Gravity.CENTER_VERTICAL
+import android.view.Gravity.END
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
@@ -64,7 +66,7 @@ internal class DialogActionButton(
     updatePadding(left = sidePadding, right = sidePadding)
 
     // Text alignment
-    textAlignment = if (stacked) View.TEXT_ALIGNMENT_VIEW_END else View.TEXT_ALIGNMENT_CENTER
+    gravity = if (stacked) CENTER_VERTICAL and END else CENTER
 
     // Invalidate in case enabled state was changed before this method executed
     isEnabled = isEnabled
