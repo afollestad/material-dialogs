@@ -66,7 +66,7 @@ internal class SingleChoiceDialogAdapter(
       notifyItemChanged(previousSelection)
       notifyItemChanged(value)
     }
-  var disabledIndices: IntArray = disabledItems ?: IntArray(0)
+  private var disabledIndices: IntArray = disabledItems ?: IntArray(0)
 
   internal fun itemClicked(index: Int) {
     this.currentSelection = index

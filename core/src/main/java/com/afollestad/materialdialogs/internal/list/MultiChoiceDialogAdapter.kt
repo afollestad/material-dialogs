@@ -76,7 +76,7 @@ internal class MultiChoiceDialogAdapter(
         }
       }
     }
-  var disabledIndices: IntArray = disabledItems ?: IntArray(0)
+  private var disabledIndices: IntArray = disabledItems ?: IntArray(0)
 
   internal fun itemClicked(index: Int) {
     val newSelection = this.currentSelection.toMutableList()

@@ -753,22 +753,6 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun showFolderChooser() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
-      }
-
-      MaterialDialog(this).show {
-        folderChooser { _, folder ->
-          toast("Selected folder: ${folder.absolutePath}")
-        }
-        debugMode(debugMode)
-      }
-    }
-  }
-
   private fun showFolderChooserButtons() {
     permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
       if (!result.allGranted()) {
