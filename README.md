@@ -911,6 +911,8 @@ MaterialDialog(this)
 
 Empty text is shown when a folder has no contents. You can configure the empty text label:
 
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_emptytext.png" width="200px" />
+
 ```kotlin
 MaterialDialog(this)
   .fileChooser(emptyTextRes = R.string.custom_label) { dialog, file -> 
