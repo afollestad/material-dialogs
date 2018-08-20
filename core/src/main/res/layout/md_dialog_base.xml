@@ -26,7 +26,6 @@
         android:id="@+id/md_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/md_icon_title"
         android:visibility="gone"
         tools:text="Use Google's location service?"
         style="@style/MD_Dialog_Title_Text"
