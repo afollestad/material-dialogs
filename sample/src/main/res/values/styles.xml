@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
   <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -25,7 +25,7 @@
     <item name="md_font_button">@font/raleway_semibold</item>
   </style>
 
-  <style name="SampleHeader">
+  <style name="SampleHeader" tools:ignore="NewApi">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textSize">@dimen/headerTitle</item>
