@@ -806,12 +806,18 @@ class MainActivity : AppCompatActivity() {
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.main, menu)
     val theme = prefs.getString(KEY_THEME, LIGHT)
-    menu.findItem(R.id.light_theme)
-        .isChecked = theme == LIGHT
-    menu.findItem(R.id.dark_theme)
-        .isChecked = theme == DARK
-    menu.findItem(R.id.custom_theme)
-        .isChecked = theme == CUSTOM
+    if (theme == LIGHT) {
+      menu.findItem(R.id.light_theme)
+          .isChecked = true
+    }
+    if (theme == DARK) {
+      menu.findItem(R.id.dark_theme)
+          .isChecked = true
+    }
+    if (theme == CUSTOM) {
+      menu.findItem(R.id.custom_theme)
+          .isChecked = true
+    }
     menu.findItem(R.id.debug_mode)
         .isChecked = debugMode
     return super.onCreateOptionsMenu(menu)
