@@ -62,7 +62,7 @@ fun MaterialDialog.listItems(
   waitForPositiveButton: Boolean = true,
   selection: ItemListener = null
 ): MaterialDialog {
-  assertOneSet(res, items)
+  assertOneSet("listItems", items, res)
   val array = items ?: getStringArray(res)?.toList()
   val adapter = getListAdapter()
 

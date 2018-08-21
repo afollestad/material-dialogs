@@ -47,7 +47,7 @@ fun MaterialDialog.listItemsMultiChoice(
     return this
   }
 
-  assertOneSet(res, items)
+  assertOneSet("listItemsMultiChoice", items, res)
   setActionButtonEnabled(POSITIVE, initialSelection.isNotEmpty())
   return customListAdapter(
       MultiChoiceDialogAdapter(

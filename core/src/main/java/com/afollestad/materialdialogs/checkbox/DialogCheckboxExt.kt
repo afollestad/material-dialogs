@@ -39,7 +39,7 @@ fun MaterialDialog.checkBoxPrompt(
   isCheckedDefault: Boolean = false,
   onToggle: BooleanCallback
 ): MaterialDialog {
-  assertOneSet(res, text)
+  assertOneSet("checkBoxPrompt", text, res)
   view.buttonsLayout.checkBoxPrompt.apply {
     this.visibility = View.VISIBLE
     this.text = text ?: getString(res)

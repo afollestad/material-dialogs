@@ -47,7 +47,7 @@ fun MaterialDialog.listItemsSingleChoice(
     return this
   }
 
-  assertOneSet(res, items)
+  assertOneSet("listItemsSingleChoice", items, res)
   setActionButtonEnabled(POSITIVE, initialSelection > -1)
   return customListAdapter(
       SingleChoiceDialogAdapter(

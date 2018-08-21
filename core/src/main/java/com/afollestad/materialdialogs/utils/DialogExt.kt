@@ -90,7 +90,7 @@ internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: Ch
       this.textViewMessage?.typeface = this.bodyFont
     }
   }
-  assertOneSet(res, text)
+  assertOneSet("message", text, res)
   this.textViewMessage!!.text = text ?: getString(res)
 }
 

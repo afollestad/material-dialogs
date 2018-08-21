@@ -13,7 +13,7 @@ internal fun MaterialDialog.font(
   @FontRes res: Int? = null,
   @AttrRes attr: Int? = null
 ): Typeface? {
-  assertOneSet(res, attr)
+  assertOneSet("font", attr, res)
   if (res != null) {
     return ResourcesCompat.getFont(windowContext, res)
   }

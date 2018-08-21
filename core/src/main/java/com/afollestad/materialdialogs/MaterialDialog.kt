@@ -41,11 +41,12 @@ import com.afollestad.materialdialogs.utils.setDefaults
 import com.afollestad.materialdialogs.utils.setWindowConstraints
 
 internal fun assertOneSet(
-  a: Int?,
-  b: Any?
+  method: String,
+  b: Any?,
+  a: Int?
 ) {
   if ((a == null || a == 0) && b == null) {
-    throw IllegalArgumentException("You must specify a resource ID or literal value.")
+    throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
   }
 }
 
@@ -110,7 +111,7 @@ class MaterialDialog(
     @DrawableRes res: Int? = null,
     drawable: Drawable? = null
   ): MaterialDialog {
-    assertOneSet(res, drawable)
+    assertOneSet("icon", drawable, res)
     populateIcon(
         view.titleLayout.iconView,
         iconRes = res,
@@ -130,7 +131,7 @@ class MaterialDialog(
     @StringRes res: Int? = null,
     text: String? = null
   ): MaterialDialog {
-    assertOneSet(res, text)
+    assertOneSet("title", text, res)
     populateText(
         view.titleLayout.titleView,
         textRes = res,

@@ -12,7 +12,7 @@ internal fun MaterialDialog.dimen(
   @AttrRes attr: Int? = null,
   fallback: Float = windowContext.resources.getDimension(R.dimen.md_dialog_default_corner_radius)
 ): Float {
-  assertOneSet(res, attr)
+  assertOneSet("dimen", attr, res)
   if (res != null) {
     return windowContext.resources.getDimension(res)
   }
