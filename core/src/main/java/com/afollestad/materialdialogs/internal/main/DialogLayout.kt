@@ -20,6 +20,8 @@ import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
+import android.view.View.MeasureSpec.getSize
+import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.FrameLayout
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
@@ -78,20 +80,20 @@ internal class DialogLayout(
     widthMeasureSpec: Int,
     heightMeasureSpec: Int
   ) {
-    val specWidth = MeasureSpec.getSize(widthMeasureSpec)
-    var specHeight = MeasureSpec.getSize(heightMeasureSpec)
+    val specWidth = getSize(widthMeasureSpec)
+    var specHeight = getSize(heightMeasureSpec)
     if (specHeight > maxHeight) {
       specHeight = maxHeight
     }
 
     titleLayout.measure(
-        MeasureSpec.makeMeasureSpec(specWidth, EXACTLY),
-        MeasureSpec.makeMeasureSpec(0, UNSPECIFIED)
+        makeMeasureSpec(specWidth, EXACTLY),
+        makeMeasureSpec(0, UNSPECIFIED)
     )
     if (buttonsLayout.shouldBeVisible()) {
       buttonsLayout.measure(
-          MeasureSpec.makeMeasureSpec(specWidth, EXACTLY),
-          MeasureSpec.makeMeasureSpec(0, UNSPECIFIED)
+          makeMeasureSpec(specWidth, EXACTLY),
+          makeMeasureSpec(0, UNSPECIFIED)
       )
     }
 
@@ -99,22 +101,14 @@ internal class DialogLayout(
       titleLayout.measuredHeight + buttonsLayout.measuredHeight
     val remainingHeight = specHeight - titleAndButtonsHeight
     contentView.measure(
-        MeasureSpec.makeMeasureSpec(specWidth, EXACTLY),
-        MeasureSpec.makeMeasureSpec(remainingHeight, AT_MOST)
+        makeMeasureSpec(specWidth, EXACTLY),
+        makeMeasureSpec(remainingHeight, AT_MOST)
     )
 
     val totalHeight = titleLayout.measuredHeight +
         contentView.measuredHeight +
         buttonsLayout.measuredHeight
     setMeasuredDimension(specWidth, totalHeight)
-
-    Log.d(
-        "MaterialDialogs",
-        "DialogLayout.onMeasure($specWidth, $totalHeight)\n" +
-            "\ttitleHeight = ${titleLayout.measuredHeight}, " +
-            "\tcontentHeight = ${contentView.measuredHeight}, " +
-            "\tbuttonsHeight = ${buttonsLayout.measuredHeight}"
-    )
   }
 
   override fun onLayout(

@@ -10,6 +10,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
+import android.view.View.MeasureSpec.getSize
+import android.view.View.MeasureSpec.makeMeasureSpec
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.internal.main.BaseSubLayout
@@ -82,13 +84,13 @@ internal class DialogActionButtonLayout(
       return
     }
 
-    val parentWidth = MeasureSpec.getSize(widthMeasureSpec)
+    val parentWidth = getSize(widthMeasureSpec)
 
     if (checkBoxPrompt.isVisible()) {
       val checkboxPromptWidth = parentWidth - (checkBoxPromptMarginHorizontal * 2)
       checkBoxPrompt.measure(
-          MeasureSpec.makeMeasureSpec(checkboxPromptWidth, MeasureSpec.EXACTLY),
-          MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+          makeMeasureSpec(checkboxPromptWidth, MeasureSpec.EXACTLY),
+          makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
       )
     }
 
@@ -103,13 +105,13 @@ internal class DialogActionButtonLayout(
       )
       if (stackButtons) {
         button.measure(
-            MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(buttonHeightStacked, MeasureSpec.EXACTLY)
+            makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY),
+            makeMeasureSpec(buttonHeightStacked, MeasureSpec.EXACTLY)
         )
       } else {
         button.measure(
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-            MeasureSpec.makeMeasureSpec(buttonHeightDefault, MeasureSpec.EXACTLY)
+            makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+            makeMeasureSpec(buttonHeightDefault, MeasureSpec.EXACTLY)
         )
       }
     }

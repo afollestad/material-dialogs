@@ -12,6 +12,8 @@ import android.util.AttributeSet
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
+import android.view.View.MeasureSpec.getSize
+import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.R
@@ -61,21 +63,21 @@ internal class DialogTitleLayout(
       return
     }
 
-    val parentWidth = MeasureSpec.getSize(widthMeasureSpec)
+    val parentWidth = getSize(widthMeasureSpec)
     var titleMaxWidth =
       parentWidth - (frameMarginHorizontal * 2)
 
     if (iconView.isVisible()) {
       iconView.measure(
-          MeasureSpec.makeMeasureSpec(iconSize, EXACTLY),
-          MeasureSpec.makeMeasureSpec(iconSize, EXACTLY)
+          makeMeasureSpec(iconSize, EXACTLY),
+          makeMeasureSpec(iconSize, EXACTLY)
       )
       titleMaxWidth -= iconView.measuredWidth
     }
 
     titleView.measure(
-        MeasureSpec.makeMeasureSpec(titleMaxWidth, AT_MOST),
-        MeasureSpec.makeMeasureSpec(0, UNSPECIFIED)
+        makeMeasureSpec(titleMaxWidth, AT_MOST),
+        makeMeasureSpec(0, UNSPECIFIED)
     )
 
     val iconViewHeight =

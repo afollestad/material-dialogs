@@ -7,6 +7,8 @@
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.support.annotation.LayoutRes
 import android.support.annotation.RestrictTo
 import android.support.annotation.RestrictTo.Scope
@@ -100,6 +102,11 @@ internal fun <T : View> T.isVisible(): Boolean {
 
 internal fun <T : View> T.isNotVisible(): Boolean {
   return !isVisible()
+}
+
+internal fun <T : View> T.isRtl(): Boolean {
+  if (SDK_INT < JELLY_BEAN_MR1) return false
+  return resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 }
 
 @RestrictTo(Scope.LIBRARY_GROUP)
