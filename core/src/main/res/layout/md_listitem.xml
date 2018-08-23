@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MD_ListItem"
     >
-  <TextView
+  <com.afollestad.materialdialogs.internal.rtl.RtlTextView
       android:id="@+id/md_title"
       style="@style/MD_ListItemText"
       tools:text="Item"

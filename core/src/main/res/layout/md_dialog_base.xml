@@ -41,8 +41,9 @@
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/md_checkbox_prompt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
         android:visibility="gone"
         />
 

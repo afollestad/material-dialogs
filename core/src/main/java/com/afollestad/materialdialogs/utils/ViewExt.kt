@@ -6,12 +6,14 @@
 
 package com.afollestad.materialdialogs.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.support.annotation.LayoutRes
 import android.support.annotation.RestrictTo
 import android.support.annotation.RestrictTo.Scope
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -20,6 +22,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 
 @Suppress("UNCHECKED_CAST")
@@ -109,7 +112,18 @@ internal fun <T : View> T.isRtl(): Boolean {
   return resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 }
 
-@RestrictTo(Scope.LIBRARY_GROUP)
-fun <T : View> T.setVisible(visible: Boolean) {
-  visibility = if (visible) VISIBLE else INVISIBLE
+internal fun TextView.setGravityStartCompat() {
+  if (SDK_INT >= JELLY_BEAN_MR1) {
+    this.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+  } else {
+    this.gravity = Gravity.START
+  }
+}
+
+internal fun TextView.setGravityEndCompat() {
+  if (SDK_INT >= JELLY_BEAN_MR1) {
+    this.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+  } else {
+    this.gravity = Gravity.END
+  }
 }

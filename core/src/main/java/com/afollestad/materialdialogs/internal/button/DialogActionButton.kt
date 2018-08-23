@@ -10,8 +10,6 @@ import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.Gravity.CENTER
-import android.view.Gravity.CENTER_VERTICAL
-import android.view.Gravity.END
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
@@ -19,6 +17,7 @@ import com.afollestad.materialdialogs.Theme.LIGHT
 import com.afollestad.materialdialogs.utils.dimenPx
 import com.afollestad.materialdialogs.utils.getColor
 import com.afollestad.materialdialogs.utils.getDrawable
+import com.afollestad.materialdialogs.utils.setGravityEndCompat
 import com.afollestad.materialdialogs.utils.updatePadding
 
 /**
@@ -66,7 +65,8 @@ internal class DialogActionButton(
     updatePadding(left = sidePadding, right = sidePadding)
 
     // Text alignment
-    gravity = if (stacked) CENTER_VERTICAL and END else CENTER
+    if (stacked) setGravityEndCompat()
+    else gravity = CENTER
 
     // Invalidate in case enabled state was changed before this method executed
     isEnabled = isEnabled
