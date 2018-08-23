@@ -1,1 +1,5 @@
-<manifest package="com.afollestad.materialdialogs.input"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.afollestad.materialdialogs.input">
+
+  <application android:supportsRtl="true"/>
+</manifest>

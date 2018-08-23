@@ -1,2 +1,6 @@
 <manifest
-    package="com.afollestad.materialdialogs.files"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.afollestad.materialdialogs.files">
+
+  <application android:supportsRtl="true"/>
+</manifest>
