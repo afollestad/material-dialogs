@@ -85,7 +85,7 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
-    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_gravity">start|center_vertical</item>
     <item name="android:layout_marginTop">@dimen/md_listitem_vertical_margin</item>
     <item name="android:layout_marginBottom">@dimen/md_listitem_vertical_margin</item>
     <item name="android:layout_marginLeft">@dimen/md_listitem_margin_left</item>
@@ -113,14 +113,14 @@
     <item name="android:clickable">false</item>
     <item name="android:focusable">false</item>
     <item name="android:gravity">start|center_vertical</item>
-    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_gravity">start|center_vertical</item>
   </style>
 
   <style name="MD_ListItemText.Choice" tools:ignore="NewApi">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
-    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_gravity">start|center_vertical</item>
     <item name="android:minHeight">@dimen/md_listitem_height</item>
     <item name="android:paddingBottom">@dimen/md_listitem_vertical_margin_choice</item>
     <item name="android:paddingLeft">@dimen/md_listitem_control_margin</item>
