@@ -18,6 +18,7 @@ import android.support.annotation.RestrictTo.Scope
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -29,6 +30,8 @@ import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 
 internal fun MaterialDialog.setWindowConstraints() {
+  window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+
   val wm = this.window!!.windowManager
   val display = wm.defaultDisplay
   val size = Point()
