@@ -7,8 +7,8 @@
 package com.afollestad.materialdialogs.internal.rtl
 
 import android.content.Context
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-import android.widget.TextView
 import com.afollestad.materialdialogs.utils.setGravityStartCompat
 
 /**
@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.utils.setGravityStartCompat
 class RtlTextView(
   context: Context,
   attrs: AttributeSet?
-) : TextView(context, attrs) {
+) : AppCompatTextView(context, attrs) {
 
   init {
     setGravityStartCompat()
