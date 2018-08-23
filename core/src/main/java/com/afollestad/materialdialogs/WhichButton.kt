@@ -1,3 +1,7 @@
+/* Licensed under Apache-2.0
+ *
+ * Designed an developed by Aidan Follestad (@afollestad)
+ */
 package com.afollestad.materialdialogs
 
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout.Companion.INDEX_NEGATIVE

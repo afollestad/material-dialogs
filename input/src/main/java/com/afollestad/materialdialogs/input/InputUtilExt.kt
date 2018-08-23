@@ -1,9 +1,7 @@
-/*
- * Licensed under Apache-2.0
+/* Licensed under Apache-2.0
  *
- * Designed an developed by Aidan Follestad (afollestad)
+ * Designed an developed by Aidan Follestad (@afollestad)
  */
-
 package com.afollestad.materialdialogs.input
 
 import android.content.Context

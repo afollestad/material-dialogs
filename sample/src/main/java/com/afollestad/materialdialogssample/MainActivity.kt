@@ -1,3 +1,7 @@
+/* Licensed under Apache-2.0
+ *
+ * Designed an developed by Aidan Follestad (@afollestad)
+ */
 @file:Suppress("DEPRECATION")
 
 package com.afollestad.materialdialogssample
@@ -171,8 +175,6 @@ class MainActivity : AppCompatActivity() {
         debugMode(debugMode)
       }
     }
-
-
 
     basic_checkbox_titled_buttons.setOnClickListener {
       MaterialDialog(this).show {

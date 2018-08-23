@@ -1,22 +1,16 @@
-/*
- * Licensed under Apache-2.0
+/* Licensed under Apache-2.0
  *
- * Designed an developed by Aidan Follestad (afollestad)
+ * Designed an developed by Aidan Follestad (@afollestad)
  */
-
 package com.afollestad.materialdialogs.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.support.annotation.LayoutRes
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams

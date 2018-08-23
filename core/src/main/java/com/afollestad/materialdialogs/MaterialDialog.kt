@@ -1,9 +1,7 @@
-/*
- * Licensed under Apache-2.0
+/* Licensed under Apache-2.0
  *
- * Designed an developed by Aidan Follestad (afollestad)
+ * Designed an developed by Aidan Follestad (@afollestad)
  */
-
 @file:Suppress("unused")
 
 package com.afollestad.materialdialogs
@@ -308,5 +306,4 @@ class MaterialDialog(
       dismiss()
     }
   }
-
 }

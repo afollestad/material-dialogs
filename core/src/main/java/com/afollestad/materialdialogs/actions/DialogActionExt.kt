@@ -1,3 +1,7 @@
+/* Licensed under Apache-2.0
+ *
+ * Designed an developed by Aidan Follestad (@afollestad)
+ */
 package com.afollestad.materialdialogs.actions
 
 import android.support.v7.widget.AppCompatButton
