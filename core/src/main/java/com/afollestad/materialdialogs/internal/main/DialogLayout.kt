@@ -4,7 +4,6 @@
  * Designed an developed by Aidan Follestad (afollestad)
  */
 
-
 package com.afollestad.materialdialogs.internal.main
 
 import android.content.Context
@@ -15,7 +14,6 @@ import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.support.annotation.ColorInt
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
