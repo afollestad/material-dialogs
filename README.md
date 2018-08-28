@@ -94,7 +94,7 @@ changed and a lot of things will be broken if you upgrade from the older version
 to note:
 
 1. **This library will be more opinionated. Not every feature request will be implemented.**
-2. Minimum API level is 17 (Android Jellybean MR1).
+2. Minimum API level is 16 (Android Jellybean).
 3. There is no longer a separate `Builder` class, it's all-in-one.
 4. The whole library was completely re-written in Kotlin. All the layouts and views were remade 
 as well. **This library is now designed specifically to work with Kotlin - it technically will 
