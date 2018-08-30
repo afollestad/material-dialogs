@@ -105,11 +105,11 @@ internal class FileChooserAdapter(
     if (onlyFolders) {
       this.contents = rawContents
           .filter { it.isDirectory && filter?.invoke(it) ?: true }
-          .sortedBy { it.name }
+          .sortedBy { it.name.toLowerCase() }
     } else {
       this.contents = rawContents
           .filter { filter?.invoke(it) ?: true }
-          .sortedWith(compareBy(File::isDirectory, File::nameWithoutExtension))
+          .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
     }
 
     this.emptyView.setVisible(this.contents.isEmpty())
