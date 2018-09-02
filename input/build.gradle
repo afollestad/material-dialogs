@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-  implementation 'com.android.support:design:' + versions.supportLibDesign
+  implementation 'com.android.support:design:' + versions.supportLib
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
   implementation project(':core')
 }
