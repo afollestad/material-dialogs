@@ -25,7 +25,7 @@ internal fun File.betterParent(): File? {
     // Emulated external storage's parent is empty so jump over it
     return getExternalStorageDirectory().parentFile.parentFile
   }
-  if (parentFile.isRoot()) {
+  if (parentFile?.isRoot() == true) {
     val rootContent = parentFile.list() ?: emptyArray()
     if (rootContent.isEmpty()) {
       // If device isn't rooted, don't allow root dir access so we don't get stuck
