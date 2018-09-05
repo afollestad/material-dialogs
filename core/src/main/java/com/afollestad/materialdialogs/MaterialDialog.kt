@@ -288,6 +288,18 @@ class MaterialDialog(
     return this
   }
 
+  /** A fluent version of [setCancelable]. */
+  fun cancelable(cancelable: Boolean): MaterialDialog {
+    this.setCancelable(cancelable)
+    return this
+  }
+
+  /** A fluent version of [setCanceledOnTouchOutside]. */
+  fun cancelOnTouchOutside(cancelable: Boolean): MaterialDialog {
+    this.setCanceledOnTouchOutside(cancelable)
+    return this
+  }
+
   override fun dismiss() {
     hideKeyboard()
     super.dismiss()

@@ -250,6 +250,18 @@ val dialog: MaterialDialog = // ...
 dialog.dismiss()
 ```
 
+---
+
+You can prevent a dialog from being canceled, meaning it has to be explictly dismissed with an 
+action button or a call to the method above.
+
+```kotlin
+MaterialDialog(this).show {
+  cancelable(false)  // calls setCancelable on the underlying dialog
+  cancelOnTouchOutside(false)  // calls setCanceledOnTouchOutside on the underlying dialog
+}
+```
+
 ## Lists
 
 ### Plain
