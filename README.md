@@ -31,8 +31,9 @@ versions will no longer receive support.**
 12. [Miscellaneous](#miscellaneous)
 14. [Theming](#theming)
     1. [Light and Dark](#light-and-dark)
-    2. [Corner Radius](#corner-radius)
-    3. [Fonts](#fonts)
+    2. [Background Color](#background-color)
+    3. [Corner Radius](#corner-radius)
+    4. [Fonts](#fonts)
 
 # Table of Contents - Input
 
@@ -601,6 +602,12 @@ Light and dark theming is automatic based on your app's theme (basically whether
 is more light or more dark):
 
 <img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.jpg" width="400px" />
+
+### Background Color
+
+Material Dialogs uses the value of the `colorBackgroundFloating` attribute in your Activity theme 
+for the background color of dialogs. You can also use the `md_background_color` attribute in your 
+theme, which will take precedence.
 
 ### Corner Radius
 

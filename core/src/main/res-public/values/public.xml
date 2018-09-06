@@ -1,4 +1,5 @@
 <resources>
+  <attr format="color" name="md_background_color"/>
   <attr format="dimension" name="md_corner_radius"/>
   <attr format="reference" name="md_font_title"/>
   <attr format="reference" name="md_font_body"/>

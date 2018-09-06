@@ -27,7 +27,7 @@ internal fun getColor(
   if (attr != null) {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
-      return a.getColor(0, Color.BLACK)
+      return a.getColor(0, 0)
     } finally {
       a.recycle()
     }

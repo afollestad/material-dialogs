@@ -58,7 +58,10 @@ internal fun MaterialDialog.setWindowConstraints() {
 
 internal fun MaterialDialog.setDefaults() {
   // Background color and corner radius
-  val backgroundColor = getColor(attr = R.attr.colorBackgroundFloating)
+  var backgroundColor = getColor(attr = R.attr.md_background_color)
+  if (backgroundColor == 0) {
+    backgroundColor = getColor(attr = R.attr.colorBackgroundFloating)
+  }
   colorBackground(color = backgroundColor)
   // Fonts
   this.titleFont = font(attr = R.attr.md_font_title)
