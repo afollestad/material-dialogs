@@ -75,9 +75,11 @@ fun MaterialDialog.input(
 
   val resources = windowContext.resources
   val editText = getInputField()!!
-  editText.setText(
-      prefill ?: if (prefillRes != null) resources.getString(prefillRes) else null
-  )
+
+  val prefillText = prefill ?: if (prefillRes != null) resources.getString(prefillRes) else null
+  if (prefillText != null) {
+    editText.append(prefillText)
+  }
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
   editText.inputType = inputType
 
