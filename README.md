@@ -488,6 +488,8 @@ dialog.checkAllItems()
 dialog.uncheckAllItems()
 
 dialog.toggleAllItemsChecked()
+
+val checked: Boolean = dialog.isItemChecked(index)
 ```
 
 ### Custom Adapters 
