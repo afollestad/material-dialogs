@@ -33,7 +33,6 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.afollestad.materialdialogs.list.toggleAllItemsChecked
 import kotlinx.android.synthetic.main.activity_main.basic
 import kotlinx.android.synthetic.main.activity_main.basic_buttons
 import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
@@ -361,9 +360,7 @@ class MainActivity : AppCompatActivity() {
         listItemsSingleChoice(R.array.socialNetworks, initialSelection = 2) { _, index, text ->
           toast("Selected item $text at index $index")
         }
-        noAutoDismiss()
-        positiveButton(R.string.choose) { d -> d.dismiss() }
-        neutralButton(text = "Toggle") { d -> d.toggleAllItemsChecked() }
+        positiveButton(R.string.choose)
         debugMode(debugMode)
       }
     }
@@ -412,9 +409,7 @@ class MainActivity : AppCompatActivity() {
         ) { _, indices, text ->
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
-        noAutoDismiss()
-        positiveButton(R.string.choose) { d -> d.dismiss() }
-        neutralButton(text = "Toggle") { d -> d.toggleAllItemsChecked() }
+        positiveButton(R.string.choose)
         debugMode(debugMode)
       }
     }
