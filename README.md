@@ -376,6 +376,22 @@ MaterialDialog(this)
   .show()
 ```
 
+---
+
+There are methods you can use in a built dialog to modify checked states:
+
+```kotlin
+val dialog: MaterialDialog = // ...
+
+dialog.checkItem(index)
+
+dialog.uncheckItem(index)
+
+dialog.toggleItemChecked(index)
+
+val checked: Boolean = dialog.isItemChecked(index)
+```
+
 ### Multiple Choice
 
 You can show multiple choice (checkbox) lists using the `listItemsMultiChoice` extension on `MaterialDialog`:
@@ -451,6 +467,27 @@ MaterialDialog(this)
   ...
   .listItemsMultiChoice(R.array.my_items, disabledIndices = indices)
   .show()
+```
+
+---
+
+There are methods you can use in a built dialog to modify checked states:
+
+```kotlin
+val dialog: MaterialDialog = // ...
+val indices: IntArray = // ...
+
+dialog.checkItems(indices)
+
+dialog.uncheckItems(indices)
+
+dialog.toggleItemsChecked(indices)
+
+dialog.checkAllItems()
+
+dialog.uncheckAllItems()
+
+dialog.toggleAllItemsChecked()
 ```
 
 ### Custom Adapters 
