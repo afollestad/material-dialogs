@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.SingleChoiceDialogAdapter
 import com.afollestad.materialdialogs.utils.getStringArray
 
@@ -57,5 +58,52 @@ fun MaterialDialog.listItemsSingleChoice(
           waitForActionButton = waitForPositiveButton,
           selection = selection
       )
+  )
+}
+
+/** Checks a single or multiple choice list item. */
+fun MaterialDialog.checkItem(index: Int) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.checkItems(intArrayOf(index))
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't check item on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Unchecks a single or multiple choice list item. */
+fun MaterialDialog.uncheckItem(index: Int) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.uncheckItems(intArrayOf(index))
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't uncheck item on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Checks or unchecks a single or multiple choice list item. */
+fun MaterialDialog.toggleItemChecked(index: Int) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.toggleItems(intArrayOf(index))
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't toggle checked item on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Returns true if a single or multiple list item is checked. */
+fun MaterialDialog.isItemChecked(index: Int): Boolean {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    return adapter.isItemChecked(index)
+  }
+  throw UnsupportedOperationException(
+      "Can't check if item is checked on adapter: ${adapter?.javaClass?.name ?: "null"}"
   )
 }

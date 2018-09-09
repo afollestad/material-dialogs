@@ -129,4 +129,34 @@ internal class SingleChoiceDialogAdapter(
     this.disabledIndices = indices
     notifyDataSetChanged()
   }
+
+  override fun checkItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    this.currentSelection = targetIndex
+  }
+
+  override fun uncheckItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    this.currentSelection = -1
+  }
+
+  override fun toggleItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    if (indices.isEmpty() || this.currentSelection == targetIndex) {
+      this.currentSelection = -1
+    } else {
+      this.currentSelection = targetIndex
+    }
+  }
+
+  override fun checkAllItems() = Unit
+
+  override fun uncheckAllItems() = Unit
+
+  override fun toggleAllChecked() = Unit
+
+  override fun isItemChecked(index: Int) = this.currentSelection == index
 }

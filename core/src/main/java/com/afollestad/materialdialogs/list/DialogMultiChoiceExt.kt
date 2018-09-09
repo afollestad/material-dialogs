@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.MultiChoiceDialogAdapter
 import com.afollestad.materialdialogs.utils.getStringArray
 
@@ -57,5 +58,77 @@ fun MaterialDialog.listItemsMultiChoice(
           waitForActionButton = waitForPositiveButton,
           selection = selection
       )
+  )
+}
+
+/** Checks a set of multiple choice list items. */
+fun MaterialDialog.checkItems(indices: IntArray) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.checkItems(indices)
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't check items on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Unchecks a set of multiple choice list items. */
+fun MaterialDialog.uncheckItems(indices: IntArray) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.uncheckItems(indices)
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't uncheck items on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Toggles the checked state of a set of multiple choice list items. */
+fun MaterialDialog.toggleItemsChecked(indices: IntArray) {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.toggleItems(indices)
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't toggle checked items on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Checks all multiple choice list items. */
+fun MaterialDialog.checkAllItems() {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.checkAllItems()
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't check all items on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Unchecks all single or multiple choice list items. */
+fun MaterialDialog.uncheckAllItems() {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.uncheckAllItems()
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't uncheck all items on adapter: ${adapter?.javaClass?.name ?: "null"}"
+  )
+}
+
+/** Toggles the checked state of all multiple choice list items. */
+fun MaterialDialog.toggleAllItemsChecked() {
+  val adapter = getListAdapter()
+  if (adapter is DialogAdapter<*, *>) {
+    adapter.toggleAllChecked()
+    return
+  }
+  throw UnsupportedOperationException(
+      "Can't uncheck all items on adapter: ${adapter?.javaClass?.name ?: "null"}"
   )
 }

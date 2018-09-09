@@ -119,4 +119,18 @@ internal class PlainListDialogAdapter(
     this.disabledIndices = indices
     notifyDataSetChanged()
   }
+
+  override fun checkItems(indices: IntArray) = Unit
+
+  override fun uncheckItems(indices: IntArray) = Unit
+
+  override fun toggleItems(indices: IntArray) = Unit
+
+  override fun checkAllItems() = Unit
+
+  override fun uncheckAllItems() = Unit
+
+  override fun toggleAllChecked() = Unit
+
+  override fun isItemChecked(index: Int) = false
 }

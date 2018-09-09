@@ -18,8 +18,10 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
+import com.afollestad.materialdialogs.utils.appendAll
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.pullIndices
+import com.afollestad.materialdialogs.utils.removeAll
 
 /** @author Aidan Follestad (afollestad) */
 internal class MultiChoiceViewHolder(
@@ -148,4 +150,50 @@ internal class MultiChoiceDialogAdapter(
     this.disabledIndices = indices
     notifyDataSetChanged()
   }
+
+  override fun checkItems(indices: IntArray) {
+    val existingSelection = this.currentSelection
+    val indicesToAdd = indices.filter { !existingSelection.contains(it) }
+    this.currentSelection = this.currentSelection.appendAll(indicesToAdd)
+  }
+
+  override fun uncheckItems(indices: IntArray) {
+    val existingSelection = this.currentSelection
+    val indicesToAdd = indices.filter { existingSelection.contains(it) }
+    this.currentSelection = this.currentSelection.removeAll(indicesToAdd)
+  }
+
+  override fun toggleItems(indices: IntArray) {
+    val newSelection = this.currentSelection.toMutableList()
+    for (target in indices) {
+      if (this.disabledIndices.contains(target)) continue
+      if (newSelection.contains(target)) {
+        newSelection.remove(target)
+      } else {
+        newSelection.add(target)
+      }
+    }
+    this.currentSelection = newSelection.toIntArray()
+  }
+
+  override fun checkAllItems() {
+    val existingSelection = this.currentSelection
+    val wholeRange = IntArray(itemCount) { it }
+    val indicesToAdd = wholeRange.filter { !existingSelection.contains(it) }
+    this.currentSelection = this.currentSelection.appendAll(indicesToAdd)
+  }
+
+  override fun uncheckAllItems() {
+    this.currentSelection = intArrayOf()
+  }
+
+  override fun toggleAllChecked() {
+    if (this.currentSelection.isEmpty()) {
+      checkAllItems()
+    } else {
+      uncheckAllItems()
+    }
+  }
+
+  override fun isItemChecked(index: Int) = this.currentSelection.contains(index)
 }

@@ -14,5 +14,21 @@ interface DialogAdapter<IT, SL> {
 
   fun disableItems(indices: IntArray)
 
+  fun checkItems(indices: IntArray)
+
+  fun uncheckItems(indices: IntArray)
+
+  fun toggleItems(indices: IntArray)
+
+  fun checkAllItems()
+
+  fun uncheckAllItems()
+
+  fun toggleAllChecked()
+
+  fun isItemChecked(index: Int): Boolean
+
+  fun getItemCount(): Int
+
   fun positiveButtonClicked()
 }
