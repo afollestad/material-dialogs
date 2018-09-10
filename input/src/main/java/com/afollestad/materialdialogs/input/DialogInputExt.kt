@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.callbacks.onPreShow
+import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.utilext.textChanged
@@ -78,7 +79,8 @@ fun MaterialDialog.input(
 
   val prefillText = prefill ?: if (prefillRes != null) resources.getString(prefillRes) else null
   if (prefillText != null) {
-    editText.append(prefillText)
+    editText.setText(prefillText)
+    onShow { editText.setSelection(prefillText.length) }
   }
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
   editText.inputType = inputType
