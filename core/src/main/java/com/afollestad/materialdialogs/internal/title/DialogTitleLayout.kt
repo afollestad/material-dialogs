@@ -72,7 +72,7 @@ internal class DialogTitleLayout(
           makeMeasureSpec(iconSize, EXACTLY),
           makeMeasureSpec(iconSize, EXACTLY)
       )
-      titleMaxWidth -= iconView.measuredWidth
+      titleMaxWidth -= (iconView.measuredWidth + iconMargin)
     }
 
     titleView.measure(
@@ -106,6 +106,7 @@ internal class DialogTitleLayout(
     val titleBottom: Int
     val titleTop: Int
     var titleRight: Int
+
     if (isRtl()) {
       titleRight = measuredWidth - frameMarginHorizontal
       titleBottom = measuredHeight - titleMarginBottom
@@ -127,6 +128,7 @@ internal class DialogTitleLayout(
       val iconTop: Int
       val iconRight: Int
       val iconBottom: Int
+
       if (isRtl()) {
         iconRight = titleRight
         iconTop = titleMidPoint - iconHalfHeight
@@ -140,6 +142,7 @@ internal class DialogTitleLayout(
         iconRight = iconLeft + iconView.measuredWidth
         iconBottom = iconTop + iconView.measuredHeight
         titleLeft = iconRight + iconMargin
+        titleRight = titleLeft + titleView.measuredWidth
       }
       iconView.layout(iconLeft, iconTop, iconRight, iconBottom)
     }
