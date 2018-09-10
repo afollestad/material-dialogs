@@ -82,6 +82,11 @@ fun MaterialDialog.input(
     editText.setText(prefillText)
     onShow { editText.setSelection(prefillText.length) }
   }
+  setActionButtonEnabled(
+      POSITIVE,
+      !waitForPositiveButton || prefillText?.isNotEmpty() == true
+  )
+
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
   editText.inputType = inputType
 
