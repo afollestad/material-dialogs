@@ -135,7 +135,8 @@ class MaterialDialog(
         view.titleLayout.titleView,
         textRes = res,
         text = text,
-        typeface = this.titleFont
+        typeface = this.titleFont,
+        textColor = R.attr.md_color_title
     )
     return this
   }

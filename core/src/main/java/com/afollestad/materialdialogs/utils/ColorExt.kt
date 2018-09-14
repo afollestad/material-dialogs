@@ -11,6 +11,7 @@ import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
+import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 
 @ColorInt internal fun MaterialDialog.getColor(
@@ -39,4 +40,15 @@ internal fun Int.isColorDark(): Boolean {
   val darkness =
     1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
   return darkness >= 0.5
+}
+
+internal fun TextView?.maybeSetTextColor(
+  context: Context,
+  @AttrRes attrRes: Int?
+) {
+  if (attrRes == null) return
+  val color = getColor(context, attr = attrRes)
+  if (color != 0) {
+    this?.setTextColor(color)
+  }
 }

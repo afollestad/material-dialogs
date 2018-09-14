@@ -33,7 +33,8 @@ versions will no longer receive support.**
     1. [Light and Dark](#light-and-dark)
     2. [Background Color](#background-color)
     3. [Corner Radius](#corner-radius)
-    4. [Fonts](#fonts)
+    4. [Text Color][#text-color]
+    5. [Fonts](#fonts)
 
 # Table of Contents - Input
 
@@ -660,6 +661,21 @@ it can be changed with an attribute in your app theme. It defaults to 2dp:
 <style name="AppTheme.Custom" parent="Theme.AppCompat">
 
   <item name="md_corner_radius">16dp</item>
+    
+</style>
+```
+
+### Text Color
+
+By default, `android:textColorPrimary` and `android:textColorSecondary` attributes from your Activity
+theme are used for the title and content colors of dialogs. If you wish to override that, there 
+are two attributes provided:
+
+```xml
+<style name="AppTheme.Custom" parent="Theme.AppCompat">
+
+  <item name="md_color_title">@color/your_color</item>
+  <item name="md_color_content">@color/your_color</item>
     
 </style>
 ```

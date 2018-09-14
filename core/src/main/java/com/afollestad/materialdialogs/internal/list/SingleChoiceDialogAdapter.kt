@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.maybeSetTextColor
 
 /** @author Aidan Follestad (afollestad) */
 internal class SingleChoiceViewHolder(
@@ -87,10 +88,12 @@ internal class SingleChoiceDialogAdapter(
     viewType: Int
   ): SingleChoiceViewHolder {
     val listItemView: View = parent.inflate(dialog.windowContext, R.layout.md_listitem_singlechoice)
-    return SingleChoiceViewHolder(
+    val viewHolder = SingleChoiceViewHolder(
         itemView = listItemView,
         adapter = this
     )
+    viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    return viewHolder
   }
 
   override fun getItemCount() = items.size

@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.maybeSetTextColor
 
 private const val KEY_ACTIVATED_INDEX = "activated_index"
 
@@ -72,10 +73,12 @@ internal class PlainListDialogAdapter(
     viewType: Int
   ): PlainListViewHolder {
     val listItemView: View = parent.inflate(dialog.windowContext, R.layout.md_listitem)
-    return PlainListViewHolder(
+    val viewHolder = PlainListViewHolder(
         itemView = listItemView,
         adapter = this
     )
+    viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    return viewHolder
   }
 
   override fun getItemCount() = items.size

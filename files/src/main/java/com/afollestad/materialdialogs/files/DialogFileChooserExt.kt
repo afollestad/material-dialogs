@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
+import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import java.io.File
 
@@ -52,6 +53,7 @@ fun MaterialDialog.fileChooser(
   val list: DialogRecyclerView = customView.findViewById(R.id.list)
   val emptyText: TextView = customView.findViewById(R.id.empty_text)
   emptyText.setText(emptyTextRes)
+  emptyText.maybeSetTextColor(windowContext, R.attr.md_color_content)
 
   list.attach(this)
   list.layoutManager = LinearLayoutManager(windowContext)

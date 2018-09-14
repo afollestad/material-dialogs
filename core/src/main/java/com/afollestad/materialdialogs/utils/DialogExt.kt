@@ -90,6 +90,7 @@ internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: Ch
         R.layout.md_dialog_stub_message,
         this.contentScrollViewFrame!!
     )
+    this.textViewMessage.maybeSetTextColor(windowContext, R.attr.md_color_content)
     this.contentScrollViewFrame!!.addView(this.textViewMessage)
     if (this.bodyFont != null) {
       this.textViewMessage?.typeface = this.bodyFont
@@ -136,7 +137,8 @@ internal fun MaterialDialog.populateText(
   @StringRes textRes: Int? = null,
   text: CharSequence? = null,
   @StringRes fallback: Int = 0,
-  typeface: Typeface?
+  typeface: Typeface?,
+  textColor: Int? = null
 ) {
   val value = text ?: getString(textRes, fallback)
   if (value != null) {
@@ -146,6 +148,7 @@ internal fun MaterialDialog.populateText(
     if (typeface != null) {
       textView.typeface = typeface
     }
+    textView.maybeSetTextColor(windowContext, textColor)
   } else {
     textView.visibility = View.GONE
   }

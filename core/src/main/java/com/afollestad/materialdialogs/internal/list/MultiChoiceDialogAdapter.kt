@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.appendAll
 import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.pullIndices
 import com.afollestad.materialdialogs.utils.removeAll
 
@@ -107,10 +108,12 @@ internal class MultiChoiceDialogAdapter(
     viewType: Int
   ): MultiChoiceViewHolder {
     val listItemView: View = parent.inflate(dialog.windowContext, R.layout.md_listitem_multichoice)
-    return MultiChoiceViewHolder(
+    val viewHolder = MultiChoiceViewHolder(
         itemView = listItemView,
         adapter = this
     )
+    viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    return viewHolder
   }
 
   override fun getItemCount() = items.size

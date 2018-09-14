@@ -12,8 +12,10 @@ import android.support.annotation.StringRes
 import android.view.View
 import android.widget.CheckBox
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.utils.getString
+import com.afollestad.materialdialogs.utils.maybeSetTextColor
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
 
@@ -46,6 +48,7 @@ fun MaterialDialog.checkBoxPrompt(
     this.setOnCheckedChangeListener { _, checked ->
       onToggle?.invoke(checked)
     }
+    maybeSetTextColor(windowContext, R.attr.md_color_content)
   }
   return this
 }
