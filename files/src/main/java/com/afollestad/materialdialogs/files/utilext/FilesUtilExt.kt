@@ -58,3 +58,7 @@ internal fun Context.hasPermission(permission: String): Boolean {
 internal fun MaterialDialog.hasReadStoragePermission(): Boolean {
   return windowContext.hasPermission(permission.READ_EXTERNAL_STORAGE)
 }
+
+internal fun MaterialDialog.hasWriteStoragePermission(): Boolean {
+  return windowContext.hasPermission(permission.WRITE_EXTERNAL_STORAGE)
+}

@@ -8,6 +8,7 @@ package com.afollestad.materialdialogs.files
 import android.annotation.SuppressLint
 import android.os.Environment.getExternalStorageDirectory
 import android.support.annotation.CheckResult
+import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -16,6 +17,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
+import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import java.io.File
@@ -38,9 +40,13 @@ fun MaterialDialog.folderChooser(
   filter: FileFilter = { !it.isHidden },
   waitForPositiveButton: Boolean = true,
   emptyTextRes: Int = R.string.files_default_empty_text,
+  allowFolderCreation: Boolean = false,
+  @StringRes folderCreationLabel: Int? = null,
   selection: FileCallback = null
 ): MaterialDialog {
-  if (!hasReadStoragePermission()) {
+  if (allowFolderCreation && !hasWriteStoragePermission()) {
+    throw IllegalStateException("You must have the WRITE_EXTERNAL_STORAGE permission first.")
+  } else if (!hasReadStoragePermission()) {
     throw IllegalStateException("You must have the READ_EXTERNAL_STORAGE permission first.")
   }
   customView(R.layout.md_file_chooser_base)
@@ -61,6 +67,8 @@ fun MaterialDialog.folderChooser(
       emptyView = emptyText,
       onlyFolders = true,
       filter = filter,
+      allowFolderCreation = allowFolderCreation,
+      folderCreationLabel = folderCreationLabel,
       callback = selection
   )
   list.adapter = adapter

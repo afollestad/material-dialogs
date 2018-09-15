@@ -8,6 +8,7 @@
 package com.afollestad.materialdialogssample
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -724,14 +725,14 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showFileChooserButtons() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
+    permission.request(arrayOf(WRITE_EXTERNAL_STORAGE)) { result ->
       if (!result.allGranted()) {
         toast("Storage permission is needed for file choosers")
         return@request
       }
 
       MaterialDialog(this).show {
-        fileChooser { _, file ->
+        fileChooser(allowFolderCreation = true) { _, file ->
           toast("Selected file: ${file.absolutePath}")
         }
         negativeButton(android.R.string.cancel)
@@ -758,14 +759,14 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showFolderChooserButtons() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
+    permission.request(arrayOf(WRITE_EXTERNAL_STORAGE)) { result ->
       if (!result.allGranted()) {
         toast("Storage permission is needed for file choosers")
         return@request
       }
 
       MaterialDialog(this).show {
-        folderChooser { _, folder ->
+        folderChooser(allowFolderCreation = true) { _, folder ->
           toast("Selected folder: ${folder.absolutePath}")
         }
         negativeButton(android.R.string.cancel)

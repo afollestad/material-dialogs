@@ -5,6 +5,7 @@
  */
 package com.afollestad.materialdialogs.files
 
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,8 @@ internal class FileChooserAdapter(
   private val emptyView: TextView,
   private val onlyFolders: Boolean,
   private val filter: FileFilter,
+  private val allowFolderCreation: Boolean,
+  @StringRes private val folderCreationLabel: Int?,
   private val callback: FileCallback
 ) : RecyclerView.Adapter<FileChooserViewHolder>() {
 
@@ -66,13 +69,30 @@ internal class FileChooserAdapter(
   }
 
   fun itemClicked(index: Int) {
-    if (currentFolder.hasParent() && index == 0) {
+    if (
+        currentFolder.hasParent() &&
+        index == goUpIndex()
+    ) {
       // go up
       loadContents(currentFolder.betterParent()!!)
       return
+    } else if (
+        currentFolder.canWrite() &&
+        allowFolderCreation &&
+        index == newFolderIndex()
+    ) {
+      // New folder
+      dialog.showNewFolderCreator(
+          parent = currentFolder,
+          folderCreationLabel = folderCreationLabel
+      ) {
+        // Refresh view
+        loadContents(currentFolder)
+      }
+      return
     }
 
-    val actualIndex = if (currentFolder.hasParent()) index - 1 else index
+    val actualIndex = actualIndex(index)
     val selected = contents[actualIndex].jumpOverEmulated()
 
     if (selected.isDirectory) {
@@ -117,6 +137,17 @@ internal class FileChooserAdapter(
     notifyDataSetChanged()
   }
 
+  override fun getItemCount(): Int {
+    var count = contents.size
+    if (currentFolder.hasParent()) {
+      count += 1
+    }
+    if (allowFolderCreation && currentFolder.canWrite()) {
+      count += 1
+    }
+    return count
+  }
+
   override fun onCreateViewHolder(
     parent: ViewGroup,
     viewType: Int
@@ -125,6 +156,7 @@ internal class FileChooserAdapter(
       // If we don't have folder chooser action buttons at runtime, force one
       dialog.positiveButton(android.R.string.ok)
     }
+
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.md_file_chooser_item, parent, false)
     view.background = getDrawable(dialog.context, attr = R.attr.md_item_selector)
@@ -134,18 +166,15 @@ internal class FileChooserAdapter(
     return viewHolder
   }
 
-  override fun getItemCount(): Int {
-    if (currentFolder.hasParent()) {
-      return contents.size + 1
-    }
-    return contents.size
-  }
-
   override fun onBindViewHolder(
     holder: FileChooserViewHolder,
     position: Int
   ) {
-    if (currentFolder.hasParent() && position == 0) {
+    if (
+        currentFolder.hasParent() &&
+        position == goUpIndex()
+    ) {
+      // Go up
       holder.iconView.setImageResource(
           if (isLightTheme) R.drawable.icon_return_dark
           else R.drawable.icon_return_light
@@ -155,11 +184,43 @@ internal class FileChooserAdapter(
       return
     }
 
-    val actualIndex = if (currentFolder.hasParent()) position - 1 else position
+    if (
+        allowFolderCreation &&
+        currentFolder.canWrite() &&
+        position == newFolderIndex()
+    ) {
+      // New folder
+      holder.iconView.setImageResource(
+          if (isLightTheme) R.drawable.icon_new_folder_dark
+          else R.drawable.icon_new_folder_light
+      )
+      holder.nameView.text = dialog.windowContext.getString(
+          folderCreationLabel ?: R.string.files_new_folder
+      )
+      holder.itemView.isActivated = false
+      return
+    }
+
+    val actualIndex = actualIndex(position)
     val item = contents[actualIndex]
     holder.iconView.setImageResource(item.iconRes())
     holder.nameView.text = item.name
     holder.itemView.isActivated = selectedFile?.absolutePath == item.absolutePath ?: false
+  }
+
+  private fun goUpIndex() = if (currentFolder.hasParent()) 0 else -1
+
+  private fun newFolderIndex() = if (currentFolder.hasParent()) 1 else 0
+
+  private fun actualIndex(position: Int): Int {
+    var actualIndex = position
+    if (currentFolder.hasParent()) {
+      actualIndex -= 1
+    }
+    if (currentFolder.canWrite() && allowFolderCreation) {
+      actualIndex -= 1
+    }
+    return actualIndex
   }
 
   private fun File.iconRes(): Int {
