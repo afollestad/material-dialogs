@@ -23,6 +23,10 @@ android {
         'src/main/res-public'
     ]
   }
+
+  packagingOptions {
+    exclude 'META-INF/color_release.kotlin_module'
+  }
 }
 
 dependencies {
