@@ -603,10 +603,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     colorChooser_customColors.setOnClickListener {
-      val topLevel = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
+      val topLevel = intArrayOf(Color.TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
       val subLevel = arrayOf(
+          intArrayOf(Color.WHITE, Color.TRANSPARENT, Color.BLACK),
           intArrayOf(Color.LTGRAY, Color.GRAY, Color.DKGRAY),
-          intArrayOf(Color.GREEN, Color.BLACK),
+          intArrayOf(Color.GREEN),
           intArrayOf(Color.MAGENTA, Color.CYAN)
       )
 
