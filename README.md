@@ -53,10 +53,12 @@ versions will no longer receive support.**
     1. [Basics](#basics-2)
     2. [Filter](#filter)
     3. [Empty Text](#empty-text)
+    4. [Folder Creation](#folder-creation)
 3. [Folder Choosers](#folder-choosers)
     1. [Basics](#basics-3)
     2. [Filter](#filter-2)
     3. [Empty Text](#empty-text-1)
+    4. [Folder Creation](#folder-creation-1)
 
 # Table of Contents - Color
 
@@ -946,6 +948,25 @@ MaterialDialog(this)
   .show()
 ```
 
+### Folder Creation
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="200px" />
+
+You can allow your users to create folders. 
+
+```kotlin
+MaterialDialog(this)
+  .fileChooser(
+      allowFolderCreation = true,
+      folderCreationLabel = R.string.new_folder // optional as well
+  ) { dialog, file -> 
+      // File selected
+  }
+  .show()
+```
+
+This "New Folder" option is only show in directories which are writable.
+
 ## Folder Choosers
 
 **Note:** Folder choosers require your app to have permission to `READ_EXTERNAL_STORAGE`, otherwise 
@@ -989,11 +1010,30 @@ Empty text is shown when a folder has no contents. You can configure the empty t
 
 ```kotlin
 MaterialDialog(this)
-  .fileChooser(emptyTextRes = R.string.custom_label) { dialog, file -> 
+  .folderChooser(emptyTextRes = R.string.custom_label) { dialog, file -> 
       // File selected
   }
   .show()
 ```
+
+### Folder Creation
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="200px" />
+
+You can allow your users to create folders. 
+
+```kotlin
+MaterialDialog(this)
+  .folderChooser(
+      allowFolderCreation = true,
+      folderCreationLabel = R.string.new_folder // optional as well
+  ) { dialog, file -> 
+      // File selected
+  }
+  .show()
+```
+
+This "New Folder" option is only show in directories which are writable.
 
 ---
 
