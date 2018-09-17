@@ -24,8 +24,8 @@ android {
     ]
   }
 
-  packagingOptions {
-    exclude 'META-INF/color_release.kotlin_module'
+  compileOptions {
+    kotlinOptions.freeCompilerArgs += ['-module-name', "com.afollestad.material-dialogs:color"]
   }
 }
 
