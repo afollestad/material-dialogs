@@ -25,7 +25,7 @@ android {
   }
 
   compileOptions {
-    kotlinOptions.freeCompilerArgs += ['-module-name', "com.afollestad.material-dialogs:core"]
+    kotlinOptions.freeCompilerArgs += ['-module-name', "com.afollestad.material-dialogs.core"]
   }
 }
 
