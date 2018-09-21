@@ -676,9 +676,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showWebViewDialog() {
     val dialog = MaterialDialog(this).show {
-      title(R.string.changelog)
-      customView(R.layout.custom_view_webview)
-      positiveButton(android.R.string.ok)
+      customView(R.layout.custom_view_webview, noVerticalPadding = true)
       debugMode(debugMode)
     }
 

@@ -18,6 +18,8 @@ import com.afollestad.materialdialogs.utils.topMargin
 import com.afollestad.materialdialogs.utils.updateMargin
 import com.afollestad.materialdialogs.utils.updatePadding
 
+internal const val CUSTOM_VIEW_NO_PADDING = "md.custom_view_no_padding"
+
 @CheckResult
 fun MaterialDialog.getCustomView(): View? {
   return contentCustomView
@@ -30,12 +32,14 @@ fun MaterialDialog.getCustomView(): View? {
  * @param viewRes The layout resource to inflate as the custom view.
  * @param view The view to insert as the custom view.
  * @param scrollable Whether or not the custom view is automatically wrapped in a ScrollView.
+ * @param noVerticalPadding When set to true, vertical padding is not added around your content.
  */
 @CheckResult
 fun MaterialDialog.customView(
   @LayoutRes viewRes: Int? = null,
   view: View? = null,
-  scrollable: Boolean = false
+  scrollable: Boolean = false,
+  noVerticalPadding: Boolean = false
 ): MaterialDialog {
   if (this.contentRecyclerView != null) {
     throw IllegalStateException(
@@ -43,7 +47,10 @@ fun MaterialDialog.customView(
             "(e.g. list, message, input, etc.)"
     )
   }
+
   assertOneSet("customView", view, viewRes)
+  config[CUSTOM_VIEW_NO_PADDING] = noVerticalPadding
+
   if (scrollable || this.contentScrollViewFrame != null) {
     addContentScrollView()
     this.contentCustomView = view ?: inflate(viewRes!!, this.contentScrollViewFrame!!)
@@ -60,5 +67,6 @@ fun MaterialDialog.customView(
     this.contentCustomView = view ?: inflate(viewRes!!, this.view)
     this.view.addView(this.contentCustomView, 1)
   }
+
   return this
 }

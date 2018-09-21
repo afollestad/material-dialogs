@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
+import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_PADDING
 
 internal fun MaterialDialog.setWindowConstraints() {
   window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
@@ -101,9 +102,11 @@ internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: Ch
 }
 
 internal fun MaterialDialog.preShow() {
+  val customViewNoPadding = config[CUSTOM_VIEW_NO_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
+
   this.view.apply {
-    if (titleLayout.shouldNotBeVisible()) {
+    if (titleLayout.shouldNotBeVisible() && !customViewNoPadding) {
       // Reduce top and bottom padding if we have no title
       contentView.updatePadding(
           top = frameMarginVerticalLess,

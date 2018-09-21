@@ -41,9 +41,6 @@
   <string name="googleWifi">Google Wifi</string>
   <string name="connect">Connect</string>
 
-  <!-- WebView example -->
-  <string name="changelog">Changelog</string>
-
   <!-- Color Chooser Examples -->
   <string name="primary_colors">Primary Colors</string>
   <string name="accent_colors">Accent Colors</string>

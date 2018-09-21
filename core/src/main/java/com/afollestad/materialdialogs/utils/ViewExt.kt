@@ -12,7 +12,6 @@ import android.support.annotation.LayoutRes
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
@@ -24,17 +23,13 @@ import com.afollestad.materialdialogs.MaterialDialog
 internal fun <R : View> ViewGroup.inflate(
   ctxt: Context = context,
   @LayoutRes res: Int
-): R {
-  return LayoutInflater.from(ctxt).inflate(res, this, false) as R
-}
+) = LayoutInflater.from(ctxt).inflate(res, this, false) as R
 
 @Suppress("UNCHECKED_CAST")
 internal fun <T> MaterialDialog.inflate(
   @LayoutRes res: Int,
   root: ViewGroup? = null
-): T {
-  return LayoutInflater.from(windowContext).inflate(res, root, false) as T
-}
+) = LayoutInflater.from(windowContext).inflate(res, root, false) as T
 
 internal fun <T : View> T.updatePadding(
   left: Int = this.paddingLeft,
@@ -53,10 +48,7 @@ internal fun <T : View> T.updatePadding(
   this.setPadding(left, top, right, bottom)
 }
 
-internal fun <T : View> T.topMargin(): Int {
-  val layoutParams = this.layoutParams as MarginLayoutParams
-  return layoutParams.topMargin
-}
+internal fun <T : View> T.topMargin() = (this.layoutParams as MarginLayoutParams).topMargin
 
 internal fun <T : View> T.updateMargin(
   left: Int = -1,
