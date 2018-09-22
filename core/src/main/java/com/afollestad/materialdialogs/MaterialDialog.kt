@@ -11,12 +11,12 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.support.annotation.CheckResult
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.CheckResult
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.WhichButton.NEGATIVE
 import com.afollestad.materialdialogs.WhichButton.NEUTRAL
@@ -105,8 +105,7 @@ class MaterialDialog(
    * @param res The drawable resource to display as the drawable.
    * @param drawable The drawable to display as the drawable.
    */
-  @CheckResult
-  fun icon(
+  @CheckResult fun icon(
     @DrawableRes res: Int? = null,
     drawable: Drawable? = null
   ): MaterialDialog {
@@ -125,8 +124,7 @@ class MaterialDialog(
    * @param res The string resource to display as the title.
    * @param text The literal string to display as the title.
    */
-  @CheckResult
-  fun title(
+  @CheckResult fun title(
     @StringRes res: Int? = null,
     text: String? = null
   ): MaterialDialog {
@@ -147,8 +145,7 @@ class MaterialDialog(
    * @param res The string resource to display as the message.
    * @param text The literal string to display as the message.
    */
-  @CheckResult
-  fun message(
+  @CheckResult fun message(
     @StringRes res: Int? = null,
     text: CharSequence? = null
   ): MaterialDialog {
@@ -167,8 +164,7 @@ class MaterialDialog(
    * @param text The literal string to display on the button.
    * @param click A listener to invoke when the button is pressed.
    */
-  @CheckResult
-  fun positiveButton(
+  @CheckResult fun positiveButton(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
@@ -202,8 +198,7 @@ class MaterialDialog(
    * @param text The literal string to display on the button.
    * @param click A listener to invoke when the button is pressed.
    */
-  @CheckResult
-  fun negativeButton(
+  @CheckResult fun negativeButton(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
@@ -263,15 +258,13 @@ class MaterialDialog(
    * Turns off auto dismiss. Action button and list item clicks won't dismiss the dialog on their
    * own. You have to handle dismissing the dialog manually with the [dismiss] method.
    */
-  @CheckResult
-  fun noAutoDismiss(): MaterialDialog {
+  @CheckResult fun noAutoDismiss(): MaterialDialog {
     this.autoDismissEnabled = false
     return this
   }
 
   /** Turns debug mode on or off. Draws spec guides over dialog views. */
-  @CheckResult
-  fun debugMode(debugMode: Boolean = true): MaterialDialog {
+  @CheckResult fun debugMode(debugMode: Boolean = true): MaterialDialog {
     this.view.debugMode = debugMode
     return this
   }

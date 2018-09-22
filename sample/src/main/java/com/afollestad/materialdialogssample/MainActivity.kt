@@ -12,7 +12,6 @@ import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Menu
@@ -20,6 +19,7 @@ import android.view.MenuItem
 import android.webkit.WebView
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss

@@ -5,9 +5,9 @@
  */
 package com.afollestad.materialdialogs.customview
 
-import android.support.annotation.CheckResult
-import android.support.annotation.LayoutRes
 import android.view.View
+import androidx.annotation.CheckResult
+import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
@@ -20,10 +20,7 @@ import com.afollestad.materialdialogs.utils.updatePadding
 
 internal const val CUSTOM_VIEW_NO_PADDING = "md.custom_view_no_padding"
 
-@CheckResult
-fun MaterialDialog.getCustomView(): View? {
-  return contentCustomView
-}
+@CheckResult fun MaterialDialog.getCustomView() = contentCustomView
 
 /**
  * Sets a custom view to display in the dialog, below the title and above the action buttons
@@ -34,8 +31,7 @@ fun MaterialDialog.getCustomView(): View? {
  * @param scrollable Whether or not the custom view is automatically wrapped in a ScrollView.
  * @param noVerticalPadding When set to true, vertical padding is not added around your content.
  */
-@CheckResult
-fun MaterialDialog.customView(
+@CheckResult fun MaterialDialog.customView(
   @LayoutRes viewRes: Int? = null,
   view: View? = null,
   scrollable: Boolean = false,

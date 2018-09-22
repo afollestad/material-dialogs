@@ -5,11 +5,11 @@
  */
 package com.afollestad.materialdialogs.internal.list
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.actions.hasActionButtons

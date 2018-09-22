@@ -9,7 +9,7 @@ import android.Manifest.permission
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Environment.getExternalStorageDirectory
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import java.io.File
 

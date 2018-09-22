@@ -7,10 +7,10 @@ package com.afollestad.materialdialogs.files
 
 import android.annotation.SuppressLint
 import android.os.Environment.getExternalStorageDirectory
-import android.support.annotation.CheckResult
-import android.support.annotation.StringRes
-import android.support.v7.widget.LinearLayoutManager
 import android.widget.TextView
+import androidx.annotation.CheckResult
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled

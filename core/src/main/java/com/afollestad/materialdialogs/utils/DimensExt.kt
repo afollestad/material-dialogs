@@ -5,9 +5,9 @@
  */
 package com.afollestad.materialdialogs.utils
 
-import android.support.annotation.AttrRes
-import android.support.annotation.DimenRes
 import android.view.View
+import androidx.annotation.AttrRes
+import androidx.annotation.DimenRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet

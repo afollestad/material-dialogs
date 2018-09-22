@@ -7,13 +7,13 @@ package com.afollestad.materialdialogs.internal.button
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
+import androidx.appcompat.widget.AppCompatCheckBox
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.internal.main.BaseSubLayout

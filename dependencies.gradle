@@ -11,5 +11,5 @@ ext.versions = [
     bintrayPlugin     : '0.8.1',
 
     kotlin            : '1.2.70',
-    supportLib        : '28.0.0-rc02'
+    androidx          : '1.0.0'
 ]

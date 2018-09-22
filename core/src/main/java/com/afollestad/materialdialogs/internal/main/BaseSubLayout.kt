@@ -8,9 +8,9 @@ package com.afollestad.materialdialogs.internal.main
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.Paint.Style.STROKE
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.utils.dimenPx

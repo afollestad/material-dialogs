@@ -8,11 +8,9 @@
 package com.afollestad.materialdialogs.input
 
 import android.annotation.SuppressLint
-import android.support.annotation.CheckResult
-import android.support.annotation.StringRes
-import android.support.design.widget.TextInputLayout
 import android.text.InputType
-import android.widget.EditText
+import androidx.annotation.CheckResult
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
@@ -22,18 +20,13 @@ import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.utilext.textChanged
+import com.google.android.material.textfield.TextInputLayout
 
 typealias InputCallback = ((MaterialDialog, CharSequence) -> Unit)?
 
-@CheckResult
-fun MaterialDialog.getInputLayout(): TextInputLayout? {
-  return this.getCustomView() as? TextInputLayout
-}
+@CheckResult fun MaterialDialog.getInputLayout() = getCustomView() as? TextInputLayout
 
-@CheckResult
-fun MaterialDialog.getInputField(): EditText? {
-  return getInputLayout()?.editText
-}
+@CheckResult fun MaterialDialog.getInputField() = getInputLayout()?.editText
 
 /**
  * Shows an input field as the content of the dialog. Can be used with a message and checkbox

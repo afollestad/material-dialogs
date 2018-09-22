@@ -5,8 +5,8 @@
  */
 package com.afollestad.materialdialogs.utils
 
-import android.support.annotation.ArrayRes
-import android.support.annotation.StringRes
+import androidx.annotation.ArrayRes
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
 internal fun MaterialDialog.getString(

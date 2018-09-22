@@ -7,8 +7,8 @@
 
 package com.afollestad.materialdialogs.list
 
-import android.support.annotation.ArrayRes
-import android.support.annotation.CheckResult
+import androidx.annotation.ArrayRes
+import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -25,8 +25,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
  *    the positive action button is pressed.
  * @param selection A listener invoked when an item in the list is selected.
  */
-@CheckResult
-fun MaterialDialog.listItemsMultiChoice(
+@CheckResult fun MaterialDialog.listItemsMultiChoice(
   @ArrayRes res: Int? = null,
   items: List<String>? = null,
   disabledIndices: IntArray? = null,

@@ -6,9 +6,9 @@
 package com.afollestad.materialdialogs.internal.button
 
 import android.content.Context
-import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.Gravity.CENTER
+import androidx.appcompat.widget.AppCompatButton
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme

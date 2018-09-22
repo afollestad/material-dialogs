@@ -10,11 +10,6 @@ import android.graphics.Point
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
-import android.support.annotation.StringRes
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
@@ -22,6 +17,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet

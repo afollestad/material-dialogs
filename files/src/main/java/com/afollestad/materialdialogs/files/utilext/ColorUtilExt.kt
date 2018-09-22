@@ -7,14 +7,13 @@ package com.afollestad.materialdialogs.files.utilext
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
 import android.widget.TextView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 
-@ColorInt
-internal fun getColor(
+@ColorInt internal fun getColor(
   context: Context,
   @ColorRes res: Int? = null,
   @AttrRes attr: Int? = null

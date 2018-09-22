@@ -8,7 +8,6 @@ package com.afollestad.materialdialogs.utils
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
-import android.support.annotation.LayoutRes
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 
 @Suppress("UNCHECKED_CAST")

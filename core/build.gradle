@@ -30,10 +30,10 @@ android {
 }
 
 dependencies {
-  api 'com.android.support:support-annotations:' + versions.supportLib
-  api 'com.android.support:appcompat-v7:' + versions.supportLib
+  api 'androidx.annotation:annotation:' + versions.androidx
+  api 'androidx.appcompat:appcompat:' + versions.androidx
 
-  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 }
 

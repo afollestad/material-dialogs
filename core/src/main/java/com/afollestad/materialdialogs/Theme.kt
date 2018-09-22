@@ -7,13 +7,11 @@ package com.afollestad.materialdialogs
 
 import android.R.attr
 import android.content.Context
-import android.support.annotation.StyleRes
+import androidx.annotation.StyleRes
 import com.afollestad.materialdialogs.utils.getColor
 import com.afollestad.materialdialogs.utils.isColorDark
 
-internal enum class Theme(
-  @StyleRes val styleRes: Int
-) {
+internal enum class Theme(@StyleRes val styleRes: Int) {
   LIGHT(R.style.MD_Light),
   DARK(R.style.MD_Dark);
 

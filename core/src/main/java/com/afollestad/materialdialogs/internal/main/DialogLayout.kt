@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
@@ -20,6 +19,7 @@ import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.FrameLayout
+import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout

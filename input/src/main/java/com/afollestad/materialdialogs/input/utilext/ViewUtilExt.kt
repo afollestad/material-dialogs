@@ -5,9 +5,9 @@
  */
 package com.afollestad.materialdialogs.input.utilext
 
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
 import android.view.View
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope
 
 @RestrictTo(Scope.LIBRARY_GROUP)
 inline fun <T : View> T.postApply(crossinline exec: T.() -> Unit) = this.post {

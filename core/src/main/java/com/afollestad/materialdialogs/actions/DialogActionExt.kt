@@ -5,7 +5,7 @@
  */
 package com.afollestad.materialdialogs.actions
 
-import android.support.v7.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatButton
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 

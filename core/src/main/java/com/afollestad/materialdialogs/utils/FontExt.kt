@@ -6,15 +6,14 @@
 package com.afollestad.materialdialogs.utils
 
 import android.graphics.Typeface
-import android.support.annotation.AttrRes
-import android.support.annotation.CheckResult
-import android.support.annotation.FontRes
-import android.support.v4.content.res.ResourcesCompat
+import androidx.annotation.AttrRes
+import androidx.annotation.CheckResult
+import androidx.annotation.FontRes
+import androidx.core.content.res.ResourcesCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.assertOneSet
 
-@CheckResult
-internal fun MaterialDialog.font(
+@CheckResult internal fun MaterialDialog.font(
   @FontRes res: Int? = null,
   @AttrRes attr: Int? = null
 ): Typeface? {
@@ -22,6 +21,7 @@ internal fun MaterialDialog.font(
   if (res != null) {
     return ResourcesCompat.getFont(windowContext, res)
   }
+
   val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr!!))
   try {
     val resId = a.getResourceId(0, 0)

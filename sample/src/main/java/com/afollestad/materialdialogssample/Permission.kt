@@ -7,9 +7,9 @@ package com.afollestad.materialdialogssample
 
 import android.app.Activity
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.support.annotation.CheckResult
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+import androidx.annotation.CheckResult
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.util.Arrays
 
 typealias Callback = (Result) -> Unit
@@ -22,14 +22,12 @@ class Permission(private val activity: Activity) {
 
   private val callbacks = mutableMapOf<Array<String>, Callback>()
 
-  @CheckResult
-  fun has(permissions: String): Boolean {
+  @CheckResult fun has(permissions: String): Boolean {
     return ContextCompat.checkSelfPermission(activity, permissions) ==
         PERMISSION_GRANTED
   }
 
-  @CheckResult
-  fun hasAll(permissions: Array<String>): Boolean {
+  @CheckResult fun hasAll(permissions: Array<String>): Boolean {
     for (perm in permissions) {
       if (!has(perm)) return false
     }
@@ -67,15 +65,13 @@ class Result(
   val grantResults: IntArray
 ) {
 
-  @CheckResult
-  fun granted(permission: String): Boolean {
+  @CheckResult fun granted(permission: String): Boolean {
     val index = permissions.indexOf(permission)
     if (index == -1) return false
     return grantResults[index] == PERMISSION_GRANTED
   }
 
-  @CheckResult
-  fun allGranted(): Boolean {
+  @CheckResult fun allGranted(): Boolean {
     for (perm in permissions) {
       if (!granted(perm)) return false
     }
