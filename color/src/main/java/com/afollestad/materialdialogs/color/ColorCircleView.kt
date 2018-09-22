@@ -14,7 +14,7 @@ import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
-import com.afollestad.materialdialogs.color.utilext.dimenPx
+import com.afollestad.materialdialogs.color.utils.dimenPx
 
 /** @author Aidan Follestad (afollestad) */
 internal class ColorCircleView(

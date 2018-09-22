@@ -17,9 +17,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.color.utilext.getColor
-import com.afollestad.materialdialogs.color.utilext.isColorDark
-import com.afollestad.materialdialogs.color.utilext.setVisibleOrGone
+import com.afollestad.materialdialogs.color.utils.getColor
+import com.afollestad.materialdialogs.color.utils.isColorDark
+import com.afollestad.materialdialogs.color.utils.setVisibleOrGone
 
 internal class ColorGridViewHolder(
   itemView: View,

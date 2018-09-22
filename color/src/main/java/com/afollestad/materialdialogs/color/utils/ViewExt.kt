@@ -3,7 +3,7 @@
  *
  * Designed and developed by Aidan Follestad (@afollestad)
  */
-package com.afollestad.materialdialogs.color.utilext
+package com.afollestad.materialdialogs.color.utils
 
 import android.view.View
 import android.view.View.GONE
