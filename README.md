@@ -33,7 +33,7 @@ versions will no longer receive support.**
     1. [Light and Dark](#light-and-dark)
     2. [Background Color](#background-color)
     3. [Corner Radius](#corner-radius)
-    4. [Text Color][#text-color]
+    4. [Text Color](#text-color)
     5. [Fonts](#fonts)
 
 # Table of Contents - Input
