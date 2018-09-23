@@ -848,7 +848,7 @@ starts with the letter 'a':
 
 ```kotlin
 MaterialDialog(this)
-  .input { dialog, text ->
+  .input(waitForPositiveButton = false) { dialog, text ->
     val inputField = dialog.getInputField()!!
     val isValid = text.startsWith("a", true)
     
