@@ -1067,7 +1067,7 @@ Color choosers show a simple grid of colors.
 <img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/color_chooser.png" width="200px" />
 
 ```kotlin
-val colors = intArrayOf(Color.RED, Color.GREEN, Color.BLUE)
+val colors = intArrayOf(RED, GREEN, BLUE)
 
 MaterialDialog(this)
   .title(R.string.colors)
@@ -1081,11 +1081,11 @@ MaterialDialog(this)
 You can specify an initial selection, which is just a color integer:
 
 ```kotlin
-val colors = intArrayOf(Color.RED, Color.GREEN, Color.BLUE)
+val colors = intArrayOf(RED, GREEN, BLUE)
 
 MaterialDialog(this)
   .title(R.string.colors)
-  .colorChooser(colors, initialSelection = Color.BLUE) { dialog, color ->
+  .colorChooser(colors, initialSelection = BLUE) { dialog, color ->
       // Use color integer
   }
   .positiveButton(R.string.select)
@@ -1100,11 +1100,12 @@ level array must match the size of the sub-colors array.
 <img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/color_chooser_sub.png" width="200px" />
 
 ```kotlin
-val colors = intArrayOf(Color.RED, Color.GREEN, Color.BLUE) // size = 3
+val colors = intArrayOf(RED, GREEN, BLUE) // size = 3
+
 val subColors = listOf( // size = 3
-  intArrayOf(Color.LIGHT_RED, Color.RED, Color.DARK_RED, Color.WHITE),
-  intArrayOf(Color.LIGHT_GREEN, Color.GREEN, Color.DARK_GREEN, Color.GRAY),
-  intArrayOf(Color.LIGHT_BLUE, Color.BLUE, Color.DARK_BLUE, Color.BLACK)
+  intArrayOf(LIGHT_RED, RED, DARK_RED, WHITE),
+  intArrayOf(LIGHT_GREEN, GREEN, DARK_GREEN, GRAY),
+  intArrayOf(LIGHT_BLUE, BLUE, DARK_BLUE, BLACK)
 )
 
 MaterialDialog(this)
