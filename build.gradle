@@ -1,5 +1,5 @@
 apply from: './dependencies.gradle'
-apply plugin: "com.github.ben-manes.versions"
+apply from: './versionsPlugin.gradle'
 
 buildscript {
   apply from: './dependencies.gradle'
