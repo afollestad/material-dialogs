@@ -8,12 +8,15 @@ package com.afollestad.materialdialogs.color
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import android.graphics.Paint
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat.getDrawable
 import com.afollestad.materialdialogs.color.utils.dimenPx
 
 /** @author Aidan Follestad (afollestad) */
@@ -26,6 +29,8 @@ internal class ColorCircleView(
   private val fillPaint = Paint()
 
   private val borderWidth = dimenPx(R.dimen.color_circle_view_border)
+
+  private var transparentGrid: Drawable? = null
 
   init {
     setWillNotDraw(false)
@@ -58,17 +63,30 @@ internal class ColorCircleView(
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
-    canvas.drawCircle(
-        measuredWidth / 2f,
-        measuredHeight / 2f,
-        (measuredWidth / 2f) - borderWidth,
-        fillPaint
-    )
+    if (color == TRANSPARENT) {
+      if (transparentGrid == null) {
+        transparentGrid = getDrawable(context, R.drawable.transparentgrid)
+      }
+      transparentGrid?.setBounds(0, 0, measuredWidth, measuredHeight)
+      transparentGrid?.draw(canvas)
+    } else {
+      canvas.drawCircle(
+          measuredWidth / 2f,
+          measuredHeight / 2f,
+          (measuredWidth / 2f) - borderWidth,
+          fillPaint
+      )
+    }
     canvas.drawCircle(
         measuredWidth / 2f,
         measuredHeight / 2f,
         (measuredWidth / 2f) - borderWidth,
         strokePaint
     )
+  }
+
+  override fun onDetachedFromWindow() {
+    super.onDetachedFromWindow()
+    transparentGrid = null
   }
 }
