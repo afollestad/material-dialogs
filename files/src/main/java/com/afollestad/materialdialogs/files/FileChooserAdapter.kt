@@ -152,11 +152,6 @@ internal class FileChooserAdapter(
     parent: ViewGroup,
     viewType: Int
   ): FileChooserViewHolder {
-    if (onlyFolders && !dialog.hasActionButtons()) {
-      // If we don't have folder chooser action buttons at runtime, force one
-      dialog.positiveButton(android.R.string.ok)
-    }
-
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.md_file_chooser_item, parent, false)
     view.background = getDrawable(dialog.context, attr = R.attr.md_item_selector)

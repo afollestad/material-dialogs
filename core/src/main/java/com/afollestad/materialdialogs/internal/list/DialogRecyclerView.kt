@@ -75,8 +75,8 @@ class DialogRecyclerView(
     val lastIndex = adapter!!.itemCount - 1
     val lm = layoutManager
     return when (lm) {
-      is LinearLayoutManager -> lm.findLastVisibleItemPosition() == lastIndex
-      is GridLayoutManager -> lm.findLastVisibleItemPosition() == lastIndex
+      is LinearLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
+      is GridLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
       else -> false
     }
   }

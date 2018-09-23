@@ -13,6 +13,7 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -49,6 +50,7 @@ fun MaterialDialog.folderChooser(
   } else if (!hasReadStoragePermission()) {
     throw IllegalStateException("You must have the READ_EXTERNAL_STORAGE permission first.")
   }
+
   customView(R.layout.md_file_chooser_base)
   setActionButtonEnabled(POSITIVE, false)
 
