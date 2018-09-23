@@ -13,14 +13,12 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
-import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
 import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
-import com.afollestad.materialdialogs.files.utilext.updatePadding
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import java.io.File
@@ -88,15 +86,6 @@ fun MaterialDialog.fileChooser(
         selection.invoke(this, selectedFile)
       }
     }
-  }
-
-  if (allowFolderCreation) {
-    // Increase empty text top padding to make room for New Folder option
-    emptyText.updatePadding(
-        top = context.resources.getDimensionPixelSize(
-            R.dimen.empty_text_padding_top_larger
-        )
-    )
   }
 
   return this

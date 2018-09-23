@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
 
   <com.afollestad.materialdialogs.internal.list.DialogRecyclerView
@@ -23,10 +24,10 @@
       android:paddingBottom="@dimen/empty_text_padding"
       android:paddingLeft="@dimen/empty_text_padding"
       android:paddingRight="@dimen/empty_text_padding"
-      android:paddingTop="@dimen/empty_text_padding_top"
+      android:paddingTop="@dimen/empty_text_padding"
       android:textColor="?android:textColorSecondary"
       android:textSize="@dimen/empty_text_size"
       tools:text="No files!"
       />
 
-</FrameLayout>
+</LinearLayout>
