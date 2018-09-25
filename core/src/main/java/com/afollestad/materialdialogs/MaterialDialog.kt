@@ -105,7 +105,7 @@ class MaterialDialog(
    * @param res The drawable resource to display as the drawable.
    * @param drawable The drawable to display as the drawable.
    */
-  @CheckResult fun icon(
+  fun icon(
     @DrawableRes res: Int? = null,
     drawable: Drawable? = null
   ): MaterialDialog {
@@ -124,7 +124,7 @@ class MaterialDialog(
    * @param res The string resource to display as the title.
    * @param text The literal string to display as the title.
    */
-  @CheckResult fun title(
+  fun title(
     @StringRes res: Int? = null,
     text: String? = null
   ): MaterialDialog {
@@ -145,7 +145,7 @@ class MaterialDialog(
    * @param res The string resource to display as the message.
    * @param text The literal string to display as the message.
    */
-  @CheckResult fun message(
+  fun message(
     @StringRes res: Int? = null,
     text: CharSequence? = null
   ): MaterialDialog {
@@ -164,7 +164,7 @@ class MaterialDialog(
    * @param text The literal string to display on the button.
    * @param click A listener to invoke when the button is pressed.
    */
-  @CheckResult fun positiveButton(
+  fun positiveButton(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
@@ -198,7 +198,7 @@ class MaterialDialog(
    * @param text The literal string to display on the button.
    * @param click A listener to invoke when the button is pressed.
    */
-  @CheckResult fun negativeButton(
+  fun negativeButton(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
@@ -224,7 +224,6 @@ class MaterialDialog(
     return this
   }
 
-  @CheckResult
   @Deprecated(
       "Use of neutral buttons is discouraged, see " +
           "https://material.io/design/components/dialogs.html#actions."

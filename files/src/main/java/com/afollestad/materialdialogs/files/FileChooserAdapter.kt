@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.files.utilext.betterParent
 import com.afollestad.materialdialogs.files.utilext.friendlyName
 import com.afollestad.materialdialogs.files.utilext.getColor
@@ -59,28 +60,23 @@ internal class FileChooserAdapter(
   var selectedFile: File? = null
 
   private var currentFolder = initialFolder
-  private lateinit var contents: List<File>
+  private var listingJob: Job<List<File>>? = null
+  private var contents: List<File>? = null
 
   private val isLightTheme =
     getColor(dialog.windowContext, attr = android.R.attr.textColorPrimary).isColorDark()
 
   init {
+    dialog.onDismiss { listingJob?.abort() }
     loadContents(initialFolder)
   }
 
   fun itemClicked(index: Int) {
-    if (
-        currentFolder.hasParent() &&
-        index == goUpIndex()
-    ) {
+    if (currentFolder.hasParent() && index == goUpIndex()) {
       // go up
       loadContents(currentFolder.betterParent()!!)
       return
-    } else if (
-        currentFolder.canWrite() &&
-        allowFolderCreation &&
-        index == newFolderIndex()
-    ) {
+    } else if (currentFolder.canWrite() && allowFolderCreation && index == newFolderIndex()) {
       // New folder
       dialog.showNewFolderCreator(
           parent = currentFolder,
@@ -93,7 +89,7 @@ internal class FileChooserAdapter(
     }
 
     val actualIndex = actualIndex(index)
-    val selected = contents[actualIndex].jumpOverEmulated()
+    val selected = contents!![actualIndex].jumpOverEmulated()
 
     if (selected.isDirectory) {
       loadContents(selected)
@@ -122,23 +118,28 @@ internal class FileChooserAdapter(
     this.currentFolder = directory
     dialog.title(text = directory.friendlyName())
 
-    val rawContents = directory.listFiles() ?: emptyArray()
-    if (onlyFolders) {
-      this.contents = rawContents
-          .filter { it.isDirectory && filter?.invoke(it) ?: true }
-          .sortedBy { it.name.toLowerCase() }
-    } else {
-      this.contents = rawContents
-          .filter { filter?.invoke(it) ?: true }
-          .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
-    }
+    listingJob?.abort()
+    listingJob = job<List<File>> { _ ->
+      val rawContents = directory.listFiles() ?: emptyArray()
+      if (onlyFolders) {
+        rawContents
+            .filter { it.isDirectory && filter?.invoke(it) ?: true }
+            .sortedBy { it.name.toLowerCase() }
+      } else {
+        rawContents
+            .filter { filter?.invoke(it) ?: true }
+            .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
+      }
 
-    this.emptyView.setVisible(this.contents.isEmpty())
-    notifyDataSetChanged()
+    }.after {
+      this.contents = it
+      this.emptyView.setVisible(it.isEmpty())
+      notifyDataSetChanged()
+    }
   }
 
   override fun getItemCount(): Int {
-    var count = contents.size
+    var count = contents?.size ?: 0
     if (currentFolder.hasParent()) {
       count += 1
     }
@@ -165,10 +166,7 @@ internal class FileChooserAdapter(
     holder: FileChooserViewHolder,
     position: Int
   ) {
-    if (
-        currentFolder.hasParent() &&
-        position == goUpIndex()
-    ) {
+    if (currentFolder.hasParent() && position == goUpIndex()) {
       // Go up
       holder.iconView.setImageResource(
           if (isLightTheme) R.drawable.icon_return_dark
@@ -179,11 +177,7 @@ internal class FileChooserAdapter(
       return
     }
 
-    if (
-        allowFolderCreation &&
-        currentFolder.canWrite() &&
-        position == newFolderIndex()
-    ) {
+    if (allowFolderCreation && currentFolder.canWrite() && position == newFolderIndex()) {
       // New folder
       holder.iconView.setImageResource(
           if (isLightTheme) R.drawable.icon_new_folder_dark
@@ -197,7 +191,7 @@ internal class FileChooserAdapter(
     }
 
     val actualIndex = actualIndex(position)
-    val item = contents[actualIndex]
+    val item = contents!![actualIndex]
     holder.iconView.setImageResource(item.iconRes())
     holder.nameView.text = item.name
     holder.itemView.isActivated = selectedFile?.absolutePath == item.absolutePath ?: false
@@ -230,8 +224,8 @@ internal class FileChooserAdapter(
 
   private fun getSelectedIndex(): Int {
     if (selectedFile == null) return -1
-    else if (contents.isEmpty()) return -1
-    val index = contents.indexOfFirst { it.absolutePath == selectedFile!!.absolutePath }
+    else if (contents?.isEmpty() == true) return -1
+    val index = contents?.indexOfFirst { it.absolutePath == selectedFile!!.absolutePath } ?: -1
     return if (index > -1 && currentFolder.hasParent()) index + 1 else index
   }
 }
