@@ -130,7 +130,6 @@ internal class FileChooserAdapter(
             .filter { filter?.invoke(it) ?: true }
             .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
       }
-
     }.after {
       this.contents = it
       this.emptyView.setVisible(it.isEmpty())
