@@ -83,6 +83,10 @@ internal class ColorGridAdapter(
       inSub = true
       // Preselect top color in sub-colors if it exists
       selectedSubIndex = subColors[selectedTopIndex].indexOfFirst { it == colors[selectedTopIndex] }
+      if (selectedSubIndex > -1) {
+        // Compensate for the go-up button
+        selectedSubIndex++
+      }
     }
 
     invokeCallback()
