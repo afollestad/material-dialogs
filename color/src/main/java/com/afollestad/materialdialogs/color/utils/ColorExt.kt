@@ -7,6 +7,7 @@ package com.afollestad.materialdialogs.color.utils
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -29,6 +30,9 @@ import androidx.core.content.ContextCompat
 }
 
 internal fun Int.isColorDark(): Boolean {
+  if (this == TRANSPARENT) {
+    return false
+  }
   val darkness =
     1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
   return darkness >= 0.5
