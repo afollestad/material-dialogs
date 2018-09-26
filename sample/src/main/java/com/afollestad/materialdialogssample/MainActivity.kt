@@ -9,6 +9,7 @@ package com.afollestad.materialdialogssample
 
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -615,7 +616,10 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors)
         colorChooser(topLevel, subLevel) { _, color ->
-          toast("Selected color: ${color.toHex()}")
+          val colorStr =
+            if (color == TRANSPARENT) "transparent"
+            else color.toHex()
+          toast("Selected color: $colorStr")
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
