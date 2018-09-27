@@ -5,7 +5,7 @@
   <color name="md_btn_selected_dark">#40CBCBCB</color>
 
   <color name="md_divider_light_theme">#E0E0E0</color>
-  <color name="md_divider_dark_theme">#1F1F1F</color>
+  <color name="md_divider_dark_theme">#3B3C3F</color>
 
   <color name="md_disabled_text_light_theme">#818181</color>
   <color name="md_disabled_text_dark_theme">#C2C2C2</color>
