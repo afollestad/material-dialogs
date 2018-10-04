@@ -9,20 +9,22 @@
     android:paddingRight="@dimen/color_grid_item_padding_double">
 
     <FrameLayout
-        android:background="@drawable/transparent_rect_repeat"
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/transparent_rect_repeat">
 
         <View
             android:id="@+id/v_color"
             android:layout_width="match_parent"
-            android:layout_height="64dp"/>
+            android:layout_height="match_parent"/>
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_alpha"
@@ -46,13 +48,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:ems="2"
+            android:gravity="right|end"
             android:text="0"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp">
+        android:layout_height="32dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_red"
@@ -76,13 +81,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:ems="2"
+            android:gravity="right|end"
             android:text="0"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp">
+        android:layout_height="32dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_green"
@@ -106,13 +114,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:ems="2"
+            android:gravity="right|end"
             android:text="0"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp">
+        android:layout_height="32dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_blue"
@@ -136,6 +147,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:ems="2"
+            android:gravity="right|end"
             android:text="0"/>
 
     </LinearLayout>
