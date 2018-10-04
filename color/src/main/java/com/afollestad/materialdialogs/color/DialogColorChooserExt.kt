@@ -48,8 +48,8 @@ fun MaterialDialog.colorChooser(
   subColors: Array<IntArray>? = null,
   @ColorInt initialSelection: Int? = null,
   waitForPositiveButton: Boolean = true,
-  allowCustomColor: Boolean = true,
-  supportCustomAlpha: Boolean = true,
+  allowCustomColor: Boolean = false,
+  supportCustomAlpha: Boolean = false,
   selection: ColorCallback = null
 ): MaterialDialog {
 
