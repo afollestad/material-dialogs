@@ -69,9 +69,6 @@ fun MaterialDialog.colorChooser(
       if (color != null) {
         selection.invoke(this, color)
       }
-      if (allowCustomColor) {
-        dismiss()
-      }
     }
   }
 
@@ -106,7 +103,7 @@ private fun updateGridLayout(dialog: MaterialDialog,
 }
 
 private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean, @ColorInt initialSelection: Int?, waitForPositiveButton: Boolean, selection: ColorCallback) {
-  val customPage: View = dialog.getCustomView()!!.findViewById(R.id.llCustomColor)
+  val customPage: View = getCustomPageView(dialog)
   val vColor: View = customPage.findViewById(R.id.v_color)
   val llAlpha: LinearLayout = customPage.findViewById(R.id.llAlpha)
   val sbAlpha: SeekBar = customPage.findViewById(R.id.sb_alpha)
