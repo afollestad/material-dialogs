@@ -111,6 +111,7 @@ internal class ColorGridAdapter(
           selectedSubIndex = subColors[index].indexOfFirst { it == initialSelection }
           if (selectedSubIndex != -1) {
             inSub = true
+            selectedSubIndex++ // compensate for the up arrow!
             selectedTopIndex = index
             break
           }
