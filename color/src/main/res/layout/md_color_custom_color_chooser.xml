@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llCustomColor"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/color_grid_padding_bottom"
     android:paddingLeft="@dimen/color_grid_item_padding_double"
@@ -10,7 +11,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
         android:background="@drawable/transparent_rect_repeat">
 
@@ -22,6 +23,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/llAlpha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

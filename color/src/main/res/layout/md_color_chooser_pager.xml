@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.afollestad.materialdialogs.color.WrapContentViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vpPager"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/md_color_chooser_grid" />
+
+    <include layout="@layout/md_color_custom_color_chooser" />
+
+</com.afollestad.materialdialogs.color.WrapContentViewPager>
