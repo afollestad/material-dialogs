@@ -597,7 +597,7 @@ class MainActivity : AppCompatActivity() {
         // title does not look good in landscape mode
         //title(R.string.primary_colors)
         colorChooser(PRIMARY_COLORS, PRIMARY_COLORS_SUB, allowCustomColor = true, supportCustomAlpha = true) { _, color ->
-          toast("Selected color: ${color.toHex()}")
+          toast("Selected color: ${color.toHex()} | Alpha: ${Color.alpha(color)}")
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
