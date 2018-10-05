@@ -14,8 +14,8 @@ internal class ColorPagerAdapter(
         @StringRes resTabCustom: Int? = null,
         textTabCustom: String? = null) : PagerAdapter() {
 
-    private var actualTabGridTitle: CharSequence
-    private var actualTabCustomTitle: CharSequence
+    private val actualTabGridTitle: CharSequence
+    private val actualTabCustomTitle: CharSequence
 
     init {
         actualTabGridTitle = textTabGrid ?: dialog.getString(resTabGrid, R.string.md_dialog_color_presets)!!
