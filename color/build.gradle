@@ -30,6 +30,7 @@ android {
 
 dependencies {
   implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
+  implementation 'com.google.android.material:material:' + versions.androidx
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 
   implementation project(':core')

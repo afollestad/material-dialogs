@@ -9,7 +9,7 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
-internal fun MaterialDialog.getString(
+fun MaterialDialog.getString(
   @StringRes res: Int? = null,
   @StringRes fallback: Int? = null
 ): CharSequence? {

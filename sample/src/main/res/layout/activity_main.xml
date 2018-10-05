@@ -435,6 +435,14 @@
         android:text="Color Chooser, Custom + No Sub"
         />
 
+    <Button
+        android:id="@+id/colorChooser_primaryColorsAndCustomValues"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Primary + Custom color with alpha"
+        />
+
     <!-- File Choosers -->
 
     <TextView

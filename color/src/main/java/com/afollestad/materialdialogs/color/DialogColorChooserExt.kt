@@ -9,12 +9,12 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -23,9 +23,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import androidx.viewpager.widget.PagerAdapter
-
-
+import com.google.android.material.tabs.TabLayout
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -39,6 +37,10 @@ typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
  *    a color and taps on the positive action button. Defaults to true if the dialog has buttons.
  * @param allowCustomColor allows to select a color with an (A)RGB slider view
  * @param supportCustomAlpha allows to select alpha values in the custom values view or not
+ * @param resTabGrid provide a custom tab label as resource integer for the grid page
+ * @param textTabGrid provide a custom tab label as string for the grid page
+ * @param resTabCustom provide a custom tab label as resource integer for the custom page
+ * @param textTabCustom provide a custom tab label as string  for the custom page
  * @param selection An optional callback invoked when the user selects a color.
  */
 @SuppressLint("CheckResult")
@@ -50,6 +52,10 @@ fun MaterialDialog.colorChooser(
   waitForPositiveButton: Boolean = true,
   allowCustomColor: Boolean = false,
   supportCustomAlpha: Boolean = false,
+  @StringRes resTabGrid: Int? = null,
+  textTabGrid: String? = null,
+  @StringRes resTabCustom: Int? = null,
+  textTabCustom: String? = null,
   selection: ColorCallback = null
 ): MaterialDialog {
 
@@ -57,7 +63,7 @@ fun MaterialDialog.colorChooser(
     setLayoutColorPresets(this)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
   } else {
-    setLayoutPager(this, allowCustomColor)
+    setLayoutPager(this, allowCustomColor, resTabGrid, textTabGrid, resTabCustom, textTabCustom)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
     updateCustomPage(this, supportCustomAlpha, initialSelection, waitForPositiveButton, selection)
   }
@@ -103,7 +109,7 @@ private fun updateGridLayout(dialog: MaterialDialog,
 }
 
 private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean, @ColorInt initialSelection: Int?, waitForPositiveButton: Boolean, selection: ColorCallback) {
-  val customPage: View = getCustomPageView(dialog)
+  val customPage: View = getPageCustomView(dialog)
   val vColor: View = customPage.findViewById(R.id.v_color)
   val llAlpha: LinearLayout = customPage.findViewById(R.id.llAlpha)
   val sbAlpha: SeekBar = customPage.findViewById(R.id.sb_alpha)
@@ -186,27 +192,35 @@ private fun onCustomValueChanged(
 
 private fun selectedColor(dialog: MaterialDialog, allowCustomColor: Boolean) : Int? {
   if (allowCustomColor) {
-    val viewPager = dialog.getCustomView() as ViewPager
+    val viewPager = getPager(dialog)
     if (viewPager.currentItem == 1) {
-      return getCustomPageView(dialog).getTag() as Int?
+      return getPageCustomView(dialog).getTag() as Int?
     }
   }
-  return (getGridPageView(dialog).adapter as ColorGridAdapter).selectedColor()
+  return (getPageGridView(dialog).adapter as ColorGridAdapter).selectedColor()
 }
 
-private fun getGridPageView(dialog: MaterialDialog): RecyclerView {
+private fun getPageGridView(dialog: MaterialDialog): RecyclerView {
   return dialog.findViewById(R.id.rvGrid) as RecyclerView
 }
 
-private fun getCustomPageView(dialog: MaterialDialog): View {
+private fun getPageCustomView(dialog: MaterialDialog): View {
   return dialog.findViewById(R.id.llCustomColor)
 }
 
-private fun setLayoutPager(dialog: MaterialDialog, allowCustomColor: Boolean) {
+private fun getPager(dialog: MaterialDialog): ViewPager {
+  return dialog.findViewById(R.id.vpPager)
+}
+
+private fun getTabLayout(dialog: MaterialDialog): TabLayout {
+  return dialog.findViewById(R.id.tlTabls)
+}
+
+private fun setLayoutPager(dialog: MaterialDialog, allowCustomColor: Boolean, @StringRes resTabGrid: Int?, textTabGrid: String?, @StringRes resTabCustom: Int?, textTabCustom: String?) {
   dialog.customView(R.layout.md_color_chooser_pager)
-  val customView = dialog.getCustomView() as ViewPager
-  customView.adapter = ColorPagerAdapter()
-  customView.addOnPageChangeListener(object :ViewPager.OnPageChangeListener {
+  val viewPager = getPager(dialog)
+  viewPager.adapter = ColorPagerAdapter(dialog, resTabGrid, textTabGrid, resTabCustom, textTabCustom)
+  viewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener {
     override fun onPageScrollStateChanged(state: Int) {}
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
@@ -215,6 +229,8 @@ private fun setLayoutPager(dialog: MaterialDialog, allowCustomColor: Boolean) {
       dialog.setActionButtonEnabled(POSITIVE, selectedColor(dialog, allowCustomColor) != null)
     }
   })
+  val tabLayout = getTabLayout(dialog)
+  tabLayout.setupWithViewPager(viewPager)
 }
 
 private fun setLayoutColorPresets(dialog: MaterialDialog) {

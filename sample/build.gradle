@@ -31,6 +31,7 @@ dependencies {
   implementation 'androidx.gridlayout:gridlayout:' + versions.androidx
   implementation 'androidx.appcompat:appcompat:' + versions.androidx
   implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
+  implementation 'com.google.android.material:material:' + versions.androidx
 
   implementation 'com.afollestad:assent:' + versions.assent
 }
