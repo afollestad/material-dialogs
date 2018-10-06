@@ -58,6 +58,7 @@ internal class MultiChoiceDialogAdapter(
   disabledItems: IntArray?,
   initialSelection: IntArray,
   private val waitForActionButton: Boolean,
+  private val allowEmptySelection: Boolean,
   internal var selection: MultiChoiceListener
 ) : RecyclerView.Adapter<MultiChoiceViewHolder>(), DialogAdapter<String, MultiChoiceListener> {
 
@@ -92,7 +93,7 @@ internal class MultiChoiceDialogAdapter(
     if (waitForActionButton && dialog.hasActionButtons()) {
       // Wait for action button, don't call listener
       // so that positive action button press can do so later.
-      dialog.setActionButtonEnabled(POSITIVE, true)
+      dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection or currentSelection.isNotEmpty())
     } else {
       // Don't wait for action button, call listener and dismiss if auto dismiss is applicable
       val selectedItems = this.items.pullIndices(this.currentSelection)
@@ -134,7 +135,7 @@ internal class MultiChoiceDialogAdapter(
   }
 
   override fun positiveButtonClicked() {
-    if (currentSelection.isNotEmpty()) {
+    if (currentSelection.isNotEmpty() or allowEmptySelection) {
       val selectedItems = items.pullIndices(currentSelection)
       selection?.invoke(dialog, currentSelection, selectedItems)
     }
