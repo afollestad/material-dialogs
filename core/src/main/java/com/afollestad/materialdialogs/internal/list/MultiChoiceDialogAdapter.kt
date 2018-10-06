@@ -135,7 +135,7 @@ internal class MultiChoiceDialogAdapter(
   }
 
   override fun positiveButtonClicked() {
-    if (currentSelection.isNotEmpty() or allowEmptySelection) {
+    if (allowEmptySelection or currentSelection.isNotEmpty()) {
       val selectedItems = items.pullIndices(currentSelection)
       selection?.invoke(dialog, currentSelection, selectedItems)
     }
