@@ -93,7 +93,7 @@ internal class MultiChoiceDialogAdapter(
     if (waitForActionButton && dialog.hasActionButtons()) {
       // Wait for action button, don't call listener
       // so that positive action button press can do so later.
-      dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection or currentSelection.isNotEmpty())
+      dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection || currentSelection.isNotEmpty())
     } else {
       // Don't wait for action button, call listener and dismiss if auto dismiss is applicable
       val selectedItems = this.items.pullIndices(this.currentSelection)
@@ -135,7 +135,7 @@ internal class MultiChoiceDialogAdapter(
   }
 
   override fun positiveButtonClicked() {
-    if (allowEmptySelection or currentSelection.isNotEmpty()) {
+    if (allowEmptySelection || currentSelection.isNotEmpty()) {
       val selectedItems = items.pullIndices(currentSelection)
       selection?.invoke(dialog, currentSelection, selectedItems)
     }

@@ -48,7 +48,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
   }
 
   assertOneSet("listItemsMultiChoice", items, res)
-  setActionButtonEnabled(POSITIVE, allowEmptySelection or initialSelection.isNotEmpty())
+  setActionButtonEnabled(POSITIVE, allowEmptySelection || initialSelection.isNotEmpty())
   return customListAdapter(
       MultiChoiceDialogAdapter(
           dialog = this,
