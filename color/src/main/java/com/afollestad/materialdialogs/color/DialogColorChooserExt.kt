@@ -75,7 +75,7 @@ fun MaterialDialog.colorChooser(
         setActionButtonEnabled(POSITIVE, selectedColor(this@colorChooser, allowCustomColor) != null)
       }
     })
-    val tabLayout = getTabLayout(this)
+    val tabLayout = getTabLayout()
     tabLayout.setupWithViewPager(viewPager)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
     updateCustomPage(this, supportCustomAlpha, initialSelection, waitForPositiveButton, selection)
@@ -219,9 +219,7 @@ private fun MaterialDialog.getPageCustomView() = findViewById(R.id.llCustomColor
 
 private fun MaterialDialog.getPager() = findViewById(R.id.vpPager) as ViewPager
 
-private fun getTabLayout(dialog: MaterialDialog): TabLayout {
-  return dialog.findViewById(R.id.tlTabls)
-}
+private fun MaterialDialog.getTabLayout() = findViewById(R.id.tlTabls) as TabLayout
 
 private fun SeekBar.tint(color: Int) {
   getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN)
