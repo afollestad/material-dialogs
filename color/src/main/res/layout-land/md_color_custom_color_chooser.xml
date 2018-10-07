@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llCustomColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/color_grid_padding_bottom"
     android:paddingLeft="@dimen/color_grid_item_padding_double"
-    android:paddingRight="@dimen/color_grid_item_padding_double">
+    android:paddingRight="@dimen/color_grid_item_padding_double"
+    android:paddingBottom="@dimen/color_grid_padding_bottom">
 
     <FrameLayout
         android:layout_width="128dp"
@@ -18,7 +18,7 @@
         <View
             android:id="@+id/v_color"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
@@ -36,10 +36,11 @@
             <TextView
                 android:id="@+id/tv_alpha"
                 style="@style/TextAppearance.AppCompat.Medium"
+                tools:ignore="HardcodedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="A"/>
+                android:text="A" />
 
             <SeekBar
                 android:id="@+id/sb_alpha"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:max="255"/>
+                android:max="255" />
 
             <TextView
                 android:id="@+id/tv_alpha_value"
@@ -57,7 +58,7 @@
                 android:layout_gravity="center_vertical"
                 android:ems="2"
                 android:gravity="right|end"
-                android:text="0"/>
+                android:text="0" />
 
         </LinearLayout>
 
@@ -69,10 +70,11 @@
             <TextView
                 android:id="@+id/tv_red"
                 style="@style/TextAppearance.AppCompat.Medium"
+                tools:ignore="HardcodedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="R"/>
+                android:text="R" />
 
             <SeekBar
                 android:id="@+id/sb_red"
@@ -80,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:max="255"/>
+                android:max="255" />
 
             <TextView
                 android:id="@+id/tv_red_value"
@@ -90,7 +92,7 @@
                 android:layout_gravity="center_vertical"
                 android:ems="2"
                 android:gravity="right|end"
-                android:text="0"/>
+                android:text="0" />
 
         </LinearLayout>
 
@@ -102,10 +104,11 @@
             <TextView
                 android:id="@+id/tv_green"
                 style="@style/TextAppearance.AppCompat.Medium"
+                tools:ignore="HardcodedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="G"/>
+                android:text="G" />
 
             <SeekBar
                 android:id="@+id/sb_green"
@@ -113,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:max="255"/>
+                android:max="255" />
 
             <TextView
                 android:id="@+id/tv_green_value"
@@ -123,7 +126,7 @@
                 android:layout_gravity="center_vertical"
                 android:ems="2"
                 android:gravity="right|end"
-                android:text="0"/>
+                android:text="0" />
 
         </LinearLayout>
 
@@ -134,10 +137,11 @@
 
             <TextView
                 android:id="@+id/tv_blue"
+                tools:ignore="HardcodedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="B"/>
+                android:text="B" />
 
             <SeekBar
                 android:id="@+id/sb_blue"
@@ -146,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:max="255"/>
+                android:max="255" />
 
             <TextView
                 android:id="@+id/tv_blue_value"
@@ -156,7 +160,7 @@
                 android:layout_gravity="center_vertical"
                 android:ems="2"
                 android:gravity="right|end"
-                android:text="0"/>
+                android:text="0" />
 
         </LinearLayout>
 

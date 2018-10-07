@@ -9,17 +9,17 @@ import com.afollestad.materialdialogs.utils.getString
 
 internal class ColorPagerAdapter(
         dialog: MaterialDialog,
-        @StringRes resTabGrid: Int? = null,
-        textTabGrid: String? = null,
-        @StringRes resTabCustom: Int? = null,
-        textTabCustom: String? = null) : PagerAdapter() {
+        @StringRes tabGridTextRes: Int? = null,
+        tabGridText: String? = null,
+        @StringRes tabCustomTextRes: Int? = null,
+        tabCustomText: String? = null) : PagerAdapter() {
 
     private val actualTabGridTitle: CharSequence
     private val actualTabCustomTitle: CharSequence
 
     init {
-        actualTabGridTitle = textTabGrid ?: dialog.getString(resTabGrid, R.string.md_dialog_color_presets)!!
-        actualTabCustomTitle = textTabCustom ?: dialog.getString(resTabCustom, R.string.md_dialog_color_custom)!!
+        actualTabGridTitle = tabGridText ?: dialog.getString(tabGridTextRes, R.string.md_dialog_color_presets)!!
+        actualTabCustomTitle = tabCustomText ?: dialog.getString(tabCustomTextRes, R.string.md_dialog_color_custom)!!
     }
 
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {

@@ -52,18 +52,31 @@ fun MaterialDialog.colorChooser(
   waitForPositiveButton: Boolean = true,
   allowCustomColor: Boolean = false,
   supportCustomAlpha: Boolean = false,
-  @StringRes resTabGrid: Int? = null,
-  textTabGrid: String? = null,
-  @StringRes resTabCustom: Int? = null,
-  textTabCustom: String? = null,
+  @StringRes tabGridTextRes: Int? = null,
+  tabGridText: String? = null,
+  @StringRes tabCustomTextRes: Int? = null,
+  tabCustomText: String? = null,
   selection: ColorCallback = null
 ): MaterialDialog {
 
   if (!allowCustomColor) {
-    setLayoutColorPresets(this)
+    customView(R.layout.md_color_chooser_grid)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
   } else {
-    setLayoutPager(this, allowCustomColor, resTabGrid, textTabGrid, resTabCustom, textTabCustom)
+    customView(R.layout.md_color_chooser_pager)
+    val viewPager = getPager()
+    viewPager.adapter = ColorPagerAdapter(this, tabGridTextRes, tabGridText, tabCustomTextRes, tabCustomText)
+    viewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener {
+      override fun onPageScrollStateChanged(state: Int) {}
+
+      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+      override fun onPageSelected(position: Int) {
+        setActionButtonEnabled(POSITIVE, selectedColor(this@colorChooser, allowCustomColor) != null)
+      }
+    })
+    val tabLayout = getTabLayout(this)
+    tabLayout.setupWithViewPager(viewPager)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
     updateCustomPage(this, supportCustomAlpha, initialSelection, waitForPositiveButton, selection)
   }
@@ -109,7 +122,7 @@ private fun updateGridLayout(dialog: MaterialDialog,
 }
 
 private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean, @ColorInt initialSelection: Int?, waitForPositiveButton: Boolean, selection: ColorCallback) {
-  val customPage: View = getPageCustomView(dialog)
+  val customPage: View = dialog.getPageCustomView()
   val vColor: View = customPage.findViewById(R.id.v_color)
   val llAlpha: LinearLayout = customPage.findViewById(R.id.llAlpha)
   val sbAlpha: SeekBar = customPage.findViewById(R.id.sb_alpha)
@@ -121,10 +134,10 @@ private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean
   val tvGreenValue: TextView = customPage.findViewById(R.id.tv_green_value)
   val tvBlueValue: TextView = customPage.findViewById(R.id.tv_blue_value)
 
-  tintSeekbar(sbAlpha, Color.BLACK)
-  tintSeekbar(sbRed, Color.RED)
-  tintSeekbar(sbGreen, Color.GREEN)
-  tintSeekbar(sbBlue, Color.BLUE)
+  sbAlpha.tint(Color.BLACK)
+  sbRed.tint(Color.RED)
+  sbGreen.tint(Color.GREEN)
+  sbBlue.tint(Color.BLUE)
 
   initialSelection?.let {
     if (supportCustomAlpha) {
@@ -192,52 +205,25 @@ private fun onCustomValueChanged(
 
 private fun selectedColor(dialog: MaterialDialog, allowCustomColor: Boolean) : Int? {
   if (allowCustomColor) {
-    val viewPager = getPager(dialog)
+    val viewPager = dialog.getPager()
     if (viewPager.currentItem == 1) {
-      return getPageCustomView(dialog).getTag() as Int?
+      return dialog.getPageCustomView().getTag() as Int?
     }
   }
-  return (getPageGridView(dialog).adapter as ColorGridAdapter).selectedColor()
+  return (dialog.getPageGridView().adapter as ColorGridAdapter).selectedColor()
 }
 
-private fun getPageGridView(dialog: MaterialDialog): RecyclerView {
-  return dialog.findViewById(R.id.rvGrid) as RecyclerView
-}
+private fun MaterialDialog.getPageGridView() = findViewById(R.id.rvGrid) as RecyclerView
 
-private fun getPageCustomView(dialog: MaterialDialog): View {
-  return dialog.findViewById(R.id.llCustomColor)
-}
+private fun MaterialDialog.getPageCustomView() = findViewById(R.id.llCustomColor) as View
 
-private fun getPager(dialog: MaterialDialog): ViewPager {
-  return dialog.findViewById(R.id.vpPager)
-}
+private fun MaterialDialog.getPager() = findViewById(R.id.vpPager) as ViewPager
 
 private fun getTabLayout(dialog: MaterialDialog): TabLayout {
   return dialog.findViewById(R.id.tlTabls)
 }
 
-private fun setLayoutPager(dialog: MaterialDialog, allowCustomColor: Boolean, @StringRes resTabGrid: Int?, textTabGrid: String?, @StringRes resTabCustom: Int?, textTabCustom: String?) {
-  dialog.customView(R.layout.md_color_chooser_pager)
-  val viewPager = getPager(dialog)
-  viewPager.adapter = ColorPagerAdapter(dialog, resTabGrid, textTabGrid, resTabCustom, textTabCustom)
-  viewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener {
-    override fun onPageScrollStateChanged(state: Int) {}
-
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-    override fun onPageSelected(position: Int) {
-      dialog.setActionButtonEnabled(POSITIVE, selectedColor(dialog, allowCustomColor) != null)
-    }
-  })
-  val tabLayout = getTabLayout(dialog)
-  tabLayout.setupWithViewPager(viewPager)
-}
-
-private fun setLayoutColorPresets(dialog: MaterialDialog) {
-  dialog.customView(R.layout.md_color_chooser_grid)
-}
-
-private fun tintSeekbar(seekBar: SeekBar, color: Int) {
-  seekBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-  seekBar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+private fun SeekBar.tint(color: Int) {
+  getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN)
+  getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN)
 }
