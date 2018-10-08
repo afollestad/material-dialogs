@@ -107,7 +107,7 @@ internal class ColorGridAdapter(
     if (initialSelection != null) {
       selectedTopIndex = colors.indexOfFirst { it == initialSelection }
       if (selectedTopIndex == -1 && subColors != null) {
-        for (section in 0..subColors.size) {
+        for (section in 0  until subColors.size) {
           selectedSubIndex = subColors[section].indexOfFirst { it == initialSelection }
           if (selectedSubIndex != -1) {
             inSub = true
