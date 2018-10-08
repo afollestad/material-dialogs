@@ -66,7 +66,7 @@ fun MaterialDialog.colorChooser(
     customView(R.layout.md_color_chooser_pager)
     val viewPager = getPager()
     viewPager.adapter = ColorPagerAdapter(this, tabGridTextRes, tabGridText, tabCustomTextRes, tabCustomText)
-    viewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener {
+    viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
       override fun onPageScrollStateChanged(state: Int) {}
 
       override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
@@ -94,16 +94,18 @@ fun MaterialDialog.colorChooser(
   return this
 }
 
-private fun updateGridLayout(dialog: MaterialDialog,
+private fun updateGridLayout(
+  dialog: MaterialDialog,
   colors: IntArray,
   subColors: Array<IntArray>?,
   @ColorInt initialSelection: Int?,
   waitForPositiveButton: Boolean,
-  selection: ColorCallback) {
+  selection: ColorCallback
+) {
     if (subColors != null && colors.size != subColors.size) {
         throw IllegalStateException("Sub-colors array size should match the colors array size.")
     }
-    val gridRecyclerView : RecyclerView = dialog.getCustomView()!!.findViewById(R.id.rvGrid)
+    val gridRecyclerView: RecyclerView = dialog.getCustomView()!!.findViewById(R.id.rvGrid)
     val gridColumnCount = dialog.windowContext.resources
             .getInteger(R.integer.color_grid_column_count)
     gridRecyclerView.layoutManager = GridLayoutManager(
@@ -152,7 +154,7 @@ private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean
 
   llAlpha.visibility = if (supportCustomAlpha) View.VISIBLE else View.GONE
 
-  val listener = object: SeekBar.OnSeekBarChangeListener {
+  val listener = object : SeekBar.OnSeekBarChangeListener {
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
       onCustomValueChanged(dialog, supportCustomAlpha, waitForPositiveButton, true, customPage, vColor, sbAlpha, sbRed, sbGreen, sbBlue, tvAlphaValue, tvRedValue, tvGreenValue, tvBlueValue, selection)
     }
@@ -166,7 +168,21 @@ private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean
   sbGreen.setOnSeekBarChangeListener(listener)
   sbBlue.setOnSeekBarChangeListener(listener)
 
-  onCustomValueChanged(dialog, supportCustomAlpha, waitForPositiveButton, initialSelection != null, customPage, vColor, sbAlpha, sbRed, sbGreen, sbBlue, tvAlphaValue, tvRedValue, tvGreenValue, tvBlueValue, selection)
+  onCustomValueChanged(
+          dialog = dialog,
+          supportCustomAlpha = supportCustomAlpha,
+          waitForPositiveButton = waitForPositiveButton,
+          valueChanged = initialSelection != null, customView = customPage,
+          vColor = vColor,
+          sbAlpha = sbAlpha,
+          sbRed = sbRed,
+          sbGreen = sbGreen,
+          sbBlue = sbBlue,
+          tvAlphaValue = tvAlphaValue,
+          tvRedValue = tvRedValue,
+          tvGreenValue = tvGreenValue,
+          tvBlueValue = tvBlueValue,
+          selection = selection)
 }
 
 private fun onCustomValueChanged(
@@ -176,9 +192,16 @@ private fun onCustomValueChanged(
   valueChanged: Boolean,
   customView: View,
   vColor: View,
-  sbAlpha: SeekBar, sbRed: SeekBar, sbGreen: SeekBar, sbBlue: SeekBar,
-  tvAlphaValue: TextView, tvRedValue: TextView, tvGreenValue: TextView, tvBlueValue: TextView,
-  selection: ColorCallback) {
+  sbAlpha: SeekBar,
+  sbRed: SeekBar,
+  sbGreen: SeekBar,
+  sbBlue: SeekBar,
+  tvAlphaValue: TextView,
+  tvRedValue: TextView,
+  tvGreenValue: TextView,
+  tvBlueValue: TextView,
+  selection: ColorCallback
+) {
   if (supportCustomAlpha) {
     tvAlphaValue.text = sbAlpha.progress.toString()
   }
@@ -203,11 +226,11 @@ private fun onCustomValueChanged(
 // Helper functions
 // ----------------
 
-private fun selectedColor(dialog: MaterialDialog, allowCustomColor: Boolean) : Int? {
+private fun selectedColor(dialog: MaterialDialog, allowCustomColor: Boolean): Int? {
   if (allowCustomColor) {
     val viewPager = dialog.getPager()
     if (viewPager.currentItem == 1) {
-      return dialog.getPageCustomView().getTag() as Int?
+      return dialog.getPageCustomView().getTag() as? Int
     }
   }
   return (dialog.getPageGridView().adapter as ColorGridAdapter).selectedColor()

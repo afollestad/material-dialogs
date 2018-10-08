@@ -1,3 +1,8 @@
+/*
+ * Licensed under Apache-2.0
+ *
+ * Designed and developed by Aidan Follestad (@afollestad)
+ */
 package com.afollestad.materialdialogs.color
 
 import android.view.View
@@ -8,11 +13,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.utils.getString
 
 internal class ColorPagerAdapter(
-        dialog: MaterialDialog,
-        @StringRes tabGridTextRes: Int? = null,
-        tabGridText: String? = null,
-        @StringRes tabCustomTextRes: Int? = null,
-        tabCustomText: String? = null) : PagerAdapter() {
+  dialog: MaterialDialog,
+  @StringRes tabGridTextRes: Int? = null,
+  tabGridText: String? = null,
+  @StringRes tabCustomTextRes: Int? = null,
+  tabCustomText: String? = null
+) : PagerAdapter() {
 
     private val actualTabGridTitle: CharSequence
     private val actualTabCustomTitle: CharSequence
