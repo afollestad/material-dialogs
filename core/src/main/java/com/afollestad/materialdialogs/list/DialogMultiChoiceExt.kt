@@ -23,6 +23,8 @@ import com.afollestad.materialdialogs.utils.getStringArray
  * @param initialSelection The initially selected item indices.
  * @param waitForPositiveButton When true, the [selection] listener won't be called until
  *    the positive action button is pressed.
+ * @param allowEmptySelection When true, the dialog allows to select 0 items as well
+ *    otherwise at least one item must be selected
  * @param selection A listener invoked when an item in the list is selected.
  */
 @CheckResult fun MaterialDialog.listItemsMultiChoice(
