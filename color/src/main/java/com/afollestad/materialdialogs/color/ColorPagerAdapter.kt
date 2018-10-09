@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.viewpager.widget.PagerAdapter
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.utils.getString
+import com.afollestad.materialdialogs.utils.Util
 
 internal class ColorPagerAdapter(
   dialog: MaterialDialog,
@@ -24,8 +24,8 @@ internal class ColorPagerAdapter(
     private val actualTabCustomTitle: CharSequence
 
     init {
-        actualTabGridTitle = tabGridText ?: dialog.getString(tabGridTextRes, R.string.md_dialog_color_presets)!!
-        actualTabCustomTitle = tabCustomText ?: dialog.getString(tabCustomTextRes, R.string.md_dialog_color_custom)!!
+        actualTabGridTitle = tabGridText ?: Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
+        actualTabCustomTitle = tabCustomText ?: Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
     }
 
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {

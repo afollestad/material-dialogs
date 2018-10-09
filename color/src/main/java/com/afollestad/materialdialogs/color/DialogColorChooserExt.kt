@@ -27,6 +27,8 @@ import com.google.android.material.tabs.TabLayout
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
+private const val ALPHA_SOLID = 255
+
 /**
  * Shows a dialog with a grid of colors that the user can select from.
  *
@@ -149,7 +151,7 @@ private fun updateCustomPage(dialog: MaterialDialog, supportCustomAlpha: Boolean
     sbGreen.progress = Color.green(it)
     sbBlue.progress = Color.blue(it)
   } ?: run {
-    sbAlpha.progress = 255
+    sbAlpha.progress = ALPHA_SOLID
   }
 
   llAlpha.visibility = if (supportCustomAlpha) View.VISIBLE else View.GONE
@@ -209,7 +211,7 @@ private fun onCustomValueChanged(
   tvGreenValue.text = sbGreen.progress.toString()
   tvBlueValue.text = sbBlue.progress.toString()
 
-  val color = Color.argb(if (supportCustomAlpha) sbAlpha.progress else 255, sbRed.progress, sbGreen.progress, sbBlue.progress)
+  val color = Color.argb(if (supportCustomAlpha) sbAlpha.progress else ALPHA_SOLID, sbRed.progress, sbGreen.progress, sbBlue.progress)
   vColor.setBackgroundColor(color)
   // simple solution - we save the color as view tag
   if (valueChanged) {
