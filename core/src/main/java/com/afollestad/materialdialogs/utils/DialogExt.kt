@@ -98,7 +98,7 @@ internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: Ch
     }
   }
   assertOneSet("message", text, res)
-  this.textViewMessage!!.text = text ?: getString(res)
+  this.textViewMessage!!.text = text ?: Util.getString(this@addContentMessageView, res)
 }
 
 internal fun MaterialDialog.preShow() {
@@ -143,7 +143,7 @@ internal fun MaterialDialog.populateText(
   typeface: Typeface?,
   textColor: Int? = null
 ) {
-  val value = text ?: getString(textRes, fallback)
+  val value = text ?: Util.getString(this, textRes, fallback)
   if (value != null) {
     (textView.parent as View).visibility = View.VISIBLE
     textView.visibility = View.VISIBLE

@@ -86,6 +86,7 @@ import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
 import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_titled
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primaryColorsAndCustomValues
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -634,6 +635,19 @@ class MainActivity : AppCompatActivity() {
         title(R.string.custom_colors)
         colorChooser(topLevel) { _, color ->
           toast("Selected color: ${color.toHex()}")
+        }
+        positiveButton(R.string.select)
+        negativeButton(android.R.string.cancel)
+        debugMode(debugMode)
+      }
+    }
+
+    colorChooser_primaryColorsAndCustomValues.setOnClickListener {
+      MaterialDialog(this).show {
+        // title does not look good in landscape mode
+        //title(R.string.primary_colors)
+        colorChooser(PRIMARY_COLORS, PRIMARY_COLORS_SUB, allowCustomColor = true, supportCustomAlpha = true) { _, color ->
+          toast("Selected color: ${color.toHex()} | Alpha: ${Color.alpha(color)}")
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
