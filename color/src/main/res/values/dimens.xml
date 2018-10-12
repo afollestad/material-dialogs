@@ -4,5 +4,11 @@
   <dimen name="color_grid_item_padding">8dp</dimen>
   <dimen name="color_grid_item_padding_double">16dp</dimen>
   <dimen name="color_grid_padding_bottom">12dp</dimen>
+
+  <dimen name="color_argb_preview_parent_size_land">0dp</dimen>
+  <dimen name="color_argb_preview_parent_margin_end">0dp</dimen>
+  <dimen name="color_argb_preview_height">64dp</dimen>
   <dimen name="color_argb_preview_border_radius">4dp</dimen>
+  <dimen name="color_argb_preview_marginBottom">16dp</dimen>
+
 </resources>

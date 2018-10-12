@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llCustomColor"
+    android:id="@+id/colorArgbPage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -13,13 +14,13 @@
 
   <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="64dp"
-      android:layout_marginBottom="16dp"
+      android:layout_height="@dimen/color_argb_preview_height"
+      android:layout_marginBottom="@dimen/color_argb_preview_marginBottom"
       android:background="@drawable/transparent_rect_repeat"
       >
 
     <View
-        android:id="@+id/v_color"
+        android:id="@+id/argbPreviewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
@@ -27,14 +28,14 @@
   </FrameLayout>
 
   <LinearLayout
-      android:id="@+id/llAlpha"
+      android:id="@+id/alphaFrame"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
       >
 
     <TextView
-        android:id="@+id/tv_alpha"
+        android:id="@+id/alpha_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -43,7 +44,7 @@
         />
 
     <SeekBar
-        android:id="@+id/sb_alpha"
+        android:id="@+id/alpha_seeker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -52,7 +53,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_alpha_value"
+        android:id="@+id/alpha_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -71,7 +72,7 @@
       >
 
     <TextView
-        android:id="@+id/tv_red"
+        android:id="@+id/red_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -80,7 +81,7 @@
         />
 
     <SeekBar
-        android:id="@+id/sb_red"
+        android:id="@+id/red_seeker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -89,7 +90,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_red_value"
+        android:id="@+id/red_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -108,7 +109,7 @@
       >
 
     <TextView
-        android:id="@+id/tv_green"
+        android:id="@+id/green_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -117,7 +118,7 @@
         />
 
     <SeekBar
-        android:id="@+id/sb_green"
+        android:id="@+id/green_seeker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -126,7 +127,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_green_value"
+        android:id="@+id/green_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -145,7 +146,7 @@
       >
 
     <TextView
-        android:id="@+id/tv_blue"
+        android:id="@+id/blue_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -153,7 +154,7 @@
         />
 
     <SeekBar
-        android:id="@+id/sb_blue"
+        android:id="@+id/blue_seeker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -163,7 +164,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_blue_value"
+        android:id="@+id/blue_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -174,6 +175,5 @@
         />
 
   </LinearLayout>
-
 
 </LinearLayout>

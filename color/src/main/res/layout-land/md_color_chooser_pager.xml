@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tlTabls"
+        android:id="@+id/colorChooserTabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -13,7 +13,7 @@
         android:paddingRight="@dimen/color_grid_item_padding_double" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpPager"
+        android:id="@+id/colorChooserPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

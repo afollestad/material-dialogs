@@ -15,7 +15,7 @@ import android.graphics.Color.argb
 import android.graphics.Color.blue
 import android.graphics.Color.green
 import android.graphics.Color.red
-import android.graphics.PorterDuff
+import android.graphics.PorterDuff.Mode.SRC_IN
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.View.GONE
@@ -117,7 +117,7 @@ private fun MaterialDialog.updateGridLayout(
     throw IllegalArgumentException("Sub-colors array size should match the colors array size.")
   }
 
-  val gridRecyclerView = getCustomView()!!.findViewById<RecyclerView>(R.id.rvGrid)
+  val gridRecyclerView = getCustomView()!!.findViewById<RecyclerView>(R.id.colorPresetGrid)
   val gridColumnCount = windowContext.resources.getInteger(R.integer.color_grid_column_count)
   gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
 
@@ -139,49 +139,49 @@ private fun MaterialDialog.updateCustomPage(
   selection: ColorCallback
 ) {
   val customPage: View = getPageCustomView()
-  val vColor: View = customPage.findViewById(R.id.v_color)
-  val llAlpha: LinearLayout = customPage.findViewById(R.id.llAlpha)
-  val sbAlpha: SeekBar = customPage.findViewById(R.id.sb_alpha)
-  val sbRed: SeekBar = customPage.findViewById(R.id.sb_red)
-  val sbGreen: SeekBar = customPage.findViewById(R.id.sb_green)
-  val sbBlue: SeekBar = customPage.findViewById(R.id.sb_blue)
-  val tvAlphaValue: TextView = customPage.findViewById(R.id.tv_alpha_value)
-  val tvRedValue: TextView = customPage.findViewById(R.id.tv_red_value)
-  val tvGreenValue: TextView = customPage.findViewById(R.id.tv_green_value)
-  val tvBlueValue: TextView = customPage.findViewById(R.id.tv_blue_value)
+  val argbPreviewView: View = customPage.findViewById(R.id.argbPreviewView)
+  val alphaFrame: LinearLayout = customPage.findViewById(R.id.alphaFrame)
+  val alphaSeeker: SeekBar = customPage.findViewById(R.id.alpha_seeker)
+  val redSeeker: SeekBar = customPage.findViewById(R.id.red_seeker)
+  val greenSeeker: SeekBar = customPage.findViewById(R.id.green_seeker)
+  val blueSeeker: SeekBar = customPage.findViewById(R.id.blue_seeker)
+  val alphaValue: TextView = customPage.findViewById(R.id.alpha_value)
+  val redValue: TextView = customPage.findViewById(R.id.red_value)
+  val greenValue: TextView = customPage.findViewById(R.id.green_value)
+  val blueValue: TextView = customPage.findViewById(R.id.blue_value)
 
-  sbAlpha.tint(DKGRAY)
-  sbRed.tint(RED)
-  sbGreen.tint(GREEN)
-  sbBlue.tint(BLUE)
+  alphaSeeker.tint(DKGRAY)
+  redSeeker.tint(RED)
+  greenSeeker.tint(GREEN)
+  blueSeeker.tint(BLUE)
 
   initialSelection?.let {
     if (supportCustomAlpha) {
-      sbAlpha.progress = alpha(it)
+      alphaSeeker.progress = alpha(it)
     }
-    sbRed.progress = red(it)
-    sbGreen.progress = green(it)
-    sbBlue.progress = blue(it)
+    redSeeker.progress = red(it)
+    greenSeeker.progress = green(it)
+    blueSeeker.progress = blue(it)
   } ?: run {
-    sbAlpha.progress = ALPHA_SOLID
+    alphaSeeker.progress = ALPHA_SOLID
   }
 
-  llAlpha.visibility = if (supportCustomAlpha) VISIBLE else GONE
-  arrayOf(sbAlpha, sbRed, sbGreen, sbBlue).progressChanged {
+  alphaFrame.visibility = if (supportCustomAlpha) VISIBLE else GONE
+  arrayOf(alphaSeeker, redSeeker, greenSeeker, blueSeeker).progressChanged {
     onCustomValueChanged(
         supportCustomAlpha,
         waitForPositiveButton,
         true,
         customPage,
-        vColor,
-        sbAlpha,
-        sbRed,
-        sbGreen,
-        sbBlue,
-        tvAlphaValue,
-        tvRedValue,
-        tvGreenValue,
-        tvBlueValue,
+        argbPreviewView,
+        alphaSeeker,
+        redSeeker,
+        greenSeeker,
+        blueSeeker,
+        alphaValue,
+        redValue,
+        greenValue,
+        blueValue,
         selection
     )
   }
@@ -191,15 +191,15 @@ private fun MaterialDialog.updateCustomPage(
       waitForPositiveButton = waitForPositiveButton,
       valueChanged = initialSelection != null,
       customView = customPage,
-      vColor = vColor,
-      sbAlpha = sbAlpha,
-      sbRed = sbRed,
-      sbGreen = sbGreen,
-      sbBlue = sbBlue,
-      tvAlphaValue = tvAlphaValue,
-      tvRedValue = tvRedValue,
-      tvGreenValue = tvGreenValue,
-      tvBlueValue = tvBlueValue,
+      argbPreviewView = argbPreviewView,
+      sbAlpha = alphaSeeker,
+      sbRed = redSeeker,
+      sbGreen = greenSeeker,
+      sbBlue = blueSeeker,
+      tvAlphaValue = alphaValue,
+      tvRedValue = redValue,
+      tvGreenValue = greenValue,
+      tvBlueValue = blueValue,
       selection = selection
   )
 }
@@ -209,7 +209,7 @@ private fun MaterialDialog.onCustomValueChanged(
   waitForPositiveButton: Boolean,
   valueChanged: Boolean,
   customView: View,
-  vColor: View,
+  argbPreviewView: View,
   sbAlpha: SeekBar,
   sbRed: SeekBar,
   sbGreen: SeekBar,
@@ -239,7 +239,7 @@ private fun MaterialDialog.onCustomValueChanged(
   previewDrawable.setColor(color)
   previewDrawable.cornerRadius =
       windowContext.resources.getDimension(R.dimen.color_argb_preview_border_radius)
-  vColor.background = previewDrawable
+  argbPreviewView.background = previewDrawable
 
   // We save the ARGB color as view the tag
   if (valueChanged) {
@@ -262,15 +262,15 @@ private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {
   return (getPageGridView().adapter as ColorGridAdapter).selectedColor()
 }
 
-private fun MaterialDialog.getPageGridView() = findViewById<RecyclerView>(R.id.rvGrid)
+private fun MaterialDialog.getPageGridView() = findViewById<RecyclerView>(R.id.colorPresetGrid)
 
-private fun MaterialDialog.getPageCustomView() = findViewById<View>(R.id.llCustomColor)
+private fun MaterialDialog.getPageCustomView() = findViewById<View>(R.id.colorArgbPage)
 
-private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.vpPager)
+private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
 
-private fun MaterialDialog.getTabLayout() = findViewById<TabLayout>(R.id.tlTabls)
+private fun MaterialDialog.getTabLayout() = findViewById<TabLayout>(R.id.colorChooserTabs)
 
 private fun SeekBar.tint(color: Int) {
-  progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-  thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+  progressDrawable.setColorFilter(color, SRC_IN)
+  thumb.setColorFilter(color, SRC_IN)
 }

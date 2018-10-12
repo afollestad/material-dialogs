@@ -36,8 +36,8 @@ internal class ColorPagerAdapter(
   ): Any {
     var resId = 0
     when (position) {
-      0 -> resId = R.id.rvGrid
-      1 -> resId = R.id.llCustomColor
+      0 -> resId = R.id.colorPresetGrid
+      1 -> resId = R.id.colorArgbPage
     }
     return collection.findViewById(resId)
   }

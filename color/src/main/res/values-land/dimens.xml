@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="color_argb_preview_parent_size_land">128dp</dimen>
+  <dimen name="color_argb_preview_parent_margin_end">16dp</dimen>
+</resources>
