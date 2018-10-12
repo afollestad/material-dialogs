@@ -39,10 +39,10 @@ private const val ALPHA_SOLID = 255
  *    a color and taps on the positive action button. Defaults to true if the dialog has buttons.
  * @param allowCustomColor allows to select a color with an (A)RGB slider view
  * @param supportCustomAlpha allows to select alpha values in the custom values view or not
- * @param resTabGrid provide a custom tab label as resource integer for the grid page
- * @param textTabGrid provide a custom tab label as string for the grid page
- * @param resTabCustom provide a custom tab label as resource integer for the custom page
- * @param textTabCustom provide a custom tab label as string  for the custom page
+ * @param tabGridTextRes provide a custom tab label as resource integer for the grid page
+ * @param tabGridText provide a custom tab label as string for the grid page
+ * @param tabCustomTextRes provide a custom tab label as resource integer for the custom page
+ * @param tabCustomText provide a custom tab label as string  for the custom page
  * @param selection An optional callback invoked when the user selects a color.
  */
 @SuppressLint("CheckResult")
