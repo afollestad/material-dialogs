@@ -440,7 +440,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/sample_button_height"
         android:layout_marginTop="@dimen/sample_button_spacing"
-        android:text="Color Chooser, Primary + Custom color with alpha"
+        android:text="Color Chooser, Primary + Custom ARGB"
         />
 
     <!-- File Choosers -->
