@@ -37,12 +37,12 @@ private const val ALPHA_SOLID = 255
  * @param initialSelection The optionally initially selected color literal integer.
  * @param waitForPositiveButton When true, the selection isn't invoked until the user selects
  *    a color and taps on the positive action button. Defaults to true if the dialog has buttons.
- * @param allowCustomColor allows to select a color with an (A)RGB slider view
- * @param supportCustomAlpha allows to select alpha values in the custom values view or not
- * @param tabGridTextRes provide a custom tab label as resource integer for the grid page
- * @param tabGridText provide a custom tab label as string for the grid page
- * @param tabCustomTextRes provide a custom tab label as resource integer for the custom page
- * @param tabCustomText provide a custom tab label as string  for the custom page
+ * @param allowCustomArgb Allows selection of a color with an (A)RGB slider view
+ * @param showAlphaSelector Allows selection alpha (transparency) values in (A)RGB mode.
+ * @param tabPresetTextRes Provides a custom tab label as resource integer for the preset grid page.
+ * @param tabPresetText Provides a custom tab label as a literal string for the preset grid page.
+ * @param tabArgbTextRes Provides a custom tab label as resource integer for the (A)RGB page.
+ * @param tabArgbText Provides a custom tab label as a literal string for the (A)RGB page.
  * @param selection An optional callback invoked when the user selects a color.
  */
 @SuppressLint("CheckResult")
@@ -52,23 +52,23 @@ fun MaterialDialog.colorChooser(
   subColors: Array<IntArray>? = null,
   @ColorInt initialSelection: Int? = null,
   waitForPositiveButton: Boolean = true,
-  allowCustomColor: Boolean = false,
-  supportCustomAlpha: Boolean = false,
-  @StringRes tabGridTextRes: Int? = null,
-  tabGridText: String? = null,
-  @StringRes tabCustomTextRes: Int? = null,
-  tabCustomText: String? = null,
+  allowCustomArgb: Boolean = false,
+  showAlphaSelector: Boolean = false,
+  @StringRes tabPresetTextRes: Int? = null,
+  tabPresetText: String? = null,
+  @StringRes tabArgbTextRes: Int? = null,
+  tabArgbText: String? = null,
   selection: ColorCallback = null
 ): MaterialDialog {
 
-  if (!allowCustomColor) {
+  if (!allowCustomArgb) {
     customView(R.layout.md_color_chooser_grid)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
   } else {
     customView(R.layout.md_color_chooser_pager)
     val viewPager = getPager()
     viewPager.adapter =
-        ColorPagerAdapter(this, tabGridTextRes, tabGridText, tabCustomTextRes, tabCustomText)
+        ColorPagerAdapter(this, tabPresetTextRes, tabPresetText, tabArgbTextRes, tabArgbText)
     viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
       override fun onPageScrollStateChanged(state: Int) {}
 
@@ -80,19 +80,19 @@ fun MaterialDialog.colorChooser(
       }
 
       override fun onPageSelected(position: Int) {
-        setActionButtonEnabled(POSITIVE, selectedColor(this@colorChooser, allowCustomColor) != null)
+        setActionButtonEnabled(POSITIVE, selectedColor(this@colorChooser, allowCustomArgb) != null)
       }
     })
     val tabLayout = getTabLayout()
     tabLayout.setupWithViewPager(viewPager)
     updateGridLayout(this, colors, subColors, initialSelection, waitForPositiveButton, selection)
-    updateCustomPage(this, supportCustomAlpha, initialSelection, waitForPositiveButton, selection)
+    updateCustomPage(this, showAlphaSelector, initialSelection, waitForPositiveButton, selection)
   }
 
   if (waitForPositiveButton && selection != null) {
     setActionButtonEnabled(POSITIVE, false)
     positiveButton {
-      val color = selectedColor(this, allowCustomColor)
+      val color = selectedColor(this, allowCustomArgb)
       if (color != null) {
         selection.invoke(this, color)
       }
