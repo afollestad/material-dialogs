@@ -31,6 +31,8 @@ import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.color.utils.below
+import com.afollestad.materialdialogs.color.utils.changeHeight
 import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.color.utils.textChanged
@@ -38,6 +40,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import java.lang.Integer.toHexString
+import java.lang.String.format
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -141,13 +144,15 @@ private fun MaterialDialog.updateCustomPage(
 ) {
   val customPage = getPageCustomView()
   val argbPreviewView = customPage.findViewById<View>(R.id.argbPreviewView)
+  val alphaLabel = customPage.findViewById<TextView>(R.id.alpha_label)
   val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
-  val redSeeker = customPage.findViewById<SeekBar>(R.id.red_seeker)
-  val greenSeeker = customPage.findViewById<SeekBar>(R.id.green_seeker)
-  val blueSeeker = customPage.findViewById<SeekBar>(R.id.blue_seeker)
   val alphaValue = customPage.findViewById<TextView>(R.id.alpha_value)
+  val redLabel = customPage.findViewById<TextView>(R.id.red_label)
+  val redSeeker = customPage.findViewById<SeekBar>(R.id.red_seeker)
   val redValue = customPage.findViewById<TextView>(R.id.red_value)
+  val greenSeeker = customPage.findViewById<SeekBar>(R.id.green_seeker)
   val greenValue = customPage.findViewById<TextView>(R.id.green_value)
+  val blueSeeker = customPage.findViewById<SeekBar>(R.id.blue_seeker)
   val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
   val hexValue = customPage.findViewById<EditText>(R.id.hex_value)
 
@@ -167,7 +172,13 @@ private fun MaterialDialog.updateCustomPage(
     alphaSeeker.progress = ALPHA_SOLID
   }
 
-//  alphaFrame.visibility = if (supportCustomAlpha) VISIBLE else GONE
+  if (!supportCustomAlpha) {
+    alphaLabel.changeHeight(0)
+    alphaSeeker.changeHeight(0)
+    alphaValue.changeHeight(0)
+    redLabel.below(R.id.hex_frame)
+  }
+
   arrayOf(alphaSeeker, redSeeker, greenSeeker, blueSeeker).progressChanged {
     onCustomValueChanged(
         supportCustomAlpha = supportCustomAlpha,
@@ -256,7 +267,7 @@ private fun MaterialDialog.onCustomValueChanged(
       greenSeeker.progress,
       blueSeeker.progress
   )
-  hexValue.setText(color.hexValue())
+  hexValue.setText(color.hexValue(supportCustomAlpha))
   hexValue.post { hexValue.setSelection(hexValue.text.length) }
 
   val previewDrawable = GradientDrawable()
@@ -299,8 +310,8 @@ private fun SeekBar.tint(color: Int) {
   thumb.setColorFilter(color, SRC_IN)
 }
 
-private fun Int.hexValue() = if (this == 0) {
-  "00000000"
+private fun Int.hexValue(includeAlpha: Boolean) = if (this == 0) {
+  if (includeAlpha) "00000000" else "000000"
 } else {
-  toHexString(this)
+  if (includeAlpha) toHexString(this) else format("%06X", 0xFFFFFF and this)
 }

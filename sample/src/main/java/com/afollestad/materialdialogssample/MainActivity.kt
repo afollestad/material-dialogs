@@ -52,6 +52,8 @@ import kotlinx.android.synthetic.main.activity_main.colorChooser_accent
 import kotlinx.android.synthetic.main.activity_main.colorChooser_customColors
 import kotlinx.android.synthetic.main.activity_main.colorChooser_customColorsNoSub
 import kotlinx.android.synthetic.main.activity_main.colorChooser_primary
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customArgb
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customRgb
 import kotlinx.android.synthetic.main.activity_main.custom_view
 import kotlinx.android.synthetic.main.activity_main.custom_view_webview
 import kotlinx.android.synthetic.main.activity_main.file_chooser
@@ -86,7 +88,6 @@ import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
 import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_titled
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primaryColorsAndCustomValues
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -642,11 +643,29 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_primaryColorsAndCustomValues.setOnClickListener {
+    colorChooser_primary_customRgb.setOnClickListener {
       MaterialDialog(this).show {
-        // title does not look good in landscape mode
-        //title(R.string.primary_colors)
-        colorChooser(PRIMARY_COLORS, PRIMARY_COLORS_SUB, allowCustomArgb = true, showAlphaSelector = true) { _, color ->
+        colorChooser(
+            colors = PRIMARY_COLORS,
+            subColors = PRIMARY_COLORS_SUB,
+            allowCustomArgb = true
+        ) { _, color ->
+          toast("Selected color: ${color.toHex()}")
+        }
+        positiveButton(R.string.select)
+        negativeButton(android.R.string.cancel)
+        debugMode(debugMode)
+      }
+    }
+
+    colorChooser_primary_customArgb.setOnClickListener {
+      MaterialDialog(this).show {
+        colorChooser(
+            colors = PRIMARY_COLORS,
+            subColors = PRIMARY_COLORS_SUB,
+            allowCustomArgb = true,
+            showAlphaSelector = true
+        ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
         positiveButton(R.string.select)

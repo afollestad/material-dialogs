@@ -436,7 +436,15 @@
         />
 
     <Button
-        android:id="@+id/colorChooser_primaryColorsAndCustomValues"
+        android:id="@+id/colorChooser_primary_customRgb"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Color Chooser, Primary + Custom RGB"
+        />
+
+    <Button
+        android:id="@+id/colorChooser_primary_customArgb"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sample_button_height"
         android:layout_marginTop="@dimen/sample_button_spacing"

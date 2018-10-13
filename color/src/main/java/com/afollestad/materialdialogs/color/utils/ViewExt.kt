@@ -9,10 +9,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.ViewGroup.MarginLayoutParams
+import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.DimenRes
+import androidx.annotation.IdRes
 import androidx.viewpager.widget.ViewPager
 
 internal fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
@@ -71,4 +75,19 @@ internal fun TextView.textChanged(changed: (String) -> Unit) {
       count: Int
     ) = changed(s.toString())
   })
+}
+
+internal fun View.changeHeight(height: Int) {
+  if (height == 0) {
+    visibility = INVISIBLE
+  }
+  val lp = layoutParams as MarginLayoutParams
+  lp.height = height
+  layoutParams = lp
+}
+
+internal fun View.below(@IdRes id: Int) {
+  val lp = layoutParams as RelativeLayout.LayoutParams
+  lp.addRule(RelativeLayout.BELOW, id)
+  layoutParams = lp
 }
