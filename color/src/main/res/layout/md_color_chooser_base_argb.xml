@@ -50,8 +50,10 @@
   <EditText
       android:id="@+id/hex_value"
       android:layout_width="wrap_content"
+      android:inputType="text"
       android:layout_height="wrap_content"
       android:hint="000000"
+      tools:ignore="Autofill"
       />
 
   </LinearLayout>
