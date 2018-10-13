@@ -18,9 +18,6 @@ import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
 import android.graphics.drawable.GradientDrawable
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
@@ -37,6 +34,7 @@ import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
+import java.lang.Integer.toHexString
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -75,10 +73,10 @@ fun MaterialDialog.colorChooser(
 ): MaterialDialog {
 
   if (!allowCustomArgb) {
-    customView(R.layout.md_color_chooser_grid)
+    customView(R.layout.md_color_chooser_base_grid)
     updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection)
   } else {
-    customView(R.layout.md_color_chooser_pager)
+    customView(R.layout.md_color_chooser_base_pager, noVerticalPadding = true)
 
     val viewPager = getPager()
     viewPager.adapter =
@@ -138,17 +136,17 @@ private fun MaterialDialog.updateCustomPage(
   waitForPositiveButton: Boolean,
   selection: ColorCallback
 ) {
-  val customPage: View = getPageCustomView()
-  val argbPreviewView: View = customPage.findViewById(R.id.argbPreviewView)
-  val alphaFrame: LinearLayout = customPage.findViewById(R.id.alphaFrame)
-  val alphaSeeker: SeekBar = customPage.findViewById(R.id.alpha_seeker)
-  val redSeeker: SeekBar = customPage.findViewById(R.id.red_seeker)
-  val greenSeeker: SeekBar = customPage.findViewById(R.id.green_seeker)
-  val blueSeeker: SeekBar = customPage.findViewById(R.id.blue_seeker)
-  val alphaValue: TextView = customPage.findViewById(R.id.alpha_value)
-  val redValue: TextView = customPage.findViewById(R.id.red_value)
-  val greenValue: TextView = customPage.findViewById(R.id.green_value)
-  val blueValue: TextView = customPage.findViewById(R.id.blue_value)
+  val customPage = getPageCustomView()
+  val argbPreviewView = customPage.findViewById<View>(R.id.argbPreviewView)
+  val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
+  val redSeeker = customPage.findViewById<SeekBar>(R.id.red_seeker)
+  val greenSeeker = customPage.findViewById<SeekBar>(R.id.green_seeker)
+  val blueSeeker = customPage.findViewById<SeekBar>(R.id.blue_seeker)
+  val alphaValue = customPage.findViewById<TextView>(R.id.alpha_value)
+  val redValue = customPage.findViewById<TextView>(R.id.red_value)
+  val greenValue = customPage.findViewById<TextView>(R.id.green_value)
+  val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
+  val hexValue = customPage.findViewById<TextView>(R.id.hex_value)
 
   alphaSeeker.tint(DKGRAY)
   redSeeker.tint(RED)
@@ -166,23 +164,24 @@ private fun MaterialDialog.updateCustomPage(
     alphaSeeker.progress = ALPHA_SOLID
   }
 
-  alphaFrame.visibility = if (supportCustomAlpha) VISIBLE else GONE
+//  alphaFrame.visibility = if (supportCustomAlpha) VISIBLE else GONE
   arrayOf(alphaSeeker, redSeeker, greenSeeker, blueSeeker).progressChanged {
     onCustomValueChanged(
-        supportCustomAlpha,
-        waitForPositiveButton,
-        true,
-        customPage,
-        argbPreviewView,
-        alphaSeeker,
-        redSeeker,
-        greenSeeker,
-        blueSeeker,
-        alphaValue,
-        redValue,
-        greenValue,
-        blueValue,
-        selection
+        supportCustomAlpha = supportCustomAlpha,
+        waitForPositiveButton = waitForPositiveButton,
+        valueChanged = true,
+        customView = customPage,
+        argbPreviewView = argbPreviewView,
+        alphaSeeker = alphaSeeker,
+        redSeeker = redSeeker,
+        greenSeeker = greenSeeker,
+        blueSeeker = blueSeeker,
+        alphaValue = alphaValue,
+        redValue = redValue,
+        greenValue = greenValue,
+        blueValue = blueValue,
+        hexValue = hexValue,
+        selection = selection
     )
   }
 
@@ -192,14 +191,15 @@ private fun MaterialDialog.updateCustomPage(
       valueChanged = initialSelection != null,
       customView = customPage,
       argbPreviewView = argbPreviewView,
-      sbAlpha = alphaSeeker,
-      sbRed = redSeeker,
-      sbGreen = greenSeeker,
-      sbBlue = blueSeeker,
-      tvAlphaValue = alphaValue,
-      tvRedValue = redValue,
-      tvGreenValue = greenValue,
-      tvBlueValue = blueValue,
+      alphaSeeker = alphaSeeker,
+      redSeeker = redSeeker,
+      greenSeeker = greenSeeker,
+      blueSeeker = blueSeeker,
+      alphaValue = alphaValue,
+      redValue = redValue,
+      greenValue = greenValue,
+      blueValue = blueValue,
+      hexValue = hexValue,
       selection = selection
   )
 }
@@ -210,31 +210,34 @@ private fun MaterialDialog.onCustomValueChanged(
   valueChanged: Boolean,
   customView: View,
   argbPreviewView: View,
-  sbAlpha: SeekBar,
-  sbRed: SeekBar,
-  sbGreen: SeekBar,
-  sbBlue: SeekBar,
-  tvAlphaValue: TextView,
-  tvRedValue: TextView,
-  tvGreenValue: TextView,
-  tvBlueValue: TextView,
+  alphaSeeker: SeekBar,
+  redSeeker: SeekBar,
+  greenSeeker: SeekBar,
+  blueSeeker: SeekBar,
+  alphaValue: TextView,
+  redValue: TextView,
+  greenValue: TextView,
+  blueValue: TextView,
+  hexValue: TextView,
   selection: ColorCallback
 ) {
   if (supportCustomAlpha) {
-    tvAlphaValue.text = sbAlpha.progress.toString()
+    alphaValue.text = alphaSeeker.progress.toString()
   }
 
-  tvRedValue.text = sbRed.progress.toString()
-  tvGreenValue.text = sbGreen.progress.toString()
-  tvBlueValue.text = sbBlue.progress.toString()
+  redValue.text = redSeeker.progress.toString()
+  greenValue.text = greenSeeker.progress.toString()
+  blueValue.text = blueSeeker.progress.toString()
 
   val color = argb(
-      if (supportCustomAlpha) sbAlpha.progress
+      if (supportCustomAlpha) alphaSeeker.progress
       else ALPHA_SOLID,
-      sbRed.progress,
-      sbGreen.progress,
-      sbBlue.progress
+      redSeeker.progress,
+      greenSeeker.progress,
+      blueSeeker.progress
   )
+  hexValue.text = toHexString(color)
+
   val previewDrawable = GradientDrawable()
   previewDrawable.setColor(color)
   previewDrawable.cornerRadius =

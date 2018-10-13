@@ -24,10 +24,10 @@ internal class ColorPagerAdapter(
   private val actualTabCustomTitle: CharSequence
 
   init {
-    actualTabGridTitle = tabGridText ?:
-        Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
-    actualTabCustomTitle = tabCustomText ?:
-        Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
+    actualTabGridTitle = tabGridText
+        ?: Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
+    actualTabCustomTitle = tabCustomText
+        ?: Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
   }
 
   override fun instantiateItem(

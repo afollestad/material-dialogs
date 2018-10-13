@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colorArgbPage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/color_grid_padding_bottom"
+    android:paddingLeft="@dimen/color_grid_item_padding_double"
+    android:paddingRight="@dimen/color_grid_item_padding_double"
+    tools:ignore="HardcodedText"
+    >
+
+  <!-- Preview -->
+
+  <FrameLayout
+      android:id="@+id/preview_frame"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/color_argb_preview_height"
+      android:layout_marginBottom="@dimen/color_argb_preview_marginBottom"
+      android:background="@drawable/transparent_rect_repeat"
+      >
+
+    <View
+        android:id="@+id/argbPreviewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+  </FrameLayout>
+
+  <!-- Hex -->
+
+  <LinearLayout
+      android:id="@+id/hex_frame"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center"
+      android:layout_centerHorizontal="true"
+      android:layout_below="@+id/preview_frame"
+      >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="#"
+      />
+
+  <EditText
+      android:id="@+id/hex_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="000000"
+      />
+
+  </LinearLayout>
+
+  <!-- Alpha -->
+
+  <TextView
+      android:id="@+id/alpha_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/hex_frame"
+      android:text="A"
+      style="@style/ColorChooser.Label"
+      />
+
+  <SeekBar
+      android:id="@+id/alpha_seeker"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/alpha_label"
+      android:layout_alignTop="@id/alpha_label"
+      android:layout_marginLeft="@dimen/color_argb_seeker_marginSides"
+      android:layout_marginRight="@dimen/color_argb_seeker_marginSides"
+      android:layout_toEndOf="@id/alpha_label"
+      android:layout_toLeftOf="@+id/alpha_value"
+      android:layout_toRightOf="@id/alpha_label"
+      android:layout_toStartOf="@+id/alpha_value"
+      style="@style/ColorChooser.Seeker"
+      />
+
+  <TextView
+      android:id="@+id/alpha_value"
+      android:layout_alignBottom="@id/alpha_label"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/alpha_label"
+      style="@style/ColorChooser.ValueLabel"
+      />
+
+  <!-- Red -->
+
+  <TextView
+      android:id="@+id/red_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/alpha_label"
+      android:text="R"
+      style="@style/ColorChooser.Label"
+      />
+
+  <SeekBar
+      android:id="@+id/red_seeker"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/red_label"
+      android:layout_alignLeft="@id/alpha_seeker"
+      android:layout_alignRight="@id/alpha_seeker"
+      android:layout_alignTop="@id/red_label"
+      android:layout_toLeftOf="@+id/red_value"
+      android:layout_toStartOf="@+id/red_value"
+      style="@style/ColorChooser.Seeker"
+      />
+
+  <TextView
+      android:id="@+id/red_value"
+      android:layout_alignBottom="@id/red_label"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/red_label"
+      style="@style/ColorChooser.ValueLabel"
+      />
+
+  <!-- Green -->
+
+  <TextView
+      android:id="@+id/green_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/red_label"
+      android:text="G"
+      style="@style/ColorChooser.Label"
+      />
+
+  <SeekBar
+      android:id="@+id/green_seeker"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/green_label"
+      android:layout_alignLeft="@id/alpha_seeker"
+      android:layout_alignRight="@id/alpha_seeker"
+      android:layout_alignTop="@id/green_label"
+      android:layout_toLeftOf="@+id/green_value"
+      android:layout_toStartOf="@+id/green_value"
+      style="@style/ColorChooser.Seeker"
+      />
+
+  <TextView
+      android:id="@+id/green_value"
+      android:layout_alignBottom="@id/green_label"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/green_label"
+      style="@style/ColorChooser.ValueLabel"
+      />
+
+  <!-- Blue -->
+
+  <TextView
+      android:id="@+id/blue_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/green_label"
+      android:text="B"
+      style="@style/ColorChooser.Label"
+      />
+
+  <SeekBar
+      android:id="@+id/blue_seeker"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/blue_label"
+      android:layout_alignLeft="@id/alpha_seeker"
+      android:layout_alignRight="@id/alpha_seeker"
+      android:layout_alignTop="@id/blue_label"
+      android:layout_toLeftOf="@+id/blue_value"
+      android:layout_toStartOf="@+id/blue_value"
+      style="@style/ColorChooser.Seeker"
+      />
+
+  <TextView
+      android:id="@+id/blue_value"
+      android:layout_alignBottom="@id/blue_label"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/blue_label"
+      style="@style/ColorChooser.ValueLabel"
+      />
+
+</RelativeLayout>
