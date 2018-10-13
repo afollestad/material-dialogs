@@ -32,4 +32,4 @@ internal inline fun SharedPreferences.apply(crossinline exec: PrefEditor.() -> U
   editor.apply()
 }
 
-internal fun Int.toHex() = String.format("#%06X", 0xFFFFFF and this)
+internal fun Int.toHex() = "#${Integer.toHexString(this)}"
