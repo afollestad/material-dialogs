@@ -14,10 +14,12 @@ import android.graphics.Color.alpha
 import android.graphics.Color.argb
 import android.graphics.Color.blue
 import android.graphics.Color.green
+import android.graphics.Color.parseColor
 import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
@@ -31,6 +33,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.progressChanged
+import com.afollestad.materialdialogs.color.utils.textChanged
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
@@ -146,7 +149,7 @@ private fun MaterialDialog.updateCustomPage(
   val redValue = customPage.findViewById<TextView>(R.id.red_value)
   val greenValue = customPage.findViewById<TextView>(R.id.green_value)
   val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
-  val hexValue = customPage.findViewById<TextView>(R.id.hex_value)
+  val hexValue = customPage.findViewById<EditText>(R.id.hex_value)
 
   alphaSeeker.tint(DKGRAY)
   redSeeker.tint(RED)
@@ -185,6 +188,23 @@ private fun MaterialDialog.updateCustomPage(
     )
   }
 
+  hexValue.textChanged {
+    if (it.length < 4) {
+      return@textChanged
+    }
+    try {
+      val newColor = parseColor("#$it")
+      if (newColor != selectedColor(true)) {
+        alphaSeeker.progress = alpha(newColor)
+        redSeeker.progress = red(newColor)
+        greenSeeker.progress = green(newColor)
+        blueSeeker.progress = blue(newColor)
+        hexValue.post { hexValue.setSelection(hexValue.text.length) }
+      }
+    } catch (_: Exception) {
+    }
+  }
+
   onCustomValueChanged(
       supportCustomAlpha = supportCustomAlpha,
       waitForPositiveButton = waitForPositiveButton,
@@ -218,7 +238,7 @@ private fun MaterialDialog.onCustomValueChanged(
   redValue: TextView,
   greenValue: TextView,
   blueValue: TextView,
-  hexValue: TextView,
+  hexValue: EditText,
   selection: ColorCallback
 ) {
   if (supportCustomAlpha) {
@@ -236,7 +256,8 @@ private fun MaterialDialog.onCustomValueChanged(
       greenSeeker.progress,
       blueSeeker.progress
   )
-  hexValue.text = toHexString(color)
+  hexValue.setText(color.hexValue())
+  hexValue.post { hexValue.setSelection(hexValue.text.length) }
 
   val previewDrawable = GradientDrawable()
   previewDrawable.setColor(color)
@@ -276,4 +297,10 @@ private fun MaterialDialog.getTabLayout() = findViewById<TabLayout>(R.id.colorCh
 private fun SeekBar.tint(color: Int) {
   progressDrawable.setColorFilter(color, SRC_IN)
   thumb.setColorFilter(color, SRC_IN)
+}
+
+private fun Int.hexValue() = if (this == 0) {
+  "00000000"
+} else {
+  toHexString(this)
 }
