@@ -7,7 +7,6 @@ package com.afollestad.materialdialogs.color
 
 import android.annotation.SuppressLint
 import android.graphics.Color.BLUE
-import android.graphics.Color.DKGRAY
 import android.graphics.Color.GREEN
 import android.graphics.Color.RED
 import android.graphics.Color.alpha
@@ -159,7 +158,7 @@ private fun MaterialDialog.updateCustomPage(
   val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
   val hexValue = customPage.findViewById<EditText>(R.id.hex_value)
 
-  alphaSeeker.tint(DKGRAY)
+  alphaSeeker.tint(getColor(windowContext, attr = android.R.attr.textColorSecondary))
   redSeeker.tint(RED)
   greenSeeker.tint(GREEN)
   blueSeeker.tint(BLUE)
