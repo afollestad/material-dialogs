@@ -1116,3 +1116,24 @@ MaterialDialog(this)
   .positiveButton(R.string.select)
   .show()
 ```
+
+### ARGB Selection
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/custom_argb.png" width="200px" />
+
+```kotlin
+MaterialDialog(this)
+  .title(R.string.colors)
+  .colorChooser(
+      colors = colors, 
+      subColors = subColors,
+      allowCustomArgb = true,
+      showAlphaSelector = true
+  ) { dialog, color ->
+      // Use color integer
+  }
+  .positiveButton(R.string.select)
+  .show()
+```
+
+Omitting `showAlphaSelector` will hide the alpha (transparency) selector.
