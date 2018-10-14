@@ -13,7 +13,7 @@
 
   <!-- Preview -->
 
-  <FrameLayout
+  <com.afollestad.materialdialogs.color.ArgbPreviewParent
       android:id="@+id/preview_frame"
       android:layout_width="match_parent"
       android:layout_height="@dimen/color_argb_preview_height"
@@ -21,13 +21,13 @@
       android:background="@drawable/transparent_rect_repeat"
       >
 
-    <View
+    <com.afollestad.materialdialogs.color.ArgbPreviewView
         android:id="@+id/argbPreviewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-  </FrameLayout>
+  </com.afollestad.materialdialogs.color.ArgbPreviewParent>
 
   <!-- Hex -->
 
@@ -35,26 +35,26 @@
       android:id="@+id/hex_frame"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:gravity="center"
-      android:layout_centerHorizontal="true"
       android:layout_below="@+id/preview_frame"
+      android:layout_centerHorizontal="true"
+      android:gravity="center"
+      android:orientation="horizontal"
       >
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="#"
-      />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#"
+        />
 
-  <EditText
-      android:id="@+id/hex_value"
-      android:layout_width="wrap_content"
-      android:inputType="text"
-      android:layout_height="wrap_content"
-      android:hint="000000"
-      tools:ignore="Autofill"
-      />
+    <EditText
+        android:id="@+id/hex_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="000000"
+        android:inputType="text"
+        tools:ignore="Autofill"
+        />
 
   </LinearLayout>
 

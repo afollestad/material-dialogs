@@ -20,15 +20,10 @@ internal class ColorPagerAdapter(
   tabCustomText: String? = null
 ) : PagerAdapter() {
 
-  private val actualTabGridTitle: CharSequence
-  private val actualTabCustomTitle: CharSequence
-
-  init {
-    actualTabGridTitle = tabGridText
-        ?: Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
-    actualTabCustomTitle = tabCustomText
-        ?: Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
-  }
+  private val actualTabGridTitle: CharSequence = tabGridText
+      ?: Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
+  private val actualTabCustomTitle: CharSequence = tabCustomText
+      ?: Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
 
   override fun instantiateItem(
     collection: ViewGroup,
@@ -42,20 +37,22 @@ internal class ColorPagerAdapter(
     return collection.findViewById(resId)
   }
 
-  override fun getCount(): Int {
-    return 2
-  }
+  override fun getCount() = 2
 
   override fun isViewFromObject(
     arg0: View,
     arg1: Any
-  ): Boolean {
-    return arg0 === arg1 as View
-  }
+  ) = arg0 === arg1 as View
 
-  override fun getPageTitle(position: Int): CharSequence? = when (position) {
+  override fun getPageTitle(position: Int) = when (position) {
     0 -> actualTabGridTitle
     1 -> actualTabCustomTitle
     else -> null
   }
+
+  override fun destroyItem(
+    container: ViewGroup,
+    position: Int,
+    arg1: Any
+  ) = Unit
 }

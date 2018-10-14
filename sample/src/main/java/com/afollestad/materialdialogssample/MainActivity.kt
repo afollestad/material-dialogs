@@ -645,6 +645,7 @@ class MainActivity : AppCompatActivity() {
 
     colorChooser_primary_customRgb.setOnClickListener {
       MaterialDialog(this).show {
+        title(R.string.custom_colors_rgb)
         colorChooser(
             colors = PRIMARY_COLORS,
             subColors = PRIMARY_COLORS_SUB,
@@ -660,6 +661,7 @@ class MainActivity : AppCompatActivity() {
 
     colorChooser_primary_customArgb.setOnClickListener {
       MaterialDialog(this).show {
+        title(R.string.custom_colors_argb)
         colorChooser(
             colors = PRIMARY_COLORS,
             subColors = PRIMARY_COLORS_SUB,

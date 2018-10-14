@@ -12,5 +12,7 @@ ext.versions = [
 
     kotlin            : '1.2.71',
     androidx          : '1.0.0',
-    assent            : '2.2.0'
+    assent            : '2.2.0',
+
+    dotsIndicator     : '1.0.0'
 ]

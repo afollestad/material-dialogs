@@ -45,6 +45,8 @@
   <string name="primary_colors">Primary Colors</string>
   <string name="accent_colors">Accent Colors</string>
   <string name="custom_colors">Custom Colors</string>
+  <string name="custom_colors_rgb">Custom RGB</string>
+  <string name="custom_colors_argb">Custom ARGB</string>
 
   <!-- File and Folder Chooser Examples -->
   <string name="select">Select</string>

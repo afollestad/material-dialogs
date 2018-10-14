@@ -6,12 +6,11 @@
     android:orientation="vertical"
     >
 
-  <com.google.android.material.tabs.TabLayout
-      android:id="@+id/colorChooserTabs"
+  <com.afollestad.viewpagerdots.DotsIndicator
+      android:id="@+id/colorChooserPagerDots"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/color_chooser_tabs_marginBottom"
-      android:minHeight="?attr/actionBarSize"
+      android:layout_height="@dimen/color_chooser_pageDots_height"
+      android:layout_marginBottom="@dimen/color_chooser_pageDots_marginBottom"
       />
 
   <com.afollestad.materialdialogs.color.WrapContentViewPager
