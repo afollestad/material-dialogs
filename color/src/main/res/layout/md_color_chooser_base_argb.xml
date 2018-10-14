@@ -13,7 +13,7 @@
 
   <!-- Preview -->
 
-  <com.afollestad.materialdialogs.color.ArgbPreviewParent
+  <FrameLayout
       android:id="@+id/preview_frame"
       android:layout_width="match_parent"
       android:layout_height="@dimen/color_argb_preview_height"
@@ -21,13 +21,13 @@
       android:background="@drawable/transparent_rect_repeat"
       >
 
-    <com.afollestad.materialdialogs.color.ArgbPreviewView
+    <View
         android:id="@+id/argbPreviewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-  </com.afollestad.materialdialogs.color.ArgbPreviewParent>
+  </FrameLayout>
 
   <!-- Hex -->
 

@@ -17,6 +17,7 @@ import android.graphics.Color.green
 import android.graphics.Color.parseColor
 import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.EditText
 import android.widget.SeekBar
@@ -145,7 +146,7 @@ private fun MaterialDialog.updateCustomPage(
   selection: ColorCallback
 ) {
   val customPage = getPageCustomView()
-  val argbPreviewView = customPage.findViewById<ArgbPreviewView>(R.id.argbPreviewView)
+  val argbPreviewView = customPage.findViewById<View>(R.id.argbPreviewView)
   val alphaLabel = customPage.findViewById<TextView>(R.id.alpha_label)
   val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
   val alphaValue = customPage.findViewById<TextView>(R.id.alpha_value)
@@ -242,7 +243,7 @@ private fun MaterialDialog.onCustomValueChanged(
   waitForPositiveButton: Boolean,
   valueChanged: Boolean,
   customView: View,
-  argbPreviewView: ArgbPreviewView,
+  argbPreviewView: View,
   alphaSeeker: SeekBar,
   redSeeker: SeekBar,
   greenSeeker: SeekBar,
@@ -272,7 +273,7 @@ private fun MaterialDialog.onCustomValueChanged(
   hexValue.setText(color.hexValue(supportCustomAlpha))
   hexValue.post { hexValue.setSelection(hexValue.text.length) }
 
-  argbPreviewView.setColor(color)
+  argbPreviewView.background = ColorDrawable(color)
 
   // We save the ARGB color as view the tag
   if (valueChanged) {
