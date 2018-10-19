@@ -190,6 +190,12 @@ class MaterialDialog(
     return this
   }
 
+  /** Clears any positive action button listeners set via usages of [positiveButton]. */
+  fun clearPositiveListeners(): MaterialDialog {
+    this.positiveListeners.clear()
+    return this
+  }
+
   /**
    * Shows a negative action button, to the left of the positive action button (or at the far
    * right if there is no positive action button).
@@ -224,6 +230,12 @@ class MaterialDialog(
     return this
   }
 
+  /** Clears any negative action button listeners set via usages of [negativeButton]. */
+  fun clearNegativeListeners(): MaterialDialog {
+    this.negativeListeners.clear()
+    return this
+  }
+
   @Deprecated(
       "Use of neutral buttons is discouraged, see " +
           "https://material.io/design/components/dialogs.html#actions."
@@ -250,6 +262,15 @@ class MaterialDialog(
         text = text,
         typeface = this.buttonFont
     )
+    return this
+  }
+
+  @Deprecated(
+      "Use of neutral buttons is discouraged, see " +
+          "https://material.io/design/components/dialogs.html#actions."
+  )
+  fun clearNeutralListeners(): MaterialDialog {
+    this.neutralListeners.clear()
     return this
   }
 
