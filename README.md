@@ -819,7 +819,7 @@ focused on. This is just taken right from the Android framework, the input type 
 directly to the underlying `EditText`:
 
 ```kotlin
-val type = InputType.TYPE_CLASS_TEXT and 
+val type = InputType.TYPE_CLASS_TEXT or 
   InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
   
 MaterialDialog(this)
