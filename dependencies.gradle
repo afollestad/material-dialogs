@@ -10,7 +10,7 @@ ext.versions = [
     versionPlugin     : '0.20.0',
     bintrayPlugin     : '0.8.1',
 
-    kotlin            : '1.2.71',
+    kotlin            : '1.3.0',
     androidx          : '1.0.0',
     assent            : '2.2.0',
 
