@@ -29,7 +29,10 @@ internal class DialogScrollView(
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    waitForLayout { invalidateDividers() }
+    waitForLayout {
+      invalidateDividers()
+      invalidateOverScroll()
+    }
   }
 
   override fun onScrollChanged(
@@ -53,5 +56,13 @@ internal class DialogScrollView(
         scrollY > 0,
         diff > 0
     )
+  }
+
+  private fun invalidateOverScroll() {
+    overScrollMode = if (childCount == 0 || measuredHeight == 0 || !isScrollable) {
+      OVER_SCROLL_NEVER
+    } else {
+      OVER_SCROLL_IF_CONTENT_SCROLLS
+    }
   }
 }

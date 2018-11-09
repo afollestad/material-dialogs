@@ -7,7 +7,6 @@ package com.afollestad.materialdialogs.internal.list
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +36,10 @@ class DialogRecyclerView(
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    waitForLayout { invalidateDividers() }
+    waitForLayout {
+      invalidateDividers()
+      invalidateOverScroll()
+    }
     addOnScrollListener(scrollListeners)
   }
 
@@ -57,9 +59,6 @@ class DialogRecyclerView(
   }
 
   private fun isAtTop(): Boolean {
-    if (!isScrollable()) {
-      return false
-    }
     val lm = layoutManager
     return when (lm) {
       is LinearLayoutManager -> lm.findFirstCompletelyVisibleItemPosition() == 0
@@ -69,9 +68,6 @@ class DialogRecyclerView(
   }
 
   private fun isAtBottom(): Boolean {
-    if (!isScrollable()) {
-      return false
-    }
     val lastIndex = adapter!!.itemCount - 1
     val lm = layoutManager
     return when (lm) {
@@ -80,6 +76,8 @@ class DialogRecyclerView(
       else -> false
     }
   }
+
+  private fun isScrollable() = isAtBottom() && isAtTop()
 
   private val scrollListeners = object : RecyclerView.OnScrollListener() {
     override fun onScrolled(
@@ -99,27 +97,11 @@ class DialogRecyclerView(
     invalidateDividersDelegate?.invoke(!isAtTop(), !isAtBottom())
   }
 
-  private fun isScrollable(): Boolean {
-    if (adapter == null) return false
-    val lm = layoutManager
-    val itemCount = adapter!!.itemCount
-    @Suppress("UNREACHABLE_CODE")
-    return when (lm) {
-      is LinearLayoutManager -> {
-        val diff = lm.findLastVisibleItemPosition() - lm.findFirstVisibleItemPosition()
-        return itemCount > diff
-      }
-      is GridLayoutManager -> {
-        val diff = lm.findLastVisibleItemPosition() - lm.findFirstVisibleItemPosition()
-        return itemCount > diff
-      }
-      else -> {
-        Log.w(
-            "MaterialDialogs",
-            "LayoutManager of type ${lm!!.javaClass.name} is currently unsupported."
-        )
-        return false
-      }
+  private fun invalidateOverScroll() {
+    overScrollMode = when {
+      childCount == 0 || measuredHeight == 0 -> OVER_SCROLL_NEVER
+      isScrollable() -> OVER_SCROLL_NEVER
+      else -> OVER_SCROLL_IF_CONTENT_SCROLLS
     }
   }
 }
