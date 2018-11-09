@@ -13,6 +13,7 @@
 
   <dimen name="md_action_button_frame_padding_neutral">18dp</dimen>
   <dimen name="md_action_button_frame_padding">8dp</dimen>
+  <dimen name="md_action_button_frame_padding_first_child">12dp</dimen>
 
   <dimen name="md_action_button_height">36dp</dimen>
   <dimen name="md_action_button_min_width">64dp</dimen>
