@@ -11,6 +11,12 @@
   <string name="shareLocationPrompt">This app wants to access your location.</string>
   <string name="useGoogleLocationServices">Use Google\'s Location Services?</string>
   <string name="useGoogleLocationServicesPrompt">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
+  <string name="htmlContent"><![CDATA[
+    <b>Material Dialogs</b> is a library designed and developed by
+    <a href="https://aidanfollestad.com">Aidan Follestad</a>. As of 2018, Aidan currently works
+    on the <u>Square Device Experience</u> team at <a href="https://github.com/square">Square</a>.<br/><br/>
+    <i><font color="#0099CC">Thanks for using Material Dialogs!</font></i>
+  ]]></string>
   <string name="socialNetworks">Social Networks</string>
   <string name="states">States</string>
   <string name="loremIpsum">

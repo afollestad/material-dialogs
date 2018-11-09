@@ -39,6 +39,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import kotlinx.android.synthetic.main.activity_main.basic
 import kotlinx.android.synthetic.main.activity_main.basic_buttons
 import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_html_content
 import kotlinx.android.synthetic.main.activity_main.basic_icon
 import kotlinx.android.synthetic.main.activity_main.basic_long
 import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
@@ -147,6 +148,20 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
+        positiveButton(R.string.agree)
+        negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    basic_html_content.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.app_name)
+        message(
+            R.string.htmlContent,
+            html = true,
+            lineHeightMultiplier = 1.4f
+        )
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)

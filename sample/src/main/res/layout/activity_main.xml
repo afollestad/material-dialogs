@@ -54,6 +54,14 @@
         />
 
     <Button
+        android:id="@+id/basic_html_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="Basic + HTML Content"
+        />
+
+    <Button
         android:id="@+id/basic_long"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sample_button_height"

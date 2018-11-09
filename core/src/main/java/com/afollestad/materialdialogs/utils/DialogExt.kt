@@ -10,6 +10,7 @@ import android.graphics.Point
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
@@ -28,6 +29,7 @@ import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_PADDING
+import com.afollestad.materialdialogs.utils.Util.getString
 
 internal fun MaterialDialog.setWindowConstraints() {
   window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
@@ -85,7 +87,12 @@ internal fun MaterialDialog.addContentScrollView() {
   }
 }
 
-internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: CharSequence?) {
+internal fun MaterialDialog.addContentMessageView(
+  @StringRes res: Int?,
+  text: CharSequence?,
+  html: Boolean,
+  lineHeightMultiplier: Float
+) {
   if (this.textViewMessage == null) {
     this.textViewMessage = inflate(
         R.layout.md_dialog_stub_message,
@@ -98,7 +105,14 @@ internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: Ch
     }
   }
   assertOneSet("message", text, res)
-  this.textViewMessage!!.text = text ?: Util.getString(this@addContentMessageView, res)
+
+  this.textViewMessage!!.let {
+    it.text = text ?: getString(this@addContentMessageView, res, html = html)
+    it.setLineSpacing(0f, lineHeightMultiplier)
+    if (html) {
+      it.movementMethod = LinkMovementMethod.getInstance()
+    }
+  }
 }
 
 internal fun MaterialDialog.preShow() {
