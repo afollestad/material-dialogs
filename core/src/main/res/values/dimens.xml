@@ -28,7 +28,7 @@
   <dimen name="md_title_textsize">20sp</dimen>
   <dimen name="md_message_textsize">16sp</dimen>
 
-  <dimen name="md_icon_margin">12dp</dimen>
+  <dimen name="md_icon_margin">16dp</dimen>
   <dimen name="md_icon_size">42dp</dimen>
 
   <dimen name="md_listitem_vertical_margin">12dp</dimen>
