@@ -7,10 +7,12 @@
 
 ---
 
+If this is a improvement or feature request, you can remove everything below. Also, please consider making a pull request if you are capable of contributing.
+
 ###### Include the following:
 
  - Material Dialogs version: `0.x.x`
- - Affected device: Google Pixel 2 XL with Android 9.0
+ - Affected device: Google Pixel 3 XL with Android 9.0
 
 Also, please wrap your code with correct syntax highlighting (not just indents).
 
