@@ -102,45 +102,41 @@ internal class DialogTitleLayout(
   ) {
     if (shouldNotBeVisible()) return
 
+    val contentTop = frameMarginVertical
+    val contentBottom = measuredHeight - titleMarginBottom
+    val contentHeight = contentBottom - contentTop
+    val contentMidPoint = contentBottom - (contentHeight / 2)
+
+    val titleHalfHeight = titleView.measuredHeight / 2
+    val titleTop = contentMidPoint - titleHalfHeight
+    val titleBottom = contentMidPoint + titleHalfHeight
     var titleLeft: Int
-    val titleBottom: Int
-    val titleTop: Int
     var titleRight: Int
 
     if (isRtl()) {
       titleRight = measuredWidth - frameMarginHorizontal
-      titleBottom = measuredHeight - titleMarginBottom
-      titleTop = titleBottom - titleView.measuredHeight
       titleLeft = titleRight - titleView.measuredWidth
     } else {
       titleLeft = frameMarginHorizontal
-      titleBottom = measuredHeight - titleMarginBottom
-      titleTop = titleBottom - titleView.measuredHeight
       titleRight = titleLeft + titleView.measuredWidth
     }
 
     if (iconView.isVisible()) {
-      val titleHalfHeight = (titleBottom - titleTop) / 2
-      val titleMidPoint = titleBottom - titleHalfHeight
       val iconHalfHeight = iconView.measuredHeight / 2
 
+      val iconTop = contentMidPoint - iconHalfHeight
+      val iconBottom = contentMidPoint + iconHalfHeight
       val iconLeft: Int
-      val iconTop: Int
       val iconRight: Int
-      val iconBottom: Int
 
       if (isRtl()) {
         iconRight = titleRight
-        iconTop = titleMidPoint - iconHalfHeight
         iconLeft = iconRight - iconView.measuredWidth
-        iconBottom = iconTop + iconView.measuredHeight
         titleRight = iconLeft - iconMargin
         titleLeft = titleRight - titleView.measuredWidth
       } else {
         iconLeft = titleLeft
-        iconTop = titleMidPoint - iconHalfHeight
         iconRight = iconLeft + iconView.measuredWidth
-        iconBottom = iconTop + iconView.measuredHeight
         titleLeft = iconRight + iconMargin
         titleRight = titleLeft + titleView.measuredWidth
       }
