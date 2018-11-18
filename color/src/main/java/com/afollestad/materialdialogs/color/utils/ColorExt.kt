@@ -37,3 +37,17 @@ internal fun Int.isColorDark(): Boolean {
     1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
   return darkness >= 0.5
 }
+
+internal fun Int.hexValue(includeAlpha: Boolean) = if (this == 0) {
+  if (includeAlpha) "00000000" else "000000"
+} else {
+  if (includeAlpha) Integer.toHexString(this) else String.format("%06X", 0xFFFFFF and this)
+}
+
+internal fun String.toColor(): Int? {
+  return try {
+    Color.parseColor("#$this")
+  } catch (_: Exception) {
+    null
+  }
+}
