@@ -6,7 +6,7 @@
 package com.afollestad.materialdialogs.color
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
 import android.graphics.Color.BLUE
 import android.graphics.Color.GREEN
@@ -40,7 +40,9 @@ import com.afollestad.materialdialogs.color.utils.changeHeight
 import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.getColor
 import com.afollestad.materialdialogs.color.utils.progressChanged
+import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.utils.Util
+import com.afollestad.materialdialogs.utils.invalidateDividers
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -72,19 +74,32 @@ fun MaterialDialog.colorChooser(
 
   if (!allowCustomArgb) {
     customView(R.layout.md_color_chooser_base_grid)
-    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection, allowCustomArgb)
+    updateGridLayout(
+        colors = colors,
+        subColors = subColors,
+        initialSelection = initialSelection,
+        waitForPositiveButton = waitForPositiveButton,
+        selection = selection,
+        allowCustomArgb = allowCustomArgb
+    )
   } else {
     customView(R.layout.md_color_chooser_base_pager, noVerticalPadding = true)
 
     val viewPager = getPager()
     viewPager.adapter = ColorPagerAdapter()
-    viewPager.onPageSelected {
+    viewPager.onPageSelected { pageIndex ->
       setActionButtonEnabled(POSITIVE, selectedColor(allowCustomArgb) != null)
       val hexValueView = getPageCustomView().findViewById<EditText>(R.id.hexValueView)
-      if (it == 0) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(hexValueView.getWindowToken(), 0)
-        //hexValueView.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+      if (pageIndex == 0) {
+        getCustomView()
+            ?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
+            ?.invalidateDividers()
+        val imm =
+          context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(hexValueView.windowToken, 0)
+      } else {
+        invalidateDividers(false, false)
       }
     }
 
@@ -92,16 +107,27 @@ fun MaterialDialog.colorChooser(
     pageIndicator?.attachViewPager(viewPager)
     pageIndicator?.setDotTint(getColor(windowContext, attr = android.R.attr.textColorPrimary))
 
-    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection, allowCustomArgb)
-    updateCustomPage(showAlphaSelector, initialSelection, waitForPositiveButton, selection)
+    updateGridLayout(
+        colors = colors,
+        subColors = subColors,
+        initialSelection = initialSelection,
+        waitForPositiveButton = waitForPositiveButton,
+        selection = selection,
+        allowCustomArgb = allowCustomArgb
+    )
+    updateCustomPage(
+        supportCustomAlpha = showAlphaSelector,
+        initialSelection = initialSelection,
+        waitForPositiveButton = waitForPositiveButton,
+        selection = selection
+    )
   }
 
   if (waitForPositiveButton && selection != null) {
     setActionButtonEnabled(POSITIVE, false)
     positiveButton {
-      val color = selectedColor(allowCustomArgb)
-      if (color != null) {
-        selection.invoke(this, color)
+      selectedColor(allowCustomArgb)?.let { selected ->
+        selection.invoke(this, selected)
       }
     }
   }
@@ -121,12 +147,13 @@ private fun MaterialDialog.updateGridLayout(
     throw IllegalArgumentException("Sub-colors array size should match the colors array size.")
   }
 
-  val gridRecyclerView = getCustomView()!!.findViewById<RecyclerView>(R.id.colorPresetGrid)
+  val gridRecyclerView =
+    getCustomView()?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid) ?: return
   val gridColumnCount = windowContext.resources.getInteger(R.integer.color_grid_column_count)
   gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
+  gridRecyclerView.attach(this)
 
   val landscape = Util.isLandscape(context)
-
   val adapter = ColorGridAdapter(
       dialog = this,
       colors = colors,

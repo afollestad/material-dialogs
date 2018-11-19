@@ -34,6 +34,11 @@ class DialogRecyclerView(
     this.invalidateDividersDelegate = dialog::invalidateDividers
   }
 
+  fun invalidateDividers() {
+    if (childCount == 0 || measuredHeight == 0) return
+    invalidateDividersDelegate?.invoke(!isAtTop(), !isAtBottom())
+  }
+
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     waitForLayout {
@@ -88,13 +93,6 @@ class DialogRecyclerView(
       super.onScrolled(recyclerView, dx, dy)
       invalidateDividers()
     }
-  }
-
-  private fun invalidateDividers() {
-    if (childCount == 0 || measuredHeight == 0) {
-      return
-    }
-    invalidateDividersDelegate?.invoke(!isAtTop(), !isAtBottom())
   }
 
   private fun invalidateOverScroll() {
