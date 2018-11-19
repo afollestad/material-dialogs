@@ -13,8 +13,9 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
-object Util {
-  fun getString(
+@RestrictTo(LIBRARY_GROUP) object Util {
+
+  @RestrictTo(LIBRARY_GROUP) fun getString(
     materialDialog: MaterialDialog,
     @StringRes res: Int? = null,
     @StringRes fallback: Int? = null,
@@ -30,6 +31,6 @@ object Util {
     return text
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun isLandscape(context: Context) = context.resources.configuration.orientation == ORIENTATION_LANDSCAPE
+  @RestrictTo(LIBRARY_GROUP) fun isLandscape(context: Context) =
+    context.resources.configuration.orientation == ORIENTATION_LANDSCAPE
 }
