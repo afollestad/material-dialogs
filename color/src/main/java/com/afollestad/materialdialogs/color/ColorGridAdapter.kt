@@ -152,7 +152,9 @@ internal class ColorGridAdapter(
     return ColorGridViewHolder(view, this)
   }
 
-  override fun getItemCount() = if (inSub) subColors!![selectedTopIndex].size + 1 else colors.size + (if (enableARGBButton) 1 else 0)
+  override fun getItemCount() =
+    if (inSub) subColors!![selectedTopIndex].size + 1
+    else colors.size + (if (enableARGBButton) 1 else 0)
 
   override fun onBindViewHolder(
     holder: ColorGridViewHolder,
