@@ -91,3 +91,9 @@ internal fun View.below(@IdRes id: Int) {
   lp.addRule(RelativeLayout.BELOW, id)
   layoutParams = lp
 }
+
+internal fun View.clearTopMargin() {
+  val lp = this.layoutParams as MarginLayoutParams
+  lp.topMargin = 0
+  layoutParams = lp
+}

@@ -31,16 +31,12 @@ import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.color.utils.below
-import com.afollestad.materialdialogs.color.utils.changeHeight
-import com.afollestad.materialdialogs.color.utils.getColor
-import com.afollestad.materialdialogs.color.utils.onPageSelected
-import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.viewpagerdots.DotsIndicator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IntRange
+import com.afollestad.materialdialogs.color.utils.*
 import com.afollestad.materialdialogs.utils.Util
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
@@ -183,6 +179,8 @@ private fun MaterialDialog.updateCustomPage(
     val landscape = Util.isLandscape(context)
     if (!landscape) {
       redLabel.below(R.id.preview_frame)
+    } else {
+      redLabel.clearTopMargin()
     }
   }
 
