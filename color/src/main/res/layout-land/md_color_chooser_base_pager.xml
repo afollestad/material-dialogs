@@ -6,13 +6,6 @@
     android:orientation="vertical"
     >
 
-  <!--<com.afollestad.viewpagerdots.DotsIndicator-->
-      <!--android:id="@+id/colorChooserPagerDots"-->
-      <!--android:layout_width="match_parent"-->
-      <!--android:layout_height="@dimen/color_chooser_pageDots_height"-->
-      <!--android:layout_marginBottom="@dimen/color_chooser_pageDots_marginBottom"-->
-      <!--/>-->
-
   <androidx.viewpager.widget.ViewPager
       android:id="@+id/colorChooserPager"
       android:layout_width="match_parent"

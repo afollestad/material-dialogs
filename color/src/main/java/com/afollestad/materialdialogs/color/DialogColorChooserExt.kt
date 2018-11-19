@@ -306,7 +306,7 @@ private fun MaterialDialog.getPageCustomView() = findViewById<View>(R.id.colorAr
 
 private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
 
-fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
+internal fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
   getPager().setCurrentItem(index, true)
 }
 
