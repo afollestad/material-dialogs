@@ -96,4 +96,5 @@ internal fun View.clearTopMargin() {
   val lp = this.layoutParams as MarginLayoutParams
   lp.topMargin = 0
   layoutParams = lp
+  parent.requestLayout()
 }

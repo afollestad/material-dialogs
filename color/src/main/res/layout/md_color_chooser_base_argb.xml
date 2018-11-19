@@ -45,7 +45,9 @@
       android:layout_toLeftOf="@+id/alpha_value"
       android:layout_toRightOf="@id/alpha_label"
       android:layout_toStartOf="@+id/alpha_value"
+      android:min="1"
       style="@style/ColorChooser.Seeker"
+      tools:ignore="UnusedAttribute"
       />
 
   <TextView

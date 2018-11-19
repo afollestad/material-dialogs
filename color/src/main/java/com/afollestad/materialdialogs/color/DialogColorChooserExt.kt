@@ -215,7 +215,6 @@ private fun MaterialDialog.updateCustomPage(
 
   if (landscape) {
     if (!supportCustomAlpha) {
-      alphaLabel.clearTopMargin()
       redLabel.clearTopMargin()
     } else {
       alphaLabel.clearTopMargin()
