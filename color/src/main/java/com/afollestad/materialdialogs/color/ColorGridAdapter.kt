@@ -43,13 +43,19 @@ internal class ColorGridAdapter(
   private val subColors: Array<IntArray>?,
   @ColorInt private val initialSelection: Int?,
   private val waitForPositiveButton: Boolean,
-  private val callback: ColorCallback
+  private val callback: ColorCallback,
+  private val enableARGBButton: Boolean
 ) : RecyclerView.Adapter<ColorGridViewHolder>() {
 
   private val upIcon =
     if (getColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
       R.drawable.icon_back_black
     else R.drawable.icon_back_white
+
+  private val customIcon =
+    if (getColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
+      R.drawable.icon_custom_black
+    else R.drawable.icon_custom_white
 
   private var selectedTopIndex: Int = -1
   private var selectedSubIndex: Int = -1
@@ -59,6 +65,10 @@ internal class ColorGridAdapter(
     if (inSub && index == 0) {
       inSub = false
       notifyDataSetChanged()
+      return
+    }
+    if (enableARGBButton && !inSub && index == itemCount - 1) {
+      dialog.setPage(1)
       return
     }
 
@@ -124,6 +134,9 @@ internal class ColorGridAdapter(
     if (inSub && position == 0) {
       return 1
     }
+    if (enableARGBButton && !inSub && position == itemCount - 1) {
+      return 1
+    }
     return 0
   }
 
@@ -139,7 +152,7 @@ internal class ColorGridAdapter(
     return ColorGridViewHolder(view, this)
   }
 
-  override fun getItemCount() = if (inSub) subColors!![selectedTopIndex].size + 1 else colors.size
+  override fun getItemCount() = if (inSub) subColors!![selectedTopIndex].size + 1 else colors.size + (if (enableARGBButton) 1 else 0)
 
   override fun onBindViewHolder(
     holder: ColorGridViewHolder,
@@ -147,6 +160,10 @@ internal class ColorGridAdapter(
   ) {
     if (inSub && position == 0) {
       holder.iconView.setImageResource(upIcon)
+      return
+    }
+    if (enableARGBButton && !inSub && position == itemCount - 1) {
+      holder.iconView.setImageResource(customIcon)
       return
     }
 

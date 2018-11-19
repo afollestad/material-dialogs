@@ -6,6 +6,7 @@
 package com.afollestad.materialdialogs.color
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Color.BLUE
 import android.graphics.Color.GREEN
@@ -17,6 +18,8 @@ import android.graphics.Color.green
 import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
@@ -36,6 +39,9 @@ import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.viewpagerdots.DotsIndicator
+import android.view.inputmethod.InputMethodManager
+import androidx.annotation.IntRange
+import com.afollestad.materialdialogs.utils.Util
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -51,10 +57,6 @@ private const val ALPHA_SOLID = 255
  *    a color and taps on the positive action button. Defaults to true if the dialog has buttons.
  * @param allowCustomArgb Allows selection of a color with an (A)RGB slider view
  * @param showAlphaSelector Allows selection alpha (transparency) values in (A)RGB mode.
- * @param tabPresetTextRes Provides a custom tab label as resource integer for the preset grid page.
- * @param tabPresetText Provides a custom tab label as a literal string for the preset grid page.
- * @param tabArgbTextRes Provides a custom tab label as resource integer for the (A)RGB page.
- * @param tabArgbText Provides a custom tab label as a literal string for the (A)RGB page.
  * @param selection An optional callback invoked when the user selects a color.
  */
 @SuppressLint("CheckResult")
@@ -66,31 +68,32 @@ fun MaterialDialog.colorChooser(
   waitForPositiveButton: Boolean = true,
   allowCustomArgb: Boolean = false,
   showAlphaSelector: Boolean = false,
-  @StringRes tabPresetTextRes: Int? = null,
-  tabPresetText: String? = null,
-  @StringRes tabArgbTextRes: Int? = null,
-  tabArgbText: String? = null,
   selection: ColorCallback = null
 ): MaterialDialog {
 
   if (!allowCustomArgb) {
     customView(R.layout.md_color_chooser_base_grid)
-    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection)
+    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection, allowCustomArgb)
   } else {
     customView(R.layout.md_color_chooser_base_pager, noVerticalPadding = true)
 
     val viewPager = getPager()
-    viewPager.adapter =
-        ColorPagerAdapter(this, tabPresetTextRes, tabPresetText, tabArgbTextRes, tabArgbText)
+    viewPager.adapter = ColorPagerAdapter()
     viewPager.onPageSelected {
       setActionButtonEnabled(POSITIVE, selectedColor(allowCustomArgb) != null)
+      val hexValueView = getPageCustomView().findViewById<EditText>(R.id.hexValueView)
+      if (it == 0) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(hexValueView.getWindowToken(), 0)
+        //hexValueView.onEditorAction(EditorInfo.IME_ACTION_DONE)
+      }
     }
 
     val pageIndicator = getPageIndicator()
-    pageIndicator.attachViewPager(viewPager)
-    pageIndicator.setDotTint(getColor(windowContext, attr = android.R.attr.textColorPrimary))
+    pageIndicator?.attachViewPager(viewPager)
+    pageIndicator?.setDotTint(getColor(windowContext, attr = android.R.attr.textColorPrimary))
 
-    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection)
+    updateGridLayout(colors, subColors, initialSelection, waitForPositiveButton, selection, allowCustomArgb)
     updateCustomPage(showAlphaSelector, initialSelection, waitForPositiveButton, selection)
   }
 
@@ -112,7 +115,8 @@ private fun MaterialDialog.updateGridLayout(
   subColors: Array<IntArray>?,
   @ColorInt initialSelection: Int?,
   waitForPositiveButton: Boolean,
-  selection: ColorCallback
+  selection: ColorCallback,
+  allowCustomArgb: Boolean
 ) {
   if (subColors != null && colors.size != subColors.size) {
     throw IllegalArgumentException("Sub-colors array size should match the colors array size.")
@@ -122,13 +126,16 @@ private fun MaterialDialog.updateGridLayout(
   val gridColumnCount = windowContext.resources.getInteger(R.integer.color_grid_column_count)
   gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
 
+  val landscape = Util.isLandscape(context)
+
   val adapter = ColorGridAdapter(
       dialog = this,
       colors = colors,
       subColors = subColors,
       initialSelection = initialSelection,
       waitForPositiveButton = waitForPositiveButton,
-      callback = selection
+      callback = selection,
+      enableARGBButton = allowCustomArgb && landscape
   )
   gridRecyclerView.adapter = adapter
 }
@@ -172,7 +179,11 @@ private fun MaterialDialog.updateCustomPage(
     alphaLabel.changeHeight(0)
     alphaSeeker.changeHeight(0)
     alphaValue.changeHeight(0)
-    redLabel.below(R.id.preview_frame)
+
+    val landscape = Util.isLandscape(context)
+    if (!landscape) {
+      redLabel.below(R.id.preview_frame)
+    }
   }
 
   previewFrame.onHexChanged = { color ->
@@ -259,7 +270,7 @@ private fun MaterialDialog.onCustomValueChanged(
   previewFrame.supportCustomAlpha = supportCustomAlpha
   previewFrame.setColor(color)
 
-  // We save the ARGB color as view the tag
+  // We save the ARGB color as view tag
   if (valueChanged) {
     customView.tag = color
     setActionButtonEnabled(POSITIVE, true)
@@ -286,8 +297,12 @@ private fun MaterialDialog.getPageCustomView() = findViewById<View>(R.id.colorAr
 
 private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
 
+fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
+  getPager().setCurrentItem(index, true)
+}
+
 private fun MaterialDialog.getPageIndicator() =
-  findViewById<DotsIndicator>(R.id.colorChooserPagerDots)
+  findViewById<DotsIndicator?>(R.id.colorChooserPagerDots)
 
 private fun SeekBar.tint(color: Int) {
   progressDrawable.setColorFilter(color, SRC_IN)

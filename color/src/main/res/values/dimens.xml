@@ -10,8 +10,10 @@
   <dimen name="color_chooser_pageDots_marginBottom">8dp</dimen>
 
   <dimen name="color_argb_preview_height">72dp</dimen>
+  <dimen name="color_argb_preview_width_landscape">120dp</dimen>
   <dimen name="color_argb_preview_border_radius">4dp</dimen>
   <dimen name="color_argb_preview_marginBottom">8dp</dimen>
+  <dimen name="color_argb_preview_marginRight_landscape">8dp</dimen>
 
   <dimen name="color_argb_label_textSize">18sp</dimen>
   <dimen name="color_argb_label_marginTop">16dp</dimen>
