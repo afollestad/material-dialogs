@@ -7,6 +7,7 @@ package com.afollestad.materialdialogs.color
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Color.BLACK
 import android.graphics.Color.WHITE
 import android.graphics.drawable.ColorDrawable
@@ -30,6 +31,10 @@ internal class PreviewFrameView(
   context: Context,
   attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
+
+  companion object {
+    const val HEX_VALUE_ALPHA_THRESHOLD = 50
+  }
 
   lateinit var argbView: View
   lateinit var hexPrefixView: TextView
@@ -66,7 +71,9 @@ internal class PreviewFrameView(
     hexValueView.setText(color.hexValue(supportCustomAlpha))
     hexValueView.post { hexValueView.setSelection(hexValueView.text.length) }
 
-    val tintColor = if (color.isColorDark()) {
+    val tintColor = if (color.isColorDark() &&
+        Color.alpha(color) >= HEX_VALUE_ALPHA_THRESHOLD
+    ) {
       WHITE
     } else {
       BLACK
