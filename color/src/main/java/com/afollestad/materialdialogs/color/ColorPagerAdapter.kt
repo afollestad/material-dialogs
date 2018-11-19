@@ -7,10 +7,7 @@ package com.afollestad.materialdialogs.color
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.viewpager.widget.PagerAdapter
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.utils.Util
 
 internal class ColorPagerAdapter : PagerAdapter() {
 

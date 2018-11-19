@@ -18,13 +18,11 @@ import android.graphics.Color.green
 import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -36,7 +34,12 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.viewpagerdots.DotsIndicator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IntRange
-import com.afollestad.materialdialogs.color.utils.*
+import com.afollestad.materialdialogs.color.utils.clearTopMargin
+import com.afollestad.materialdialogs.color.utils.below
+import com.afollestad.materialdialogs.color.utils.changeHeight
+import com.afollestad.materialdialogs.color.utils.onPageSelected
+import com.afollestad.materialdialogs.color.utils.getColor
+import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.utils.Util
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
@@ -171,16 +174,24 @@ private fun MaterialDialog.updateCustomPage(
     alphaSeeker.progress = ALPHA_SOLID
   }
 
+  val landscape = Util.isLandscape(context)
+
   if (!supportCustomAlpha) {
     alphaLabel.changeHeight(0)
     alphaSeeker.changeHeight(0)
     alphaValue.changeHeight(0)
 
-    val landscape = Util.isLandscape(context)
     if (!landscape) {
       redLabel.below(R.id.preview_frame)
-    } else {
+    }
+  }
+
+  if (landscape) {
+    if (!supportCustomAlpha) {
+      alphaLabel.clearTopMargin()
       redLabel.clearTopMargin()
+    } else {
+      alphaLabel.clearTopMargin()
     }
   }
 
