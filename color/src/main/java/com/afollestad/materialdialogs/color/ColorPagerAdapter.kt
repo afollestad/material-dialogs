@@ -7,23 +7,9 @@ package com.afollestad.materialdialogs.color
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.viewpager.widget.PagerAdapter
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.utils.Util
 
-internal class ColorPagerAdapter(
-  dialog: MaterialDialog,
-  @StringRes tabGridTextRes: Int? = null,
-  tabGridText: String? = null,
-  @StringRes tabCustomTextRes: Int? = null,
-  tabCustomText: String? = null
-) : PagerAdapter() {
-
-  private val actualTabGridTitle: CharSequence = tabGridText
-      ?: Util.getString(dialog, tabGridTextRes, R.string.md_dialog_color_presets)!!
-  private val actualTabCustomTitle: CharSequence = tabCustomText
-      ?: Util.getString(dialog, tabCustomTextRes, R.string.md_dialog_color_custom)!!
+internal class ColorPagerAdapter : PagerAdapter() {
 
   override fun instantiateItem(
     collection: ViewGroup,
@@ -43,12 +29,6 @@ internal class ColorPagerAdapter(
     arg0: View,
     arg1: Any
   ) = arg0 === arg1 as View
-
-  override fun getPageTitle(position: Int) = when (position) {
-    0 -> actualTabGridTitle
-    1 -> actualTabCustomTitle
-    else -> null
-  }
 
   override fun destroyItem(
     container: ViewGroup,

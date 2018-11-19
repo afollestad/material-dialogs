@@ -5,7 +5,11 @@
  */
 package com.afollestad.materialdialogs.utils
 
+import android.content.Context
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.text.Html
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
@@ -25,4 +29,7 @@ object Util {
     }
     return text
   }
+
+  @RestrictTo(LIBRARY_GROUP)
+  fun isLandscape(context: Context) = context.resources.configuration.orientation == ORIENTATION_LANDSCAPE
 }
