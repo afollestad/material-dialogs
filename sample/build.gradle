@@ -23,8 +23,6 @@ android {
 dependencies {
   implementation project(':core')
   implementation project(':input')
-  implementation project(':files')
-  implementation project(':color')
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 

@@ -8,8 +8,6 @@
 package com.afollestad.materialdialogssample
 
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -19,77 +17,18 @@ import android.webkit.WebView
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.afollestad.assent.Permission.READ_EXTERNAL_STORAGE
-import com.afollestad.assent.Permission.WRITE_EXTERNAL_STORAGE
-import com.afollestad.assent.runWithPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
-import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.files.fileChooser
-import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import kotlinx.android.synthetic.main.activity_main.basic
-import kotlinx.android.synthetic.main.activity_main.basic_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_html_content
-import kotlinx.android.synthetic.main.activity_main.basic_icon
-import kotlinx.android.synthetic.main.activity_main.basic_long
-import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_titled
-import kotlinx.android.synthetic.main.activity_main.basic_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.buttons_callbacks
-import kotlinx.android.synthetic.main.activity_main.buttons_neutral
-import kotlinx.android.synthetic.main.activity_main.buttons_stacked
-import kotlinx.android.synthetic.main.activity_main.buttons_stacked_checkboxPrompt
-import kotlinx.android.synthetic.main.activity_main.colorChooser_accent
-import kotlinx.android.synthetic.main.activity_main.colorChooser_customColors
-import kotlinx.android.synthetic.main.activity_main.colorChooser_customColorsNoSub
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customArgb
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customRgb
-import kotlinx.android.synthetic.main.activity_main.custom_view
-import kotlinx.android.synthetic.main.activity_main.custom_view_webview
-import kotlinx.android.synthetic.main.activity_main.file_chooser
-import kotlinx.android.synthetic.main.activity_main.file_chooser_buttons
-import kotlinx.android.synthetic.main.activity_main.file_chooser_filter
-import kotlinx.android.synthetic.main.activity_main.folder_chooser_buttons
-import kotlinx.android.synthetic.main.activity_main.folder_chooser_filter
-import kotlinx.android.synthetic.main.activity_main.input
-import kotlinx.android.synthetic.main.activity_main.input_check_prompt
-import kotlinx.android.synthetic.main.activity_main.input_counter
-import kotlinx.android.synthetic.main.activity_main.input_message
-import kotlinx.android.synthetic.main.activity_main.list
-import kotlinx.android.synthetic.main.activity_main.list_buttons
-import kotlinx.android.synthetic.main.activity_main.list_checkPrompt
-import kotlinx.android.synthetic.main.activity_main.list_checkPrompt_buttons
-import kotlinx.android.synthetic.main.activity_main.list_long
-import kotlinx.android.synthetic.main.activity_main.list_long_buttons
-import kotlinx.android.synthetic.main.activity_main.list_long_items
-import kotlinx.android.synthetic.main.activity_main.list_long_items_buttons
-import kotlinx.android.synthetic.main.activity_main.list_long_items_titled
-import kotlinx.android.synthetic.main.activity_main.list_long_items_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.list_long_titled
-import kotlinx.android.synthetic.main.activity_main.list_long_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.list_titled
-import kotlinx.android.synthetic.main.activity_main.list_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.list_titled_message_buttons
-import kotlinx.android.synthetic.main.activity_main.misc_dialog_callbacks
-import kotlinx.android.synthetic.main.activity_main.multiple_choice
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_buttons
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_disabled_items
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_long_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
-import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_titled
+import kotlinx.android.synthetic.main.activity_main.*
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -610,110 +549,6 @@ class MainActivity : AppCompatActivity() {
     custom_view.setOnClickListener { showCustomViewDialog() }
 
     custom_view_webview.setOnClickListener { showWebViewDialog() }
-
-    colorChooser_primary.setOnClickListener {
-      MaterialDialog(this).show {
-        title(R.string.primary_colors)
-        colorChooser(PRIMARY_COLORS, PRIMARY_COLORS_SUB) { _, color ->
-          toast("Selected color: ${color.toHex()}")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    colorChooser_accent.setOnClickListener {
-      MaterialDialog(this).show {
-        title(R.string.accent_colors)
-        colorChooser(ACCENT_COLORS, ACCENT_COLORS_SUB) { _, color ->
-          toast("Selected color: ${color.toHex()}")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    colorChooser_customColors.setOnClickListener {
-      val topLevel = intArrayOf(Color.TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
-      val subLevel = arrayOf(
-          intArrayOf(Color.WHITE, Color.TRANSPARENT, Color.BLACK),
-          intArrayOf(Color.LTGRAY, Color.GRAY, Color.DKGRAY),
-          intArrayOf(Color.GREEN),
-          intArrayOf(Color.MAGENTA, Color.CYAN)
-      )
-
-      MaterialDialog(this).show {
-        title(R.string.custom_colors)
-        colorChooser(topLevel, subLevel) { _, color ->
-          val colorStr =
-            if (color == TRANSPARENT) "transparent"
-            else color.toHex()
-          toast("Selected color: $colorStr")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    colorChooser_customColorsNoSub.setOnClickListener {
-      val topLevel = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
-
-      MaterialDialog(this).show {
-        title(R.string.custom_colors)
-        colorChooser(topLevel) { _, color ->
-          toast("Selected color: ${color.toHex()}")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    colorChooser_primary_customRgb.setOnClickListener {
-      MaterialDialog(this).show {
-        title(R.string.custom_colors_rgb)
-        colorChooser(
-            colors = PRIMARY_COLORS,
-            subColors = PRIMARY_COLORS_SUB,
-            allowCustomArgb = true
-        ) { _, color ->
-          toast("Selected color: ${color.toHex()}")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    colorChooser_primary_customArgb.setOnClickListener {
-      MaterialDialog(this).show {
-        title(R.string.custom_colors_argb)
-        colorChooser(
-            colors = PRIMARY_COLORS,
-            subColors = PRIMARY_COLORS_SUB,
-            allowCustomArgb = true,
-            showAlphaSelector = true
-        ) { _, color ->
-          toast("Selected color: ${color.toHex()}")
-        }
-        positiveButton(R.string.select)
-        negativeButton(android.R.string.cancel)
-        debugMode(debugMode)
-      }
-    }
-
-    file_chooser.setOnClickListener { showFileChooser() }
-
-    file_chooser_buttons.setOnClickListener { showFileChooserButtons() }
-
-    file_chooser_filter.setOnClickListener { showFileChooserFilter() }
-
-    folder_chooser_buttons.setOnClickListener { showFolderChooserButtons() }
-
-    folder_chooser_filter.setOnClickListener { showFolderChooserFilter() }
   }
 
   private fun showCustomViewDialog() {
@@ -774,54 +609,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun showFileChooser() = runWithPermissions(READ_EXTERNAL_STORAGE) {
-    MaterialDialog(this).show {
-      fileChooser { _, file ->
-        toast("Selected file: ${file.absolutePath}")
-      }
-      debugMode(debugMode)
-    }
-  }
 
-  private fun showFileChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
-    MaterialDialog(this).show {
-      fileChooser(allowFolderCreation = true) { _, file ->
-        toast("Selected file: ${file.absolutePath}")
-      }
-      negativeButton(android.R.string.cancel)
-      positiveButton(R.string.select)
-      debugMode(debugMode)
-    }
-  }
-
-  private fun showFileChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
-    MaterialDialog(this).show {
-      fileChooser(filter = { it.extension == "txt" }) { _, file ->
-        toast("Selected file: ${file.absolutePath}")
-      }
-      debugMode(debugMode)
-    }
-  }
-
-  private fun showFolderChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
-    MaterialDialog(this).show {
-      folderChooser(allowFolderCreation = true) { _, folder ->
-        toast("Selected folder: ${folder.absolutePath}")
-      }
-      negativeButton(android.R.string.cancel)
-      positiveButton(R.string.select)
-      debugMode(debugMode)
-    }
-  }
-
-  private fun showFolderChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
-    MaterialDialog(this).show {
-      folderChooser(filter = { it.name.startsWith("a", true) }) { _, folder ->
-        toast("Selected folder: ${folder.absolutePath}")
-      }
-      debugMode(debugMode)
-    }
-  }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.main, menu)

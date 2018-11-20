@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <dimen name="empty_text_size">18sp</dimen>
-  <dimen name="empty_text_padding">32dp</dimen>
-  <dimen name="file_chooser_item_vertical_padding">8dp</dimen>
-  <dimen name="file_chooser_item_horizontal_padding">22dp</dimen>
-  <dimen name="file_chooser_item_icon_margin_end">12dp</dimen>
-  <dimen name="file_chooser_list_padding_bottom">16dp</dimen>
-</resources>
