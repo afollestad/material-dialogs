@@ -11,9 +11,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -24,9 +21,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
-import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.internal.main.DialogLayout
-import com.afollestad.materialdialogs.internal.main.DialogScrollView
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.utils.hideKeyboard
 import com.afollestad.materialdialogs.utils.inflate
