@@ -48,8 +48,7 @@ internal class DialogTitleLayout(
     titleView = findViewById(R.id.md_text_title)
   }
 
-  fun shouldNotBeVisible() =
-    iconView.isNotVisible() && titleView.isNotVisible()
+  fun shouldNotBeVisible() = iconView.isNotVisible() && titleView.isNotVisible()
 
   override fun onMeasure(
     widthMeasureSpec: Int,

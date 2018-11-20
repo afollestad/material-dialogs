@@ -80,7 +80,6 @@ internal class DialogContentLayout(
     dialog: MaterialDialog,
     adapter: RecyclerView.Adapter<*>
   ) {
-    check(customView == null) { "Cannot mix list dialogs and custom view dialogs." }
     if (recyclerView == null) {
       recyclerView = inflate(R.layout.md_dialog_stub_recyclerview)
       recyclerView!!.attach(dialog)
@@ -96,7 +95,6 @@ internal class DialogContentLayout(
     scrollable: Boolean
   ) {
     check(customView == null) { "Custom view already set." }
-    check(recyclerView == null) { "Cannot mix list dialogs and custom view dialogs." }
     if (scrollable) {
       addContentScrollView()
       customView = view ?: inflate(res!!, scrollFrame)
@@ -107,12 +105,30 @@ internal class DialogContentLayout(
     }
   }
 
-  fun modifyPadding(
-    top: Int,
-    bottom: Int
+  fun haveMoreThanOneChild() = childCount > 1
+
+  fun modifyFirstAndLastPadding(
+    top: Int = -1,
+    bottom: Int = -1
   ) {
-    getChildAt(0).updatePadding(top = top)
-    getChildAt(childCount - 1).updatePadding(bottom = bottom)
+    if (top != -1) {
+      getChildAt(0).updatePadding(top = top)
+    }
+    if (bottom != -1) {
+      getChildAt(childCount - 1).updatePadding(bottom = bottom)
+    }
+  }
+
+  fun modifyScrollViewPadding(
+    top: Int = -1,
+    bottom: Int = -1
+  ) {
+    if (top != -1) {
+      scrollView.updatePadding(top = top)
+    }
+    if (bottom != -1) {
+      scrollView.updatePadding(bottom = bottom)
+    }
   }
 
   override fun onMeasure(
@@ -122,29 +138,38 @@ internal class DialogContentLayout(
     val specWidth = getSize(widthMeasureSpec)
     val specHeight = getSize(heightMeasureSpec)
 
+    // The ScrollView is the most important child view because it contains main content
+    // like a message.
     scrollView?.measure(
         makeMeasureSpec(specWidth, EXACTLY),
         makeMeasureSpec(specHeight, AT_MOST)
     )
+    val scrollViewHeight = scrollView?.measuredHeight ?: 0
+    val remainingHeightAfterScrollView = specHeight - scrollViewHeight
+    val childCountWithoutScrollView = if (scrollView != null) childCount - 1 else childCount
 
-    if (recyclerView != null) {
-      val remainingHeightForList = specHeight - (scrollView?.measuredHeight ?: 0)
-      recyclerView?.measure(
-          makeMeasureSpec(specWidth, EXACTLY),
-          makeMeasureSpec(remainingHeightForList, EXACTLY)
-      )
-    } else if (customView != null) {
-      val remainingHeightForCustomView = specHeight - (scrollView?.measuredHeight ?: 0)
-      customView?.measure(
-          makeMeasureSpec(specWidth, EXACTLY),
-          makeMeasureSpec(remainingHeightForCustomView, AT_MOST)
-      )
+    if (childCountWithoutScrollView == 0) {
+      // No more children to measure
+      setMeasuredDimension(specWidth, scrollViewHeight)
+      return
     }
 
-    val scrollWidth = scrollView?.measuredWidth ?: 0
-    val scrollHeight = scrollView?.measuredHeight ?: 0
+    val heightPerRemainingChild = remainingHeightAfterScrollView / childCountWithoutScrollView
 
-    setMeasuredDimension(scrollWidth, scrollHeight)
+    var totalChildHeight = scrollViewHeight
+    for (i in 0 until childCount) {
+      val currentChild = getChildAt(i)
+      if (currentChild.id == scrollView?.id) {
+        continue
+      }
+      currentChild.measure(
+          makeMeasureSpec(specWidth, EXACTLY),
+          makeMeasureSpec(heightPerRemainingChild, AT_MOST)
+      )
+      totalChildHeight += currentChild.measuredHeight
+    }
+
+    setMeasuredDimension(specWidth, totalChildHeight)
   }
 
   override fun onLayout(

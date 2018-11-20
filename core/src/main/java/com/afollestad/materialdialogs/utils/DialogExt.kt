@@ -81,14 +81,16 @@ internal fun MaterialDialog.preShow() {
   this.view.apply {
     if (titleLayout.shouldNotBeVisible() && !customViewNoPadding) {
       // Reduce top and bottom padding if we have no title
-      contentLayout.modifyPadding(
+      contentLayout.modifyFirstAndLastPadding(
           top = frameMarginVerticalLess,
           bottom = frameMarginVerticalLess
       )
     }
     if (getCheckBoxPrompt().isVisible()) {
       // Zero out bottom content padding if we have a checkbox prompt
-      contentLayout.updatePadding(bottom = 0)
+      contentLayout.modifyFirstAndLastPadding(bottom = 0)
+    } else if (contentLayout.haveMoreThanOneChild()) {
+      contentLayout.modifyScrollViewPadding(bottom = frameMarginVerticalLess)
     }
   }
 }

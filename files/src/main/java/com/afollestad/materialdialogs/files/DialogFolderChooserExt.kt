@@ -44,10 +44,13 @@ fun MaterialDialog.folderChooser(
   @StringRes folderCreationLabel: Int? = null,
   selection: FileCallback = null
 ): MaterialDialog {
-  if (allowFolderCreation && !hasWriteStoragePermission()) {
-    throw IllegalStateException("You must have the WRITE_EXTERNAL_STORAGE permission first.")
-  } else if (!hasReadStoragePermission()) {
-    throw IllegalStateException("You must have the READ_EXTERNAL_STORAGE permission first.")
+  if (allowFolderCreation) {
+    check(hasWriteStoragePermission()) {
+      "You must have the WRITE_EXTERNAL_STORAGE permission first."
+    }
+  }
+  check(hasReadStoragePermission()) {
+    "You must have the READ_EXTERNAL_STORAGE permission first."
   }
 
   customView(R.layout.md_file_chooser_base)

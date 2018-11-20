@@ -47,6 +47,7 @@
   <style name="MD_Dialog_Message">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center</item>
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/md_message_textsize</item>
     <item name="android:paddingLeft">@dimen/md_dialog_frame_margin_horizontal</item>
@@ -57,6 +58,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:orientation">vertical</item>
+    <item name="android:gravity">center</item>
   </style>
 
   <style name="MD_ActionButton">
