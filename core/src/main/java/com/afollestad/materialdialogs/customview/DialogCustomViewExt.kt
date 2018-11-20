@@ -11,7 +11,6 @@ import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.utils.addContentScrollView
 import com.afollestad.materialdialogs.utils.dimenPx
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.topMargin
@@ -48,7 +47,8 @@ internal const val CUSTOM_VIEW_NO_PADDING = "md.custom_view_no_padding"
   config[CUSTOM_VIEW_NO_PADDING] = noVerticalPadding
 
   if (scrollable || this.contentScrollViewFrame != null) {
-    addContentScrollView()
+    // TODO implement this with new content layout
+    //addContentScrollView()
     this.contentCustomView = view ?: inflate(viewRes!!, this.contentScrollViewFrame!!)
     if (!scrollable) {
       // We didn't explicitly want this view to be scrollable but we already had existing

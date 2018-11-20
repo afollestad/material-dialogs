@@ -31,13 +31,20 @@ internal fun <T> MaterialDialog.inflate(
   root: ViewGroup? = null
 ) = LayoutInflater.from(windowContext).inflate(res, root, false) as T
 
-internal fun <T : View> T.updatePadding(
-  left: Int = this.paddingLeft,
-  top: Int = this.paddingTop,
-  right: Int = this.paddingRight,
-  bottom: Int = this.paddingBottom
+@Suppress("UNCHECKED_CAST")
+internal fun <T> ViewGroup.inflate(
+  @LayoutRes res: Int,
+  root: ViewGroup? = this
+) = LayoutInflater.from(context).inflate(res, root, false) as T
+
+internal fun <T : View> T?.updatePadding(
+  left: Int = this?.paddingLeft ?: 0,
+  top: Int = this?.paddingTop ?: 0,
+  right: Int = this?.paddingRight ?: 0,
+  bottom: Int = this?.paddingBottom ?: 0
 ) {
-  if (left == this.paddingLeft &&
+  if (this != null &&
+      left == this.paddingLeft &&
       top == this.paddingTop &&
       right == this.paddingRight &&
       bottom == this.paddingBottom
@@ -45,7 +52,7 @@ internal fun <T : View> T.updatePadding(
     // no change needed, don't want to invalidate layout
     return
   }
-  this.setPadding(left, top, right, bottom)
+  this?.setPadding(left, top, right, bottom)
 }
 
 internal fun <T : View> T.topMargin() = (this.layoutParams as MarginLayoutParams).topMargin
@@ -80,7 +87,7 @@ internal inline fun <T : View> T.waitForLayout(crossinline f: T.() -> Unit) =
         this@waitForLayout.f()
       }
     })
-  }
+  }!!
 
 internal fun <T : View> T.isVisible(): Boolean {
   return if (this is Button) {

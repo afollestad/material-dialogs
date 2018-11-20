@@ -13,7 +13,8 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
-@RestrictTo(LIBRARY_GROUP) object Util {
+@RestrictTo(LIBRARY_GROUP)
+object Util {
 
   @RestrictTo(LIBRARY_GROUP) fun getString(
     materialDialog: MaterialDialog,
@@ -21,9 +22,23 @@ import com.afollestad.materialdialogs.MaterialDialog
     @StringRes fallback: Int? = null,
     html: Boolean = false
   ): CharSequence? {
+    return getString(
+        context = materialDialog.windowContext,
+        res = res,
+        fallback = fallback,
+        html = html
+    )
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun getString(
+    context: Context,
+    @StringRes res: Int? = null,
+    @StringRes fallback: Int? = null,
+    html: Boolean = false
+  ): CharSequence? {
     val resourceId = res ?: (fallback ?: 0)
     if (resourceId == 0) return null
-    val text = materialDialog.windowContext.resources.getText(resourceId)
+    val text = context.resources.getText(resourceId)
     if (html) {
       @Suppress("DEPRECATION")
       return Html.fromHtml(text.toString())

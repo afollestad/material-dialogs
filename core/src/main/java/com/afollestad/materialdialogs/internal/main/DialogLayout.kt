@@ -12,7 +12,6 @@ import android.graphics.Paint
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
-import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
@@ -30,8 +29,8 @@ val DEBUG_COLOR_DARK_PINK = Color.parseColor("#E066B1")
 val DEBUG_COLOR_BLUE = Color.parseColor("#B5FAFB")
 
 /**
- * The root layout of a dialog. Contains a [DialogTitleLayout], [DialogActionButtonLayout],
- * along with a content view that goes in between.
+ * The root layout of a dialog. Contains a [DialogTitleLayout], [DialogContentLayout],
+ * and [DialogActionButtonLayout].
  *
  * @author Aidan Follestad (afollestad)
  */
@@ -50,8 +49,7 @@ internal class DialogLayout(
 
   internal lateinit var dialog: MaterialDialog
   internal lateinit var titleLayout: DialogTitleLayout
-  internal val contentView: View
-    get() = getChildAt(1)
+  internal lateinit var contentLayout: DialogContentLayout
   internal lateinit var buttonsLayout: DialogActionButtonLayout
 
   init {
@@ -61,6 +59,7 @@ internal class DialogLayout(
   override fun onFinishInflate() {
     super.onFinishInflate()
     titleLayout = findViewById(R.id.md_title_layout)
+    contentLayout = findViewById(R.id.md_content_layout)
     buttonsLayout = findViewById(R.id.md_button_layout)
   }
 
@@ -96,13 +95,13 @@ internal class DialogLayout(
     val titleAndButtonsHeight =
       titleLayout.measuredHeight + buttonsLayout.measuredHeight
     val remainingHeight = specHeight - titleAndButtonsHeight
-    contentView.measure(
+    contentLayout.measure(
         makeMeasureSpec(specWidth, EXACTLY),
         makeMeasureSpec(remainingHeight, AT_MOST)
     )
 
     val totalHeight = titleLayout.measuredHeight +
-        contentView.measuredHeight +
+        contentLayout.measuredHeight +
         buttonsLayout.measuredHeight
     setMeasuredDimension(specWidth, totalHeight)
   }
@@ -141,7 +140,7 @@ internal class DialogLayout(
 
     val contentLeft = 0
     val contentRight = measuredWidth
-    contentView.layout(
+    contentLayout.layout(
         contentLeft,
         titleBottom,
         contentRight,

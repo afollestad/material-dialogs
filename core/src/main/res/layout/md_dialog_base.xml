@@ -33,6 +33,12 @@
 
   </com.afollestad.materialdialogs.internal.main.DialogTitleLayout>
 
+  <com.afollestad.materialdialogs.internal.main.DialogContentLayout
+      android:id="@+id/md_content_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+
   <com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
       android:id="@+id/md_button_layout"
       android:layout_width="match_parent"

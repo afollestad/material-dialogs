@@ -28,8 +28,6 @@ import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.internal.main.DialogScrollView
 import com.afollestad.materialdialogs.list.getListAdapter
-import com.afollestad.materialdialogs.utils.addContentMessageView
-import com.afollestad.materialdialogs.utils.addContentScrollView
 import com.afollestad.materialdialogs.utils.hideKeyboard
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.isVisible
@@ -156,8 +154,14 @@ class MaterialDialog(
     if (this.contentCustomView != null) {
       throw IllegalStateException("message() should be used BEFORE customView().")
     }
-    addContentScrollView()
-    addContentMessageView(res, text, html, lineHeightMultiplier)
+    assertOneSet("message", text, res)
+    this.view.contentLayout.setMessage(
+        res = res,
+        text = text,
+        html = html,
+        lineHeightMultiplier = lineHeightMultiplier,
+        typeface = this.bodyFont
+    )
     return this
   }
 
