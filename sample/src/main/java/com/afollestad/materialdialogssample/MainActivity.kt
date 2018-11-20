@@ -80,6 +80,7 @@ import kotlinx.android.synthetic.main.activity_main.list_long_titled
 import kotlinx.android.synthetic.main.activity_main.list_long_titled_buttons
 import kotlinx.android.synthetic.main.activity_main.list_titled
 import kotlinx.android.synthetic.main.activity_main.list_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.list_titled_message_buttons
 import kotlinx.android.synthetic.main.activity_main.misc_dialog_callbacks
 import kotlinx.android.synthetic.main.activity_main.multiple_choice
 import kotlinx.android.synthetic.main.activity_main.multiple_choice_buttons
@@ -242,6 +243,19 @@ class MainActivity : AppCompatActivity() {
     list_titled_buttons.setOnClickListener {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
+        listItems(R.array.socialNetworks) { _, index, text ->
+          toast("Selected item $text at index $index")
+        }
+        positiveButton(R.string.agree)
+        negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    list_titled_message_buttons.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.socialNetworks)
+        message(R.string.useGoogleLocationServices)
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
         }

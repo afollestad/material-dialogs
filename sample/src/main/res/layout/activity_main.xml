@@ -133,6 +133,14 @@
         />
 
     <Button
+        android:id="@+id/list_titled_message_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sample_button_height"
+        android:layout_marginTop="@dimen/sample_button_spacing"
+        android:text="List + Title + Message + Buttons"
+        />
+
+    <Button
         android:id="@+id/list_long"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sample_button_height"

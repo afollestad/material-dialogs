@@ -9,23 +9,22 @@ package com.afollestad.materialdialogs.list
 
 import androidx.annotation.ArrayRes
 import androidx.annotation.CheckResult
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
 import com.afollestad.materialdialogs.utils.getDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
-import com.afollestad.materialdialogs.utils.inflate
 
+/** Gets the RecyclerView for a list dialog, if there is one. */
 @CheckResult fun MaterialDialog.getRecyclerView(): RecyclerView? {
-  return this.contentRecyclerView
+  return this.view.contentLayout.recyclerView
 }
 
+/** A shortcut to [RecyclerView.getAdapter] on [getRecyclerView]. */
 @CheckResult fun MaterialDialog.getListAdapter(): RecyclerView.Adapter<*>? {
-  return this.contentRecyclerView?.adapter
+  return getRecyclerView()?.adapter
 }
 
 /**
@@ -36,10 +35,10 @@ import com.afollestad.materialdialogs.utils.inflate
 @CheckResult fun MaterialDialog.customListAdapter(
   adapter: RecyclerView.Adapter<*>
 ): MaterialDialog {
-  addContentRecyclerView()
-  if (this.contentRecyclerView!!.adapter != null)
-    throw IllegalStateException("An adapter has already been set to this dialog.")
-  this.contentRecyclerView!!.adapter = adapter
+  this.view.contentLayout.addRecyclerView(
+      dialog = this,
+      adapter = adapter
+  )
   return this
 }
 
@@ -83,24 +82,4 @@ import com.afollestad.materialdialogs.utils.inflate
 }
 
 internal fun MaterialDialog.getItemSelector() =
-  getDrawable(
-      context = context, attr = attr.md_item_selector
-  )
-
-private fun MaterialDialog.addContentRecyclerView() {
-  if (this.contentScrollView != null || this.contentCustomView != null) {
-    throw IllegalStateException(
-        "Your dialog has already been setup with a different type " +
-            "(e.g. with a message, input field, etc.)"
-    )
-  }
-  if (this.contentRecyclerView != null) {
-    return
-  }
-  this.contentRecyclerView = inflate(
-      R.layout.md_dialog_stub_recyclerview, this.view
-  )
-  this.contentRecyclerView!!.attach(this)
-  this.contentRecyclerView!!.layoutManager = LinearLayoutManager(windowContext)
-  this.view.addView(this.contentRecyclerView, 1)
-}
+  getDrawable(context = context, attr = attr.md_item_selector)
