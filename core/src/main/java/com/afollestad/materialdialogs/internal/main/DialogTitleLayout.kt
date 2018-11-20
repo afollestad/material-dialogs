@@ -3,7 +3,7 @@
  *
  * Designed and developed by Aidan Follestad (@afollestad)
  */
-package com.afollestad.materialdialogs.internal.title
+package com.afollestad.materialdialogs.internal.main
 
 import android.content.Context
 import android.graphics.Canvas
@@ -16,9 +16,6 @@ import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.internal.main.BaseSubLayout
-import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_DARK_PINK
-import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_PINK
 import com.afollestad.materialdialogs.utils.dimenPx
 import com.afollestad.materialdialogs.utils.isNotVisible
 import com.afollestad.materialdialogs.utils.isRtl
