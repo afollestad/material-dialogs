@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 
 internal abstract class BaseSubLayout(
@@ -53,6 +53,6 @@ internal abstract class BaseSubLayout(
   ): Paint = dialogParent().debugPaint(color, stroke)
 
   private fun getDividerColor(): Int {
-    return getColor(dialogParent().dialog.context, attr = attr.md_divider_color)
+    return resolveColor(dialogParent().dialog.context, attr = attr.md_divider_color)
   }
 }

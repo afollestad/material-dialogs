@@ -25,8 +25,8 @@ import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.files.utilext.setVisible
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
-import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import java.io.File
 
 internal class FileChooserViewHolder(
@@ -64,7 +64,7 @@ internal class FileChooserAdapter(
   private var contents: List<File>? = null
 
   private val isLightTheme =
-    getColor(dialog.windowContext, attr = android.R.attr.textColorPrimary).isColorDark()
+    resolveColor(dialog.windowContext, attr = android.R.attr.textColorPrimary).isColorDark()
 
   init {
     dialog.onDismiss { listingJob?.abort() }
@@ -154,7 +154,7 @@ internal class FileChooserAdapter(
   ): FileChooserViewHolder {
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.md_file_chooser_item, parent, false)
-    view.background = getDrawable(dialog.context, attr = R.attr.md_item_selector)
+    view.background = resolveDrawable(dialog.context, attr = R.attr.md_item_selector)
 
     val viewHolder = FileChooserViewHolder(view, this)
     viewHolder.nameView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)

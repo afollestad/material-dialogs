@@ -13,8 +13,8 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
-import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
 import com.afollestad.materialdialogs.utils.updatePadding
@@ -48,16 +48,16 @@ internal class DialogActionButton(
   ) {
     // Text color
     val theme = inferTheme(appContext)
-    enabledColor = getColor(appContext, attr = attr.colorAccent)
+    enabledColor = resolveColor(appContext, attr = attr.colorAccent)
     val disabledColorRes =
       if (theme == LIGHT) R.color.md_disabled_text_light_theme
       else R.color.md_disabled_text_dark_theme
-    disabledColor = getColor(baseContext, res = disabledColorRes)
+    disabledColor = resolveColor(baseContext, res = disabledColorRes)
     setTextColor(enabledColor)
 
     // Selector
     val selectorAttr = if (stacked) R.attr.md_item_selector else R.attr.md_button_selector
-    background = getDrawable(baseContext, attr = selectorAttr)
+    background = resolveDrawable(baseContext, attr = selectorAttr)
 
     // Padding
     val sidePadding = if (stacked) paddingStacked else paddingDefault

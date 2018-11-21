@@ -11,19 +11,19 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
-@ColorInt internal fun MaterialDialog.getColor(
+@ColorInt internal fun MaterialDialog.resolveColor(
   @ColorRes res: Int? = null,
   @AttrRes attr: Int? = null
-): Int = getColor(windowContext, res, attr)
+): Int = resolveColor(windowContext, res, attr)
 
 internal fun TextView?.maybeSetTextColor(
   context: Context,
   @AttrRes attrRes: Int?
 ) {
   if (attrRes == null) return
-  val color = getColor(context, attr = attrRes)
+  val color = resolveColor(context, attr = attrRes)
   if (color != 0) {
     this?.setTextColor(color)
   }

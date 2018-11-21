@@ -41,7 +41,7 @@ import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.invalidateDividers
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
@@ -105,7 +105,7 @@ fun MaterialDialog.colorChooser(
 
     val pageIndicator = getPageIndicator()
     pageIndicator?.attachViewPager(viewPager)
-    pageIndicator?.setDotTint(getColor(windowContext, attr = android.R.attr.textColorPrimary))
+    pageIndicator?.setDotTint(resolveColor(windowContext, attr = android.R.attr.textColorPrimary))
 
     updateGridLayout(
         colors = colors,
@@ -184,7 +184,7 @@ private fun MaterialDialog.updateCustomPage(
   val blueSeeker = customPage.findViewById<SeekBar>(R.id.blue_seeker)
   val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
 
-  alphaSeeker.tint(getColor(windowContext, attr = android.R.attr.textColorSecondary))
+  alphaSeeker.tint(resolveColor(windowContext, attr = android.R.attr.textColorSecondary))
   redSeeker.tint(RED)
   greenSeeker.tint(GREEN)
   blueSeeker.tint(BLUE)

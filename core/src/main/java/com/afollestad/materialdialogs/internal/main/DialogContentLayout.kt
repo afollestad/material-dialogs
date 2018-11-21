@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
-import com.afollestad.materialdialogs.utils.MDUtil.getString
+import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.updatePadding
@@ -68,7 +68,7 @@ internal class DialogContentLayout(
     typeface.let { messageTextView?.typeface = it }
     messageTextView!!.apply {
       maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
-      setText(text ?: getString(dialog, res, html = html))
+      setText(text ?: resolveString(dialog, res, html = html))
       setLineSpacing(0f, lineHeightMultiplier)
       if (html) {
         movementMethod = LinkMovementMethod.getInstance()

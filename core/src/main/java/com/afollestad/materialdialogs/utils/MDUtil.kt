@@ -28,13 +28,13 @@ import com.afollestad.materialdialogs.MaterialDialog
 @RestrictTo(LIBRARY_GROUP)
 object MDUtil {
 
-  @RestrictTo(LIBRARY_GROUP) fun getString(
+  @RestrictTo(LIBRARY_GROUP) fun resolveString(
     materialDialog: MaterialDialog,
     @StringRes res: Int? = null,
     @StringRes fallback: Int? = null,
     html: Boolean = false
   ): CharSequence? {
-    return getString(
+    return resolveString(
         context = materialDialog.windowContext,
         res = res,
         fallback = fallback,
@@ -42,7 +42,7 @@ object MDUtil {
     )
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun getString(
+  @RestrictTo(LIBRARY_GROUP) fun resolveString(
     context: Context,
     @StringRes res: Int? = null,
     @StringRes fallback: Int? = null,
@@ -58,7 +58,7 @@ object MDUtil {
     return text
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun getDrawable(
+  @RestrictTo(LIBRARY_GROUP) fun resolveDrawable(
     context: Context,
     @DrawableRes res: Int? = null,
     @AttrRes attr: Int? = null,
@@ -78,6 +78,37 @@ object MDUtil {
     }
     if (res == null) return fallback
     return ContextCompat.getDrawable(context, res)
+  }
+
+  @RestrictTo(LIBRARY_GROUP)
+  @ColorInt
+  fun resolveColor(
+    context: Context,
+    @ColorRes res: Int? = null,
+    @AttrRes attr: Int? = null
+  ): Int {
+    if (attr != null) {
+      val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+      try {
+        return a.getColor(0, 0)
+      } finally {
+        a.recycle()
+      }
+    }
+    return ContextCompat.getColor(context, res ?: 0)
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(): Boolean {
+    if (this == Color.TRANSPARENT) {
+      return false
+    }
+    val darkness =
+      1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
+    return darkness >= 0.5
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
+    return context.resources.getDimensionPixelSize(res)
   }
 
   @RestrictTo(LIBRARY_GROUP) fun isLandscape(context: Context) =
@@ -101,36 +132,5 @@ object MDUtil {
         count: Int
       ) = callback.invoke(s)
     })
-  }
-
-  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(): Boolean {
-    if (this == Color.TRANSPARENT) {
-      return false
-    }
-    val darkness =
-      1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
-    return darkness >= 0.5
-  }
-
-  @RestrictTo(LIBRARY_GROUP)
-  @ColorInt
-  fun getColor(
-    context: Context,
-    @ColorRes res: Int? = null,
-    @AttrRes attr: Int? = null
-  ): Int {
-    if (attr != null) {
-      val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
-      try {
-        return a.getColor(0, 0)
-      } finally {
-        a.recycle()
-      }
-    }
-    return ContextCompat.getColor(context, res ?: 0)
-  }
-
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
-    return context.resources.getDimensionPixelSize(res)
   }
 }

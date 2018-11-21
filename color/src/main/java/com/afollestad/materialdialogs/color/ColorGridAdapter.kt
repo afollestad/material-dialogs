@@ -19,8 +19,8 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.color.utils.setVisibleOrGone
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
-import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
 internal class ColorGridViewHolder(
   itemView: View,
@@ -49,12 +49,12 @@ internal class ColorGridAdapter(
 ) : RecyclerView.Adapter<ColorGridViewHolder>() {
 
   private val upIcon =
-    if (getColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
+    if (resolveColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
       R.drawable.icon_back_black
     else R.drawable.icon_back_white
 
   private val customIcon =
-    if (getColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
+    if (resolveColor(dialog.windowContext, attr = attr.textColorPrimary).isColorDark())
       R.drawable.icon_custom_black
     else R.drawable.icon_custom_white
 
@@ -150,7 +150,7 @@ internal class ColorGridAdapter(
       else R.layout.md_color_grid_item
     val view = LayoutInflater.from(parent.context)
         .inflate(layoutRes, parent, false)
-    view.background = getDrawable(dialog.context, attr = R.attr.md_item_selector)
+    view.background = resolveDrawable(dialog.context, attr = R.attr.md_item_selector)
     return ColorGridViewHolder(view, this)
   }
 
@@ -177,7 +177,7 @@ internal class ColorGridAdapter(
 
     holder.colorCircle!!.color = color
     holder.colorCircle.border =
-        getColor(holder.itemView.context, attr = attr.textColorPrimary)
+        resolveColor(holder.itemView.context, attr = attr.textColorPrimary)
 
     holder.iconView.setImageResource(
         if (color.isColorDark()) R.drawable.icon_checkmark_white

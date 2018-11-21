@@ -14,7 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
-import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
 
 /** Gets the RecyclerView for a list dialog, if there is one. */
@@ -82,4 +82,4 @@ import com.afollestad.materialdialogs.utils.getStringArray
 }
 
 internal fun MaterialDialog.getItemSelector() =
-  getDrawable(context = context, attr = attr.md_item_selector)
+  resolveDrawable(context = context, attr = attr.md_item_selector)

@@ -8,8 +8,7 @@ package com.afollestad.materialdialogs
 import android.R.attr
 import android.content.Context
 import androidx.annotation.StyleRes
-import com.afollestad.materialdialogs.utils.MDUtil.getColor
-import com.afollestad.materialdialogs.utils.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 
 internal enum class Theme(@StyleRes val styleRes: Int) {
@@ -19,7 +18,7 @@ internal enum class Theme(@StyleRes val styleRes: Int) {
   companion object {
     fun inferTheme(context: Context): Theme {
       val isPrimaryDark =
-        getColor(context = context, attr = attr.textColorPrimary).isColorDark()
+        resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
       return if (isPrimaryDark) LIGHT else DARK
     }
   }
