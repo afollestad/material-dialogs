@@ -49,7 +49,6 @@ internal fun assertOneSet(
 
 typealias DialogCallback = (MaterialDialog) -> Unit
 
-/** @author Aidan Follestad (afollestad) */
 class MaterialDialog(
   val windowContext: Context
 ) : Dialog(windowContext, inferTheme(windowContext).styleRes) {
