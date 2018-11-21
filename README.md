@@ -80,15 +80,9 @@ core and normal-use functionality.
 
 ```gradle
 dependencies {
-	
-    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta6'
+  ...
+  implementation 'com.afollestad.material-dialogs:core:2.0.0-beta6'
 }
-```
-
-If Gradle is unable to resolve, add this to your repositories:
-
-```gradle
-maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
 ```
 
 ## Changes in Version 2
@@ -714,15 +708,9 @@ The `input` module contains extensions to the core module, such as a text input 
 
 ```gradle
 dependencies {
-	
-    implementation 'com.afollestad.material-dialogs:input:2.0.0-beta6'
+  ...
+  implementation 'com.afollestad.material-dialogs:input:2.0.0-beta6'
 }
-```
-
-If Gradle is unable to resolve, add this to your repositories:
-
-```gradle
-maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
 ```
 
 ## Text Input
@@ -871,15 +859,9 @@ The `files` module contains extensions to the core module, such as a file and fo
 
 ```gradle
 dependencies {
-	
-    implementation 'com.afollestad.material-dialogs:files:2.0.0-beta6'
+  ...
+  implementation 'com.afollestad.material-dialogs:files:2.0.0-beta6'
 }
-```
-
-If Gradle is unable to resolve, add this to your repositories:
-
-```gradle
-maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
 ```
 
 ## File Choosers
@@ -1047,15 +1029,9 @@ The `color` module contains extensions to the core module, such as a color choos
 
 ```gradle
 dependencies {
-	
-    implementation 'com.afollestad.material-dialogs:color:2.0.0-beta6'
+  ...
+  implementation 'com.afollestad.material-dialogs:color:2.0.0-beta6'
 }
-```
-
-If Gradle is unable to resolve, add this to your repositories:
-
-```gradle
-maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
 ```
 
 ## Color Choosers
