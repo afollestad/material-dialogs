@@ -31,7 +31,6 @@ dependencies {
   implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
   implementation 'com.google.android.material:material:' + versions.androidx
 
-  implementation 'com.afollestad:assent:' + versions.assent
 }
 
 apply from: '../spotless.gradle'
