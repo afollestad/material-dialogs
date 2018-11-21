@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     const val CUSTOM = "custom"
   }
 
-  private var debugMode = false
+  private var debugMode = true
   private lateinit var prefs: SharedPreferences
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -473,9 +473,9 @@ class MainActivity : AppCompatActivity() {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
-        onShow { _ -> toast("onShow") }
-        onCancel { _ -> toast("onCancel") }
-        onDismiss { _ -> toast("onDismiss") }
+        onShow { toast("onShow") }
+        onCancel { toast("onCancel") }
+        onDismiss { toast("onDismiss") }
         debugMode(debugMode)
       }
     }

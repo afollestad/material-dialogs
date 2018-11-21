@@ -1,11 +1,9 @@
 apply from: './dependencies.gradle'
-apply from: './versionsPlugin.gradle'
 
 buildscript {
   apply from: './dependencies.gradle'
 
   repositories {
-    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }
@@ -14,14 +12,11 @@ buildscript {
     classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
     classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
     classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + versions.kotlin
-    classpath 'com.github.ben-manes:gradle-versions-plugin:' + versions.versionPlugin
-    classpath 'com.novoda:bintray-release:' + versions.bintrayPlugin
   }
 }
 
 allprojects {
   repositories {
-    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }

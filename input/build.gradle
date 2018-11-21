@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply from: '../dependencies.gradle'
 
-ext.shard = 'input'
-apply from: '../bintrayconfig.gradle'
 
 android {
   compileSdkVersion versions.compileSdk

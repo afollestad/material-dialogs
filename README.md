@@ -44,47 +44,22 @@
 
 ## Gradle Dependency
 
-[ ![Core](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acore/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
 
 The `core` module contains everything you need to get started with the library. It contains all
 core and normal-use functionality.
 
 ```gradle
 dependencies {
-	
-    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta5'
+
+    implementation 'com.github.georgehargreaves95:material-dialogs:2.0.0-beta5'
 }
+
 ```
 
-If Gradle is unable to resolve, add this to your repositories:
+## Changes in Forked Version
 
-```gradle
-maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
-```
-
-## Changes in Version 2
-
-The whole library has been rebuilt, layouts and everything. The library is 100% Kotlin. APIs have 
-changed and a lot of things will be broken if you upgrade from the older version. Other things 
-to note:
-
-1. **This library will be more opinionated. Not every feature request will be implemented.**
-2. Minimum API level is 16 (Android Jellybean).
-3. There is no longer a separate `Builder` class, it's all-in-one.
-4. The whole library was completely re-written in Kotlin. All the layouts and views were remade 
-as well. **This library is now designed specifically to work with Kotlin - it technically will 
-work with Java, but not pleasantly.**
-5. All main classes exist in the `core` module, the extension modules take advantage of Kotlin 
-extensions to append functionality to it (such as input dialogs, color dialogs, etc.). This way,
-you can include only what your app needs.
-6. The use of the neutral button is deprecated to discourage use, see the 
-[newer Material guidelines](https://material.io/design/components/dialogs.html#actions).
-7. *There is no longer a progress dialog included in library*, since they are discouraged by Google, 
-and discouraged by me. You should prefer a non-blocking inline progress indicator.
-8. No dynamic color support, your dialogs will match your app theme. *I will be making sure 
-[Aesthetic](https://github.com/afollestad/aesthetic) works correctly with this library if you really 
-need dynamic theming.*
-9. Other things will probably be added here.
+In order to protect the integrity of my own projects I've forked and pared down the original MaterialDialogs library. The library isn't particularly intended for public 
+use and isn't under active development.
 
 ## Basics
 
