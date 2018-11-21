@@ -38,10 +38,10 @@ import com.afollestad.materialdialogs.color.utils.clearTopMargin
 import com.afollestad.materialdialogs.color.utils.below
 import com.afollestad.materialdialogs.color.utils.changeHeight
 import com.afollestad.materialdialogs.color.utils.onPageSelected
-import com.afollestad.materialdialogs.color.utils.getColor
 import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
+import com.afollestad.materialdialogs.utils.MDUtil.getColor
 import com.afollestad.materialdialogs.utils.invalidateDividers
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?

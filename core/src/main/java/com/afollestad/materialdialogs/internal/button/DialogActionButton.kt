@@ -13,9 +13,9 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
+import com.afollestad.materialdialogs.utils.MDUtil.getColor
 import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
-import com.afollestad.materialdialogs.utils.dimenPx
-import com.afollestad.materialdialogs.utils.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
 import com.afollestad.materialdialogs.utils.updatePadding
 

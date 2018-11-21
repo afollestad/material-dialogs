@@ -8,8 +8,9 @@ package com.afollestad.materialdialogs
 import android.R.attr
 import android.content.Context
 import androidx.annotation.StyleRes
+import com.afollestad.materialdialogs.utils.MDUtil.getColor
 import com.afollestad.materialdialogs.utils.getColor
-import com.afollestad.materialdialogs.utils.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 
 internal enum class Theme(@StyleRes val styleRes: Int) {
   LIGHT(R.style.MD_Light),

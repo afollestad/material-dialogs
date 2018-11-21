@@ -17,7 +17,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getDrawable
-import com.afollestad.materialdialogs.color.utils.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 
 /** @author Aidan Follestad (afollestad) */
 internal class ColorCircleView(

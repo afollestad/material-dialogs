@@ -6,11 +6,11 @@
 package com.afollestad.materialdialogs.input
 
 import android.content.Context
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.input.utilext.postApply
 
 internal fun MaterialDialog.invalidateInputMaxLength() {
   val maxLength = getInputLayout()!!.counterMaxLength
@@ -28,4 +28,8 @@ internal fun MaterialDialog.showKeyboardIfApplicable() {
       windowContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
   }
+}
+
+internal inline fun <T : View> T.postApply(crossinline exec: T.() -> Unit) = this.post {
+  this.exec()
 }

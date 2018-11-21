@@ -20,8 +20,8 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.ViewCompat
 import com.afollestad.materialdialogs.color.utils.hexValue
-import com.afollestad.materialdialogs.color.utils.isColorDark
-import com.afollestad.materialdialogs.color.utils.textChanged
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.color.utils.toColor
 
 internal typealias HexColorChanged = (Int) -> Boolean
@@ -59,7 +59,7 @@ internal class PreviewFrameView(
       if (it.length < 4) {
         return@textChanged
       }
-      val newColor = it.toColor() ?: return@textChanged
+      val newColor = it.toString().toColor() ?: return@textChanged
       if (onHexChanged(newColor)) {
         hexValueView.post { hexValueView.setSelection(hexValueView.text.length) }
       }

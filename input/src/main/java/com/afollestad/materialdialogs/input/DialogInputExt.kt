@@ -19,7 +19,7 @@ import com.afollestad.materialdialogs.callbacks.onPreShow
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.input.utilext.textChanged
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.textfield.TextInputLayout
 
 typealias InputCallback = ((MaterialDialog, CharSequence) -> Unit)?

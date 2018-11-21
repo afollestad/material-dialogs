@@ -20,12 +20,12 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.files.utilext.betterParent
 import com.afollestad.materialdialogs.files.utilext.friendlyName
-import com.afollestad.materialdialogs.files.utilext.getColor
 import com.afollestad.materialdialogs.files.utilext.hasParent
-import com.afollestad.materialdialogs.files.utilext.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.files.utilext.setVisible
+import com.afollestad.materialdialogs.utils.MDUtil.getColor
 import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
 import java.io.File
 

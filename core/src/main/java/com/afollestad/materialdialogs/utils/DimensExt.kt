@@ -5,7 +5,6 @@
  */
 package com.afollestad.materialdialogs.utils
 
-import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.DimenRes
 import com.afollestad.materialdialogs.MaterialDialog
@@ -27,8 +26,4 @@ internal fun MaterialDialog.dimen(
   } finally {
     a.recycle()
   }
-}
-
-internal fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
-  return context.resources.getDimensionPixelSize(res)
 }

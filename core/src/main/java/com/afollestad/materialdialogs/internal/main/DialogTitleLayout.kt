@@ -16,7 +16,7 @@ import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.isNotVisible
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible

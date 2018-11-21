@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.internal.main.BaseSubLayout
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_BLUE
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_DARK_PINK
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_PINK
-import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible
 

@@ -5,8 +5,6 @@
  */
 package com.afollestad.materialdialogs.color.utils
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
@@ -14,14 +12,8 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.RelativeLayout
 import android.widget.SeekBar
-import android.widget.TextView
-import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
 import androidx.viewpager.widget.ViewPager
-
-internal fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
-  return context.resources.getDimensionPixelSize(res)
-}
 
 internal fun <T : View> T.setVisibleOrGone(visible: Boolean) {
   visibility = if (visible) VISIBLE else GONE
@@ -55,26 +47,6 @@ internal fun Array<SeekBar>.progressChanged(selection: (Int) -> Unit) {
   for (bar in this) {
     bar.setOnSeekBarChangeListener(listener)
   }
-}
-
-internal fun TextView.textChanged(changed: (String) -> Unit) {
-  addTextChangedListener(object : TextWatcher {
-    override fun afterTextChanged(s: Editable?) = Unit
-
-    override fun beforeTextChanged(
-      s: CharSequence?,
-      start: Int,
-      count: Int,
-      after: Int
-    ) = Unit
-
-    override fun onTextChanged(
-      s: CharSequence?,
-      start: Int,
-      before: Int,
-      count: Int
-    ) = changed(s.toString())
-  })
 }
 
 internal fun View.changeHeight(height: Int) {

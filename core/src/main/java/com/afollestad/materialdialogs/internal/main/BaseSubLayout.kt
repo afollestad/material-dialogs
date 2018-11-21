@@ -13,8 +13,8 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
-import com.afollestad.materialdialogs.utils.dimenPx
-import com.afollestad.materialdialogs.utils.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.getColor
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 
 internal abstract class BaseSubLayout(
   context: Context,

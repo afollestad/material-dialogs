@@ -20,7 +20,6 @@ class RtlTextView(
   context: Context,
   attrs: AttributeSet?
 ) : AppCompatTextView(context, attrs) {
-
   init {
     setGravityStartCompat()
   }
