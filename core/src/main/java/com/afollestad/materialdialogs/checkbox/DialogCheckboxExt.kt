@@ -14,7 +14,7 @@ import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.utils.Util
+import com.afollestad.materialdialogs.utils.MDUtil.getString
 import com.afollestad.materialdialogs.utils.maybeSetTextColor
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
@@ -40,7 +40,7 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
   assertOneSet("checkBoxPrompt", text, res)
   view.buttonsLayout.checkBoxPrompt.apply {
     this.visibility = View.VISIBLE
-    this.text = text ?: Util.getString(this@checkBoxPrompt, res)
+    this.text = text ?: getString(this@checkBoxPrompt, res)
     this.isChecked = isCheckedDefault
     this.setOnCheckedChangeListener { _, checked ->
       onToggle?.invoke(checked)

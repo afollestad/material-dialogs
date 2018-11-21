@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
     android:padding="@dimen/color_grid_item_padding"
     tools:layout_height="56dp"
     tools:layout_width="56dp"

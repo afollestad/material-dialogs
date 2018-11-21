@@ -67,7 +67,6 @@
     <item name="android:textSize">@dimen/md_action_button_textsize</item>
     <item name="android:singleLine">true</item>
     <item name="android:gravity">center</item>
-    <item name="android:background">?selectableItemBackground</item>
     <item name="android:minWidth">@dimen/md_action_button_min_width</item>
     <item name="android:paddingLeft">@dimen/md_action_button_padding_horizontal</item>
     <item name="android:paddingRight">@dimen/md_action_button_padding_horizontal</item>

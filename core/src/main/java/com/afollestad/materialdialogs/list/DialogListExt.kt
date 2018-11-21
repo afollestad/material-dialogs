@@ -14,7 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
-import com.afollestad.materialdialogs.utils.getDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.getDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
 
 /** Gets the RecyclerView for a list dialog, if there is one. */

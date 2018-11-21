@@ -41,7 +41,7 @@ import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.getColor
 import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
-import com.afollestad.materialdialogs.utils.Util
+import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import com.afollestad.materialdialogs.utils.invalidateDividers
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
@@ -153,7 +153,6 @@ private fun MaterialDialog.updateGridLayout(
   gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
   gridRecyclerView.attach(this)
 
-  val landscape = Util.isLandscape(context)
   val adapter = ColorGridAdapter(
       dialog = this,
       colors = colors,
@@ -161,7 +160,7 @@ private fun MaterialDialog.updateGridLayout(
       initialSelection = initialSelection,
       waitForPositiveButton = waitForPositiveButton,
       callback = selection,
-      enableARGBButton = allowCustomArgb && landscape
+      enableARGBButton = allowCustomArgb && isLandscape(context)
   )
   gridRecyclerView.adapter = adapter
 }
@@ -201,7 +200,7 @@ private fun MaterialDialog.updateCustomPage(
     alphaSeeker.progress = ALPHA_SOLID
   }
 
-  val landscape = Util.isLandscape(context)
+  val landscape = isLandscape(context)
 
   if (!supportCustomAlpha) {
     alphaLabel.changeHeight(0)
