@@ -57,13 +57,11 @@ import com.afollestad.materialdialogs.utils.getStringArray
   selection: ItemListener = null
 ): MaterialDialog {
   assertOneSet("listItems", items, res)
-  val array = items ?: getStringArray(res)?.toList()
+  val array = items ?: getStringArray(res)?.toList() ?: return this
   val adapter = getListAdapter()
 
   if (adapter is PlainListDialogAdapter) {
-    if (array != null) {
-      adapter.replaceItems(array, selection)
-    }
+    adapter.replaceItems(array, selection)
     if (disabledIndices != null) {
       adapter.disableItems(disabledIndices)
     }
@@ -73,7 +71,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
   return customListAdapter(
       PlainListDialogAdapter(
           dialog = this,
-          items = array!!,
+          items = array,
           disabledItems = disabledIndices,
           waitForActionButton = waitForPositiveButton,
           selection = selection

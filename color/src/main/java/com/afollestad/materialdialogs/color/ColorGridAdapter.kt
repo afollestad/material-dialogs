@@ -175,8 +175,8 @@ internal class ColorGridAdapter(
       if (inSub) subColors!![selectedTopIndex][position - 1]
       else colors[position]
 
-    holder.colorCircle!!.color = color
-    holder.colorCircle.border =
+    holder.colorCircle?.color = color
+    holder.colorCircle?.border =
         resolveColor(holder.itemView.context, attr = attr.textColorPrimary)
 
     holder.iconView.setImageResource(
@@ -192,7 +192,7 @@ internal class ColorGridAdapter(
   private fun invokeCallback() {
     val actualWaitForPositive = waitForPositiveButton && dialog.hasActionButtons()
     if (!actualWaitForPositive) {
-      callback?.invoke(dialog, selectedColor()!!)
+      callback?.invoke(dialog, selectedColor() ?: 0)
     }
   }
 }

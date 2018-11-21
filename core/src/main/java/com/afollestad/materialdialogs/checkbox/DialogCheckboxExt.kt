@@ -38,7 +38,7 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
   onToggle: BooleanCallback
 ): MaterialDialog {
   assertOneSet("checkBoxPrompt", text, res)
-  view.buttonsLayout.checkBoxPrompt.apply {
+  view.buttonsLayout.checkBoxPrompt.run {
     this.visibility = View.VISIBLE
     this.text = text ?: resolveString(this@checkBoxPrompt, res)
     this.isChecked = isCheckedDefault

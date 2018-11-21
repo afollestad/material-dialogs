@@ -30,16 +30,16 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 
 internal fun MaterialDialog.setWindowConstraints() {
-  window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+  window?.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE) ?: return
+  val wm = this.window?.windowManager ?: return
 
-  val wm = this.window!!.windowManager
   val display = wm.defaultDisplay
   val size = Point()
   display.getSize(size)
   val windowWidth = size.x
   val windowHeight = size.y
 
-  context.resources.apply {
+  context.resources.run {
     val windowVerticalPadding = getDimensionPixelSize(
         R.dimen.md_dialog_vertical_margin
     )
@@ -80,7 +80,7 @@ internal fun MaterialDialog.preShow() {
   val customViewNoPadding = config[CUSTOM_VIEW_NO_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
 
-  this.view.apply {
+  this.view.run {
     if (titleLayout.shouldNotBeVisible() && !customViewNoPadding) {
       // Reduce top and bottom padding if we have no title
       contentLayout.modifyFirstAndLastPadding(
@@ -152,6 +152,6 @@ internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialo
   val drawable = GradientDrawable()
   drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
   drawable.setColor(color)
-  window!!.setBackgroundDrawable(drawable)
+  window?.setBackgroundDrawable(drawable)
   return this
 }

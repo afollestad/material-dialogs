@@ -224,7 +224,7 @@ internal class FileChooserAdapter(
   private fun getSelectedIndex(): Int {
     if (selectedFile == null) return -1
     else if (contents?.isEmpty() == true) return -1
-    val index = contents?.indexOfFirst { it.absolutePath == selectedFile!!.absolutePath } ?: -1
+    val index = contents?.indexOfFirst { it.absolutePath == selectedFile?.absolutePath } ?: -1
     return if (index > -1 && currentFolder.hasParent()) index + 1 else index
   }
 }

@@ -21,8 +21,8 @@ import com.afollestad.materialdialogs.assertOneSet
   if (res != null) {
     return ResourcesCompat.getFont(windowContext, res)
   }
-
-  val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr!!))
+  requireNotNull(attr)
+  val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr))
   try {
     val resId = a.getResourceId(0, 0)
     if (resId == 0) return null

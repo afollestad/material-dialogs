@@ -20,7 +20,8 @@ internal fun MaterialDialog.dimen(
   if (res != null) {
     return windowContext.resources.getDimension(res)
   }
-  val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr!!))
+  requireNotNull(attr)
+  val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr))
   try {
     return a.getDimension(0, fallback)
   } finally {

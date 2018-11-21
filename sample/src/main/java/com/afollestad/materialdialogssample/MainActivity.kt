@@ -722,7 +722,7 @@ class MainActivity : AppCompatActivity() {
       customView(R.layout.custom_view, scrollable = true)
       positiveButton(R.string.connect) { dialog ->
         // Pull the password out of the custom view when the positive button is pressed
-        val customView = dialog.getCustomView()!!
+        val customView = dialog.getCustomView() ?: return@positiveButton
         val passwordInput: EditText = customView.findViewById(R.id.password)
         toast("Password: $passwordInput")
       }
@@ -731,7 +731,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Setup custom view content
-    val customView = dialog.getCustomView()!!
+    val customView = dialog.getCustomView() ?: return
     val passwordInput: EditText = customView.findViewById(R.id.password)
     val showPasswordCheck: CheckBox = customView.findViewById(R.id.showPassword)
     showPasswordCheck.setOnCheckedChangeListener { _, isChecked ->
@@ -749,7 +749,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     dialog.onShow {
-      val customView = it.getCustomView()!!
+      val customView = it.getCustomView() ?: return@onShow
       val webView: WebView = customView.findViewById(R.id.web_view)
 
       webView.loadData(
@@ -846,21 +846,21 @@ class MainActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.light_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, LIGHT)
         }
         recreate()
         return true
       }
       R.id.dark_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, DARK)
         }
         recreate()
         return true
       }
       R.id.custom_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, CUSTOM)
         }
         recreate()
@@ -868,7 +868,7 @@ class MainActivity : AppCompatActivity() {
       }
       R.id.debug_mode -> {
         debugMode = !debugMode
-        prefs.apply {
+        prefs.commit {
           putBoolean(KEY_DEBUG_MODE, debugMode)
         }
         invalidateOptionsMenu()

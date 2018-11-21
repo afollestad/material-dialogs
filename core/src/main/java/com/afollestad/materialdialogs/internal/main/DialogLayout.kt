@@ -182,8 +182,9 @@ internal class DialogLayout(
     if (debugPaint == null) {
       debugPaint = Paint()
     }
-    debugPaint!!.style = if (stroke) STROKE else FILL
-    debugPaint!!.color = color
-    return debugPaint!!
+    return debugPaint!!.apply {
+      this.style = if (stroke) STROKE else FILL
+      this.color = color
+    }
   }
 }

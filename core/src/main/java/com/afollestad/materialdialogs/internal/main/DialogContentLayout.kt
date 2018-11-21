@@ -61,12 +61,13 @@ internal class DialogContentLayout(
   ) {
     addContentScrollView()
     if (messageTextView == null) {
-      messageTextView = inflate(R.layout.md_dialog_stub_message, scrollFrame!!)
-      scrollFrame!!.addView(messageTextView)
+      messageTextView = inflate<TextView>(R.layout.md_dialog_stub_message, scrollFrame!!).apply {
+        scrollFrame!!.addView(this)
+      }
     }
 
     typeface.let { messageTextView?.typeface = it }
-    messageTextView!!.apply {
+    messageTextView?.run {
       maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
       setText(text ?: resolveString(dialog, res, html = html))
       setLineSpacing(0f, lineHeightMultiplier)
@@ -81,12 +82,13 @@ internal class DialogContentLayout(
     adapter: RecyclerView.Adapter<*>
   ) {
     if (recyclerView == null) {
-      recyclerView = inflate(R.layout.md_dialog_stub_recyclerview)
-      recyclerView!!.attach(dialog)
-      recyclerView!!.layoutManager = LinearLayoutManager(dialog.windowContext)
+      recyclerView = inflate<DialogRecyclerView>(R.layout.md_dialog_stub_recyclerview).apply {
+        this.attach(dialog)
+        this.layoutManager = LinearLayoutManager(dialog.windowContext)
+      }
       addView(recyclerView)
     }
-    recyclerView!!.adapter = adapter
+    recyclerView?.adapter = adapter
   }
 
   fun addCustomView(
@@ -195,9 +197,10 @@ internal class DialogContentLayout(
 
   private fun addContentScrollView() {
     if (scrollView == null) {
-      scrollView = inflate(R.layout.md_dialog_stub_scrollview)
-      scrollView!!.rootView = rootLayout
-      scrollFrame = scrollView!!.getChildAt(0) as ViewGroup
+      scrollView = inflate<DialogScrollView>(R.layout.md_dialog_stub_scrollview).apply {
+        this.rootView = rootLayout
+        scrollFrame = this.getChildAt(0) as ViewGroup
+      }
       addView(scrollView)
     }
   }

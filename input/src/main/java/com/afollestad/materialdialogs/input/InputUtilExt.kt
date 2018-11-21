@@ -13,8 +13,8 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 
 internal fun MaterialDialog.invalidateInputMaxLength() {
-  val maxLength = getInputLayout()!!.counterMaxLength
-  val currentLength = getInputField()!!.text.length
+  val maxLength = getInputLayout()?.counterMaxLength ?: return
+  val currentLength = getInputField()?.text?.length ?: 0
   if (maxLength > 0) {
     setActionButtonEnabled(POSITIVE, currentLength <= maxLength)
   }
@@ -22,7 +22,7 @@ internal fun MaterialDialog.invalidateInputMaxLength() {
 
 internal fun MaterialDialog.showKeyboardIfApplicable() {
   val editText = getInputField() ?: return
-  editText.postApply {
+  editText.postRun {
     requestFocus()
     val imm =
       windowContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -30,6 +30,6 @@ internal fun MaterialDialog.showKeyboardIfApplicable() {
   }
 }
 
-internal inline fun <T : View> T.postApply(crossinline exec: T.() -> Unit) = this.post {
+internal inline fun <T : View> T.postRun(crossinline exec: T.() -> Unit) = this.post {
   this.exec()
 }

@@ -13,8 +13,7 @@ var toast: Toast? = null
 
 internal fun Activity.toast(message: CharSequence) {
   toast?.cancel()
-  toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-  toast!!.show()
+  toast = Toast.makeText(this, message, Toast.LENGTH_SHORT).apply { show() }
 }
 
 typealias PrefEditor = SharedPreferences.Editor
@@ -26,7 +25,7 @@ internal fun SharedPreferences.boolean(
   return getBoolean(key, defaultValue)
 }
 
-internal inline fun SharedPreferences.apply(crossinline exec: PrefEditor.() -> Unit) {
+internal inline fun SharedPreferences.commit(crossinline exec: PrefEditor.() -> Unit) {
   val editor = this.edit()
   editor.exec()
   editor.apply()

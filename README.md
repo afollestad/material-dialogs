@@ -837,10 +837,10 @@ starts with the letter 'a':
 ```kotlin
 MaterialDialog(this)
   .input(waitForPositiveButton = false) { dialog, text ->
-    val inputField = dialog.getInputField()!!
+    val inputField = dialog.getInputField()
     val isValid = text.startsWith("a", true)
     
-    inputField.error = if (isValid) null else "Must start with an 'a'!"
+    inputField?.error = if (isValid) null else "Must start with an 'a'!"
     dialog.setActionButtonEnabled(POSITIVE, isValid)
   }
   .positiveButton(R.string.submit)

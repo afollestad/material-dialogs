@@ -36,7 +36,7 @@ internal class Job<T>(private val execution: Execution<T>) {
       if (isAborted) return@Runnable
       handler.post { after?.invoke(result) }
     })
-    thread!!.start()
+    thread?.start()
     return this
   }
 }
