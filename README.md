@@ -296,9 +296,7 @@ on `MaterialDialog`:
 ```kotlin
 MaterialDialog(this).show {
 
-  listItemsSingleChoice(R.array.my_items) { _, index, text ->
-    // 
-  }
+  listItemsSingleChoice(R.array.my_items)
 }
 ```
 
