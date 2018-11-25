@@ -125,11 +125,12 @@ internal class DialogContentLayout(
     top: Int = -1,
     bottom: Int = -1
   ) {
+    val targetView = if (scrollView != null) scrollView else recyclerView
     if (top != -1) {
-      scrollView.updatePadding(top = top)
+      targetView.updatePadding(top = top)
     }
     if (bottom != -1) {
-      scrollView.updatePadding(bottom = bottom)
+      targetView.updatePadding(bottom = bottom)
     }
   }
 

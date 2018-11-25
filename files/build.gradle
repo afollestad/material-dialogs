@@ -31,6 +31,7 @@ android {
 dependencies {
   implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:' + versions.coroutines
 
   implementation project(':core')
   implementation project(':input')

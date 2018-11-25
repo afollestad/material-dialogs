@@ -27,6 +27,11 @@ import com.afollestad.materialdialogs.files.utilext.setVisible
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.io.File
 
 internal class FileChooserViewHolder(
@@ -60,21 +65,21 @@ internal class FileChooserAdapter(
   var selectedFile: File? = null
 
   private var currentFolder = initialFolder
-  private var listingJob: Job<List<File>>? = null
+  private var listingJob: Job? = null
   private var contents: List<File>? = null
 
   private val isLightTheme =
     resolveColor(dialog.windowContext, attr = android.R.attr.textColorPrimary).isColorDark()
 
   init {
-    dialog.onDismiss { listingJob?.abort() }
-    loadContents(initialFolder)
+    dialog.onDismiss { listingJob?.cancel() }
+    switchDirectory(initialFolder)
   }
 
   fun itemClicked(index: Int) {
     if (currentFolder.hasParent() && index == goUpIndex()) {
       // go up
-      loadContents(currentFolder.betterParent()!!)
+      switchDirectory(currentFolder.betterParent()!!)
       return
     } else if (currentFolder.canWrite() && allowFolderCreation && index == newFolderIndex()) {
       // New folder
@@ -83,7 +88,7 @@ internal class FileChooserAdapter(
           folderCreationLabel = folderCreationLabel
       ) {
         // Refresh view
-        loadContents(currentFolder)
+        switchDirectory(currentFolder)
       }
       return
     }
@@ -92,7 +97,7 @@ internal class FileChooserAdapter(
     val selected = contents!![actualIndex].jumpOverEmulated()
 
     if (selected.isDirectory) {
-      loadContents(selected)
+      switchDirectory(selected)
     } else {
       val previousSelectedIndex = getSelectedIndex()
       this.selectedFile = selected
@@ -109,30 +114,34 @@ internal class FileChooserAdapter(
     }
   }
 
-  private fun loadContents(directory: File) {
-    if (onlyFolders) {
-      this.selectedFile = directory
-      dialog.setActionButtonEnabled(POSITIVE, true)
-    }
-
-    this.currentFolder = directory
-    dialog.title(text = directory.friendlyName())
-
-    listingJob?.abort()
-    listingJob = job<List<File>> { _ ->
-      val rawContents = directory.listFiles() ?: emptyArray()
+  private fun switchDirectory(directory: File) {
+    listingJob?.cancel()
+    listingJob = GlobalScope.launch(Main) {
       if (onlyFolders) {
-        rawContents
-            .filter { it.isDirectory && filter?.invoke(it) ?: true }
-            .sortedBy { it.name.toLowerCase() }
-      } else {
-        rawContents
-            .filter { filter?.invoke(it) ?: true }
-            .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
+        selectedFile = directory
+        dialog.setActionButtonEnabled(POSITIVE, true)
       }
-    }.after {
-      this.contents = it
-      this.emptyView.setVisible(it.isEmpty())
+
+      currentFolder = directory
+      dialog.title(text = directory.friendlyName())
+
+      val result = async {
+        val rawContents = directory.listFiles() ?: emptyArray()
+        if (onlyFolders) {
+          rawContents
+              .filter { it.isDirectory && filter?.invoke(it) ?: true }
+              .sortedBy { it.name.toLowerCase() }
+        } else {
+          rawContents
+              .filter { filter?.invoke(it) ?: true }
+              .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
+        }
+      }
+
+      contents = result.await()
+          .apply {
+            emptyView.setVisible(isEmpty())
+          }
       notifyDataSetChanged()
     }
   }
