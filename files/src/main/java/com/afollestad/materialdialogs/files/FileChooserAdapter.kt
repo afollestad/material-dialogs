@@ -21,10 +21,10 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.files.utilext.betterParent
 import com.afollestad.materialdialogs.files.utilext.friendlyName
 import com.afollestad.materialdialogs.files.utilext.hasParent
-import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.files.utilext.setVisible
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import java.io.File
@@ -165,13 +165,14 @@ internal class FileChooserAdapter(
     holder: FileChooserViewHolder,
     position: Int
   ) {
-    if (currentFolder.hasParent() && position == goUpIndex()) {
+    val currentParent = currentFolder.betterParent()
+    if (currentParent != null && position == goUpIndex()) {
       // Go up
       holder.iconView.setImageResource(
           if (isLightTheme) R.drawable.icon_return_dark
           else R.drawable.icon_return_light
       )
-      holder.nameView.text = "..."
+      holder.nameView.text = currentParent.name
       holder.itemView.isActivated = false
       return
     }
