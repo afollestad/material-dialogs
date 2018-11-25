@@ -53,7 +53,7 @@ fun MaterialDialog.folderChooser(
     "You must have the READ_EXTERNAL_STORAGE permission first."
   }
 
-  customView(R.layout.md_file_chooser_base)
+  customView(R.layout.md_file_chooser_base, noVerticalPadding = true)
   setActionButtonEnabled(POSITIVE, false)
 
   val customView = getCustomView() ?: return this
