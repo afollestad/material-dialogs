@@ -27,11 +27,12 @@ import com.afollestad.materialdialogs.files.utilext.setVisible
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 internal class FileChooserViewHolder(
@@ -125,7 +126,7 @@ internal class FileChooserAdapter(
       currentFolder = directory
       dialog.title(text = directory.friendlyName())
 
-      val result = async {
+      val result = withContext(IO) {
         val rawContents = directory.listFiles() ?: emptyArray()
         if (onlyFolders) {
           rawContents
@@ -138,10 +139,9 @@ internal class FileChooserAdapter(
         }
       }
 
-      contents = result.await()
-          .apply {
-            emptyView.setVisible(isEmpty())
-          }
+      contents = result.apply {
+        emptyView.setVisible(isEmpty())
+      }
       notifyDataSetChanged()
     }
   }
