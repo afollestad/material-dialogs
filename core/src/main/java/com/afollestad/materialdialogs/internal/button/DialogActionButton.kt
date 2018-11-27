@@ -8,6 +8,7 @@ package com.afollestad.materialdialogs.internal.button
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity.CENTER
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
@@ -25,7 +26,7 @@ import com.afollestad.materialdialogs.utils.updatePadding
  *
  * @author Aidan Follestad (afollestad)
  */
-internal class DialogActionButton(
+class DialogActionButton(
   context: Context,
   attrs: AttributeSet? = null
 ) : AppCompatButton(context, attrs) {
@@ -41,7 +42,7 @@ internal class DialogActionButton(
     isFocusable = true
   }
 
-  fun update(
+  internal fun update(
     baseContext: Context,
     appContext: Context,
     stacked: Boolean
@@ -68,6 +69,11 @@ internal class DialogActionButton(
     else gravity = CENTER
 
     // Invalidate in case enabled state was changed before this method executed
+    isEnabled = isEnabled
+  }
+
+  fun updateTextColor(@ColorInt color: Int) {
+    enabledColor = color
     isEnabled = isEnabled
   }
 

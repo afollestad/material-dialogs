@@ -98,13 +98,13 @@ object MDUtil {
     return ContextCompat.getColor(context, res ?: 0)
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(): Boolean {
+  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(threshold: Double = 0.5): Boolean {
     if (this == Color.TRANSPARENT) {
       return false
     }
     val darkness =
       1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
-    return darkness >= 0.5
+    return darkness >= threshold
   }
 
   @RestrictTo(LIBRARY_GROUP) fun <T : View> T.dimenPx(@DimenRes res: Int): Int {

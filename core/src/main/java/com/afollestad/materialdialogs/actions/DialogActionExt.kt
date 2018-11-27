@@ -5,7 +5,6 @@
  */
 package com.afollestad.materialdialogs.actions
 
-import androidx.appcompat.widget.AppCompatButton
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 
@@ -14,7 +13,7 @@ fun MaterialDialog.hasActionButtons() = view.buttonsLayout.visibleButtons.isNotE
 
 /** Returns the underlying view for an action button in the dialog. */
 fun MaterialDialog.getActionButton(which: WhichButton) =
-  view.buttonsLayout.actionButtons[which.index] as AppCompatButton
+  view.buttonsLayout.actionButtons[which.index]
 
 /** Enables or disables an action button. */
 fun MaterialDialog.setActionButtonEnabled(

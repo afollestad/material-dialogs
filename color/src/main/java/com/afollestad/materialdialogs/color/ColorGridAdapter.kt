@@ -80,7 +80,7 @@ internal class ColorGridAdapter(
       selectedSubIndex = index
       notifyItemChanged(previousSelection)
       notifyItemChanged(selectedSubIndex)
-      invokeCallback()
+      onColorSelected()
       return
     }
 
@@ -100,7 +100,7 @@ internal class ColorGridAdapter(
       }
     }
 
-    invokeCallback()
+    onColorSelected()
     notifyDataSetChanged()
   }
 
@@ -189,10 +189,13 @@ internal class ColorGridAdapter(
     )
   }
 
-  private fun invokeCallback() {
+  private fun onColorSelected() {
+    val selectedColor = selectedColor() ?: 0
     val actualWaitForPositive = waitForPositiveButton && dialog.hasActionButtons()
     if (!actualWaitForPositive) {
-      callback?.invoke(dialog, selectedColor() ?: 0)
+      callback?.invoke(dialog, selectedColor)
     }
+    dialog.updateActionButtonsColor(selectedColor)
+    dialog.setArgbColor(selectedColor)
   }
 }

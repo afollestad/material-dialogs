@@ -5,6 +5,7 @@
  */
 package com.afollestad.materialdialogs.color
 
+import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
@@ -18,31 +19,34 @@ import android.graphics.Color.green
 import android.graphics.Color.red
 import android.graphics.PorterDuff.Mode.SRC_IN
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
+import androidx.annotation.IntRange
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton.NEGATIVE
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.viewpagerdots.DotsIndicator
-import android.view.inputmethod.InputMethodManager
-import androidx.annotation.IntRange
-import com.afollestad.materialdialogs.color.utils.clearTopMargin
 import com.afollestad.materialdialogs.color.utils.below
 import com.afollestad.materialdialogs.color.utils.changeHeight
+import com.afollestad.materialdialogs.color.utils.clearTopMargin
 import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.progressChanged
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.invalidateDividers
+import com.afollestad.viewpagerdots.DotsIndicator
 
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
@@ -89,7 +93,7 @@ fun MaterialDialog.colorChooser(
     viewPager.adapter = ColorPagerAdapter()
     viewPager.onPageSelected { pageIndex ->
       setActionButtonEnabled(POSITIVE, selectedColor(allowCustomArgb) != null)
-      val hexValueView = getPageCustomView().findViewById<EditText>(R.id.hexValueView)
+      val hexValueView = getPageCustomView()!!.findViewById<EditText>(R.id.hexValueView)
 
       if (pageIndex == 0) {
         getCustomView()
@@ -135,6 +139,25 @@ fun MaterialDialog.colorChooser(
   return this
 }
 
+/**
+ * Updates the color displayed in the ARGB page of a color chooser dialog.
+ */
+fun MaterialDialog.setArgbColor(@ColorInt color: Int) {
+  val customPage = getPageCustomView() ?: return
+  val previewFrame =
+    customPage.findViewById<PreviewFrameView>(R.id.preview_frame)
+  previewFrame.setColor(color)
+
+  customPage.findViewById<SeekBar>(R.id.alpha_seeker)
+      .progress = Color.alpha(color)
+  customPage.findViewById<SeekBar>(R.id.red_seeker)
+      .progress = Color.red(color)
+  customPage.findViewById<SeekBar>(R.id.green_seeker)
+      .progress = Color.green(color)
+  customPage.findViewById<SeekBar>(R.id.blue_seeker)
+      .progress = Color.blue(color)
+}
+
 private fun MaterialDialog.updateGridLayout(
   colors: IntArray,
   subColors: Array<IntArray>?,
@@ -171,7 +194,7 @@ private fun MaterialDialog.updateCustomPage(
   waitForPositiveButton: Boolean,
   selection: ColorCallback
 ) {
-  val customPage = getPageCustomView()
+  val customPage = getPageCustomView()!!
   val previewFrame = customPage.findViewById<PreviewFrameView>(R.id.preview_frame)
   val alphaLabel = customPage.findViewById<TextView>(R.id.alpha_label)
   val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
@@ -313,13 +336,14 @@ private fun MaterialDialog.onCustomValueChanged(
   if (!waitForPositiveButton && valueChanged) {
     selection?.invoke(this, color)
   }
+  updateActionButtonsColor(color)
 }
 
 private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {
   if (allowCustomColor) {
     val viewPager = getPager()
     if (viewPager.currentItem == 1) {
-      return getPageCustomView().tag as? Int
+      return getPageCustomView()?.tag as? Int
     }
   }
   return (getPageGridView().adapter as ColorGridAdapter).selectedColor()
@@ -327,12 +351,29 @@ private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {
 
 private fun MaterialDialog.getPageGridView() = findViewById<RecyclerView>(R.id.colorPresetGrid)
 
-private fun MaterialDialog.getPageCustomView() = findViewById<View>(R.id.colorArgbPage)
+private fun MaterialDialog.getPageCustomView() = findViewById<View?>(R.id.colorArgbPage)
 
 private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
 
 internal fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
   getPager().setCurrentItem(index, true)
+}
+
+internal fun MaterialDialog.updateActionButtonsColor(@ColorInt color: Int) {
+  val adjustedColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
+  val isAdjustedDark = adjustedColor.isColorDark(0.25)
+  val isPrimaryDark =
+    resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
+
+  val finalColor = if (isPrimaryDark && !isAdjustedDark) {
+    resolveColor(context = context, attr = attr.textColorPrimary)
+  } else if (!isPrimaryDark && isAdjustedDark) {
+    resolveColor(context = context, attr = attr.textColorPrimaryInverse)
+  } else {
+    adjustedColor
+  }
+  getActionButton(POSITIVE).updateTextColor(finalColor)
+  getActionButton(NEGATIVE).updateTextColor(finalColor)
 }
 
 private fun MaterialDialog.getPageIndicator() =
