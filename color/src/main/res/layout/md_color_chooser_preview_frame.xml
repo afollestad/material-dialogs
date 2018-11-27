@@ -35,7 +35,7 @@
         android:id="@+id/hexValueView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+        android:digits="0123456789ABCDEFabcdef"
         android:fontFamily="sans-serif-medium"
         android:hint="000000"
         android:inputType="text"

@@ -336,7 +336,12 @@ private fun MaterialDialog.onCustomValueChanged(
   if (!waitForPositiveButton && valueChanged) {
     selection?.invoke(this, color)
   }
+
   updateActionButtonsColor(color)
+  getCustomView()?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
+      ?.let {
+        (it.adapter as ColorGridAdapter).updateSelection(color)
+      }
 }
 
 private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {

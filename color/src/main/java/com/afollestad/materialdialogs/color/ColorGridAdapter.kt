@@ -19,8 +19,8 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.color.utils.setVisibleOrGone
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
-import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 
 internal class ColorGridViewHolder(
   itemView: View,
@@ -115,20 +115,23 @@ internal class ColorGridAdapter(
   }
 
   init {
-    if (initialSelection != null) {
-      selectedTopIndex = colors.indexOfFirst { it == initialSelection }
-      if (selectedTopIndex == -1 && subColors != null) {
-        for (section in 0 until subColors.size) {
-          selectedSubIndex = subColors[section].indexOfFirst { it == initialSelection }
-          if (selectedSubIndex != -1) {
-            inSub = true
-            selectedSubIndex++ // compensate for the up arrow
-            selectedTopIndex = section
-            break
-          }
+    initialSelection?.let(this::updateSelection)
+  }
+
+  internal fun updateSelection(@ColorInt color: Int) {
+    selectedTopIndex = colors.indexOfFirst { it == color }
+    if (selectedTopIndex == -1 && subColors != null) {
+      for (section in 0 until subColors.size) {
+        selectedSubIndex = subColors[section].indexOfFirst { it == color }
+        if (selectedSubIndex != -1) {
+          inSub = true
+          selectedSubIndex++ // compensate for the up arrow
+          selectedTopIndex = section
+          break
         }
       }
     }
+    notifyDataSetChanged()
   }
 
   override fun getItemViewType(position: Int): Int {
