@@ -16,7 +16,7 @@
   <dimen name="color_argb_preview_marginRight_landscape">8dp</dimen>
 
   <dimen name="color_argb_label_textSize">18sp</dimen>
-  <dimen name="color_argb_label_marginTop">24dp</dimen>
+  <dimen name="color_argb_label_marginTop">20dp</dimen>
   <dimen name="color_argb_seeker_marginSides">8dp</dimen>
 
   <dimen name="seekbar_grouplayout_tolerance">36dp</dimen>
