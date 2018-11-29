@@ -7,6 +7,8 @@ package com.afollestad.materialdialogs.files
 
 import android.annotation.SuppressLint
 import android.os.Environment.getExternalStorageDirectory
+import android.text.InputFilter
+import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
@@ -19,6 +21,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
 import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
+import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import java.io.File
@@ -96,11 +99,28 @@ internal fun MaterialDialog.showNewFolderCreator(
   @StringRes folderCreationLabel: Int?,
   onCreation: () -> Unit
 ) {
-  MaterialDialog(windowContext).show {
+  val dialog = MaterialDialog(windowContext).show {
     title(folderCreationLabel ?: R.string.files_new_folder)
     input(hintRes = R.string.files_new_folder_hint) { _, input ->
       File(parent, input.toString().trim()).mkdir()
       onCreation()
+    }
+  }
+  dialog.getInputField()
+      ?.blockReservedCharacters()
+}
+
+private fun EditText.blockReservedCharacters() {
+  filters += InputFilter { source, _, _, _, _, _ ->
+    if (source.isEmpty()) {
+      return@InputFilter null
+    }
+    val last = source[source.length - 1]
+    val reservedChars = "?:\"*|/\\<>"
+    if (reservedChars.indexOf(last) > -1) {
+      source.subSequence(0, source.length - 1)
+    } else {
+      null
     }
   }
 }
