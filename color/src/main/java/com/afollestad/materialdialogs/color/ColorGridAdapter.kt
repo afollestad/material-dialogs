@@ -120,11 +120,11 @@ internal class ColorGridAdapter(
 
   internal fun updateSelection(@ColorInt color: Int) {
     selectedTopIndex = colors.indexOfFirst { it == color }
-    if (selectedTopIndex == -1 && subColors != null) {
+    if (subColors != null) {
       for (section in 0 until subColors.size) {
         selectedSubIndex = subColors[section].indexOfFirst { it == color }
-        if (selectedSubIndex != -1) {
-          inSub = true
+        inSub = selectedSubIndex != -1
+        if (inSub) {
           selectedSubIndex++ // compensate for the up arrow
           selectedTopIndex = section
           break

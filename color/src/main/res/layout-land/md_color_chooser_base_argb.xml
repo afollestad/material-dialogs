@@ -24,7 +24,7 @@
 
   <!-- Color SeekBars on the right -->
 
-  <RelativeLayout
+  <com.afollestad.materialdialogs.color.SeekBarGroupLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_toEndOf="@+id/preview_frame"
@@ -177,6 +177,6 @@
         style="@style/ColorChooser.ValueLabel"
         />
 
-  </RelativeLayout>
+  </com.afollestad.materialdialogs.color.SeekBarGroupLayout>
 
 </RelativeLayout>
