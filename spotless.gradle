@@ -10,7 +10,7 @@ spotless {
   kotlin {
     target "**/*.kt"
     ktlint().userData(['indent_size': '2', 'continuation_indent_size': '2'])
-    licenseHeader '/*\n * Licensed under Apache-2.0\n *\n * Designed and developed by Aidan Follestad (@afollestad)\n */'
+    licenseHeaderFile '../spotless.license.kt'
     trimTrailingWhitespace()
     endWithNewline()
   }
