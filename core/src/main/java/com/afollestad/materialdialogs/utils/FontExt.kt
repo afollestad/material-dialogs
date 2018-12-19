@@ -15,6 +15,8 @@
  */
 package com.afollestad.materialdialogs.utils
 
+import android.content.Context
+import android.content.res.Resources
 import android.graphics.Typeface
 import androidx.annotation.AttrRes
 import androidx.annotation.CheckResult
@@ -29,15 +31,24 @@ import com.afollestad.materialdialogs.assertOneSet
 ): Typeface? {
   assertOneSet("font", attr, res)
   if (res != null) {
-    return ResourcesCompat.getFont(windowContext, res)
+    return safeGetFont(windowContext, res)
   }
   requireNotNull(attr)
   val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr))
   try {
     val resId = a.getResourceId(0, 0)
     if (resId == 0) return null
-    return ResourcesCompat.getFont(windowContext, resId)
+    return safeGetFont(windowContext, resId)
   } finally {
     a.recycle()
+  }
+}
+
+private fun safeGetFont(context: Context, @FontRes res: Int): Typeface? {
+  return try {
+    ResourcesCompat.getFont(context, res)
+  } catch (e: Resources.NotFoundException) {
+    e.printStackTrace()
+    null
   }
 }
