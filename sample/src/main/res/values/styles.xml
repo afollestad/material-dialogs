@@ -23,6 +23,7 @@
     <item name="md_font_title">@font/raleway_bold</item>
     <item name="md_font_body">@font/raleway_medium</item>
     <item name="md_font_button">@font/raleway_semibold</item>
+    <item name="md_ripple_color">@color/primary_custom_translucent</item>
   </style>
 
   <style name="SampleHeader" tools:ignore="NewApi">

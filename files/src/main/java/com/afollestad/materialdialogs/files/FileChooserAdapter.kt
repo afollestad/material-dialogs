@@ -34,9 +34,9 @@ import com.afollestad.materialdialogs.files.utilext.hasParent
 import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
 import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
 import com.afollestad.materialdialogs.files.utilext.setVisible
+import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
-import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
@@ -173,7 +173,7 @@ internal class FileChooserAdapter(
   ): FileChooserViewHolder {
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.md_file_chooser_item, parent, false)
-    view.background = resolveDrawable(dialog.context, attr = R.attr.md_item_selector)
+    view.background = dialog.getItemSelector()
 
     val viewHolder = FileChooserViewHolder(view, this)
     viewHolder.nameView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)

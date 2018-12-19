@@ -10,5 +10,6 @@
   <color name="primary_custom">#26c6da</color>
   <color name="primaryDark_custom">#0095a8</color>
   <color name="accent_custom">#6ff9ff</color>
+  <color name="primary_custom_translucent">#4026c6da</color>
 
 </resources>

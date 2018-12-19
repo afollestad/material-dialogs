@@ -28,9 +28,9 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.color.utils.setVisibleOrGone
+import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
-import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 
 internal class ColorGridViewHolder(
   itemView: View,
@@ -163,7 +163,7 @@ internal class ColorGridAdapter(
       else R.layout.md_color_grid_item
     val view = LayoutInflater.from(parent.context)
         .inflate(layoutRes, parent, false)
-    view.background = resolveDrawable(dialog.context, attr = R.attr.md_item_selector)
+    view.background = dialog.getItemSelector()
     return ColorGridViewHolder(view, this)
   }
 

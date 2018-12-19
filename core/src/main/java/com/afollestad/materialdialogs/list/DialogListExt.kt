@@ -17,15 +17,24 @@
 
 package com.afollestad.materialdialogs.list
 
+import android.content.res.ColorStateList.valueOf
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.RippleDrawable
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import androidx.annotation.ArrayRes
 import androidx.annotation.CheckResult
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
+import com.afollestad.materialdialogs.utils.resolveColor
 
 /** Gets the RecyclerView for a list dialog, if there is one. */
 @CheckResult fun MaterialDialog.getRecyclerView(): RecyclerView? {
@@ -89,5 +98,14 @@ import com.afollestad.materialdialogs.utils.getStringArray
   )
 }
 
-internal fun MaterialDialog.getItemSelector() =
-  resolveDrawable(context = context, attr = attr.md_item_selector)
+@RestrictTo(LIBRARY_GROUP)
+fun MaterialDialog.getItemSelector(): Drawable? {
+  val drawable = resolveDrawable(context = context, attr = attr.md_item_selector)
+  if (SDK_INT >= LOLLIPOP && drawable is RippleDrawable) {
+    val rippleColor = resolveColor(attr = R.attr.md_ripple_color)
+    if (rippleColor != 0) {
+      drawable.setColor(valueOf(rippleColor))
+    }
+  }
+  return drawable
+}

@@ -16,6 +16,10 @@
 package com.afollestad.materialdialogs.internal.button
 
 import android.content.Context
+import android.content.res.ColorStateList.valueOf
+import android.graphics.drawable.RippleDrawable
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.util.AttributeSet
 import android.view.Gravity.CENTER
 import androidx.annotation.ColorInt
@@ -24,9 +28,9 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
-import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
 import com.afollestad.materialdialogs.utils.updatePadding
 
@@ -68,7 +72,14 @@ class DialogActionButton(
 
     // Selector
     val selectorAttr = if (stacked) R.attr.md_item_selector else R.attr.md_button_selector
-    background = resolveDrawable(baseContext, attr = selectorAttr)
+    val bgDrawable = resolveDrawable(baseContext, attr = selectorAttr)
+    if (SDK_INT >= LOLLIPOP && bgDrawable is RippleDrawable) {
+      val rippleColor = resolveColor(context = baseContext, attr = R.attr.md_ripple_color)
+      if (rippleColor != 0) {
+        bgDrawable.setColor(valueOf(rippleColor))
+      }
+    }
+    background = bgDrawable
 
     // Padding
     val sidePadding = if (stacked) paddingStacked else paddingDefault
