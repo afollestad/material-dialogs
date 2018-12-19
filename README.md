@@ -33,9 +33,10 @@
 12. [Theming](#theming)
     1. [Light and Dark](#light-and-dark)
     2. [Background Color](#background-color)
-    3. [Corner Radius](#corner-radius)
-    4. [Text Color](#text-color)
-    5. [Fonts](#fonts)
+    3. [Background Color](#ripple-color)
+    4. [Corner Radius](#corner-radius)
+    5. [Text Color](#text-color)
+    6. [Fonts](#fonts)
 
 # Table of Contents - Input
 
@@ -82,7 +83,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.0.0-rc3'
+  implementation 'com.afollestad.material-dialogs:core:2.0.0-rc4'
 }
 ```
 
@@ -632,6 +633,12 @@ Material Dialogs uses the value of the `colorBackgroundFloating` attribute in yo
 for the background color of dialogs. You can also use the `md_background_color` attribute in your 
 theme, which will take precedence.
 
+### Ripple Color
+
+Material Dialogs uses the value of the `?android:colorControlHighlight` attribute in your Activity 
+theme for the ripple color of list items, buttons, etc. by default. You can override this with the 
+`md_ripple_color` theme attribute as well.
+
 ### Corner Radius
 
 Corner radius is the rounding of dialog corners:
@@ -696,7 +703,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.0.0-rc3'
+  implementation 'com.afollestad.material-dialogs:input:2.0.0-rc4'
 }
 ```
 
@@ -854,7 +861,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.0.0-rc3'
+  implementation 'com.afollestad.material-dialogs:files:2.0.0-rc4'
 }
 ```
 
@@ -1033,7 +1040,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.0.0-rc3'
+  implementation 'com.afollestad.material-dialogs:color:2.0.0-rc4'
 }
 ```
 
