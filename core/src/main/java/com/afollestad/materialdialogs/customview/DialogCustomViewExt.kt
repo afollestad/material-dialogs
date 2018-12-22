@@ -21,7 +21,7 @@ import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.assertOneSet
 
-internal const val CUSTOM_VIEW_NO_PADDING = "md.custom_view_no_padding"
+internal const val CUSTOM_VIEW_NO_HORIZONTAL_PADDING = "md.custom_view_no_horizontal_padding"
 
 /** Gets a custom view set by [customView]. */
 @CheckResult fun MaterialDialog.getCustomView(): View? {
@@ -44,7 +44,7 @@ internal const val CUSTOM_VIEW_NO_PADDING = "md.custom_view_no_padding"
   noVerticalPadding: Boolean = false
 ): MaterialDialog {
   assertOneSet("customView", view, viewRes)
-  config[CUSTOM_VIEW_NO_PADDING] = noVerticalPadding
+  config[CUSTOM_VIEW_NO_HORIZONTAL_PADDING] = noVerticalPadding
   this.view.contentLayout.addCustomView(
       res = viewRes,
       view = view,

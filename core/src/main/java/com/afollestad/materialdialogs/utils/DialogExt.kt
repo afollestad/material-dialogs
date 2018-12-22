@@ -35,7 +35,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
-import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_PADDING
+import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_HORIZONTAL_PADDING
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 
@@ -87,11 +87,11 @@ fun MaterialDialog.invalidateDividers(
 ) = view.invalidateDividers(scrolledDown, atBottom)
 
 internal fun MaterialDialog.preShow() {
-  val customViewNoPadding = config[CUSTOM_VIEW_NO_PADDING] as? Boolean == true
+  val customViewNoHorizontalPadding = config[CUSTOM_VIEW_NO_HORIZONTAL_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
 
   this.view.run {
-    if (titleLayout.shouldNotBeVisible() && !customViewNoPadding) {
+    if (titleLayout.shouldNotBeVisible() && !customViewNoHorizontalPadding) {
       // Reduce top and bottom padding if we have no title
       contentLayout.modifyFirstAndLastPadding(
           top = frameMarginVerticalLess,
