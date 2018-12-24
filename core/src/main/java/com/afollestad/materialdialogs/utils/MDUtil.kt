@@ -24,6 +24,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -142,5 +143,16 @@ object MDUtil {
         count: Int
       ) = callback.invoke(s)
     })
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun TextView?.maybeSetTextColor(
+    context: Context,
+    @AttrRes attrRes: Int?
+  ) {
+    if (attrRes == null) return
+    val color = resolveColor(context, attr = attrRes)
+    if (color != 0) {
+      this?.setTextColor(color)
+    }
   }
 }

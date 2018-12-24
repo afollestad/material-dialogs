@@ -24,8 +24,8 @@ import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
-import com.afollestad.materialdialogs.utils.maybeSetTextColor
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
 

@@ -35,9 +35,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import com.afollestad.materialdialogs.utils.inflate
-import com.afollestad.materialdialogs.utils.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.updatePadding
 
 /**

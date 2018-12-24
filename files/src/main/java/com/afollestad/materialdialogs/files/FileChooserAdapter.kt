@@ -32,7 +32,7 @@ import com.afollestad.materialdialogs.files.utilext.betterParent
 import com.afollestad.materialdialogs.files.utilext.friendlyName
 import com.afollestad.materialdialogs.files.utilext.hasParent
 import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
-import com.afollestad.materialdialogs.files.utilext.maybeSetTextColor
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.files.utilext.setVisible
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark

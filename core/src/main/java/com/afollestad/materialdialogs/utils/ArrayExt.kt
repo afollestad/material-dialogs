@@ -16,9 +16,9 @@
 package com.afollestad.materialdialogs.utils
 
 internal inline fun <reified T> List<T>.pullIndices(indices: IntArray): List<T> {
-  val result = mutableListOf<T>()
-  for (index in indices) {
-    result.add(this[index])
+  return mutableListOf<T>().apply {
+    for (index in indices) {
+      add(this@pullIndices[index])
+    }
   }
-  return result
 }

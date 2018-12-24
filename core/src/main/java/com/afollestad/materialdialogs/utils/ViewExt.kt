@@ -22,7 +22,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.TextView
@@ -63,30 +62,6 @@ internal fun <T : View> T?.updatePadding(
     return
   }
   this?.setPadding(left, top, right, bottom)
-}
-
-internal fun <T : View> T.topMargin() = (this.layoutParams as MarginLayoutParams).topMargin
-
-internal fun <T : View> T.updateMargin(
-  left: Int = -1,
-  top: Int = -1,
-  right: Int = -1,
-  bottom: Int = -1
-) {
-  val layoutParams = this.layoutParams as MarginLayoutParams
-  if (left != -1) {
-    layoutParams.leftMargin = left
-  }
-  if (top != -1) {
-    layoutParams.topMargin = top
-  }
-  if (right != -1) {
-    layoutParams.rightMargin = right
-  }
-  if (bottom != -1) {
-    layoutParams.bottomMargin = bottom
-  }
-  this.layoutParams = layoutParams
 }
 
 internal inline fun <T : View> T.waitForLayout(crossinline f: T.() -> Unit) =

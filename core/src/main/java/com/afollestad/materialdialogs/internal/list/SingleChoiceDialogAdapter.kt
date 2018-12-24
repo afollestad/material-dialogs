@@ -29,7 +29,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.inflate
-import com.afollestad.materialdialogs.utils.maybeSetTextColor
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 
 /** @author Aidan Follestad (afollestad) */
 internal class SingleChoiceViewHolder(

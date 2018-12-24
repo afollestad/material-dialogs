@@ -16,13 +16,12 @@
 package com.afollestad.materialdialogs.utils
 
 internal fun IntArray.appendAll(values: Collection<Int>): IntArray {
-  val mutable = this.toMutableList()
-  mutable.addAll(values)
-  return mutable.toIntArray()
+  return toMutableList()
+      .apply { addAll(values) }
+      .toIntArray()
 }
 
 internal fun IntArray.removeAll(values: Collection<Int>): IntArray {
-  val mutable = this.toMutableList()
-  mutable.removeAll { values.contains(it) }
-  return mutable.toIntArray()
+  return toMutableList().apply { removeAll { values.contains(it) } }
+      .toIntArray()
 }
