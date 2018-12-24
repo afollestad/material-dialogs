@@ -16,7 +16,6 @@
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Typeface
 import androidx.annotation.AttrRes
 import androidx.annotation.CheckResult
@@ -47,7 +46,7 @@ import com.afollestad.materialdialogs.assertOneSet
 private fun safeGetFont(context: Context, @FontRes res: Int): Typeface? {
   return try {
     ResourcesCompat.getFont(context, res)
-  } catch (e: Resources.NotFoundException) {
+  } catch (e: Throwable) {
     e.printStackTrace()
     null
   }
