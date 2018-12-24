@@ -28,10 +28,10 @@ dependencies {
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 
-  implementation 'androidx.gridlayout:gridlayout:' + versions.androidx
-  implementation 'androidx.appcompat:appcompat:' + versions.androidx
-  implementation 'androidx.recyclerview:recyclerview:' + versions.androidx
-  implementation 'com.google.android.material:material:' + versions.androidx
+  implementation 'androidx.appcompat:appcompat:' + versions.androidxCore
+  implementation 'androidx.gridlayout:gridlayout:' + versions.androidxRecyclerView
+  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
+  implementation 'com.google.android.material:material:' + versions.androidxMaterial
 
   implementation 'com.afollestad:assent:' + versions.assent
 }
