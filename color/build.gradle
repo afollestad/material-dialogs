@@ -22,10 +22,6 @@ android {
         'src/main/res-public'
     ]
   }
-
-  compileOptions {
-    kotlinOptions.freeCompilerArgs += ['-module-name', "com.afollestad.material-dialogs.color"]
-  }
 }
 
 
