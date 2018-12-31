@@ -61,7 +61,7 @@ abstract class MaterialDialogFragment : DialogFragment() {
    * thus provide a way for further customization
    * @return Return an instance of MaterialDialog to be displayed by the fragment.
    */
-  override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+  final override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     val materialDialog = MaterialDialog(context!!)
     val layoutInflater = LayoutInflater.from(context)
     val view = onCreateView(layoutInflater, savedInstanceState, materialDialog)
