@@ -37,7 +37,7 @@ internal const val CUSTOM_VIEW_NO_HORIZONTAL_PADDING = "md.custom_view_no_horizo
  * @param scrollable Whether or not the custom view is automatically wrapped in a ScrollView.
  * @param noVerticalPadding When set to true, vertical padding is not added around your content.
  */
-@CheckResult fun MaterialDialog.customView(
+fun MaterialDialog.customView(
   @LayoutRes viewRes: Int? = null,
   view: View? = null,
   scrollable: Boolean = false,
