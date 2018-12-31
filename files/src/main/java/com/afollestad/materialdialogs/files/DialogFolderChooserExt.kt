@@ -28,9 +28,17 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
 import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import java.io.File
+
+/** Gets the selected folder for the current folder chooser dialog. */
+@CheckResult
+fun MaterialDialog.selectedFolder(): File? {
+  val customView = getCustomView() ?: return null
+  val list: DialogRecyclerView = customView.findViewById(R.id.list)
+  return (list.adapter as? FileChooserAdapter)?.selectedFile
+}
 
 /**
  * Shows a dialog that lets the user select a local folder.
@@ -44,7 +52,6 @@ import java.io.File
  * @param selection A callback invoked when a folder is selected.
  */
 @SuppressLint("CheckResult")
-@CheckResult
 fun MaterialDialog.folderChooser(
   initialDirectory: File = getExternalStorageDirectory(),
   filter: FileFilter = { !it.isHidden },

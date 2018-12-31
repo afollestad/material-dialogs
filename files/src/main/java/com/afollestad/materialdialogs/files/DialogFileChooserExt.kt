@@ -30,14 +30,22 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
 import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import java.io.File
 
 typealias FileFilter = ((File) -> Boolean)?
 typealias FileCallback = ((dialog: MaterialDialog, file: File) -> Unit)?
+
+/** Gets the selected file for the current file chooser dialog. */
+@CheckResult
+fun MaterialDialog.selectedFile(): File? {
+  val customView = getCustomView() ?: return null
+  val list: DialogRecyclerView = customView.findViewById(R.id.list)
+  return (list.adapter as? FileChooserAdapter)?.selectedFile
+}
 
 /**
  * Shows a dialog that lets the user select a local file.
@@ -51,7 +59,6 @@ typealias FileCallback = ((dialog: MaterialDialog, file: File) -> Unit)?
  * @param selection A callback invoked when a file is selected.
  */
 @SuppressLint("CheckResult")
-@CheckResult
 fun MaterialDialog.fileChooser(
   initialDirectory: File = getExternalStorageDirectory(),
   filter: FileFilter = { !it.isHidden },
