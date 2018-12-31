@@ -601,6 +601,31 @@ val customView = dialog.getCustomView()
 dialog.show()
 ```
 
+Sometimes it's worth to encapsulate your dialog logic to separate class.
+Here you can subclass `MaterialDialogFragment` and implement your logic by overriding `onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?, dialog: MaterialDialog): View`
+
+```kotlin
+class MyBigDialog : MaterialDialogFragment() {
+    lateinit var ratingBar : RatingBar
+
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?, dialog: MaterialDialog): View {
+        val view: View = inflater.inflate(R.layout_my_big_dialog, null)
+        ratingBar = view.findViewById(R.id.rating_bar)
+        ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser -> ... }
+        with(dialog){
+            title(...)
+            positiveButton { ... }
+            negativeButton { ... }
+        }
+        return view
+    }
+}
+```
+then your dialog can be displayed:
+```kotlin
+MyBigDialog().show(fragmentManager, "myBigDialog")
+```
+
 ## Miscellaneous
 
 There are little details which are easy to miss. For an example, auto dismiss controls whether pressing 
