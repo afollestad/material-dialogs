@@ -28,11 +28,9 @@ import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
-import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
-import com.afollestad.materialdialogs.utils.updatePadding
 
 /**
  * Represents an action button in a dialog, positive, negative, or neutral. Handles switching
@@ -44,9 +42,6 @@ class DialogActionButton(
   context: Context,
   attrs: AttributeSet? = null
 ) : AppCompatButton(context, attrs) {
-
-  private val paddingDefault = dimenPx(R.dimen.md_action_button_padding_horizontal)
-  private val paddingStacked = dimenPx(R.dimen.md_stacked_action_button_padding_horizontal)
 
   private var enabledColor: Int = 0
   private var disabledColor: Int = 0
@@ -80,10 +75,6 @@ class DialogActionButton(
       }
     }
     background = bgDrawable
-
-    // Padding
-    val sidePadding = if (stacked) paddingStacked else paddingDefault
-    updatePadding(left = sidePadding, right = sidePadding)
 
     // Text alignment
     if (stacked) setGravityEndCompat()

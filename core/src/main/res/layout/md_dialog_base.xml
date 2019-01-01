@@ -50,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start|center_vertical"
+        android:minHeight="@dimen/md_checkbox_prompt_height"
         android:visibility="gone"
         />
 

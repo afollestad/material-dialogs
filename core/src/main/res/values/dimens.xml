@@ -14,14 +14,18 @@
   <dimen name="md_action_button_frame_padding_neutral">18dp</dimen>
   <dimen name="md_action_button_frame_padding">8dp</dimen>
   <dimen name="md_action_button_frame_padding_first_child">12dp</dimen>
-
-  <dimen name="md_action_button_height">36dp</dimen>
-  <dimen name="md_action_button_min_width">64dp</dimen>
+  <dimen name="md_action_button_inset_vertical">6dp</dimen>
+  <dimen name="md_action_button_inset_horizontal">4dp</dimen>
   <dimen name="md_action_button_padding_horizontal">8dp</dimen>
+  <dimen name="md_action_button_padding_vertical">4dp</dimen>
+
+  <dimen name="md_action_button_height">48dp</dimen>
+  <dimen name="md_action_button_min_width">64dp</dimen>
   <dimen name="md_action_button_spacing">8dp</dimen>
   <dimen name="md_action_button_corner_radius">2dp</dimen>
   <dimen name="md_action_button_textsize">14sp</dimen>
 
+  <dimen name="md_checkbox_prompt_height">48dp</dimen>
   <dimen name="md_stacked_action_button_height">48dp</dimen>
   <dimen name="md_stacked_action_button_padding_horizontal">16dp</dimen>
 
