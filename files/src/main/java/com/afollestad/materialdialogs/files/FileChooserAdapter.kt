@@ -28,14 +28,14 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.callbacks.onDismiss
-import com.afollestad.materialdialogs.files.utilext.betterParent
-import com.afollestad.materialdialogs.files.utilext.friendlyName
-import com.afollestad.materialdialogs.files.utilext.hasParent
-import com.afollestad.materialdialogs.files.utilext.jumpOverEmulated
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.files.utilext.setVisible
+import com.afollestad.materialdialogs.files.util.betterParent
+import com.afollestad.materialdialogs.files.util.friendlyName
+import com.afollestad.materialdialogs.files.util.hasParent
+import com.afollestad.materialdialogs.files.util.jumpOverEmulated
+import com.afollestad.materialdialogs.files.util.setVisible
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -88,9 +88,10 @@ internal class FileChooserAdapter(
   }
 
   fun itemClicked(index: Int) {
-    if (currentFolder.hasParent() && index == goUpIndex()) {
+    val parent = currentFolder.betterParent(allowFolderCreation, filter)
+    if (parent != null && index == goUpIndex()) {
       // go up
-      switchDirectory(currentFolder.betterParent()!!)
+      switchDirectory(parent)
       return
     } else if (currentFolder.canWrite() && allowFolderCreation && index == newFolderIndex()) {
       // New folder
@@ -158,7 +159,7 @@ internal class FileChooserAdapter(
 
   override fun getItemCount(): Int {
     var count = contents?.size ?: 0
-    if (currentFolder.hasParent()) {
+    if (currentFolder.hasParent(allowFolderCreation, filter)) {
       count += 1
     }
     if (allowFolderCreation && currentFolder.canWrite()) {
@@ -184,7 +185,7 @@ internal class FileChooserAdapter(
     holder: FileChooserViewHolder,
     position: Int
   ) {
-    val currentParent = currentFolder.betterParent()
+    val currentParent = currentFolder.betterParent(allowFolderCreation, filter)
     if (currentParent != null && position == goUpIndex()) {
       // Go up
       holder.iconView.setImageResource(
@@ -216,13 +217,13 @@ internal class FileChooserAdapter(
     holder.itemView.isActivated = selectedFile?.absolutePath == item.absolutePath ?: false
   }
 
-  private fun goUpIndex() = if (currentFolder.hasParent()) 0 else -1
+  private fun goUpIndex() = if (currentFolder.hasParent(allowFolderCreation, filter)) 0 else -1
 
-  private fun newFolderIndex() = if (currentFolder.hasParent()) 1 else 0
+  private fun newFolderIndex() = if (currentFolder.hasParent(allowFolderCreation, filter)) 1 else 0
 
   private fun actualIndex(position: Int): Int {
     var actualIndex = position
-    if (currentFolder.hasParent()) {
+    if (currentFolder.hasParent(allowFolderCreation, filter)) {
       actualIndex -= 1
     }
     if (currentFolder.canWrite() && allowFolderCreation) {
@@ -245,6 +246,6 @@ internal class FileChooserAdapter(
     if (selectedFile == null) return -1
     else if (contents?.isEmpty() == true) return -1
     val index = contents?.indexOfFirst { it.absolutePath == selectedFile?.absolutePath } ?: -1
-    return if (index > -1 && currentFolder.hasParent()) index + 1 else index
+    return if (index > -1 && currentFolder.hasParent(allowFolderCreation, filter)) index + 1 else index
   }
 }

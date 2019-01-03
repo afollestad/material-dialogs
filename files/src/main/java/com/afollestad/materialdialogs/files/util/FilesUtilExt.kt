@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.files.utilext
+package com.afollestad.materialdialogs.files.util
 
 import android.Manifest.permission
 import android.content.Context
@@ -21,29 +21,44 @@ import android.content.pm.PackageManager
 import android.os.Environment.getExternalStorageDirectory
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.files.FileFilter
 import java.io.File
 
-internal fun File.hasParent() = betterParent() != null
+internal fun File.hasParent(
+  writeable: Boolean,
+  filter: FileFilter
+) = betterParent(writeable, filter) != null
 
 internal fun File.isExternalStorage() =
   absolutePath == getExternalStorageDirectory().absolutePath
 
 internal fun File.isRoot() = absolutePath == "/"
 
-internal fun File.betterParent(): File? {
-  if (this.isExternalStorage()) {
+internal fun File.betterParent(
+  writeable: Boolean,
+  filter: FileFilter
+): File? {
+  val parentToUse = if (this.isExternalStorage()) {
     // Emulated external storage's parent is empty so jump over it
-    return getExternalStorageDirectory().parentFile.parentFile
+    getExternalStorageDirectory().parentFile.parentFile
+  } else {
+    parentFile
   }
-  if (parentFile?.isRoot() == true) {
-    val rootContent = parentFile.list() ?: emptyArray()
-    if (rootContent.isEmpty()) {
-      // If device isn't rooted, don't allow root dir access so we don't get stuck
-      return null
-    }
+
+  if ((writeable && !parentToUse.canWrite()) || !parentToUse.canRead()) {
+    // We can't access this folder
+    return null
   }
-  // Else normal operation
-  return parentFile
+
+  val folderContent =
+    parentToUse.listFiles()?.filter { filter?.invoke(it) ?: true } ?: emptyList()
+  if (folderContent.isEmpty()) {
+    // There is nothing in this folder most likely because we can't access files inside of it.
+    // We don't want to get stuck here.
+    return null
+  }
+
+  return parentToUse
 }
 
 internal fun File.jumpOverEmulated(): File {

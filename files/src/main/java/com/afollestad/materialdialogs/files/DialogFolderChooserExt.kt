@@ -28,8 +28,8 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.files.utilext.hasReadStoragePermission
-import com.afollestad.materialdialogs.files.utilext.hasWriteStoragePermission
+import com.afollestad.materialdialogs.files.util.hasReadStoragePermission
+import com.afollestad.materialdialogs.files.util.hasWriteStoragePermission
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import java.io.File
