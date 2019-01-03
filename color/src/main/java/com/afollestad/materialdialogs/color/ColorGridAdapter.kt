@@ -160,7 +160,7 @@ internal class ColorGridAdapter(
     viewType: Int
   ): ColorGridViewHolder {
     val layoutRes =
-      if (viewType == 1) R.layout.md_color_grid_item_goup
+      if (viewType == 1) R.layout.md_color_grid_item_go_up
       else R.layout.md_color_grid_item
     val view = LayoutInflater.from(parent.context)
         .inflate(layoutRes, parent, false)

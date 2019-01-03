@@ -31,7 +31,7 @@
         android:text="#"
         />
 
-    <EditText
+    <com.afollestad.materialdialogs.color.view.ObservableEditText
         android:id="@+id/hexValueView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

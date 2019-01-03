@@ -68,6 +68,11 @@ class MaterialDialog(
    */
   val config: MutableMap<String, Any> = mutableMapOf()
 
+  @Suppress("UNCHECKED_CAST")
+  fun <T> config(key: String): T {
+    return config[key] as T
+  }
+
   /** Returns true if auto dismiss is enabled. */
   var autoDismissEnabled: Boolean = true
     internal set

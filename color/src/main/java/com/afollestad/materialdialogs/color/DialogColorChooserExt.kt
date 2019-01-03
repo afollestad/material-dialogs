@@ -19,20 +19,11 @@ import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
-import android.graphics.Color.BLUE
-import android.graphics.Color.GREEN
-import android.graphics.Color.RED
-import android.graphics.Color.alpha
 import android.graphics.Color.argb
-import android.graphics.Color.blue
-import android.graphics.Color.green
-import android.graphics.Color.red
-import android.graphics.PorterDuff.Mode.SRC_IN
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
@@ -48,7 +39,6 @@ import com.afollestad.materialdialogs.color.utils.below
 import com.afollestad.materialdialogs.color.utils.changeHeight
 import com.afollestad.materialdialogs.color.utils.clearTopMargin
 import com.afollestad.materialdialogs.color.utils.onPageSelected
-import com.afollestad.materialdialogs.color.utils.progressChanged
 import com.afollestad.materialdialogs.color.view.PreviewFrameView
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -62,6 +52,11 @@ import com.afollestad.viewpagerdots.DotsIndicator
 typealias ColorCallback = ((dialog: MaterialDialog, color: Int) -> Unit)?
 
 private const val ALPHA_SOLID = 255
+
+private const val KEY_CUSTOM_PAGE_VIEW_SET = "color_custom_page_view_set"
+private const val KEY_CUSTOM_ARGB = "color_custom_argb"
+private const val KEY_SHOW_ALPHA = "color_show_alpha"
+private const val KEY_WAIT_FOR_POSITIVE = "color_wait_for_positive"
 
 /**
  * Shows a dialog with a grid of colors that the user can select from.
@@ -86,10 +81,15 @@ fun MaterialDialog.colorChooser(
   showAlphaSelector: Boolean = false,
   selection: ColorCallback = null
 ): MaterialDialog {
+  config.run {
+    set(KEY_WAIT_FOR_POSITIVE, waitForPositiveButton)
+    set(KEY_CUSTOM_ARGB, allowCustomArgb)
+    set(KEY_SHOW_ALPHA, showAlphaSelector)
+  }
 
   if (!allowCustomArgb) {
     customView(R.layout.md_color_chooser_base_grid)
-    updateGridLayout(
+    setupGridLayout(
         colors = colors,
         subColors = subColors,
         initialSelection = initialSelection,
@@ -119,11 +119,11 @@ fun MaterialDialog.colorChooser(
       }
     }
 
-    val pageIndicator = getPageIndicator()
-    pageIndicator?.attachViewPager(viewPager)
-    pageIndicator?.setDotTint(resolveColor(windowContext, attr = android.R.attr.textColorPrimary))
-
-    updateGridLayout(
+    getPageIndicator()?.run {
+      attachViewPager(viewPager)
+      setDotTint(resolveColor(windowContext, attr = android.R.attr.textColorPrimary))
+    }
+    setupGridLayout(
         colors = colors,
         subColors = subColors,
         initialSelection = initialSelection,
@@ -131,10 +131,9 @@ fun MaterialDialog.colorChooser(
         selection = selection,
         allowCustomArgb = allowCustomArgb
     )
-    updateCustomPage(
+    setupCustomPage(
         supportCustomAlpha = showAlphaSelector,
         initialSelection = initialSelection,
-        waitForPositiveButton = waitForPositiveButton,
         selection = selection
     )
   }
@@ -170,7 +169,7 @@ fun MaterialDialog.setArgbColor(@ColorInt color: Int) {
       .progress = Color.blue(color)
 }
 
-private fun MaterialDialog.updateGridLayout(
+private fun MaterialDialog.setupGridLayout(
   colors: IntArray,
   subColors: Array<IntArray>?,
   @ColorInt initialSelection: Int?,
@@ -178,7 +177,7 @@ private fun MaterialDialog.updateGridLayout(
   selection: ColorCallback,
   allowCustomArgb: Boolean
 ) {
-  require(subColors != null && colors.size != subColors.size) {
+  require(subColors != null && colors.size == subColors.size) {
     "Sub-colors array size should match the colors array size."
   }
 
@@ -200,153 +199,86 @@ private fun MaterialDialog.updateGridLayout(
   gridRecyclerView.adapter = adapter
 }
 
-private fun MaterialDialog.updateCustomPage(
+private fun MaterialDialog.setupCustomPage(
   supportCustomAlpha: Boolean,
   @ColorInt initialSelection: Int?,
-  waitForPositiveButton: Boolean,
   selection: ColorCallback
 ) {
-  val customPage = getPageCustomView() ?: return
-  val previewFrame = customPage.findViewById<PreviewFrameView>(R.id.preview_frame)
-  val alphaLabel = customPage.findViewById<TextView>(R.id.alpha_label)
-  val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
-  val alphaValue = customPage.findViewById<TextView>(R.id.alpha_value)
-  val redLabel = customPage.findViewById<TextView>(R.id.red_label)
-  val redSeeker = customPage.findViewById<SeekBar>(R.id.red_seeker)
-  val redValue = customPage.findViewById<TextView>(R.id.red_value)
-  val greenSeeker = customPage.findViewById<SeekBar>(R.id.green_seeker)
-  val greenValue = customPage.findViewById<TextView>(R.id.green_value)
-  val blueSeeker = customPage.findViewById<SeekBar>(R.id.blue_seeker)
-  val blueValue = customPage.findViewById<TextView>(R.id.blue_value)
+  val viewSet = CustomPageViewSet(this).tint()
+  config[KEY_CUSTOM_PAGE_VIEW_SET] = viewSet
 
-  alphaSeeker.tint(resolveColor(windowContext, attr = android.R.attr.textColorSecondary))
-  redSeeker.tint(RED)
-  greenSeeker.tint(GREEN)
-  blueSeeker.tint(BLUE)
-
-  initialSelection?.let {
-    if (supportCustomAlpha) {
-      alphaSeeker.progress = alpha(it)
-    }
-    redSeeker.progress = red(it)
-    greenSeeker.progress = green(it)
-    blueSeeker.progress = blue(it)
+  initialSelection?.let { color ->
+    viewSet.setColorArgb(color)
   } ?: run {
-    alphaSeeker.progress = ALPHA_SOLID
+    viewSet.setColorAlpha(ALPHA_SOLID)
   }
 
   val landscape = isLandscape(context)
-
   if (!supportCustomAlpha) {
-    alphaLabel.changeHeight(0)
-    alphaSeeker.changeHeight(0)
-    alphaValue.changeHeight(0)
-
+    viewSet.alphaLabel.changeHeight(0)
+    viewSet.alphaSeeker.changeHeight(0)
+    viewSet.alphaValue.changeHeight(0)
     if (!landscape) {
-      redLabel.below(R.id.preview_frame)
+      viewSet.redLabel.below(R.id.preview_frame)
     }
   }
-
   if (landscape) {
     if (!supportCustomAlpha) {
-      redLabel.clearTopMargin()
+      viewSet.redLabel.clearTopMargin()
     } else {
-      alphaLabel.clearTopMargin()
+      viewSet.alphaLabel.clearTopMargin()
     }
   }
 
-  previewFrame.onHexChanged = { color ->
+  viewSet.previewFrame.onHexChanged = { color ->
     if (color != selectedColor(true)) {
-      alphaSeeker.progress = Color.alpha(color)
-      redSeeker.progress = Color.red(color)
-      greenSeeker.progress = Color.green(color)
-      blueSeeker.progress = Color.blue(color)
+      viewSet.setColorArgb(color)
+      invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
       true
     } else {
       false
     }
   }
 
-  arrayOf(alphaSeeker, redSeeker, greenSeeker, blueSeeker).progressChanged {
-    onCustomValueChanged(
-        supportCustomAlpha = supportCustomAlpha,
-        waitForPositiveButton = waitForPositiveButton,
-        valueChanged = true,
-        customView = customPage,
-        previewFrame = previewFrame,
-        alphaSeeker = alphaSeeker,
-        redSeeker = redSeeker,
-        greenSeeker = greenSeeker,
-        blueSeeker = blueSeeker,
-        alphaValue = alphaValue,
-        redValue = redValue,
-        greenValue = greenValue,
-        blueValue = blueValue,
-        selection = selection
-    )
+  viewSet.alphaSeeker.observe {
+    invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
   }
-
-  onCustomValueChanged(
-      supportCustomAlpha = supportCustomAlpha,
-      waitForPositiveButton = waitForPositiveButton,
-      valueChanged = initialSelection != null,
-      customView = customPage,
-      previewFrame = previewFrame,
-      alphaSeeker = alphaSeeker,
-      redSeeker = redSeeker,
-      greenSeeker = greenSeeker,
-      blueSeeker = blueSeeker,
-      alphaValue = alphaValue,
-      redValue = redValue,
-      greenValue = greenValue,
-      blueValue = blueValue,
-      selection = selection
-  )
+  viewSet.redSeeker.observe {
+    invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
+  }
+  viewSet.greenSeeker.observe {
+    invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
+  }
+  viewSet.blueSeeker.observe {
+    invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
+  }
+  invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
 }
 
-private fun MaterialDialog.onCustomValueChanged(
-  supportCustomAlpha: Boolean,
-  waitForPositiveButton: Boolean,
+private fun MaterialDialog.invalidateFromColorChanged(
   valueChanged: Boolean,
-  customView: View,
-  previewFrame: PreviewFrameView,
-  alphaSeeker: SeekBar,
-  redSeeker: SeekBar,
-  greenSeeker: SeekBar,
-  blueSeeker: SeekBar,
-  alphaValue: TextView,
-  redValue: TextView,
-  greenValue: TextView,
-  blueValue: TextView,
   selection: ColorCallback
 ) {
-  if (supportCustomAlpha) {
-    alphaValue.text = alphaSeeker.progress.toString()
-  }
-
-  redValue.text = redSeeker.progress.toString()
-  greenValue.text = greenSeeker.progress.toString()
-  blueValue.text = blueSeeker.progress.toString()
+  val viewSet: CustomPageViewSet = config(KEY_CUSTOM_PAGE_VIEW_SET)
+  val supportCustomAlpha: Boolean = config(KEY_SHOW_ALPHA)
+  val waitForPositiveButton: Boolean = config(KEY_WAIT_FOR_POSITIVE)
 
   val color = argb(
-      if (supportCustomAlpha) alphaSeeker.progress
+      if (supportCustomAlpha) viewSet.alphaSeeker.progress
       else ALPHA_SOLID,
-      redSeeker.progress,
-      greenSeeker.progress,
-      blueSeeker.progress
+      viewSet.redSeeker.progress,
+      viewSet.greenSeeker.progress,
+      viewSet.blueSeeker.progress
   )
+  viewSet.previewFrame.supportCustomAlpha = supportCustomAlpha
+  viewSet.previewFrame.setColor(color)
+  viewSet.setColorArgb(color) // invalidate labels
 
-  previewFrame.supportCustomAlpha = supportCustomAlpha
-  previewFrame.setColor(color)
-
-  // We save the ARGB color as view tag
   if (valueChanged) {
-    customView.tag = color
     setActionButtonEnabled(POSITIVE, true)
-  }
-
-  if (!waitForPositiveButton && valueChanged) {
-    selection?.invoke(this, color)
+    if (!waitForPositiveButton) {
+      selection?.invoke(this, color)
+    }
   }
 
   updateActionButtonsColor(color)
@@ -355,22 +287,6 @@ private fun MaterialDialog.onCustomValueChanged(
         (it.adapter as ColorGridAdapter).updateSelection(color)
       }
 }
-
-private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {
-  if (allowCustomColor) {
-    val viewPager = getPager()
-    if (viewPager.currentItem == 1) {
-      return getPageCustomView()?.tag as? Int
-    }
-  }
-  return (getPageGridView().adapter as ColorGridAdapter).selectedColor()
-}
-
-private fun MaterialDialog.getPageGridView() = findViewById<RecyclerView>(R.id.colorPresetGrid)
-
-private fun MaterialDialog.getPageCustomView() = findViewById<View?>(R.id.colorArgbPage)
-
-private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
 
 internal fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
   getPager().setCurrentItem(index, true)
@@ -393,10 +309,22 @@ internal fun MaterialDialog.updateActionButtonsColor(@ColorInt color: Int) {
   getActionButton(NEGATIVE).updateTextColor(finalColor)
 }
 
+private fun MaterialDialog.selectedColor(allowCustomColor: Boolean): Int? {
+  if (allowCustomColor) {
+    val viewPager = getPager()
+    if (viewPager.currentItem == 1) {
+      val viewSet: CustomPageViewSet = config(KEY_CUSTOM_PAGE_VIEW_SET)
+      return viewSet.previewFrame.color
+    }
+  }
+  return (getPageGridView().adapter as ColorGridAdapter).selectedColor()
+}
+
+private fun MaterialDialog.getPageGridView() = findViewById<RecyclerView>(R.id.colorPresetGrid)
+
+private fun MaterialDialog.getPageCustomView() = findViewById<View?>(R.id.colorArgbPage)
+
+private fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.colorChooserPager)
+
 private fun MaterialDialog.getPageIndicator() =
   findViewById<DotsIndicator?>(R.id.colorChooserPagerDots)
-
-private fun SeekBar.tint(color: Int) {
-  progressDrawable.setColorFilter(color, SRC_IN)
-  thumb.setColorFilter(color, SRC_IN)
-}
