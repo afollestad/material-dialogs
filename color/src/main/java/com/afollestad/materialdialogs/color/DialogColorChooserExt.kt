@@ -103,14 +103,15 @@ fun MaterialDialog.colorChooser(
     viewPager.adapter = ColorPagerAdapter()
     viewPager.onPageSelected { pageIndex ->
       setActionButtonEnabled(POSITIVE, selectedColor(allowCustomArgb) != null)
-      val hexValueView = getPageCustomView()!!.findViewById<EditText>(R.id.hexValueView)
+      val pageView = getPageCustomView() ?: return@onPageSelected
+      val hexValueView = pageView.findViewById<EditText>(R.id.hexValueView)
 
       if (pageIndex == 0) {
         getCustomView()
             ?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
             ?.invalidateDividers()
         val imm =
-          context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+          context.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(hexValueView.windowToken, 0)
       } else {
         invalidateDividers(false, false)
@@ -176,8 +177,8 @@ private fun MaterialDialog.updateGridLayout(
   selection: ColorCallback,
   allowCustomArgb: Boolean
 ) {
-  if (subColors != null && colors.size != subColors.size) {
-    throw IllegalArgumentException("Sub-colors array size should match the colors array size.")
+  require(subColors != null && colors.size != subColors.size) {
+    "Sub-colors array size should match the colors array size."
   }
 
   val gridRecyclerView =
@@ -204,7 +205,7 @@ private fun MaterialDialog.updateCustomPage(
   waitForPositiveButton: Boolean,
   selection: ColorCallback
 ) {
-  val customPage = getPageCustomView()!!
+  val customPage = getPageCustomView() ?: return
   val previewFrame = customPage.findViewById<PreviewFrameView>(R.id.preview_frame)
   val alphaLabel = customPage.findViewById<TextView>(R.id.alpha_label)
   val alphaSeeker = customPage.findViewById<SeekBar>(R.id.alpha_seeker)
