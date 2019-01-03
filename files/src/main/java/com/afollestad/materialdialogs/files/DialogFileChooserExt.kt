@@ -63,13 +63,15 @@ fun MaterialDialog.selectedFile(): File? {
 @SuppressLint("CheckResult")
 fun MaterialDialog.fileChooser(
   initialDirectory: File = getExternalStorageDirectory(),
-  filter: FileFilter = { !it.isHidden },
+  filter: FileFilter = null,
   waitForPositiveButton: Boolean = true,
   emptyTextRes: Int = R.string.files_default_empty_text,
   allowFolderCreation: Boolean = false,
   @StringRes folderCreationLabel: Int? = null,
   selection: FileCallback = null
 ): MaterialDialog {
+  var actualFilter: FileFilter = filter
+
   if (allowFolderCreation) {
     check(hasWriteStoragePermission()) {
       "You must have the WRITE_EXTERNAL_STORAGE permission first."
@@ -77,12 +79,18 @@ fun MaterialDialog.fileChooser(
     check(initialDirectory.canWrite()) {
       "${initialDirectory.absolutePath} is not writeable to your app."
     }
+    if (filter == null) {
+      actualFilter = { !it.isHidden && it.canWrite() }
+    }
   } else {
     check(hasReadStoragePermission()) {
       "You must have the READ_EXTERNAL_STORAGE permission first."
     }
     check(initialDirectory.canRead()) {
       "${initialDirectory.absolutePath} is not readable to your app."
+    }
+    if (filter == null) {
+      actualFilter = { !it.isHidden && it.canRead() }
     }
   }
 
@@ -103,7 +111,7 @@ fun MaterialDialog.fileChooser(
       waitForPositiveButton = waitForPositiveButton,
       emptyView = emptyText,
       onlyFolders = false,
-      filter = filter,
+      filter = actualFilter,
       allowFolderCreation = allowFolderCreation,
       folderCreationLabel = folderCreationLabel,
       callback = selection
