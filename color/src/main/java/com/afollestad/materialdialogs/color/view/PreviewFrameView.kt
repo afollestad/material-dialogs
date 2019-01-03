@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.color
+package com.afollestad.materialdialogs.color.view
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -29,10 +29,13 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.ViewCompat
+import com.afollestad.materialdialogs.color.R
+import com.afollestad.materialdialogs.color.R.drawable
+import com.afollestad.materialdialogs.color.R.layout
 import com.afollestad.materialdialogs.color.utils.hexValue
-import com.afollestad.materialdialogs.utils.MDUtil.textChanged
-import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.color.utils.toColor
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 
 internal typealias HexColorChanged = (Int) -> Boolean
 
@@ -53,10 +56,12 @@ internal class PreviewFrameView(
   var supportCustomAlpha: Boolean = true
   var onHexChanged: HexColorChanged = { true }
 
+  private var lastColor: Int? = null
+
   init {
-    setBackgroundResource(R.drawable.transparent_rect_repeat)
+    setBackgroundResource(drawable.transparent_rect_repeat)
     LayoutInflater.from(context)
-        .inflate(R.layout.md_color_chooser_preview_frame, this)
+        .inflate(layout.md_color_chooser_preview_frame, this)
   }
 
   override fun onFinishInflate() {
@@ -77,6 +82,12 @@ internal class PreviewFrameView(
   }
 
   fun setColor(@ColorInt color: Int) {
+    if (lastColor == color) {
+      // Not changed
+      return
+    }
+    lastColor = color
+
     argbView.background = ColorDrawable(color)
     hexValueView.setText(color.hexValue(supportCustomAlpha))
     hexValueView.post { hexValueView.setSelection(hexValueView.text.length) }

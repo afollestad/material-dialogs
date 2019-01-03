@@ -13,13 +13,13 @@
 
   <!-- Preview -->
 
-  <com.afollestad.materialdialogs.color.PreviewFrameView
+  <com.afollestad.materialdialogs.color.view.PreviewFrameView
       android:id="@+id/preview_frame"
       android:layout_width="match_parent"
       android:layout_height="@dimen/color_argb_preview_height"
       />
 
-  <com.afollestad.materialdialogs.color.SeekBarGroupLayout
+  <com.afollestad.materialdialogs.color.view.SeekBarGroupLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:paddingTop="@dimen/color_argb_preview_marginBottom"
@@ -170,6 +170,6 @@
         style="@style/ColorChooser.ValueLabel"
         />
 
-  </com.afollestad.materialdialogs.color.SeekBarGroupLayout>
+  </com.afollestad.materialdialogs.color.view.SeekBarGroupLayout>
 
 </LinearLayout>

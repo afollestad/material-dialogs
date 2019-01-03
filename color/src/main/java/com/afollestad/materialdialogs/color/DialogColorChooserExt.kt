@@ -49,6 +49,7 @@ import com.afollestad.materialdialogs.color.utils.changeHeight
 import com.afollestad.materialdialogs.color.utils.clearTopMargin
 import com.afollestad.materialdialogs.color.utils.onPageSelected
 import com.afollestad.materialdialogs.color.utils.progressChanged
+import com.afollestad.materialdialogs.color.view.PreviewFrameView
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.color
+package com.afollestad.materialdialogs.color.view
 
 import android.content.Context
 import android.util.AttributeSet

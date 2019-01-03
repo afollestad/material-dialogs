@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.color
+package com.afollestad.materialdialogs.color.view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -27,6 +27,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getDrawable
+import com.afollestad.materialdialogs.color.R.dimen
+import com.afollestad.materialdialogs.color.R.drawable
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 
 /** @author Aidan Follestad (afollestad) */
@@ -38,7 +40,9 @@ internal class ColorCircleView(
   private val strokePaint = Paint()
   private val fillPaint = Paint()
 
-  private val borderWidth = dimenPx(R.dimen.color_circle_view_border)
+  private val borderWidth = dimenPx(
+      dimen.color_circle_view_border
+  )
 
   private var transparentGrid: Drawable? = null
 
@@ -75,7 +79,9 @@ internal class ColorCircleView(
     super.onDraw(canvas)
     if (color == TRANSPARENT) {
       if (transparentGrid == null) {
-        transparentGrid = getDrawable(context, R.drawable.transparentgrid)
+        transparentGrid = getDrawable(context,
+            drawable.transparentgrid
+        )
       }
       transparentGrid?.setBounds(0, 0, measuredWidth, measuredHeight)
       transparentGrid?.draw(canvas)

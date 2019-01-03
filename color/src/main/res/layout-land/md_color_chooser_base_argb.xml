@@ -12,7 +12,7 @@
 
   <!-- Preview -->
 
-  <com.afollestad.materialdialogs.color.PreviewFrameView
+  <com.afollestad.materialdialogs.color.view.PreviewFrameView
       android:id="@+id/preview_frame"
       android:layout_height="match_parent"
       android:layout_width="@dimen/color_argb_preview_width_landscape"
@@ -24,7 +24,7 @@
 
   <!-- Color SeekBars on the right -->
 
-  <com.afollestad.materialdialogs.color.SeekBarGroupLayout
+  <com.afollestad.materialdialogs.color.view.SeekBarGroupLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_toEndOf="@+id/preview_frame"
@@ -177,6 +177,6 @@
         style="@style/ColorChooser.ValueLabel"
         />
 
-  </com.afollestad.materialdialogs.color.SeekBarGroupLayout>
+  </com.afollestad.materialdialogs.color.view.SeekBarGroupLayout>
 
 </RelativeLayout>

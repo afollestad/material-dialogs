@@ -13,7 +13,7 @@
       android:layout_marginBottom="@dimen/color_chooser_pageDots_marginBottom"
       />
 
-  <com.afollestad.materialdialogs.color.WrapContentViewPager
+  <com.afollestad.materialdialogs.color.view.WrapContentViewPager
       android:id="@+id/colorChooserPager"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -23,6 +23,6 @@
 
     <include layout="@layout/md_color_chooser_base_argb"/>
 
-  </com.afollestad.materialdialogs.color.WrapContentViewPager>
+  </com.afollestad.materialdialogs.color.view.WrapContentViewPager>
 
 </LinearLayout>

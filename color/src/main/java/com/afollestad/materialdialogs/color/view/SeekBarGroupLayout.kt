@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.color
+package com.afollestad.materialdialogs.color.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,6 +26,8 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.SeekBar
+import com.afollestad.materialdialogs.color.BuildConfig
+import com.afollestad.materialdialogs.color.R.dimen
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import kotlin.math.abs
 
@@ -35,7 +37,9 @@ class SeekBarGroupLayout(
   attrs: AttributeSet? = null
 ) : RelativeLayout(context, attrs) {
 
-  private val tolerance = dimenPx(R.dimen.seekbar_grouplayout_tolerance)
+  private val tolerance = dimenPx(
+      dimen.seekbar_grouplayout_tolerance
+  )
   private var seekBars = listOf<SeekBar>()
   private var grabbedBar: SeekBar? = null
 

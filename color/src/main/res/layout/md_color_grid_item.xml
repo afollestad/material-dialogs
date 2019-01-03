@@ -9,7 +9,7 @@
     tools:layout_width="56dp"
     >
 
-  <com.afollestad.materialdialogs.color.ColorCircleView
+  <com.afollestad.materialdialogs.color.view.ColorCircleView
       android:id="@+id/color_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
