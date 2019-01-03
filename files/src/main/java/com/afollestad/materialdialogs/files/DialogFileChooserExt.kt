@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("unused")
+
 package com.afollestad.materialdialogs.files
 
 import android.annotation.SuppressLint
@@ -68,10 +70,20 @@ fun MaterialDialog.fileChooser(
   @StringRes folderCreationLabel: Int? = null,
   selection: FileCallback = null
 ): MaterialDialog {
-  if (allowFolderCreation && !hasWriteStoragePermission()) {
-    throw IllegalStateException("You must have the WRITE_EXTERNAL_STORAGE permission first.")
-  } else if (!hasReadStoragePermission()) {
-    throw IllegalStateException("You must have the READ_EXTERNAL_STORAGE permission first.")
+  if (allowFolderCreation) {
+    check(hasWriteStoragePermission()) {
+      "You must have the WRITE_EXTERNAL_STORAGE permission first."
+    }
+    check(initialDirectory.canWrite()) {
+      "${initialDirectory.absolutePath} is not writeable to your app."
+    }
+  } else {
+    check(hasReadStoragePermission()) {
+      "You must have the READ_EXTERNAL_STORAGE permission first."
+    }
+    check(initialDirectory.canRead()) {
+      "${initialDirectory.absolutePath} is not readable to your app."
+    }
   }
 
   customView(R.layout.md_file_chooser_base, noVerticalPadding = true)
