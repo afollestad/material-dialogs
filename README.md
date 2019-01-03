@@ -758,6 +758,18 @@ MaterialDialog(this).show {
 }
 ```
 
+To allow the positive action button to be pressed even when the input is empty:
+
+```kotlin
+MaterialDialog(this).show {
+
+  input(allowEmpty = true) { dialog, text ->
+      // Text submitted with the action button, might be an empty string`
+  }
+  positiveButton(R.string.done)
+}
+```
+
 ### Hints and Prefill
 
 You can set a hint to the input field, which is the gray faded text shown when the field is empty:

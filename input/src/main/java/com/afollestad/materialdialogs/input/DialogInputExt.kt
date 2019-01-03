@@ -52,6 +52,8 @@ typealias InputCallback = ((MaterialDialog, CharSequence) -> Unit)?
  * @param waitForPositiveButton When true, the [callback] isn't invoked until the positive button
  *    is clicked. Otherwise, it's invoked every time the input text changes. Defaults to true if
  *    the dialog has buttons.
+ * @param allowEmpty Defaults to false. When false, the positive action button is disabled unless
+ *    the input field is not empty.
  * @param callback A listener to invoke for input text notifications.
  */
 @SuppressLint("CheckResult")
@@ -64,6 +66,7 @@ fun MaterialDialog.input(
   inputType: Int = InputType.TYPE_CLASS_TEXT,
   maxLength: Int? = null,
   waitForPositiveButton: Boolean = true,
+  allowEmpty: Boolean = false,
   callback: InputCallback = null
 ): MaterialDialog {
   customView(R.layout.md_dialog_stub_input)
@@ -87,7 +90,7 @@ fun MaterialDialog.input(
   }
   setActionButtonEnabled(
       POSITIVE,
-      !waitForPositiveButton || prefillText?.isNotEmpty() == true
+      allowEmpty || prefillText?.isNotEmpty() == true
   )
 
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
@@ -107,7 +110,9 @@ fun MaterialDialog.input(
   }
 
   editText.textChanged {
-    setActionButtonEnabled(POSITIVE, it.isNotEmpty())
+    if (!allowEmpty) {
+      setActionButtonEnabled(POSITIVE, it.isNotEmpty())
+    }
     if (!waitForPositiveButton && callback != null) {
       // We aren't waiting for positive, so invoke every time the text changes
       callback.invoke(this, it)
