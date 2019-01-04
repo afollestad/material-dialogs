@@ -177,7 +177,7 @@ private fun MaterialDialog.setupGridLayout(
   selection: ColorCallback,
   allowCustomArgb: Boolean
 ) {
-  require(subColors != null && colors.size == subColors.size) {
+  require(subColors == null || colors.size == subColors.size) {
     "Sub-colors array size should match the colors array size."
   }
 
