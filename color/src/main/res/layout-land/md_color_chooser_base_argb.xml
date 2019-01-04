@@ -46,7 +46,7 @@
         style="@style/ColorChooser.Label"
         />
 
-    <SeekBar
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
         android:id="@+id/alpha_seeker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         style="@style/ColorChooser.Label"
         />
 
-    <SeekBar
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
         android:id="@+id/red_seeker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         style="@style/ColorChooser.Label"
         />
 
-    <SeekBar
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
         android:id="@+id/green_seeker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
         style="@style/ColorChooser.Label"
         />
 
-    <SeekBar
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
         android:id="@+id/blue_seeker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
