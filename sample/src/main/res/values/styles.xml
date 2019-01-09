@@ -34,10 +34,16 @@
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:fontFamily">sans-serif-light</item>
     <item name="android:layout_marginLeft">@dimen/headerMarginStart</item>
-    <item name="android:layout_marginStart">@dimen/headerMarginStart
-    </item>
+    <item name="android:layout_marginStart">@dimen/headerMarginStart</item>
     <item name="android:layout_marginTop">@dimen/headerMarginVertical</item>
     <item name="android:layout_marginBottom">@dimen/headerMarginVertical</item>
+  </style>
+
+  <style name="SampleButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/sample_button_height</item>
+    <item name="android:layout_marginTop">@dimen/sample_button_spacing</item>
+    <item name="backgroundTint">#80000000</item>
   </style>
 
 </resources>
