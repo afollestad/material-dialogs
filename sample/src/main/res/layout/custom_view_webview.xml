@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="16dp"
     >
   <WebView
       android:id="@+id/web_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:clipToPadding="false"
       android:scrollbars="none"
       />
 </FrameLayout>
