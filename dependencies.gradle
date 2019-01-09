@@ -23,6 +23,6 @@ ext.versions = [
     coroutines          : '1.1.0',
 
     // afollestad
-    assent              : '2.2.0',
+    assent              : '2.2.2',
     dotsIndicator       : '1.0.0'
 ]
