@@ -49,7 +49,7 @@ import com.afollestad.materialdialogs.utils.resolveColor
 
 /** A shortcut to [RecyclerView.getAdapter] on [getRecyclerView]. */
 @CheckResult fun MaterialDialog.getListAdapter(): RecyclerView.Adapter<*>? {
-  return getRecyclerView().adapter
+  return this.view.contentLayout.recyclerView?.adapter
 }
 
 /**
