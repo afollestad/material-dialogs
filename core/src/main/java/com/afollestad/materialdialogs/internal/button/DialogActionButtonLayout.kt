@@ -59,7 +59,7 @@ internal class DialogActionButtonLayout(
   private val buttonFramePaddingFirstChild =
     dimenPx(R.dimen.md_action_button_frame_padding_first_child)
   private val buttonFramePaddingNeutral = dimenPx(R.dimen.md_action_button_frame_padding_neutral)
-  private val buttonSpacing = dimenPx(R.dimen.md_action_button_spacing)
+  private val buttonSpacing = 0
 
   private val checkBoxPromptMarginVertical = dimenPx(R.dimen.md_checkbox_prompt_margin_vertical)
   private val checkBoxPromptMarginHorizontal = dimenPx(R.dimen.md_checkbox_prompt_margin_horizontal)
