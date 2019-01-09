@@ -1,19 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
   </style>
 
-  <style name="AppTheme.Dark" parent="Theme.AppCompat">
+  <style name="AppTheme.Dark" parent="Theme.MaterialComponents">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
   </style>
 
-  <style name="AppTheme.Custom" parent="Theme.AppCompat.Light">
+  <style name="AppTheme.Custom" parent="Theme.MaterialComponents.Light">
     <item name="colorPrimary">@color/primary_custom</item>
     <item name="colorPrimaryDark">@color/primaryDark_custom</item>
     <item name="colorAccent">@color/accent_custom</item>

@@ -37,8 +37,7 @@ import java.io.File
 /** Gets the selected folder for the current folder chooser dialog. */
 @CheckResult
 fun MaterialDialog.selectedFolder(): File? {
-  val customView = getCustomView() ?: return null
-  val list: DialogRecyclerView = customView.findViewById(R.id.list)
+  val list: DialogRecyclerView = getCustomView().findViewById(R.id.list)
   return (list.adapter as? FileChooserAdapter)?.selectedFile
 }
 

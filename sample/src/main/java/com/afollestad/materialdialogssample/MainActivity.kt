@@ -732,8 +732,7 @@ class MainActivity : AppCompatActivity() {
       customView(R.layout.custom_view, scrollable = true)
       positiveButton(R.string.connect) { dialog ->
         // Pull the password out of the custom view when the positive button is pressed
-        val customView = dialog.getCustomView() ?: return@positiveButton
-        val passwordInput: EditText = customView.findViewById(R.id.password)
+        val passwordInput: EditText = dialog.getCustomView().findViewById(R.id.password)
         toast("Password: $passwordInput")
       }
       negativeButton(android.R.string.cancel)
@@ -741,7 +740,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Setup custom view content
-    val customView = dialog.getCustomView() ?: return
+    val customView = dialog.getCustomView()
     val passwordInput: EditText = customView.findViewById(R.id.password)
     val showPasswordCheck: CheckBox = customView.findViewById(R.id.showPassword)
     showPasswordCheck.setOnCheckedChangeListener { _, isChecked ->
@@ -759,9 +758,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     dialog.onShow {
-      val customView = it.getCustomView() ?: return@onShow
-      val webView: WebView = customView.findViewById(R.id.web_view)
-
+      val webView: WebView = it.getCustomView().findViewById(R.id.web_view)
       webView.loadData(
           "<h3>WebView Custom View</h3>\n" +
               "\n" +

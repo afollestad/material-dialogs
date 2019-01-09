@@ -96,11 +96,11 @@ fun MaterialDialog.input(
 
   if (callback != null && waitForPositiveButton) {
     // Add an additional callback to invoke the input listener after the positive AB is pressed
-    positiveButton { callback.invoke(this@input, getInputField()?.text ?: "") }
+    positiveButton { callback.invoke(this@input, getInputField().text ?: "") }
   }
 
   val resources = windowContext.resources
-  val editText = getInputField() ?: return this
+  val editText = getInputField()
 
   val prefillText = prefill ?: if (prefillRes != null) resources.getString(prefillRes) else null
   if (prefillText != null) {
@@ -116,7 +116,7 @@ fun MaterialDialog.input(
   editText.inputType = inputType
 
   if (maxLength != null) {
-    getInputLayout()?.run {
+    getInputLayout().run {
       isCounterEnabled = true
       counterMaxLength = maxLength
     }
