@@ -23,9 +23,15 @@ import com.afollestad.materialdialogs.assertOneSet
 
 internal const val CUSTOM_VIEW_NO_HORIZONTAL_PADDING = "md.custom_view_no_horizontal_padding"
 
-/** Gets a custom view set by [customView]. */
-@CheckResult fun MaterialDialog.getCustomView(): View? {
-  return this.view.contentLayout.customView
+/**
+ * Gets the custom view for the dialog, set by [customView].
+ *
+ * @throws IllegalStateException if there is no custom view set.
+ */
+@CheckResult fun MaterialDialog.getCustomView(): View {
+  return this.view.contentLayout.customView ?: throw IllegalStateException(
+      "You have not setup this dialog as a customView dialog."
+  )
 }
 
 /**

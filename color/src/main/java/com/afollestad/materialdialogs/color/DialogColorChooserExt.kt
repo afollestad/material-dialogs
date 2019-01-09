@@ -109,8 +109,8 @@ fun MaterialDialog.colorChooser(
 
       if (pageIndex == 0) {
         getCustomView()
-            ?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
-            ?.invalidateDividers()
+            .findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
+            .invalidateDividers()
         val imm =
           context.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(hexValueView.windowToken, 0)
@@ -181,8 +181,8 @@ private fun MaterialDialog.setupGridLayout(
     "Sub-colors array size should match the colors array size."
   }
 
-  val gridRecyclerView =
-    getCustomView()?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid) ?: return
+  val gridRecyclerView = getCustomView()
+      .findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
   val gridColumnCount = windowContext.resources.getInteger(R.integer.color_grid_column_count)
   gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
   gridRecyclerView.attach(this)
@@ -282,7 +282,8 @@ private fun MaterialDialog.invalidateFromColorChanged(
   }
 
   updateActionButtonsColor(color)
-  getCustomView()?.findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
+  getCustomView()
+      .findViewById<DialogRecyclerView>(R.id.colorPresetGrid)
       ?.let {
         (it.adapter as ColorGridAdapter).updateSelection(color)
       }

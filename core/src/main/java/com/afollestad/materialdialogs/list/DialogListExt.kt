@@ -36,14 +36,20 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
 import com.afollestad.materialdialogs.utils.resolveColor
 
-/** Gets the RecyclerView for a list dialog, if there is one. */
-@CheckResult fun MaterialDialog.getRecyclerView(): RecyclerView? {
-  return this.view.contentLayout.recyclerView
+/**
+ * Gets the RecyclerView for a list dialog, if there is one.
+ *
+ * @throws IllegalStateException if the dialog is not a list dialog.
+ */
+@CheckResult fun MaterialDialog.getRecyclerView(): RecyclerView {
+  return this.view.contentLayout.recyclerView ?: throw IllegalStateException(
+      "This dialog is not a list dialog."
+  )
 }
 
 /** A shortcut to [RecyclerView.getAdapter] on [getRecyclerView]. */
 @CheckResult fun MaterialDialog.getListAdapter(): RecyclerView.Adapter<*>? {
-  return getRecyclerView()?.adapter
+  return getRecyclerView().adapter
 }
 
 /**
