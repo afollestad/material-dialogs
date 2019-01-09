@@ -134,8 +134,19 @@ internal class DialogActionButtonLayout(
       for (button in visibleButtons) {
         totalWidth += button.measuredWidth + buttonSpacing
       }
-      if (totalWidth >= parentWidth) {
+      if (totalWidth >= parentWidth && !stackButtons) {
         stackButtons = true
+        for (button in visibleButtons) {
+          button.measure(
+              makeMeasureSpec(parentWidth, EXACTLY),
+              makeMeasureSpec(buttonHeightStacked, EXACTLY)
+          )
+          button.update(
+              baseContext = baseContext,
+              appContext = appContext,
+              stacked = true
+          )
+        }
       }
     }
 
