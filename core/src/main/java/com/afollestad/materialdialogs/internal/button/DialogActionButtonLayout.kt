@@ -56,8 +56,6 @@ internal class DialogActionButtonLayout(
   private val buttonHeightDefault = dimenPx(R.dimen.md_action_button_height)
   private val buttonHeightStacked = dimenPx(R.dimen.md_stacked_action_button_height)
   private val buttonFramePadding = dimenPx(R.dimen.md_action_button_frame_padding)
-  private val buttonFramePaddingFirstChild =
-    dimenPx(R.dimen.md_action_button_frame_padding_first_child)
   private val buttonFramePaddingNeutral = dimenPx(R.dimen.md_action_button_frame_padding_neutral)
   private val buttonSpacing = 0
 
@@ -206,7 +204,7 @@ internal class DialogActionButtonLayout(
         )
       }
 
-      var leftX = buttonFramePaddingFirstChild
+      var leftX = buttonFramePadding
       if (actionButtons[INDEX_POSITIVE].isVisible()) {
         val btn = actionButtons[INDEX_POSITIVE]
         val rightX = leftX + btn.measuredWidth
@@ -233,7 +231,7 @@ internal class DialogActionButtonLayout(
         )
       }
 
-      var rightX = measuredWidth - buttonFramePaddingFirstChild
+      var rightX = measuredWidth - buttonFramePadding
       if (actionButtons[INDEX_POSITIVE].isVisible()) {
         val btn = actionButtons[INDEX_POSITIVE]
         val leftX = rightX - btn.measuredWidth

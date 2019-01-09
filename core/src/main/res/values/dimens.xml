@@ -13,7 +13,6 @@
 
   <dimen name="md_action_button_frame_padding_neutral">18dp</dimen>
   <dimen name="md_action_button_frame_padding">8dp</dimen>
-  <dimen name="md_action_button_frame_padding_first_child">12dp</dimen>
   <dimen name="md_action_button_inset_vertical">6dp</dimen>
   <dimen name="md_action_button_inset_horizontal">4dp</dimen>
   <dimen name="md_action_button_padding_horizontal">12dp</dimen>
