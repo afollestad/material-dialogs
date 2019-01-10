@@ -47,9 +47,9 @@ internal class PreviewFrameView(
     const val HEX_VALUE_ALPHA_THRESHOLD = 50
   }
 
-  lateinit var argbView: View
-  lateinit var hexPrefixView: TextView
-  lateinit var hexValueView: ObservableEditText
+  private lateinit var argbView: View
+  private lateinit var hexPrefixView: TextView
+  private lateinit var hexValueView: ObservableEditText
 
   var supportCustomAlpha: Boolean = true
   var onHexChanged: HexColorChanged = { true }

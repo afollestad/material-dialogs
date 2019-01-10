@@ -20,7 +20,16 @@ import android.graphics.Color
 internal fun Int.hexValue(includeAlpha: Boolean) = if (this == 0) {
   if (includeAlpha) "00000000" else "000000"
 } else {
-  if (includeAlpha) Integer.toHexString(this) else String.format("%06X", 0xFFFFFF and this)
+  if (includeAlpha) {
+    val result = Integer.toHexString(this)
+    if (result.length == 6) {
+      "00$result"
+    } else {
+      result
+    }
+  } else {
+    String.format("%06X", 0xFFFFFF and this)
+  }
 }
 
 internal fun String.toColor(): Int? {
