@@ -18,6 +18,9 @@ package com.afollestad.materialdialogs.color.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.MeasureSpec.AT_MOST
+import android.view.View.MeasureSpec.EXACTLY
+import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.makeMeasureSpec
 import androidx.viewpager.widget.ViewPager
 
@@ -32,20 +35,38 @@ internal class WrapContentViewPager(
   ) {
     var newHeightSpec = heightMeasureSpec
 
-    var height = 0
-    for (i in 0 until childCount) {
-      val child = getChildAt(i)
+    var maxChildHeight = 0
+    forEachChild { child ->
       child.measure(
-          widthMeasureSpec, makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+          widthMeasureSpec,
+          makeMeasureSpec(0, UNSPECIFIED)
       )
       val h = child.measuredHeight
-      if (h > height) height = h
+      if (h > maxChildHeight) maxChildHeight = h
     }
 
-    if (height != 0) {
-      newHeightSpec = makeMeasureSpec(height, View.MeasureSpec.EXACTLY)
+    if (maxChildHeight != 0) {
+      newHeightSpec = makeMeasureSpec(maxChildHeight, EXACTLY)
+
+      // Loop over children again and enforce a max height to make sure scrollable
+      // children are correctly scrollable.
+      forEachChild { child ->
+        if (child.measuredHeight > maxChildHeight) {
+          child.measure(
+              widthMeasureSpec,
+              makeMeasureSpec(maxChildHeight, AT_MOST)
+          )
+        }
+      }
     }
 
     super.onMeasure(widthMeasureSpec, newHeightSpec)
+  }
+
+  private fun forEachChild(each: (View) -> Unit) {
+    for (i in 0 until childCount) {
+      val child = getChildAt(i)
+      each(child)
+    }
   }
 }
