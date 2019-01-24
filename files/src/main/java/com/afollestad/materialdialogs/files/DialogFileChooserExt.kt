@@ -44,7 +44,7 @@ typealias FileCallback = ((dialog: MaterialDialog, file: File) -> Unit)?
 /** Gets the selected file for the current file chooser dialog. */
 @CheckResult
 fun MaterialDialog.selectedFile(): File? {
-  val customView = getCustomView() ?: return null
+  val customView = getCustomView()
   val list: DialogRecyclerView = customView.findViewById(R.id.list)
   return (list.adapter as? FileChooserAdapter)?.selectedFile
 }
@@ -143,8 +143,7 @@ internal fun MaterialDialog.showNewFolderCreator(
       onCreation()
     }
   }
-  dialog.getInputField()
-      ?.blockReservedCharacters()
+  dialog.getInputField().blockReservedCharacters()
 }
 
 private fun EditText.blockReservedCharacters() {

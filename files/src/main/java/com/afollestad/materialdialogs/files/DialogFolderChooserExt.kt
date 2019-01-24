@@ -89,7 +89,7 @@ fun MaterialDialog.folderChooser(
   customView(R.layout.md_file_chooser_base, noVerticalPadding = true)
   setActionButtonEnabled(POSITIVE, false)
 
-  val customView = getCustomView() ?: return this
+  val customView = getCustomView()
   val list: DialogRecyclerView = customView.findViewById(R.id.list)
   val emptyText: TextView = customView.findViewById(R.id.empty_text)
   emptyText.setText(emptyTextRes)
