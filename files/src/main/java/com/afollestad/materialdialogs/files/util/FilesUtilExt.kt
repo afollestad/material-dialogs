@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("SpellCheckingInspection")
+
 package com.afollestad.materialdialogs.files.util
 
 import android.Manifest.permission
@@ -38,12 +40,12 @@ internal fun File.betterParent(
   writeable: Boolean,
   filter: FileFilter
 ): File? {
-  val parentToUse = if (this.isExternalStorage()) {
+  val parentToUse = (if (this.isExternalStorage()) {
     // Emulated external storage's parent is empty so jump over it
-    getExternalStorageDirectory().parentFile.parentFile
+    getExternalStorageDirectory()?.parentFile?.parentFile
   } else {
     parentFile
-  }
+  }) ?: return null
 
   if ((writeable && !parentToUse.canWrite()) || !parentToUse.canRead()) {
     // We can't access this folder
