@@ -18,7 +18,6 @@ package com.afollestad.materialdialogs.color.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.makeMeasureSpec
@@ -41,26 +40,19 @@ internal class WrapContentViewPager(
           widthMeasureSpec,
           makeMeasureSpec(0, UNSPECIFIED)
       )
+
       val h = child.measuredHeight
-      if (h > maxChildHeight) maxChildHeight = h
+      if (h > maxChildHeight) {
+        maxChildHeight = h
+      }
     }
 
     val maxAllowedHeightFromParent = MeasureSpec.getSize(heightMeasureSpec)
-    if (maxChildHeight > maxAllowedHeightFromParent) maxChildHeight = maxAllowedHeightFromParent
-
+    if (maxChildHeight > maxAllowedHeightFromParent) {
+      maxChildHeight = maxAllowedHeightFromParent
+    }
     if (maxChildHeight != 0) {
       newHeightSpec = makeMeasureSpec(maxChildHeight, EXACTLY)
-
-      // Loop over children again and enforce a max height to make sure scrollable
-      // children are correctly scrollable.
-      forEachChild { child ->
-        if (child.measuredHeight > maxChildHeight) {
-          child.measure(
-              widthMeasureSpec,
-              makeMeasureSpec(maxChildHeight, AT_MOST)
-          )
-        }
-      }
     }
 
     super.onMeasure(widthMeasureSpec, newHeightSpec)
