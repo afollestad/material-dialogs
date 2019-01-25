@@ -45,6 +45,9 @@ internal class WrapContentViewPager(
       if (h > maxChildHeight) maxChildHeight = h
     }
 
+    val maxAllowedHeightFromParent = MeasureSpec.getSize(heightMeasureSpec)
+    if (maxChildHeight > maxAllowedHeightFromParent) maxChildHeight = maxAllowedHeightFromParent
+
     if (maxChildHeight != 0) {
       newHeightSpec = makeMeasureSpec(maxChildHeight, EXACTLY)
 
