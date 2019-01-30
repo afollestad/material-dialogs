@@ -153,7 +153,6 @@ There are simple methods for adding action buttons:
 
 ```kotlin
 MaterialDialog(this).show {
-
   positiveButton(R.string.agree)
   negativeButton(R.string.disagree)
 }
@@ -163,7 +162,6 @@ You can use literal strings here as well:
 
 ```kotlin
 MaterialDialog(this).show {
-
   positiveButton(text = "Agree")
   negativeButton(text = "Disagree")
 }
@@ -175,7 +173,6 @@ Listening for clicks on the buttons is as simple as adding a lambda to the end:
 
 ```kotlin
 MaterialDialog(this).show {
-
   positiveButton(R.string.agree) { dialog ->
     // Do something
   }
@@ -198,7 +195,6 @@ You can display an icon to the left of the title:
 
 ```kotlin
 MaterialDialog(this).show {
-
   icon(R.drawable.your_icon)
 }
 ```
@@ -208,7 +204,6 @@ You can pass a Drawable instance as well:
 ```kotlin
 val myDrawable: Drawable = // ...
 MaterialDialog(this).show {
-
   icon(drawable = myDrawable)
 }
 ```
@@ -219,7 +214,6 @@ There are a few lifecycle callbacks you can hook into:
 
 ```kotlin
 MaterialDialog(this).show {
-
   onPreShow { dialog -> }
   onShow { dialog -> }
   onDismiss { dialog -> }
@@ -233,7 +227,6 @@ Dismissing a dialog closes it, it's just a simple method inherited from the pare
 
 ```kotlin
 val dialog: MaterialDialog = // ...
-
 dialog.dismiss()
 ```
 
@@ -244,7 +237,6 @@ action button or a call to the method above.
 
 ```kotlin
 MaterialDialog(this).show {
-
   cancelable(false)  // calls setCancelable on the underlying dialog
   cancelOnTouchOutside(false)  // calls setCanceledOnTouchOutside on the underlying dialog
 }
@@ -260,7 +252,6 @@ You can show lists using the `listItems` extension on `MaterialDialog`:
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItems(R.array.socialNetworks)
 }
 ```
@@ -271,7 +262,6 @@ You can pass a literal string array too:
 val myItems = listOf("Hello", "World")
 
 MaterialDialog(this).show {
-
   listItems(items = myItems)
 }
 ```
@@ -280,7 +270,6 @@ To get item selection events, just append a lambda:
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItems(R.array.socialNetworks) { dialog, index, text ->
     // Invoked when the user taps an item
   }
@@ -296,7 +285,6 @@ on `MaterialDialog`:
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsSingleChoice(R.array.my_items)
 }
 ```
@@ -307,7 +295,6 @@ You can pass a literal string array too:
 val myItems = listOf("Hello", "World")
 
 MaterialDialog(this).show {
-
   listItemsSingleChoice(items = myItems)
 }
 ```
@@ -318,7 +305,6 @@ If you want an option to be selected when the dialog opens, you can pass an `ini
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsSingleChoice(R.array.my_items, initialSelection = 1)
 }
 ```
@@ -327,7 +313,6 @@ To get item selection events, just append a lambda:
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsSingleChoice(R.array.my_items) { dialog, index, text ->
     // Invoked when the user selects an item
   }
@@ -339,7 +324,6 @@ you add a positive action button...
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsSingleChoice(R.array.my_items) { dialog, index, text ->
     // Invoked when the user selects an item
   }
@@ -356,7 +340,6 @@ An added bonus, you can disable items from being selected/unselected:
 val indices = intArrayOf(0, 2)
 
 MaterialDialog(this).show {
-
   listItemsSingleChoice(R.array.my_items, disabledIndices = indices)
 }
 ```
@@ -385,7 +368,6 @@ You can show multiple choice (checkbox) lists using the `listItemsMultiChoice` e
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsMultiChoice(R.array.my_items) { _, index, text ->
      // Invoked when the user selects item(s)
   }
@@ -398,7 +380,6 @@ You can pass a literal string array too:
 val myItems = listOf("Hello", "World")
 
 MaterialDialog(this).show {
-
   listItemsMultiChoice(items = myItems)
 }
 ```
@@ -411,7 +392,6 @@ If you want option(s) to be selected when the dialog opens, you can pass an `ini
 val indices = intArrayOf(1, 3)
 
 MaterialDialog(this).show {
-
   listItemsMultiChoice(R.array.my_items, initialSelection = indices)
 }
 ```
@@ -420,7 +400,6 @@ To get item selection events, just append a lambda:
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsMultiChoice(R.array.my_items) { dialog, indices, items ->
     // Invoked when the user selects an item
   }
@@ -432,7 +411,6 @@ you add a positive action button...
 
 ```kotlin
 MaterialDialog(this).show {
-
   listItemsMultiChoice(R.array.my_items) { dialog, indices, items ->
     // Invoked when the user selects an item
   }
@@ -449,7 +427,6 @@ An added bonus, you can disable items from being selected/unselected:
 val indices = intArrayOf(0, 2)
 
 MaterialDialog(this).show {
-
   listItemsMultiChoice(R.array.my_items, disabledIndices = indices)
 }
 ```
@@ -485,7 +462,6 @@ If you want to customize lists to use your own views, you need to use a custom a
 val adapter: RecyclerView.Adapter<*> = // some sort of adapter implementation...
 
 MaterialDialog(this).show {
-
   customListAdapter(adapter)
 }
 ```
@@ -515,7 +491,6 @@ which shows the action buttons.
 
 ```kotlin
 MaterialDialog(this).show {
-
   checkBoxPrompt(R.string.your_label) { checked ->
       // Check box was checked or unchecked
   }
@@ -526,7 +501,6 @@ You can pass a literal string for the label too:
 
 ```kotlin
 MaterialDialog(this).show {
-
   checkBoxPrompt(text = "Hello, World")
 }
 ```
@@ -537,7 +511,6 @@ You can also append a lambda which gets invoked when the checkbox is checked or 
 
 ```kotlin
 MaterialDialog(this).show {
-
   checkBoxPrompt(text = "Hello, World") { checked -> }
 }
 ```
@@ -546,7 +519,6 @@ If you only care about the checkbox state when the positive action button is pre
 
 ```kotlin
 MaterialDialog(this).show {
-
   checkBoxPrompt(R.string.your_label)
   positiveButton(R.string.button_text) { dialog ->
       val isChecked = dialog.isCheckPromptChecked()
@@ -564,7 +536,6 @@ a simple example in the sample project.
 
 ```kotlin
 MaterialDialog(this).show {
-
   customView(R.layout.my_custom_view)
 }
 ```
@@ -575,7 +546,6 @@ You can also pass a literal view:
 val myView: View = // ...
 
 MaterialDialog(this).show {
-
   customView(view = myView)
 }
 ```
@@ -584,7 +554,6 @@ If your custom view may be taller than the dialog, you'll want to make it scroll
 
 ```kotlin
 MaterialDialog(this).show {
-
   customView(R.layout.my_custom_view, scrollable = true)
 }
 ```
@@ -609,7 +578,6 @@ it's turned on. You can disable it:
 
 ```kotlin
 MaterialDialog(this).show {
-
   noAutoDismiss()
 }
 ```
@@ -717,7 +685,6 @@ You can setup an input dialog using the `input` extension on `MaterialDialog`:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input()
   positiveButton(R.string.submit)
 }
@@ -737,7 +704,6 @@ text entered:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input { dialpog, text ->
       // Text submitted with the action button
   }
@@ -750,7 +716,6 @@ modified:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(waitForPositiveButton = false) { dialog, text ->
       // Text changed
   }
@@ -762,7 +727,6 @@ To allow the positive action button to be pressed even when the input is empty:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(allowEmpty = true) { dialog, text ->
       // Text submitted with the action button, might be an empty string`
   }
@@ -776,7 +740,6 @@ You can set a hint to the input field, which is the gray faded text shown when t
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(hintRes = R.string.hint_text)
 }
 ```
@@ -785,7 +748,6 @@ A literal string can be used as well:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(hint = "Your Hint Text")
 }
 ```
@@ -796,7 +758,6 @@ You can also prefill the input field:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(prefillRes = R.string.prefill_text)
 }
 ```
@@ -805,7 +766,6 @@ A literal string can be used as well:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(prefill = "Prefilled text")
 }
 ```
@@ -821,7 +781,6 @@ val type = InputType.TYPE_CLASS_TEXT or
   InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
   
 MaterialDialog(this).show {
-
   input(inputType = type)
 }
 ```
@@ -835,7 +794,6 @@ button if the input length goes over that:
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(maxLength = 8)
   positiveButton(R.string.submit)
 }
@@ -848,7 +806,6 @@ starts with the letter 'a':
 
 ```kotlin
 MaterialDialog(this).show {
-
   input(waitForPositiveButton = false) { dialog, text ->
     val inputField = dialog.getInputField()
     val isValid = text.startsWith("a", true)
@@ -890,7 +847,6 @@ You create file choosers using the `fileChooser` extension on `MaterialDialog`:
 
 ```kotlin
 MaterialDialog(this).show {
-
   fileChooser { dialog, file ->
       // File selected
   }
@@ -906,7 +862,6 @@ You can change the directory which is listed initially:
 val initialFolder = File(getExternalStorageDirectory(), "Download")
 
 MaterialDialog(this).show {
-
   fileChooser(initialDirectory = initialFolder) { dialog, file ->
       // File selected
   }
@@ -925,7 +880,6 @@ A filter can be applied to only show the files and directories you wish to show:
 val myFilter: FileFilter = { it.isDirectory || it.nameWithoutExtension.startsWith("a", true) }
 
 MaterialDialog(this).show {
-
   fileChooser(filter = myFilter) { dialog, file ->
       // File selected
   }
@@ -940,7 +894,6 @@ Empty text is shown when a folder has no contents. You can configure the empty t
 
 ```kotlin
 MaterialDialog(this).show {
-
   fileChooser(emptyTextRes = R.string.custom_label) { dialog, file ->
       // File selected
   }
@@ -955,7 +908,6 @@ You can allow your users to create folders.
 
 ```kotlin
 MaterialDialog(this).show {
-
   fileChooser(
       allowFolderCreation = true,
       folderCreationLabel = R.string.new_folder // optional as well
@@ -981,7 +933,6 @@ is pressed.
 
 ```kotlin
 MaterialDialog(this).show {
-
   folderChooser { dialog, folder ->
       // Folder selected
   }
@@ -997,7 +948,6 @@ You can apply a filter like you can with the file chooser.
 val myFilter: FileFilter = { it.name.startsWith("a", true) }
 
 MaterialDialog(this).show {
-
   folderChooser(filter = myFilter) { dialog, file ->
       // Folder selected
   }
@@ -1012,7 +962,6 @@ Empty text is shown when a folder has no contents. You can configure the empty t
 
 ```kotlin
 MaterialDialog(this).show {
-
   folderChooser(emptyTextRes = R.string.custom_label) { dialog, file ->
       // File selected
   }
@@ -1027,7 +976,6 @@ You can allow your users to create folders.
 
 ```kotlin
 MaterialDialog(this).show {
-
   folderChooser(
       allowFolderCreation = true,
       folderCreationLabel = R.string.new_folder // optional as well
@@ -1068,7 +1016,6 @@ Color choosers show a simple grid of colors.
 val colors = intArrayOf(RED, GREEN, BLUE)
 
 MaterialDialog(this).show {
-
   title(R.string.colors)
   colorChooser(colors) { dialog, color ->
       // Use color integer
@@ -1083,7 +1030,6 @@ You can specify an initial selection, which is just a color integer:
 val colors = intArrayOf(RED, GREEN, BLUE)
 
 MaterialDialog(this).show {
-
   title(R.string.colors)
   colorChooser(colors, initialSelection = BLUE) { dialog, color ->
       // Use color integer
@@ -1109,7 +1055,6 @@ val subColors = listOf( // size = 3
 )
 
 MaterialDialog(this).show {
-
   title(R.string.colors)
   colorChooser(colors, subColors = subColors) { dialog, color ->
       // Use color integer
@@ -1124,7 +1069,6 @@ MaterialDialog(this).show {
 
 ```kotlin
 MaterialDialog(this).show {
-
   title(R.string.colors)
   colorChooser(
       colors = colors, 
