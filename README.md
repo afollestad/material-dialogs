@@ -33,7 +33,7 @@
 12. [Theming](#theming)
     1. [Light and Dark](#light-and-dark)
     2. [Background Color](#background-color)
-    3. [Background Color](#ripple-color)
+    3. [Ripple Color](#ripple-color)
     4. [Corner Radius](#corner-radius)
     5. [Text Color](#text-color)
     6. [Fonts](#fonts)
