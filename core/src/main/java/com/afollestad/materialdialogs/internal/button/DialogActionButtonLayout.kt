@@ -111,6 +111,11 @@ internal class DialogActionButtonLayout(
     val baseContext = dialogParent().dialog.context
     val appContext = dialogParent().dialog.windowContext
     for (button in visibleButtons) {
+      button.update(
+          baseContext = baseContext,
+          appContext = appContext,
+          stacked = stackButtons
+      )
       if (stackButtons) {
         button.measure(
             makeMeasureSpec(parentWidth, EXACTLY),
@@ -122,11 +127,6 @@ internal class DialogActionButtonLayout(
             makeMeasureSpec(buttonHeightDefault, EXACTLY)
         )
       }
-      button.update(
-          baseContext = baseContext,
-          appContext = appContext,
-          stacked = stackButtons
-      )
     }
 
     if (visibleButtons.isNotEmpty() && !stackButtons) {
@@ -137,14 +137,14 @@ internal class DialogActionButtonLayout(
       if (totalWidth >= parentWidth && !stackButtons) {
         stackButtons = true
         for (button in visibleButtons) {
-          button.measure(
-              makeMeasureSpec(parentWidth, EXACTLY),
-              makeMeasureSpec(buttonHeightStacked, EXACTLY)
-          )
           button.update(
               baseContext = baseContext,
               appContext = appContext,
               stacked = true
+          )
+          button.measure(
+              makeMeasureSpec(parentWidth, EXACTLY),
+              makeMeasureSpec(buttonHeightStacked, EXACTLY)
           )
         }
       }
