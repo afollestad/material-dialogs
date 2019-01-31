@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colorArgbPage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/color_grid_padding_bottom"
+    android:paddingLeft="@dimen/color_grid_item_padding_double"
+    android:paddingRight="@dimen/color_grid_item_padding_double"
+    >
+
+  <!-- Preview -->
+
+  <com.afollestad.materialdialogs.color.view.PreviewFrameView
+      android:id="@+id/preview_frame"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/color_argb_preview_height"
+      />
+
+  <com.afollestad.materialdialogs.color.view.SeekBarGroupLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="@dimen/color_argb_preview_marginBottom"
+      tools:ignore="HardcodedText"
+      >
+
+    <!-- Alpha -->
+
+    <TextView
+        android:id="@+id/alpha_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/preview_frame"
+        android:text="A"
+        style="@style/ColorChooser.Label"
+        />
+
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
+        android:id="@+id/alpha_seeker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/alpha_label"
+        android:layout_alignTop="@id/alpha_label"
+        android:layout_marginLeft="@dimen/color_argb_seeker_marginSides"
+        android:layout_marginRight="@dimen/color_argb_seeker_marginSides"
+        android:layout_toEndOf="@id/alpha_label"
+        android:layout_toLeftOf="@+id/alpha_value"
+        android:layout_toRightOf="@id/alpha_label"
+        android:layout_toStartOf="@+id/alpha_value"
+        tools:ignore="UnusedAttribute"
+        style="@style/ColorChooser.Seeker"
+        />
+
+    <TextView
+        android:id="@+id/alpha_value"
+        android:layout_alignBottom="@id/alpha_label"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/alpha_label"
+        style="@style/ColorChooser.ValueLabel"
+        />
+
+    <!-- Red -->
+
+    <TextView
+        android:id="@+id/red_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/alpha_label"
+        android:text="R"
+        style="@style/ColorChooser.Label"
+        />
+
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
+        android:id="@+id/red_seeker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/red_label"
+        android:layout_alignLeft="@id/alpha_seeker"
+        android:layout_alignRight="@id/alpha_seeker"
+        android:layout_alignTop="@id/red_label"
+        android:layout_toLeftOf="@+id/red_value"
+        android:layout_toStartOf="@+id/red_value"
+        style="@style/ColorChooser.Seeker"
+        />
+
+    <TextView
+        android:id="@+id/red_value"
+        android:layout_alignBottom="@id/red_label"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/red_label"
+        style="@style/ColorChooser.ValueLabel"
+        />
+
+    <!-- Green -->
+
+    <TextView
+        android:id="@+id/green_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/red_label"
+        android:text="G"
+        style="@style/ColorChooser.Label"
+        />
+
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
+        android:id="@+id/green_seeker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/green_label"
+        android:layout_alignLeft="@id/alpha_seeker"
+        android:layout_alignRight="@id/alpha_seeker"
+        android:layout_alignTop="@id/green_label"
+        android:layout_toLeftOf="@+id/green_value"
+        android:layout_toStartOf="@+id/green_value"
+        style="@style/ColorChooser.Seeker"
+        />
+
+    <TextView
+        android:id="@+id/green_value"
+        android:layout_alignBottom="@id/green_label"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/green_label"
+        style="@style/ColorChooser.ValueLabel"
+        />
+
+    <!-- Blue -->
+
+    <TextView
+        android:id="@+id/blue_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/green_label"
+        android:layout_marginBottom="@dimen/color_argb_label_marginTop"
+        android:text="B"
+        style="@style/ColorChooser.Label"
+        />
+
+    <com.afollestad.materialdialogs.color.view.ObservableSeekBar
+        android:id="@+id/blue_seeker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/blue_label"
+        android:layout_alignLeft="@id/alpha_seeker"
+        android:layout_alignRight="@id/alpha_seeker"
+        android:layout_alignTop="@id/blue_label"
+        android:layout_toLeftOf="@+id/blue_value"
+        android:layout_toStartOf="@+id/blue_value"
+        style="@style/ColorChooser.Seeker"
+        />
+
+    <TextView
+        android:id="@+id/blue_value"
+        android:layout_alignBottom="@id/blue_label"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/blue_label"
+        style="@style/ColorChooser.ValueLabel"
+        />
+
+  </com.afollestad.materialdialogs.color.view.SeekBarGroupLayout>
+
+</LinearLayout>

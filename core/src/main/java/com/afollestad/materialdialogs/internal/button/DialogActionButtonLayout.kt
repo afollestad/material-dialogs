@@ -1,26 +1,36 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs.internal.button
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
+import androidx.appcompat.widget.AppCompatCheckBox
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.internal.main.BaseSubLayout
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_BLUE
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_DARK_PINK
 import com.afollestad.materialdialogs.internal.main.DEBUG_COLOR_PINK
-import com.afollestad.materialdialogs.utils.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible
 
@@ -47,7 +57,7 @@ internal class DialogActionButtonLayout(
   private val buttonHeightStacked = dimenPx(R.dimen.md_stacked_action_button_height)
   private val buttonFramePadding = dimenPx(R.dimen.md_action_button_frame_padding)
   private val buttonFramePaddingNeutral = dimenPx(R.dimen.md_action_button_frame_padding_neutral)
-  private val buttonSpacing = dimenPx(R.dimen.md_action_button_spacing)
+  private val buttonSpacing = 0
 
   private val checkBoxPromptMarginVertical = dimenPx(R.dimen.md_checkbox_prompt_margin_vertical)
   private val checkBoxPromptMarginHorizontal = dimenPx(R.dimen.md_checkbox_prompt_margin_horizontal)
@@ -101,6 +111,11 @@ internal class DialogActionButtonLayout(
     val baseContext = dialogParent().dialog.context
     val appContext = dialogParent().dialog.windowContext
     for (button in visibleButtons) {
+      button.update(
+          baseContext = baseContext,
+          appContext = appContext,
+          stacked = stackButtons
+      )
       if (stackButtons) {
         button.measure(
             makeMeasureSpec(parentWidth, EXACTLY),
@@ -112,11 +127,6 @@ internal class DialogActionButtonLayout(
             makeMeasureSpec(buttonHeightDefault, EXACTLY)
         )
       }
-      button.update(
-          baseContext = baseContext,
-          appContext = appContext,
-          stacked = stackButtons
-      )
     }
 
     if (visibleButtons.isNotEmpty() && !stackButtons) {
@@ -124,8 +134,19 @@ internal class DialogActionButtonLayout(
       for (button in visibleButtons) {
         totalWidth += button.measuredWidth + buttonSpacing
       }
-      if (totalWidth >= parentWidth) {
+      if (totalWidth >= parentWidth && !stackButtons) {
         stackButtons = true
+        for (button in visibleButtons) {
+          button.update(
+              baseContext = baseContext,
+              appContext = appContext,
+              stacked = true
+          )
+          button.measure(
+              makeMeasureSpec(parentWidth, EXACTLY),
+              makeMeasureSpec(buttonHeightStacked, EXACTLY)
+          )
+        }
       }
     }
 

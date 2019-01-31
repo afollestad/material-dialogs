@@ -1,17 +1,26 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 @file:Suppress("DEPRECATION")
 
 package com.afollestad.materialdialogssample
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Menu
@@ -19,6 +28,10 @@ import android.view.MenuItem
 import android.webkit.WebView
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.afollestad.assent.Permission.READ_EXTERNAL_STORAGE
+import com.afollestad.assent.Permission.WRITE_EXTERNAL_STORAGE
+import com.afollestad.assent.runWithPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
@@ -36,6 +49,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import kotlinx.android.synthetic.main.activity_main.basic
 import kotlinx.android.synthetic.main.activity_main.basic_buttons
 import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_html_content
 import kotlinx.android.synthetic.main.activity_main.basic_icon
 import kotlinx.android.synthetic.main.activity_main.basic_long
 import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
@@ -49,6 +63,8 @@ import kotlinx.android.synthetic.main.activity_main.colorChooser_accent
 import kotlinx.android.synthetic.main.activity_main.colorChooser_customColors
 import kotlinx.android.synthetic.main.activity_main.colorChooser_customColorsNoSub
 import kotlinx.android.synthetic.main.activity_main.colorChooser_primary
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customArgb
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customRgb
 import kotlinx.android.synthetic.main.activity_main.custom_view
 import kotlinx.android.synthetic.main.activity_main.custom_view_webview
 import kotlinx.android.synthetic.main.activity_main.file_chooser
@@ -74,6 +90,7 @@ import kotlinx.android.synthetic.main.activity_main.list_long_titled
 import kotlinx.android.synthetic.main.activity_main.list_long_titled_buttons
 import kotlinx.android.synthetic.main.activity_main.list_titled
 import kotlinx.android.synthetic.main.activity_main.list_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.list_titled_message_buttons
 import kotlinx.android.synthetic.main.activity_main.misc_dialog_callbacks
 import kotlinx.android.synthetic.main.activity_main.multiple_choice
 import kotlinx.android.synthetic.main.activity_main.multiple_choice_buttons
@@ -99,7 +116,6 @@ class MainActivity : AppCompatActivity() {
 
   private var debugMode = false
   private lateinit var prefs: SharedPreferences
-  private val permission = Permission(this)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     prefs = getSharedPreferences(KEY_PREFS, MODE_PRIVATE)
@@ -143,6 +159,20 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
+        positiveButton(R.string.agree)
+        negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    basic_html_content.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.app_name)
+        message(
+            R.string.htmlContent,
+            html = true,
+            lineHeightMultiplier = 1.4f
+        )
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
@@ -223,6 +253,19 @@ class MainActivity : AppCompatActivity() {
     list_titled_buttons.setOnClickListener {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
+        listItems(R.array.socialNetworks) { _, index, text ->
+          toast("Selected item $text at index $index")
+        }
+        positiveButton(R.string.agree)
+        negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    list_titled_message_buttons.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.socialNetworks)
+        message(R.string.useGoogleLocationServices)
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
         }
@@ -603,17 +646,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     colorChooser_customColors.setOnClickListener {
-      val topLevel = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
+      val topLevel = intArrayOf(Color.TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
       val subLevel = arrayOf(
+          intArrayOf(Color.WHITE, Color.TRANSPARENT, Color.BLACK),
           intArrayOf(Color.LTGRAY, Color.GRAY, Color.DKGRAY),
-          intArrayOf(Color.GREEN, Color.BLACK),
+          intArrayOf(Color.GREEN),
           intArrayOf(Color.MAGENTA, Color.CYAN)
       )
 
       MaterialDialog(this).show {
         title(R.string.custom_colors)
         colorChooser(topLevel, subLevel) { _, color ->
-          toast("Selected color: ${color.toHex()}")
+          val colorStr =
+            if (color == TRANSPARENT) "transparent"
+            else color.toHex()
+          toast("Selected color: $colorStr")
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
@@ -627,6 +674,39 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors)
         colorChooser(topLevel) { _, color ->
+          toast("Selected color: ${color.toHex()}")
+        }
+        positiveButton(R.string.select)
+        negativeButton(android.R.string.cancel)
+        debugMode(debugMode)
+      }
+    }
+
+    colorChooser_primary_customRgb.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.custom_colors_rgb)
+        colorChooser(
+            colors = PRIMARY_COLORS,
+            subColors = PRIMARY_COLORS_SUB,
+            allowCustomArgb = true
+        ) { _, color ->
+          toast("Selected color: ${color.toHex()}")
+        }
+        positiveButton(R.string.select)
+        negativeButton(android.R.string.cancel)
+        debugMode(debugMode)
+      }
+    }
+
+    colorChooser_primary_customArgb.setOnClickListener {
+      MaterialDialog(this).show {
+        title(R.string.custom_colors_argb)
+        colorChooser(
+            colors = PRIMARY_COLORS,
+            subColors = PRIMARY_COLORS_SUB,
+            allowCustomArgb = true,
+            showAlphaSelector = true
+        ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
         positiveButton(R.string.select)
@@ -652,8 +732,7 @@ class MainActivity : AppCompatActivity() {
       customView(R.layout.custom_view, scrollable = true)
       positiveButton(R.string.connect) { dialog ->
         // Pull the password out of the custom view when the positive button is pressed
-        val customView = dialog.getCustomView()!!
-        val passwordInput: EditText = customView.findViewById(R.id.password)
+        val passwordInput: EditText = dialog.getCustomView().findViewById(R.id.password)
         toast("Password: $passwordInput")
       }
       negativeButton(android.R.string.cancel)
@@ -661,7 +740,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Setup custom view content
-    val customView = dialog.getCustomView()!!
+    val customView = dialog.getCustomView()
     val passwordInput: EditText = customView.findViewById(R.id.password)
     val showPasswordCheck: CheckBox = customView.findViewById(R.id.showPassword)
     showPasswordCheck.setOnCheckedChangeListener { _, isChecked ->
@@ -674,16 +753,12 @@ class MainActivity : AppCompatActivity() {
 
   private fun showWebViewDialog() {
     val dialog = MaterialDialog(this).show {
-      title(R.string.changelog)
-      customView(R.layout.custom_view_webview)
-      positiveButton(android.R.string.ok)
+      customView(R.layout.custom_view_webview, noVerticalPadding = true)
       debugMode(debugMode)
     }
 
     dialog.onShow {
-      val customView = it.getCustomView()!!
-      val webView: WebView = customView.findViewById(R.id.web_view)
-
+      val webView: WebView = it.getCustomView().findViewById(R.id.web_view)
       webView.loadData(
           "<h3>WebView Custom View</h3>\n" +
               "\n" +
@@ -706,87 +781,52 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun showFileChooser() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
+  private fun showFileChooser() = runWithPermissions(READ_EXTERNAL_STORAGE) {
+    MaterialDialog(this).show {
+      fileChooser { _, file ->
+        toast("Selected file: ${file.absolutePath}")
       }
-
-      MaterialDialog(this).show {
-        fileChooser { _, file ->
-          toast("Selected file: ${file.absolutePath}")
-        }
-        debugMode(debugMode)
-      }
+      debugMode(debugMode)
     }
   }
 
-  private fun showFileChooserButtons() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
+  private fun showFileChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
+    MaterialDialog(this).show {
+      fileChooser(allowFolderCreation = true) { _, file ->
+        toast("Selected file: ${file.absolutePath}")
       }
-
-      MaterialDialog(this).show {
-        fileChooser { _, file ->
-          toast("Selected file: ${file.absolutePath}")
-        }
-        negativeButton(android.R.string.cancel)
-        positiveButton(R.string.select)
-        debugMode(debugMode)
-      }
+      negativeButton(android.R.string.cancel)
+      positiveButton(R.string.select)
+      debugMode(debugMode)
     }
   }
 
-  private fun showFileChooserFilter() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
+  private fun showFileChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
+    MaterialDialog(this).show {
+      fileChooser(filter = { it.extension == "txt" }) { _, file ->
+        toast("Selected file: ${file.absolutePath}")
       }
-
-      MaterialDialog(this).show {
-        fileChooser(filter = { it.extension == "txt" }) { _, file ->
-          toast("Selected file: ${file.absolutePath}")
-        }
-        debugMode(debugMode)
-      }
+      debugMode(debugMode)
     }
   }
 
-  private fun showFolderChooserButtons() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
+  private fun showFolderChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
+    MaterialDialog(this).show {
+      folderChooser(allowFolderCreation = true) { _, folder ->
+        toast("Selected folder: ${folder.absolutePath}")
       }
-
-      MaterialDialog(this).show {
-        folderChooser { _, folder ->
-          toast("Selected folder: ${folder.absolutePath}")
-        }
-        negativeButton(android.R.string.cancel)
-        positiveButton(R.string.select)
-        debugMode(debugMode)
-      }
+      negativeButton(android.R.string.cancel)
+      positiveButton(R.string.select)
+      debugMode(debugMode)
     }
   }
 
-  private fun showFolderChooserFilter() {
-    permission.request(arrayOf(READ_EXTERNAL_STORAGE)) { result ->
-      if (!result.allGranted()) {
-        toast("Storage permission is needed for file choosers")
-        return@request
+  private fun showFolderChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
+    MaterialDialog(this).show {
+      folderChooser(filter = { it.name.startsWith("a", true) }) { _, folder ->
+        toast("Selected folder: ${folder.absolutePath}")
       }
-
-      MaterialDialog(this).show {
-        folderChooser(filter = { it.name.startsWith("a", true) }) { _, folder ->
-          toast("Selected folder: ${folder.absolutePath}")
-        }
-        debugMode(debugMode)
-      }
+      debugMode(debugMode)
     }
   }
 
@@ -813,21 +853,21 @@ class MainActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.light_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, LIGHT)
         }
         recreate()
         return true
       }
       R.id.dark_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, DARK)
         }
         recreate()
         return true
       }
       R.id.custom_theme -> {
-        prefs.apply {
+        prefs.commit {
           putString(KEY_THEME, CUSTOM)
         }
         recreate()
@@ -835,7 +875,7 @@ class MainActivity : AppCompatActivity() {
       }
       R.id.debug_mode -> {
         debugMode = !debugMode
-        prefs.apply {
+        prefs.commit {
           putBoolean(KEY_DEBUG_MODE, debugMode)
         }
         invalidateOptionsMenu()
@@ -843,14 +883,5 @@ class MainActivity : AppCompatActivity() {
       }
     }
     return super.onOptionsItemSelected(item)
-  }
-
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-  ) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    permission.response(requestCode, permissions, grantResults)
   }
 }

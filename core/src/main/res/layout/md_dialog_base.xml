@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     >
 
-  <com.afollestad.materialdialogs.internal.title.DialogTitleLayout
+  <com.afollestad.materialdialogs.internal.main.DialogTitleLayout
       android:id="@+id/md_title_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -31,7 +31,13 @@
         style="@style/MD_Dialog_Title_Text"
         />
 
-  </com.afollestad.materialdialogs.internal.title.DialogTitleLayout>
+  </com.afollestad.materialdialogs.internal.main.DialogTitleLayout>
+
+  <com.afollestad.materialdialogs.internal.main.DialogContentLayout
+      android:id="@+id/md_content_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
 
   <com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
       android:id="@+id/md_button_layout"
@@ -39,11 +45,12 @@
       android:layout_height="wrap_content"
       >
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/md_checkbox_prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start|center_vertical"
+        android:minHeight="@dimen/md_checkbox_prompt_height"
         android:visibility="gone"
         />
 

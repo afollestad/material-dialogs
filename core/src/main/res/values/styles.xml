@@ -47,6 +47,7 @@
   <style name="MD_Dialog_Message">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center</item>
     <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">@dimen/md_message_textsize</item>
     <item name="android:paddingLeft">@dimen/md_dialog_frame_margin_horizontal</item>
@@ -57,21 +58,23 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:orientation">vertical</item>
+    <item name="android:gravity">center</item>
   </style>
 
   <style name="MD_ActionButton">
+    <item name="android:background">@null</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:textSize">@dimen/md_action_button_textsize</item>
     <item name="android:singleLine">true</item>
     <item name="android:gravity">center</item>
-    <item name="android:background">?selectableItemBackground</item>
     <item name="android:minWidth">@dimen/md_action_button_min_width</item>
     <item name="android:paddingLeft">@dimen/md_action_button_padding_horizontal</item>
     <item name="android:paddingRight">@dimen/md_action_button_padding_horizontal</item>
   </style>
 
   <style name="MD_ListItem">
+    <item name="android:background">@null</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:focusable">true</item>
@@ -82,6 +85,7 @@
   </style>
 
   <style name="MD_ListItemText" tools:ignore="NewApi">
+    <item name="android:background">@null</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
@@ -97,7 +101,7 @@
   </style>
 
   <style name="MD_ListItem.Choice">
-    <item name="android:background">?selectableItemBackground</item>
+    <item name="android:background">@null</item>
     <item name="android:descendantFocusability">blocksDescendants</item>
     <item name="android:focusable">true</item>
     <item name="android:minHeight">@dimen/md_listitem_height</item>
@@ -117,6 +121,7 @@
   </style>
 
   <style name="MD_ListItemText.Choice" tools:ignore="NewApi">
+    <item name="android:background">@null</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>

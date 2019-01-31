@@ -7,11 +7,6 @@ android {
   compileSdkVersion versions.compileSdk
   buildToolsVersion versions.buildTools
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
   defaultConfig {
     applicationId "com.afollestad.materialdialogssample"
     minSdkVersion versions.minSdk
@@ -29,9 +24,12 @@ dependencies {
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 
-  implementation 'com.android.support:gridlayout-v7:' + versions.supportLib
-  implementation 'com.android.support:appcompat-v7:' + versions.supportLib
-  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'androidx.appcompat:appcompat:' + versions.androidxCore
+  implementation 'androidx.gridlayout:gridlayout:' + versions.androidxRecyclerView
+  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
+  implementation 'com.google.android.material:material:' + versions.androidxMaterial
+
+  implementation 'com.afollestad:assent:' + versions.assent
 }
 
 apply from: '../spotless.gradle'

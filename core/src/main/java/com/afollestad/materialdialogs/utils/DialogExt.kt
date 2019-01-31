@@ -1,7 +1,17 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs.utils
 
@@ -10,35 +20,37 @@ import android.graphics.Point
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.RestrictTo
-import android.support.annotation.RestrictTo.Scope
-import android.support.annotation.StringRes
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
+import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_HORIZONTAL_PADDING
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveString
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 
 internal fun MaterialDialog.setWindowConstraints() {
-  window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+  window?.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE) ?: return
+  val wm = this.window?.windowManager ?: return
 
-  val wm = this.window!!.windowManager
   val display = wm.defaultDisplay
   val size = Point()
   display.getSize(size)
   val windowWidth = size.x
   val windowHeight = size.y
 
-  context.resources.apply {
+  context.resources.run {
     val windowVerticalPadding = getDimensionPixelSize(
         R.dimen.md_dialog_vertical_margin
     )
@@ -58,7 +70,10 @@ internal fun MaterialDialog.setWindowConstraints() {
 
 internal fun MaterialDialog.setDefaults() {
   // Background color and corner radius
-  val backgroundColor = getColor(attr = R.attr.colorBackgroundFloating)
+  var backgroundColor = resolveColor(attr = R.attr.md_background_color)
+  if (backgroundColor == 0) {
+    backgroundColor = resolveColor(attr = R.attr.colorBackgroundFloating)
+  }
   colorBackground(color = backgroundColor)
   // Fonts
   this.titleFont = font(attr = R.attr.md_font_title)
@@ -72,43 +87,23 @@ fun MaterialDialog.invalidateDividers(
   atBottom: Boolean
 ) = view.invalidateDividers(scrolledDown, atBottom)
 
-internal fun MaterialDialog.addContentScrollView() {
-  if (this.contentScrollView == null) {
-    this.contentScrollView = inflate(R.layout.md_dialog_stub_scrollview, this.view)
-    this.contentScrollView!!.rootView = this.view
-    this.contentScrollViewFrame = this.contentScrollView!!.getChildAt(0) as LinearLayout
-    this.view.addView(this.contentScrollView, 1)
-  }
-}
-
-internal fun MaterialDialog.addContentMessageView(@StringRes res: Int?, text: CharSequence?) {
-  if (this.textViewMessage == null) {
-    this.textViewMessage = inflate(
-        R.layout.md_dialog_stub_message,
-        this.contentScrollViewFrame!!
-    )
-    this.contentScrollViewFrame!!.addView(this.textViewMessage)
-    if (this.bodyFont != null) {
-      this.textViewMessage?.typeface = this.bodyFont
-    }
-  }
-  assertOneSet("message", text, res)
-  this.textViewMessage!!.text = text ?: getString(res)
-}
-
 internal fun MaterialDialog.preShow() {
+  val customViewNoHorizontalPadding = config[CUSTOM_VIEW_NO_HORIZONTAL_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
-  this.view.apply {
-    if (titleLayout.shouldNotBeVisible()) {
+
+  this.view.run {
+    if (titleLayout.shouldNotBeVisible() && !customViewNoHorizontalPadding) {
       // Reduce top and bottom padding if we have no title
-      contentView.updatePadding(
+      contentLayout.modifyFirstAndLastPadding(
           top = frameMarginVerticalLess,
           bottom = frameMarginVerticalLess
       )
     }
     if (getCheckBoxPrompt().isVisible()) {
       // Zero out bottom content padding if we have a checkbox prompt
-      contentView.updatePadding(bottom = 0)
+      contentLayout.modifyFirstAndLastPadding(bottom = 0)
+    } else if (contentLayout.haveMoreThanOneChild()) {
+      contentLayout.modifyScrollViewPadding(bottom = frameMarginVerticalLess)
     }
   }
 }
@@ -118,7 +113,7 @@ internal fun MaterialDialog.populateIcon(
   @DrawableRes iconRes: Int?,
   icon: Drawable?
 ) {
-  val drawable = getDrawable(windowContext, res = iconRes, fallback = icon)
+  val drawable = resolveDrawable(windowContext, res = iconRes, fallback = icon)
   if (drawable != null) {
     (imageView.parent as View).visibility = View.VISIBLE
     imageView.visibility = View.VISIBLE
@@ -133,9 +128,10 @@ internal fun MaterialDialog.populateText(
   @StringRes textRes: Int? = null,
   text: CharSequence? = null,
   @StringRes fallback: Int = 0,
-  typeface: Typeface?
+  typeface: Typeface?,
+  textColor: Int? = null
 ) {
-  val value = text ?: getString(textRes, fallback)
+  val value = text ?: resolveString(this, textRes, fallback)
   if (value != null) {
     (textView.parent as View).visibility = View.VISIBLE
     textView.visibility = View.VISIBLE
@@ -143,6 +139,7 @@ internal fun MaterialDialog.populateText(
     if (typeface != null) {
       textView.typeface = typeface
     }
+    textView.maybeSetTextColor(windowContext, textColor)
   } else {
     textView.visibility = View.GONE
   }
@@ -166,6 +163,6 @@ internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialo
   val drawable = GradientDrawable()
   drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
   drawable.setColor(color)
-  window!!.setBackgroundDrawable(drawable)
+  window?.setBackgroundDrawable(drawable)
   return this
 }

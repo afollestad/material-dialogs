@@ -4,11 +4,12 @@
   <!-- https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
 
   <color name="primary">#6002ee</color>
-  <color name="primaryDark">#0000ba</color>
+  <color name="primaryDark">#5002c7</color>
   <color name="accent">#9c47ff</color>
 
   <color name="primary_custom">#26c6da</color>
   <color name="primaryDark_custom">#0095a8</color>
   <color name="accent_custom">#6ff9ff</color>
+  <color name="primary_custom_translucent">#4026c6da</color>
 
 </resources>

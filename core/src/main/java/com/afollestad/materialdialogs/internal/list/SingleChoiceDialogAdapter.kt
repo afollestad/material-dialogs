@@ -1,16 +1,26 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs.internal.list
 
-import android.support.v7.widget.AppCompatRadioButton
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
@@ -19,6 +29,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 
 /** @author Aidan Follestad (afollestad) */
 internal class SingleChoiceViewHolder(
@@ -87,10 +98,12 @@ internal class SingleChoiceDialogAdapter(
     viewType: Int
   ): SingleChoiceViewHolder {
     val listItemView: View = parent.inflate(dialog.windowContext, R.layout.md_listitem_singlechoice)
-    return SingleChoiceViewHolder(
+    val viewHolder = SingleChoiceViewHolder(
         itemView = listItemView,
         adapter = this
     )
+    viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    return viewHolder
   }
 
   override fun getItemCount() = items.size
@@ -129,4 +142,34 @@ internal class SingleChoiceDialogAdapter(
     this.disabledIndices = indices
     notifyDataSetChanged()
   }
+
+  override fun checkItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    this.currentSelection = targetIndex
+  }
+
+  override fun uncheckItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    this.currentSelection = -1
+  }
+
+  override fun toggleItems(indices: IntArray) {
+    val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    if (this.disabledIndices.contains(targetIndex)) return
+    if (indices.isEmpty() || this.currentSelection == targetIndex) {
+      this.currentSelection = -1
+    } else {
+      this.currentSelection = targetIndex
+    }
+  }
+
+  override fun checkAllItems() = Unit
+
+  override fun uncheckAllItems() = Unit
+
+  override fun toggleAllChecked() = Unit
+
+  override fun isItemChecked(index: Int) = this.currentSelection == index
 }

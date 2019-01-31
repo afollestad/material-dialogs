@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout
+<com.google.android.material.textfield.TextInputLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,11 +10,9 @@
     app:hintEnabled="false"
     style="@style/MD_Dialog_Input_Layout"
     >
-
-  <android.support.design.widget.TextInputEditText
+  <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/md_input_message"
       tools:text="Hello, World!"
       style="@style/MD_Dialog_Input_Layout.Message"
       />
-
-</android.support.design.widget.TextInputLayout>
+</com.google.android.material.textfield.TextInputLayout>

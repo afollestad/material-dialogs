@@ -1,26 +1,34 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs
 
 import android.R.attr
 import android.content.Context
-import android.support.annotation.StyleRes
-import com.afollestad.materialdialogs.utils.getColor
-import com.afollestad.materialdialogs.utils.isColorDark
+import androidx.annotation.StyleRes
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 
-internal enum class Theme(
-  @StyleRes val styleRes: Int
-) {
+internal enum class Theme(@StyleRes val styleRes: Int) {
   LIGHT(R.style.MD_Light),
   DARK(R.style.MD_Dark);
 
   companion object {
     fun inferTheme(context: Context): Theme {
       val isPrimaryDark =
-        getColor(context = context, attr = attr.textColorPrimary).isColorDark()
+        resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
       return if (isPrimaryDark) LIGHT else DARK
     }
   }

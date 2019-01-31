@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="ColorChooser"/>
+
+  <style name="ColorChooser.Label" parent="@style/TextAppearance.AppCompat.Medium">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/color_argb_label_textSize</item>
+    <item name="android:layout_marginTop">@dimen/color_argb_label_marginTop</item>
+  </style>
+
+  <style name="ColorChooser.Seeker">
+    <item name="android:max">255</item>
+  </style>
+
+  <style name="ColorChooser.ValueLabel" parent="@style/TextAppearance.AppCompat.Medium">
+    <item name="android:textColor">?android:textColorPrimary</item>
+    <item name="android:textSize">@dimen/color_argb_label_textSize</item>
+    <item name="android:text">0</item>
+    <item name="android:layout_width">36dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+</resources>

@@ -1,16 +1,25 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs.internal.list
 
 import android.content.Context
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.utils.invalidateDividers
@@ -35,9 +44,17 @@ class DialogRecyclerView(
     this.invalidateDividersDelegate = dialog::invalidateDividers
   }
 
+  fun invalidateDividers() {
+    if (childCount == 0 || measuredHeight == 0) return
+    invalidateDividersDelegate?.invoke(!isAtTop(), !isAtBottom())
+  }
+
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    waitForLayout { invalidateDividers() }
+    waitForLayout {
+      invalidateDividers()
+      invalidateOverScroll()
+    }
     addOnScrollListener(scrollListeners)
   }
 
@@ -57,9 +74,6 @@ class DialogRecyclerView(
   }
 
   private fun isAtTop(): Boolean {
-    if (!isScrollable()) {
-      return false
-    }
     val lm = layoutManager
     return when (lm) {
       is LinearLayoutManager -> lm.findFirstCompletelyVisibleItemPosition() == 0
@@ -69,17 +83,16 @@ class DialogRecyclerView(
   }
 
   private fun isAtBottom(): Boolean {
-    if (!isScrollable()) {
-      return false
-    }
     val lastIndex = adapter!!.itemCount - 1
     val lm = layoutManager
     return when (lm) {
-      is LinearLayoutManager -> lm.findLastVisibleItemPosition() == lastIndex
-      is GridLayoutManager -> lm.findLastVisibleItemPosition() == lastIndex
+      is LinearLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
+      is GridLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
       else -> false
     }
   }
+
+  private fun isScrollable() = isAtBottom() && isAtTop()
 
   private val scrollListeners = object : RecyclerView.OnScrollListener() {
     override fun onScrolled(
@@ -92,34 +105,11 @@ class DialogRecyclerView(
     }
   }
 
-  private fun invalidateDividers() {
-    if (childCount == 0 || measuredHeight == 0) {
-      return
-    }
-    invalidateDividersDelegate?.invoke(!isAtTop(), !isAtBottom())
-  }
-
-  private fun isScrollable(): Boolean {
-    if (adapter == null) return false
-    val lm = layoutManager
-    val itemCount = adapter!!.itemCount
-    @Suppress("UNREACHABLE_CODE")
-    return when (lm) {
-      is LinearLayoutManager -> {
-        val diff = lm.findLastVisibleItemPosition() - lm.findFirstVisibleItemPosition()
-        return itemCount > diff
-      }
-      is GridLayoutManager -> {
-        val diff = lm.findLastVisibleItemPosition() - lm.findFirstVisibleItemPosition()
-        return itemCount > diff
-      }
-      else -> {
-        Log.w(
-            "MaterialDialogs",
-            "LayoutManager of type ${lm!!.javaClass.name} is currently unsupported."
-        )
-        return false
-      }
+  private fun invalidateOverScroll() {
+    overScrollMode = when {
+      childCount == 0 || measuredHeight == 0 -> OVER_SCROLL_NEVER
+      isScrollable() -> OVER_SCROLL_NEVER
+      else -> OVER_SCROLL_IF_CONTENT_SCROLLS
     }
   }
 }

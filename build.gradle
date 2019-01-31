@@ -1,10 +1,11 @@
 apply from: './dependencies.gradle'
-apply plugin: "com.github.ben-manes.versions"
+apply from: './versionsPlugin.gradle'
 
 buildscript {
   apply from: './dependencies.gradle'
 
   repositories {
+    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }
@@ -20,6 +21,7 @@ buildscript {
 
 allprojects {
   repositories {
+    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }

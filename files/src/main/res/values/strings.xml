@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="files_default_empty_text">This folder\'s empty!</string>
+  <string name="files_new_folder">New Folder…</string>
+  <string name="files_new_folder_hint">New folder name</string>
 </resources>

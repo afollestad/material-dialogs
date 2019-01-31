@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="color_circle_view_border">1dp</dimen>
+
   <dimen name="color_grid_item_padding">8dp</dimen>
   <dimen name="color_grid_item_padding_double">16dp</dimen>
   <dimen name="color_grid_padding_bottom">12dp</dimen>
+
+  <dimen name="color_chooser_pageDots_height">24dp</dimen>
+  <dimen name="color_chooser_pageDots_marginBottom">8dp</dimen>
+
+  <dimen name="color_argb_preview_height">72dp</dimen>
+  <dimen name="color_argb_preview_width_landscape">120dp</dimen>
+  <dimen name="color_argb_preview_border_radius">4dp</dimen>
+  <dimen name="color_argb_preview_marginBottom">8dp</dimen>
+  <dimen name="color_argb_preview_marginRight_landscape">8dp</dimen>
+
+  <dimen name="color_argb_label_textSize">18sp</dimen>
+  <dimen name="color_argb_label_marginTop">20dp</dimen>
+  <dimen name="color_argb_seeker_marginSides">8dp</dimen>
+
+  <dimen name="seekbar_grouplayout_tolerance">36dp</dimen>
+
 </resources>

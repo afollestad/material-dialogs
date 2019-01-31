@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText"
+    tools:parentTag="android.widget.FrameLayout"
+    >
+
+  <View
+      android:id="@+id/argbView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/hexPrefixView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="#"
+        />
+
+    <com.afollestad.materialdialogs.color.view.ObservableEditText
+        android:id="@+id/hexValueView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789ABCDEFabcdef"
+        android:fontFamily="sans-serif-medium"
+        android:hint="000000"
+        android:inputType="text"
+        android:maxLength="8"
+        tools:ignore="Autofill"
+        />
+
+  </LinearLayout>
+
+</merge>

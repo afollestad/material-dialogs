@@ -1,21 +1,32 @@
-/*
- * Licensed under Apache-2.0
- *
+/**
  * Designed and developed by Aidan Follestad (@afollestad)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.afollestad.materialdialogs.internal.list
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 
 private const val KEY_ACTIVATED_INDEX = "activated_index"
 
@@ -72,10 +83,12 @@ internal class PlainListDialogAdapter(
     viewType: Int
   ): PlainListViewHolder {
     val listItemView: View = parent.inflate(dialog.windowContext, R.layout.md_listitem)
-    return PlainListViewHolder(
+    val viewHolder = PlainListViewHolder(
         itemView = listItemView,
         adapter = this
     )
+    viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    return viewHolder
   }
 
   override fun getItemCount() = items.size
@@ -119,4 +132,18 @@ internal class PlainListDialogAdapter(
     this.disabledIndices = indices
     notifyDataSetChanged()
   }
+
+  override fun checkItems(indices: IntArray) = Unit
+
+  override fun uncheckItems(indices: IntArray) = Unit
+
+  override fun toggleItems(indices: IntArray) = Unit
+
+  override fun checkAllItems() = Unit
+
+  override fun uncheckAllItems() = Unit
+
+  override fun toggleAllChecked() = Unit
+
+  override fun isItemChecked(index: Int) = false
 }

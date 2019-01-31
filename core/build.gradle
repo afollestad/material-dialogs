@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply from: '../dependencies.gradle'
-apply plugin: "com.github.ben-manes.versions"
 
 ext.shard = 'core'
 apply from: '../bintrayconfig.gradle'
@@ -26,10 +25,10 @@ android {
 }
 
 dependencies {
-  api 'com.android.support:support-annotations:' + versions.supportLib
-  api 'com.android.support:appcompat-v7:' + versions.supportLib
+  api 'androidx.appcompat:appcompat:' + versions.androidxCore
+  api 'androidx.annotation:annotation:' + versions.androidxAnnotation
 
-  implementation 'com.android.support:recyclerview-v7:' + versions.supportLib
+  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 }
 

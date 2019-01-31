@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <com.afollestad.viewpagerdots.DotsIndicator
+      android:id="@+id/colorChooserPagerDots"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/color_chooser_pageDots_height"
+      android:layout_marginBottom="@dimen/color_chooser_pageDots_marginBottom"
+      />
+
+  <com.afollestad.materialdialogs.color.view.WrapContentViewPager
+      android:id="@+id/colorChooserPager"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <include layout="@layout/md_color_chooser_base_grid"/>
+
+    <include layout="@layout/md_color_chooser_base_argb"/>
+
+  </com.afollestad.materialdialogs.color.view.WrapContentViewPager>
+
+</LinearLayout>
