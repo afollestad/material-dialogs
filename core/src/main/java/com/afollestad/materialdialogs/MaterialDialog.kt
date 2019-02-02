@@ -38,6 +38,7 @@ import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.isVisible
 import com.afollestad.materialdialogs.utils.populateIcon
 import com.afollestad.materialdialogs.utils.populateText
+import com.afollestad.materialdialogs.utils.postShow
 import com.afollestad.materialdialogs.utils.preShow
 import com.afollestad.materialdialogs.utils.setDefaults
 import com.afollestad.materialdialogs.utils.setWindowConstraints
@@ -304,6 +305,7 @@ class MaterialDialog(
   override fun show() {
     preShow()
     super.show()
+    postShow()
   }
 
   /** Applies multiple properties to the dialog and opens it. */

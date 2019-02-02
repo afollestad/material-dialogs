@@ -33,12 +33,15 @@ import androidx.annotation.RestrictTo.Scope
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
+import com.afollestad.materialdialogs.WhichButton.NEGATIVE
+import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_HORIZONTAL_PADDING
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 
 internal fun MaterialDialog.setWindowConstraints() {
   window?.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE) ?: return
@@ -105,6 +108,19 @@ internal fun MaterialDialog.preShow() {
     } else if (contentLayout.haveMoreThanOneChild()) {
       contentLayout.modifyScrollViewPadding(bottom = frameMarginVerticalLess)
     }
+  }
+}
+
+internal fun MaterialDialog.postShow() {
+  val negativeBtn = getActionButton(NEGATIVE)
+  if (negativeBtn.isVisible()) {
+    negativeBtn.post { negativeBtn.requestFocus() }
+    return
+  }
+  val positiveBtn = getActionButton(POSITIVE)
+  if (positiveBtn.isVisible()) {
+    positiveBtn.post { positiveBtn.requestFocus() }
+    return
   }
 }
 
