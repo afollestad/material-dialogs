@@ -41,9 +41,10 @@ typealias InputCallback = ((MaterialDialog, CharSequence) -> Unit)?
  * @throws IllegalStateException if the dialog is not an input dialog.
  */
 @CheckResult fun MaterialDialog.getInputLayout(): TextInputLayout {
-  return getCustomView() as? TextInputLayout ?: throw IllegalStateException(
-      "You have not setup this dialog as an input dialog."
-  )
+  return getCustomView().findViewById(R.id.md_input_layout) as? TextInputLayout
+      ?: throw IllegalStateException(
+          "You have not setup this dialog as an input dialog."
+      )
 }
 
 /**
