@@ -197,7 +197,8 @@ class MaterialDialog(
         textRes = res,
         text = text,
         fallback = android.R.string.ok,
-        typeface = this.buttonFont
+        typeface = this.buttonFont,
+        textColor = R.attr.md_color_button_text
     )
     return this
   }
@@ -237,7 +238,8 @@ class MaterialDialog(
         textRes = res,
         text = text,
         fallback = android.R.string.cancel,
-        typeface = this.buttonFont
+        typeface = this.buttonFont,
+        textColor = R.attr.md_color_button_text
     )
     return this
   }
