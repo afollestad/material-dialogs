@@ -24,7 +24,7 @@
     <item name="md_font_body">@font/raleway_medium</item>
     <item name="md_font_button">@font/raleway_semibold</item>
     <item name="md_ripple_color">@color/primary_custom_translucent</item>
-    <item name="md_button_text_color">@color/accent_custom</item>
+    <item name="md_color_button_text">@color/accent_custom</item>
   </style>
 
   <style name="SampleHeader" tools:ignore="NewApi">
