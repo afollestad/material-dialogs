@@ -107,6 +107,13 @@ internal class DialogContentLayout(
     scrollable: Boolean
   ) {
     check(customView == null) { "Custom view already set." }
+
+    if (view != null && view.parent != null) {
+      // Make sure the view is detached from any former parents.
+      val parent = view.parent as? ViewGroup
+      parent?.let { parent.removeView(view) }
+    }
+
     if (scrollable) {
       addContentScrollView()
       customView = view ?: inflate(res!!, scrollFrame)
