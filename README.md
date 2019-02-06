@@ -83,7 +83,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.0.0-rc11'
+  implementation 'com.afollestad.material-dialogs:core:2.0.0'
 }
 ```
 
@@ -94,11 +94,11 @@ changed and a lot of things will be broken if you upgrade from the older version
 to note:
 
 1. **This library will be more opinionated. Not every feature request will be implemented.**
-2. Minimum API level is 16 (Android Jellybean).
+2. Minimum API level is 16 (Android Jellybean). The purpose of this library is no longer backwards compat.
 3. There is no longer a separate `Builder` class, it's all-in-one.
 4. The whole library was completely re-written in Kotlin. All the layouts and views were remade 
 as well. **This library is now designed specifically to work with Kotlin - it technically will 
-work with Java, but not pleasantly.**
+work with Java, but not pleasantly - extension modules will not work in Java.**
 5. All main classes exist in the `core` module, the extension modules take advantage of Kotlin 
 extensions to append functionality to it (such as input dialogs, color dialogs, etc.). This way,
 you can include only what your app needs.
@@ -106,10 +106,8 @@ you can include only what your app needs.
 [newer Material guidelines](https://material.io/design/components/dialogs.html#actions).
 7. *There is no longer a progress dialog included in library*, since they are discouraged by Google, 
 and discouraged by me. You should prefer a non-blocking inline progress indicator.
-8. No dynamic color support, your dialogs will match your app theme. *I will be making sure 
-[Aesthetic](https://github.com/afollestad/aesthetic) works correctly with this library if you really 
-need dynamic theming.*
-9. Other things will probably be added here.
+8. No dynamic color support, your dialogs will match your app theme.
+9. Probably other things. Exploration is encouraged!
 
 ## Basics
 
@@ -671,7 +669,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.0.0-rc11'
+  implementation 'com.afollestad.material-dialogs:input:2.0.0'
 }
 ```
 
@@ -830,7 +828,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.0.0-rc11'
+  implementation 'com.afollestad.material-dialogs:files:2.0.0'
 }
 ```
 
@@ -1000,7 +998,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.0.0-rc11'
+  implementation 'com.afollestad.material-dialogs:color:2.0.0'
 }
 ```
 
