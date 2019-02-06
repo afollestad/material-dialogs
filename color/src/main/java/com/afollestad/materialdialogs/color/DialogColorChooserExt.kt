@@ -57,6 +57,7 @@ private const val KEY_CUSTOM_PAGE_VIEW_SET = "color_custom_page_view_set"
 private const val KEY_CUSTOM_ARGB = "color_custom_argb"
 private const val KEY_SHOW_ALPHA = "color_show_alpha"
 private const val KEY_WAIT_FOR_POSITIVE = "color_wait_for_positive"
+private const val KEY_CHANGE_ACTION_BUTTON_COLOR = "color_change_action_button_color"
 
 /**
  * Shows a dialog with a grid of colors that the user can select from.
@@ -68,6 +69,7 @@ private const val KEY_WAIT_FOR_POSITIVE = "color_wait_for_positive"
  *    a color and taps on the positive action button. Defaults to true if the dialog has buttons.
  * @param allowCustomArgb Allows selection of a color with an (A)RGB slider view
  * @param showAlphaSelector Allows selection alpha (transparency) values in (A)RGB mode.
+ * @param changeActionButtonsColor When true, action button colors will match the selected color.
  * @param selection An optional callback invoked when the user selects a color.
  */
 @SuppressLint("CheckResult")
@@ -79,12 +81,14 @@ fun MaterialDialog.colorChooser(
   waitForPositiveButton: Boolean = true,
   allowCustomArgb: Boolean = false,
   showAlphaSelector: Boolean = false,
+  changeActionButtonsColor: Boolean = false,
   selection: ColorCallback = null
 ): MaterialDialog {
   config.run {
     set(KEY_WAIT_FOR_POSITIVE, waitForPositiveButton)
     set(KEY_CUSTOM_ARGB, allowCustomArgb)
     set(KEY_SHOW_ALPHA, showAlphaSelector)
+    set(KEY_CHANGE_ACTION_BUTTON_COLOR, changeActionButtonsColor)
   }
 
   if (!allowCustomArgb) {
@@ -294,6 +298,9 @@ internal fun MaterialDialog.setPage(@IntRange(from = 0, to = 1) index: Int) {
 }
 
 internal fun MaterialDialog.updateActionButtonsColor(@ColorInt color: Int) {
+  val changeButtonColor: Boolean = config(KEY_CHANGE_ACTION_BUTTON_COLOR)
+  if (!changeButtonColor) return
+
   val adjustedColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
   val isAdjustedDark = adjustedColor.isColorDark(0.25)
   val isPrimaryDark =
