@@ -42,14 +42,17 @@ import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_HORIZONTAL_PADDI
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
+import kotlin.math.min
 
 internal fun MaterialDialog.setWindowConstraints() {
-  window?.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE) ?: return
-  val wm = this.window?.windowManager ?: return
+  val win = window ?: return
+  win.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+  val wm = win.windowManager ?: return
 
   val display = wm.defaultDisplay
   val size = Point()
   display.getSize(size)
+
   val windowWidth = size.x
   val windowHeight = size.y
 
@@ -63,11 +66,12 @@ internal fun MaterialDialog.setWindowConstraints() {
     val maxWidth = getDimensionPixelSize(R.dimen.md_dialog_max_width)
     val calculatedWidth = windowWidth - windowHorizontalPadding * 2
 
-    this@setWindowConstraints.view.maxHeight = windowHeight - windowVerticalPadding * 2
-    val lp = WindowManager.LayoutParams()
-    lp.copyFrom(this@setWindowConstraints.window!!.attributes)
-    lp.width = Math.min(maxWidth, calculatedWidth)
-    this@setWindowConstraints.window!!.attributes = lp
+    view.maxHeight = windowHeight - windowVerticalPadding * 2
+    val lp = WindowManager.LayoutParams().apply {
+      copyFrom(win.attributes)
+      width = min(maxWidth, calculatedWidth)
+    }
+    win.attributes = lp
   }
 }
 
