@@ -7,7 +7,7 @@ ext.versions = [
     publishVersionCode  : 228,
 
     // Plugins
-    gradlePlugin        : '3.3.0',
+    gradlePlugin        : '3.3.1',
     spotlessPlugin      : '3.17.0',
     versionPlugin       : '0.20.0',
     bintrayPlugin       : '0.9',
@@ -19,7 +19,7 @@ ext.versions = [
     androidxMaterial    : '1.0.0',
 
     // Kotlin
-    kotlin              : '1.3.20',
+    kotlin              : '1.3.21',
     coroutines          : '1.1.1',
 
     // afollestad
