@@ -123,21 +123,14 @@ fun MaterialDialog.input(
     }
   }
 
-  if (maxLength != null) {
-    // Add text change listener to invalidate max length enabled state
-    editText.textChanged { invalidateInputMaxLength() }
-    invalidateInputMaxLength()
-  }
-
   editText.textChanged {
-    if (!allowEmpty) {
-      setActionButtonEnabled(POSITIVE, it.isNotEmpty())
-    }
+    invalidateInput(allowEmpty)
     if (!waitForPositiveButton && callback != null) {
       // We aren't waiting for positive, so invoke every time the text changes
       callback.invoke(this, it)
     }
   }
+  invalidateInput(allowEmpty)
 
   return this
 }
