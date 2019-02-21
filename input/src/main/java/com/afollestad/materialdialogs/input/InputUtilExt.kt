@@ -25,11 +25,11 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 internal fun MaterialDialog.invalidateInput(allowEmpty: Boolean) {
   val maxLength = getInputLayout().counterMaxLength
   val currentLength = getInputField().text?.length ?: 0
-  val isActionButtonEnable = if (maxLength > 0 && currentLength <= maxLength && !allowEmpty && currentLength > 0) {
-    true
-  } else if (allowEmpty && maxLength > 0 && currentLength <= maxLength) {
-    true
-  } else maxLength <= 0 && !allowEmpty && currentLength > 0
+  val isActionButtonEnable = when {
+    maxLength > 0 && currentLength <= maxLength && !allowEmpty && currentLength > 0 -> true
+    allowEmpty && maxLength > 0 && currentLength <= maxLength -> true
+    else -> maxLength <= 0 && !allowEmpty && currentLength > 0
+  }
   setActionButtonEnabled(POSITIVE, isActionButtonEnable)
 }
 
