@@ -37,6 +37,7 @@ import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
+import com.afollestad.materialdialogs.color.ColorPalette
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -624,7 +625,10 @@ class MainActivity : AppCompatActivity() {
     colorChooser_primary.setOnClickListener {
       MaterialDialog(this).show {
         title(R.string.primary_colors)
-        colorChooser(PRIMARY_COLORS, PRIMARY_COLORS_SUB) { _, color ->
+        colorChooser(
+            ColorPalette.Primary,
+            ColorPalette.PrimarySub
+        ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
         positiveButton(R.string.select)
@@ -636,7 +640,10 @@ class MainActivity : AppCompatActivity() {
     colorChooser_accent.setOnClickListener {
       MaterialDialog(this).show {
         title(R.string.accent_colors)
-        colorChooser(ACCENT_COLORS, ACCENT_COLORS_SUB) { _, color ->
+        colorChooser(
+            ColorPalette.Accent,
+            ColorPalette.AccentSub
+        ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
         positiveButton(R.string.select)
@@ -686,8 +693,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors_rgb)
         colorChooser(
-            colors = PRIMARY_COLORS,
-            subColors = PRIMARY_COLORS_SUB,
+            colors = ColorPalette.Primary,
+            subColors = ColorPalette.PrimarySub,
             allowCustomArgb = true
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
@@ -702,8 +709,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors_argb)
         colorChooser(
-            colors = PRIMARY_COLORS,
-            subColors = PRIMARY_COLORS_SUB,
+            colors = ColorPalette.Primary,
+            subColors = ColorPalette.PrimarySub,
             allowCustomArgb = true,
             showAlphaSelector = true
         ) { _, color ->
