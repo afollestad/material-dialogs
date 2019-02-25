@@ -13,7 +13,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/signalStrength"
-      android:textColor="#80000000"
+      android:textColor="?android:textColorSecondary"
       android:textSize="@dimen/customTitle"
       />
 
@@ -22,7 +22,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="4dp"
       android:text="@string/excellent"
-      android:textColor="#000000"
+      android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
       />
 
@@ -31,7 +31,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="18dp"
       android:text="@string/ssid"
-      android:textColor="#80000000"
+      android:textColor="?android:textColorSecondary"
       android:textSize="@dimen/customTitle"
       />
 
@@ -40,7 +40,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="4dp"
       android:text="@string/ssidLit"
-      android:textColor="#000000"
+      android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
       />
 
@@ -49,7 +49,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="18dp"
       android:text="@string/security"
-      android:textColor="#80000000"
+      android:textColor="?android:textColorSecondary"
       android:textSize="@dimen/customTitle"
       />
 
@@ -58,7 +58,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="4dp"
       android:text="@string/securityType"
-      android:textColor="#000000"
+      android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
       />
 
@@ -67,7 +67,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="18dp"
       android:text="@string/password"
-      android:textColor="#80000000"
+      android:textColor="?android:textColorSecondary"
       android:textSize="@dimen/customTitle"
       />
 
@@ -78,7 +78,7 @@
       android:layout_marginTop="4dp"
       android:inputType="textPassword"
       android:text="Hello World"
-      android:textColor="#000000"
+      android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
       tools:ignore="HardcodedText,LabelFor"
       />
@@ -91,7 +91,7 @@
       android:layout_marginTop="18dp"
       android:gravity="center"
       android:text="@string/showPassword"
-      android:textColor="#000000"
+      android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
       />
 
