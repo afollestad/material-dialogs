@@ -71,6 +71,7 @@
     <item name="android:minWidth">@dimen/md_action_button_min_width</item>
     <item name="android:paddingLeft">@dimen/md_action_button_padding_horizontal</item>
     <item name="android:paddingRight">@dimen/md_action_button_padding_horizontal</item>
+    <item name="android:textAllCaps">false</item>
   </style>
 
   <style name="MD_ListItem">

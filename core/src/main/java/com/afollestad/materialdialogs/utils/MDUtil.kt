@@ -109,6 +109,19 @@ object MDUtil {
     return ContextCompat.getColor(context, res ?: 0)
   }
 
+  @RestrictTo(LIBRARY_GROUP) fun resolveInt(
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: Int
+  ): Int {
+    val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+    try {
+      return a.getInt(0, defaultValue)
+    } finally {
+      a.recycle()
+    }
+  }
+
   @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(threshold: Double = 0.5): Boolean {
     if (this == Color.TRANSPARENT) {
       return false

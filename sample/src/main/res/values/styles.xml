@@ -11,6 +11,8 @@
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
+
+    <item name="md_button_casing">literal</item>
   </style>
 
   <style name="AppTheme.Custom" parent="Theme.MaterialComponents.Light">

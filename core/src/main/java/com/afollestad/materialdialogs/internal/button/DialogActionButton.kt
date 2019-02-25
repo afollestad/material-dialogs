@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.resolveInt
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
 
 /**
@@ -42,6 +43,9 @@ class DialogActionButton(
   context: Context,
   attrs: AttributeSet? = null
 ) : AppCompatButton(context, attrs) {
+  companion object {
+    private const val CASING_UPPER = 1
+  }
 
   private var enabledColor: Int = 0
   private var disabledColor: Int = 0
@@ -56,6 +60,14 @@ class DialogActionButton(
     appContext: Context,
     stacked: Boolean
   ) {
+    // Casing
+    val casing = resolveInt(
+        context = appContext,
+        attr = R.attr.md_button_casing,
+        defaultValue = CASING_UPPER
+    )
+    setSupportAllCaps(casing == CASING_UPPER)
+
     // Text color
     val theme = inferTheme(appContext)
     enabledColor = resolveColor(appContext, attr = attr.colorAccent)
