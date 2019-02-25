@@ -83,7 +83,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.0.1'
+  implementation 'com.afollestad.material-dialogs:core:2.0.2'
 }
 ```
 
@@ -669,7 +669,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.0.0'
+  implementation 'com.afollestad.material-dialogs:input:2.0.2'
 }
 ```
 
@@ -828,7 +828,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.0.0'
+  implementation 'com.afollestad.material-dialogs:files:2.0.2'
 }
 ```
 
@@ -998,7 +998,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.0.0'
+  implementation 'com.afollestad.material-dialogs:color:2.0.2'
 }
 ```
 
