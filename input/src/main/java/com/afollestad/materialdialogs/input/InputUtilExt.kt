@@ -22,9 +22,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 
-internal fun MaterialDialog.invalidateInputMaxLength() {
-  val maxLength = getInputLayout().counterMaxLength
+internal fun MaterialDialog.invalidateInputMaxLength(allowEmpty: Boolean) {
   val currentLength = getInputField().text?.length ?: 0
+  if (!allowEmpty && currentLength == 0) {
+    return
+  }
+  val maxLength = getInputLayout().counterMaxLength
   if (maxLength > 0) {
     setActionButtonEnabled(POSITIVE, currentLength <= maxLength)
   }

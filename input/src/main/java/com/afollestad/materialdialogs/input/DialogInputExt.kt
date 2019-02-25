@@ -103,14 +103,14 @@ fun MaterialDialog.input(
   val resources = windowContext.resources
   val editText = getInputField()
 
-  val prefillText = prefill ?: if (prefillRes != null) resources.getString(prefillRes) else null
-  if (prefillText != null) {
+  val prefillText = prefill ?: if (prefillRes != null) resources.getString(prefillRes) else ""
+  if (prefillText.isNotEmpty()) {
     editText.setText(prefillText)
     onShow { editText.setSelection(prefillText.length) }
   }
   setActionButtonEnabled(
       POSITIVE,
-      allowEmpty || prefillText?.isNotEmpty() == true
+      allowEmpty || prefillText.isNotEmpty()
   )
 
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
@@ -121,17 +121,15 @@ fun MaterialDialog.input(
       isCounterEnabled = true
       counterMaxLength = maxLength
     }
-  }
-
-  if (maxLength != null) {
-    // Add text change listener to invalidate max length enabled state
-    editText.textChanged { invalidateInputMaxLength() }
-    invalidateInputMaxLength()
+    invalidateInputMaxLength(allowEmpty)
   }
 
   editText.textChanged {
     if (!allowEmpty) {
       setActionButtonEnabled(POSITIVE, it.isNotEmpty())
+    }
+    if (maxLength != null) {
+      invalidateInputMaxLength(allowEmpty)
     }
     if (!waitForPositiveButton && callback != null) {
       // We aren't waiting for positive, so invoke every time the text changes
