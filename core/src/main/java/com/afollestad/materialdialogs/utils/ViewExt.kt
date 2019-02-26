@@ -95,12 +95,12 @@ internal fun TextView.setGravityStartCompat() {
   if (SDK_INT >= JELLY_BEAN_MR1) {
     this.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
   }
-  this.gravity = Gravity.START
+  this.gravity = Gravity.START or Gravity.CENTER_VERTICAL
 }
 
 internal fun TextView.setGravityEndCompat() {
   if (SDK_INT >= JELLY_BEAN_MR1) {
     this.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
   }
-  this.gravity = Gravity.END
+  this.gravity = Gravity.END or Gravity.CENTER_VERTICAL
 }
