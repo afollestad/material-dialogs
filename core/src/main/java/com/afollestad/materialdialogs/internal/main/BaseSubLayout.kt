@@ -20,11 +20,10 @@ import android.graphics.Paint
 import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
-import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
 internal abstract class BaseSubLayout(
   context: Context,
@@ -56,11 +55,6 @@ internal abstract class BaseSubLayout(
     dividerPaint.color = getDividerColor()
     return dividerPaint
   }
-
-  protected fun debugPaint(
-    @ColorInt color: Int,
-    stroke: Boolean = false
-  ): Paint = dialogParent().debugPaint(color, stroke)
 
   private fun getDividerColor(): Int {
     return resolveColor(dialogParent().dialog.context, attr = attr.md_divider_color)

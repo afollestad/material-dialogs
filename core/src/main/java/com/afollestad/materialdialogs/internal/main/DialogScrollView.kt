@@ -34,7 +34,7 @@ internal class DialogScrollView(
 
   var rootView: DialogLayout? = null
 
-  private var isScrollable: Boolean = false
+  private val isScrollable: Boolean
     get() = getChildAt(0).measuredHeight > height
 
   override fun onAttachedToWindow() {
@@ -57,7 +57,7 @@ internal class DialogScrollView(
 
   private fun invalidateDividers() {
     if (childCount == 0 || measuredHeight == 0 || !isScrollable) {
-      rootView?.invalidateDividers(false, false)
+      rootView?.invalidateDividers(scrolledDown = false, atBottom = false)
       return
     }
     val view = getChildAt(childCount - 1)

@@ -16,11 +16,6 @@
 package com.afollestad.materialdialogs.internal.main
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Paint.Style.FILL
-import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
@@ -28,15 +23,10 @@ import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.FrameLayout
-import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
-
-val DEBUG_COLOR_PINK = Color.parseColor("#EAA3CF")
-val DEBUG_COLOR_DARK_PINK = Color.parseColor("#E066B1")
-val DEBUG_COLOR_BLUE = Color.parseColor("#B5FAFB")
 
 /**
  * The root layout of a dialog. Contains a [DialogTitleLayout], [DialogContentLayout],
@@ -50,10 +40,6 @@ internal class DialogLayout(
 ) : FrameLayout(context, attrs) {
 
   var maxHeight: Int = 0
-  var debugMode: Boolean = false
-
-  private val frameMarginVertical = dimenPx(R.dimen.md_dialog_frame_margin_vertical)
-  private var debugPaint: Paint? = null
 
   internal val frameMarginVerticalLess = dimenPx(R.dimen.md_dialog_frame_margin_vertical_less)
 
@@ -156,45 +142,5 @@ internal class DialogLayout(
         contentRight,
         buttonsTop
     )
-  }
-
-  override fun onDraw(canvas: Canvas) {
-    super.onDraw(canvas)
-
-    if (debugMode) {
-      val contentPadding =
-        if (titleLayout.shouldNotBeVisible()) frameMarginVerticalLess else frameMarginVertical
-      if (titleLayout.shouldNotBeVisible()) {
-        // Content top spacing
-        canvas.drawRect(
-            0f,
-            titleLayout.bottom.toFloat(),
-            measuredWidth.toFloat(),
-            titleLayout.bottom.toFloat() + contentPadding,
-            debugPaint(DEBUG_COLOR_BLUE)
-        )
-      }
-      // Content bottom spacing
-      canvas.drawRect(
-          0f,
-          buttonsLayout.top.toFloat() - contentPadding,
-          measuredWidth.toFloat(),
-          buttonsLayout.top.toFloat(),
-          debugPaint(DEBUG_COLOR_BLUE)
-      )
-    }
-  }
-
-  fun debugPaint(
-    @ColorInt color: Int,
-    stroke: Boolean = false
-  ): Paint {
-    if (debugPaint == null) {
-      debugPaint = Paint()
-    }
-    return debugPaint!!.apply {
-      this.style = if (stroke) STROKE else FILL
-      this.color = color
-    }
   }
 }

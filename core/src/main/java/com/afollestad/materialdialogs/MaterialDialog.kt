@@ -299,7 +299,8 @@ class MaterialDialog(
 
   /** Turns debug mode on or off. Draws spec guides over dialog views. */
   @CheckResult fun debugMode(debugMode: Boolean = true): MaterialDialog {
-    this.view.debugMode = debugMode
+    TODO("Re-enable")
+    //this.view.debugMode = debugMode
     return this
   }
 

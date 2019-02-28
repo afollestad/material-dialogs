@@ -52,7 +52,7 @@ internal class DialogContentLayout(
   attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-  private var rootLayout: DialogLayout? = null
+  private val rootLayout: DialogLayout?
     get() = parent as DialogLayout
   private var scrollView: DialogScrollView? = null
   private var scrollFrame: ViewGroup? = null
