@@ -24,10 +24,6 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.WhichButton.NEGATIVE
 import com.afollestad.materialdialogs.WhichButton.NEUTRAL
@@ -62,7 +58,7 @@ typealias DialogCallback = (MaterialDialog) -> Unit
 /** @author Aidan Follestad (afollestad) */
 class MaterialDialog(
   val windowContext: Context
-) : Dialog(windowContext, inferTheme(windowContext).styleRes), LifecycleObserver {
+) : Dialog(windowContext, inferTheme(windowContext).styleRes) {
 
   /**
    * A named config map, used like tags for extensions.
@@ -105,7 +101,6 @@ class MaterialDialog(
     this.view.dialog = this
     setWindowConstraints()
     setDefaults()
-    (windowContext as? LifecycleOwner)?.lifecycle?.addObserver(this)
   }
 
   /**
@@ -353,11 +348,5 @@ class MaterialDialog(
     if (autoDismissEnabled) {
       dismiss()
     }
-  }
-
-  /** dismiss automatically when lifecycle owner is destroyed. */
-  @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-  fun onDestroy() {
-    dismiss()
   }
 }

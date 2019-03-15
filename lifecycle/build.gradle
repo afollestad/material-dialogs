@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: '../dependencies.gradle'
+
+ext.shard = 'lifecycle'
+apply from: '../bintrayconfig.gradle'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
+    }
+
+    sourceSets {
+        main.res.srcDirs = [
+                'src/main/res',
+                'src/main/res-public'
+        ]
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+    implementation project(':core')
+
+    implementation 'androidx.lifecycle:lifecycle-runtime:' + versions.lifecycle
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:' + versions.lifecycle
+}
+
+apply from: '../spotless.gradle'

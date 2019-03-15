@@ -30,8 +30,6 @@ dependencies {
 
   implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
-  implementation 'androidx.lifecycle:lifecycle-runtime:' + versions.lifecycle
-  annotationProcessor 'androidx.lifecycle:lifecycle-compiler:' + versions.lifecycle
 }
 
 apply from: '../spotless.gradle'
