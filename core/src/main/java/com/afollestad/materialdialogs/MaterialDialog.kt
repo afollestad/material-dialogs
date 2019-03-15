@@ -357,7 +357,7 @@ class MaterialDialog(
 
   /** dismiss automatically when lifecycle owner is destroyed. */
   @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-  fun onDestroy(){
+  fun onDestroy() {
     dismiss()
   }
 }
