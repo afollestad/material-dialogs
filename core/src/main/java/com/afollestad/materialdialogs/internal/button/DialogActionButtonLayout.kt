@@ -50,16 +50,15 @@ internal class DialogActionButtonLayout(
     const val INDEX_NEUTRAL = 2
   }
 
-  private val buttonHeightDefault = dimenPx(R.dimen.md_action_button_height)
-  private val buttonHeightStacked = dimenPx(R.dimen.md_stacked_action_button_height)
-  private val buttonFramePadding = dimenPx(R.dimen.md_action_button_frame_padding)
+  private val buttonFramePadding = dimenPx(R.dimen.md_action_button_frame_padding) -
+      dimenPx(R.dimen.md_action_button_inset_horizontal)
   private val buttonFramePaddingNeutral = dimenPx(R.dimen.md_action_button_frame_padding_neutral)
-  private val buttonSpacing = 0
+  private val buttonFrameSpecHeight = dimenPx(R.dimen.md_action_button_frame_spec_height)
 
   private val checkBoxPromptMarginVertical = dimenPx(R.dimen.md_checkbox_prompt_margin_vertical)
   private val checkBoxPromptMarginHorizontal = dimenPx(R.dimen.md_checkbox_prompt_margin_horizontal)
 
-  private var stackButtons: Boolean = false
+  internal var stackButtons: Boolean = false
 
   lateinit var actionButtons: Array<DialogActionButton>
   lateinit var checkBoxPrompt: AppCompatCheckBox
@@ -116,12 +115,12 @@ internal class DialogActionButtonLayout(
       if (stackButtons) {
         button.measure(
             makeMeasureSpec(parentWidth, EXACTLY),
-            makeMeasureSpec(buttonHeightStacked, EXACTLY)
+            makeMeasureSpec(buttonFrameSpecHeight, EXACTLY)
         )
       } else {
         button.measure(
             makeMeasureSpec(0, UNSPECIFIED),
-            makeMeasureSpec(buttonHeightDefault, EXACTLY)
+            makeMeasureSpec(buttonFrameSpecHeight, EXACTLY)
         )
       }
     }
@@ -129,7 +128,7 @@ internal class DialogActionButtonLayout(
     if (visibleButtons.isNotEmpty() && !stackButtons) {
       var totalWidth = 0
       for (button in visibleButtons) {
-        totalWidth += button.measuredWidth + buttonSpacing
+        totalWidth += button.measuredWidth
       }
       if (totalWidth >= parentWidth && !stackButtons) {
         stackButtons = true
@@ -141,7 +140,7 @@ internal class DialogActionButtonLayout(
           )
           button.measure(
               makeMeasureSpec(parentWidth, EXACTLY),
-              makeMeasureSpec(buttonHeightStacked, EXACTLY)
+              makeMeasureSpec(buttonFrameSpecHeight, EXACTLY)
           )
         }
       }
@@ -171,6 +170,7 @@ internal class DialogActionButtonLayout(
       val promptTop: Int
       val promptRight: Int
       val promptBottom: Int
+
       if (isRtl()) {
         promptRight = measuredWidth - checkBoxPromptMarginHorizontal
         promptTop = checkBoxPromptMarginVertical
@@ -182,6 +182,7 @@ internal class DialogActionButtonLayout(
         promptRight = promptLeft + checkBoxPrompt.measuredWidth
         promptBottom = promptTop + checkBoxPrompt.measuredHeight
       }
+
       checkBoxPrompt.layout(
           promptLeft,
           promptTop,
@@ -191,65 +192,66 @@ internal class DialogActionButtonLayout(
     }
 
     if (stackButtons) {
-      var topY = measuredHeight - requiredHeightForButtons()
-      for (button in visibleButtons) {
-        val bottomY = topY + buttonHeightStacked
-        button.layout(0, topY, measuredWidth, bottomY)
-        topY = bottomY
-      }
-    } else if (isRtl()) {
-      val topY = measuredHeight - (requiredHeightForButtons() - buttonFramePadding)
-      val bottomY = measuredHeight - buttonFramePadding
-
-      if (actionButtons[INDEX_NEUTRAL].isVisible()) {
-        val btn = actionButtons[INDEX_NEUTRAL]
-        val rightX = measuredWidth - buttonFramePaddingNeutral
-        btn.layout(
-            rightX - btn.measuredWidth,
-            topY,
-            rightX,
-            bottomY
-        )
-      }
-
-      var leftX = buttonFramePadding
-      if (actionButtons[INDEX_POSITIVE].isVisible()) {
-        val btn = actionButtons[INDEX_POSITIVE]
-        val rightX = leftX + btn.measuredWidth
-        btn.layout(leftX, topY, rightX, bottomY)
-        leftX = rightX + buttonSpacing
-      }
-      if (actionButtons[INDEX_NEGATIVE].isVisible()) {
-        val btn = actionButtons[INDEX_NEGATIVE]
-        val rightX = leftX + btn.measuredWidth
-        btn.layout(leftX, topY, rightX, bottomY)
+      val leftX = buttonFramePadding
+      val rightX = measuredWidth - buttonFramePadding
+      var bottomY = measuredHeight
+      for (button in visibleButtons.reversed()) {
+        val topY = bottomY - buttonFrameSpecHeight
+        button.layout(leftX, topY, rightX, bottomY)
+        bottomY = topY
       }
     } else {
-      val topY = measuredHeight - (requiredHeightForButtons() - buttonFramePadding)
-      val bottomY = measuredHeight - 0
+      val topY = measuredHeight - buttonFrameSpecHeight
+      val bottomY = measuredHeight - buttonFramePadding
 
-      if (actionButtons[INDEX_NEUTRAL].isVisible()) {
-        val btn = actionButtons[INDEX_NEUTRAL]
-        val leftX = buttonFramePaddingNeutral
-        btn.layout(
-            leftX,
-            topY,
-            leftX + btn.measuredWidth,
-            bottomY
-        )
-      }
+      if (isRtl()) {
+        if (actionButtons[INDEX_NEUTRAL].isVisible()) {
+          val btn = actionButtons[INDEX_NEUTRAL]
+          val rightX = measuredWidth - buttonFramePaddingNeutral
+          btn.layout(
+              rightX - btn.measuredWidth,
+              topY,
+              rightX,
+              bottomY
+          )
+        }
 
-      var rightX = measuredWidth - buttonFramePadding
-      if (actionButtons[INDEX_POSITIVE].isVisible()) {
-        val btn = actionButtons[INDEX_POSITIVE]
-        val leftX = rightX - btn.measuredWidth
-        btn.layout(leftX, topY, rightX, bottomY)
-        rightX = leftX - buttonSpacing
-      }
-      if (actionButtons[INDEX_NEGATIVE].isVisible()) {
-        val btn = actionButtons[INDEX_NEGATIVE]
-        val leftX = rightX - btn.measuredWidth
-        btn.layout(leftX, topY, rightX, bottomY)
+        var leftX = buttonFramePadding
+        if (actionButtons[INDEX_POSITIVE].isVisible()) {
+          val btn = actionButtons[INDEX_POSITIVE]
+          val rightX = leftX + btn.measuredWidth
+          btn.layout(leftX, topY, rightX, bottomY)
+          leftX = rightX
+        }
+        if (actionButtons[INDEX_NEGATIVE].isVisible()) {
+          val btn = actionButtons[INDEX_NEGATIVE]
+          val rightX = leftX + btn.measuredWidth
+          btn.layout(leftX, topY, rightX, bottomY)
+        }
+      } else {
+        if (actionButtons[INDEX_NEUTRAL].isVisible()) {
+          val btn = actionButtons[INDEX_NEUTRAL]
+          val leftX = buttonFramePaddingNeutral
+          btn.layout(
+              leftX,
+              topY,
+              leftX + btn.measuredWidth,
+              bottomY
+          )
+        }
+
+        var rightX = measuredWidth - buttonFramePadding
+        if (actionButtons[INDEX_POSITIVE].isVisible()) {
+          val btn = actionButtons[INDEX_POSITIVE]
+          val leftX = rightX - btn.measuredWidth
+          btn.layout(leftX, topY, rightX, bottomY)
+          rightX = leftX
+        }
+        if (actionButtons[INDEX_NEGATIVE].isVisible()) {
+          val btn = actionButtons[INDEX_NEGATIVE]
+          val leftX = rightX - btn.measuredWidth
+          btn.layout(leftX, topY, rightX, bottomY)
+        }
       }
     }
   }
@@ -270,7 +272,7 @@ internal class DialogActionButtonLayout(
 
   private fun requiredHeightForButtons() = when {
     visibleButtons.isEmpty() -> 0
-    stackButtons -> (visibleButtons.size * buttonHeightStacked) + buttonFramePadding
-    else -> buttonHeightDefault + (buttonFramePadding * 2)
+    stackButtons -> visibleButtons.size * buttonFrameSpecHeight
+    else -> buttonFrameSpecHeight
   }
 }

@@ -54,6 +54,7 @@ import kotlinx.android.synthetic.main.activity_main.basic_html_content
 import kotlinx.android.synthetic.main.activity_main.basic_icon
 import kotlinx.android.synthetic.main.activity_main.basic_long
 import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_stacked_buttons
 import kotlinx.android.synthetic.main.activity_main.basic_titled
 import kotlinx.android.synthetic.main.activity_main.basic_titled_buttons
 import kotlinx.android.synthetic.main.activity_main.buttons_callbacks
@@ -152,6 +153,15 @@ class MainActivity : AppCompatActivity() {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    basic_stacked_buttons.setOnClickListener {
+      MaterialDialog(this).show {
+        message(R.string.useGoogleLocationServicesPrompt)
+        positiveButton(text = "This is a long button")
+        negativeButton(text = "So is this, these should stack")
         debugMode(debugMode)
       }
     }

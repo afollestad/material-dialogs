@@ -38,7 +38,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
-import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_HORIZONTAL_PADDING
+import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_VERTICAL_PADDING
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
@@ -67,10 +67,11 @@ internal fun MaterialDialog.setWindowConstraints() {
     val calculatedWidth = windowWidth - windowHorizontalPadding * 2
 
     view.maxHeight = windowHeight - windowVerticalPadding * 2
-    val lp = WindowManager.LayoutParams().apply {
-      copyFrom(win.attributes)
-      width = min(maxWidth, calculatedWidth)
-    }
+    val lp = WindowManager.LayoutParams()
+        .apply {
+          copyFrom(win.attributes)
+          width = min(maxWidth, calculatedWidth)
+        }
     win.attributes = lp
   }
 }
@@ -95,15 +96,15 @@ fun MaterialDialog.invalidateDividers(
 ) = view.invalidateDividers(scrolledDown, atBottom)
 
 internal fun MaterialDialog.preShow() {
-  val customViewNoHorizontalPadding = config[CUSTOM_VIEW_NO_HORIZONTAL_PADDING] as? Boolean == true
+  val customViewNoVerticalPadding = config[CUSTOM_VIEW_NO_VERTICAL_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
 
   this.view.run {
-    if (titleLayout.shouldNotBeVisible() && !customViewNoHorizontalPadding) {
-      // Reduce top and bottom padding if we have no title
+    if (titleLayout.shouldNotBeVisible() && !customViewNoVerticalPadding) {
+      // Reduce top and bottom padding if we have no title or buttons
       contentLayout.modifyFirstAndLastPadding(
-          top = frameMarginVerticalLess,
-          bottom = frameMarginVerticalLess
+          top = frameMarginVertical,
+          bottom = frameMarginVertical
       )
     }
     if (getCheckBoxPrompt().isVisible()) {

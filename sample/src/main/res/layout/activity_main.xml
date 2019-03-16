@@ -41,6 +41,12 @@
         />
 
     <Button
+        android:id="@+id/basic_stacked_buttons"
+        android:text="Basic + Stacked Buttons"
+        style="@style/SampleButton"
+        />
+
+    <Button
         android:id="@+id/basic_titled_buttons"
         android:text="Basic + Title + Buttons"
         style="@style/SampleButton"

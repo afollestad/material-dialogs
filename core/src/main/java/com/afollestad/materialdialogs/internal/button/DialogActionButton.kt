@@ -78,8 +78,7 @@ class DialogActionButton(
     setTextColor(enabledColor)
 
     // Selector
-    val selectorAttr = if (stacked) R.attr.md_item_selector else R.attr.md_button_selector
-    val bgDrawable = resolveDrawable(baseContext, attr = selectorAttr)
+    val bgDrawable = resolveDrawable(baseContext, attr = R.attr.md_button_selector)
     if (SDK_INT >= LOLLIPOP && bgDrawable is RippleDrawable) {
       val rippleColor = resolveColor(context = baseContext, attr = R.attr.md_ripple_color)
       if (rippleColor != 0) {

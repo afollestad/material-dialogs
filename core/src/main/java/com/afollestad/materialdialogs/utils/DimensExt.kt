@@ -15,6 +15,9 @@
  */
 package com.afollestad.materialdialogs.utils
 
+import android.util.TypedValue
+import android.util.TypedValue.COMPLEX_UNIT_DIP
+import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.DimenRes
 import com.afollestad.materialdialogs.MaterialDialog
@@ -37,4 +40,8 @@ internal fun MaterialDialog.dimen(
   } finally {
     a.recycle()
   }
+}
+
+internal fun View.dp(value: Int): Float {
+  return TypedValue.applyDimension(COMPLEX_UNIT_DIP, value.toFloat(), resources.displayMetrics)
 }
