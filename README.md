@@ -8,6 +8,7 @@
 [ ![Input](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Ainput/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Ainput/_latestVersion)
 [ ![Files](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Afiles/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Afiles/_latestVersion)
 [ ![Color](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acolor/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
+[ ![Color](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Alifecycle/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Alifecycle/_latestVersion)
 
 #### [View Releases and Changelogs](https://github.com/afollestad/material-dialogs/releases)
 
@@ -68,6 +69,11 @@
 2. [Color Choosers](#color-choosers)
     1. [Basics](#basics-4)
     2. [Sub Colors](#sub-colors) 
+
+# Table of Contents - Lifecycle
+
+1. [Gradle Dependency](#gradle-dependency-4)
+2. [Usage](#usage)
 
 ---
 
@@ -1081,3 +1087,33 @@ MaterialDialog(this).show {
 ```
 
 Omitting `showAlphaSelector` will hide the alpha (transparency) selector.
+
+---
+
+# Lifecycle
+
+## Gradle Dependency
+
+[ ![Lifecycle](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Alifecycle/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Alifecycle/_latestVersion)
+
+The `lifecycle` module contains extensions to make dialogs work with AndroidX lifecycles.
+
+```gradle
+dependencies {
+  ...
+  implementation 'com.afollestad.material-dialogs:lifecycle:2.0.3'
+}
+```
+
+## Usage
+
+```kotlin
+MaterialDialog(this).show {
+  ...
+  lifecycleOwner(owner)
+}
+```
+
+When the given lifecycle owner is destroyed, the dialog is automatically dismissed. Lifecycle 
+owners include Activities and Fragments from AndroidX, along with any class that implements the
+`LifecycleOwner` interface.

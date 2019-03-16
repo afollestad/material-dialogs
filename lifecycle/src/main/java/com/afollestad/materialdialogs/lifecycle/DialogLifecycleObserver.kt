@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("unused")
+
 package com.afollestad.materialdialogs.lifecycle
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-class LCObserver(private val callback: () -> Unit) : LifecycleObserver {
-    /** dismiss automatically when lifecycle owner is destroyed. */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
-        callback.invoke()
-    }
+/** @author @jordyamc */
+internal class DialogLifecycleObserver(private val dismiss: () -> Unit) : LifecycleObserver {
+  @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+  fun onDestroy() = dismiss()
 }

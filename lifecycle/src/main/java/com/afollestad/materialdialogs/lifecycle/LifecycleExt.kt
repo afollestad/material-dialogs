@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("unused")
+
 package com.afollestad.materialdialogs.lifecycle
 
 import androidx.lifecycle.LifecycleOwner
 import com.afollestad.materialdialogs.MaterialDialog
 
 /**
- * Implement lifecycle in dialog to avoid leaks when the activity is destroyed
- * when the dialog is showing.
+ * Attach the dialog to a lifecycle and dismiss it when the lifecycle is destroyed.
+ * Uses the given [owner] lifecycle if provided, else falls back to the Context of the dialog
+ * window if it can.
  *
  * @param owner Optional lifecycle owner, if its null use windowContext.
  */
 fun MaterialDialog.lifecycleOwner(owner: LifecycleOwner? = null): MaterialDialog {
-    val observer = LCObserver {
-        dismiss()
-    }
-    if (owner != null)
-        owner.lifecycle.addObserver(observer)
-    else
-        (windowContext as? LifecycleOwner)?.lifecycle?.addObserver(observer)
-    return this
+  val observer = DialogLifecycleObserver(::dismiss)
+  val lifecycleOwner = owner ?: (windowContext as? LifecycleOwner
+      ?: throw IllegalStateException(
+          "$windowContext is not a LifecycleOwner."
+      ))
+  lifecycleOwner.lifecycle.addObserver(observer)
+  return this
 }
