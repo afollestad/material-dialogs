@@ -22,10 +22,10 @@ import androidx.viewpager.widget.PagerAdapter
 internal class DateTimePickerAdapter : PagerAdapter() {
 
   override fun instantiateItem(container: ViewGroup, position: Int): Any {
-    var resId = 0
-    when (position) {
-      0 -> resId = R.id.datetimeDatePicker
-      1 -> resId = R.id.datetimeTimePicker
+    val resId = when (position) {
+      0 -> R.id.datetimeDatePicker
+      1 -> R.id.datetimeTimePicker
+      else -> throw IllegalStateException("Unexpected position: $position")
     }
     return container.findViewById(resId)
   }

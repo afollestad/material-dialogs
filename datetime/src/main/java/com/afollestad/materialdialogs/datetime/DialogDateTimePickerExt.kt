@@ -45,10 +45,10 @@ fun MaterialDialog.datePicker(
   minDate?.let { getDatePicker().minDate = it.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() }
   currentDate?.let { getDatePicker().init(it.year, it.monthValue.inc(), it.dayOfMonth, null) }
 
-  positiveButton(res = android.R.string.ok) {
+  positiveButton(android.R.string.ok) {
     dateCallback?.invoke(it, extractLocalDate(getDatePicker()))
   }
-  negativeButton(res = android.R.string.cancel)
+  negativeButton(android.R.string.cancel)
 
   return this
 }
@@ -69,10 +69,10 @@ fun MaterialDialog.timePicker(
     }
   }
 
-  positiveButton(res = android.R.string.ok) {
+  positiveButton(android.R.string.ok) {
     timeCallback?.invoke(it, extractLocalTime(getTimePicker()))
   }
-  negativeButton(res = android.R.string.cancel)
+  negativeButton(android.R.string.cancel)
 
   return this
 }
@@ -116,10 +116,10 @@ fun MaterialDialog.dateTimePicker(
   }
 
   setActionButtonEnabled(POSITIVE, !requireFutureDateTime || isFutureTime(getDatePicker(), getTimePicker()))
-  positiveButton(res = android.R.string.ok) {
+  positiveButton(android.R.string.ok) {
     dateTimeCallback?.invoke(it, extractLocalDateTime(getDatePicker(), getTimePicker()))
   }
-  negativeButton(res = android.R.string.cancel)
+  negativeButton(android.R.string.cancel)
 
   return this
 }

@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("DEPRECATION")
+
 package com.afollestad.materialdialogs.datetime.utils
 
 import android.os.Build
 import android.widget.TimePicker
 
-fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+private fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 
-@Suppress("DEPRECATION")
-fun TimePicker.hour() = if (isNougat()) hour else currentHour
+fun TimePicker.hour(): Int = if (isNougat()) hour else currentHour
 
-@Suppress("DEPRECATION")
-fun TimePicker.minute() = if (isNougat()) minute else currentMinute
+fun TimePicker.minute(): Int = if (isNougat()) minute else currentMinute
 
-@Suppress("DEPRECATION")
 fun TimePicker.hour(value: Int) {
   if (isNougat()) hour = value else currentHour = value
 }
 
-@Suppress("DEPRECATION")
 fun TimePicker.minute(value: Int) {
   if (isNougat()) minute = value else currentMinute = value
 }

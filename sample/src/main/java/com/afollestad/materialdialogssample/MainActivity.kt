@@ -50,7 +50,64 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.basic
+import kotlinx.android.synthetic.main.activity_main.basic_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_html_content
+import kotlinx.android.synthetic.main.activity_main.basic_icon
+import kotlinx.android.synthetic.main.activity_main.basic_long
+import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_stacked_buttons
+import kotlinx.android.synthetic.main.activity_main.basic_titled
+import kotlinx.android.synthetic.main.activity_main.basic_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.buttons_callbacks
+import kotlinx.android.synthetic.main.activity_main.buttons_neutral
+import kotlinx.android.synthetic.main.activity_main.buttons_stacked
+import kotlinx.android.synthetic.main.activity_main.buttons_stacked_checkboxPrompt
+import kotlinx.android.synthetic.main.activity_main.colorChooser_accent
+import kotlinx.android.synthetic.main.activity_main.colorChooser_customColors
+import kotlinx.android.synthetic.main.activity_main.colorChooser_customColorsNoSub
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customArgb
+import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customRgb
+import kotlinx.android.synthetic.main.activity_main.custom_view
+import kotlinx.android.synthetic.main.activity_main.custom_view_webview
+import kotlinx.android.synthetic.main.activity_main.file_chooser
+import kotlinx.android.synthetic.main.activity_main.file_chooser_buttons
+import kotlinx.android.synthetic.main.activity_main.file_chooser_filter
+import kotlinx.android.synthetic.main.activity_main.folder_chooser_buttons
+import kotlinx.android.synthetic.main.activity_main.folder_chooser_filter
+import kotlinx.android.synthetic.main.activity_main.input
+import kotlinx.android.synthetic.main.activity_main.input_check_prompt
+import kotlinx.android.synthetic.main.activity_main.input_counter
+import kotlinx.android.synthetic.main.activity_main.input_message
+import kotlinx.android.synthetic.main.activity_main.list
+import kotlinx.android.synthetic.main.activity_main.list_buttons
+import kotlinx.android.synthetic.main.activity_main.list_checkPrompt
+import kotlinx.android.synthetic.main.activity_main.list_checkPrompt_buttons
+import kotlinx.android.synthetic.main.activity_main.list_long
+import kotlinx.android.synthetic.main.activity_main.list_long_buttons
+import kotlinx.android.synthetic.main.activity_main.list_long_items
+import kotlinx.android.synthetic.main.activity_main.list_long_items_buttons
+import kotlinx.android.synthetic.main.activity_main.list_long_items_titled
+import kotlinx.android.synthetic.main.activity_main.list_long_items_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.list_long_titled
+import kotlinx.android.synthetic.main.activity_main.list_long_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.list_titled
+import kotlinx.android.synthetic.main.activity_main.list_titled_buttons
+import kotlinx.android.synthetic.main.activity_main.list_titled_message_buttons
+import kotlinx.android.synthetic.main.activity_main.misc_dialog_callbacks
+import kotlinx.android.synthetic.main.activity_main.multiple_choice
+import kotlinx.android.synthetic.main.activity_main.multiple_choice_buttons
+import kotlinx.android.synthetic.main.activity_main.multiple_choice_disabled_items
+import kotlinx.android.synthetic.main.activity_main.multiple_choice_long_items
+import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
+import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
+import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
+import kotlinx.android.synthetic.main.activity_main.single_choice_titled
+import kotlinx.android.synthetic.main.activity_main.date_picker
+import kotlinx.android.synthetic.main.activity_main.time_picker
+import kotlinx.android.synthetic.main.activity_main.datetime_picker
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -691,11 +748,29 @@ class MainActivity : AppCompatActivity() {
 
     folder_chooser_filter.setOnClickListener { showFolderChooserFilter() }
 
-    date_picker.setOnClickListener { showDatePicker() }
+    date_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
 
-    time_picker.setOnClickListener { showTimePicker() }
+        datePicker()
+      }
+    }
 
-    datetime_picker.setOnClickListener { showDateTimePicker() }
+    time_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
+
+        timePicker()
+      }
+    }
+
+    datetime_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
+
+        dateTimePicker(requireFutureDateTime = true)
+      }
+    }
   }
 
   private fun showCustomViewDialog() {
@@ -799,30 +874,6 @@ class MainActivity : AppCompatActivity() {
         toast("Selected folder: ${folder.absolutePath}")
       }
       debugMode(debugMode)
-    }
-  }
-
-  private fun showDatePicker() {
-    MaterialDialog(this).show {
-      title(text = "Select Date and Time")
-
-      datePicker()
-    }
-  }
-
-  private fun showTimePicker() {
-    MaterialDialog(this).show {
-      title(text = "Select Date and Time")
-
-      timePicker()
-    }
-  }
-
-  private fun showDateTimePicker() {
-    MaterialDialog(this).show {
-      title(text = "Select Date and Time")
-
-      dateTimePicker(requireFutureDateTime = true)
     }
   }
 

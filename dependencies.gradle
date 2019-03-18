@@ -1,32 +1,32 @@
 ext.versions = [
-        // Project
-        minSdk              : 16,
-        compileSdk          : 28,
-        buildTools          : '28.0.3',
-        publishVersion      : '2.1.0',
-        publishVersionCode  : 233,
+    // Project
+    minSdk              : 16,
+    compileSdk          : 28,
+    buildTools          : '28.0.3',
+    publishVersion      : '2.1.0',
+    publishVersionCode  : 233,
 
-        // Plugins
-        gradlePlugin        : '3.3.2',
-        spotlessPlugin      : '3.19.0',
-        versionPlugin       : '0.21.0',
-        bintrayPlugin       : '0.9',
+    // Plugins
+    gradlePlugin        : '3.3.2',
+    spotlessPlugin      : '3.19.0',
+    versionPlugin       : '0.21.0',
+    bintrayPlugin       : '0.9',
 
-        // AndroidX
-        androidxCore        : '1.0.2',
-        androidxAnnotation  : '1.0.2',
-        androidxRecyclerView: '1.0.0',
-        androidxMaterial    : '1.0.0',
-        lifecycle           : '2.0.0',
+    // AndroidX
+    androidxCore        : '1.0.2',
+    androidxAnnotation  : '1.0.2',
+    androidxRecyclerView: '1.0.0',
+    androidxMaterial    : '1.0.0',
+    lifecycle           : '2.0.0',
 
-        // Kotlin
-        kotlin              : '1.3.21',
-        coroutines          : '1.1.1',
+    // Kotlin
+    kotlin              : '1.3.21',
+    coroutines          : '1.1.1',
 
-        // afollestad
-        assent              : '2.2.3',
-        dotsIndicator       : '1.0.0',
+    // afollestad
+    assent              : '2.2.3',
+    dotsIndicator       : '1.0.0',
 
-        // java.time backport
-        threetenbp          : '1.3.8'
+    // java.time backport
+    threetenbp          : '1.3.8'
 ]

@@ -1,5 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.afollestad.materialdialogs.datetime">
-
-    <application android:supportsRtl="true" />
-</manifest>
+<manifest package="com.afollestad.materialdialogs.datetime"/>
