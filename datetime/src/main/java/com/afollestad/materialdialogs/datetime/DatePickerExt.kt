@@ -15,6 +15,7 @@
  */
 package com.afollestad.materialdialogs.datetime
 
+import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.utils.extractLocalDate
@@ -55,4 +56,11 @@ fun MaterialDialog.datePicker(
   negativeButton(android.R.string.cancel)
 
   return this
+}
+
+/**
+ * Gets the currently selected date from a date picker dialog.
+ */
+@CheckResult fun MaterialDialog.selectedDate(): LocalDate {
+  return getDatePicker().extractLocalDate()
 }

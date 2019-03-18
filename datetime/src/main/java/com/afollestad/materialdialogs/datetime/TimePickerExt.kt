@@ -15,6 +15,7 @@
  */
 package com.afollestad.materialdialogs.datetime
 
+import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.utils.extractLocalTime
@@ -49,4 +50,11 @@ fun MaterialDialog.timePicker(
   negativeButton(android.R.string.cancel)
 
   return this
+}
+
+/**
+ * Gets the currently selected time from a time picker dialog.
+ */
+@CheckResult fun MaterialDialog.selectedTime(): LocalTime {
+  return getTimePicker().extractLocalTime()
 }

@@ -16,6 +16,7 @@
 package com.afollestad.materialdialogs.datetime
 
 import android.R.attr
+import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -104,4 +105,11 @@ fun MaterialDialog.dateTimePicker(
   negativeButton(android.R.string.cancel)
 
   return this
+}
+
+/**
+ * Gets the currently selected date and time from a date/time picker dialog.
+ */
+@CheckResult fun MaterialDialog.selectedDateTime(): LocalDateTime {
+  return extractLocalDateTime(getDatePicker(), getTimePicker())
 }
