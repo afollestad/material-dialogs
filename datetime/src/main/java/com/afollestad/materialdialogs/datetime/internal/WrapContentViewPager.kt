@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.datetime.view
+package com.afollestad.materialdialogs.datetime.internal
 
 import android.content.Context
 import android.util.AttributeSet
@@ -36,8 +36,8 @@ internal class WrapContentViewPager(
     var maxChildHeight = 0
     forEachChild { child ->
       child.measure(
-        widthMeasureSpec,
-        MeasureSpec.makeMeasureSpec(0, UNSPECIFIED)
+          widthMeasureSpec,
+          MeasureSpec.makeMeasureSpec(0, UNSPECIFIED)
       )
 
       val h = child.measuredHeight

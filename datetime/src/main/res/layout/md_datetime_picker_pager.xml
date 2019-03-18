@@ -10,7 +10,7 @@
         android:layout_height="@dimen/datetime_picker_pageDots_height"
         android:layout_marginBottom="@dimen/datetime_picker_pageDots_marginBottom" />
 
-    <com.afollestad.materialdialogs.datetime.view.WrapContentViewPager
+    <com.afollestad.materialdialogs.datetime.internal.WrapContentViewPager
         android:id="@+id/dateTimePickerPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,5 +18,5 @@
         <include layout="@layout/md_datetime_picker_date" />
 
         <include layout="@layout/md_datetime_picker_time" />
-    </com.afollestad.materialdialogs.datetime.view.WrapContentViewPager>
+    </com.afollestad.materialdialogs.datetime.internal.WrapContentViewPager>
 </LinearLayout>

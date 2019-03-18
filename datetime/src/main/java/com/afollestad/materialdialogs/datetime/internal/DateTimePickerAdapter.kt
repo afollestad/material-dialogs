@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.datetime
+package com.afollestad.materialdialogs.datetime.internal
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
+import com.afollestad.materialdialogs.datetime.R.id
 
 internal class DateTimePickerAdapter : PagerAdapter() {
 
-  override fun instantiateItem(container: ViewGroup, position: Int): Any {
+  override fun instantiateItem(
+    container: ViewGroup,
+    position: Int
+  ): Any {
     val resId = when (position) {
-      0 -> R.id.datetimeDatePicker
-      1 -> R.id.datetimeTimePicker
+      0 -> id.datetimeDatePicker
+      1 -> id.datetimeTimePicker
       else -> throw IllegalStateException("Unexpected position: $position")
     }
     return container.findViewById(resId)
@@ -32,7 +36,14 @@ internal class DateTimePickerAdapter : PagerAdapter() {
 
   override fun getCount(): Int = 2
 
-  override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object` as View
+  override fun isViewFromObject(
+    view: View,
+    `object`: Any
+  ): Boolean = view === `object` as View
 
-  override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) = Unit
+  override fun destroyItem(
+    container: ViewGroup,
+    position: Int,
+    `object`: Any
+  ) = Unit
 }

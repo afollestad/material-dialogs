@@ -18,18 +18,32 @@
 package com.afollestad.materialdialogs.datetime.utils
 
 import android.os.Build
+import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.viewpager.widget.ViewPager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.datetime.R
+import com.afollestad.viewpagerdots.DotsIndicator
 
-private fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+internal fun TimePicker.hour(): Int = if (isNougat()) hour else currentHour
 
-fun TimePicker.hour(): Int = if (isNougat()) hour else currentHour
+internal fun TimePicker.minute(): Int = if (isNougat()) minute else currentMinute
 
-fun TimePicker.minute(): Int = if (isNougat()) minute else currentMinute
-
-fun TimePicker.hour(value: Int) {
+internal fun TimePicker.hour(value: Int) {
   if (isNougat()) hour = value else currentHour = value
 }
 
-fun TimePicker.minute(value: Int) {
+internal fun TimePicker.minute(value: Int) {
   if (isNougat()) minute = value else currentMinute = value
 }
+
+internal fun MaterialDialog.getDatePicker() = findViewById<DatePicker>(R.id.datetimeDatePicker)
+
+internal fun MaterialDialog.getTimePicker() = findViewById<TimePicker>(R.id.datetimeTimePicker)
+
+internal fun MaterialDialog.getPager() = findViewById<ViewPager>(R.id.dateTimePickerPager)
+
+internal fun MaterialDialog.getPageIndicator() =
+  findViewById<DotsIndicator?>(R.id.datetimePickerPagerDots)
+
+private fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N

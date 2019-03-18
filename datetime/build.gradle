@@ -6,36 +6,36 @@ ext.shard = 'datetime'
 apply from: '../bintrayconfig.gradle'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
 
-    defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode versions.publishVersionCode
-        versionName versions.publishVersion
-    }
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.publishVersionCode
+    versionName versions.publishVersion
+  }
 
-    sourceSets {
-        main.res.srcDirs = [
-                'src/main/res',
-                'src/main/res-public'
-        ]
-    }
+  sourceSets {
+    main.res.srcDirs = [
+        'src/main/res',
+        'src/main/res-public'
+    ]
+  }
 }
 
 dependencies {
-    api 'androidx.appcompat:appcompat:' + versions.androidxCore
-    api 'androidx.annotation:annotation:' + versions.androidxAnnotation
+  api 'androidx.appcompat:appcompat:' + versions.androidxCore
+  api 'androidx.annotation:annotation:' + versions.androidxAnnotation
 
-    implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 
-    implementation 'com.afollestad:viewpagerdots:' + versions.dotsIndicator
+  implementation 'com.afollestad:viewpagerdots:' + versions.dotsIndicator
 
-    api 'org.threeten:threetenbp:' + versions.threetenbp
+  api 'org.threeten:threetenbp:' + versions.threetenbp
 
-    implementation project(':core')
+  implementation project(':core')
 }
 
 apply from: '../spotless.gradle'
