@@ -8,6 +8,7 @@
 ![Input](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:input.svg?label=input)
 ![Files](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:files.svg?label=files)
 ![Color](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:color.svg?label=color)
+![DateTime](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:datetime.svg?label=datetime)
 ![Lifecycle](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:lifecycle.svg?label=lifecycle)
 
 #### [View Releases and Changelogs](https://github.com/afollestad/material-dialogs/releases)
@@ -70,9 +71,16 @@
     1. [Basics](#basics-4)
     2. [Sub Colors](#sub-colors) 
 
-# Table of Contents - Lifecycle
+# Table of Contents - DateTime
 
 1. [Gradle Dependency](#gradle-dependency-4)
+2. [Date](#date)
+3. [Time](#time)
+4. [DateTime](#datetime)
+
+# Table of Contents - Lifecycle
+
+1. [Gradle Dependency](#gradle-dependency-5)
 2. [Usage](#usage)
 
 ---
@@ -89,7 +97,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.1.0'
+  implementation 'com.afollestad.material-dialogs:core:2.2.0'
 }
 ```
 
@@ -675,7 +683,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.1.0'
+  implementation 'com.afollestad.material-dialogs:input:2.2.0'
 }
 ```
 
@@ -834,7 +842,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.1.0'
+  implementation 'com.afollestad.material-dialogs:files:2.2.0'
 }
 ```
 
@@ -1004,7 +1012,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.1.0'
+  implementation 'com.afollestad.material-dialogs:color:2.2.0'
 }
 ```
 
@@ -1090,6 +1098,63 @@ Omitting `showAlphaSelector` will hide the alpha (transparency) selector.
 
 ---
 
+# DateTime
+
+## Gradle Dependency
+
+[ ![DateTime](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Adatetime/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Adatetime/_latestVersion)
+
+The `datetime` module contains extensions to make date, time, and date-time picker dialogs.
+
+```gradle
+dependencies {
+  ...
+  implementation 'com.afollestad.material-dialogs:datetime:2.2.0'
+}
+```
+
+## Date
+
+```kotlin
+MaterialDialog(this).show {
+  ...
+  datePicker { dialog, date ->
+    // Use date
+  }
+}
+```
+
+You can optionally provide `minDate` and `currentDate` parameters as well.
+
+## Time
+
+```kotlin
+MaterialDialog(this).show {
+  ...
+  timePicker { dialog, time ->
+    // Use time
+  }
+}
+```
+
+You can optionally provide `currentTime` and `show24HoursView` parameters as well.
+
+## DateTime
+
+```kotlin
+MaterialDialog(this).show {
+  ...
+  dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
+    // Use dateTime
+  }
+}
+```
+
+You can optionally provide `minDateTime`, `currentDateTime`, `show24HoursView`, 
+and `requireFutureDateTime` parameters as well. 
+
+---
+
 # Lifecycle
 
 ## Gradle Dependency
@@ -1101,7 +1166,7 @@ The `lifecycle` module contains extensions to make dialogs work with AndroidX li
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:lifecycle:2.1.0'
+  implementation 'com.afollestad.material-dialogs:lifecycle:2.2.0'
 }
 ```
 
