@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="datetime_picker_pageDots_height">24dp</dimen>
+    <dimen name="datetime_picker_pageDots_marginBottom">8dp</dimen>
+</resources>
