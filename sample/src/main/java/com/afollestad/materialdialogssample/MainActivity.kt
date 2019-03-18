@@ -750,25 +750,28 @@ class MainActivity : AppCompatActivity() {
 
     date_picker.setOnClickListener {
       MaterialDialog(this).show {
-        title(text = "Select Date and Time")
-
-        datePicker()
+        title(text = "Select Date")
+        datePicker { _, date ->
+          toast("Selected date: $date")
+        }
       }
     }
 
     time_picker.setOnClickListener {
       MaterialDialog(this).show {
-        title(text = "Select Date and Time")
-
-        timePicker()
+        title(text = "Select Time")
+        timePicker { _, time ->
+          toast("Selected time: $time")
+        }
       }
     }
 
     datetime_picker.setOnClickListener {
       MaterialDialog(this).show {
         title(text = "Select Date and Time")
-
-        dateTimePicker(requireFutureDateTime = true)
+        dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
+          toast("Selected date/time: $dateTime")
+        }
       }
     }
   }

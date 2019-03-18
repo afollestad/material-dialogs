@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("unused")
+
 package com.afollestad.materialdialogs.datetime
 
 import android.R.attr
@@ -96,7 +98,6 @@ fun MaterialDialog.dateTimePicker(
   setActionButtonEnabled(
       POSITIVE,
       !requireFutureDateTime || futureTime
-
   )
   positiveButton(android.R.string.ok) {
     val selectedTime = extractLocalDateTime(getDatePicker(), getTimePicker())
