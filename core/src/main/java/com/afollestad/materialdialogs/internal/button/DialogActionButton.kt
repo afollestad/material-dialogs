@@ -25,7 +25,6 @@ import android.view.Gravity.CENTER
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.Theme.LIGHT
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
@@ -70,7 +69,7 @@ class DialogActionButton(
 
     // Text color
     val theme = inferTheme(appContext)
-    enabledColor = resolveColor(appContext, attr = attr.colorAccent)
+    enabledColor = resolveColor(appContext, attr = R.attr.colorPrimary)
     val disabledColorRes =
       if (theme == LIGHT) R.color.md_disabled_text_light_theme
       else R.color.md_disabled_text_dark_theme
