@@ -41,6 +41,9 @@ import com.afollestad.materialdialogs.color.ColorPalette
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.datetime.datePicker
+import com.afollestad.materialdialogs.datetime.dateTimePicker
+import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.files.fileChooser
 import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
@@ -102,6 +105,9 @@ import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
 import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
 import kotlinx.android.synthetic.main.activity_main.single_choice_titled
+import kotlinx.android.synthetic.main.activity_main.date_picker
+import kotlinx.android.synthetic.main.activity_main.time_picker
+import kotlinx.android.synthetic.main.activity_main.datetime_picker
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -122,11 +128,11 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     prefs = getSharedPreferences(KEY_PREFS, MODE_PRIVATE)
     setTheme(
-        when (prefs.getString(KEY_THEME, LIGHT)) {
-          DARK -> R.style.AppTheme_Dark
-          CUSTOM -> R.style.AppTheme_Custom
-          else -> R.style.AppTheme
-        }
+      when (prefs.getString(KEY_THEME, LIGHT)) {
+        DARK -> R.style.AppTheme_Dark
+        CUSTOM -> R.style.AppTheme_Custom
+        else -> R.style.AppTheme
+      }
     )
     debugMode = prefs.boolean(KEY_DEBUG_MODE, false)
 
@@ -180,9 +186,9 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.app_name)
         message(
-            R.string.htmlContent,
-            html = true,
-            lineHeightMultiplier = 1.4f
+          R.string.htmlContent,
+          html = true,
+          lineHeightMultiplier = 1.4f
         )
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
@@ -434,7 +440,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(
-            R.array.socialNetworks, initialSelection = 1, disabledIndices = intArrayOf(1, 3)
+          R.array.socialNetworks, initialSelection = 1, disabledIndices = intArrayOf(1, 3)
         ) { _, index, text ->
           toast("Selected item $text at index $index")
         }
@@ -447,7 +453,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
-            R.array.socialNetworks, initialSelection = intArrayOf(1, 3)
+          R.array.socialNetworks, initialSelection = intArrayOf(1, 3)
         ) { _, indices, text ->
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
@@ -459,7 +465,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
-            R.array.socialNetworks, initialSelection = intArrayOf(1, 3)
+          R.array.socialNetworks, initialSelection = intArrayOf(1, 3)
         ) { _, indices, text ->
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
@@ -472,7 +478,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
-            R.array.socialNetworks_longItems, initialSelection = intArrayOf(0, 2)
+          R.array.socialNetworks_longItems, initialSelection = intArrayOf(0, 2)
         ) { _, indices, text ->
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
@@ -485,9 +491,9 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
-            R.array.socialNetworks,
-            initialSelection = intArrayOf(2, 3),
-            disabledIndices = intArrayOf(1, 3)
+          R.array.socialNetworks,
+          initialSelection = intArrayOf(2, 3),
+          disabledIndices = intArrayOf(1, 3)
         ) { _, indices, text ->
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
@@ -566,8 +572,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
-            hint = "Type something",
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+          hint = "Type something",
+          inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
         ) { _, text ->
           toast("Input: $text")
         }
@@ -582,9 +588,9 @@ class MainActivity : AppCompatActivity() {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
         input(
-            hint = "Type something",
-            prefill = "Pre-filled!",
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+          hint = "Type something",
+          prefill = "Pre-filled!",
+          inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
         ) { _, text ->
           toast("Input: $text")
         }
@@ -598,9 +604,9 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
-            hint = "Type something",
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS,
-            maxLength = 8
+          hint = "Type something",
+          inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS,
+          maxLength = 8
         ) { _, text ->
           toast("Input: $text")
         }
@@ -614,8 +620,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
-            hint = "Type something",
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+          hint = "Type something",
+          inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
         ) { _, text ->
           toast("Input: $text")
         }
@@ -636,8 +642,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.primary_colors)
         colorChooser(
-            ColorPalette.Primary,
-            ColorPalette.PrimarySub
+          ColorPalette.Primary,
+          ColorPalette.PrimarySub
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
@@ -651,8 +657,8 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.accent_colors)
         colorChooser(
-            ColorPalette.Accent,
-            ColorPalette.AccentSub
+          ColorPalette.Accent,
+          ColorPalette.AccentSub
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
@@ -665,10 +671,10 @@ class MainActivity : AppCompatActivity() {
     colorChooser_customColors.setOnClickListener {
       val topLevel = intArrayOf(Color.TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
       val subLevel = arrayOf(
-          intArrayOf(Color.WHITE, Color.TRANSPARENT, Color.BLACK),
-          intArrayOf(Color.LTGRAY, Color.GRAY, Color.DKGRAY),
-          intArrayOf(Color.GREEN),
-          intArrayOf(Color.MAGENTA, Color.CYAN)
+        intArrayOf(Color.WHITE, Color.TRANSPARENT, Color.BLACK),
+        intArrayOf(Color.LTGRAY, Color.GRAY, Color.DKGRAY),
+        intArrayOf(Color.GREEN),
+        intArrayOf(Color.MAGENTA, Color.CYAN)
       )
 
       MaterialDialog(this).show {
@@ -703,9 +709,9 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors_rgb)
         colorChooser(
-            colors = ColorPalette.Primary,
-            subColors = ColorPalette.PrimarySub,
-            allowCustomArgb = true
+          colors = ColorPalette.Primary,
+          subColors = ColorPalette.PrimarySub,
+          allowCustomArgb = true
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
@@ -719,10 +725,10 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(R.string.custom_colors_argb)
         colorChooser(
-            colors = ColorPalette.Primary,
-            subColors = ColorPalette.PrimarySub,
-            allowCustomArgb = true,
-            showAlphaSelector = true
+          colors = ColorPalette.Primary,
+          subColors = ColorPalette.PrimarySub,
+          allowCustomArgb = true,
+          showAlphaSelector = true
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }
@@ -741,6 +747,30 @@ class MainActivity : AppCompatActivity() {
     folder_chooser_buttons.setOnClickListener { showFolderChooserButtons() }
 
     folder_chooser_filter.setOnClickListener { showFolderChooserFilter() }
+
+    date_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
+
+        datePicker()
+      }
+    }
+
+    time_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
+
+        timePicker()
+      }
+    }
+
+    datetime_picker.setOnClickListener {
+      MaterialDialog(this).show {
+        title(text = "Select Date and Time")
+
+        dateTimePicker(requireFutureDateTime = true)
+      }
+    }
   }
 
   private fun showCustomViewDialog() {
@@ -762,9 +792,9 @@ class MainActivity : AppCompatActivity() {
     val showPasswordCheck: CheckBox = customView.findViewById(R.id.showPassword)
     showPasswordCheck.setOnCheckedChangeListener { _, isChecked ->
       passwordInput.inputType =
-          if (!isChecked) InputType.TYPE_TEXT_VARIATION_PASSWORD else InputType.TYPE_CLASS_TEXT
+        if (!isChecked) InputType.TYPE_TEXT_VARIATION_PASSWORD else InputType.TYPE_CLASS_TEXT
       passwordInput.transformationMethod =
-          if (!isChecked) PasswordTransformationMethod.getInstance() else null
+        if (!isChecked) PasswordTransformationMethod.getInstance() else null
     }
   }
 
@@ -777,23 +807,23 @@ class MainActivity : AppCompatActivity() {
     dialog.onShow {
       val webView: WebView = it.getCustomView().findViewById(R.id.web_view)
       webView.loadData(
-          "<h3>WebView Custom View</h3>\n" +
-              "\n" +
-              "<ol>\n" +
-              "    <li><b>NEW:</b> Hey!</li>\n" +
-              "    <li><b>IMPROVE:</b> Hello!</li>\n" +
-              "    <li><b>FIX:</b> Hi!</li>\n" +
-              "    <li><b>FIX:</b> Hey again!</li>\n" +
-              "    <li><b>FIX:</b> What?</li>\n" +
-              "    <li><b>FIX:</b> This is an example.</li>\n" +
-              "    <li><b>MISC:</b> How are you?</li>\n" +
-              "</ol>\n" +
-              "<p>Material guidelines for dialogs:\n" +
-              "    <a href='http://www.google.com/design/spec/components/dialogs.html'>" +
-              "http://www.google.com/design/spec/components/dialogs.html</a>.\n" +
-              "</p>",
-          "text/html",
-          "UTF-8"
+        "<h3>WebView Custom View</h3>\n" +
+          "\n" +
+          "<ol>\n" +
+          "    <li><b>NEW:</b> Hey!</li>\n" +
+          "    <li><b>IMPROVE:</b> Hello!</li>\n" +
+          "    <li><b>FIX:</b> Hi!</li>\n" +
+          "    <li><b>FIX:</b> Hey again!</li>\n" +
+          "    <li><b>FIX:</b> What?</li>\n" +
+          "    <li><b>FIX:</b> This is an example.</li>\n" +
+          "    <li><b>MISC:</b> How are you?</li>\n" +
+          "</ol>\n" +
+          "<p>Material guidelines for dialogs:\n" +
+          "    <a href='http://www.google.com/design/spec/components/dialogs.html'>" +
+          "http://www.google.com/design/spec/components/dialogs.html</a>.\n" +
+          "</p>",
+        "text/html",
+        "UTF-8"
       )
     }
   }
@@ -852,18 +882,18 @@ class MainActivity : AppCompatActivity() {
     val theme = prefs.getString(KEY_THEME, LIGHT)
     if (theme == LIGHT) {
       menu.findItem(R.id.light_theme)
-          .isChecked = true
+        .isChecked = true
     }
     if (theme == DARK) {
       menu.findItem(R.id.dark_theme)
-          .isChecked = true
+        .isChecked = true
     }
     if (theme == CUSTOM) {
       menu.findItem(R.id.custom_theme)
-          .isChecked = true
+        .isChecked = true
     }
     menu.findItem(R.id.debug_mode)
-        .isChecked = debugMode
+      .isChecked = debugMode
     return super.onCreateOptionsMenu(menu)
   }
 

@@ -21,6 +21,7 @@ dependencies {
   implementation project(':input')
   implementation project(':files')
   implementation project(':color')
+  implementation project(':datetime')
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
 

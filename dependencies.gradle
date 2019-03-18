@@ -25,5 +25,8 @@ ext.versions = [
 
     // afollestad
     assent              : '2.2.3',
-    dotsIndicator       : '1.0.0'
+    dotsIndicator       : '1.0.0',
+
+    // java.time backport
+    threetenbp          : '1.3.8'
 ]
