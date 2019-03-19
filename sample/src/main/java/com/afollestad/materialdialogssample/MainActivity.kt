@@ -752,7 +752,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(text = "Select Date")
         datePicker { _, date ->
-          toast("Selected date: $date")
+          toast("Selected date: ${date.formatDate()}")
         }
       }
     }
@@ -761,7 +761,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(text = "Select Time")
         timePicker { _, time ->
-          toast("Selected time: $time")
+          toast("Selected time: ${time.formatTime()}")
         }
       }
     }
@@ -770,7 +770,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
-          toast("Selected date/time: $dateTime")
+          toast("Selected date/time: ${dateTime.formatDateTime()}")
         }
       }
     }

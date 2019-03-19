@@ -44,7 +44,7 @@ fun MaterialDialog.dateTimePicker(
   minDateTime: Calendar? = null,
   currentDateTime: Calendar? = null,
   requireFutureDateTime: Boolean = false,
-  show24HoursView: Boolean = true,
+  show24HoursView: Boolean = false,
   dateTimeCallback: DateTimeCallback = null
 ): MaterialDialog {
   customView(R.layout.md_datetime_picker_pager, noVerticalPadding = true)
@@ -62,7 +62,7 @@ fun MaterialDialog.dateTimePicker(
     getDatePicker().apply {
       init(
           it?.get(Calendar.YEAR) ?: year,
-          it?.get(Calendar.MONTH)?.inc() ?: month,
+          it?.get(Calendar.MONTH) ?: month,
           it?.get(Calendar.DAY_OF_MONTH) ?: dayOfMonth
       ) { _, _, _, _ ->
         val futureTime = isFutureTime(this, getTimePicker())

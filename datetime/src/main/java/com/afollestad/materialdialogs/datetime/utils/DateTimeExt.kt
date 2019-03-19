@@ -30,15 +30,18 @@ internal fun isFutureTime(
 }
 
 internal fun DatePicker.toCalendar(): Calendar {
-  return GregorianCalendar(year, month.inc(), dayOfMonth, 0, 0, 1)
+  return GregorianCalendar(year, month, dayOfMonth, 0, 0, 1)
 }
 
 internal fun TimePicker.toCalendar(): Calendar {
-  return Calendar.getInstance()
-      .apply {
-        set(Calendar.HOUR, hour())
-        set(Calendar.MINUTE, minute())
-      }
+  val now = Calendar.getInstance()
+  return GregorianCalendar(
+      now.get(Calendar.YEAR),
+      now.get(Calendar.MONTH),
+      now.get(Calendar.DAY_OF_MONTH),
+      hour(),
+      minute()
+  )
 }
 
 internal fun toCalendar(
@@ -47,7 +50,7 @@ internal fun toCalendar(
 ): Calendar {
   return GregorianCalendar(
       datePicker.year,
-      datePicker.month.inc(),
+      datePicker.month,
       datePicker.dayOfMonth,
       timePicker.hour(),
       timePicker.minute()

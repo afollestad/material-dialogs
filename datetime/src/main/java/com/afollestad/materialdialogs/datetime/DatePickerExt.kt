@@ -40,7 +40,7 @@ fun MaterialDialog.datePicker(
   currentDate?.let {
     getDatePicker().init(
         it.get(Calendar.YEAR),
-        it.get(Calendar.MONTH).inc(),
+        it.get(Calendar.MONTH),
         it.get(Calendar.DAY_OF_MONTH),
         null
     )

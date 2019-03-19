@@ -18,12 +18,15 @@ package com.afollestad.materialdialogssample
 import android.app.Activity
 import android.content.SharedPreferences
 import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-var toast: Toast? = null
+private var toast: Toast? = null
 
 internal fun Activity.toast(message: CharSequence) {
   toast?.cancel()
-  toast = Toast.makeText(this, message, Toast.LENGTH_SHORT).apply { show() }
+  toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+      .apply { show() }
 }
 
 typealias PrefEditor = SharedPreferences.Editor
@@ -42,3 +45,15 @@ internal inline fun SharedPreferences.commit(crossinline exec: PrefEditor.() -> 
 }
 
 internal fun Int.toHex() = "#${Integer.toHexString(this)}"
+
+internal fun Calendar.formatTime(): String {
+  return SimpleDateFormat("kk:mm a").format(this.time)
+}
+
+internal fun Calendar.formatDate(): String {
+  return SimpleDateFormat("MMMM dd, yyyy").format(this.time)
+}
+
+internal fun Calendar.formatDateTime(): String {
+  return SimpleDateFormat("kk:mm a, MMMM dd, yyyy").format(this.time)
+}
