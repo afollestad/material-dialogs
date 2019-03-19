@@ -26,7 +26,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.2.0'
+  implementation 'com.afollestad.material-dialogs:core:2.2.1'
 }
 ```
 
@@ -41,7 +41,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.2.0'
+  implementation 'com.afollestad.material-dialogs:input:2.2.1'
 }
 ```
  
@@ -56,7 +56,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.2.0'
+  implementation 'com.afollestad.material-dialogs:files:2.2.1'
 }
 ```
 
@@ -71,7 +71,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.2.0'
+  implementation 'com.afollestad.material-dialogs:color:2.2.1'
 }
 ```
 
@@ -86,7 +86,7 @@ The `datetime` module contains extensions to make date, time, and date-time pick
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:datetime:2.2.0'
+  implementation 'com.afollestad.material-dialogs:datetime:2.2.1'
 }
 ```
 
@@ -101,6 +101,6 @@ The `lifecycle` module contains extensions to make dialogs work with AndroidX li
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:lifecycle:2.2.0'
+  implementation 'com.afollestad.material-dialogs:lifecycle:2.2.1'
 }
 ```

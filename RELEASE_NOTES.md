@@ -1,5 +1,3 @@
-2.2.0
+2.2.1
 
-1. Added a `datetime` module which provides date, time, and date/time selector dialogs.
-2. Reverted dialog max-width values to the previous values.
-3. Action buttons should use the primary theme color by default per the newer specs.
+1. Correctly respect the `md_color_button_text` theme attribute for action button text color.
