@@ -69,7 +69,9 @@ class DialogActionButton(
 
     // Text color
     val theme = inferTheme(appContext)
-    enabledColor = resolveColor(appContext, attr = R.attr.colorPrimary)
+    enabledColor = resolveColor(appContext, attr = R.attr.md_color_button_text) {
+      resolveColor(appContext, attr = R.attr.colorPrimary)
+    }
     val disabledColorRes =
       if (theme == LIGHT) R.color.md_disabled_text_light_theme
       else R.color.md_disabled_text_dark_theme

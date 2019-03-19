@@ -96,12 +96,17 @@ object MDUtil {
   fun resolveColor(
     context: Context,
     @ColorRes res: Int? = null,
-    @AttrRes attr: Int? = null
+    @AttrRes attr: Int? = null,
+    fallback: (() -> Int)? = null
   ): Int {
     if (attr != null) {
       val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
       try {
-        return a.getColor(0, 0)
+        val result = a.getColor(0, 0)
+        if (result == 0 && fallback != null) {
+          return fallback()
+        }
+        return result
       } finally {
         a.recycle()
       }
