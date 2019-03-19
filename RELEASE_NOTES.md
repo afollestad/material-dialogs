@@ -1,3 +1,3 @@
-2.2.1
+2.3.0
 
-1. Correctly respect the `md_color_button_text` theme attribute for action button text color.
+`datetime` no longer has a dependency on ThreetenBP. Uses Java's `Calendar` instead. Sorry to those who are already using it with `LocalDateTime`.
