@@ -24,7 +24,6 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.DateTimePickerAdapter
-import com.afollestad.materialdialogs.datetime.utils.extractLocalDateTime
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.getPageIndicator
 import com.afollestad.materialdialogs.datetime.utils.getPager
@@ -32,18 +31,18 @@ import com.afollestad.materialdialogs.datetime.utils.getTimePicker
 import com.afollestad.materialdialogs.datetime.utils.hour
 import com.afollestad.materialdialogs.datetime.utils.isFutureTime
 import com.afollestad.materialdialogs.datetime.utils.minute
+import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
+import java.util.Calendar
 
-typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: LocalDateTime) -> Unit)?
+typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar) -> Unit)?
 
 /**
  * Makes the dialog a date and time picker.
  */
 fun MaterialDialog.dateTimePicker(
-  minDateTime: LocalDateTime? = null,
-  currentDateTime: LocalDateTime? = null,
+  minDateTime: Calendar? = null,
+  currentDateTime: Calendar? = null,
   requireFutureDateTime: Boolean = false,
   show24HoursView: Boolean = true,
   dateTimeCallback: DateTimeCallback = null
@@ -58,17 +57,13 @@ fun MaterialDialog.dateTimePicker(
     setDotTint(resolveColor(windowContext, attr = attr.textColorPrimary))
   }
 
-  minDateTime?.let {
-    getDatePicker().minDate = it.atZone(ZoneId.systemDefault())
-        .toInstant()
-        .toEpochMilli()
-  }
+  minDateTime?.let { getDatePicker().minDate = it.timeInMillis }
   currentDateTime.let {
     getDatePicker().apply {
       init(
-          it?.year ?: year,
-          it?.monthValue?.inc() ?: month,
-          it?.dayOfMonth ?: dayOfMonth
+          it?.get(Calendar.YEAR) ?: year,
+          it?.get(Calendar.MONTH)?.inc() ?: month,
+          it?.get(Calendar.DAY_OF_MONTH) ?: dayOfMonth
       ) { _, _, _, _ ->
         val futureTime = isFutureTime(this, getTimePicker())
         setActionButtonEnabled(
@@ -77,13 +72,9 @@ fun MaterialDialog.dateTimePicker(
       }
     }
     getTimePicker().apply {
-      if (it != null) {
-        hour(it.hour)
-        minute(it.minute)
-      }
-
+      hour(it?.get(Calendar.HOUR) ?: 12)
+      minute(it?.get(Calendar.MINUTE) ?: 0)
       setIs24HourView(show24HoursView)
-
       setOnTimeChangedListener { _, _, _ ->
         val isFutureTime = isFutureTime(getDatePicker(), this)
         setActionButtonEnabled(
@@ -100,7 +91,7 @@ fun MaterialDialog.dateTimePicker(
       !requireFutureDateTime || futureTime
   )
   positiveButton(android.R.string.ok) {
-    val selectedTime = extractLocalDateTime(getDatePicker(), getTimePicker())
+    val selectedTime = toCalendar(getDatePicker(), getTimePicker())
     dateTimeCallback?.invoke(it, selectedTime)
   }
   negativeButton(android.R.string.cancel)
@@ -111,6 +102,6 @@ fun MaterialDialog.dateTimePicker(
 /**
  * Gets the currently selected date and time from a date/time picker dialog.
  */
-@CheckResult fun MaterialDialog.selectedDateTime(): LocalDateTime {
-  return extractLocalDateTime(getDatePicker(), getTimePicker())
+@CheckResult fun MaterialDialog.selectedDateTime(): Calendar {
+  return toCalendar(getDatePicker(), getTimePicker())
 }

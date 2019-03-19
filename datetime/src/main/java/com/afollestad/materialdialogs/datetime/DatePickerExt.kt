@@ -20,40 +20,34 @@ package com.afollestad.materialdialogs.datetime
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.datetime.utils.extractLocalDate
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-
-typealias DateCallback = ((dialog: MaterialDialog, date: LocalDate) -> Unit)?
+import com.afollestad.materialdialogs.datetime.utils.toCalendar
+import java.util.Calendar
 
 /**
  * Makes the dialog a date picker.
  */
 fun MaterialDialog.datePicker(
-  minDate: LocalDate? = null,
-  currentDate: LocalDate? = null,
-  dateCallback: DateCallback = null
+  minDate: Calendar? = null,
+  currentDate: Calendar? = null,
+  dateCallback: DateTimeCallback = null
 ): MaterialDialog {
   customView(R.layout.md_datetime_picker_date)
 
   minDate?.let {
-    getDatePicker().minDate = it.atStartOfDay()
-        .atZone(ZoneId.systemDefault())
-        .toInstant()
-        .toEpochMilli()
+    getDatePicker().minDate = minDate.timeInMillis
   }
   currentDate?.let {
     getDatePicker().init(
-        it.year,
-        it.monthValue.inc(),
-        it.dayOfMonth,
+        it.get(Calendar.YEAR),
+        it.get(Calendar.MONTH).inc(),
+        it.get(Calendar.DAY_OF_MONTH),
         null
     )
   }
 
   positiveButton(android.R.string.ok) {
-    dateCallback?.invoke(it, getDatePicker().extractLocalDate())
+    dateCallback?.invoke(it, getDatePicker().toCalendar())
   }
   negativeButton(android.R.string.cancel)
 
@@ -63,6 +57,6 @@ fun MaterialDialog.datePicker(
 /**
  * Gets the currently selected date from a date picker dialog.
  */
-@CheckResult fun MaterialDialog.selectedDate(): LocalDate {
-  return getDatePicker().extractLocalDate()
+@CheckResult fun MaterialDialog.selectedDate(): Calendar {
+  return getDatePicker().toCalendar()
 }

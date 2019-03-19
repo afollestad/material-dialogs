@@ -33,8 +33,6 @@ dependencies {
 
   implementation 'com.afollestad:viewpagerdots:' + versions.dotsIndicator
 
-  api 'org.threeten:threetenbp:' + versions.threetenbp
-
   implementation project(':core')
 }
 

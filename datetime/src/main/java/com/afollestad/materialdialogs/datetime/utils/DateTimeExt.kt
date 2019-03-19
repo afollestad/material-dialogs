@@ -17,36 +17,35 @@ package com.afollestad.materialdialogs.datetime.utils
 
 import android.widget.DatePicker
 import android.widget.TimePicker
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalTime
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 internal fun isFutureTime(
   datePicker: DatePicker,
   timePicker: TimePicker
 ): Boolean {
-  val now = LocalDateTime.now()
-  val date = extractLocalDateTime(datePicker, timePicker).toLocalDate()
-  val time = extractLocalDateTime(datePicker, timePicker).toLocalTime()
-
-  return date == now.toLocalDate() &&
-      time.isAfter(now.toLocalTime()) ||
-      date.isAfter(now.toLocalDate())
+  val now = Calendar.getInstance()
+  val dateTime = toCalendar(datePicker, timePicker)
+  return dateTime.timeInMillis >= now.timeInMillis
 }
 
-internal fun DatePicker.extractLocalDate(): LocalDate {
-  return LocalDate.of(year, month.inc(), dayOfMonth)
+internal fun DatePicker.toCalendar(): Calendar {
+  return GregorianCalendar(year, month.inc(), dayOfMonth, 0, 0, 1)
 }
 
-internal fun TimePicker.extractLocalTime(): LocalTime {
-  return LocalTime.of(hour(), minute())
+internal fun TimePicker.toCalendar(): Calendar {
+  return Calendar.getInstance()
+      .apply {
+        set(Calendar.HOUR, hour())
+        set(Calendar.MINUTE, minute())
+      }
 }
 
-internal fun extractLocalDateTime(
+internal fun toCalendar(
   datePicker: DatePicker,
   timePicker: TimePicker
-): LocalDateTime {
-  return LocalDateTime.of(
+): Calendar {
+  return GregorianCalendar(
       datePicker.year,
       datePicker.month.inc(),
       datePicker.dayOfMonth,

@@ -20,34 +20,32 @@ package com.afollestad.materialdialogs.datetime
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.datetime.utils.extractLocalTime
 import com.afollestad.materialdialogs.datetime.utils.getTimePicker
 import com.afollestad.materialdialogs.datetime.utils.hour
 import com.afollestad.materialdialogs.datetime.utils.minute
-import org.threeten.bp.LocalTime
-
-typealias TimeCallback = ((dialog: MaterialDialog, time: LocalTime) -> Unit)?
+import com.afollestad.materialdialogs.datetime.utils.toCalendar
+import java.util.Calendar
 
 /**
  * Makes the dialog a time picker.
  */
 fun MaterialDialog.timePicker(
-  currentTime: LocalTime? = null,
+  currentTime: Calendar? = null,
   show24HoursView: Boolean = true,
-  timeCallback: TimeCallback = null
+  timeCallback: DateTimeCallback = null
 ): MaterialDialog {
   customView(R.layout.md_datetime_picker_time)
 
   currentTime?.let {
     getTimePicker().apply {
-      hour(it.hour)
-      minute(it.minute)
+      hour(it.get(Calendar.HOUR))
+      minute(it.get(Calendar.MINUTE))
       setIs24HourView(show24HoursView)
     }
   }
 
   positiveButton(android.R.string.ok) {
-    timeCallback?.invoke(it, getTimePicker().extractLocalTime())
+    timeCallback?.invoke(it, getTimePicker().toCalendar())
   }
   negativeButton(android.R.string.cancel)
 
@@ -57,6 +55,6 @@ fun MaterialDialog.timePicker(
 /**
  * Gets the currently selected time from a time picker dialog.
  */
-@CheckResult fun MaterialDialog.selectedTime(): LocalTime {
-  return getTimePicker().extractLocalTime()
+@CheckResult fun MaterialDialog.selectedTime(): Calendar {
+  return getTimePicker().toCalendar()
 }
