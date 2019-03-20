@@ -12,7 +12,7 @@
   <dimen name="md_dialog_frame_margin_horizontal">24dp</dimen>
 
   <dimen name="md_action_button_frame_spec_height">52dp</dimen>
-  <dimen name="md_action_button_frame_padding_neutral">18dp</dimen>
+  <dimen name="md_action_button_frame_padding_neutral">7dp</dimen>
   <dimen name="md_action_button_frame_padding">8dp</dimen>
   <dimen name="md_action_button_inset_vertical">8dp</dimen>
   <dimen name="md_action_button_inset_horizontal">4dp</dimen>
