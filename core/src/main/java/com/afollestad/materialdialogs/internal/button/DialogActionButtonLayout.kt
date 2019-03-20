@@ -202,7 +202,7 @@ internal class DialogActionButtonLayout(
       }
     } else {
       val topY = measuredHeight - buttonFrameSpecHeight
-      val bottomY = measuredHeight - buttonFramePadding
+      val bottomY = measuredHeight
 
       if (isRtl()) {
         if (actionButtons[INDEX_NEUTRAL].isVisible()) {
