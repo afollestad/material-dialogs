@@ -32,7 +32,7 @@ fun MaterialDialog.datePicker(
   currentDate: Calendar? = null,
   dateCallback: DateTimeCallback = null
 ): MaterialDialog {
-  customView(R.layout.md_datetime_picker_date)
+  customView(R.layout.md_datetime_picker_date, noVerticalPadding = true)
 
   minDate?.let {
     getDatePicker().minDate = minDate.timeInMillis

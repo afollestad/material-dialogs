@@ -750,10 +750,10 @@ class MainActivity : AppCompatActivity() {
 
     date_picker.setOnClickListener {
       MaterialDialog(this).show {
-        title(text = "Select Date")
         datePicker { _, date ->
           toast("Selected date: ${date.formatDate()}")
         }
+        debugMode(debugMode)
       }
     }
 
@@ -763,6 +763,7 @@ class MainActivity : AppCompatActivity() {
         timePicker { _, time ->
           toast("Selected time: ${time.formatTime()}")
         }
+        debugMode(debugMode)
       }
     }
 
@@ -772,6 +773,7 @@ class MainActivity : AppCompatActivity() {
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
           toast("Selected date/time: ${dateTime.formatDateTime()}")
         }
+        debugMode(debugMode)
       }
     }
   }

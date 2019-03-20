@@ -34,7 +34,7 @@ fun MaterialDialog.timePicker(
   show24HoursView: Boolean = true,
   timeCallback: DateTimeCallback = null
 ): MaterialDialog {
-  customView(R.layout.md_datetime_picker_time)
+  customView(R.layout.md_datetime_picker_time, noVerticalPadding = true)
 
   currentTime?.let {
     getTimePicker().apply {
