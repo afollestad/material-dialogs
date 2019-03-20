@@ -553,14 +553,15 @@ it can be changed with an attribute in your app theme. It defaults to 2dp:
 ### Text Color
 
 By default, `android:textColorPrimary` and `android:textColorSecondary` attributes from your Activity
-theme are used for the title and content colors of dialogs. If you wish to override that, there 
-are two attributes provided:
+theme are used for the title and content colors of dialogs. `colorPrimary` is used for the default 
+text color of action buttons. If you wish to override these, there are attributes provided:
 
 ```xml
 <style name="AppTheme.Custom" parent="Theme.AppCompat">
 
   <item name="md_color_title">@color/your_color</item>
   <item name="md_color_content">@color/your_color</item>
+  <item name="md_color_button_text">@color/your/color</item>
     
 </style>
 ```
