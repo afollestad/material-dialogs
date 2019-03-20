@@ -15,13 +15,22 @@
  */
 package com.afollestad.materialdialogs.utils
 
+import android.graphics.Color
 import androidx.annotation.AttrRes
+import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
-@ColorInt internal fun MaterialDialog.resolveColor(
+@ColorInt @CheckResult
+internal fun MaterialDialog.resolveColor(
   @ColorRes res: Int? = null,
   @AttrRes attr: Int? = null
 ): Int = resolveColor(windowContext, res, attr)
+
+@ColorInt @CheckResult
+internal fun Int.adjustAlpha(alpha: Float): Int {
+  val newAlpha = (255 * alpha).toInt()
+  return Color.argb(newAlpha, Color.red(this), Color.green(this), Color.blue(this))
+}

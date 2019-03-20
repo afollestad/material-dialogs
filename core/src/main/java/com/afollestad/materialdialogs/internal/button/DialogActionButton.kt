@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.Theme.LIGHT
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveInt
+import com.afollestad.materialdialogs.utils.adjustAlpha
 import com.afollestad.materialdialogs.utils.setGravityEndCompat
 
 /**
@@ -81,7 +82,9 @@ class DialogActionButton(
     // Selector
     val bgDrawable = resolveDrawable(baseContext, attr = R.attr.md_button_selector)
     if (SDK_INT >= LOLLIPOP && bgDrawable is RippleDrawable) {
-      val rippleColor = resolveColor(context = baseContext, attr = R.attr.md_ripple_color)
+      val rippleColor = resolveColor(context = baseContext, attr = R.attr.md_ripple_color) {
+        resolveColor(appContext, attr = R.attr.colorPrimary).adjustAlpha(.12f)
+      }
       if (rippleColor != 0) {
         bgDrawable.setColor(valueOf(rippleColor))
       }
