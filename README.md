@@ -16,7 +16,9 @@ Click a module to see the Gradle dependency and a how-to document.
 
 ## Core
 
-[ ![Core](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:core.svg?label=core) ](https://bintray.com/drummer-aidan/maven/material-dialogs:core)
+
+
+[ ![Core](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:core.svg?label=core) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
 
 #### [Core Tutorial and Samples](documentation/CORE.md)
 
@@ -32,7 +34,7 @@ dependencies {
 
 ## Input
 
-[ ![Input](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:input.svg?label=input) ](https://bintray.com/drummer-aidan/maven/material-dialogs:input)
+[ ![Input](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:input.svg?label=input) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Ainput/_latestVersion)
 
 #### [Input Tutorial and Samples](documentation/INPUT.md)
  
@@ -47,7 +49,7 @@ dependencies {
  
 ## Files
 
-[ ![Files](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:files.svg?label=files) ](https://bintray.com/drummer-aidan/maven/material-dialogs:files)
+[ ![Files](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:files.svg?label=files) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Afiles/_latestVersion)
 
 #### [Files Tutorial and Samples](documentation/FILES.md)
 
@@ -62,7 +64,7 @@ dependencies {
 
 ## Color
 
-[ ![Color](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:color.svg?label=color) ](https://bintray.com/drummer-aidan/maven/material-dialogs:color)
+[ ![Color](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:color.svg?label=color) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
 
 #### [Color Tutorial and Samples](documentation/COLOR.md)
 
@@ -77,7 +79,7 @@ dependencies {
 
 ## DateTime
 
-[ ![DateTime](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:datetime.svg?label=datetime) ](https://bintray.com/drummer-aidan/maven/material-dialogs:datetime)
+[ ![DateTime](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:datetime.svg?label=datetime) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Adatetime/_latestVersion)
 
 #### [DateTime Tutorial and Samples](documentation/DATETIME.md)
 
@@ -92,7 +94,7 @@ dependencies {
 
 ## Lifecycle
 
-[ ![Lifecycle](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:lifecycle.svg?label=lifecycle) ](https://bintray.com/drummer-aidan/maven/material-dialogs:lifecycle)
+[ ![Lifecycle](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:lifecycle.svg?label=lifecycle) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Alifecycle/_latestVersion)
 
 #### [Lifecycle Tutorial and Samples](documentation/LIFECYCLE.md)
 
