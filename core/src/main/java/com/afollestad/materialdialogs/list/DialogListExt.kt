@@ -98,7 +98,7 @@ import com.afollestad.materialdialogs.utils.resolveColor
           dialog = this,
           items = array,
           disabledItems = disabledIndices,
-          waitForActionButton = waitForPositiveButton,
+          waitForPositiveButton = waitForPositiveButton,
           selection = selection
       )
   )

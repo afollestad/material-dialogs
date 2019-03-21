@@ -17,9 +17,13 @@ package com.afollestad.materialdialogs.actions
 
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.utils.isVisible
 
 /** Returns true if the dialog has visible action buttons. */
 fun MaterialDialog.hasActionButtons() = view.buttonsLayout.visibleButtons.isNotEmpty()
+
+/** Returns true if the given button is visible in the dialog. */
+fun MaterialDialog.hasActionButton(which: WhichButton) = getActionButton(which).isVisible()
 
 /** Returns the underlying view for an action button in the dialog. */
 fun MaterialDialog.getActionButton(which: WhichButton) =

@@ -87,6 +87,7 @@ import kotlinx.android.synthetic.main.activity_main.list
 import kotlinx.android.synthetic.main.activity_main.list_buttons
 import kotlinx.android.synthetic.main.activity_main.list_checkPrompt
 import kotlinx.android.synthetic.main.activity_main.list_checkPrompt_buttons
+import kotlinx.android.synthetic.main.activity_main.list_dont_wait_positive
 import kotlinx.android.synthetic.main.activity_main.list_long
 import kotlinx.android.synthetic.main.activity_main.list_long_buttons
 import kotlinx.android.synthetic.main.activity_main.list_long_items
@@ -253,6 +254,16 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
+        debugMode(debugMode)
+      }
+    }
+
+    list_dont_wait_positive.setOnClickListener {
+      MaterialDialog(this).show {
+        listItems(R.array.socialNetworks, waitForPositiveButton = false) { _, index, text ->
+          toast("Selected item $text at index $index")
+        }
+        negativeButton(android.R.string.cancel)
         debugMode(debugMode)
       }
     }

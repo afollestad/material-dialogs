@@ -22,11 +22,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
+import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.hasActionButton
 import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
+import com.afollestad.materialdialogs.utils.inflate
 
 private const val KEY_ACTIVATED_INDEX = "activated_index"
 
@@ -53,16 +55,16 @@ internal class PlainListDialogAdapter(
   private var dialog: MaterialDialog,
   internal var items: List<String>,
   disabledItems: IntArray?,
-  private var waitForActionButton: Boolean,
+  private var waitForPositiveButton: Boolean,
   internal var selection: ItemListener
 ) : RecyclerView.Adapter<PlainListViewHolder>(), DialogAdapter<String, ItemListener> {
 
   private var disabledIndices: IntArray = disabledItems ?: IntArray(0)
 
   fun itemClicked(index: Int) {
-    if (waitForActionButton && dialog.hasActionButtons()) {
-      // Wait for action button, mark clicked item as activated so that we can call the selection
-      // listener when the positive action button is pressed.
+    if (waitForPositiveButton && dialog.hasActionButton(POSITIVE)) {
+      // Wait for positive action button, mark clicked item as activated so that we can call the
+      // selection listener when the button is pressed.
       val lastActivated = dialog.config[KEY_ACTIVATED_INDEX] as? Int
       dialog.config[KEY_ACTIVATED_INDEX] = index
       if (lastActivated != null) {
@@ -70,7 +72,7 @@ internal class PlainListDialogAdapter(
       }
       notifyItemChanged(index)
     } else {
-      // Don't wait for action button, call listener and dismiss if auto dismiss is applicable
+      // Don't wait for action buttons, call listener and dismiss if auto dismiss is applicable
       this.selection?.invoke(dialog, index, this.items[index])
       if (dialog.autoDismissEnabled && !dialog.hasActionButtons()) {
         dialog.dismiss()
