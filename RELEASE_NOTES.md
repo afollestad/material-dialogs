@@ -1,7 +1,4 @@
-2.4.0
+2.5.0
 
-1. Fix action button selectors being cut off on the bottom, see #1759.
-2. Re-applied smaller dialog max width values to match the Material spec.
-3. Fix vertical spacing on datetime dialogs when there is no dialog title, see #1757.
-4. Fixed neutral button positioning, although you still should prefer to not use it.
-5. Use semi-transparent primary theme color for the ripple of action buttons on API 21+. 
+1. Added `md_color_widget` theme attribute to apply custom coloring to checkbox prompts and controls in single/multi-choice lists.
+2. Fix the list selection callback in plain lists when `waitForPositiveButton=false`. See #1751. 

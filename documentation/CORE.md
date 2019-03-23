@@ -35,7 +35,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.4.0'
+  implementation 'com.afollestad.material-dialogs:core:2.5.0'
 }
 ```
 

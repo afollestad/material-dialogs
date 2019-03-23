@@ -19,7 +19,7 @@ The `input` module contains extensions to the core module, such as a text input 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:input:2.4.0'
+  implementation 'com.afollestad.material-dialogs:input:2.5.0'
 }
 ```
 
