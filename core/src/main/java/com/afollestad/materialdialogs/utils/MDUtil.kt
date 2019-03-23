@@ -168,9 +168,14 @@ object MDUtil {
     @AttrRes attrRes: Int?
   ) {
     if (attrRes == null) return
-    val color = resolveColor(context, attr = attrRes)
-    if (color != 0) {
-      this?.setTextColor(color)
+    resolveColor(context, attr = attrRes).ifNotZero {
+      this?.setTextColor(it)
+    }
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun Int?.ifNotZero(block: (value: Int) -> Unit) {
+    if (this != null && this != 0) {
+      block(this)
     }
   }
 }

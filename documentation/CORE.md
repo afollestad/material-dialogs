@@ -23,6 +23,7 @@
     4. [Corner Radius](#corner-radius)
     5. [Text Color](#text-color)
     6. [Fonts](#fonts)
+    7. [Widget Color](#widget-color)
 
 ## Gradle Dependency
 
@@ -585,3 +586,17 @@ using attributes in your app's theme.
 See the "Custom Theme" example in the sample project (open the overflow menu for the theme switcher).
 
 <img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/customtheme.png" width="200px" />
+
+### Widget Color
+
+By default, widgets like CheckBoxes and RadioButtons use your theme's accent color. You can 
+override that to use whatever color you want. This applies to checkbox prompts, single and multiple 
+choice lists, etc. but will not automatically apply to widgets in your own custom views.
+
+```xml
+<style name="AppTheme.Custom" parent="Theme.AppCompat">
+
+  <item name="md_widget_color">@color/your_color</item>
+    
+</style>
+```

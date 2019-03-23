@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.getStringArray
 import com.afollestad.materialdialogs.utils.resolveColor
 
@@ -108,9 +109,8 @@ import com.afollestad.materialdialogs.utils.resolveColor
 fun MaterialDialog.getItemSelector(): Drawable? {
   val drawable = resolveDrawable(context = context, attr = attr.md_item_selector)
   if (SDK_INT >= LOLLIPOP && drawable is RippleDrawable) {
-    val rippleColor = resolveColor(attr = R.attr.md_ripple_color)
-    if (rippleColor != 0) {
-      drawable.setColor(valueOf(rippleColor))
+    resolveColor(attr = R.attr.md_ripple_color).ifNotZero {
+      drawable.setColor(valueOf(it))
     }
   }
   return drawable

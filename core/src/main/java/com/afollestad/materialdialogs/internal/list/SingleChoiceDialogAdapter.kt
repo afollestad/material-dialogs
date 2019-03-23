@@ -20,6 +20,7 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
@@ -28,8 +29,11 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
+import com.afollestad.materialdialogs.utils.createColorSelector
+import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.resolveColor
 
 /** @author Aidan Follestad (afollestad) */
 internal class SingleChoiceViewHolder(
@@ -103,6 +107,13 @@ internal class SingleChoiceDialogAdapter(
         adapter = this
     )
     viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
+    dialog.resolveColor(attr = R.attr.md_color_widget)
+        .ifNotZero {
+          CompoundButtonCompat.setButtonTintList(
+              viewHolder.controlView,
+              dialog.createColorSelector(checked = it)
+          )
+        }
     return viewHolder
   }
 
@@ -113,8 +124,8 @@ internal class SingleChoiceDialogAdapter(
     position: Int
   ) {
     holder.isEnabled = !disabledIndices.contains(position)
-
     holder.controlView.isChecked = currentSelection == position
+
     holder.titleView.text = items[position]
     holder.itemView.background = dialog.getItemSelector()
 

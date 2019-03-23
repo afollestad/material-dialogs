@@ -21,6 +21,7 @@ import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
 import androidx.viewpager.widget.ViewPager
+import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 
 internal class WrapContentViewPager(
   context: Context,
@@ -50,8 +51,8 @@ internal class WrapContentViewPager(
     if (maxChildHeight > maxAllowedHeightFromParent) {
       maxChildHeight = maxAllowedHeightFromParent
     }
-    if (maxChildHeight != 0) {
-      newHeightSpec = MeasureSpec.makeMeasureSpec(maxChildHeight, EXACTLY)
+    maxChildHeight.ifNotZero {
+      newHeightSpec = MeasureSpec.makeMeasureSpec(it, EXACTLY)
     }
 
     super.onMeasure(widthMeasureSpec, newHeightSpec)

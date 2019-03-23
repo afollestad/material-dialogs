@@ -21,11 +21,15 @@ import android.view.View
 import android.widget.CheckBox
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
+import androidx.core.widget.CompoundButtonCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
+import com.afollestad.materialdialogs.utils.createColorSelector
+import com.afollestad.materialdialogs.utils.resolveColor
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
 
@@ -57,6 +61,13 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
     }
     maybeSetTextColor(windowContext, R.attr.md_color_content)
     bodyFont?.let { this.typeface = it }
+
+    resolveColor(attr = R.attr.md_color_widget).ifNotZero {
+      CompoundButtonCompat.setButtonTintList(
+          this,
+          createColorSelector(checked = it)
+      )
+    }
   }
   return this
 }
