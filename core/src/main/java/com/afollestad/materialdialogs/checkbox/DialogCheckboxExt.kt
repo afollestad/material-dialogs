@@ -56,6 +56,7 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
       onToggle?.invoke(checked)
     }
     maybeSetTextColor(windowContext, R.attr.md_color_content)
+    bodyFont?.let { this.typeface = it }
   }
   return this
 }
