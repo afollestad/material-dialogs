@@ -198,7 +198,7 @@ private fun MaterialDialog.setupGridLayout(
       initialSelection = initialSelection,
       waitForPositiveButton = waitForPositiveButton,
       callback = selection,
-      enableARGBButton = allowCustomArgb && isLandscape(context)
+      enableARGBButton = allowCustomArgb && context.isLandscape()
   )
   gridRecyclerView.adapter = adapter
 }
@@ -217,7 +217,7 @@ private fun MaterialDialog.setupCustomPage(
     viewSet.setColorAlpha(ALPHA_SOLID)
   }
 
-  val landscape = isLandscape(context)
+  val landscape = context.isLandscape()
   if (!supportCustomAlpha) {
     viewSet.alphaLabel.changeHeight(0)
     viewSet.alphaSeeker.changeHeight(0)
