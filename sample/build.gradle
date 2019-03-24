@@ -23,7 +23,7 @@ dependencies {
   implementation project(':color')
   implementation project(':datetime')
 
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
 
   implementation 'androidx.appcompat:appcompat:' + versions.androidxCore
   implementation 'androidx.gridlayout:gridlayout:' + versions.androidxRecyclerView

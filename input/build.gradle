@@ -26,7 +26,7 @@ android {
 
 dependencies {
   implementation 'com.google.android.material:material:' + versions.androidxMaterial
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:' + versions.kotlin
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
   implementation project(':core')
 }
 
