@@ -72,9 +72,9 @@ fun MaterialDialog.dateTimePicker(
       }
     }
     getTimePicker().apply {
-      hour(it?.get(Calendar.HOUR) ?: 12)
-      minute(it?.get(Calendar.MINUTE) ?: 0)
       setIs24HourView(show24HoursView)
+      hour(it?.get(Calendar.HOUR_OF_DAY) ?: 12)
+      minute(it?.get(Calendar.MINUTE) ?: 0)
       setOnTimeChangedListener { _, _, _ ->
         val isFutureTime = isFutureTime(getDatePicker(), this)
         setActionButtonEnabled(

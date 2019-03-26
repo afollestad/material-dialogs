@@ -38,9 +38,9 @@ fun MaterialDialog.timePicker(
 
   currentTime?.let {
     getTimePicker().apply {
-      hour(it.get(Calendar.HOUR))
-      minute(it.get(Calendar.MINUTE))
       setIs24HourView(show24HoursView)
+      hour(it.get(Calendar.HOUR_OF_DAY))
+      minute(it.get(Calendar.MINUTE))
     }
   }
 
