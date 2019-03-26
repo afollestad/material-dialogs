@@ -16,7 +16,7 @@ The `datetime` module contains extensions to make date, time, and date-time pick
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:datetime:2.5.0'
+  implementation 'com.afollestad.material-dialogs:datetime:2.6.0'
 }
 ```
 
