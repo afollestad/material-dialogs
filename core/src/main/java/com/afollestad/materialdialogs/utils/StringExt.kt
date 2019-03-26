@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.afollestad.materialdialogs.utils
 
 import androidx.annotation.ArrayRes
 import com.afollestad.materialdialogs.MaterialDialog
 
-internal fun MaterialDialog.getStringArray(@ArrayRes res: Int?): Array<String>? {
-  if (res == null) return emptyArray()
-  return windowContext.resources.getStringArray(res)
+internal inline fun MaterialDialog.getStringArray(@ArrayRes res: Int?): Array<String>? {
+  return if (res != null) return windowContext.resources.getStringArray(res) else emptyArray()
 }

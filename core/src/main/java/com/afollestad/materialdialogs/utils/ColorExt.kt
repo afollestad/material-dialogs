@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.afollestad.materialdialogs.utils
 
 import android.content.res.ColorStateList
@@ -26,28 +28,41 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColors
 
 @ColorInt @CheckResult
-internal fun MaterialDialog.resolveColor(
+internal inline fun MaterialDialog.resolveColor(
   @ColorRes res: Int? = null,
   @AttrRes attr: Int? = null
 ): Int = resolveColor(windowContext, res, attr)
 
+@CheckResult
+internal inline fun MaterialDialog.resolveColors(
+  attrs: IntArray,
+  noinline fallback: ((forAttr: Int) -> Int)? = null
+): IntArray = resolveColors(windowContext, attrs, fallback)
+
 @ColorInt @CheckResult
-internal fun Int.adjustAlpha(alpha: Float): Int {
-  val newAlpha = (255 * alpha).toInt()
-  return Color.argb(newAlpha, Color.red(this), Color.green(this), Color.blue(this))
+internal inline fun Int.adjustAlpha(alpha: Float): Int {
+  return Color.argb((255 * alpha).toInt(), Color.red(this), Color.green(this), Color.blue(this))
 }
 
 @RestrictTo(LIBRARY_GROUP) internal fun MaterialDialog.createColorSelector(
-  @ColorInt unchecked: Int = resolveColor(windowContext, attr = R.attr.colorControlNormal),
-  @ColorInt checked: Int = resolveColor(windowContext, attr = R.attr.colorControlActivated)
+  @ColorInt unchecked: Int = 0,
+  @ColorInt checked: Int = 0
 ): ColorStateList {
   return ColorStateList(
       arrayOf(
           intArrayOf(-android.R.attr.state_checked),
           intArrayOf(android.R.attr.state_checked)
       ),
-      intArrayOf(unchecked, checked)
+      intArrayOf(
+          if (unchecked == 0) resolveColor(
+              windowContext, attr = R.attr.colorControlNormal
+          ) else unchecked,
+          if (checked == 0) resolveColor(
+              windowContext, attr = R.attr.colorControlActivated
+          ) else checked
+      )
   )
 }

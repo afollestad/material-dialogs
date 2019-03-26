@@ -27,7 +27,10 @@
     <item name="md_font_button">@font/raleway_semibold</item>
     <item name="md_ripple_color">@color/primary_custom_translucent</item>
     <item name="md_color_button_text">@color/accent_custom</item>
+
     <item name="md_color_widget">#00CC00</item>
+    <item name="md_color_widget_unchecked">#CC0000</item>
+
   </style>
 
   <style name="SampleHeader" tools:ignore="NewApi">

@@ -29,14 +29,13 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.appendAll
 import com.afollestad.materialdialogs.utils.createColorSelector
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.pullIndices
 import com.afollestad.materialdialogs.utils.removeAll
-import com.afollestad.materialdialogs.utils.resolveColor
+import com.afollestad.materialdialogs.utils.resolveColors
 
 /** @author Aidan Follestad (afollestad) */
 internal class MultiChoiceViewHolder(
@@ -128,13 +127,16 @@ internal class MultiChoiceDialogAdapter(
         adapter = this
     )
     viewHolder.titleView.maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
-    dialog.resolveColor(attr = R.attr.md_color_widget)
-        .ifNotZero {
+
+    val widgetAttrs = intArrayOf(R.attr.md_color_widget, R.attr.md_color_widget_unchecked)
+    dialog.resolveColors(attrs = widgetAttrs)
+        .let {
           CompoundButtonCompat.setButtonTintList(
               viewHolder.controlView,
-              dialog.createColorSelector(checked = it)
+              dialog.createColorSelector(checked = it[0], unchecked = it[1])
           )
         }
+
     return viewHolder
   }
 

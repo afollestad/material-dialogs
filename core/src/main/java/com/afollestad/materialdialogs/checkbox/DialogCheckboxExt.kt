@@ -25,11 +25,10 @@ import androidx.core.widget.CompoundButtonCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import com.afollestad.materialdialogs.utils.createColorSelector
-import com.afollestad.materialdialogs.utils.resolveColor
+import com.afollestad.materialdialogs.utils.resolveColors
 
 typealias BooleanCallback = ((Boolean) -> Unit)?
 
@@ -62,10 +61,11 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
     maybeSetTextColor(windowContext, R.attr.md_color_content)
     bodyFont?.let { this.typeface = it }
 
-    resolveColor(attr = R.attr.md_color_widget).ifNotZero {
+    val widgetAttrs = intArrayOf(R.attr.md_color_widget, R.attr.md_color_widget_unchecked)
+    resolveColors(attrs = widgetAttrs).let {
       CompoundButtonCompat.setButtonTintList(
           this,
-          createColorSelector(checked = it)
+          createColorSelector(checked = it[0], unchecked = it[1])
       )
     }
   }

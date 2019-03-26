@@ -5,6 +5,7 @@
   <attr format="color" name="md_ripple_color"/>
   <attr format="color" name="md_color_button_text"/>
   <attr format="color" name="md_color_widget"/>
+  <attr format="color" name="md_color_widget_unchecked"/>
   <attr format="dimension" name="md_corner_radius"/>
   <attr format="reference" name="md_font_title"/>
   <attr format="reference" name="md_font_body"/>
