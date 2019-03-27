@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.callbacks.onPreShow
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.textfield.TextInputLayout
 
@@ -115,6 +116,12 @@ fun MaterialDialog.input(
 
   editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
   editText.inputType = inputType
+  editText.maybeSetTextColor(
+      windowContext,
+      attrRes = R.attr.md_color_content,
+      hintAttrRes = R.attr.md_color_hint
+  )
+  bodyFont?.let(editText::setTypeface)
 
   if (maxLength != null) {
     getInputLayout().run {

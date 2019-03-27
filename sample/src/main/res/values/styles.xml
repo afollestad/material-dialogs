@@ -28,8 +28,8 @@
     <item name="md_ripple_color">@color/primary_custom_translucent</item>
     <item name="md_color_button_text">@color/accent_custom</item>
 
-    <item name="md_color_widget">#00CC00</item>
-    <item name="md_color_widget_unchecked">#CC0000</item>
+    <item name="md_color_widget_unchecked">#00CC00</item>
+    <item name="md_color_widget">#CC0000</item>
 
   </style>
 

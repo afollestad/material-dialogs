@@ -29,8 +29,8 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
+import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.createColorSelector
 import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.resolveColors
 
@@ -112,7 +112,7 @@ internal class SingleChoiceDialogAdapter(
         .let {
           CompoundButtonCompat.setButtonTintList(
               viewHolder.controlView,
-              dialog.createColorSelector(checked = it[0], unchecked = it[1])
+              createColorSelector(dialog.windowContext, checked = it[0], unchecked = it[1])
           )
         }
 

@@ -17,16 +17,12 @@
 
 package com.afollestad.materialdialogs.utils
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.annotation.AttrRes
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import androidx.annotation.RestrictTo
-import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColors
 
@@ -45,24 +41,4 @@ internal inline fun MaterialDialog.resolveColors(
 @ColorInt @CheckResult
 internal inline fun Int.adjustAlpha(alpha: Float): Int {
   return Color.argb((255 * alpha).toInt(), Color.red(this), Color.green(this), Color.blue(this))
-}
-
-@RestrictTo(LIBRARY_GROUP) internal fun MaterialDialog.createColorSelector(
-  @ColorInt unchecked: Int = 0,
-  @ColorInt checked: Int = 0
-): ColorStateList {
-  return ColorStateList(
-      arrayOf(
-          intArrayOf(-android.R.attr.state_checked),
-          intArrayOf(android.R.attr.state_checked)
-      ),
-      intArrayOf(
-          if (unchecked == 0) resolveColor(
-              windowContext, attr = R.attr.colorControlNormal
-          ) else unchecked,
-          if (checked == 0) resolveColor(
-              windowContext, attr = R.attr.colorControlActivated
-          ) else checked
-      )
-  )
 }

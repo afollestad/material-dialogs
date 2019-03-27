@@ -17,7 +17,9 @@
 
 package com.afollestad.materialdialogs.utils
 
+import android.R.attr
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -37,6 +39,7 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.R
 
 @RestrictTo(LIBRARY_GROUP)
 object MDUtil {
@@ -187,11 +190,17 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP) fun TextView?.maybeSetTextColor(
     context: Context,
-    @AttrRes attrRes: Int?
+    @AttrRes attrRes: Int?,
+    @AttrRes hintAttrRes: Int? = null
   ) {
-    if (attrRes == null) return
-    resolveColor(context, attr = attrRes).ifNotZero {
-      this?.setTextColor(it)
+    if (this == null || (attrRes == null && hintAttrRes == null)) return
+    if (attrRes != null) {
+      resolveColor(context, attr = attrRes)
+          .ifNotZero(this::setTextColor)
+    }
+    if (hintAttrRes != null) {
+      resolveColor(context, attr = hintAttrRes)
+          .ifNotZero(this::setHintTextColor)
     }
   }
 
@@ -200,5 +209,29 @@ object MDUtil {
     if (this != null && this != 0) {
       block(this)
     }
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun createColorSelector(
+    context: Context,
+    @ColorInt unchecked: Int = 0,
+    @ColorInt checked: Int = 0
+  ): ColorStateList {
+    val checkedColor = if (checked == 0) resolveColor(
+        context, attr = R.attr.colorControlActivated
+    ) else checked
+    return ColorStateList(
+        arrayOf(
+            intArrayOf(-attr.state_checked, -attr.state_focused),
+            intArrayOf(attr.state_checked),
+            intArrayOf(attr.state_focused)
+        ),
+        intArrayOf(
+            if (unchecked == 0) resolveColor(
+                context, attr = R.attr.colorControlNormal
+            ) else unchecked,
+            checkedColor,
+            checkedColor
+        )
+    )
   }
 }

@@ -2,6 +2,7 @@
   <attr format="color" name="md_background_color"/>
   <attr format="color" name="md_color_title"/>
   <attr format="color" name="md_color_content"/>
+  <attr format="color" name="md_color_hint"/>
   <attr format="color" name="md_ripple_color"/>
   <attr format="color" name="md_color_button_text"/>
   <attr format="color" name="md_color_widget"/>
