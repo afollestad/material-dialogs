@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import androidx.annotation.CheckResult
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
@@ -84,6 +85,7 @@ class MaterialDialog(
     internal set
   var buttonFont: Typeface? = null
     internal set
+  @DimenRes private var maxWidthRes: Int = R.dimen.md_dialog_max_width
 
   internal val view: DialogLayout = inflate(R.layout.md_dialog_base)
 
@@ -99,7 +101,6 @@ class MaterialDialog(
   init {
     setContentView(view)
     this.view.dialog = this
-    setWindowConstraints()
     setDefaults()
   }
 
@@ -297,6 +298,20 @@ class MaterialDialog(
     return this
   }
 
+  /**
+   * Be careful with this. The specs say to use 280dp on a phone, and this value increases
+   * for landscape, tablets. etc.
+   *
+   * If you override this, you should make sure you test on larger screens and in different
+   * orientations.
+   *
+   * This value only takes effect when calling [show].
+   */
+  @CheckResult fun maxWidthRes(@DimenRes res: Int): MaterialDialog {
+    this.maxWidthRes = res
+    return this
+  }
+
   /** Turns debug mode on or off. Draws spec guides over dialog views. */
   @CheckResult fun debugMode(debugMode: Boolean = true): MaterialDialog {
     this.view.debugMode = debugMode
@@ -305,6 +320,7 @@ class MaterialDialog(
 
   /** Opens the dialog. */
   override fun show() {
+    setWindowConstraints(maxWidthRes)
     preShow()
     super.show()
     postShow()
