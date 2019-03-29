@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.afollestad.materialdialogs.utils
 
-internal fun IntArray.appendAll(values: Collection<Int>): IntArray {
+internal inline fun IntArray.appendAll(values: Collection<Int>): IntArray {
   return toMutableList()
       .apply { addAll(values) }
       .toIntArray()
 }
 
-internal fun IntArray.removeAll(values: Collection<Int>): IntArray {
+internal inline fun IntArray.removeAll(values: Collection<Int>): IntArray {
   return toMutableList().apply { removeAll { values.contains(it) } }
       .toIntArray()
 }

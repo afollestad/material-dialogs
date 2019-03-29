@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -45,7 +47,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import kotlin.math.min
 
-internal fun MaterialDialog.setWindowConstraints(
+internal inline fun MaterialDialog.setWindowConstraints(
   @DimenRes maxWidthRes: Int = R.dimen.md_dialog_max_width
 ) {
   val win = window ?: return
@@ -79,11 +81,10 @@ internal fun MaterialDialog.setWindowConstraints(
   }
 }
 
-internal fun MaterialDialog.setDefaults() {
+internal inline fun MaterialDialog.setDefaults() {
   // Background color and corner radius
-  var backgroundColor = resolveColor(attr = R.attr.md_background_color)
-  if (backgroundColor == 0) {
-    backgroundColor = resolveColor(attr = R.attr.colorBackgroundFloating)
+  val backgroundColor = resolveColor(attr = R.attr.md_background_color) {
+    resolveColor(attr = R.attr.colorBackgroundFloating)
   }
   colorBackground(color = backgroundColor)
   // Fonts
@@ -98,7 +99,7 @@ fun MaterialDialog.invalidateDividers(
   atBottom: Boolean
 ) = view.invalidateDividers(scrolledDown, atBottom)
 
-internal fun MaterialDialog.preShow() {
+internal inline fun MaterialDialog.preShow() {
   val customViewNoVerticalPadding = config[CUSTOM_VIEW_NO_VERTICAL_PADDING] as? Boolean == true
   this.preShowListeners.invokeAll(this)
 
@@ -119,7 +120,7 @@ internal fun MaterialDialog.preShow() {
   }
 }
 
-internal fun MaterialDialog.postShow() {
+internal inline fun MaterialDialog.postShow() {
   val negativeBtn = getActionButton(NEGATIVE)
   if (negativeBtn.isVisible()) {
     negativeBtn.post { negativeBtn.requestFocus() }
@@ -169,7 +170,7 @@ internal fun MaterialDialog.populateText(
   }
 }
 
-internal fun MaterialDialog.hideKeyboard() {
+internal inline fun MaterialDialog.hideKeyboard() {
   val imm =
     windowContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
   val currentFocus = currentFocus
@@ -183,10 +184,10 @@ internal fun MaterialDialog.hideKeyboard() {
   }
 }
 
-internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
-  val drawable = GradientDrawable()
-  drawable.cornerRadius = dimen(attr = R.attr.md_corner_radius)
-  drawable.setColor(color)
-  window?.setBackgroundDrawable(drawable)
+internal inline fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
+  window?.setBackgroundDrawable(GradientDrawable().apply {
+    cornerRadius = dimen(attr = R.attr.md_corner_radius)
+    setColor(color)
+  })
   return this
 }

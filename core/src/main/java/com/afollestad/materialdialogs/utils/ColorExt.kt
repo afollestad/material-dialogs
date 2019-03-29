@@ -29,8 +29,9 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveColors
 @ColorInt @CheckResult
 internal inline fun MaterialDialog.resolveColor(
   @ColorRes res: Int? = null,
-  @AttrRes attr: Int? = null
-): Int = resolveColor(windowContext, res, attr)
+  @AttrRes attr: Int? = null,
+  noinline fallback: (() -> Int)? = null
+): Int = resolveColor(windowContext, res, attr, fallback)
 
 @CheckResult
 internal inline fun MaterialDialog.resolveColors(
