@@ -29,9 +29,13 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
-import com.afollestad.materialdialogs.utils.*
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
+import com.afollestad.materialdialogs.utils.appendAll
+import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.pullIndices
+import com.afollestad.materialdialogs.utils.removeAll
+import com.afollestad.materialdialogs.utils.resolveColors
 
 /** @author Aidan Follestad (afollestad) */
 internal class MultiChoiceViewHolder(
