@@ -29,13 +29,9 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
+import com.afollestad.materialdialogs.utils.*
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.appendAll
-import com.afollestad.materialdialogs.utils.inflate
-import com.afollestad.materialdialogs.utils.pullIndices
-import com.afollestad.materialdialogs.utils.removeAll
-import com.afollestad.materialdialogs.utils.resolveColors
 
 /** @author Aidan Follestad (afollestad) */
 internal class MultiChoiceViewHolder(
@@ -182,12 +178,19 @@ internal class MultiChoiceDialogAdapter(
     val existingSelection = this.currentSelection
     val indicesToAdd = indices.filter { !existingSelection.contains(it) }
     this.currentSelection = this.currentSelection.appendAll(indicesToAdd)
+    if (existingSelection.isEmpty()) {
+      dialog.setActionButtonEnabled(POSITIVE, true)
+    }
   }
 
   override fun uncheckItems(indices: IntArray) {
     val existingSelection = this.currentSelection
     val indicesToAdd = indices.filter { existingSelection.contains(it) }
-    this.currentSelection = this.currentSelection.removeAll(indicesToAdd)
+    this.currentSelection = this.currentSelection.removeAll(indicesToAdd).also {
+      if (it.isEmpty()) {
+        dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection)
+      }
+    }
   }
 
   override fun toggleItems(indices: IntArray) {
@@ -200,7 +203,9 @@ internal class MultiChoiceDialogAdapter(
         newSelection.add(target)
       }
     }
-    this.currentSelection = newSelection.toIntArray()
+    this.currentSelection = newSelection.toIntArray().also {
+      dialog.setActionButtonEnabled(POSITIVE, if (it.isEmpty()) allowEmptySelection else true)
+    }
   }
 
   override fun checkAllItems() {
@@ -208,10 +213,14 @@ internal class MultiChoiceDialogAdapter(
     val wholeRange = IntArray(itemCount) { it }
     val indicesToAdd = wholeRange.filter { !existingSelection.contains(it) }
     this.currentSelection = this.currentSelection.appendAll(indicesToAdd)
+    if (existingSelection.isEmpty()) {
+      dialog.setActionButtonEnabled(POSITIVE, true)
+    }
   }
 
   override fun uncheckAllItems() {
     this.currentSelection = intArrayOf()
+    dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection)
   }
 
   override fun toggleAllChecked() {
