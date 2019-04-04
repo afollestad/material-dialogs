@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context
@@ -31,19 +29,19 @@ import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 
 @Suppress("UNCHECKED_CAST")
-internal inline fun <R : View> ViewGroup.inflate(
+internal fun <R : View> ViewGroup.inflate(
   ctxt: Context = context,
   @LayoutRes res: Int
 ) = LayoutInflater.from(ctxt).inflate(res, this, false) as R
 
 @Suppress("UNCHECKED_CAST")
-internal inline fun <T> MaterialDialog.inflate(
+internal fun <T> MaterialDialog.inflate(
   @LayoutRes res: Int,
   root: ViewGroup? = null
 ) = LayoutInflater.from(windowContext).inflate(res, root, false) as T
 
 @Suppress("UNCHECKED_CAST")
-internal inline fun <T> ViewGroup.inflate(
+internal fun <T> ViewGroup.inflate(
   @LayoutRes res: Int,
   root: ViewGroup? = this
 ) = LayoutInflater.from(context).inflate(res, root, false) as T
@@ -84,11 +82,9 @@ internal fun <T : View> T.isVisible(): Boolean {
   }
 }
 
-internal inline fun <T : View> T.isNotVisible(): Boolean {
-  return !isVisible()
-}
+internal fun <T : View> T.isNotVisible(): Boolean = !isVisible()
 
-internal inline fun <T : View> T.isRtl(): Boolean {
+internal fun <T : View> T.isRtl(): Boolean {
   return if (SDK_INT < JELLY_BEAN_MR1) false else resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 }
 

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.afollestad.materialdialogs.utils
 
 import android.util.TypedValue
@@ -44,6 +42,6 @@ internal fun MaterialDialog.dimen(
   }
 }
 
-internal inline fun View.dp(value: Int): Float {
+internal fun View.dp(value: Int): Float {
   return TypedValue.applyDimension(COMPLEX_UNIT_DIP, value.toFloat(), resources.displayMetrics)
 }

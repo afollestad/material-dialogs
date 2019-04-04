@@ -36,11 +36,12 @@ fun MaterialDialog.timePicker(
 ): MaterialDialog {
   customView(R.layout.md_datetime_picker_time, noVerticalPadding = true)
 
-  currentTime?.let {
-    getTimePicker().apply {
-      setIs24HourView(show24HoursView)
-      hour(it.get(Calendar.HOUR_OF_DAY))
-      minute(it.get(Calendar.MINUTE))
+  getTimePicker().apply {
+    setIs24HourView(show24HoursView)
+
+    if (currentTime != null) {
+      hour(currentTime.get(Calendar.HOUR_OF_DAY))
+      minute(currentTime.get(Calendar.MINUTE))
     }
   }
 

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.afollestad.materialdialogs.utils
 
 import android.graphics.Color
@@ -27,19 +25,19 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColors
 
 @ColorInt @CheckResult
-internal inline fun MaterialDialog.resolveColor(
+internal fun MaterialDialog.resolveColor(
   @ColorRes res: Int? = null,
   @AttrRes attr: Int? = null,
-  noinline fallback: (() -> Int)? = null
+  fallback: (() -> Int)? = null
 ): Int = resolveColor(windowContext, res, attr, fallback)
 
 @CheckResult
-internal inline fun MaterialDialog.resolveColors(
+internal fun MaterialDialog.resolveColors(
   attrs: IntArray,
-  noinline fallback: ((forAttr: Int) -> Int)? = null
-): IntArray = resolveColors(windowContext, attrs, fallback)
+  fallback: ((forAttr: Int) -> Int)? = null
+) = resolveColors(windowContext, attrs, fallback)
 
 @ColorInt @CheckResult
-internal inline fun Int.adjustAlpha(alpha: Float): Int {
+internal fun Int.adjustAlpha(alpha: Float): Int {
   return Color.argb((255 * alpha).toInt(), Color.red(this), Color.green(this), Color.blue(this))
 }

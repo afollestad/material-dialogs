@@ -58,30 +58,32 @@ fun MaterialDialog.dateTimePicker(
   }
 
   minDateTime?.let { getDatePicker().minDate = it.timeInMillis }
-  currentDateTime.let {
-    getDatePicker().apply {
-      init(
-          it?.get(Calendar.YEAR) ?: year,
-          it?.get(Calendar.MONTH) ?: month,
-          it?.get(Calendar.DAY_OF_MONTH) ?: dayOfMonth
-      ) { _, _, _, _ ->
-        val futureTime = isFutureTime(this, getTimePicker())
-        setActionButtonEnabled(
-            POSITIVE, !requireFutureDateTime || futureTime
-        )
-      }
+
+  getDatePicker().apply {
+    init(
+        currentDateTime?.get(Calendar.YEAR) ?: year,
+        currentDateTime?.get(Calendar.MONTH) ?: month,
+        currentDateTime?.get(Calendar.DAY_OF_MONTH) ?: dayOfMonth
+    ) { _, _, _, _ ->
+      val futureTime = isFutureTime(this, getTimePicker())
+      setActionButtonEnabled(
+          POSITIVE, !requireFutureDateTime || futureTime
+      )
     }
-    getTimePicker().apply {
-      setIs24HourView(show24HoursView)
-      hour(it?.get(Calendar.HOUR_OF_DAY) ?: 12)
-      minute(it?.get(Calendar.MINUTE) ?: 0)
-      setOnTimeChangedListener { _, _, _ ->
-        val isFutureTime = isFutureTime(getDatePicker(), this)
-        setActionButtonEnabled(
-            POSITIVE,
-            !requireFutureDateTime || isFutureTime
-        )
-      }
+  }
+
+  getTimePicker().apply {
+    setIs24HourView(show24HoursView)
+
+    hour(currentDateTime?.get(Calendar.HOUR_OF_DAY) ?: 12)
+    minute(currentDateTime?.get(Calendar.MINUTE) ?: 0)
+
+    setOnTimeChangedListener { _, _, _ ->
+      val isFutureTime = isFutureTime(getDatePicker(), this)
+      setActionButtonEnabled(
+          POSITIVE,
+          !requireFutureDateTime || isFutureTime
+      )
     }
   }
 
@@ -90,6 +92,7 @@ fun MaterialDialog.dateTimePicker(
       POSITIVE,
       !requireFutureDateTime || futureTime
   )
+
   positiveButton(android.R.string.ok) {
     val selectedTime = toCalendar(getDatePicker(), getTimePicker())
     dateTimeCallback?.invoke(it, selectedTime)
