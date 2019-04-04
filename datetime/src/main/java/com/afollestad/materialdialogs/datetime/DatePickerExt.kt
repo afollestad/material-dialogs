@@ -29,6 +29,7 @@ import java.util.Calendar
  */
 fun MaterialDialog.datePicker(
   minDate: Calendar? = null,
+  maxDate: Calendar? = null,
   currentDate: Calendar? = null,
   dateCallback: DateTimeCallback = null
 ): MaterialDialog {
@@ -36,6 +37,9 @@ fun MaterialDialog.datePicker(
 
   minDate?.let {
     getDatePicker().minDate = minDate.timeInMillis
+  }
+  maxDate?.let {
+    getDatePicker().maxDate = maxDate.timeInMillis
   }
   currentDate?.let {
     getDatePicker().init(
