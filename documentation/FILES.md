@@ -23,7 +23,7 @@ The `files` module contains extensions to the core module, such as a file and fo
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:files:2.6.0'
+  implementation 'com.afollestad.material-dialogs:files:2.7.0'
 }
 ```
 
