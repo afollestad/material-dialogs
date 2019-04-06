@@ -76,18 +76,12 @@ fun MaterialDialog.fileChooser(
     check(hasWriteStoragePermission()) {
       "You must have the WRITE_EXTERNAL_STORAGE permission first."
     }
-    check(initialDirectory.canWrite()) {
-      "${initialDirectory.absolutePath} is not writeable to your app."
-    }
     if (filter == null) {
       actualFilter = { !it.isHidden && it.canWrite() }
     }
   } else {
     check(hasReadStoragePermission()) {
       "You must have the READ_EXTERNAL_STORAGE permission first."
-    }
-    check(initialDirectory.canRead()) {
-      "${initialDirectory.absolutePath} is not readable to your app."
     }
     if (filter == null) {
       actualFilter = { !it.isHidden && it.canRead() }
@@ -143,7 +137,8 @@ internal fun MaterialDialog.showNewFolderCreator(
       onCreation()
     }
   }
-  dialog.getInputField().blockReservedCharacters()
+  dialog.getInputField()
+      .blockReservedCharacters()
 }
 
 private fun EditText.blockReservedCharacters() {
