@@ -1,5 +1,6 @@
-2.6.0
+2.7.0
 
-1. Added `md_color_widget_unchecked` attribute to compliment the previously added `md_color_widget` attribute.
-2. Fixed time and datetime pickers not handling default time correctly. See #1766.
-3. Use JDK 8 version of the Kotlin plugin dependency. 
+1. Undid dialog max width changes again, to what they were before they looked small. Added `maxWidth` setter function that you can use to custom dialog max widths if you wish, although it's discouraged.
+2. Added a `dialogWrapContent` parameter to `customView(...)` which instructs the dialog to set its max width to the measured width of your custom view.
+3. The `datetime` dialogs use the `dialogWrapContent` parameter above, which fixes how they look in landscape etc.  
+4. Misc. bug fixes and code cleanup.
