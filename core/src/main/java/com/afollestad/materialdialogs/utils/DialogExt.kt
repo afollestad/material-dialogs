@@ -27,8 +27,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.Px
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
 import androidx.annotation.StringRes
@@ -46,11 +46,16 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import kotlin.math.min
 
 internal fun MaterialDialog.setWindowConstraints(
-  @DimenRes maxWidthRes: Int = R.dimen.md_dialog_max_width
+  @Px maxWidth: Int? = null
 ) {
   val win = window ?: return
   win.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
   val wm = win.windowManager ?: return
+
+  if (maxWidth == 0) {
+    // Postpone
+    return
+  }
 
   val display = wm.defaultDisplay
   val size = Point()
@@ -66,14 +71,15 @@ internal fun MaterialDialog.setWindowConstraints(
     val windowHorizontalPadding = getDimensionPixelSize(
         R.dimen.md_dialog_horizontal_margin
     )
-    val maxWidth = getDimensionPixelSize(maxWidthRes)
     val calculatedWidth = windowWidth - windowHorizontalPadding * 2
+    val actualMaxWidth =
+      maxWidth ?: context.resources.getDimensionPixelSize(R.dimen.md_dialog_max_width)
 
     view.maxHeight = windowHeight - windowVerticalPadding * 2
     val lp = WindowManager.LayoutParams()
         .apply {
           copyFrom(win.attributes)
-          width = min(maxWidth, calculatedWidth)
+          width = min(actualMaxWidth, calculatedWidth)
         }
     win.attributes = lp
   }

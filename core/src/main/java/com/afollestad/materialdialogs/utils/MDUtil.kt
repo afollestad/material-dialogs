@@ -25,6 +25,7 @@ import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
@@ -229,5 +230,27 @@ object MDUtil {
             checkedColor
         )
     )
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForLayout(block: T.() -> Unit) {
+    if (measuredWidth > 0 && measuredHeight > 0) {
+      this.block()
+      return
+    }
+
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+      var lastWidth: Int? = null
+
+      override fun onGlobalLayout() {
+        if (lastWidth != null && lastWidth == measuredWidth) {
+          viewTreeObserver.removeOnGlobalLayoutListener(this)
+          return
+        }
+        if (measuredWidth > 0 && measuredHeight > 0) {
+          lastWidth = measuredWidth
+          this@waitForLayout.block()
+        }
+      }
+    })
   }
 }

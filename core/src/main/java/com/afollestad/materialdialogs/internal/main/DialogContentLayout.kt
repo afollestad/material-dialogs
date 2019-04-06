@@ -105,7 +105,7 @@ internal class DialogContentLayout(
     @LayoutRes res: Int?,
     view: View?,
     scrollable: Boolean
-  ) {
+  ): View {
     check(customView == null) { "Custom view already set." }
 
     if (view != null && view.parent != null) {
@@ -122,6 +122,8 @@ internal class DialogContentLayout(
       customView = view ?: inflate(res!!)
       addView(customView)
     }
+
+    return customView!!
   }
 
   fun haveMoreThanOneChild() = childCount > 1

@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.CheckResult
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.Px
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.Theme.Companion.inferTheme
 import com.afollestad.materialdialogs.WhichButton.NEGATIVE
@@ -49,7 +50,7 @@ internal fun assertOneSet(
   b: Any?,
   a: Int?
 ) {
-  if ((a == null || a == 0) && b == null) {
+  if (a == null && b == null) {
     throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
   }
 }
@@ -85,7 +86,7 @@ class MaterialDialog(
     internal set
   var buttonFont: Typeface? = null
     internal set
-  @DimenRes private var maxWidthRes: Int = R.dimen.md_dialog_max_width
+  @Px private var maxWidth: Int? = null
 
   internal val view: DialogLayout = inflate(R.layout.md_dialog_base)
 
@@ -307,8 +308,20 @@ class MaterialDialog(
    *
    * This value only takes effect when calling [show].
    */
-  @CheckResult fun maxWidthRes(@DimenRes res: Int): MaterialDialog {
-    this.maxWidthRes = res
+  fun maxWidth(
+    @DimenRes res: Int? = null,
+    @Px literal: Int? = null
+  ): MaterialDialog {
+    assertOneSet("maxWidth", res, literal)
+    val shouldSetConstraints = this.maxWidth != null && this.maxWidth == 0
+    this.maxWidth = if (res != null) {
+      windowContext.resources.getDimensionPixelSize(res)
+    } else {
+      literal!!
+    }
+    if (shouldSetConstraints) {
+      setWindowConstraints(this.maxWidth)
+    }
     return this
   }
 
@@ -320,7 +333,7 @@ class MaterialDialog(
 
   /** Opens the dialog. */
   override fun show() {
-    setWindowConstraints(maxWidthRes)
+    setWindowConstraints(maxWidth)
     preShow()
     super.show()
     postShow()

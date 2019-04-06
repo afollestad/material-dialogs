@@ -20,6 +20,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.waitForLayout
 
 internal const val CUSTOM_VIEW_NO_VERTICAL_PADDING = "md.custom_view_no_vertical_padding"
 
@@ -47,14 +48,29 @@ fun MaterialDialog.customView(
   @LayoutRes viewRes: Int? = null,
   view: View? = null,
   scrollable: Boolean = false,
-  noVerticalPadding: Boolean = false
+  noVerticalPadding: Boolean = false,
+  dialogWrapContent: Boolean = false
 ): MaterialDialog {
   assertOneSet("customView", view, viewRes)
   config[CUSTOM_VIEW_NO_VERTICAL_PADDING] = noVerticalPadding
+
+  if (dialogWrapContent) {
+    // Postpone window measurement so custom view measures itself naturally.
+    maxWidth(literal = 0)
+  }
+
   this.view.contentLayout.addCustomView(
       res = viewRes,
       view = view,
       scrollable = scrollable
   )
+      .also {
+        if (dialogWrapContent) {
+          it.waitForLayout {
+            maxWidth(literal = measuredWidth)
+          }
+        }
+      }
+
   return this
 }

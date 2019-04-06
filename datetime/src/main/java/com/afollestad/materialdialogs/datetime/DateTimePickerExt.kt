@@ -47,7 +47,11 @@ fun MaterialDialog.dateTimePicker(
   show24HoursView: Boolean = false,
   dateTimeCallback: DateTimeCallback = null
 ): MaterialDialog {
-  customView(R.layout.md_datetime_picker_pager, noVerticalPadding = true)
+  customView(
+      R.layout.md_datetime_picker_pager,
+      noVerticalPadding = true,
+      dialogWrapContent = true
+  )
 
   val viewPager = getPager()
   viewPager.adapter = DateTimePickerAdapter()
