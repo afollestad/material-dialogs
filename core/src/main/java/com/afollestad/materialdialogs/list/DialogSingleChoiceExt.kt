@@ -43,6 +43,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
   waitForPositiveButton: Boolean = true,
   selection: SingleChoiceListener = null
 ): MaterialDialog {
+  assertOneSet("listItemsSingleChoice", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
   val adapter = getListAdapter()
 
@@ -54,7 +55,6 @@ import com.afollestad.materialdialogs.utils.getStringArray
     return this
   }
 
-  assertOneSet("listItemsSingleChoice", items, res)
   setActionButtonEnabled(POSITIVE, initialSelection > -1)
   return customListAdapter(
       SingleChoiceDialogAdapter(

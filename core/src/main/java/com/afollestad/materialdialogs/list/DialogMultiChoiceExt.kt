@@ -46,6 +46,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
   allowEmptySelection: Boolean = false,
   selection: MultiChoiceListener = null
 ): MaterialDialog {
+  assertOneSet("listItemsMultiChoice", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
   val adapter = getListAdapter()
 
@@ -57,7 +58,6 @@ import com.afollestad.materialdialogs.utils.getStringArray
     return this
   }
 
-  assertOneSet("listItemsMultiChoice", items, res)
   setActionButtonEnabled(POSITIVE, allowEmptySelection || initialSelection.isNotEmpty())
 
   return customListAdapter(
