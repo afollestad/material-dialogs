@@ -45,14 +45,13 @@ import com.afollestad.materialdialogs.utils.getStringArray
 ): MaterialDialog {
   assertOneSet("listItemsSingleChoice", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
-  val adapter = getListAdapter()
 
-  if (adapter is SingleChoiceDialogAdapter) {
-    adapter.replaceItems(array, selection)
-    if (disabledIndices != null) {
-      adapter.disableItems(disabledIndices)
-    }
-    return this
+  if (getListAdapter() != null) {
+    return updateListItems(
+        res = res,
+        items = items,
+        disabledIndices = disabledIndices
+    )
   }
 
   setActionButtonEnabled(POSITIVE, initialSelection > -1)

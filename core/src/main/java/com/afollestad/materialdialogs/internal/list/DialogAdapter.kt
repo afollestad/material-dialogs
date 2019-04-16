@@ -15,11 +15,10 @@
  */
 package com.afollestad.materialdialogs.internal.list
 
-interface DialogAdapter<IT, SL> {
-
+interface DialogAdapter<in IT, in SL> {
   fun replaceItems(
     items: List<IT>,
-    listener: SL
+    listener: SL? = null
   )
 
   fun disableItems(indices: IntArray)

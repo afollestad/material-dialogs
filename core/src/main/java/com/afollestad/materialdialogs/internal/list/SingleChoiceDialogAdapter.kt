@@ -147,7 +147,9 @@ internal class SingleChoiceDialogAdapter(
     listener: SingleChoiceListener
   ) {
     this.items = items
-    this.selection = listener
+    if (listener != null) {
+      this.selection = listener
+    }
     this.notifyDataSetChanged()
   }
 

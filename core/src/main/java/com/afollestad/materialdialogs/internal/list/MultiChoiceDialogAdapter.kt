@@ -169,7 +169,9 @@ internal class MultiChoiceDialogAdapter(
     listener: MultiChoiceListener
   ) {
     this.items = items
-    this.selection = listener
+    if (listener != null) {
+      this.selection = listener
+    }
     this.notifyDataSetChanged()
   }
 
@@ -190,11 +192,12 @@ internal class MultiChoiceDialogAdapter(
   override fun uncheckItems(indices: IntArray) {
     val existingSelection = this.currentSelection
     val indicesToAdd = indices.filter { existingSelection.contains(it) }
-    this.currentSelection = this.currentSelection.removeAll(indicesToAdd).also {
-      if (it.isEmpty()) {
-        dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection)
-      }
-    }
+    this.currentSelection = this.currentSelection.removeAll(indicesToAdd)
+        .also {
+          if (it.isEmpty()) {
+            dialog.setActionButtonEnabled(POSITIVE, allowEmptySelection)
+          }
+        }
   }
 
   override fun toggleItems(indices: IntArray) {
@@ -207,9 +210,10 @@ internal class MultiChoiceDialogAdapter(
         newSelection.add(target)
       }
     }
-    this.currentSelection = newSelection.toIntArray().also {
-      dialog.setActionButtonEnabled(POSITIVE, if (it.isEmpty()) allowEmptySelection else true)
-    }
+    this.currentSelection = newSelection.toIntArray()
+        .also {
+          dialog.setActionButtonEnabled(POSITIVE, if (it.isEmpty()) allowEmptySelection else true)
+        }
   }
 
   override fun checkAllItems() {

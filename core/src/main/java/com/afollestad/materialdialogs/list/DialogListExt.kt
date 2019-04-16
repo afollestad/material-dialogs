@@ -31,9 +31,11 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.internal.list.MultiChoiceDialogAdapter
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
-import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
+import com.afollestad.materialdialogs.internal.list.SingleChoiceDialogAdapter
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.getStringArray
 import com.afollestad.materialdialogs.utils.resolveColor
 
@@ -84,14 +86,13 @@ import com.afollestad.materialdialogs.utils.resolveColor
 ): MaterialDialog {
   assertOneSet("listItems", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
-  val adapter = getListAdapter()
 
-  if (adapter is PlainListDialogAdapter) {
-    adapter.replaceItems(array, selection)
-    if (disabledIndices != null) {
-      adapter.disableItems(disabledIndices)
-    }
-    return this
+  if (getListAdapter() != null) {
+    return updateListItems(
+        res = res,
+        items = items,
+        disabledIndices = disabledIndices
+    )
   }
 
   return customListAdapter(
@@ -105,6 +106,53 @@ import com.afollestad.materialdialogs.utils.resolveColor
   )
 }
 
+/**
+ * Updates the items, and optionally the disabled indices, of a plain, single choice,
+ * or multi-choice list dialog.
+ *
+ * @author Aidan Follestad (@afollestad)
+ */
+fun MaterialDialog.updateListItems(
+  @ArrayRes res: Int? = null,
+  items: List<String>? = null,
+  disabledIndices: IntArray? = null
+): MaterialDialog {
+  assertOneSet("updateListItems", items, res)
+  val array = items ?: getStringArray(res)?.toList() ?: return this
+  val adapter = getListAdapter()
+  check(adapter != null) {
+    "updateListItems(...) can't be used before you've created a list dialog."
+  }
+  when (adapter) {
+    is PlainListDialogAdapter -> {
+      adapter.replaceItems(array)
+      if (disabledIndices != null) {
+        adapter.disableItems(disabledIndices)
+      }
+      return this
+    }
+    is SingleChoiceDialogAdapter -> {
+      adapter.replaceItems(array)
+      if (disabledIndices != null) {
+        adapter.disableItems(disabledIndices)
+      }
+    }
+    is MultiChoiceDialogAdapter -> {
+      adapter.replaceItems(array)
+      if (disabledIndices != null) {
+        adapter.disableItems(disabledIndices)
+      }
+    }
+    else -> {
+      throw UnsupportedOperationException(
+          "updateListItems() cannot work with adapter of type ${adapter::class.java}"
+      )
+    }
+  }
+  return this
+}
+
+/** @author Aidan Follestad (@afollestad) */
 @RestrictTo(LIBRARY_GROUP)
 fun MaterialDialog.getItemSelector(): Drawable? {
   val drawable = resolveDrawable(context = context, attr = attr.md_item_selector)
