@@ -48,6 +48,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
 ): MaterialDialog {
   assertOneSet("listItemsMultiChoice", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
+
   if (getListAdapter() != null) {
     return updateListItems(
         res = res,

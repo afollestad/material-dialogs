@@ -29,7 +29,6 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.assertOneSet
 import com.afollestad.materialdialogs.internal.list.MultiChoiceDialogAdapter
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
@@ -155,7 +154,7 @@ fun MaterialDialog.updateListItems(
 /** @author Aidan Follestad (@afollestad) */
 @RestrictTo(LIBRARY_GROUP)
 fun MaterialDialog.getItemSelector(): Drawable? {
-  val drawable = resolveDrawable(context = context, attr = attr.md_item_selector)
+  val drawable = resolveDrawable(context = context, attr = R.attr.md_item_selector)
   if (SDK_INT >= LOLLIPOP && drawable is RippleDrawable) {
     resolveColor(attr = R.attr.md_ripple_color).ifNotZero {
       drawable.setColor(valueOf(it))

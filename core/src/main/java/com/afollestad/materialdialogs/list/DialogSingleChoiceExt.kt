@@ -45,6 +45,10 @@ import com.afollestad.materialdialogs.utils.getStringArray
 ): MaterialDialog {
   assertOneSet("listItemsSingleChoice", items, res)
   val array = items ?: getStringArray(res)?.toList() ?: return this
+  require(initialSelection >= -1 || initialSelection < array.size) {
+    "Initial selection $initialSelection must be between -1 and " +
+        "the size of your items array ${array.size}"
+  }
 
   if (getListAdapter() != null) {
     return updateListItems(
