@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import java.util.Calendar
+import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 
 /**
  * Makes the dialog a date picker.
@@ -36,7 +37,7 @@ fun MaterialDialog.datePicker(
   customView(
       R.layout.md_datetime_picker_date,
       noVerticalPadding = true,
-      dialogWrapContent = true
+      dialogWrapContent = windowContext.isLandscape()
   )
 
   if (minDate != null) {

@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.datetime.utils.hour
 import com.afollestad.materialdialogs.datetime.utils.minute
 import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import java.util.Calendar
+import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 
 /**
  * Makes the dialog a time picker.
@@ -37,7 +38,7 @@ fun MaterialDialog.timePicker(
   customView(
       R.layout.md_datetime_picker_time,
       noVerticalPadding = true,
-      dialogWrapContent = true
+      dialogWrapContent = windowContext.isLandscape()
   )
 
   getTimePicker().apply {

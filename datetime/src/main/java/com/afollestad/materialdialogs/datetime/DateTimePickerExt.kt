@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.datetime.utils.isFutureTime
 import com.afollestad.materialdialogs.datetime.utils.minute
 import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import java.util.Calendar
 
 typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar) -> Unit)?
@@ -50,7 +51,7 @@ fun MaterialDialog.dateTimePicker(
   customView(
       R.layout.md_datetime_picker_pager,
       noVerticalPadding = true,
-      dialogWrapContent = true
+      dialogWrapContent = windowContext.isLandscape()
   )
 
   val viewPager = getPager()
