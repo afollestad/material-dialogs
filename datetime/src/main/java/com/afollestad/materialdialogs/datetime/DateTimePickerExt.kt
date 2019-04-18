@@ -22,8 +22,10 @@ import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.DateTimePickerAdapter
+import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.getPageIndicator
 import com.afollestad.materialdialogs.datetime.utils.getPager
@@ -32,8 +34,8 @@ import com.afollestad.materialdialogs.datetime.utils.hour
 import com.afollestad.materialdialogs.datetime.utils.isFutureTime
 import com.afollestad.materialdialogs.datetime.utils.minute
 import com.afollestad.materialdialogs.datetime.utils.toCalendar
-import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import java.util.Calendar
 
 typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar) -> Unit)?
@@ -54,9 +56,9 @@ fun MaterialDialog.dateTimePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
-  val viewPager = getPager()
-  viewPager.adapter = DateTimePickerAdapter()
-
+  val viewPager = getPager().apply {
+    adapter = DateTimePickerAdapter()
+  }
   getPageIndicator()?.run {
     attachViewPager(viewPager)
     setDotTint(resolveColor(windowContext, attr = attr.textColorPrimary))
@@ -103,6 +105,15 @@ fun MaterialDialog.dateTimePicker(
     dateTimeCallback?.invoke(it, selectedTime)
   }
   negativeButton(android.R.string.cancel)
+
+  val changeListener = TimeChangeListener(windowContext, getTimePicker()) {
+    val isFutureTime = isFutureTime(getDatePicker(), it)
+    setActionButtonEnabled(
+        POSITIVE,
+        !requireFutureDateTime || isFutureTime
+    )
+  }
+  onDismiss { changeListener.dispose() }
 
   return this
 }
