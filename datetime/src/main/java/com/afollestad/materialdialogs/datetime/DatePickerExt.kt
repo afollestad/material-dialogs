@@ -19,11 +19,16 @@ package com.afollestad.materialdialogs.datetime
 
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton.POSITIVE
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
+import com.afollestad.materialdialogs.datetime.utils.isFutureDate
 import com.afollestad.materialdialogs.datetime.utils.toCalendar
-import java.util.Calendar
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
+import java.util.Calendar
 
 /**
  * Makes the dialog a date picker.
@@ -32,6 +37,7 @@ fun MaterialDialog.datePicker(
   minDate: Calendar? = null,
   maxDate: Calendar? = null,
   currentDate: Calendar? = null,
+  requireFutureDate: Boolean = false,
   dateCallback: DateTimeCallback = null
 ): MaterialDialog {
   customView(
@@ -50,15 +56,31 @@ fun MaterialDialog.datePicker(
     getDatePicker().init(
         currentDate.get(Calendar.YEAR),
         currentDate.get(Calendar.MONTH),
-        currentDate.get(Calendar.DAY_OF_MONTH),
-        null
-    )
+        currentDate.get(Calendar.DAY_OF_MONTH)
+    ) { _, _, _, _ ->
+      val isFutureDate = getDatePicker().isFutureDate()
+      setActionButtonEnabled(
+          POSITIVE,
+          !requireFutureDate || isFutureDate
+      )
+    }
   }
 
   positiveButton(android.R.string.ok) {
     dateCallback?.invoke(it, getDatePicker().toCalendar())
   }
   negativeButton(android.R.string.cancel)
+
+  if (requireFutureDate) {
+    val changeListener = TimeChangeListener(windowContext, getDatePicker()) {
+      val isFutureDate = it.isFutureDate()
+      setActionButtonEnabled(
+          POSITIVE,
+          !requireFutureDate || isFutureDate
+      )
+    }
+    onDismiss { changeListener.dispose() }
+  }
 
   return this
 }

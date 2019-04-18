@@ -66,7 +66,7 @@ fun MaterialDialog.dateTimePicker(
 
   minDateTime?.let { getDatePicker().minDate = it.timeInMillis }
 
-  getDatePicker().apply {
+  with(getDatePicker()) {
     init(
         currentDateTime?.get(Calendar.YEAR) ?: year,
         currentDateTime?.get(Calendar.MONTH) ?: month,
@@ -106,14 +106,16 @@ fun MaterialDialog.dateTimePicker(
   }
   negativeButton(android.R.string.cancel)
 
-  val changeListener = TimeChangeListener(windowContext, getTimePicker()) {
-    val isFutureTime = isFutureTime(getDatePicker(), it)
-    setActionButtonEnabled(
-        POSITIVE,
-        !requireFutureDateTime || isFutureTime
-    )
+  if (requireFutureDateTime) {
+    val changeListener = TimeChangeListener(windowContext, getTimePicker()) {
+      val isFutureTime = isFutureTime(getDatePicker(), it)
+      setActionButtonEnabled(
+          POSITIVE,
+          !requireFutureDateTime || isFutureTime
+      )
+    }
+    onDismiss { changeListener.dispose() }
   }
-  onDismiss { changeListener.dispose() }
 
   return this
 }

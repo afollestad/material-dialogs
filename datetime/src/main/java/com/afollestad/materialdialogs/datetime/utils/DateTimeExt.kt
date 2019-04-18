@@ -29,6 +29,16 @@ internal fun isFutureTime(
   return dateTime.timeInMillis >= now.timeInMillis
 }
 
+internal fun TimePicker.isFutureTime(): Boolean {
+  val now = Calendar.getInstance()
+  return toCalendar().timeInMillis >= now.timeInMillis
+}
+
+internal fun DatePicker.isFutureDate(): Boolean {
+  val now = Calendar.getInstance()
+  return toCalendar().timeInMillis >= now.timeInMillis
+}
+
 internal fun DatePicker.toCalendar(): Calendar {
   return GregorianCalendar(year, month, dayOfMonth, 0, 0, 1)
 }
