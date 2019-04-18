@@ -16,7 +16,7 @@ The `color` module contains extensions to the core module, such as a color choos
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:color:2.8.0'
+  implementation 'com.afollestad.material-dialogs:color:2.8.1'
 }
 ```
 
