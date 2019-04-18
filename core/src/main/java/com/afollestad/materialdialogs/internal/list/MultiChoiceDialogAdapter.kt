@@ -82,13 +82,13 @@ internal class MultiChoiceDialogAdapter(
       for (previous in previousSelection) {
         if (!value.contains(previous)) {
           // This value was unselected
-          notifyItemChanged(previous)
+          notifyItemChanged(previous, UncheckPayload)
         }
       }
       for (current in value) {
         if (!previousSelection.contains(current)) {
           // This value was selected
-          notifyItemChanged(current)
+          notifyItemChanged(current, CheckPayload)
         }
       }
     }
@@ -155,6 +155,25 @@ internal class MultiChoiceDialogAdapter(
     if (dialog.bodyFont != null) {
       holder.titleView.typeface = dialog.bodyFont
     }
+  }
+
+  override fun onBindViewHolder(
+    holder: MultiChoiceViewHolder,
+    position: Int,
+    payloads: MutableList<Any>
+  ) {
+    when (payloads.firstOrNull()) {
+      CheckPayload -> {
+        holder.controlView.isChecked = true
+        return
+      }
+      UncheckPayload -> {
+        holder.controlView.isChecked = false
+        return
+      }
+    }
+    super.onBindViewHolder(holder, position, payloads)
+    super.onBindViewHolder(holder, position, payloads)
   }
 
   override fun positiveButtonClicked() {

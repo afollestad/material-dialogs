@@ -76,8 +76,8 @@ internal class SingleChoiceDialogAdapter(
     set(value) {
       val previousSelection = field
       field = value
-      notifyItemChanged(previousSelection)
-      notifyItemChanged(value)
+      notifyItemChanged(previousSelection, UncheckPayload)
+      notifyItemChanged(value, CheckPayload)
     }
   private var disabledIndices: IntArray = disabledItems ?: IntArray(0)
 
@@ -134,6 +134,24 @@ internal class SingleChoiceDialogAdapter(
     if (dialog.bodyFont != null) {
       holder.titleView.typeface = dialog.bodyFont
     }
+  }
+
+  override fun onBindViewHolder(
+    holder: SingleChoiceViewHolder,
+    position: Int,
+    payloads: MutableList<Any>
+  ) {
+    when (payloads.firstOrNull()) {
+      CheckPayload -> {
+        holder.controlView.isChecked = true
+        return
+      }
+      UncheckPayload -> {
+        holder.controlView.isChecked = false
+        return
+      }
+    }
+    super.onBindViewHolder(holder, position, payloads)
   }
 
   override fun positiveButtonClicked() {
