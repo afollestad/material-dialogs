@@ -12,11 +12,10 @@
 
 # Modules
 
-Click a module to see the Gradle dependency and a how-to document.
+The core module is the fundamental module that you need in order to use this library. The others 
+are extensions to core.
 
 ## Core
-
-
 
 [ ![Core](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:core.svg?label=core) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
 
