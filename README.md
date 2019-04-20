@@ -8,7 +8,7 @@
 
 ---
 
-![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase20.jpg)
+![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase3.png)
 
 # Modules
 
