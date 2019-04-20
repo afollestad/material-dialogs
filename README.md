@@ -24,6 +24,8 @@ are extensions to core.
 The `core` module contains everything you need to get started with the library. It contains all
 core and normal-use functionality.
 
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/basic_with_buttons.png" width="200px" />
+
 ```gradle
 dependencies {
   ...
@@ -38,6 +40,8 @@ dependencies {
 #### [Input Tutorial and Samples](documentation/INPUT.md)
  
 The `input` module contains extensions to the core module, such as a text input dialog.
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/input.png" width="200px" />
 
 ```gradle
 dependencies {
@@ -54,6 +58,8 @@ dependencies {
 
 The `files` module contains extensions to the core module, such as a file and folder chooser.
 
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_chooser.png" width="200px" />
+
 ```gradle
 dependencies {
   ...
@@ -69,6 +75,8 @@ dependencies {
 
 The `color` module contains extensions to the core module, such as a color chooser.
 
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/color_chooser.png" width="200px" />
+
 ```gradle
 dependencies {
   ...
@@ -83,6 +91,8 @@ dependencies {
 #### [DateTime Tutorial and Samples](documentation/DATETIME.md)
 
 The `datetime` module contains extensions to make date, time, and date-time picker dialogs.
+
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/datetimepicker.png" width="400px" />
 
 ```gradle
 dependencies {

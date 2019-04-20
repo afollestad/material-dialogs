@@ -521,7 +521,7 @@ change fonts, corner rounding, etc.
 Light and dark theming is automatic based on your app's theme (basically whether `android:textColorPrimary` 
 is more light or more dark):
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.jpg" width="400px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.png" width="400px" />
 
 ### Background Color
 
@@ -539,7 +539,7 @@ theme for the ripple color of list items, buttons, etc. by default. You can over
 
 Corner radius is the rounding of dialog corners:
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/cornerradius.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/customtheme.png" width="200px" />
 
 it can be changed with an attribute in your app theme. It defaults to 2dp:
 
