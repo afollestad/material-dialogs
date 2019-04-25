@@ -20,7 +20,7 @@ ext.versions = [
     lifecycle           : '2.0.0',
 
     // Kotlin
-    kotlin              : '1.3.30',
+    kotlin              : '1.3.31',
     coroutines          : '1.2.0',
 
     // afollestad
