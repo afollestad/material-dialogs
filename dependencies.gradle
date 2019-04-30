@@ -10,7 +10,7 @@ ext.versions = [
     gradlePlugin        : '3.4.0',
     spotlessPlugin      : '3.22.0',
     versionPlugin       : '0.21.0',
-    bintrayPlugin       : '0.9',
+    bintrayPlugin       : '0.9.1',
 
     // AndroidX
     androidxCore        : '1.0.2',
