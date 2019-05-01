@@ -48,6 +48,7 @@ fun MaterialDialog.dateTimePicker(
   currentDateTime: Calendar? = null,
   requireFutureDateTime: Boolean = false,
   show24HoursView: Boolean = false,
+  autoFlipToTime: Boolean = true,
   dateTimeCallback: DateTimeCallback = null
 ): MaterialDialog {
   customView(
@@ -76,6 +77,9 @@ fun MaterialDialog.dateTimePicker(
       setActionButtonEnabled(
           POSITIVE, !requireFutureDateTime || futureTime
       )
+      if (autoFlipToTime) {
+        getPager().currentItem = 1
+      }
     }
   }
 
