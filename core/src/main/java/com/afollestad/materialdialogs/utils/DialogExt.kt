@@ -48,14 +48,15 @@ import kotlin.math.min
 internal fun MaterialDialog.setWindowConstraints(
   @Px maxWidth: Int? = null
 ) {
-  val win = window ?: return
-  win.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
-  val wm = win.windowManager ?: return
-
   if (maxWidth == 0) {
     // Postpone
     return
   }
+
+  val win = window ?: return
+  win.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+  val wm = win.windowManager ?: return
+  val res = context.resources
 
   val display = wm.defaultDisplay
   val size = Point()
@@ -64,25 +65,23 @@ internal fun MaterialDialog.setWindowConstraints(
   val windowWidth = size.x
   val windowHeight = size.y
 
-  context.resources.run {
-    val windowVerticalPadding = getDimensionPixelSize(
-        R.dimen.md_dialog_vertical_margin
-    )
-    val windowHorizontalPadding = getDimensionPixelSize(
-        R.dimen.md_dialog_horizontal_margin
-    )
-    val calculatedWidth = windowWidth - windowHorizontalPadding * 2
-    val actualMaxWidth =
-      maxWidth ?: context.resources.getDimensionPixelSize(R.dimen.md_dialog_max_width)
+  val windowVerticalPadding = res.getDimensionPixelSize(
+      R.dimen.md_dialog_vertical_margin
+  )
+  val windowHorizontalPadding = res.getDimensionPixelSize(
+      R.dimen.md_dialog_horizontal_margin
+  )
+  val calculatedWidth = windowWidth - windowHorizontalPadding * 2
+  val actualMaxWidth =
+    maxWidth ?: res.getDimensionPixelSize(R.dimen.md_dialog_max_width)
 
-    view.maxHeight = windowHeight - windowVerticalPadding * 2
-    val lp = WindowManager.LayoutParams()
-        .apply {
-          copyFrom(win.attributes)
-          width = min(actualMaxWidth, calculatedWidth)
-        }
-    win.attributes = lp
-  }
+  view.maxHeight = windowHeight - windowVerticalPadding * 2
+  val lp = WindowManager.LayoutParams()
+      .apply {
+        copyFrom(win.attributes)
+        width = min(actualMaxWidth, calculatedWidth)
+      }
+  win.attributes = lp
 }
 
 internal fun MaterialDialog.setDefaults() {
@@ -133,7 +132,6 @@ internal fun MaterialDialog.postShow() {
   val positiveBtn = getActionButton(POSITIVE)
   if (positiveBtn.isVisible()) {
     positiveBtn.post { positiveBtn.requestFocus() }
-    return
   }
 }
 
@@ -178,13 +176,12 @@ internal fun MaterialDialog.hideKeyboard() {
   val imm =
     windowContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
   val currentFocus = currentFocus
-  val windowToken = if (currentFocus != null) {
+  if (currentFocus != null) {
     currentFocus.windowToken
   } else {
     view.windowToken
-  }
-  if (windowToken != null) {
-    imm.hideSoftInputFromWindow(windowToken, 0)
+  }.let {
+    imm.hideSoftInputFromWindow(it, 0)
   }
 }
 
