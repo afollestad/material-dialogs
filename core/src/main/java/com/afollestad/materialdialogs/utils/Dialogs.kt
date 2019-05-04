@@ -16,7 +16,6 @@
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.graphics.Point
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -57,13 +56,7 @@ internal fun MaterialDialog.setWindowConstraints(
   win.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
   val wm = win.windowManager ?: return
   val res = context.resources
-
-  val display = wm.defaultDisplay
-  val size = Point()
-  display.getSize(size)
-
-  val windowWidth = size.x
-  val windowHeight = size.y
+  val (windowWidth, windowHeight) = wm.getWidthAndHeight()
 
   val windowVerticalPadding = res.getDimensionPixelSize(
       R.dimen.md_dialog_vertical_margin
