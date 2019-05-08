@@ -403,14 +403,12 @@ class MaterialDialog(
   }
 
   private fun setWindowConstraints() {
-    window?.let {
-      dialogBehavior.setWindowConstraints(
-          context = windowContext,
-          maxWidth = maxWidth,
-          window = it,
-          view = view
-      )
-    }
+    dialogBehavior.setWindowConstraints(
+        context = windowContext,
+        maxWidth = maxWidth,
+        window = window!!,
+        view = view
+    )
   }
 
   private fun invalidateBackgroundColorAndRadius() {
