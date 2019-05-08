@@ -7,9 +7,9 @@
   <color name="primaryDark">#5002c7</color>
   <color name="accent">#9c47ff</color>
 
-  <color name="primary_custom">#26c6da</color>
-  <color name="primaryDark_custom">#0095a8</color>
-  <color name="accent_custom">#6ff9ff</color>
-  <color name="primary_custom_translucent">#4026c6da</color>
+  <color name="primary_custom">#607D8B</color>
+  <color name="primaryDark_custom">#546E7A</color>
+  <color name="accent_custom">#388E3C</color>
+  <color name="primary_custom_translucent">#40388E3C</color>
 
 </resources>

@@ -126,6 +126,8 @@ The `bottomsheets` module contains extensions to turn modal dialogs into bottom 
 other functionality like showing a grid of items. Be sure to checkout the sample project for this,
 too!
 
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/bottomsheet_customview.png" width="200px" />
+
 ```gradle
 dependencies {
   ...
