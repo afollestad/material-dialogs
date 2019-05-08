@@ -17,9 +17,15 @@ package com.afollestad.materialdialogs.bottomsheets
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.appcompat.widget.AppCompatImageView
 
-/** @author Aidan Follestad (@afollestad) */
+/**
+ * @author Aidan Follestad (@afollestad)
+ * @hide
+ */
+@RestrictTo(LIBRARY_GROUP)
 class HeightMatchesWidthImageView(
   context: Context,
   attrs: AttributeSet?
