@@ -21,6 +21,8 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.util.TypedValue
+import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.view.LayoutInflater
 import androidx.annotation.CheckResult
 import androidx.annotation.DimenRes
@@ -340,11 +342,16 @@ class MaterialDialog(
    * corners.
    */
   fun cornerRadius(
-    literal: Float? = null,
+    literalDp: Float? = null,
     @DimenRes res: Int? = null
   ): MaterialDialog {
-    assertOneSet("cornerRadius", literal, res)
-    this.cornerRadius = literal ?: windowContext.resources.getDimension(res!!)
+    assertOneSet("cornerRadius", literalDp, res)
+    this.cornerRadius = if (res != null) {
+      windowContext.resources.getDimension(res)
+    } else {
+      val displayMetrics = windowContext.resources.displayMetrics
+      TypedValue.applyDimension(COMPLEX_UNIT_DIP, literalDp!!, displayMetrics)
+    }
     invalidateBackgroundColorAndRadius()
     return this
   }
