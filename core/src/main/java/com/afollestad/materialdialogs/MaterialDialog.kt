@@ -334,6 +334,11 @@ class MaterialDialog(
     return this
   }
 
+  /**
+   * Sets the corner radius for the dialog, or the rounding of the corners. Dialogs can choose
+   * how they want to handle this, e.g. bottom sheets will only round the top left and right
+   * corners.
+   */
   fun cornerRadius(
     literal: Float? = null,
     @DimenRes res: Int? = null
