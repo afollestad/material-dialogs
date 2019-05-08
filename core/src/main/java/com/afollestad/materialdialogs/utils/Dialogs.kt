@@ -22,32 +22,17 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 import com.afollestad.materialdialogs.customview.CUSTOM_VIEW_NO_VERTICAL_PADDING
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.MDUtil.resolveDimen
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
-
-internal fun MaterialDialog.setDefaults() {
-  // Background color and corner radius
-  val backgroundColor = resolveColor(attr = R.attr.md_background_color) {
-    resolveColor(attr = R.attr.colorBackgroundFloating)
-  }
-  colorBackground(color = backgroundColor)
-  // Fonts
-  this.titleFont = font(attr = R.attr.md_font_title)
-  this.bodyFont = font(attr = R.attr.md_font_body)
-  this.buttonFont = font(attr = R.attr.md_font_button)
-}
 
 @RestrictTo(Scope.LIBRARY_GROUP)
 fun MaterialDialog.invalidateDividers(
@@ -124,17 +109,4 @@ internal fun MaterialDialog.hideKeyboard() {
   }.let {
     imm.hideSoftInputFromWindow(it, 0)
   }
-}
-
-internal fun MaterialDialog.colorBackground(@ColorInt color: Int): MaterialDialog {
-  window?.let {
-    dialogBehavior.setBackgroundColor(
-        context = windowContext,
-        window = it,
-        view = view,
-        color = color,
-        cornerRounding = resolveDimen(windowContext, attr = R.attr.md_corner_radius)
-    )
-  }
-  return this
 }

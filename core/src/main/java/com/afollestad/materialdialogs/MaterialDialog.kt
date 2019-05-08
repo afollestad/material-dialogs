@@ -37,12 +37,14 @@ import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDimen
+import com.afollestad.materialdialogs.utils.font
 import com.afollestad.materialdialogs.utils.hideKeyboard
 import com.afollestad.materialdialogs.utils.isVisible
 import com.afollestad.materialdialogs.utils.populateIcon
 import com.afollestad.materialdialogs.utils.populateText
 import com.afollestad.materialdialogs.utils.preShow
-import com.afollestad.materialdialogs.utils.setDefaults
+import com.afollestad.materialdialogs.utils.resolveColor
 
 typealias DialogCallback = (MaterialDialog) -> Unit
 
@@ -69,7 +71,6 @@ class MaterialDialog(
   /** Returns true if auto dismiss is enabled. */
   var autoDismissEnabled: Boolean = true
     internal set
-
   var titleFont: Typeface? = null
     internal set
   var bodyFont: Typeface? = null
@@ -77,6 +78,8 @@ class MaterialDialog(
   var buttonFont: Typeface? = null
     internal set
   var cancelOnTouchOutside: Boolean = true
+    internal set
+  var cornerRadius: Float? = null
     internal set
   @Px private var maxWidth: Int? = null
 
@@ -103,7 +106,12 @@ class MaterialDialog(
     setContentView(rootView)
     this.view = dialogBehavior.getDialogLayout(rootView)
         .also { it.attachDialog(this) }
-    setDefaults()
+
+    // Set defaults
+    this.titleFont = font(attr = R.attr.md_font_title)
+    this.bodyFont = font(attr = R.attr.md_font_body)
+    this.buttonFont = font(attr = R.attr.md_font_button)
+    invalidateBackgroundColorAndRadius()
   }
 
   /**
@@ -326,6 +334,16 @@ class MaterialDialog(
     return this
   }
 
+  fun cornerRadius(
+    literal: Float? = null,
+    @DimenRes res: Int? = null
+  ): MaterialDialog {
+    assertOneSet("cornerRadius", literal, res)
+    this.cornerRadius = literal ?: windowContext.resources.getDimension(res!!)
+    invalidateBackgroundColorAndRadius()
+    return this
+  }
+
   /** Turns debug mode on or off. Draws spec guides over dialog views. */
   @CheckResult fun debugMode(debugMode: Boolean = true): MaterialDialog {
     this.view.debugMode = debugMode
@@ -393,5 +411,20 @@ class MaterialDialog(
           view = view
       )
     }
+  }
+
+  private fun invalidateBackgroundColorAndRadius() {
+    val backgroundColor = resolveColor(attr = R.attr.md_background_color) {
+      resolveColor(attr = R.attr.colorBackgroundFloating)
+    }
+    val cornerRadius =
+      cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius)
+    dialogBehavior.setBackgroundColor(
+        context = windowContext,
+        window = window!!,
+        view = view,
+        color = backgroundColor,
+        cornerRounding = cornerRadius
+    )
   }
 }
