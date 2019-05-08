@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.afollestad.materialdialogs.internal.main.DialogTitleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/md_title_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <ImageView
+      android:id="@+id/md_icon_title"
+      tools:ignore="ContentDescription"
+      style="@style/MD_Dialog_Icon"
+      />
+
+  <com.afollestad.materialdialogs.internal.rtl.RtlTextView
+      android:id="@+id/md_text_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      tools:text="Use Google's location service?"
+      style="@style/MD_Dialog_Title_Text"
+      />
+
+</com.afollestad.materialdialogs.internal.main.DialogTitleLayout>

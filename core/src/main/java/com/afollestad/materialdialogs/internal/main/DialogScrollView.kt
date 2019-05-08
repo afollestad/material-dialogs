@@ -18,7 +18,9 @@ package com.afollestad.materialdialogs.internal.main
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ScrollView
-import com.afollestad.materialdialogs.utils.waitForLayout
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
+import com.afollestad.materialdialogs.utils.MDUtil.waitForWidth
 
 /**
  * A [ScrollView] which reports whether or not it's scrollable based on whether the content
@@ -27,7 +29,8 @@ import com.afollestad.materialdialogs.utils.waitForLayout
  *
  * @author Aidan Follestad (afollestad)
  */
-internal class DialogScrollView(
+@RestrictTo(LIBRARY_GROUP)
+class DialogScrollView(
   context: Context?,
   attrs: AttributeSet? = null
 ) : ScrollView(context, attrs) {
@@ -39,7 +42,7 @@ internal class DialogScrollView(
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    waitForLayout {
+    waitForWidth {
       invalidateDividers()
       invalidateOverScroll()
     }
@@ -55,9 +58,9 @@ internal class DialogScrollView(
     invalidateDividers()
   }
 
-  private fun invalidateDividers() {
+  fun invalidateDividers() {
     if (childCount == 0 || measuredHeight == 0 || !isScrollable) {
-      rootView?.invalidateDividers(scrolledDown = false, atBottom = false)
+      rootView?.invalidateDividers(showTop = false, showBottom = false)
       return
     }
     val view = getChildAt(childCount - 1)

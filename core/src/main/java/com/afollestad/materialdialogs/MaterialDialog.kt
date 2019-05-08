@@ -21,6 +21,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
 import androidx.annotation.CheckResult
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -35,31 +36,20 @@ import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.list.getListAdapter
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.hideKeyboard
-import com.afollestad.materialdialogs.utils.inflate
 import com.afollestad.materialdialogs.utils.isVisible
 import com.afollestad.materialdialogs.utils.populateIcon
 import com.afollestad.materialdialogs.utils.populateText
-import com.afollestad.materialdialogs.utils.postShow
 import com.afollestad.materialdialogs.utils.preShow
 import com.afollestad.materialdialogs.utils.setDefaults
-import com.afollestad.materialdialogs.utils.setWindowConstraints
-
-internal fun assertOneSet(
-  method: String,
-  b: Any?,
-  a: Int?
-) {
-  if (a == null && b == null) {
-    throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
-  }
-}
 
 typealias DialogCallback = (MaterialDialog) -> Unit
 
 /** @author Aidan Follestad (afollestad) */
 class MaterialDialog(
-  val windowContext: Context
+  val windowContext: Context,
+  val dialogBehavior: DialogBehavior = ModalDialog
 ) : Dialog(windowContext, inferTheme(windowContext).styleRes) {
 
   /**
@@ -86,9 +76,12 @@ class MaterialDialog(
     internal set
   var buttonFont: Typeface? = null
     internal set
+  var cancelOnTouchOutside: Boolean = true
+    internal set
   @Px private var maxWidth: Int? = null
 
-  internal val view: DialogLayout = inflate(R.layout.md_dialog_base)
+  /** The root layout of the dialog. */
+  val view: DialogLayout
 
   internal val preShowListeners = mutableListOf<DialogCallback>()
   internal val showListeners = mutableListOf<DialogCallback>()
@@ -100,8 +93,16 @@ class MaterialDialog(
   private val neutralListeners = mutableListOf<DialogCallback>()
 
   init {
-    setContentView(view)
-    this.view.dialog = this
+    val layoutInflater = LayoutInflater.from(windowContext)
+    val rootView = dialogBehavior.createView(
+        context = windowContext,
+        window = window!!,
+        layoutInflater = layoutInflater,
+        dialog = this
+    )
+    setContentView(rootView)
+    this.view = dialogBehavior.getDialogLayout(rootView)
+        .also { it.attachDialog(this) }
     setDefaults()
   }
 
@@ -320,7 +321,7 @@ class MaterialDialog(
       literal!!
     }
     if (shouldSetConstraints) {
-      setWindowConstraints(this.maxWidth)
+      setWindowConstraints()
     }
     return this
   }
@@ -333,10 +334,11 @@ class MaterialDialog(
 
   /** Opens the dialog. */
   override fun show() {
-    setWindowConstraints(maxWidth)
+    setWindowConstraints()
     preShow()
+    dialogBehavior.onPreShow(this)
     super.show()
-    postShow()
+    dialogBehavior.onPostShow(this)
   }
 
   /** Applies multiple properties to the dialog and opens it. */
@@ -354,11 +356,15 @@ class MaterialDialog(
 
   /** A fluent version of [setCanceledOnTouchOutside]. */
   fun cancelOnTouchOutside(cancelable: Boolean): MaterialDialog {
+    cancelOnTouchOutside = true
     this.setCanceledOnTouchOutside(cancelable)
     return this
   }
 
   override fun dismiss() {
+    if (dialogBehavior.onDismiss()) {
+      return
+    }
     hideKeyboard()
     super.dismiss()
   }
@@ -375,6 +381,17 @@ class MaterialDialog(
     }
     if (autoDismissEnabled) {
       dismiss()
+    }
+  }
+
+  private fun setWindowConstraints() {
+    window?.let {
+      dialogBehavior.setWindowConstraints(
+          context = windowContext,
+          maxWidth = maxWidth,
+          window = it,
+          view = view
+      )
     }
   }
 }

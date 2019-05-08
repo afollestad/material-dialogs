@@ -22,10 +22,10 @@ import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.SingleChoiceDialogAdapter
-import com.afollestad.materialdialogs.utils.getStringArray
+import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 
 /**
  * @param res The string array resource to populate the list with.
@@ -44,7 +44,7 @@ import com.afollestad.materialdialogs.utils.getStringArray
   selection: SingleChoiceListener = null
 ): MaterialDialog {
   assertOneSet("listItemsSingleChoice", items, res)
-  val array = items ?: getStringArray(res)?.toList() ?: return this
+  val array = items ?: windowContext.getStringArray(res).toList()
   require(initialSelection >= -1 || initialSelection < array.size) {
     "Initial selection $initialSelection must be between -1 and " +
         "the size of your items array ${array.size}"

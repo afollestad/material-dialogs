@@ -13,11 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.utils
+package com.afollestad.materialdialogs.bottomsheets
 
-import androidx.annotation.ArrayRes
-import com.afollestad.materialdialogs.MaterialDialog
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 
-internal fun MaterialDialog.getStringArray(@ArrayRes res: Int?): Array<String>? {
-  return if (res != null) return windowContext.resources.getStringArray(res) else emptyArray()
+/** @author Aidan Follestad (@afollestad) */
+class HeightMatchesWidthImageView(
+  context: Context,
+  attrs: AttributeSet?
+) : AppCompatImageView(context, attrs) {
+
+  override fun onMeasure(
+    widthMeasureSpec: Int,
+    heightMeasureSpec: Int
+  ) = super.onMeasure(widthMeasureSpec, widthMeasureSpec)
 }

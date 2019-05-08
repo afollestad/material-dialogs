@@ -80,7 +80,7 @@
       android:text="Hello World"
       android:textColor="?android:textColorPrimary"
       android:textSize="@dimen/customEntry"
-      tools:ignore="HardcodedText,LabelFor"
+      tools:ignore="Autofill,HardcodedText,LabelFor"
       />
 
   <CheckBox

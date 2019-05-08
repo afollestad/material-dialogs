@@ -28,7 +28,7 @@ import com.afollestad.materialdialogs.actions.hasActionButtons
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.inflate
 
 private const val KEY_ACTIVATED_INDEX = "activated_index"
 

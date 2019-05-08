@@ -22,7 +22,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DimenRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 
 internal fun MaterialDialog.dimen(
   @DimenRes res: Int? = null,

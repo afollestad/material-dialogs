@@ -20,6 +20,7 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 private var toast: Toast? = null
 
@@ -47,13 +48,13 @@ internal inline fun SharedPreferences.commit(crossinline exec: PrefEditor.() -> 
 internal fun Int.toHex() = "#${Integer.toHexString(this)}"
 
 internal fun Calendar.formatTime(): String {
-  return SimpleDateFormat("kk:mm a").format(this.time)
+  return SimpleDateFormat("kk:mm a", Locale.US).format(this.time)
 }
 
 internal fun Calendar.formatDate(): String {
-  return SimpleDateFormat("MMMM dd, yyyy").format(this.time)
+  return SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(this.time)
 }
 
 internal fun Calendar.formatDateTime(): String {
-  return SimpleDateFormat("kk:mm a, MMMM dd, yyyy").format(this.time)
+  return SimpleDateFormat("kk:mm a, MMMM dd, yyyy", Locale.US).format(this.time)
 }

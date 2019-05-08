@@ -27,15 +27,15 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.internal.list.MultiChoiceDialogAdapter
+import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
-import com.afollestad.materialdialogs.internal.list.SingleChoiceDialogAdapter
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDrawable
-import com.afollestad.materialdialogs.utils.getStringArray
 import com.afollestad.materialdialogs.utils.resolveColor
 
 /**
@@ -60,11 +60,13 @@ import com.afollestad.materialdialogs.utils.resolveColor
  * Cannot be used in combination with message, input, and some other types of dialogs.
  */
 @CheckResult fun MaterialDialog.customListAdapter(
-  adapter: RecyclerView.Adapter<*>
+  adapter: RecyclerView.Adapter<*>,
+  layoutManager: LayoutManager? = null
 ): MaterialDialog {
   this.view.contentLayout.addRecyclerView(
       dialog = this,
-      adapter = adapter
+      adapter = adapter,
+      layoutManager = layoutManager
   )
   return this
 }
@@ -84,7 +86,7 @@ import com.afollestad.materialdialogs.utils.resolveColor
   selection: ItemListener = null
 ): MaterialDialog {
   assertOneSet("listItems", items, res)
-  val array = items ?: getStringArray(res)?.toList() ?: return this
+  val array = items ?: windowContext.getStringArray(res).toList()
 
   if (getListAdapter() != null) {
     return updateListItems(
@@ -117,35 +119,17 @@ fun MaterialDialog.updateListItems(
   disabledIndices: IntArray? = null
 ): MaterialDialog {
   assertOneSet("updateListItems", items, res)
-  val array = items ?: getStringArray(res)?.toList() ?: return this
+  val array = items ?: windowContext.getStringArray(res).toList()
   val adapter = getListAdapter()
   check(adapter != null) {
     "updateListItems(...) can't be used before you've created a list dialog."
   }
-  when (adapter) {
-    is PlainListDialogAdapter -> {
-      adapter.replaceItems(array)
-      if (disabledIndices != null) {
-        adapter.disableItems(disabledIndices)
-      }
-      return this
-    }
-    is SingleChoiceDialogAdapter -> {
-      adapter.replaceItems(array)
-      if (disabledIndices != null) {
-        adapter.disableItems(disabledIndices)
-      }
-    }
-    is MultiChoiceDialogAdapter -> {
-      adapter.replaceItems(array)
-      if (disabledIndices != null) {
-        adapter.disableItems(disabledIndices)
-      }
-    }
-    else -> {
-      throw UnsupportedOperationException(
-          "updateListItems() cannot work with adapter of type ${adapter::class.java}"
-      )
+  if (adapter is DialogAdapter<*, *>) {
+    @Suppress("UNCHECKED_CAST")
+    (adapter as DialogAdapter<String, *>).replaceItems(array)
+
+    if (disabledIndices != null) {
+      adapter.disableItems(disabledIndices)
     }
   }
   return this

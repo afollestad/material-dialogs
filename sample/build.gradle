@@ -26,6 +26,7 @@ dependencies {
   implementation project(':files')
   implementation project(':color')
   implementation project(':datetime')
+  implementation project(':bottomsheets')
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
 

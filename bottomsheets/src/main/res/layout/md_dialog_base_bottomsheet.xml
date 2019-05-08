@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <FrameLayout
+      android:id="@+id/md_root_bottom_sheet"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:focusable="true"
+      app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+      >
+
+    <include
+        layout="@layout/md_dialog_base_no_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+  </FrameLayout>
+
+  <include
+      layout="@layout/md_dialog_stub_buttons"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -38,6 +38,13 @@
     <item name="android:windowExitAnimation">@anim/popup_exit</item>
   </style>
 
+  <style name="MD_Dialog_Icon">
+    <item name="android:layout_width">56dp</item>
+    <item name="android:layout_height">56dp</item>
+    <item name="android:scaleType">fitCenter</item>
+    <item name="android:visibility">gone</item>
+  </style>
+
   <style name="MD_Dialog_Title_Text">
     <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">@dimen/md_title_textsize</item>
@@ -72,6 +79,12 @@
     <item name="android:paddingLeft">@dimen/md_action_button_padding_horizontal</item>
     <item name="android:paddingRight">@dimen/md_action_button_padding_horizontal</item>
     <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="MD_Dialog_CheckPrompt">
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:minHeight">@dimen/md_checkbox_prompt_height</item>
+    <item name="android:visibility">gone</item>
   </style>
 
   <style name="MD_ListItem">

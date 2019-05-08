@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.utils
+package com.afollestad.materialdialogs.bottomsheets
 
-import android.graphics.Point
-import android.view.WindowManager
+import android.widget.ImageView
+import androidx.annotation.DrawableRes
 
-internal fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
-  val size = Point()
-  defaultDisplay.getSize(size)
-  return Pair(size.x, size.y)
+/** @author Aidan Follestad (@afollestad) */
+interface GridItem {
+  val title: String
+  fun populateIcon(imageView: ImageView)
+}
+
+/** @author Aidan Follestad (@afollestad) */
+data class BasicGridItem(
+  @DrawableRes val iconRes: Int,
+  override val title: String
+) : GridItem {
+  override fun populateIcon(imageView: ImageView) {
+    imageView.setImageResource(iconRes)
+  }
 }

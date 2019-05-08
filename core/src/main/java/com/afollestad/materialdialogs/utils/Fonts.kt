@@ -22,7 +22,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.FontRes
 import androidx.core.content.res.ResourcesCompat
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 
 @CheckResult internal fun MaterialDialog.font(
   @FontRes res: Int? = null,

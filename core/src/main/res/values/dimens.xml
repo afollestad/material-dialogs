@@ -20,12 +20,10 @@
   <dimen name="md_action_button_padding_vertical">4dp</dimen>
 
   <dimen name="md_action_button_min_width">64dp</dimen>
-  <dimen name="md_action_button_spacing">8dp</dimen>
   <dimen name="md_action_button_corner_radius">2dp</dimen>
   <dimen name="md_action_button_textsize">14sp</dimen>
 
   <dimen name="md_checkbox_prompt_height">48dp</dimen>
-  <dimen name="md_stacked_action_button_padding_horizontal">16dp</dimen>
 
   <dimen name="md_title_textsize">20sp</dimen>
   <dimen name="md_message_textsize">16sp</dimen>

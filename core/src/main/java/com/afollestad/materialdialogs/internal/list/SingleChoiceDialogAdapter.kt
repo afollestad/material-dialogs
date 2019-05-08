@@ -31,7 +31,7 @@ import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.inflate
 import com.afollestad.materialdialogs.utils.resolveColors
 
 /** @author Aidan Follestad (afollestad) */

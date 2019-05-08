@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="MD_GridItem" parent="@style/MD_ListItem">
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="MD_GridItemText">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:gravity">center</item>
+    <item name="android:lines">2</item>
+    <item name="android:textSize">@dimen/md_listitem_textsize</item>
+    <item name="android:textColor">@color/md_list_item_textcolor</item>
+  </style>
+
+</resources>

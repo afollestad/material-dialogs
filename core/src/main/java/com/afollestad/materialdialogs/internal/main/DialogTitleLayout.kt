@@ -25,6 +25,8 @@ import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.isNotVisible
@@ -37,7 +39,8 @@ import java.lang.Math.max
  *
  * @author Aidan Follestad (afollestad)
  */
-internal class DialogTitleLayout(
+@RestrictTo(LIBRARY_GROUP)
+class DialogTitleLayout(
   context: Context,
   attrs: AttributeSet? = null
 ) : BaseSubLayout(context, attrs) {

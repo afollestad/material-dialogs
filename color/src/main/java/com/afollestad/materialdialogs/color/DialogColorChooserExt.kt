@@ -15,7 +15,6 @@
  */
 package com.afollestad.materialdialogs.color
 
-import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
@@ -119,7 +118,7 @@ fun MaterialDialog.colorChooser(
           context.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(hexValueView.windowToken, 0)
       } else {
-        invalidateDividers(false, false)
+        invalidateDividers(showTop = false, showBottom = false)
       }
     }
 
@@ -304,12 +303,12 @@ internal fun MaterialDialog.updateActionButtonsColor(@ColorInt color: Int) {
   val adjustedColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
   val isAdjustedDark = adjustedColor.isColorDark(0.25)
   val isPrimaryDark =
-    resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
+    resolveColor(context = context, attr = android.R.attr.textColorPrimary).isColorDark()
 
   val finalColor = if (isPrimaryDark && !isAdjustedDark) {
-    resolveColor(context = context, attr = attr.textColorPrimary)
+    resolveColor(context = context, attr = android.R.attr.textColorPrimary)
   } else if (!isPrimaryDark && isAdjustedDark) {
-    resolveColor(context = context, attr = attr.textColorPrimaryInverse)
+    resolveColor(context = context, attr = android.R.attr.textColorPrimaryInverse)
   } else {
     adjustedColor
   }

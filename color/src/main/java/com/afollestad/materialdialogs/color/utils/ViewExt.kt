@@ -21,7 +21,6 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.RelativeLayout
-import android.widget.SeekBar
 import androidx.annotation.IdRes
 import androidx.viewpager.widget.ViewPager
 
@@ -41,22 +40,6 @@ internal fun ViewPager.onPageSelected(selection: (Int) -> Unit) {
       positionOffsetPixels: Int
     ) = Unit
   })
-}
-
-internal fun Array<SeekBar>.progressChanged(selection: (Int) -> Unit) {
-  val listener = object : SeekBar.OnSeekBarChangeListener {
-    override fun onProgressChanged(
-      p0: SeekBar?,
-      p1: Int,
-      p2: Boolean
-    ) = selection(p1)
-
-    override fun onStartTrackingTouch(p0: SeekBar?) = Unit
-    override fun onStopTrackingTouch(p0: SeekBar?) = Unit
-  }
-  for (bar in this) {
-    bar.setOnSeekBarChangeListener(listener)
-  }
 }
 
 internal fun View.changeHeight(height: Int) {

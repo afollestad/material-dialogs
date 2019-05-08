@@ -17,13 +17,15 @@ package com.afollestad.materialdialogs.internal.list
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.utils.invalidateDividers
-import com.afollestad.materialdialogs.utils.waitForLayout
+import com.afollestad.materialdialogs.utils.MDUtil.waitForWidth
 
 typealias InvalidateDividersDelegate = (scrolledDown: Boolean, atBottom: Boolean) -> Unit
 
@@ -33,6 +35,7 @@ typealias InvalidateDividersDelegate = (scrolledDown: Boolean, atBottom: Boolean
  *
  * @author Aidan Follestad (afollestad)
  */
+@RestrictTo(LIBRARY_GROUP)
 class DialogRecyclerView(
   context: Context,
   attrs: AttributeSet? = null
@@ -51,7 +54,7 @@ class DialogRecyclerView(
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    waitForLayout {
+    waitForWidth {
       invalidateDividers()
       invalidateOverScroll()
     }
@@ -74,8 +77,7 @@ class DialogRecyclerView(
   }
 
   private fun isAtTop(): Boolean {
-    val lm = layoutManager
-    return when (lm) {
+    return when (val lm = layoutManager) {
       is LinearLayoutManager -> lm.findFirstCompletelyVisibleItemPosition() == 0
       is GridLayoutManager -> lm.findFirstCompletelyVisibleItemPosition() == 0
       else -> false
@@ -84,8 +86,7 @@ class DialogRecyclerView(
 
   private fun isAtBottom(): Boolean {
     val lastIndex = adapter!!.itemCount - 1
-    val lm = layoutManager
-    return when (lm) {
+    return when (val lm = layoutManager) {
       is LinearLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
       is GridLayoutManager -> lm.findLastCompletelyVisibleItemPosition() == lastIndex
       else -> false

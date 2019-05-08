@@ -1,0 +1,25 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MD_GridItem"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="vertical"
+      >
+    <com.afollestad.materialdialogs.bottomsheets.HeightMatchesWidthImageView
+        android:id="@+id/md_grid_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        tools:ignore="ContentDescription"
+        />
+    <com.afollestad.materialdialogs.internal.rtl.RtlTextView
+        android:id="@+id/md_grid_title"
+        tools:text="Item"
+        style="@style/MD_GridItemText"
+        />
+  </LinearLayout>
+</FrameLayout>

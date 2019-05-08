@@ -56,9 +56,7 @@ class SeekBarGroupLayout(
 
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    val action = event.actionMasked
-
-    when (action) {
+    when (event.actionMasked) {
       ACTION_DOWN -> {
         val target = closestSeekBar(event)
         if (target != null) {

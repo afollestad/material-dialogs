@@ -1,37 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.afollestad.materialdialogs.internal.main.DialogLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/md_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-  <com.afollestad.materialdialogs.internal.main.DialogTitleLayout
-      android:id="@+id/md_title_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
-
-    <ImageView
-        android:id="@+id/md_icon_title"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        tools:ignore="ContentDescription"
-        />
-
-    <com.afollestad.materialdialogs.internal.rtl.RtlTextView
-        android:id="@+id/md_text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:text="Use Google's location service?"
-        style="@style/MD_Dialog_Title_Text"
-        />
-
-  </com.afollestad.materialdialogs.internal.main.DialogTitleLayout>
+  <include layout="@layout/md_dialog_stub_title"/>
 
   <com.afollestad.materialdialogs.internal.main.DialogContentLayout
       android:id="@+id/md_content_layout"
@@ -39,39 +14,6 @@
       android:layout_height="wrap_content"
       />
 
-  <com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
-      android:id="@+id/md_button_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
-
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/md_checkbox_prompt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start|center_vertical"
-        android:minHeight="@dimen/md_checkbox_prompt_height"
-        android:visibility="gone"
-        />
-
-    <com.afollestad.materialdialogs.internal.button.DialogActionButton
-        android:id="@+id/md_button_positive"
-        tools:text="Agree"
-        style="@style/MD_ActionButton"
-        />
-
-    <com.afollestad.materialdialogs.internal.button.DialogActionButton
-        android:id="@+id/md_button_negative"
-        tools:text="Disagree"
-        style="@style/MD_ActionButton"
-        />
-
-    <com.afollestad.materialdialogs.internal.button.DialogActionButton
-        android:id="@+id/md_button_neutral"
-        tools:text="Idk"
-        style="@style/MD_ActionButton"
-        />
-
-  </com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout>
+  <include layout="@layout/md_dialog_stub_buttons"/>
 
 </com.afollestad.materialdialogs.internal.main.DialogLayout>

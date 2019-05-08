@@ -20,19 +20,25 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.ArrayRes
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
@@ -140,11 +146,24 @@ object MDUtil {
   @RestrictTo(LIBRARY_GROUP) fun resolveInt(
     context: Context,
     @AttrRes attr: Int,
-    defaultValue: Int
+    defaultValue: Int = 0
   ): Int {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
       return a.getInt(0, defaultValue)
+    } finally {
+      a.recycle()
+    }
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun resolveDimen(
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: Float = 0f
+  ): Float {
+    val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+    try {
+      return a.getDimension(0, defaultValue)
     } finally {
       a.recycle()
     }
@@ -232,7 +251,7 @@ object MDUtil {
     )
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForLayout(block: T.() -> Unit) {
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForWidth(block: T.() -> Unit) {
     if (measuredWidth > 0 && measuredHeight > 0) {
       this.block()
       return
@@ -246,11 +265,78 @@ object MDUtil {
           viewTreeObserver.removeOnGlobalLayoutListener(this)
           return
         }
-        if (measuredWidth > 0 && measuredHeight > 0) {
+        if (measuredWidth > 0 && measuredHeight > 0 && lastWidth != measuredWidth) {
           lastWidth = measuredWidth
-          this@waitForLayout.block()
+          this@waitForWidth.block()
         }
       }
     })
   }
+
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForHeight(block: T.() -> Unit) {
+    if (measuredWidth > 0 && measuredHeight > 0) {
+      this.block()
+      return
+    }
+
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+      var lastHeight: Int? = null
+
+      override fun onGlobalLayout() {
+        if (lastHeight != null && lastHeight == measuredHeight) {
+          viewTreeObserver.removeOnGlobalLayoutListener(this)
+          return
+        }
+        if (measuredWidth > 0 && measuredHeight > 0 && lastHeight != measuredHeight) {
+          lastHeight = measuredHeight
+          this@waitForHeight.block()
+        }
+      }
+    })
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
+    val size = Point()
+    defaultDisplay.getSize(size)
+    return Pair(size.x, size.y)
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T?.updatePadding(
+    left: Int = this?.paddingLeft ?: 0,
+    top: Int = this?.paddingTop ?: 0,
+    right: Int = this?.paddingRight ?: 0,
+    bottom: Int = this?.paddingBottom ?: 0
+  ) {
+    if (this != null &&
+        left == this.paddingLeft &&
+        top == this.paddingTop &&
+        right == this.paddingRight &&
+        bottom == this.paddingBottom
+    ) {
+      // no change needed, don't want to invalidate layout
+      return
+    }
+    this?.setPadding(left, top, right, bottom)
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun assertOneSet(
+    method: String,
+    b: Any?,
+    a: Int?
+  ) {
+    if (a == null && b == null) {
+      throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
+    }
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun Context.getStringArray(@ArrayRes res: Int?): Array<String> {
+    return if (res != null) return resources.getStringArray(res) else emptyArray()
+  }
+
+  @Suppress("UNCHECKED_CAST")
+  @RestrictTo(LIBRARY_GROUP)
+  fun <R : View> ViewGroup.inflate(
+    ctxt: Context = context,
+    @LayoutRes res: Int
+  ) = LayoutInflater.from(ctxt).inflate(res, this, false) as R
 }

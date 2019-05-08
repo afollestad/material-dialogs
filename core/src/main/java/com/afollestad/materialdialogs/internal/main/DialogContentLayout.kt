@@ -28,17 +28,20 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
+import com.afollestad.materialdialogs.utils.MDUtil.updatePadding
 import com.afollestad.materialdialogs.utils.inflate
-import com.afollestad.materialdialogs.utils.updatePadding
 
 /**
  * The middle section of the dialog, between [DialogTitleLayout] and
@@ -47,19 +50,20 @@ import com.afollestad.materialdialogs.utils.updatePadding
  *
  * @author Aidan Follestad (afollestad)
  */
-internal class DialogContentLayout(
+@RestrictTo(LIBRARY_GROUP)
+class DialogContentLayout(
   context: Context,
   attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
   private val rootLayout: DialogLayout?
     get() = parent as DialogLayout
-  private var scrollView: DialogScrollView? = null
   private var scrollFrame: ViewGroup? = null
   private var messageTextView: TextView? = null
 
-  internal var recyclerView: DialogRecyclerView? = null
-  internal var customView: View? = null
+  var scrollView: DialogScrollView? = null
+  var recyclerView: DialogRecyclerView? = null
+  var customView: View? = null
 
   fun setMessage(
     dialog: MaterialDialog,
@@ -89,12 +93,13 @@ internal class DialogContentLayout(
 
   fun addRecyclerView(
     dialog: MaterialDialog,
-    adapter: RecyclerView.Adapter<*>
+    adapter: RecyclerView.Adapter<*>,
+    layoutManager: LayoutManager?
   ) {
     if (recyclerView == null) {
       recyclerView = inflate<DialogRecyclerView>(R.layout.md_dialog_stub_recyclerview).apply {
         this.attach(dialog)
-        this.layoutManager = LinearLayoutManager(dialog.windowContext)
+        this.layoutManager = layoutManager ?: LinearLayoutManager(dialog.windowContext)
       }
       addView(recyclerView)
     }

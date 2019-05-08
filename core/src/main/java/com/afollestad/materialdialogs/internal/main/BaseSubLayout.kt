@@ -20,18 +20,23 @@ import android.graphics.Paint
 import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.ViewGroup
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
+import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.R.attr
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
-internal abstract class BaseSubLayout(
+@RestrictTo(LIBRARY_GROUP)
+abstract class BaseSubLayout internal constructor(
   context: Context,
   attrs: AttributeSet? = null
 ) : ViewGroup(context, attrs) {
 
   private val dividerPaint = Paint()
   protected val dividerHeight = dimenPx(R.dimen.md_divider_height)
+  lateinit var dialog: MaterialDialog
 
   var drawDivider: Boolean = false
     set(value) {
@@ -47,16 +52,12 @@ internal abstract class BaseSubLayout(
     dividerPaint.isAntiAlias = true
   }
 
-  protected fun dialogParent(): DialogLayout {
-    return parent as DialogLayout
-  }
-
   protected fun dividerPaint(): Paint {
     dividerPaint.color = getDividerColor()
     return dividerPaint
   }
 
   private fun getDividerColor(): Int {
-    return resolveColor(dialogParent().dialog.context, attr = attr.md_divider_color)
+    return resolveColor(dialog.context, attr = attr.md_divider_color)
   }
 }

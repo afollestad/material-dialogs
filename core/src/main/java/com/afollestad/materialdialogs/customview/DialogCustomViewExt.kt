@@ -19,8 +19,8 @@ import android.view.View
 import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.assertOneSet
-import com.afollestad.materialdialogs.utils.MDUtil.waitForLayout
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.waitForWidth
 
 internal const val CUSTOM_VIEW_NO_VERTICAL_PADDING = "md.custom_view_no_vertical_padding"
 
@@ -66,7 +66,7 @@ fun MaterialDialog.customView(
   )
       .also {
         if (dialogWrapContent) {
-          it.waitForLayout {
+          it.waitForWidth {
             maxWidth(literal = measuredWidth)
           }
         }

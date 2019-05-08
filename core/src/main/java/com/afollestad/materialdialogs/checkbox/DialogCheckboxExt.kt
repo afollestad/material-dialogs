@@ -24,7 +24,7 @@ import androidx.annotation.StringRes
 import androidx.core.widget.CompoundButtonCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.assertOneSet
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveString
@@ -33,7 +33,9 @@ import com.afollestad.materialdialogs.utils.resolveColors
 typealias BooleanCallback = ((Boolean) -> Unit)?
 
 @CheckResult fun MaterialDialog.getCheckBoxPrompt(): CheckBox {
-  return view.buttonsLayout.checkBoxPrompt
+  return view.buttonsLayout?.checkBoxPrompt ?: throw IllegalStateException(
+      "The dialog does not have an attached buttons layout."
+  )
 }
 
 @CheckResult fun MaterialDialog.isCheckPromptChecked() = getCheckBoxPrompt().isChecked
@@ -51,7 +53,7 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
   onToggle: BooleanCallback
 ): MaterialDialog {
   assertOneSet("checkBoxPrompt", text, res)
-  view.buttonsLayout.checkBoxPrompt.run {
+  view.buttonsLayout?.checkBoxPrompt?.run {
     this.visibility = View.VISIBLE
     this.text = text ?: resolveString(this@checkBoxPrompt, res)
     this.isChecked = isCheckedDefault
