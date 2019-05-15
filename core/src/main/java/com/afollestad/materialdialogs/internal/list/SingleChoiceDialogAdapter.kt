@@ -30,8 +30,8 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.resolveColors
 
 /** @author Aidan Follestad (afollestad) */
@@ -74,6 +74,7 @@ internal class SingleChoiceDialogAdapter(
 
   private var currentSelection: Int = initialSelection
     set(value) {
+      if (value == field) return
       val previousSelection = field
       field = value
       notifyItemChanged(previousSelection, UncheckPayload)
