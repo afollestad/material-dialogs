@@ -16,6 +16,7 @@
 package com.afollestad.materialdialogs.internal.main
 
 import android.content.Context
+import android.content.Context.WINDOW_SERVICE
 import android.graphics.Canvas
 import android.graphics.Color.BLUE
 import android.graphics.Color.CYAN
@@ -30,13 +31,17 @@ import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.UNSPECIFIED
 import android.view.View.MeasureSpec.getSize
 import android.view.View.MeasureSpec.makeMeasureSpec
+import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.LayoutMode.WRAP_CONTENT
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.button.shouldBeVisible
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.getWidthAndHeight
 import com.afollestad.materialdialogs.utils.dp
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible
@@ -67,7 +72,10 @@ class DialogLayout(
   lateinit var titleLayout: DialogTitleLayout
   lateinit var contentLayout: DialogContentLayout
   var buttonsLayout: DialogActionButtonLayout? = null
+  var layoutMode: LayoutMode = WRAP_CONTENT
+
   private var isButtonsLayoutAChild: Boolean = true
+  private var windowHeight: Int = -1
 
   override fun onFinishInflate() {
     super.onFinishInflate()
@@ -95,6 +103,13 @@ class DialogLayout(
   ) {
     titleLayout.drawDivider = showTop
     buttonsLayout?.drawDivider = showBottom
+  }
+
+  override fun onAttachedToWindow() {
+    super.onAttachedToWindow()
+    val windowManager = context.getSystemService(WINDOW_SERVICE) as WindowManager
+    val (_, windowHeight) = windowManager.getWidthAndHeight()
+    this.windowHeight = windowHeight
   }
 
   override fun onMeasure(
@@ -126,10 +141,14 @@ class DialogLayout(
         makeMeasureSpec(remainingHeight, AT_MOST)
     )
 
-    val totalHeight = titleLayout.measuredHeight +
-        contentLayout.measuredHeight +
-        (buttonsLayout?.measuredHeight ?: 0)
-    setMeasuredDimension(specWidth, totalHeight)
+    if (layoutMode == WRAP_CONTENT) {
+      val totalHeight = titleLayout.measuredHeight +
+          contentLayout.measuredHeight +
+          (buttonsLayout?.measuredHeight ?: 0)
+      setMeasuredDimension(specWidth, totalHeight)
+    } else {
+      setMeasuredDimension(specWidth, windowHeight)
+    }
   }
 
   override fun onLayout(

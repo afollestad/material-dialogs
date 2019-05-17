@@ -25,6 +25,8 @@ import android.view.Window
 import android.view.WindowManager.LayoutParams
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.afollestad.materialdialogs.DialogBehavior
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.LayoutMode.MATCH_PARENT
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.button.shouldBeVisible
@@ -37,7 +39,9 @@ import kotlin.math.min
 import kotlin.properties.Delegates.notNull
 
 /** @author Aidan Follestad (@afollestad) */
-class BottomSheet : DialogBehavior {
+class BottomSheet(
+  private val layoutMode: LayoutMode = MATCH_PARENT
+) : DialogBehavior {
   internal var bottomSheetBehavior: BottomSheetBehavior<*>? = null
   private var bottomSheetView: ViewGroup? = null
 
@@ -45,7 +49,8 @@ class BottomSheet : DialogBehavior {
   private var buttonsLayout: DialogActionButtonLayout? = null
   private var dialog: MaterialDialog? = null
 
-  private var defaultPeekHeight: Int by notNull()
+  internal var defaultPeekHeight: Int by notNull()
+  internal var maxPeekheight: Int = -1
   private var actualPeekHeight: Int by notNull()
 
   @SuppressLint("InflateParams")
@@ -68,6 +73,7 @@ class BottomSheet : DialogBehavior {
     val (_, windowHeight) = window.windowManager.getWidthAndHeight()
     defaultPeekHeight = (windowHeight * DEFAULT_PEEK_HEIGHT_RATIO).toInt()
     actualPeekHeight = defaultPeekHeight
+    maxPeekheight = windowHeight
 
     setupBottomSheetBehavior()
 
@@ -132,6 +138,7 @@ class BottomSheet : DialogBehavior {
 
   override fun getDialogLayout(root: ViewGroup): DialogLayout {
     return (root.findViewById(R.id.md_root) as DialogLayout).also { dialogLayout ->
+      dialogLayout.layoutMode = layoutMode
       dialogLayout.attachButtonsLayout(buttonsLayout!!)
     }
   }
@@ -239,9 +246,9 @@ class BottomSheet : DialogBehavior {
     onEnd()
   }
 
-  private companion object {
+  companion object {
+    internal const val LAYOUT_PEEK_CHANGE_DURATION_MS = 250L
     private const val DEFAULT_PEEK_HEIGHT_RATIO = 0.6f
-    private const val LAYOUT_PEEK_CHANGE_DURATION_MS = 250L
 
     private const val BUTTONS_SHOW_START_DELAY_MS = 100L
     private const val BUTTONS_SHOW_DURATION_MS = 180L
