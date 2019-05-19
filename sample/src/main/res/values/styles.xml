@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-  <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+  <style name="AppTheme" parent="ThemeParent">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
   </style>
 
-  <style name="AppTheme.Dark" parent="Theme.MaterialComponents">
+  <style name="AppTheme.Dark" parent="ThemeParent.Dark">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
@@ -15,7 +15,7 @@
     <item name="md_button_casing">literal</item>
   </style>
 
-  <style name="AppTheme.Custom" parent="Theme.MaterialComponents.Light">
+  <style name="AppTheme.Custom" parent="ThemeParent">
     <item name="colorPrimary">@color/primary_custom</item>
     <item name="colorPrimaryDark">@color/primaryDark_custom</item>
     <item name="colorAccent">@color/accent_custom</item>

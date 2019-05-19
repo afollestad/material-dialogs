@@ -69,8 +69,8 @@ fun MaterialDialog.setPeekHeight(
 
   val bottomSheet = (dialogBehavior as BottomSheet)
   val literalOrRes = literal ?: context.resources.getDimensionPixelSize(res!!)
-  val destinationPeekHeight = if (bottomSheet.maxPeekheight > 0) {
-    min(bottomSheet.maxPeekheight, literalOrRes)
+  val destinationPeekHeight = if (bottomSheet.maxPeekHeight > 0) {
+    min(bottomSheet.maxPeekHeight, literalOrRes)
   } else {
     literalOrRes
   }

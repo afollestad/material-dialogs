@@ -24,6 +24,7 @@ import android.view.Window
 import android.view.WindowManager.LayoutParams
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
+import androidx.annotation.StyleRes
 import com.afollestad.materialdialogs.WhichButton.NEGATIVE
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.getActionButton
@@ -34,10 +35,13 @@ import kotlin.math.min
 
 /** @author Aidan Follestad (@afollestad) */
 interface DialogBehavior {
+  /** Gets the styles.xml theme for the dialog Window. */
+  @StyleRes fun getThemeRes(isDark: Boolean): Int
+
   /** Creates the root layout of the dialog. */
   fun createView(
-    context: Context,
-    window: Window,
+    creatingContext: Context,
+    dialogWindow: Window,
     layoutInflater: LayoutInflater,
     dialog: MaterialDialog
   ): ViewGroup
@@ -78,10 +82,18 @@ interface DialogBehavior {
 
 /** @author Aidan Follestad (@afollestad) */
 object ModalDialog : DialogBehavior {
+  override fun getThemeRes(isDark: Boolean): Int {
+    return if (isDark) {
+      R.style.MD_Dark
+    } else {
+      R.style.MD_Light
+    }
+  }
+
   @SuppressLint("InflateParams")
   override fun createView(
-    context: Context,
-    window: Window,
+    creatingContext: Context,
+    dialogWindow: Window,
     layoutInflater: LayoutInflater,
     dialog: MaterialDialog
   ): ViewGroup {

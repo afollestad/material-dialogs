@@ -8,6 +8,7 @@
 
     <item name="android:actionModeBackground">@color/primary_material_dark</item>
     <item name="android:actionModeCloseDrawable">@drawable/md_nav_back</item>
+    <item name="android:windowNoTitle">true</item>
 
     <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     <item name="android:backgroundDimEnabled">true</item>
@@ -27,6 +28,7 @@
 
     <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
     <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowNoTitle">true</item>
 
     <item name="md_divider_color">@color/md_divider_dark_theme</item>
     <item name="md_item_selector">@drawable/md_item_selector_dark</item>

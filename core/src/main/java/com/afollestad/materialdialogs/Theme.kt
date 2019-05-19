@@ -17,19 +17,20 @@ package com.afollestad.materialdialogs
 
 import android.R.attr
 import android.content.Context
+import androidx.annotation.CheckResult
 import androidx.annotation.StyleRes
-import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 
-internal enum class Theme(@StyleRes val styleRes: Int) {
-  LIGHT(R.style.MD_Light),
-  DARK(R.style.MD_Dark);
+@StyleRes @CheckResult
+internal fun inferTheme(
+  context: Context,
+  dialogBehavior: DialogBehavior
+): Int {
+  val isThemeDark = !inferThemeIsLight(context)
+  return dialogBehavior.getThemeRes(isThemeDark)
+}
 
-  companion object {
-    fun inferTheme(context: Context): Theme {
-      val isPrimaryDark =
-        resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
-      return if (isPrimaryDark) LIGHT else DARK
-    }
-  }
+@CheckResult internal fun inferThemeIsLight(context: Context): Boolean {
+  return resolveColor(context = context, attr = attr.textColorPrimary).isColorDark()
 }

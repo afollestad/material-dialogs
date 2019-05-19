@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <style name="MD_Light.BottomSheet" parent="MD_Light">
+    <item name="android:windowIsFloating">false</item>
+  </style>
+
+  <style name="MD_Dark.BottomSheet" parent="MD_Dark">
+    <item name="android:windowIsFloating">false</item>
+  </style>
+
   <style name="MD_GridItem" parent="@style/MD_ListItem">
     <item name="android:paddingTop">8dp</item>
     <item name="android:paddingBottom">8dp</item>
