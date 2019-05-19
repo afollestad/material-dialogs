@@ -178,11 +178,10 @@ class MainActivity : AppCompatActivity() {
     basic_html_content.setOnClickListener {
       MaterialDialog(this).show {
         title(R.string.app_name)
-        message(
-            R.string.htmlContent,
-            html = true,
-            lineHeightMultiplier = 1.4f
-        )
+        message(R.string.htmlContent) {
+          html { toast("Clicked link: $it") }
+          lineSpacing(1.4f)
+        }
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)

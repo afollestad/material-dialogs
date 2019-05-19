@@ -4,19 +4,20 @@
 
 1. [Gradle Dependency](#gradle-dependency)
 2. [Basics](#basics)
-3. [Action Buttons](#action-buttons)
-4. [Adding an Icon](#adding-an-icon)
-5. [Callbacks](#callbacks)
-6. [Dismissing](#dismissing)
-7. [Lists](#lists)
+3. [Customizing the Message](#customizing-the-message)
+4. [Action Buttons](#action-buttons)
+5. [Adding an Icon](#adding-an-icon)
+6. [Callbacks](#callbacks)
+7. [Dismissing](#dismissing)
+8. [Lists](#lists)
     1. [Plain](#plain)
     2. [Single Choice](#single-choice)
     3. [Multiple Choice](#multiple-choice)
     4. [Custom Adapters](#custom-adapters)
-8. [Checkbox Prompts](#checkbox-prompts)
-9. [Custom Views](#custom-views)
-10. [Miscellaneous](#miscellaneous)
-11. [Theming](#theming)
+9. [Checkbox Prompts](#checkbox-prompts)
+10. [Custom Views](#custom-views)
+11. [Miscellaneous](#miscellaneous)
+12. [Theming](#theming)
     1. [Light and Dark](#light-and-dark)
     2. [Background Color](#background-color)
     3. [Ripple Color](#ripple-color)
@@ -35,7 +36,7 @@ core and normal-use functionality.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:3.0.0-alpha2'
+  implementation 'com.afollestad.material-dialogs:core:3.0.0-alpha4'
 }
 ```
 
@@ -71,6 +72,27 @@ val dialog = MaterialDialog(this)
   .message(R.string.your_message)
   
 dialog.show()
+```
+
+## Customizing the Message
+
+The `message` function lets you trail it with a lambda, which exposes certain built-in modifiers 
+along with allowing you to act on the `TextView` directly.
+
+```kotlin
+MaterialDialog(this).show {
+  ...
+  message(R.string.your_message) {
+      html() // format, color, etc. with tags in string
+      html { link ->  // same as above, but... 
+        // Invokes a callback when a URL is clicked instead of auto opening it in a browser
+      }
+      lineSpacing(1.4f) // modifies line spacing, default is 1.0f
+      
+      // You can directly act on the message TextView as well
+      val textView = messageTextView
+  }
+}
 ```
 
 ## Action Buttons

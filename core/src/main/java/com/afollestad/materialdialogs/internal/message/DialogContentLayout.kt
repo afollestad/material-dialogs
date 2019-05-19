@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.internal.main
+package com.afollestad.materialdialogs.internal.message
 
 import android.content.Context
 import android.graphics.Typeface
-import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
@@ -38,8 +37,10 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
+import com.afollestad.materialdialogs.internal.main.DialogLayout
+import com.afollestad.materialdialogs.internal.main.DialogScrollView
+import com.afollestad.materialdialogs.message.DialogMessageSettings
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
-import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 import com.afollestad.materialdialogs.utils.MDUtil.updatePadding
 import com.afollestad.materialdialogs.utils.inflate
 
@@ -69,9 +70,8 @@ class DialogContentLayout(
     dialog: MaterialDialog,
     @StringRes res: Int?,
     text: CharSequence?,
-    html: Boolean,
-    lineHeightMultiplier: Float,
-    typeface: Typeface?
+    typeface: Typeface?,
+    applySettings: (DialogMessageSettings.() -> Unit)?
   ) {
     addContentScrollView()
     if (messageTextView == null) {
@@ -80,14 +80,13 @@ class DialogContentLayout(
       }
     }
 
-    typeface.let { messageTextView?.typeface = it }
+    val messageSettings = DialogMessageSettings(dialog, messageTextView!!)
+    applySettings?.invoke(messageSettings)
+
     messageTextView?.run {
+      typeface?.let { this.typeface = it }
       maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
-      setText(text ?: resolveString(dialog, res, html = html))
-      setLineSpacing(0f, lineHeightMultiplier)
-      if (html) {
-        movementMethod = LinkMovementMethod.getInstance()
-      }
+      messageSettings.setText(res, text)
     }
   }
 

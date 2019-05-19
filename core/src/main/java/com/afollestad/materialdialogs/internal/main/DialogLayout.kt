@@ -40,6 +40,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
 import com.afollestad.materialdialogs.internal.button.shouldBeVisible
+import com.afollestad.materialdialogs.internal.message.DialogContentLayout
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.MDUtil.getWidthAndHeight
 import com.afollestad.materialdialogs.utils.dp

@@ -38,6 +38,7 @@ import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.list.getListAdapter
+import com.afollestad.materialdialogs.message.DialogMessageSettings
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDimen
 import com.afollestad.materialdialogs.utils.font
@@ -167,17 +168,15 @@ class MaterialDialog(
   fun message(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
-    html: Boolean = false,
-    lineHeightMultiplier: Float = 1f
+    applySettings: (DialogMessageSettings.() -> Unit)? = null
   ): MaterialDialog {
     assertOneSet("message", text, res)
     this.view.contentLayout.setMessage(
         dialog = this,
         res = res,
         text = text,
-        html = html,
-        lineHeightMultiplier = lineHeightMultiplier,
-        typeface = this.bodyFont
+        typeface = this.bodyFont,
+        applySettings = applySettings
     )
     return this
   }
