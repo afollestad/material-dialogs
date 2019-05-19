@@ -1,4 +1,9 @@
-3.0.0-alpha4
+3.0.0-beta1
+
+* Fixed status bar and navigation appearance for bottom sheet dialogs.
+* We're nearing a "stable" release.
+
+### 3.0.0-alpha4
 
 Minor API change: The `message(...)` function no longer provides `html` and `lineSpacingMultiplier` 
 as parameters. Instead, it works like this:
@@ -23,11 +28,3 @@ to instruct the bottom sheet to be expandable to the screen height or limit itse
 of its content. See the updated Bottom Sheets documentation.
 * Added a `setPeekHeight(...)` extension method for `MaterialDialog` that you can use to set the 
 default peek height and animate peek height changes.
-
-### 3.0.0-alpha2
-
-* You can now set corner radius dynamically with the `cornerRadius` method.
-* Some minor bug fixes and internal cleanup.
-
-### 3.0.0-alpha1:
-* Bottom sheets are here! Checkout the README and sample project for details.
