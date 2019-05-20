@@ -18,7 +18,6 @@ package com.afollestad.materialdialogs.bottomsheets
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.view.LayoutInflater
@@ -26,7 +25,6 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager.LayoutParams
-import androidx.annotation.ColorInt
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.afollestad.materialdialogs.DialogBehavior
 import com.afollestad.materialdialogs.LayoutMode
@@ -109,14 +107,6 @@ class BottomSheet(
     if (SDK_INT >= 21) {
       dialogWindow.navigationBarColor = activityWindow.navigationBarColor
     }
-  }
-
-  @ColorInt fun Int.darkenColor(factor: Float = 0.5f): Int {
-    val color = this
-    return Color.HSVToColor(FloatArray(3).apply {
-      Color.colorToHSV(color, this)
-      this[2] *= factor
-    })
   }
 
   private fun setupBottomSheetBehavior() {

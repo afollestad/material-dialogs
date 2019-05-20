@@ -18,10 +18,12 @@ package com.afollestad.materialdialogs.bottomsheets
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.graphics.Color
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.CheckResult
+import androidx.annotation.ColorInt
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
@@ -114,5 +116,13 @@ internal fun <T : View> T.onDetach(onAttached: T.() -> Unit) {
     }
 
     override fun onViewAttachedToWindow(v: View) = Unit
+  })
+}
+
+@ColorInt internal fun Int.darkenColor(factor: Float = 0.5f): Int {
+  val color = this
+  return Color.HSVToColor(FloatArray(3).apply {
+    Color.colorToHSV(color, this)
+    this[2] *= factor
   })
 }
