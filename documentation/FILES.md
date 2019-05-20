@@ -36,7 +36,7 @@ directory listings will come back empty.
 
 You create file choosers using the `fileChooser` extension on `MaterialDialog`:
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_chooser.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_chooser.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
@@ -83,7 +83,7 @@ MaterialDialog(this).show {
 
 Empty text is shown when a folder has no contents. You can configure the empty text label:
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_emptytext.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_emptytext.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
@@ -95,7 +95,7 @@ MaterialDialog(this).show {
 
 ### Folder Creation
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="250px" />
 
 You can allow your users to create folders. 
 
@@ -151,7 +151,7 @@ MaterialDialog(this).show {
 
 Empty text is shown when a folder has no contents. You can configure the empty text label:
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_emptytext.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_emptytext.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
@@ -163,7 +163,7 @@ MaterialDialog(this).show {
 
 ### Folder Creation
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_folder_creation.png" width="250px" />
 
 You can allow your users to create folders. 
 

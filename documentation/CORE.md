@@ -543,7 +543,7 @@ change fonts, corner rounding, etc.
 Light and dark theming is automatic based on your app's theme (basically whether `android:textColorPrimary` 
 is more light or more dark):
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.png" width="400px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/lightanddarkthemes.png" width="500px" />
 
 ### Background Color
 

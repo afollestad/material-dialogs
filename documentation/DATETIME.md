@@ -22,7 +22,7 @@ dependencies {
 
 ## Date
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/datepicker.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/datepicker.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
@@ -37,7 +37,7 @@ You can optionally provide `minDate` and `currentDate` parameters as well.
 
 ## Time
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/timepicker.png" width="200px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/timepicker.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
