@@ -3,10 +3,12 @@
 
   <style name="ThemeParent" parent="Theme.MaterialComponents.Light.DarkActionBar">
     <item name="android:navigationBarColor">?colorPrimaryDark</item>
+    <item name="sample_button_color">#80000000</item>
   </style>
 
   <style name="ThemeParent.Dark" parent="Theme.MaterialComponents">
     <item name="android:navigationBarColor">?colorPrimaryDark</item>
+    <item name="sample_button_color">#80000000</item>
   </style>
 
 </resources>

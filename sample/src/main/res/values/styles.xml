@@ -15,7 +15,7 @@
     <item name="md_button_casing">literal</item>
   </style>
 
-  <style name="AppTheme.Custom" parent="ThemeParent">
+  <style name="AppTheme.Custom" parent="ThemeParent.Dark">
     <item name="colorPrimary">@color/primary_custom</item>
     <item name="colorPrimaryDark">@color/primaryDark_custom</item>
     <item name="colorAccent">@color/accent_custom</item>
@@ -26,11 +26,10 @@
     <item name="md_font_body">@font/raleway_medium</item>
     <item name="md_font_button">@font/raleway_semibold</item>
     <item name="md_ripple_color">@color/primary_custom_translucent</item>
-    <item name="md_color_button_text">@color/accent_custom</item>
 
-    <item name="md_color_widget_unchecked">#00CC00</item>
-    <item name="md_color_widget">#CC0000</item>
-
+    <item name="android:windowBackground">@android:color/black</item>
+    <item name="sample_button_color">#424242</item>
+    <item name="md_background_color">#212121</item>
   </style>
 
   <style name="SampleHeader" tools:ignore="NewApi">
@@ -50,7 +49,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/sample_button_height</item>
     <item name="android:layout_marginTop">@dimen/sample_button_spacing</item>
-    <item name="backgroundTint">#80000000</item>
+    <item name="backgroundTint">?sample_button_color</item>
   </style>
 
 </resources>

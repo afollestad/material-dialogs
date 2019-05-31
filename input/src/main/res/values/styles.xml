@@ -4,7 +4,7 @@
   <style name="MD_Dialog_Input_Layout">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="boxBackgroundColor">@null</item>
+    <item name="boxBackgroundColor">@android:color/transparent</item>
   </style>
 
   <style name="MD_Dialog_Input_Layout.Message">
