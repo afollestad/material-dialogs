@@ -21,7 +21,7 @@ other functionality like showing a grid of items.
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:bottomsheets:3.0.0-beta2'
+  implementation 'com.afollestad.material-dialogs:bottomsheets:3.0.0-rc1'
 }
 ```
 

@@ -1,8 +1,3 @@
-3.0.0-beta2
+3.0.0-rc1
 
-* Fixed bottom sheet content going under the system status bar.
-
-#### 3.0.0-beta1
-
-* Fixed status bar and navigation appearance for bottom sheet dialogs.
-* We're nearing a "stable" release.
+* Hopefully fix input dialog styling with alpha versions of Material Components, when the background color of dialogs is overridden.
