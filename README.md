@@ -17,7 +17,7 @@ are extensions to core.
 
 ## Core
 
-[ ![Core](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:core.svg?label=core) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
+[ ![Core](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acore/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
 
 #### [Core Tutorial and Samples](documentation/CORE.md)
 
@@ -35,7 +35,7 @@ dependencies {
 
 ## Input
 
-[ ![Input](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:input.svg?label=input) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Ainput/_latestVersion)
+[ ![Input](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Ainput/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Ainput/_latestVersion)
 
 #### [Input Tutorial and Samples](documentation/INPUT.md)
  
@@ -52,7 +52,7 @@ dependencies {
  
 ## Files
 
-[ ![Files](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:files.svg?label=files) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Afiles/_latestVersion)
+[ ![Files](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Afiles/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Afiles/_latestVersion)
 
 #### [Files Tutorial and Samples](documentation/FILES.md)
 
@@ -69,7 +69,7 @@ dependencies {
 
 ## Color
 
-[ ![Color](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:color.svg?label=color) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
+[ ![Color](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acolor/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
 
 #### [Color Tutorial and Samples](documentation/COLOR.md)
 
@@ -86,7 +86,7 @@ dependencies {
 
 ## DateTime
 
-[ ![DateTime](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:datetime.svg?label=datetime) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Adatetime/_latestVersion)
+[ ![DateTime](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Adatetime/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Adatetime/_latestVersion)
 
 #### [DateTime Tutorial and Samples](documentation/DATETIME.md)
 
@@ -103,7 +103,7 @@ dependencies {
 
 ## Bottom Sheets
 
-[ ![Lifecycle](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:bottomsheets.svg?label=bottomsheets) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Abottomsheets/_latestVersion)
+[ ![Bottom Sheets](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Abottomsheets/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Abottomsheets/_latestVersion)
 
 #### [Bottom Sheets Tutorial and Samples](documentation/BOTTOMSHEETS.md)
 
@@ -122,7 +122,7 @@ dependencies {
 
 ## Lifecycle
 
-[ ![Lifecycle](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:lifecycle.svg?label=lifecycle) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Alifecycle/_latestVersion)
+[ ![Lifecycle](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Alifecycle/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Alifecycle/_latestVersion)
 
 #### [Lifecycle Tutorial and Samples](documentation/LIFECYCLE.md)
 
