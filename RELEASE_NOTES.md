@@ -1,3 +1,4 @@
-3.0.0-rc1
+3.0.0-rc2
 
-* Hopefully fix input dialog styling with alpha versions of Material Components, when the background color of dialogs is overridden.
+* compileSdk 29!
+* 3.0.0 will become stable soon if no major issues are found.
