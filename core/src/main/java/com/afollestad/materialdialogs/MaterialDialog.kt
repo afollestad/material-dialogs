@@ -161,8 +161,6 @@ class MaterialDialog(
    *
    * @param res The string resource to display as the message.
    * @param text The literal string to display as the message.
-   * @param html When true, the given string is parsed as HTML and links become clickable.
-   * @param lineHeightMultiplier The line spacing for the message view, defaulting to 1.0.
    */
   fun message(
     @StringRes res: Int? = null,

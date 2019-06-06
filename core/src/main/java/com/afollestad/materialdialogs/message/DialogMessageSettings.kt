@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 /** @author Aidan Follestad (@afollestad) */
 class DialogMessageSettings internal constructor(
   private val dialog: MaterialDialog,
-  val messageTextView: TextView
+  private val messageTextView: TextView
 ) {
   private var isHtml: Boolean = false
 
