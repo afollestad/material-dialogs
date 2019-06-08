@@ -22,6 +22,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.view.LayoutInflater
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager.LayoutParams
@@ -36,6 +37,7 @@ import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.utils.MDUtil.getWidthAndHeight
 import com.afollestad.materialdialogs.utils.MDUtil.waitForHeight
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import kotlin.math.min
 import kotlin.properties.Delegates.notNull
@@ -133,22 +135,11 @@ class BottomSheet(
         onHide = {
           buttonsLayout?.visibility = GONE
           dialog?.dismiss()
-          dialog = null
         }
     )
 
     bottomSheetView!!.waitForHeight {
       actualPeekHeight = min(defaultPeekHeight, min(this.measuredHeight, defaultPeekHeight))
-      bottomSheetBehavior?.animatePeekHeight(
-          view = bottomSheetView!!,
-          start = 0,
-          dest = actualPeekHeight,
-          duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
-          onEnd = {
-            invalidateDividers(actualPeekHeight)
-          }
-      )
-      showButtons()
     }
   }
 
@@ -217,6 +208,21 @@ class BottomSheet(
       // Clicking outside the bottom sheet dismisses the dialog
       rootView?.setOnClickListener { this.dialog?.dismiss() }
     }
+
+    bottomSheetView!!.waitForHeight {
+      bottomSheetBehavior?.peekHeight = 0
+      bottomSheetBehavior?.state = STATE_COLLAPSED
+      bottomSheetBehavior?.animatePeekHeight(
+          view = bottomSheetView!!,
+          start = 0,
+          dest = actualPeekHeight,
+          duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
+          onEnd = {
+            invalidateDividers(actualPeekHeight)
+          }
+      )
+      showButtons()
+    }
   }
 
   override fun onPostShow(dialog: MaterialDialog) = Unit
@@ -227,17 +233,10 @@ class BottomSheet(
         bottomSheetBehavior!!.state != STATE_HIDDEN
     ) {
       bottomSheetBehavior!!.state = STATE_HIDDEN
-      hideButtons { cleanup() }
+      hideButtons()
       return true
     }
     return false
-  }
-
-  private fun cleanup() {
-    bottomSheetBehavior = null
-    bottomSheetView = null
-    buttonsLayout = null
-    rootView = null
   }
 
   private fun showButtons() {
@@ -246,6 +245,7 @@ class BottomSheet(
     }
     val start = buttonsLayout!!.measuredHeight
     buttonsLayout?.translationY = start.toFloat()
+    buttonsLayout?.visibility = VISIBLE
     val animator = animateValues(
         from = start,
         to = 0,
@@ -259,20 +259,16 @@ class BottomSheet(
     }
   }
 
-  private fun hideButtons(onEnd: () -> Unit) {
-    if (buttonsLayout.shouldBeVisible()) {
-      val animator = animateValues(
-          from = 0,
-          to = buttonsLayout!!.measuredHeight,
-          duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
-          onUpdate = { buttonsLayout?.translationY = it.toFloat() },
-          onEnd = onEnd
-      )
-      buttonsLayout?.onDetach { animator.cancel() }
-      animator.start()
-      return
-    }
-    onEnd()
+  private fun hideButtons() {
+    if (!buttonsLayout.shouldBeVisible()) return
+    val animator = animateValues(
+        from = 0,
+        to = buttonsLayout!!.measuredHeight,
+        duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
+        onUpdate = { buttonsLayout?.translationY = it.toFloat() }
+    )
+    buttonsLayout?.onDetach { animator.cancel() }
+    animator.start()
   }
 
   companion object {
