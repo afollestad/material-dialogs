@@ -3,10 +3,12 @@
 
   <style name="MD_Light.BottomSheet" parent="MD_Light">
     <item name="android:windowIsFloating">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
   </style>
 
   <style name="MD_Dark.BottomSheet" parent="MD_Dark">
     <item name="android:windowIsFloating">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
   </style>
 
   <style name="MD_GridItem" parent="@style/MD_ListItem">
