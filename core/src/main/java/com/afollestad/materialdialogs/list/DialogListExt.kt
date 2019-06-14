@@ -59,7 +59,7 @@ import com.afollestad.materialdialogs.utils.resolveColor
  *
  * Cannot be used in combination with message, input, and some other types of dialogs.
  */
-@CheckResult fun MaterialDialog.customListAdapter(
+fun MaterialDialog.customListAdapter(
   adapter: RecyclerView.Adapter<*>,
   layoutManager: LayoutManager? = null
 ): MaterialDialog {

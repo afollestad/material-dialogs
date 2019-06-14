@@ -46,7 +46,7 @@ typealias BooleanCallback = ((Boolean) -> Unit)?
  * @param isCheckedDefault Whether or not the checkbox is initially checked.
  * @param onToggle A listener invoked when the checkbox is checked or unchecked.
  */
-@CheckResult fun MaterialDialog.checkBoxPrompt(
+fun MaterialDialog.checkBoxPrompt(
   @StringRes res: Int = 0,
   text: String? = null,
   isCheckedDefault: Boolean = false,
