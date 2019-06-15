@@ -133,14 +133,14 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    basic.setOnClickListener {
+    basic.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.shareLocationPrompt)
         debugMode(debugMode)
       }
     }
 
-    basic_titled.setOnClickListener {
+    basic_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_buttons.setOnClickListener {
+    basic_buttons.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(R.string.agree)
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_stacked_buttons.setOnClickListener {
+    basic_stacked_buttons.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(text = "This is a long button")
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_titled_buttons.setOnClickListener {
+    basic_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_html_content.setOnClickListener {
+    basic_html_content.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.app_name)
         message(R.string.htmlContent) {
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_long_titled_buttons.setOnClickListener {
+    basic_long_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.loremIpsum)
@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_icon.setOnClickListener {
+    basic_icon.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         icon(R.mipmap.ic_launcher)
@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_checkbox_titled_buttons.setOnClickListener {
+    basic_checkbox_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list.setOnClickListener {
+    list.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -232,7 +232,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_buttons.setOnClickListener {
+    list_buttons.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_dont_wait_positive.setOnClickListener {
+    list_dont_wait_positive.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks, waitForPositiveButton = false) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled.setOnClickListener {
+    list_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks) { _, index, text ->
@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled_buttons.setOnClickListener {
+    list_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks) { _, index, text ->
@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled_message_buttons.setOnClickListener {
+    list_titled_message_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         message(R.string.useGoogleLocationServices)
@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_long.setOnClickListener {
+    list_long.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.states) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_long_titled.setOnClickListener {
+    list_long_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.states)
         listItems(R.array.states) { _, index, text ->
@@ -307,7 +307,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_checkPrompt_buttons.setOnClickListener {
+    list_checkPrompt_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks_longItems) { _, index, text ->
@@ -322,7 +322,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_titled.setOnClickListener {
+    single_choice_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks, initialSelection = 1) { _, index, text ->
@@ -332,7 +332,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_buttons_titled.setOnClickListener {
+    single_choice_buttons_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks, initialSelection = 2) { _, index, text ->
@@ -343,7 +343,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_long_items.setOnClickListener {
+    single_choice_long_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks_longItems) { _, index, text ->
@@ -354,7 +354,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_disabled_items.setOnClickListener {
+    single_choice_disabled_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(
@@ -367,7 +367,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice.setOnClickListener {
+    multiple_choice.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -379,7 +379,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_buttons.setOnClickListener {
+    multiple_choice_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -392,7 +392,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_long_items.setOnClickListener {
+    multiple_choice_long_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -405,7 +405,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_disabled_items.setOnClickListener {
+    multiple_choice_disabled_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -420,7 +420,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_stacked.setOnClickListener {
+    buttons_stacked.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -431,7 +431,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_stacked_checkboxPrompt.setOnClickListener {
+    buttons_stacked_checkboxPrompt.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -445,7 +445,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_neutral.setOnClickListener {
+    buttons_neutral.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -456,7 +456,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_callbacks.setOnClickListener {
+    buttons_callbacks.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -473,7 +473,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    misc_dialog_callbacks.setOnClickListener {
+    misc_dialog_callbacks.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -486,7 +486,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input.setOnClickListener {
+    input.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -501,7 +501,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_message.setOnClickListener {
+    input_message.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -518,7 +518,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_counter.setOnClickListener {
+    input_counter.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -534,7 +534,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_check_prompt.setOnClickListener {
+    input_check_prompt.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -552,11 +552,11 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    custom_view.setOnClickListener { showCustomViewDialog() }
+    custom_view.onClickDebounced { showCustomViewDialog() }
 
-    custom_view_webview.setOnClickListener { showWebViewDialog() }
+    custom_view_webview.onClickDebounced { showWebViewDialog() }
 
-    colorChooser_primary.setOnClickListener {
+    colorChooser_primary.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.primary_colors)
         colorChooser(
@@ -572,7 +572,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_accent.setOnClickListener {
+    colorChooser_accent.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.accent_colors)
         colorChooser(
@@ -588,7 +588,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_customColors.setOnClickListener {
+    colorChooser_customColors.onClickDebounced {
       val topLevel = intArrayOf(TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
       val subLevel = arrayOf(
           intArrayOf(Color.WHITE, TRANSPARENT, Color.BLACK),
@@ -612,7 +612,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_customColorsNoSub.setOnClickListener {
+    colorChooser_customColorsNoSub.onClickDebounced {
       val topLevel = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
 
       MaterialDialog(this).show {
@@ -627,7 +627,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_primary_customRgb.setOnClickListener {
+    colorChooser_primary_customRgb.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.custom_colors_rgb)
         colorChooser(
@@ -644,7 +644,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_primary_customArgb.setOnClickListener {
+    colorChooser_primary_customArgb.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.custom_colors_argb)
         colorChooser(
@@ -662,17 +662,17 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    file_chooser.setOnClickListener { showFileChooser() }
+    file_chooser.onClickDebounced { showFileChooser() }
 
-    file_chooser_buttons.setOnClickListener { showFileChooserButtons() }
+    file_chooser_buttons.onClickDebounced { showFileChooserButtons() }
 
-    file_chooser_filter.setOnClickListener { showFileChooserFilter() }
+    file_chooser_filter.onClickDebounced { showFileChooserFilter() }
 
-    folder_chooser_buttons.setOnClickListener { showFolderChooserButtons() }
+    folder_chooser_buttons.onClickDebounced { showFolderChooserButtons() }
 
-    folder_chooser_filter.setOnClickListener { showFolderChooserFilter() }
+    folder_chooser_filter.onClickDebounced { showFolderChooserFilter() }
 
-    date_picker.setOnClickListener {
+    date_picker.onClickDebounced {
       MaterialDialog(this).show {
         datePicker { _, date ->
           toast("Selected date: ${date.formatDate()}")
@@ -681,7 +681,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    time_picker.setOnClickListener {
+    time_picker.onClickDebounced {
       MaterialDialog(this).show {
         title(text = "Select Time")
         timePicker { _, time ->
@@ -691,7 +691,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    datetime_picker.setOnClickListener {
+    datetime_picker.onClickDebounced {
       MaterialDialog(this).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
@@ -701,7 +701,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_info.setOnClickListener {
+    bottomsheet_info.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -711,7 +711,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_list.setOnClickListener {
+    bottomsheet_list.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         listItems(R.array.states) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -722,7 +722,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_grid.setOnClickListener {
+    bottomsheet_grid.onClickDebounced {
       val items = listOf(
           BasicGridItem(R.drawable.ic_icon_android, "One"),
           BasicGridItem(R.drawable.ic_icon_android, "Two"),
@@ -744,11 +744,11 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_customView.setOnClickListener {
+    bottomsheet_customView.onClickDebounced {
       showCustomViewDialog(BottomSheet(WRAP_CONTENT))
     }
 
-    bottomsheet_colorPicker.setOnClickListener {
+    bottomsheet_colorPicker.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(R.string.custom_colors_argb)
         colorChooser(
@@ -766,7 +766,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_dateTimePicker.setOnClickListener {
+    bottomsheet_dateTimePicker.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->

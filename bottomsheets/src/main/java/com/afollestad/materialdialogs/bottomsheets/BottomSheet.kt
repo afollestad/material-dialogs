@@ -104,9 +104,6 @@ class BottomSheet(
   ) {
     val activityWindow = creatingActivity.window!!
     if (SDK_INT >= 21) {
-      dialogWindow.statusBarColor = activityWindow.statusBarColor.darkenColor()
-    }
-    if (SDK_INT >= 21) {
       dialogWindow.navigationBarColor = activityWindow.navigationBarColor
     }
   }

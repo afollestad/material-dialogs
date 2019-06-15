@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="MD_Light.BottomSheet" parent="MD_Light">
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+  </style>
+
+  <style name="MD_Dark.BottomSheet" parent="MD_Dark">
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+  </style>
+
+</resources>
