@@ -19,7 +19,9 @@ package com.afollestad.materialdialogs
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color.TRANSPARENT
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
@@ -425,9 +427,8 @@ class MaterialDialog(
     }
     val cornerRadius =
       cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius)
+    window?.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
     dialogBehavior.setBackgroundColor(
-        context = windowContext,
-        window = window!!,
         view = view,
         color = backgroundColor,
         cornerRounding = cornerRadius

@@ -59,8 +59,6 @@ interface DialogBehavior {
 
   /** Sets the root dialog background. */
   fun setBackgroundColor(
-    context: Context,
-    window: Window,
     view: DialogLayout,
     @ColorInt color: Int,
     cornerRounding: Float
@@ -142,16 +140,14 @@ object ModalDialog : DialogBehavior {
   }
 
   override fun setBackgroundColor(
-    context: Context,
-    window: Window,
     view: DialogLayout,
     @ColorInt color: Int,
     cornerRounding: Float
   ) {
-    window.setBackgroundDrawable(GradientDrawable().apply {
+    view.background = GradientDrawable().apply {
       cornerRadius = cornerRounding
       setColor(color)
-    })
+    }
   }
 
   override fun onPreShow(dialog: MaterialDialog) = Unit

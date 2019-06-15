@@ -184,13 +184,10 @@ class BottomSheet(
   }
 
   override fun setBackgroundColor(
-    context: Context,
-    window: Window,
     view: DialogLayout,
     color: Int,
     cornerRounding: Float
   ) {
-    window.setBackgroundDrawable(null)
     bottomSheetView?.background = GradientDrawable().apply {
       cornerRadii = floatArrayOf(
           cornerRounding, cornerRounding, // top left
