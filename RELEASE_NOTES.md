@@ -1,3 +1,5 @@
-3.0.0-rc3
+3.0.0-rc4
 
-* Fixed the reusability of bottom sheet dialogs. You can call `show()` on a dialog that has been hidden and it will animate in as intended.
+* Resolve #1815
+* Resolve #1817
+* Resolve #1818
