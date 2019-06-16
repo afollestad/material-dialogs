@@ -55,7 +55,7 @@ typealias DialogCallback = (MaterialDialog) -> Unit
 /** @author Aidan Follestad (afollestad) */
 class MaterialDialog(
   val windowContext: Context,
-  val dialogBehavior: DialogBehavior = ModalDialog
+  val dialogBehavior: DialogBehavior = DEFAULT_BEHAVIOR
 ) : Dialog(windowContext, inferTheme(windowContext, dialogBehavior)) {
 
   /**
@@ -433,5 +433,13 @@ class MaterialDialog(
         color = backgroundColor,
         cornerRounding = cornerRadius
     )
+  }
+
+  companion object {
+    /**
+     * The default [dialogBehavior] for all constructed instances of
+     * [MaterialDialog]. Defaults to [ModalDialog].
+     */
+    @JvmStatic var DEFAULT_BEHAVIOR: DialogBehavior = ModalDialog
   }
 }
