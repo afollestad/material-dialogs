@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DatePicker xmlns:android="http://schemas.android.com/apk/res/android"
+<com.afollestad.date.DatePicker
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/datetimeDatePicker"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

@@ -17,6 +17,7 @@
 
 package com.afollestad.materialdialogs.datetime
 
+import android.R.string
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
@@ -26,7 +27,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.isFutureDate
-import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import java.util.Calendar
 
@@ -46,18 +46,12 @@ fun MaterialDialog.datePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
-  if (minDate != null) {
-    getDatePicker().minDate = minDate.timeInMillis
-  }
-  if (maxDate != null) {
-    getDatePicker().maxDate = maxDate.timeInMillis
-  }
-  if (currentDate != null) {
-    getDatePicker().init(
-        currentDate.get(Calendar.YEAR),
-        currentDate.get(Calendar.MONTH),
-        currentDate.get(Calendar.DAY_OF_MONTH)
-    ) { _, _, _, _ ->
+  getDatePicker().apply {
+    minDate?.let { setMinDate(it) }
+    maxDate?.let { setMaxDate(it) }
+    currentDate?.let { setDate(it) }
+
+    onDateChanged {
       val isFutureDate = getDatePicker().isFutureDate()
       setActionButtonEnabled(
           POSITIVE,
@@ -66,10 +60,10 @@ fun MaterialDialog.datePicker(
     }
   }
 
-  positiveButton(android.R.string.ok) {
-    dateCallback?.invoke(it, getDatePicker().toCalendar())
+  positiveButton(string.ok) {
+    dateCallback?.invoke(it, getDatePicker().getDate()!!)
   }
-  negativeButton(android.R.string.cancel)
+  negativeButton(string.cancel)
 
   if (requireFutureDate) {
     val changeListener = TimeChangeListener(windowContext, getDatePicker()) {
@@ -89,5 +83,5 @@ fun MaterialDialog.datePicker(
  * Gets the currently selected date from a date picker dialog.
  */
 @CheckResult fun MaterialDialog.selectedDate(): Calendar {
-  return getDatePicker().toCalendar()
+  return getDatePicker().getDate()!!
 }

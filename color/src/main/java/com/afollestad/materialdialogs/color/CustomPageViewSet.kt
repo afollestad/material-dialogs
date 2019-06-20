@@ -112,6 +112,7 @@ internal class CustomPageViewSet(private val dialog: MaterialDialog) {
 
 private fun MaterialDialog.getPageCustomView() = findViewById<View?>(R.id.colorArgbPage)
 
+@Suppress("DEPRECATION")
 private fun SeekBar.tint(color: Int) {
   progressDrawable.setColorFilter(color, SRC_IN)
   thumb.setColorFilter(color, SRC_IN)

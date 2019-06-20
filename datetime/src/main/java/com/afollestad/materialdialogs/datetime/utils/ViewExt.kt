@@ -18,9 +18,9 @@
 package com.afollestad.materialdialogs.datetime.utils
 
 import android.os.Build
-import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.viewpager.widget.ViewPager
+import com.afollestad.date.DatePicker
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.R
 import com.afollestad.viewpagerdots.DotsIndicator

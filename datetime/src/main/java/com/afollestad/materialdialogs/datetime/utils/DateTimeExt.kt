@@ -15,8 +15,8 @@
  */
 package com.afollestad.materialdialogs.datetime.utils
 
-import android.widget.DatePicker
 import android.widget.TimePicker
+import com.afollestad.date.DatePicker
 import java.util.Calendar
 import java.util.GregorianCalendar
 
@@ -36,11 +36,7 @@ internal fun TimePicker.isFutureTime(): Boolean {
 
 internal fun DatePicker.isFutureDate(): Boolean {
   val now = Calendar.getInstance()
-  return toCalendar().timeInMillis >= now.timeInMillis
-}
-
-internal fun DatePicker.toCalendar(): Calendar {
-  return GregorianCalendar(year, month, dayOfMonth, 0, 0, 1)
+  return getDate()!!.timeInMillis >= now.timeInMillis
 }
 
 internal fun TimePicker.toCalendar(): Calendar {
@@ -58,11 +54,8 @@ internal fun toCalendar(
   datePicker: DatePicker,
   timePicker: TimePicker
 ): Calendar {
-  return GregorianCalendar(
-      datePicker.year,
-      datePicker.month,
-      datePicker.dayOfMonth,
-      timePicker.hour(),
-      timePicker.minute()
-  )
+  return datePicker.getDate()!!.apply {
+    set(Calendar.HOUR_OF_DAY, timePicker.hour())
+    set(Calendar.MINUTE, timePicker.minute())
+  }
 }

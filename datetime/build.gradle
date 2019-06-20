@@ -32,6 +32,7 @@ dependencies {
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
 
   implementation 'com.afollestad:viewpagerdots:' + versions.dotsIndicator
+  implementation 'com.afollestad:date-picker:' + versions.datePicker
 
   implementation project(':core')
 }
