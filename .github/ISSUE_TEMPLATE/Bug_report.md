@@ -1,6 +1,7 @@
 ---
 name: Bug report
 about: Something is crashing or not working as intended
+labels: bug
 
 ---
 
