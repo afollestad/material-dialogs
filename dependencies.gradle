@@ -26,5 +26,5 @@ ext.versions = [
     // afollestad
     assent              : '2.3.0',
     dotsIndicator       : '1.0.0',
-    datePicker          : '0.2.1'
+    datePicker          : '0.4.1'
 ]

@@ -19,6 +19,7 @@ package com.afollestad.materialdialogs.datetime
 
 import android.R.attr
 import androidx.annotation.CheckResult
+import com.afollestad.date.dayOfMonth
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -68,12 +69,12 @@ fun MaterialDialog.dateTimePicker(
   getDatePicker().apply {
     minDateTime?.let { setMinDate(it) }
     currentDateTime?.let { setDate(it) }
-    onDateChanged {
+    addOnDateChanged { previous, date ->
       val futureTime = isFutureTime(getDatePicker(), getTimePicker())
       setActionButtonEnabled(
           POSITIVE, !requireFutureDateTime || futureTime
       )
-      if (autoFlipToTime) {
+      if (autoFlipToTime && didDateChange(previous, date)) {
         getPager().currentItem = 1
       }
     }
@@ -111,6 +112,14 @@ fun MaterialDialog.dateTimePicker(
   }
 
   return this
+}
+
+private fun didDateChange(
+  from: Calendar?,
+  to: Calendar
+): Boolean {
+  if (from == null) return false
+  return from.dayOfMonth != to.dayOfMonth
 }
 
 /**
