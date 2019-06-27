@@ -1,5 +1,8 @@
+// Set default
+ext.modulePackageId = ""
+
 if (!project.rootProject.file('local.properties').exists()) {
-  println "Not applying install.gradle"
+  println "Not applying bintrayconfig.gradle"
   return
 }
 apply plugin: 'com.novoda.bintray-release'
@@ -46,3 +49,5 @@ publish {
   website = 'https://github.com/afollestad/material-dialogs'
   dryRun = false
 }
+
+ext.modulePackageId = publish.groupId + '.' + publish.artifactId

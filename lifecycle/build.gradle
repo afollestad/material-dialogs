@@ -6,30 +6,39 @@ ext.shard = 'lifecycle'
 apply from: '../bintrayconfig.gradle'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
 
-    defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode versions.publishVersionCode
-        versionName versions.publishVersion
+  compileOptions {
+    if (modulePackageId != null && modulePackageId != '') {
+      logger.warn('Package for current module: ' + modulePackageId)
+      kotlinOptions.freeCompilerArgs += ['-module-name', modulePackageId]
+    } else {
+      logger.warn('Skipping setting compiler module name, no package to use.')
     }
+  }
 
-    sourceSets {
-        main.res.srcDirs = [
-                'src/main/res',
-                'src/main/res-public'
-        ]
-    }
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.publishVersionCode
+    versionName versions.publishVersion
+  }
+
+  sourceSets {
+    main.res.srcDirs = [
+        'src/main/res',
+        'src/main/res-public'
+    ]
+  }
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
-    implementation project(':core')
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
+  implementation project(':core')
 
-    implementation 'androidx.lifecycle:lifecycle-runtime:' + versions.lifecycle
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:' + versions.lifecycle
+  implementation 'androidx.lifecycle:lifecycle-runtime:' + versions.lifecycle
+  annotationProcessor 'androidx.lifecycle:lifecycle-compiler:' + versions.lifecycle
 }
 
 apply from: '../spotless.gradle'

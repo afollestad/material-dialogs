@@ -1,5 +1,4 @@
-3.0.0
+3.0.1
 
-* Kotlin 1.3.40.
-* Added static `DEFAULT_BEHAVIOR` field to `MaterialDialog`, you can override the default behavior for all dialogs.
-* Integrated by new [date-picker](https://github.com/afollestad/date-picker) library to replace the stock date-picker. It will correctly fill the width of dialogs and bottom sheets.
+* Set module names for the Kotlin compiler, so that they don't clash with other third party libs.
+* The module name for the newer date-picker dependency is also being set now, so your app won't have to exclude its module file.

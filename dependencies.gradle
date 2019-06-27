@@ -3,8 +3,8 @@ ext.versions = [
     minSdk              : 16,
     compileSdk          : 29,
     buildTools          : '29.0.0',
-    publishVersion      : '3.0.0',
-    publishVersionCode  : 255,
+    publishVersion      : '3.0.1',
+    publishVersionCode  : 256,
 
     // Plugins
     gradlePlugin        : '3.4.1',
@@ -24,7 +24,7 @@ ext.versions = [
     coroutines          : '1.2.2',
 
     // afollestad
-    assent              : '2.3.0',
+    assent              : '2.3.1',
     dotsIndicator       : '1.0.0',
-    datePicker          : '0.4.1'
+    datePicker          : '0.4.2'
 ]

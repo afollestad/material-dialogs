@@ -9,6 +9,15 @@ android {
   compileSdkVersion versions.compileSdk
   buildToolsVersion versions.buildTools
 
+  compileOptions {
+    if (modulePackageId != null && modulePackageId != '') {
+      logger.warn('Package for current module: ' + modulePackageId)
+      kotlinOptions.freeCompilerArgs += ['-module-name', modulePackageId]
+    } else {
+      logger.warn('Skipping setting compiler module name, no package to use.')
+    }
+  }
+
   defaultConfig {
     minSdkVersion versions.minSdk
     targetSdkVersion versions.compileSdk
