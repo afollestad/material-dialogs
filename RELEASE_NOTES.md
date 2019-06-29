@@ -1,4 +1,3 @@
-3.0.1
+3.0.2
 
-* Set module names for the Kotlin compiler, so that they don't clash with other third party libs.
-* The module name for the newer date-picker dependency is also being set now, so your app won't have to exclude its module file.
+* Upgraded [afollestad/date-picker](https://github.com/afollestad/date-picker) library to 0.5.0.
