@@ -36,6 +36,8 @@ dependencies {
   implementation 'com.google.android.material:material:' + versions.androidxMaterial
 
   implementation 'com.afollestad:assent:' + versions.assent
+
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:' + versions.leakCanary
 }
 
 apply from: '../spotless.gradle'

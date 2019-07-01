@@ -26,5 +26,8 @@ ext.versions = [
     // afollestad
     assent              : '2.3.1',
     dotsIndicator       : '1.0.0',
-    datePicker          : '0.6.0'
+    datePicker          : '0.6.0',
+
+    // Other
+    leakCanary          : '2.0-alpha-2'
 ]
