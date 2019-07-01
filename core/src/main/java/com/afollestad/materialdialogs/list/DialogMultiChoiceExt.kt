@@ -17,6 +17,7 @@
 
 package com.afollestad.materialdialogs.list
 
+import android.util.Log
 import androidx.annotation.ArrayRes
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
@@ -50,10 +51,15 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
   val array = items ?: windowContext.getStringArray(res).toList()
 
   if (getListAdapter() != null) {
-    return updateListItems(
+    Log.w(
+        "MaterialDialogs",
+        "Prefer calling updateListItemsMultiChoice(...) over listItemsMultiChoice(...) again."
+    )
+    return updateListItemsMultiChoice(
         res = res,
         items = items,
-        disabledIndices = disabledIndices
+        disabledIndices = disabledIndices,
+        selection = selection
     )
   }
 
@@ -69,6 +75,28 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
           selection = selection
       )
   )
+}
+
+/**
+ * Updates the items, and optionally the disabled indices, of a plain list dialog.
+ *
+ * @author Aidan Follestad (@afollestad)
+ */
+fun MaterialDialog.updateListItemsMultiChoice(
+  @ArrayRes res: Int? = null,
+  items: List<String>? = null,
+  disabledIndices: IntArray? = null,
+  selection: MultiChoiceListener = null
+): MaterialDialog {
+  assertOneSet("updateListItemsMultiChoice", items, res)
+  val array = items ?: windowContext.getStringArray(res).toList()
+  val adapter = getListAdapter()
+  check(adapter is MultiChoiceDialogAdapter) {
+    "updateListItemsMultiChoice(...) can't be used before you've created a multiple choice list dialog."
+  }
+  adapter.replaceItems(array, selection)
+  disabledIndices?.let(adapter::disableItems)
+  return this
 }
 
 /** Checks a set of multiple choice list items. */

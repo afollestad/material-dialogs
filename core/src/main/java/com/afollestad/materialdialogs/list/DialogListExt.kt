@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.LOLLIPOP
+import android.util.Log
 import androidx.annotation.ArrayRes
 import androidx.annotation.CheckResult
 import androidx.annotation.RestrictTo
@@ -30,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.R
-import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.PlainListDialogAdapter
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
@@ -89,10 +89,12 @@ fun MaterialDialog.customListAdapter(
   val array = items ?: windowContext.getStringArray(res).toList()
 
   if (getListAdapter() != null) {
+    Log.w("MaterialDialogs", "Prefer calling updateListItems(...) over listItems(...) again.")
     return updateListItems(
         res = res,
         items = items,
-        disabledIndices = disabledIndices
+        disabledIndices = disabledIndices,
+        selection = selection
     )
   }
 
@@ -108,30 +110,24 @@ fun MaterialDialog.customListAdapter(
 }
 
 /**
- * Updates the items, and optionally the disabled indices, of a plain, single choice,
- * or multi-choice list dialog.
+ * Updates the items, and optionally the disabled indices, of a plain list dialog.
  *
  * @author Aidan Follestad (@afollestad)
  */
 fun MaterialDialog.updateListItems(
   @ArrayRes res: Int? = null,
   items: List<String>? = null,
-  disabledIndices: IntArray? = null
+  disabledIndices: IntArray? = null,
+  selection: ItemListener = null
 ): MaterialDialog {
   assertOneSet("updateListItems", items, res)
   val array = items ?: windowContext.getStringArray(res).toList()
   val adapter = getListAdapter()
-  check(adapter != null) {
-    "updateListItems(...) can't be used before you've created a list dialog."
+  check(adapter is PlainListDialogAdapter) {
+    "updateListItems(...) can't be used before you've created a plain list dialog."
   }
-  if (adapter is DialogAdapter<*, *>) {
-    @Suppress("UNCHECKED_CAST")
-    (adapter as DialogAdapter<String, *>).replaceItems(array)
-
-    if (disabledIndices != null) {
-      adapter.disableItems(disabledIndices)
-    }
-  }
+  adapter.replaceItems(array, selection)
+  disabledIndices?.let(adapter::disableItems)
   return this
 }
 
