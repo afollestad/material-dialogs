@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/md_dialog_frame_margin_horizontal"
-    android:paddingRight="@dimen/md_dialog_frame_margin_horizontal"
     >
 
   <TextView

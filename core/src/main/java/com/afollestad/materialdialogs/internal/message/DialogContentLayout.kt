@@ -62,6 +62,10 @@ class DialogContentLayout(
     get() = parent as DialogLayout
   private var scrollFrame: ViewGroup? = null
   private var messageTextView: TextView? = null
+  private var useHorizontalPadding: Boolean = false
+  private val frameHorizontalMargin: Int by lazy {
+    resources.getDimensionPixelSize(R.dimen.md_dialog_frame_margin_horizontal)
+  }
 
   var scrollView: DialogScrollView? = null
   var recyclerView: DialogRecyclerView? = null
@@ -109,7 +113,8 @@ class DialogContentLayout(
   fun addCustomView(
     @LayoutRes res: Int?,
     view: View?,
-    scrollable: Boolean
+    scrollable: Boolean,
+    horizontalPadding: Boolean
   ): View {
     check(customView == null) { "Custom view already set." }
 
@@ -120,10 +125,21 @@ class DialogContentLayout(
     }
 
     if (scrollable) {
+      // Since the view is going in the main ScrollView, apply padding to custom view.
+      this.useHorizontalPadding = false
       addContentScrollView()
       customView = view ?: inflate(res!!, scrollFrame)
-      scrollFrame!!.addView(customView)
+      scrollFrame!!.addView(customView?.apply {
+        if (horizontalPadding) {
+          updatePadding(
+              left = frameHorizontalMargin,
+              right = frameHorizontalMargin
+          )
+        }
+      })
     } else {
+      // Since the view is NOT going in the main ScrollView, we'll offset it in the layout.
+      this.useHorizontalPadding = horizontalPadding
       customView = view ?: inflate(res!!)
       addView(customView)
     }
@@ -190,7 +206,11 @@ class DialogContentLayout(
         continue
       }
       currentChild.measure(
-          makeMeasureSpec(specWidth, EXACTLY),
+          if (currentChild == customView && useHorizontalPadding) {
+            makeMeasureSpec(specWidth - (frameHorizontalMargin * 2), EXACTLY)
+          } else {
+            makeMeasureSpec(specWidth, EXACTLY)
+          },
           makeMeasureSpec(heightPerRemainingChild, AT_MOST)
       )
       totalChildHeight += currentChild.measuredHeight
@@ -210,11 +230,20 @@ class DialogContentLayout(
     for (i in 0 until childCount) {
       val currentChild = getChildAt(i)
       val currentBottom = currentTop + currentChild.measuredHeight
+      val childLeft: Int
+      val childRight: Int
+      if (currentChild == customView && useHorizontalPadding) {
+        childLeft = frameHorizontalMargin
+        childRight = measuredWidth - frameHorizontalMargin
+      } else {
+        childLeft = 0
+        childRight = measuredWidth
+      }
       currentChild.layout(
-          0,
-          currentTop,
-          measuredWidth,
-          currentBottom
+          /*left=   */childLeft,
+          /*top=    */currentTop,
+          /*right=  */childRight,
+          /*bottom= */currentBottom
       )
       currentTop = currentBottom
     }

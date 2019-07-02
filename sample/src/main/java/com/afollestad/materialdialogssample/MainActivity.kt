@@ -821,7 +821,7 @@ class MainActivity : AppCompatActivity() {
   private fun showCustomViewDialog(dialogBehavior: DialogBehavior = ModalDialog) {
     val dialog = MaterialDialog(this, dialogBehavior).show {
       title(R.string.googleWifi)
-      customView(R.layout.custom_view, scrollable = true)
+      customView(R.layout.custom_view, scrollable = true, horizontalPadding = true)
       positiveButton(R.string.connect) { dialog ->
         // Pull the password out of the custom view when the positive button is pressed
         val passwordInput: EditText = dialog.getCustomView()
