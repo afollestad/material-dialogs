@@ -27,6 +27,7 @@ dependencies {
   implementation project(':color')
   implementation project(':datetime')
   implementation project(':bottomsheets')
+  implementation project(':lifecycle')
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
 

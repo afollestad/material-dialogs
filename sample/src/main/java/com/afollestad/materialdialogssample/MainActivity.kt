@@ -53,6 +53,7 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.files.fileChooser
 import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -137,6 +138,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         message(R.string.shareLocationPrompt)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -145,6 +147,7 @@ class MainActivity : AppCompatActivity() {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -154,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -173,6 +177,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -186,6 +191,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -196,6 +202,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -207,6 +214,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -220,6 +228,7 @@ class MainActivity : AppCompatActivity() {
           toast("Checked? $checked")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -229,6 +238,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected item $text at index $index")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -240,6 +250,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -250,6 +261,7 @@ class MainActivity : AppCompatActivity() {
         }
         negativeButton(android.R.string.cancel)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -260,6 +272,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected item $text at index $index")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -272,6 +285,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -285,6 +299,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -294,6 +309,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected item $text at index $index")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -304,6 +320,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected item $text at index $index")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -319,6 +336,7 @@ class MainActivity : AppCompatActivity() {
           toast("Checked? $checked")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -329,6 +347,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected item $text at index $index")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -340,6 +359,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -351,6 +371,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -364,6 +385,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -376,6 +398,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -389,6 +412,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -402,6 +426,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -417,6 +442,7 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.choose)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -428,6 +454,7 @@ class MainActivity : AppCompatActivity() {
         negativeButton(text = "How are you doing?")
         neutralButton(text = "Testing long buttons")
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -442,6 +469,7 @@ class MainActivity : AppCompatActivity() {
           toast("Checked? $checked")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -453,6 +481,7 @@ class MainActivity : AppCompatActivity() {
         negativeButton(R.string.disagree)
         neutralButton(R.string.more_info)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -470,6 +499,7 @@ class MainActivity : AppCompatActivity() {
           toast("On neutral")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -483,6 +513,7 @@ class MainActivity : AppCompatActivity() {
         onCancel { toast("onCancel") }
         onDismiss { toast("onDismiss") }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -515,6 +546,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -531,6 +563,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -549,6 +582,7 @@ class MainActivity : AppCompatActivity() {
           toast("Checked? $checked")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -567,8 +601,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -583,8 +617,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -607,8 +641,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -622,8 +656,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -639,8 +673,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -657,8 +691,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -678,6 +712,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected date: ${date.formatDate()}")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -688,6 +723,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected time: ${time.formatTime()}")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -698,6 +734,7 @@ class MainActivity : AppCompatActivity() {
           toast("Selected date/time: ${dateTime.formatDateTime()}")
         }
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -708,6 +745,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -719,6 +757,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -741,6 +780,7 @@ class MainActivity : AppCompatActivity() {
         positiveButton(R.string.agree)
         negativeButton(R.string.disagree)
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -761,8 +801,8 @@ class MainActivity : AppCompatActivity() {
         }
         positiveButton(R.string.select)
         negativeButton(android.R.string.cancel)
-
         debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
       }
     }
 
@@ -772,6 +812,7 @@ class MainActivity : AppCompatActivity() {
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
           toast("Selected date/time: ${dateTime.formatDateTime()}")
         }
+        lifecycleOwner(this@MainActivity)
         debugMode(debugMode)
       }
     }
@@ -788,6 +829,7 @@ class MainActivity : AppCompatActivity() {
         toast("Password: $passwordInput")
       }
       negativeButton(android.R.string.cancel)
+      lifecycleOwner(this@MainActivity)
       debugMode(debugMode)
     }
 
@@ -840,6 +882,7 @@ class MainActivity : AppCompatActivity() {
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
+      lifecycleOwner(this@MainActivity)
     }
   }
 
@@ -851,6 +894,7 @@ class MainActivity : AppCompatActivity() {
       negativeButton(android.R.string.cancel)
       positiveButton(R.string.select)
       debugMode(debugMode)
+      lifecycleOwner(this@MainActivity)
     }
   }
 
@@ -860,6 +904,7 @@ class MainActivity : AppCompatActivity() {
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
+      lifecycleOwner(this@MainActivity)
     }
   }
 
@@ -871,6 +916,7 @@ class MainActivity : AppCompatActivity() {
       negativeButton(android.R.string.cancel)
       positiveButton(R.string.select)
       debugMode(debugMode)
+      lifecycleOwner(this@MainActivity)
     }
   }
 
@@ -880,6 +926,7 @@ class MainActivity : AppCompatActivity() {
         toast("Selected folder: ${folder.absolutePath}")
       }
       debugMode(debugMode)
+      lifecycleOwner(this@MainActivity)
     }
   }
 

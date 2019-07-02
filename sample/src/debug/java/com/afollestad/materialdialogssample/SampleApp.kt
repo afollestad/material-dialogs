@@ -23,6 +23,6 @@ class SampleApp : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    LeakCanary.config = LeakCanary.config.copy(retainedVisibleThreshold = 2)
+    LeakCanary.config = LeakCanary.config.copy(retainedVisibleThreshold = 3)
   }
 }
