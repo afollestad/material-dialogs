@@ -52,7 +52,7 @@ text entered:
 
 ```kotlin
 MaterialDialog(this).show {
-  input { dialpog, text ->
+  input { dialog, text ->
       // Text submitted with the action button
   }
   positiveButton(R.string.submit)
