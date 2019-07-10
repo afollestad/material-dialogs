@@ -83,6 +83,8 @@ class MaterialDialog(
     internal set
   var cancelOnTouchOutside: Boolean = true
     internal set
+  var cancelable: Boolean = true
+    internal set
   var cornerRadius: Float? = null
     internal set
   @Px private var maxWidth: Int? = null
@@ -376,17 +378,36 @@ class MaterialDialog(
     return this
   }
 
-  /** A fluent version of [setCancelable]. */
+  /** Configures whether or not the dialog can be cancelled. */
   fun cancelable(cancelable: Boolean): MaterialDialog {
-    this.setCancelable(cancelable)
+    @Suppress("DEPRECATION")
+    setCancelable(cancelable)
     return this
   }
 
-  /** A fluent version of [setCanceledOnTouchOutside]. */
+  @Deprecated(
+      message = "Use fluent cancelable(Boolean) instead.",
+      replaceWith = ReplaceWith("cancelable(cancelable)")
+  )
+  override fun setCancelable(cancelable: Boolean) {
+    this.cancelable = cancelable
+    super.setCancelable(cancelable)
+  }
+
+  /** Whether or not touching outside of the dialog UI will cancel the dialog. */
   fun cancelOnTouchOutside(cancelable: Boolean): MaterialDialog {
-    cancelOnTouchOutside = true
-    this.setCanceledOnTouchOutside(cancelable)
+    @Suppress("DEPRECATION")
+    setCanceledOnTouchOutside(cancelable)
     return this
+  }
+
+  @Deprecated(
+      message = "Use fluent cancelOnTouchOutside(Boolean) instead.",
+      replaceWith = ReplaceWith("cancelOnTouchOutside(cancelOnTouchOutside)")
+  )
+  override fun setCanceledOnTouchOutside(cancelOnTouchOutside: Boolean) {
+    this.cancelOnTouchOutside = cancelOnTouchOutside
+    super.setCanceledOnTouchOutside(cancelOnTouchOutside)
   }
 
   override fun dismiss() {

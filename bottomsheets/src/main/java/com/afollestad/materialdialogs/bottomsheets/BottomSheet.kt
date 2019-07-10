@@ -198,9 +198,11 @@ class BottomSheet(
   }
 
   override fun onPreShow(dialog: MaterialDialog) {
-    if (dialog.cancelOnTouchOutside) {
+    if (dialog.cancelOnTouchOutside && dialog.cancelable) {
       // Clicking outside the bottom sheet dismisses the dialog
       rootView?.setOnClickListener { this.dialog?.dismiss() }
+    } else {
+      rootView?.setOnClickListener(null)
     }
 
     bottomSheetView!!.waitForHeight {
