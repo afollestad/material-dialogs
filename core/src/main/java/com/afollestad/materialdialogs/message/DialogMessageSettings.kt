@@ -43,6 +43,10 @@ class DialogMessageSettings internal constructor(
     return this
   }
 
+  fun getMessageTextView(): TextView {
+    return messageTextView
+  }
+
   internal fun setText(
     @StringRes res: Int?,
     text: CharSequence?
