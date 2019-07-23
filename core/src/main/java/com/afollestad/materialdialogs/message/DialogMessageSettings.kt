@@ -26,7 +26,8 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 /** @author Aidan Follestad (@afollestad) */
 class DialogMessageSettings internal constructor(
   private val dialog: MaterialDialog,
-  private val messageTextView: TextView
+  @Suppress("MemberVisibilityCanBePrivate")
+  val messageTextView: TextView
 ) {
   private var isHtml: Boolean = false
 
