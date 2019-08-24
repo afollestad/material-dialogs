@@ -67,13 +67,13 @@ internal class MultiChoiceViewHolder(
  */
 internal class MultiChoiceDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: List<String>,
+  internal var items: List<CharSequence>,
   disabledItems: IntArray?,
   initialSelection: IntArray,
   private val waitForActionButton: Boolean,
   private val allowEmptySelection: Boolean,
   internal var selection: MultiChoiceListener
-) : RecyclerView.Adapter<MultiChoiceViewHolder>(), DialogAdapter<String, MultiChoiceListener> {
+) : RecyclerView.Adapter<MultiChoiceViewHolder>(), DialogAdapter<CharSequence, MultiChoiceListener> {
 
   private var currentSelection: IntArray = initialSelection
     set(value) {
@@ -184,7 +184,7 @@ internal class MultiChoiceDialogAdapter(
   }
 
   override fun replaceItems(
-    items: List<String>,
+    items: List<CharSequence>,
     listener: MultiChoiceListener
   ) {
     this.items = items

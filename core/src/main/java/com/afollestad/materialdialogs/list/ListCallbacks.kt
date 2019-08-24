@@ -18,10 +18,10 @@ package com.afollestad.materialdialogs.list
 import com.afollestad.materialdialogs.MaterialDialog
 
 typealias ItemListener =
-    ((dialog: MaterialDialog, index: Int, text: String) -> Unit)?
+    ((dialog: MaterialDialog, index: Int, text: CharSequence) -> Unit)?
 
 typealias SingleChoiceListener =
-    ((dialog: MaterialDialog, index: Int, text: String) -> Unit)?
+    ((dialog: MaterialDialog, index: Int, text: CharSequence) -> Unit)?
 
 typealias MultiChoiceListener =
-    ((dialog: MaterialDialog, indices: IntArray, items: List<String>) -> Unit)?
+    ((dialog: MaterialDialog, indices: IntArray, items: List<CharSequence>) -> Unit)?
