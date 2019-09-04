@@ -80,7 +80,7 @@ fun MaterialDialog.customListAdapter(
  */
 @CheckResult fun MaterialDialog.listItems(
   @ArrayRes res: Int? = null,
-  items: List<String>? = null,
+  items: List<CharSequence>? = null,
   disabledIndices: IntArray? = null,
   waitForPositiveButton: Boolean = true,
   selection: ItemListener = null
@@ -116,7 +116,7 @@ fun MaterialDialog.customListAdapter(
  */
 fun MaterialDialog.updateListItems(
   @ArrayRes res: Int? = null,
-  items: List<String>? = null,
+  items: List<CharSequence>? = null,
   disabledIndices: IntArray? = null,
   selection: ItemListener = null
 ): MaterialDialog {

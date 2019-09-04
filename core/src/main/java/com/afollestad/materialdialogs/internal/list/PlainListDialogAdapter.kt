@@ -53,11 +53,11 @@ internal class PlainListViewHolder(
  */
 internal class PlainListDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: List<String>,
+  internal var items: List<CharSequence>,
   disabledItems: IntArray?,
   private var waitForPositiveButton: Boolean,
   internal var selection: ItemListener
-) : RecyclerView.Adapter<PlainListViewHolder>(), DialogAdapter<String, ItemListener> {
+) : RecyclerView.Adapter<PlainListViewHolder>(), DialogAdapter<CharSequence, ItemListener> {
 
   private var disabledIndices: IntArray = disabledItems ?: IntArray(0)
 
@@ -122,7 +122,7 @@ internal class PlainListDialogAdapter(
   }
 
   override fun replaceItems(
-    items: List<String>,
+    items: List<CharSequence>,
     listener: ItemListener
   ) {
     this.items = items
