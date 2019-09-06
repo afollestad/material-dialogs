@@ -9,19 +9,19 @@ ext.versions = [
     // Plugins
     gradlePlugin        : '3.5.0',
     spotlessPlugin      : '3.24.2',
-    versionPlugin       : '0.22.0',
+    versionPlugin       : '0.24.0',
     bintrayPlugin       : '0.9.1',
 
     // AndroidX
-    androidxCore        : '1.0.2',
+    androidxCore        : '1.1.0',
     androidxAnnotation  : '1.1.0',
     androidxRecyclerView: '1.0.0',
     androidxMaterial    : '1.0.0',
-    lifecycle           : '2.0.0',
+    lifecycle           : '2.1.0',
 
     // Kotlin
     kotlin              : '1.3.50',
-    coroutines          : '1.3.0',
+    coroutines          : '1.3.1',
 
     // afollestad
     assent              : '2.3.1',
