@@ -18,7 +18,7 @@
 package com.afollestad.materialdialogs.files
 
 import android.annotation.SuppressLint
-import android.os.Environment.getExternalStorageDirectory
+import android.content.Context
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.files.util.getExternalFilesDir
 import com.afollestad.materialdialogs.files.util.hasReadStoragePermission
 import com.afollestad.materialdialogs.files.util.hasWriteStoragePermission
 import com.afollestad.materialdialogs.internal.list.DialogRecyclerView
@@ -54,7 +55,8 @@ fun MaterialDialog.selectedFolder(): File? {
  */
 @SuppressLint("CheckResult")
 fun MaterialDialog.folderChooser(
-  initialDirectory: File = getExternalStorageDirectory(),
+  context: Context,
+  initialDirectory: File? = context.getExternalFilesDir(),
   filter: FileFilter = null,
   waitForPositiveButton: Boolean = true,
   emptyTextRes: Int = R.string.files_default_empty_text,
@@ -80,6 +82,10 @@ fun MaterialDialog.folderChooser(
     }
   }
 
+  check(initialDirectory != null) {
+    "The initial directory is null."
+  }
+
   customView(R.layout.md_file_chooser_base, noVerticalPadding = true)
   setActionButtonEnabled(POSITIVE, false)
 
@@ -91,6 +97,7 @@ fun MaterialDialog.folderChooser(
 
   list.attach(this)
   list.layoutManager = LinearLayoutManager(windowContext)
+
   val adapter = FileChooserAdapter(
       dialog = this,
       initialFolder = initialDirectory,

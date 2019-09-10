@@ -51,7 +51,7 @@ fun MaterialDialog.datePicker(
     maxDate?.let { setMaxDate(it) }
     currentDate?.let { setDate(it) }
 
-    onDateChanged {
+    addOnDateChanged { _, _ ->
       val isFutureDate = getDatePicker().isFutureDate()
       setActionButtonEnabled(
           POSITIVE,

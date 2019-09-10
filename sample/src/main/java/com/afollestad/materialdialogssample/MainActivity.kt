@@ -878,7 +878,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooser() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser { _, file ->
+      fileChooser(this@MainActivity) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
@@ -888,7 +888,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser(allowFolderCreation = true) { _, file ->
+      fileChooser(context = this@MainActivity, allowFolderCreation = true) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       negativeButton(android.R.string.cancel)
@@ -900,7 +900,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser(filter = { it.extension == "txt" }) { _, file ->
+      fileChooser(context = this@MainActivity, filter = { it.extension == "txt" }) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
@@ -910,7 +910,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFolderChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      folderChooser(allowFolderCreation = true) { _, folder ->
+      folderChooser(context = this@MainActivity, allowFolderCreation = true) { _, folder ->
         toast("Selected folder: ${folder.absolutePath}")
       }
       negativeButton(android.R.string.cancel)
@@ -922,7 +922,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFolderChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      folderChooser(filter = { it.name.startsWith("a", true) }) { _, folder ->
+      folderChooser(context = this@MainActivity, filter = { it.name.startsWith("a", true) }) { _, folder ->
         toast("Selected folder: ${folder.absolutePath}")
       }
       debugMode(debugMode)

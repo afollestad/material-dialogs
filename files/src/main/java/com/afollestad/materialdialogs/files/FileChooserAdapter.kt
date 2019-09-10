@@ -44,6 +44,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.Locale
 
 internal class FileChooserViewHolder(
   itemView: View,
@@ -88,7 +89,7 @@ internal class FileChooserAdapter(
   }
 
   fun itemClicked(index: Int) {
-    val parent = currentFolder.betterParent(allowFolderCreation, filter)
+    val parent = currentFolder.betterParent(dialog.context, allowFolderCreation, filter)
     if (parent != null && index == goUpIndex()) {
       // go up
       switchDirectory(parent)
@@ -106,7 +107,7 @@ internal class FileChooserAdapter(
     }
 
     val actualIndex = actualIndex(index)
-    val selected = contents!![actualIndex].jumpOverEmulated()
+    val selected = contents!![actualIndex].jumpOverEmulated(dialog.context)
 
     if (selected.isDirectory) {
       switchDirectory(selected)
@@ -135,18 +136,20 @@ internal class FileChooserAdapter(
       }
 
       currentFolder = directory
-      dialog.title(text = directory.friendlyName())
+      dialog.title(text = directory.friendlyName(dialog.context))
 
       val result = withContext(IO) {
         val rawContents = directory.listFiles() ?: emptyArray()
         if (onlyFolders) {
           rawContents
               .filter { it.isDirectory && filter?.invoke(it) ?: true }
-              .sortedBy { it.name.toLowerCase() }
+              .sortedBy { it.name.toLowerCase(Locale.getDefault()) }
         } else {
           rawContents
               .filter { filter?.invoke(it) ?: true }
-              .sortedWith(compareBy({ !it.isDirectory }, { it.nameWithoutExtension.toLowerCase() }))
+              .sortedWith(compareBy({ !it.isDirectory }, {
+                it.nameWithoutExtension.toLowerCase(Locale.getDefault())
+              }))
         }
       }
 
@@ -159,7 +162,7 @@ internal class FileChooserAdapter(
 
   override fun getItemCount(): Int {
     var count = contents?.size ?: 0
-    if (currentFolder.hasParent(allowFolderCreation, filter)) {
+    if (currentFolder.hasParent(dialog.context, allowFolderCreation, filter)) {
       count += 1
     }
     if (allowFolderCreation && currentFolder.canWrite()) {
@@ -185,7 +188,7 @@ internal class FileChooserAdapter(
     holder: FileChooserViewHolder,
     position: Int
   ) {
-    val currentParent = currentFolder.betterParent(allowFolderCreation, filter)
+    val currentParent = currentFolder.betterParent(dialog.context, allowFolderCreation, filter)
     if (currentParent != null && position == goUpIndex()) {
       // Go up
       holder.iconView.setImageResource(
@@ -217,13 +220,13 @@ internal class FileChooserAdapter(
     holder.itemView.isActivated = selectedFile?.absolutePath == item.absolutePath ?: false
   }
 
-  private fun goUpIndex() = if (currentFolder.hasParent(allowFolderCreation, filter)) 0 else -1
+  private fun goUpIndex() = if (currentFolder.hasParent(dialog.context, allowFolderCreation, filter)) 0 else -1
 
-  private fun newFolderIndex() = if (currentFolder.hasParent(allowFolderCreation, filter)) 1 else 0
+  private fun newFolderIndex() = if (currentFolder.hasParent(dialog.context, allowFolderCreation, filter)) 1 else 0
 
   private fun actualIndex(position: Int): Int {
     var actualIndex = position
-    if (currentFolder.hasParent(allowFolderCreation, filter)) {
+    if (currentFolder.hasParent(dialog.context, allowFolderCreation, filter)) {
       actualIndex -= 1
     }
     if (currentFolder.canWrite() && allowFolderCreation) {
@@ -246,6 +249,6 @@ internal class FileChooserAdapter(
     if (selectedFile == null) return -1
     else if (contents?.isEmpty() == true) return -1
     val index = contents?.indexOfFirst { it.absolutePath == selectedFile?.absolutePath } ?: -1
-    return if (index > -1 && currentFolder.hasParent(allowFolderCreation, filter)) index + 1 else index
+    return if (index > -1 && currentFolder.hasParent(dialog.context, allowFolderCreation, filter)) index + 1 else index
   }
 }
