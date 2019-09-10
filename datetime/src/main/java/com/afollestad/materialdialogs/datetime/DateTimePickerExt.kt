@@ -39,7 +39,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
 import java.util.Calendar
 
-typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar) -> Unit)?
+typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar?) -> Unit)?
 
 /**
  * Makes the dialog a date and time picker.

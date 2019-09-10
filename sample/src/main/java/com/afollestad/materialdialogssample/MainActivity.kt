@@ -709,7 +709,7 @@ class MainActivity : AppCompatActivity() {
     date_picker.onClickDebounced {
       MaterialDialog(this).show {
         datePicker { _, date ->
-          toast("Selected date: ${date.formatDate()}")
+          toast("Selected date: ${date?.formatDate()}")
         }
         debugMode(debugMode)
         lifecycleOwner(this@MainActivity)
@@ -720,7 +720,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(text = "Select Time")
         timePicker { _, time ->
-          toast("Selected time: ${time.formatTime()}")
+          toast("Selected time: ${time?.formatTime()}")
         }
         debugMode(debugMode)
         lifecycleOwner(this@MainActivity)
@@ -731,7 +731,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
-          toast("Selected date/time: ${dateTime.formatDateTime()}")
+          toast("Selected date/time: ${dateTime?.formatDateTime()}")
         }
         debugMode(debugMode)
         lifecycleOwner(this@MainActivity)
@@ -810,7 +810,7 @@ class MainActivity : AppCompatActivity() {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
-          toast("Selected date/time: ${dateTime.formatDateTime()}")
+          toast("Selected date/time: ${dateTime?.formatDateTime()}")
         }
         lifecycleOwner(this@MainActivity)
         debugMode(debugMode)
