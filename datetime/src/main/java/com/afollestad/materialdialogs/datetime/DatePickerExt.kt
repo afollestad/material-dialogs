@@ -47,10 +47,10 @@ fun MaterialDialog.datePicker(
   )
 
   check(minDate == null || currentDate == null || minDate.before(currentDate)) {
-    "You `minDate` must be less than `currentDate`."
+    "Your `minDate` must be less than `currentDate`."
   }
   check(maxDate == null || currentDate == null || maxDate.after(currentDate)) {
-    "You `maxDate` must be bigger than `currentDate`."
+    "Your `maxDate` must be bigger than `currentDate`."
   }
 
   getDatePicker().apply {
