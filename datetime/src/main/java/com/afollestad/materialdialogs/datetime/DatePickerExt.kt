@@ -46,6 +46,13 @@ fun MaterialDialog.datePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
+  check(minDate == null || currentDate == null || minDate.before(currentDate)) {
+    "Your `minDate` must be less than `currentDate`."
+  }
+  check(maxDate == null || currentDate == null || maxDate.after(currentDate)) {
+    "Your `maxDate` must be bigger than `currentDate`."
+  }
+
   getDatePicker().apply {
     minDate?.let { setMinDate(it) }
     maxDate?.let { setMaxDate(it) }
@@ -61,7 +68,9 @@ fun MaterialDialog.datePicker(
   }
 
   positiveButton(string.ok) {
-    dateCallback?.invoke(it, getDatePicker().getDate()!!)
+    getDatePicker().getDate()?.let { datetime ->
+      dateCallback?.invoke(it, datetime)
+    }
   }
   negativeButton(string.cancel)
 
