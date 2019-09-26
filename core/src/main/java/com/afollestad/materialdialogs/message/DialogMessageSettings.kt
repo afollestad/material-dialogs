@@ -15,6 +15,7 @@
  */
 package com.afollestad.materialdialogs.message
 
+import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -25,7 +26,8 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 /** @author Aidan Follestad (@afollestad) */
 class DialogMessageSettings internal constructor(
   private val dialog: MaterialDialog,
-  private val messageTextView: TextView
+  @Suppress("MemberVisibilityCanBePrivate")
+  val messageTextView: TextView
 ) {
   private var isHtml: Boolean = false
 
@@ -47,6 +49,13 @@ class DialogMessageSettings internal constructor(
     @StringRes res: Int?,
     text: CharSequence?
   ) {
-    messageTextView.text = text ?: resolveString(dialog, res, html = isHtml)
+    messageTextView.text = text.maybeWrapHtml(isHtml)
+        ?: resolveString(dialog, res, html = isHtml)
+  }
+
+  private fun CharSequence?.maybeWrapHtml(isHtml: Boolean): CharSequence? {
+    if (this == null) return null
+    @Suppress("DEPRECATION")
+    return if (isHtml) Html.fromHtml(this.toString()) else this
   }
 }

@@ -65,12 +65,12 @@ internal class SingleChoiceViewHolder(
  */
 internal class SingleChoiceDialogAdapter(
   private var dialog: MaterialDialog,
-  internal var items: List<String>,
+  internal var items: List<CharSequence>,
   disabledItems: IntArray?,
   initialSelection: Int,
   private val waitForActionButton: Boolean,
   internal var selection: SingleChoiceListener
-) : RecyclerView.Adapter<SingleChoiceViewHolder>(), DialogAdapter<String, SingleChoiceListener> {
+) : RecyclerView.Adapter<SingleChoiceViewHolder>(), DialogAdapter<CharSequence, SingleChoiceListener> {
 
   private var currentSelection: Int = initialSelection
     set(value) {
@@ -162,7 +162,7 @@ internal class SingleChoiceDialogAdapter(
   }
 
   override fun replaceItems(
-    items: List<String>,
+    items: List<CharSequence>,
     listener: SingleChoiceListener
   ) {
     this.items = items

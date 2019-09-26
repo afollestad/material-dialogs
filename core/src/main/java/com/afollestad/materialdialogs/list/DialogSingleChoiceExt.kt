@@ -38,7 +38,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
  */
 @CheckResult fun MaterialDialog.listItemsSingleChoice(
   @ArrayRes res: Int? = null,
-  items: List<String>? = null,
+  items: List<CharSequence>? = null,
   disabledIndices: IntArray? = null,
   initialSelection: Int = -1,
   waitForPositiveButton: Boolean = true,
@@ -84,7 +84,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
  */
 fun MaterialDialog.updateListItemsSingleChoice(
   @ArrayRes res: Int? = null,
-  items: List<String>? = null,
+  items: List<CharSequence>? = null,
   disabledIndices: IntArray? = null,
   selection: SingleChoiceListener = null
 ): MaterialDialog {
