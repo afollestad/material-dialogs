@@ -141,7 +141,7 @@ You can apply a filter like you can with the file chooser.
 val myFilter: FileFilter = { it.name.startsWith("a", true) }
 
 MaterialDialog(this).show {
-  folderChooser(filter = myFilter) { dialog, file ->
+  folderChooser(filter = myFilter) { dialog, folder ->
       // Folder selected
   }
 }
@@ -155,8 +155,8 @@ Empty text is shown when a folder has no contents. You can configure the empty t
 
 ```kotlin
 MaterialDialog(this).show {
-  folderChooser(emptyTextRes = R.string.custom_label) { dialog, file ->
-      // File selected
+  folderChooser(emptyTextRes = R.string.custom_label) { dialog, folder ->
+      // Folder selected
   }
 }
 ```
@@ -172,8 +172,8 @@ MaterialDialog(this).show {
   folderChooser(
       allowFolderCreation = true,
       folderCreationLabel = R.string.new_folder // optional as well
-  ) { dialog, file -> 
-      // File selected
+  ) { dialog, folder ->
+      // Folder selected
   }
 }
 ```
