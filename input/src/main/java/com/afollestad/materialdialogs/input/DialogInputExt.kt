@@ -93,9 +93,10 @@ fun MaterialDialog.input(
   maxLength: Int? = null,
   waitForPositiveButton: Boolean = true,
   allowEmpty: Boolean = false,
+  scrollable: Boolean = false,
   callback: InputCallback = null
 ): MaterialDialog {
-  customView(R.layout.md_dialog_stub_input)
+  customView(viewRes = R.layout.md_dialog_stub_input, scrollable = scrollable)
   onPreShow { showKeyboardIfApplicable() }
   if (!hasActionButtons()) {
     positiveButton(android.R.string.ok)
