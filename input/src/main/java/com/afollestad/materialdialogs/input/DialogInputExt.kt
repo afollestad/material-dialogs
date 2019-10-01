@@ -80,6 +80,8 @@ private fun MaterialDialog.lookupInputLayout(): TextInputLayout {
  *    the dialog has buttons.
  * @param allowEmpty Defaults to false. When false, the positive action button is disabled unless
  *    the input field is not empty.
+ * @param scrollable Defaults to false. When true, the input field will be added to content
+ *    scrollview.
  * @param callback A listener to invoke for input text notifications.
  */
 @SuppressLint("CheckResult")
