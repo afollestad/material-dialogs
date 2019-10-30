@@ -18,6 +18,6 @@ package com.afollestad.materialdialogs.files.util
 import android.content.Context
 import java.io.File
 
-fun Context.getExternalFilesDir(): File? {
+internal fun Context.getExternalFilesDir(): File? {
     return this.getExternalFilesDir(null)
 }
