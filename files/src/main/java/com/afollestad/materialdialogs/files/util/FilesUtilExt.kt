@@ -20,29 +20,30 @@ package com.afollestad.materialdialogs.files.util
 import android.Manifest.permission
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Environment.getExternalStorageDirectory
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.files.FileFilter
 import java.io.File
 
 internal fun File.hasParent(
+  context: Context,
   writeable: Boolean,
   filter: FileFilter
-) = betterParent(writeable, filter) != null
+) = betterParent(context, writeable, filter) != null
 
-internal fun File.isExternalStorage() =
-  absolutePath == getExternalStorageDirectory().absolutePath
+internal fun File.isExternalStorage(context: Context) =
+  absolutePath == context.getExternalFilesDir()?.absolutePath
 
 internal fun File.isRoot() = absolutePath == "/"
 
 internal fun File.betterParent(
+  context: Context,
   writeable: Boolean,
   filter: FileFilter
 ): File? {
-  val parentToUse = (if (this.isExternalStorage()) {
+  val parentToUse = (if (isExternalStorage(context)) {
     // Emulated external storage's parent is empty so jump over it
-    getExternalStorageDirectory()?.parentFile?.parentFile
+    context.getExternalFilesDir()?.parentFile?.parentFile
   } else {
     parentFile
   }) ?: return null
@@ -63,16 +64,18 @@ internal fun File.betterParent(
   return parentToUse
 }
 
-internal fun File.jumpOverEmulated(): File {
-  if (absolutePath == getExternalStorageDirectory().parentFile.absolutePath) {
-    // Emulated external storage's parent is empty so jump over it
-    return getExternalStorageDirectory()
+internal fun File.jumpOverEmulated(context: Context): File {
+  val externalFileDir = context.getExternalFilesDir()
+  externalFileDir?.parentFile?.let { externalParentFile ->
+    if (absolutePath == externalParentFile.absolutePath) {
+      return externalFileDir
+    }
   }
   return this
 }
 
-internal fun File.friendlyName() = when {
-  isExternalStorage() -> "External Storage"
+internal fun File.friendlyName(context: Context) = when {
+  isExternalStorage(context) -> "External Storage"
   isRoot() -> "Root"
   else -> name
 }
