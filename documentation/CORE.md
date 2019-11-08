@@ -139,9 +139,9 @@ stacked:
 
 ## Adding an Icon
 
-You can display an icon to the left of the title:
+You can display an icon to the left of or above the title:
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/icon.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/icon.png" width="250px" /> <img src="https://raw.githubusercontent.com/ema987/material-dialogs/feature/iconPosition/art/icon_above_title.png" width="250px" />
 
 ```kotlin
 MaterialDialog(this).show {
@@ -155,6 +155,14 @@ You can pass a Drawable instance as well:
 val myDrawable: Drawable = // ...
 MaterialDialog(this).show {
   icon(drawable = myDrawable)
+}
+```
+
+Above the title:
+
+```kotlin
+MaterialDialog(this).show {
+  icon(R.drawable.your_icon, iconPosition = IconPosition.ABOVE_TITLE)
 }
 ```
 
