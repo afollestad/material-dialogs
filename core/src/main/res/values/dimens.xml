@@ -7,6 +7,7 @@
   <dimen name="md_dialog_horizontal_margin">32dp</dimen>
 
   <dimen name="md_dialog_title_layout_margin_bottom">20dp</dimen>
+  <dimen name="md_dialog_icon_title_layout_margin_bottom">8dp</dimen>
   <dimen name="md_dialog_frame_margin_vertical">24dp</dimen>
   <dimen name="md_dialog_frame_margin_vertical_less">16dp</dimen>
   <dimen name="md_dialog_frame_margin_horizontal">24dp</dimen>

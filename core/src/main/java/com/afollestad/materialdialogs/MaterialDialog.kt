@@ -38,6 +38,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.main.DialogLayout
+import com.afollestad.materialdialogs.internal.main.IconPosition
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.message.DialogMessageSettings
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
@@ -121,14 +122,16 @@ class MaterialDialog(
   }
 
   /**
-   * Shows an drawable to the left of the dialog title.
+   * Shows a drawable to the left of or above the dialog title.
    *
    * @param res The drawable resource to display as the drawable.
    * @param drawable The drawable to display as the drawable.
+   * @param iconPosition The position the icon will assume
    */
   fun icon(
     @DrawableRes res: Int? = null,
-    drawable: Drawable? = null
+    drawable: Drawable? = null,
+    iconPosition: IconPosition = IconPosition.LEFT_OF_TITLE
   ): MaterialDialog {
     assertOneSet("icon", drawable, res)
     populateIcon(
@@ -136,6 +139,7 @@ class MaterialDialog(
         iconRes = res,
         icon = drawable
     )
+    view.titleLayout.iconPosition = iconPosition
     return this
   }
 

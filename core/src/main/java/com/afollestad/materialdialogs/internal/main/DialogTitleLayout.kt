@@ -54,6 +54,10 @@ class DialogTitleLayout(
 
   internal lateinit var iconView: ImageView
   internal lateinit var titleView: TextView
+  internal var iconPosition: IconPosition = IconPosition.LEFT_OF_TITLE
+
+  private val iconTitleMarginBottom : Int
+    get() = if(iconPosition == IconPosition.ABOVE_TITLE) dimenPx(R.dimen.md_dialog_icon_title_layout_margin_bottom) else 0
 
   override fun onFinishInflate() {
     super.onFinishInflate()
@@ -81,7 +85,9 @@ class DialogTitleLayout(
           makeMeasureSpec(iconSize, EXACTLY),
           makeMeasureSpec(iconSize, EXACTLY)
       )
-      titleMaxWidth -= (iconView.measuredWidth + iconMargin)
+      if(iconPosition == IconPosition.LEFT_OF_TITLE) {
+        titleMaxWidth -= (iconView.measuredWidth + iconMargin)
+      }
     }
 
     titleView.measure(
@@ -91,10 +97,17 @@ class DialogTitleLayout(
 
     val iconViewHeight =
       if (iconView.isVisible()) iconView.measuredHeight else 0
-    val requiredHeight = max(
-        iconViewHeight, titleView.measuredHeight
-    )
-    val actualHeight = requiredHeight + frameMarginVertical + titleMarginBottom
+
+    val requiredHeight = when(iconPosition){
+      IconPosition.LEFT_OF_TITLE -> {
+        max(iconViewHeight, titleView.measuredHeight)
+      }
+      IconPosition.ABOVE_TITLE -> {
+       iconViewHeight + titleView.measuredHeight
+      }
+    }
+
+    val actualHeight = requiredHeight + frameMarginVertical + titleMarginBottom + iconTitleMarginBottom
 
     setMeasuredDimension(
         parentWidth,
@@ -112,43 +125,61 @@ class DialogTitleLayout(
     if (shouldNotBeVisible()) return
 
     val contentTop = frameMarginVertical
-    val contentBottom = measuredHeight - titleMarginBottom
+    val contentBottom = measuredHeight - titleMarginBottom + iconTitleMarginBottom
     val contentHeight = contentBottom - contentTop
     val contentMidPoint = contentBottom - (contentHeight / 2)
 
     val titleHalfHeight = titleView.measuredHeight / 2
-    val titleTop = contentMidPoint - titleHalfHeight
-    val titleBottom = contentMidPoint + titleHalfHeight
+    var titleTop = contentMidPoint - titleHalfHeight
+    var titleBottom = contentMidPoint + titleHalfHeight
     var titleLeft: Int
     var titleRight: Int
 
     if (isRtl()) {
       titleRight = measuredWidth - frameMarginHorizontal
-      titleLeft = titleRight - titleView.measuredWidth
+      titleLeft = frameMarginHorizontal
     } else {
       titleLeft = frameMarginHorizontal
-      titleRight = titleLeft + titleView.measuredWidth
+      titleRight = measuredWidth - frameMarginHorizontal
     }
 
     if (iconView.isVisible()) {
       val iconHalfHeight = iconView.measuredHeight / 2
 
-      val iconTop = contentMidPoint - iconHalfHeight
-      val iconBottom = contentMidPoint + iconHalfHeight
+      val iconTop : Int
+      val iconBottom: Int
       val iconLeft: Int
       val iconRight: Int
 
-      if (isRtl()) {
-        iconRight = titleRight
-        iconLeft = iconRight - iconView.measuredWidth
-        titleRight = iconLeft - iconMargin
-        titleLeft = titleRight - titleView.measuredWidth
-      } else {
-        iconLeft = titleLeft
-        iconRight = iconLeft + iconView.measuredWidth
-        titleLeft = iconRight + iconMargin
-        titleRight = titleLeft + titleView.measuredWidth
+      when(iconPosition) {
+        IconPosition.LEFT_OF_TITLE -> {
+          iconTop = contentMidPoint - iconHalfHeight
+          iconBottom = contentMidPoint + iconHalfHeight
+
+          if (isRtl()) {
+            iconRight = titleRight
+            iconLeft = iconRight - iconView.measuredWidth
+            titleRight = iconLeft - iconMargin
+            titleLeft = titleRight - titleView.measuredWidth
+          } else {
+            iconLeft = titleLeft
+            iconRight = iconLeft + iconView.measuredWidth
+            titleLeft = iconRight + iconMargin
+            titleRight = titleLeft + titleView.measuredWidth
+          }
+        }
+
+        IconPosition.ABOVE_TITLE -> {
+          titleTop = contentMidPoint - titleHalfHeight + iconHalfHeight
+          titleBottom = contentMidPoint + titleHalfHeight + iconHalfHeight
+
+          iconTop = contentTop
+          iconBottom = titleTop - iconTitleMarginBottom
+          iconLeft = left + iconView.measuredWidth
+          iconRight = right - iconView.measuredWidth
+        }
       }
+
       iconView.layout(iconLeft, iconTop, iconRight, iconBottom)
     }
 

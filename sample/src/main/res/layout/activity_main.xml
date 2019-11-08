@@ -65,8 +65,14 @@
         />
 
     <Button
-        android:id="@+id/basic_icon"
-        android:text="Basic + Icon + Buttons"
+        android:id="@+id/basic_icon_left"
+        android:text="Basic + Icon Left + Buttons"
+        style="@style/SampleButton"
+        />
+
+    <Button
+        android:id="@+id/basic_icon_above"
+        android:text="Basic + Icon Above + Buttons"
         style="@style/SampleButton"
         />
 
