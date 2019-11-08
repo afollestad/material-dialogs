@@ -56,8 +56,8 @@ class DialogTitleLayout(
   internal lateinit var titleView: TextView
   internal var iconPosition: IconPosition = IconPosition.LEFT_OF_TITLE
 
-  private val iconTitleMarginBottom : Int
-    get() = if(iconPosition == IconPosition.ABOVE_TITLE) dimenPx(R.dimen.md_dialog_icon_title_layout_margin_bottom) else 0
+  private val iconTitleMarginBottom: Int
+    get() = if (iconPosition == IconPosition.ABOVE_TITLE) dimenPx(R.dimen.md_dialog_icon_title_layout_margin_bottom) else 0
 
   override fun onFinishInflate() {
     super.onFinishInflate()
@@ -85,7 +85,7 @@ class DialogTitleLayout(
           makeMeasureSpec(iconSize, EXACTLY),
           makeMeasureSpec(iconSize, EXACTLY)
       )
-      if(iconPosition == IconPosition.LEFT_OF_TITLE) {
+      if (iconPosition == IconPosition.LEFT_OF_TITLE) {
         titleMaxWidth -= (iconView.measuredWidth + iconMargin)
       }
     }
@@ -98,12 +98,12 @@ class DialogTitleLayout(
     val iconViewHeight =
       if (iconView.isVisible()) iconView.measuredHeight else 0
 
-    val requiredHeight = when(iconPosition){
+    val requiredHeight = when (iconPosition) {
       IconPosition.LEFT_OF_TITLE -> {
         max(iconViewHeight, titleView.measuredHeight)
       }
       IconPosition.ABOVE_TITLE -> {
-       iconViewHeight + titleView.measuredHeight
+        iconViewHeight + titleView.measuredHeight
       }
     }
 
@@ -146,12 +146,12 @@ class DialogTitleLayout(
     if (iconView.isVisible()) {
       val iconHalfHeight = iconView.measuredHeight / 2
 
-      val iconTop : Int
+      val iconTop: Int
       val iconBottom: Int
       val iconLeft: Int
       val iconRight: Int
 
-      when(iconPosition) {
+      when (iconPosition) {
         IconPosition.LEFT_OF_TITLE -> {
           iconTop = contentMidPoint - iconHalfHeight
           iconBottom = contentMidPoint + iconHalfHeight
