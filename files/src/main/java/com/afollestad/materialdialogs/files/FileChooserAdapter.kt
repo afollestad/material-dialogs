@@ -37,14 +37,14 @@ import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.resolveColor
+import java.io.File
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.util.Locale
 
 internal class FileChooserViewHolder(
   itemView: View,

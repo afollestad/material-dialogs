@@ -1,44 +1,12 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply from: '../dependencies.gradle'
+ext.module_group = "com.afollestad.material-dialogs"
+ext.module_name = "core"
 
-ext.shard = 'core'
-apply from: '../bintrayconfig.gradle'
-
-android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTools
-
-  compileOptions {
-    if (modulePackageId != null && modulePackageId != '') {
-      logger.warn('Package for current module: ' + modulePackageId)
-      kotlinOptions.freeCompilerArgs += ['-module-name', modulePackageId]
-    } else {
-      logger.warn('Skipping setting compiler module name, no package to use.')
-    }
-  }
-
-  defaultConfig {
-    minSdkVersion versions.minSdk
-    targetSdkVersion versions.compileSdk
-    versionCode versions.publishVersionCode
-    versionName versions.publishVersion
-  }
-
-  sourceSets {
-    main.res.srcDirs = [
-        'src/main/res',
-        'src/main/res-public'
-    ]
-  }
-}
+apply from: rootProject.file("gradle/android_library_config.gradle")
 
 dependencies {
-  api 'androidx.appcompat:appcompat:' + versions.androidxCore
-  api 'androidx.annotation:annotation:' + versions.androidxAnnotation
+  api deps.androidx.core
+  api deps.androidx.recycler_view
+  compileOnly deps.androidx.annotations
 
-  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
+  implementation deps.kotlin.stdlib8
 }
-
-apply from: '../spotless.gradle'

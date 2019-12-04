@@ -1,32 +1,37 @@
-apply from: './dependencies.gradle'
-apply from: './versionsPlugin.gradle'
+apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 
 buildscript {
-  apply from: './dependencies.gradle'
+  apply from: rootProject.file("dependencies.gradle")
 
   repositories {
-    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
-    classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + versions.kotlin
-    classpath 'com.github.ben-manes:gradle-versions-plugin:' + versions.versionPlugin
-    classpath 'com.novoda:bintray-release:' + versions.bintrayPlugin
+    classpath deps.gradle_plugins.android
+    classpath deps.gradle_plugins.bintray_release
+    classpath deps.gradle_plugins.kotlin
+    classpath deps.gradle_plugins.spotless
+    classpath deps.gradle_plugins.versions
   }
 }
 
 allprojects {
   repositories {
-    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     google()
     jcenter()
   }
+}
 
-  tasks.withType(Javadoc).all {
-    enabled = false
+subprojects {
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+      freeCompilerArgs += ['-module-name', project.path.replace('/', '.').replace(':', '_')]
+    }
   }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
 }

@@ -30,8 +30,8 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.list.MultiChoiceListener
 import com.afollestad.materialdialogs.list.getItemSelector
 import com.afollestad.materialdialogs.utils.MDUtil.createColorSelector
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.inflate
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.appendAll
 import com.afollestad.materialdialogs.utils.pullIndices
 import com.afollestad.materialdialogs.utils.removeAll

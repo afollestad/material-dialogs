@@ -1,42 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply from: '../dependencies.gradle'
+ext.module_group = "com.afollestad.material-dialogs"
+ext.module_name = "input"
 
-ext.shard = 'input'
-apply from: '../bintrayconfig.gradle'
-
-android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTools
-
-  compileOptions {
-    if (modulePackageId != null && modulePackageId != '') {
-      logger.warn('Package for current module: ' + modulePackageId)
-      kotlinOptions.freeCompilerArgs += ['-module-name', modulePackageId]
-    } else {
-      logger.warn('Skipping setting compiler module name, no package to use.')
-    }
-  }
-
-  defaultConfig {
-    minSdkVersion versions.minSdk
-    targetSdkVersion versions.compileSdk
-    versionCode versions.publishVersionCode
-    versionName versions.publishVersion
-  }
-
-  sourceSets {
-    main.res.srcDirs = [
-        'src/main/res',
-        'src/main/res-public'
-    ]
-  }
-}
+apply from: rootProject.file("gradle/android_library_config.gradle")
 
 dependencies {
-  implementation 'com.google.android.material:material:' + versions.androidxMaterial
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
-  implementation project(':core')
-}
+  api project(':core')
 
-apply from: '../spotless.gradle'
+  implementation deps.google_material
+  implementation deps.kotlin.stdlib8
+}

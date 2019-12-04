@@ -1,0 +1,8 @@
+apply plugin: "com.android.application"
+apply from: rootProject.file("gradle/android_common_config.gradle")
+
+if (module_package_id == null) {
+  throw new IllegalStateException("module_package_id is missing!")
+}
+
+android.defaultConfig.applicationId = module_package_id.replace('-', '')
