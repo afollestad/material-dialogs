@@ -103,8 +103,8 @@ internal class GridIconDialogAdapter<IT : GridItem>(
     holder.itemView.isEnabled = !disabledIndices.contains(position)
     val currentItem = items[position]
 
-    holder.titleView.text = currentItem.title
     holder.itemView.background = dialog.getItemSelector()
+    currentItem.configureTitle(holder.titleView)
     currentItem.populateIcon(holder.iconView)
 
     val activatedIndex = dialog.config[KEY_ACTIVATED_INDEX] as? Int

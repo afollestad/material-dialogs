@@ -16,12 +16,16 @@
 package com.afollestad.materialdialogs.bottomsheets
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 
 /** @author Aidan Follestad (@afollestad) */
 interface GridItem {
   val title: String
   fun populateIcon(imageView: ImageView)
+  fun configureTitle(textView: TextView) {
+    textView.text = title
+  }
 }
 
 /** @author Aidan Follestad (@afollestad) */
