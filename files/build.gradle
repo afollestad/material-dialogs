@@ -7,6 +7,6 @@ dependencies {
   api project(':core')
   api project(':input')
 
-  implementation deps.kotlin.coroutines.core
+  implementation deps.kotlin.coroutines.android
   implementation deps.kotlin.stdlib8
 }
