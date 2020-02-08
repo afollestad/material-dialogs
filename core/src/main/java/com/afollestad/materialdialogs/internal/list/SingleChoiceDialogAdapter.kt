@@ -55,7 +55,10 @@ internal class SingleChoiceViewHolder(
       titleView.isEnabled = value
     }
 
-  override fun onClick(view: View) = adapter.itemClicked(adapterPosition)
+  override fun onClick(view: View) {
+    if (adapterPosition < 0) return
+    adapter.itemClicked(adapterPosition)
+  }
 }
 
 /**
@@ -70,7 +73,8 @@ internal class SingleChoiceDialogAdapter(
   initialSelection: Int,
   private val waitForActionButton: Boolean,
   internal var selection: SingleChoiceListener
-) : RecyclerView.Adapter<SingleChoiceViewHolder>(), DialogAdapter<CharSequence, SingleChoiceListener> {
+) : RecyclerView.Adapter<SingleChoiceViewHolder>(),
+    DialogAdapter<CharSequence, SingleChoiceListener> {
 
   private var currentSelection: Int = initialSelection
     set(value) {
@@ -179,12 +183,18 @@ internal class SingleChoiceDialogAdapter(
 
   override fun checkItems(indices: IntArray) {
     val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    check(targetIndex >= 0 && targetIndex < items.size) {
+      "Index $targetIndex is out of range for this adapter of ${items.size} items."
+    }
     if (this.disabledIndices.contains(targetIndex)) return
     this.currentSelection = targetIndex
   }
 
   override fun uncheckItems(indices: IntArray) {
     val targetIndex = if (indices.isNotEmpty()) indices[0] else -1
+    check(targetIndex >= 0 && targetIndex < items.size) {
+      "Index $targetIndex is out of range for this adapter of ${items.size} items."
+    }
     if (this.disabledIndices.contains(targetIndex)) return
     this.currentSelection = -1
   }
