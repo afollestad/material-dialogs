@@ -1,3 +1,10 @@
+3.2.1
+
+* Fixed the module-name given to the Kotlin compiler for each Gradle module, should fix
+extension function resolution issues.
+
+---
+
 3.2.0
 
 * Dependency upgrades.
