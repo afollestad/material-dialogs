@@ -46,11 +46,11 @@ import kotlin.properties.Delegates.notNull
 class BottomSheet(
   private val layoutMode: LayoutMode = MATCH_PARENT
 ) : DialogBehavior {
-  internal var bottomSheetBehavior: BottomSheetBehavior<*>? = null
-  private var bottomSheetView: ViewGroup? = null
+  internal var bottomSheetBehavior: BottomSheetBehavior<ViewGroup>? = null
+  private lateinit var bottomSheetView: ViewGroup
+  private lateinit var rootView: CoordinatorLayout
+  private lateinit var buttonsLayout: DialogActionButtonLayout
 
-  private var rootView: CoordinatorLayout? = null
-  private var buttonsLayout: DialogActionButtonLayout? = null
   private var dialog: MaterialDialog? = null
 
   internal var defaultPeekHeight: Int by notNull()
@@ -79,8 +79,8 @@ class BottomSheet(
     ) as CoordinatorLayout
 
     this.dialog = dialog
-    this.bottomSheetView = rootView!!.findViewById(R.id.md_root_bottom_sheet)
-    this.buttonsLayout = rootView!!.findViewById(R.id.md_button_layout)
+    this.bottomSheetView = rootView.findViewById(R.id.md_root_bottom_sheet)
+    this.buttonsLayout = rootView.findViewById(R.id.md_button_layout)
 
     val (_, windowHeight) = dialogWindow.windowManager.getWidthAndHeight()
     defaultPeekHeight = (windowHeight * DEFAULT_PEEK_HEIGHT_RATIO).toInt()
@@ -95,7 +95,7 @@ class BottomSheet(
       )
     }
 
-    return rootView!!
+    return rootView
   }
 
   private fun carryOverWindowFlags(
@@ -119,23 +119,23 @@ class BottomSheet(
     bottomSheetBehavior!!.setCallbacks(
         onSlide = { currentHeight ->
           // Slide the buttons layout down as the bottom sheet is hiding itself
-          val buttonsLayoutHeight = buttonsLayout?.measuredHeight ?: currentHeight + 1
+          val buttonsLayoutHeight = buttonsLayout.measuredHeight
           if (currentHeight in 1..buttonsLayoutHeight) {
             val diff = buttonsLayoutHeight - currentHeight
-            buttonsLayout?.translationY = diff.toFloat()
+            buttonsLayout.translationY = diff.toFloat()
           } else if (currentHeight > 0) {
-            buttonsLayout?.translationY = 0f
+            buttonsLayout.translationY = 0f
           }
           // Show divider over buttons layout if sheet is sliding down
           invalidateDividers(currentHeight)
         },
         onHide = {
-          buttonsLayout?.visibility = GONE
+          buttonsLayout.visibility = GONE
           dialog?.dismiss()
         }
     )
 
-    bottomSheetView!!.waitForHeight {
+    bottomSheetView.waitForHeight {
       actualPeekHeight = min(defaultPeekHeight, min(this.measuredHeight, defaultPeekHeight))
     }
   }
@@ -146,17 +146,17 @@ class BottomSheet(
     val scrollView = contentLayout.scrollView
     val recyclerView = contentLayout.recyclerView
     when {
-      currentHeight < mainViewHeight -> buttonsLayout?.drawDivider = true
+      currentHeight < mainViewHeight -> buttonsLayout.drawDivider = true
       scrollView != null -> scrollView.invalidateDividers()
       recyclerView != null -> recyclerView.invalidateDividers()
-      else -> buttonsLayout?.drawDivider = false
+      else -> buttonsLayout.drawDivider = false
     }
   }
 
   override fun getDialogLayout(root: ViewGroup): DialogLayout {
     return (root.findViewById(R.id.md_root) as DialogLayout).also { dialogLayout ->
       dialogLayout.layoutMode = layoutMode
-      dialogLayout.attachButtonsLayout(buttonsLayout!!)
+      dialogLayout.attachButtonsLayout(buttonsLayout)
     }
   }
 
@@ -185,7 +185,7 @@ class BottomSheet(
     color: Int,
     cornerRounding: Float
   ) {
-    bottomSheetView?.background = GradientDrawable().apply {
+    bottomSheetView.background = GradientDrawable().apply {
       cornerRadii = floatArrayOf(
           cornerRounding, cornerRounding, // top left
           cornerRounding, cornerRounding, // top right
@@ -194,22 +194,22 @@ class BottomSheet(
       )
       setColor(color)
     }
-    buttonsLayout?.setBackgroundColor(color)
+    buttonsLayout.setBackgroundColor(color)
   }
 
   override fun onPreShow(dialog: MaterialDialog) {
     if (dialog.cancelOnTouchOutside && dialog.cancelable) {
       // Clicking outside the bottom sheet dismisses the dialog
-      rootView?.setOnClickListener { this.dialog?.dismiss() }
+      rootView.setOnClickListener { this.dialog?.dismiss() }
     } else {
-      rootView?.setOnClickListener(null)
+      rootView.setOnClickListener(null)
     }
 
-    bottomSheetView!!.waitForHeight {
+    bottomSheetView.waitForHeight {
       bottomSheetBehavior?.peekHeight = 0
       bottomSheetBehavior?.state = STATE_COLLAPSED
       bottomSheetBehavior?.animatePeekHeight(
-          view = bottomSheetView!!,
+          view = bottomSheetView,
           start = 0,
           dest = actualPeekHeight,
           duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
@@ -239,16 +239,16 @@ class BottomSheet(
     if (!buttonsLayout.shouldBeVisible()) {
       return
     }
-    val start = buttonsLayout!!.measuredHeight
-    buttonsLayout?.translationY = start.toFloat()
-    buttonsLayout?.visibility = VISIBLE
+    val start = buttonsLayout.measuredHeight
+    buttonsLayout.translationY = start.toFloat()
+    buttonsLayout.visibility = VISIBLE
     val animator = animateValues(
         from = start,
         to = 0,
         duration = BUTTONS_SHOW_DURATION_MS,
-        onUpdate = { buttonsLayout?.translationY = it.toFloat() }
+        onUpdate = { buttonsLayout.translationY = it.toFloat() }
     )
-    buttonsLayout?.onDetach { animator.cancel() }
+    buttonsLayout.onDetach { animator.cancel() }
     animator.apply {
       startDelay = BUTTONS_SHOW_START_DELAY_MS
       start()
@@ -259,11 +259,11 @@ class BottomSheet(
     if (!buttonsLayout.shouldBeVisible()) return
     val animator = animateValues(
         from = 0,
-        to = buttonsLayout!!.measuredHeight,
+        to = buttonsLayout.measuredHeight,
         duration = LAYOUT_PEEK_CHANGE_DURATION_MS,
-        onUpdate = { buttonsLayout?.translationY = it.toFloat() }
+        onUpdate = { buttonsLayout.translationY = it.toFloat() }
     )
-    buttonsLayout?.onDetach { animator.cancel() }
+    buttonsLayout.onDetach { animator.cancel() }
     animator.start()
   }
 
