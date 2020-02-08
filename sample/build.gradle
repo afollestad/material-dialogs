@@ -1,5 +1,5 @@
-ext.module_group = "com.afollestad.material-dialogs"
-ext.module_name = "sample"
+ext.module_group = "com.afollestad"
+ext.module_name = "materialdialogssample"
 
 apply from: rootProject.file("gradle/android_application_config.gradle")
 
