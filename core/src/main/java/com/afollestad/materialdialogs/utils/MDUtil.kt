@@ -159,11 +159,11 @@ object MDUtil {
   @RestrictTo(LIBRARY_GROUP) fun resolveDimen(
     context: Context,
     @AttrRes attr: Int,
-    defaultValue: Float = 0f
+    defaultValue: (() -> Float)? = null
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
-      return a.getDimension(0, defaultValue)
+      return a.getDimension(0, defaultValue?.invoke() ?: 0f)
     } finally {
       a.recycle()
     }
