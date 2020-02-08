@@ -49,6 +49,7 @@ class DialogActionButton(
 
   private var enabledColor: Int = 0
   private var disabledColor: Int = 0
+  private var enabledColorOverride: Int? = null
 
   init {
     isClickable = true
@@ -77,7 +78,7 @@ class DialogActionButton(
       if (isLightTheme) R.color.md_disabled_text_light_theme
       else R.color.md_disabled_text_dark_theme
     disabledColor = resolveColor(baseContext, res = disabledColorRes)
-    setTextColor(enabledColor)
+    setTextColor(enabledColorOverride ?: enabledColor)
 
     // Selector
     val bgDrawable = resolveDrawable(baseContext, attr = R.attr.md_button_selector)
@@ -100,11 +101,12 @@ class DialogActionButton(
 
   fun updateTextColor(@ColorInt color: Int) {
     enabledColor = color
+    enabledColorOverride = color
     isEnabled = isEnabled
   }
 
   override fun setEnabled(enabled: Boolean) {
     super.setEnabled(enabled)
-    setTextColor(if (enabled) enabledColor else disabledColor)
+    setTextColor(if (enabled) enabledColorOverride ?: enabledColor else disabledColor)
   }
 }
