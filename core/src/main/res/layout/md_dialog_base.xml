@@ -4,6 +4,7 @@
     android:id="@+id/md_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipChildren="true"
     >
 
   <include layout="@layout/md_dialog_stub_title"/>

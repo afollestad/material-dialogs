@@ -444,13 +444,13 @@ class MaterialDialog(
     val backgroundColor = resolveColor(attr = R.attr.md_background_color) {
       resolveColor(attr = R.attr.colorBackgroundFloating)
     }
-    val cornerRadius =
-      cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius)
     window?.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+    val cornerRadius = cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius)
+    view.cornerRadius = cornerRadius
     dialogBehavior.setBackgroundColor(
         view = view,
         color = backgroundColor,
-        cornerRounding = cornerRadius
+        cornerRadius = cornerRadius
     )
   }
 
