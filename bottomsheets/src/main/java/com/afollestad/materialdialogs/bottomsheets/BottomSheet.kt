@@ -228,7 +228,10 @@ class BottomSheet(
         sheetBehavior != null &&
         sheetBehavior.state != STATE_HIDDEN
     ) {
-      sheetBehavior.state = STATE_HIDDEN
+      sheetBehavior.apply {
+        isHideable = true
+        state = STATE_HIDDEN
+      }
       hideButtons()
       return true
     }
