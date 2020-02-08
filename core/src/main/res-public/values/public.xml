@@ -11,6 +11,7 @@
   <attr format="reference" name="md_font_title"/>
   <attr format="reference" name="md_font_body"/>
   <attr format="reference" name="md_font_button"/>
+  <attr format="float" name="md_line_spacing_body"/>
   <attr format="enum" name="md_button_casing">
     <enum name="upper" value="1"/>
     <enum name="literal" value="2"/>
