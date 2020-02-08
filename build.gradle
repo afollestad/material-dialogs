@@ -27,7 +27,7 @@ allprojects {
 subprojects {
   tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
-      freeCompilerArgs += ['-module-name', project.path.replace('/', '.').replace(':', '_')]
+      freeCompilerArgs += ['-module-name', project.path.replace(':', '')]
     }
   }
 }
