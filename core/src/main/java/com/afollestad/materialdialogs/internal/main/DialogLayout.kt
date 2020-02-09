@@ -67,7 +67,7 @@ class DialogLayout(
       field = value
       setWillNotDraw(!value)
     }
-  var cornerRadius: Float = 0f
+  var cornerRadii: FloatArray = floatArrayOf()
     set(value) {
       field = value
       if (!cornerRadiusPath.isEmpty) {
@@ -164,14 +164,14 @@ class DialogLayout(
       setMeasuredDimension(specWidth, windowHeight)
     }
 
-    if (cornerRadius > 0f) {
+    if (cornerRadii.isNotEmpty()) {
       cornerRadiusRect.apply {
         left = 0f
         top = 0f
         right = measuredWidth.toFloat()
         bottom = measuredHeight.toFloat()
       }
-      cornerRadiusPath.addRoundRect(cornerRadiusRect, cornerRadius, cornerRadius, CW)
+      cornerRadiusPath.addRoundRect(cornerRadiusRect, cornerRadii, CW)
     }
   }
 
@@ -309,7 +309,7 @@ class DialogLayout(
   }
 
   override fun dispatchDraw(canvas: Canvas) {
-    if (cornerRadius > 0f) {
+    if (cornerRadii.isNotEmpty()) {
       canvas.clipPath(cornerRadiusPath)
     }
     super.dispatchDraw(canvas)

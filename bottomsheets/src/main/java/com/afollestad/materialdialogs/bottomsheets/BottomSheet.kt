@@ -186,7 +186,12 @@ class BottomSheet(
     cornerRadius: Float
   ) {
     bottomSheetView.background = GradientDrawable().apply {
-      this.cornerRadius = cornerRadius
+      this.cornerRadii = floatArrayOf(
+          cornerRadius, cornerRadius, // top left
+          cornerRadius, cornerRadius, // top right
+          0f, 0f, // bottom left
+          0f, 0f // bottom right
+      )
       setColor(color)
     }
     buttonsLayout.setBackgroundColor(color)

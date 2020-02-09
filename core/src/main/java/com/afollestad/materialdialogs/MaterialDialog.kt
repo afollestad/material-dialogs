@@ -449,7 +449,6 @@ class MaterialDialog(
       cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius) {
         context.resources.getDimension(R.dimen.md_dialog_default_corner_radius)
       }
-    view.cornerRadius = cornerRadius
     dialogBehavior.setBackgroundColor(
         view = view,
         color = backgroundColor,

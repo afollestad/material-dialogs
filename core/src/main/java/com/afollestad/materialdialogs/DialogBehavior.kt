@@ -144,6 +144,12 @@ object ModalDialog : DialogBehavior {
     @ColorInt color: Int,
     cornerRadius: Float
   ) {
+    view.cornerRadii = floatArrayOf(
+        cornerRadius, cornerRadius, // top left
+        cornerRadius, cornerRadius, // top right
+        0f, 0f, // bottom left
+        0f, 0f // bottom right
+    )
     view.background = GradientDrawable().apply {
       this.cornerRadius = cornerRadius
       setColor(color)
