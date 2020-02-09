@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package com.afollestad.materialdialogs
 
@@ -129,14 +129,13 @@ class MaterialDialog(
   fun icon(
     @DrawableRes res: Int? = null,
     drawable: Drawable? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     assertOneSet("icon", drawable, res)
     populateIcon(
         view.titleLayout.iconView,
         iconRes = res,
         icon = drawable
     )
-    return this
   }
 
   /**
@@ -148,7 +147,7 @@ class MaterialDialog(
   fun title(
     @StringRes res: Int? = null,
     text: String? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     assertOneSet("title", text, res)
     populateText(
         view.titleLayout.titleView,
@@ -157,7 +156,6 @@ class MaterialDialog(
         typeface = this.titleFont,
         textColor = R.attr.md_color_title
     )
-    return this
   }
 
   /**
@@ -170,7 +168,7 @@ class MaterialDialog(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     applySettings: (DialogMessageSettings.() -> Unit)? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     assertOneSet("message", text, res)
     this.view.contentLayout.setMessage(
         dialog = this,
@@ -179,7 +177,6 @@ class MaterialDialog(
         typeface = this.bodyFont,
         applySettings = applySettings
     )
-    return this
   }
 
   /**
@@ -193,7 +190,7 @@ class MaterialDialog(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     if (click != null) {
       positiveListeners.add(click)
     }
@@ -212,13 +209,11 @@ class MaterialDialog(
         fallback = android.R.string.ok,
         typeface = this.buttonFont
     )
-    return this
   }
 
   /** Clears any positive action button listeners set via usages of [positiveButton]. */
-  fun clearPositiveListeners(): MaterialDialog {
+  fun clearPositiveListeners(): MaterialDialog = apply {
     this.positiveListeners.clear()
-    return this
   }
 
   /**
@@ -233,7 +228,7 @@ class MaterialDialog(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     if (click != null) {
       negativeListeners.add(click)
     }
@@ -242,7 +237,7 @@ class MaterialDialog(
     if (res == null && text == null && btn.isVisible()) {
       // Didn't receive text and the button is already setup,
       // so just stop with the added listener.
-      return this
+      return@apply
     }
 
     populateText(
@@ -252,13 +247,11 @@ class MaterialDialog(
         fallback = android.R.string.cancel,
         typeface = this.buttonFont
     )
-    return this
   }
 
   /** Clears any negative action button listeners set via usages of [negativeButton]. */
-  fun clearNegativeListeners(): MaterialDialog {
+  fun clearNegativeListeners(): MaterialDialog = apply {
     this.negativeListeners.clear()
-    return this
   }
 
   @Deprecated(
@@ -269,7 +262,7 @@ class MaterialDialog(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
     click: DialogCallback? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     if (click != null) {
       neutralListeners.add(click)
     }
@@ -278,7 +271,7 @@ class MaterialDialog(
     if (res == null && text == null && btn.isVisible()) {
       // Didn't receive text and the button is already setup,
       // so just stop with the added listener.
-      return this
+      return@apply
     }
 
     populateText(
@@ -287,25 +280,22 @@ class MaterialDialog(
         text = text,
         typeface = this.buttonFont
     )
-    return this
   }
 
   @Deprecated(
       "Use of neutral buttons is discouraged, see " +
           "https://material.io/design/components/dialogs.html#actions."
   )
-  fun clearNeutralListeners(): MaterialDialog {
+  fun clearNeutralListeners(): MaterialDialog = apply {
     this.neutralListeners.clear()
-    return this
   }
 
   /**
    * Turns off auto dismiss. Action button and list item clicks won't dismiss the dialog on their
    * own. You have to handle dismissing the dialog manually with the [dismiss] method.
    */
-  @CheckResult fun noAutoDismiss(): MaterialDialog {
+  @CheckResult fun noAutoDismiss(): MaterialDialog = apply {
     this.autoDismissEnabled = false
-    return this
   }
 
   /**
@@ -320,7 +310,7 @@ class MaterialDialog(
   fun maxWidth(
     @DimenRes res: Int? = null,
     @Px literal: Int? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     assertOneSet("maxWidth", res, literal)
     val shouldSetConstraints = this.maxWidth != null && this.maxWidth == 0
     this.maxWidth = if (res != null) {
@@ -331,7 +321,6 @@ class MaterialDialog(
     if (shouldSetConstraints) {
       setWindowConstraints()
     }
-    return this
   }
 
   /**
@@ -342,7 +331,7 @@ class MaterialDialog(
   fun cornerRadius(
     literalDp: Float? = null,
     @DimenRes res: Int? = null
-  ): MaterialDialog {
+  ): MaterialDialog = apply {
     assertOneSet("cornerRadius", literalDp, res)
     this.cornerRadius = if (res != null) {
       windowContext.resources.getDimension(res)
@@ -351,13 +340,13 @@ class MaterialDialog(
       TypedValue.applyDimension(COMPLEX_UNIT_DIP, literalDp!!, displayMetrics)
     }
     invalidateBackgroundColorAndRadius()
-    return this
   }
 
   /** Turns debug mode on or off. Draws spec guides over dialog views. */
-  @CheckResult fun debugMode(debugMode: Boolean = true): MaterialDialog {
+  @CheckResult fun debugMode(
+    debugMode: Boolean = true
+  ): MaterialDialog = apply {
     this.view.debugMode = debugMode
-    return this
   }
 
   /** Opens the dialog. */
@@ -370,17 +359,15 @@ class MaterialDialog(
   }
 
   /** Applies multiple properties to the dialog and opens it. */
-  inline fun show(func: MaterialDialog.() -> Unit): MaterialDialog {
+  inline fun show(func: MaterialDialog.() -> Unit): MaterialDialog = apply {
     this.func()
     this.show()
-    return this
   }
 
   /** Configures whether or not the dialog can be cancelled. */
-  fun cancelable(cancelable: Boolean): MaterialDialog {
+  fun cancelable(cancelable: Boolean): MaterialDialog = apply {
     @Suppress("DEPRECATION")
     setCancelable(cancelable)
-    return this
   }
 
   @Deprecated(
@@ -393,10 +380,9 @@ class MaterialDialog(
   }
 
   /** Whether or not touching outside of the dialog UI will cancel the dialog. */
-  fun cancelOnTouchOutside(cancelable: Boolean): MaterialDialog {
+  fun cancelOnTouchOutside(cancelable: Boolean): MaterialDialog = apply {
     @Suppress("DEPRECATION")
     setCanceledOnTouchOutside(cancelable)
-    return this
   }
 
   @Deprecated(
@@ -409,9 +395,7 @@ class MaterialDialog(
   }
 
   override fun dismiss() {
-    if (dialogBehavior.onDismiss()) {
-      return
-    }
+    if (dialogBehavior.onDismiss()) return
     hideKeyboard()
     super.dismiss()
   }
@@ -445,14 +429,12 @@ class MaterialDialog(
       resolveColor(attr = R.attr.colorBackgroundFloating)
     }
     window?.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-    val cornerRadius =
-      cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius) {
-        context.resources.getDimension(R.dimen.md_dialog_default_corner_radius)
-      }
     dialogBehavior.setBackgroundColor(
         view = view,
         color = backgroundColor,
-        cornerRadius = cornerRadius
+        cornerRadius = cornerRadius ?: resolveDimen(windowContext, attr = R.attr.md_corner_radius) {
+          context.resources.getDimension(R.dimen.md_dialog_default_corner_radius)
+        }
     )
   }
 
