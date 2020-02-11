@@ -49,6 +49,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/sample_button_height</item>
     <item name="android:layout_marginTop">@dimen/sample_button_spacing</item>
+    <item name="android:textColor">?sample_button_text_color</item>
     <item name="backgroundTint">?sample_button_color</item>
   </style>
 
