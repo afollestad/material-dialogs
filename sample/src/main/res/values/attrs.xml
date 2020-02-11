@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <attr format="color" name="sample_button_color"/>
+  <attr format="color" name="sample_button_text_color"/>
 </resources>
