@@ -1,49 +1,12 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply from: '../dependencies.gradle'
+ext.module_group = "com.afollestad.material-dialogs"
+ext.module_name = "files"
 
-ext.shard = 'files'
-apply from: '../bintrayconfig.gradle'
-
-android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTools
-
-  compileOptions {
-    if (modulePackageId != null && modulePackageId != '') {
-      logger.warn('Package for current module: ' + modulePackageId)
-      kotlinOptions.freeCompilerArgs += ['-module-name', modulePackageId]
-    } else {
-      logger.warn('Skipping setting compiler module name, no package to use.')
-    }
-  }
-
-  defaultConfig {
-    minSdkVersion versions.minSdk
-    targetSdkVersion versions.compileSdk
-    versionCode versions.publishVersionCode
-    versionName versions.publishVersion
-  }
-
-  sourceSets {
-    main.res.srcDirs = [
-        'src/main/res',
-        'src/main/res-public'
-    ]
-  }
-
-  packagingOptions {
-    exclude 'META-INF/atomicfu.kotlin_module'
-  }
-}
+apply from: rootProject.file("gradle/android_library_config.gradle")
 
 dependencies {
-  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:' + versions.coroutines
+  api project(':core')
+  api project(':input')
 
-  implementation project(':core')
-  implementation project(':input')
+  implementation deps.kotlin.coroutines.android
+  implementation deps.kotlin.stdlib8
 }
-
-apply from: '../spotless.gradle'

@@ -1,0 +1,4 @@
+apply plugin: "com.android.library"
+
+apply from: rootProject.file("gradle/android_common_config.gradle")
+apply from: rootProject.file("gradle/android_bintray_config.gradle")

@@ -142,6 +142,8 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:gravity">start|center_vertical</item>
     <item name="android:layout_gravity">start|center_vertical</item>
+    <item name="android:layout_marginLeft">@dimen/md_listitem_margin_left_choice</item>
+    <item name="android:layout_marginStart">@dimen/md_listitem_margin_left_choice</item>
     <item name="android:minHeight">@dimen/md_listitem_height</item>
     <item name="android:paddingBottom">@dimen/md_listitem_vertical_margin_choice</item>
     <item name="android:paddingLeft">@dimen/md_listitem_control_margin</item>

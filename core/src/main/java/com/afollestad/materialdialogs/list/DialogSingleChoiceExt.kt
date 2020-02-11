@@ -23,9 +23,9 @@ import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.list.SingleChoiceDialogAdapter
+import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 
 /**

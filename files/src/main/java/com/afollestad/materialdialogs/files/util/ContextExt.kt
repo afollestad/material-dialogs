@@ -13,27 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.materialdialogs.bottomsheets
+package com.afollestad.materialdialogs.files.util
 
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.DrawableRes
+import android.content.Context
+import java.io.File
 
-/** @author Aidan Follestad (@afollestad) */
-interface GridItem {
-  val title: String
-  fun populateIcon(imageView: ImageView)
-  fun configureTitle(textView: TextView) {
-    textView.text = title
-  }
-}
-
-/** @author Aidan Follestad (@afollestad) */
-data class BasicGridItem(
-  @DrawableRes val iconRes: Int,
-  override val title: String
-) : GridItem {
-  override fun populateIcon(imageView: ImageView) {
-    imageView.setImageResource(iconRes)
-  }
+internal fun Context.getExternalFilesDir(): File? {
+    return this.getExternalFilesDir(null)
 }

@@ -1,0 +1,34 @@
+ext.module_package_id = "${module_group}.${module_name}"
+logger.info("Package ID: $module_package_id")
+
+apply plugin: "kotlin-android"
+apply from: rootProject.file("dependencies.gradle")
+apply from: rootProject.file("gradle/spotless_plugin_config.gradle")
+
+android {
+  compileSdkVersion versions.compile_sdk
+  buildToolsVersion versions.build_tools
+
+  compileOptions {
+    sourceCompatibility 1.8
+    targetCompatibility 1.8
+  }
+
+  defaultConfig {
+    minSdkVersion versions.min_sdk
+    targetSdkVersion versions.compile_sdk
+    versionCode versions.publish_version_code
+    versionName versions.publish_version
+  }
+
+  sourceSets {
+    main.res.srcDirs = [
+        "src/main/res",
+        "src/main/res-public"
+    ]
+  }
+
+  packagingOptions {
+    exclude 'META-INF/atomicfu.kotlin_module'
+  }
+}

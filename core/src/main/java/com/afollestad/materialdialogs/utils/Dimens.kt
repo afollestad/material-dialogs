@@ -21,13 +21,12 @@ import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.DimenRes
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 
 internal fun MaterialDialog.dimen(
   @DimenRes res: Int? = null,
   @AttrRes attr: Int? = null,
-  fallback: Float = windowContext.resources.getDimension(R.dimen.md_dialog_default_corner_radius)
+  fallback: Float = 0f
 ): Float {
   assertOneSet("dimen", attr, res)
   if (res != null) {

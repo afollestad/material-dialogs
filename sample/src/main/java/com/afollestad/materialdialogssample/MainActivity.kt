@@ -26,6 +26,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -57,63 +58,6 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import kotlinx.android.synthetic.main.activity_main.basic
-import kotlinx.android.synthetic.main.activity_main.basic_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_checkbox_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_html_content
-import kotlinx.android.synthetic.main.activity_main.basic_icon
-import kotlinx.android.synthetic.main.activity_main.basic_long_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_stacked_buttons
-import kotlinx.android.synthetic.main.activity_main.basic_titled
-import kotlinx.android.synthetic.main.activity_main.basic_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_colorPicker
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_customView
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_dateTimePicker
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_grid
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_info
-import kotlinx.android.synthetic.main.activity_main.bottomsheet_list
-import kotlinx.android.synthetic.main.activity_main.buttons_callbacks
-import kotlinx.android.synthetic.main.activity_main.buttons_neutral
-import kotlinx.android.synthetic.main.activity_main.buttons_stacked
-import kotlinx.android.synthetic.main.activity_main.buttons_stacked_checkboxPrompt
-import kotlinx.android.synthetic.main.activity_main.colorChooser_accent
-import kotlinx.android.synthetic.main.activity_main.colorChooser_customColors
-import kotlinx.android.synthetic.main.activity_main.colorChooser_customColorsNoSub
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customArgb
-import kotlinx.android.synthetic.main.activity_main.colorChooser_primary_customRgb
-import kotlinx.android.synthetic.main.activity_main.custom_view
-import kotlinx.android.synthetic.main.activity_main.custom_view_webview
-import kotlinx.android.synthetic.main.activity_main.date_picker
-import kotlinx.android.synthetic.main.activity_main.datetime_picker
-import kotlinx.android.synthetic.main.activity_main.file_chooser
-import kotlinx.android.synthetic.main.activity_main.file_chooser_buttons
-import kotlinx.android.synthetic.main.activity_main.file_chooser_filter
-import kotlinx.android.synthetic.main.activity_main.folder_chooser_buttons
-import kotlinx.android.synthetic.main.activity_main.folder_chooser_filter
-import kotlinx.android.synthetic.main.activity_main.input
-import kotlinx.android.synthetic.main.activity_main.input_check_prompt
-import kotlinx.android.synthetic.main.activity_main.input_counter
-import kotlinx.android.synthetic.main.activity_main.input_message
-import kotlinx.android.synthetic.main.activity_main.list
-import kotlinx.android.synthetic.main.activity_main.list_buttons
-import kotlinx.android.synthetic.main.activity_main.list_checkPrompt_buttons
-import kotlinx.android.synthetic.main.activity_main.list_dont_wait_positive
-import kotlinx.android.synthetic.main.activity_main.list_long
-import kotlinx.android.synthetic.main.activity_main.list_long_titled
-import kotlinx.android.synthetic.main.activity_main.list_titled
-import kotlinx.android.synthetic.main.activity_main.list_titled_buttons
-import kotlinx.android.synthetic.main.activity_main.list_titled_message_buttons
-import kotlinx.android.synthetic.main.activity_main.misc_dialog_callbacks
-import kotlinx.android.synthetic.main.activity_main.multiple_choice
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_buttons
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_disabled_items
-import kotlinx.android.synthetic.main.activity_main.multiple_choice_long_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_buttons_titled
-import kotlinx.android.synthetic.main.activity_main.single_choice_disabled_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_long_items
-import kotlinx.android.synthetic.main.activity_main.single_choice_titled
-import kotlinx.android.synthetic.main.activity_main.time_picker
 
 /** @author Aidan Follestad (afollestad) */
 class MainActivity : AppCompatActivity() {
@@ -134,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    basic.onClickDebounced {
+    R.id.basic.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.shareLocationPrompt)
         debugMode(debugMode)
@@ -142,7 +86,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_titled.onClickDebounced {
+    R.id.basic_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -151,7 +95,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_buttons.onClickDebounced {
+    R.id.basic_buttons.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(R.string.agree)
@@ -161,7 +105,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_stacked_buttons.onClickDebounced {
+    R.id.basic_stacked_buttons.onClickDebounced {
       MaterialDialog(this).show {
         message(R.string.useGoogleLocationServicesPrompt)
         positiveButton(text = "This is a long button")
@@ -170,7 +114,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_titled_buttons.onClickDebounced {
+    R.id.basic_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -181,7 +125,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_html_content.onClickDebounced {
+    R.id.basic_html_content.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.app_name)
         message(R.string.htmlContent) {
@@ -195,7 +139,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_long_titled_buttons.onClickDebounced {
+    R.id.basic_long_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.loremIpsum)
@@ -206,7 +150,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_icon.onClickDebounced {
+    R.id.basic_icon.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         icon(R.mipmap.ic_launcher)
@@ -218,7 +162,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    basic_checkbox_titled_buttons.onClickDebounced {
+    R.id.basic_checkbox_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -232,7 +176,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list.onClickDebounced {
+    R.id.list.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -242,7 +186,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_buttons.onClickDebounced {
+    R.id.list_buttons.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -254,7 +198,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_dont_wait_positive.onClickDebounced {
+    R.id.list_dont_wait_positive.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.socialNetworks, waitForPositiveButton = false) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -265,7 +209,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled.onClickDebounced {
+    R.id.list_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks) { _, index, text ->
@@ -276,7 +220,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled_buttons.onClickDebounced {
+    R.id.list_titled_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks) { _, index, text ->
@@ -289,7 +233,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_titled_message_buttons.onClickDebounced {
+    R.id.list_titled_message_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         message(R.string.useGoogleLocationServices)
@@ -303,7 +247,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_long.onClickDebounced {
+    R.id.list_long.onClickDebounced {
       MaterialDialog(this).show {
         listItems(R.array.states) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -313,7 +257,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_long_titled.onClickDebounced {
+    R.id.list_long_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.states)
         listItems(R.array.states) { _, index, text ->
@@ -324,7 +268,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    list_checkPrompt_buttons.onClickDebounced {
+    R.id.list_checkPrompt_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItems(R.array.socialNetworks_longItems) { _, index, text ->
@@ -340,7 +284,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_titled.onClickDebounced {
+    R.id.single_choice_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks, initialSelection = 1) { _, index, text ->
@@ -351,7 +295,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_buttons_titled.onClickDebounced {
+    R.id.single_choice_buttons_titled.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks, initialSelection = 2) { _, index, text ->
@@ -363,7 +307,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_long_items.onClickDebounced {
+    R.id.single_choice_long_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(R.array.socialNetworks_longItems) { _, index, text ->
@@ -375,7 +319,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    single_choice_disabled_items.onClickDebounced {
+    R.id.single_choice_disabled_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsSingleChoice(
@@ -389,7 +333,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice.onClickDebounced {
+    R.id.multiple_choice.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -402,7 +346,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_buttons.onClickDebounced {
+    R.id.multiple_choice_buttons.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -416,7 +360,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_long_items.onClickDebounced {
+    R.id.multiple_choice_long_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -430,7 +374,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    multiple_choice_disabled_items.onClickDebounced {
+    R.id.multiple_choice_disabled_items.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)
         listItemsMultiChoice(
@@ -446,7 +390,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_stacked.onClickDebounced {
+    R.id.buttons_stacked.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -458,7 +402,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_stacked_checkboxPrompt.onClickDebounced {
+    R.id.buttons_stacked_checkboxPrompt.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -473,7 +417,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_neutral.onClickDebounced {
+    R.id.buttons_neutral.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -485,7 +429,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    buttons_callbacks.onClickDebounced {
+    R.id.buttons_callbacks.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -503,7 +447,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    misc_dialog_callbacks.onClickDebounced {
+    R.id.misc_dialog_callbacks.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -517,7 +461,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input.onClickDebounced {
+    R.id.input.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -532,7 +476,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_message.onClickDebounced {
+    R.id.input_message.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -550,7 +494,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_counter.onClickDebounced {
+    R.id.input_counter.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -567,7 +511,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    input_check_prompt.onClickDebounced {
+    R.id.input_check_prompt.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
         input(
@@ -586,11 +530,11 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    custom_view.onClickDebounced { showCustomViewDialog() }
+    R.id.custom_view.onClickDebounced { showCustomViewDialog() }
 
-    custom_view_webview.onClickDebounced { showWebViewDialog() }
+    R.id.custom_view_webview.onClickDebounced { showWebViewDialog() }
 
-    colorChooser_primary.onClickDebounced {
+    R.id.colorChooser_primary.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.primary_colors)
         colorChooser(
@@ -606,7 +550,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_accent.onClickDebounced {
+    R.id.colorChooser_accent.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.accent_colors)
         colorChooser(
@@ -622,7 +566,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_customColors.onClickDebounced {
+    R.id.colorChooser_customColors.onClickDebounced {
       val topLevel = intArrayOf(TRANSPARENT, Color.RED, Color.YELLOW, Color.BLUE)
       val subLevel = arrayOf(
           intArrayOf(Color.WHITE, TRANSPARENT, Color.BLACK),
@@ -646,7 +590,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_customColorsNoSub.onClickDebounced {
+    R.id.colorChooser_customColorsNoSub.onClickDebounced {
       val topLevel = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
 
       MaterialDialog(this).show {
@@ -661,7 +605,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_primary_customRgb.onClickDebounced {
+    R.id.colorChooser_primary_customRgb.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.custom_colors_rgb)
         colorChooser(
@@ -678,7 +622,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    colorChooser_primary_customArgb.onClickDebounced {
+    R.id.colorChooser_primary_customArgb.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.custom_colors_argb)
         colorChooser(
@@ -696,17 +640,17 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    file_chooser.onClickDebounced { showFileChooser() }
+    R.id.file_chooser.onClickDebounced { showFileChooser() }
 
-    file_chooser_buttons.onClickDebounced { showFileChooserButtons() }
+    R.id.file_chooser_buttons.onClickDebounced { showFileChooserButtons() }
 
-    file_chooser_filter.onClickDebounced { showFileChooserFilter() }
+    R.id.file_chooser_filter.onClickDebounced { showFileChooserFilter() }
 
-    folder_chooser_buttons.onClickDebounced { showFolderChooserButtons() }
+    R.id.folder_chooser_buttons.onClickDebounced { showFolderChooserButtons() }
 
-    folder_chooser_filter.onClickDebounced { showFolderChooserFilter() }
+    R.id.folder_chooser_filter.onClickDebounced { showFolderChooserFilter() }
 
-    date_picker.onClickDebounced {
+    R.id.date_picker.onClickDebounced {
       MaterialDialog(this).show {
         datePicker { _, date ->
           toast("Selected date: ${date.formatDate()}")
@@ -716,7 +660,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    time_picker.onClickDebounced {
+    R.id.time_picker.onClickDebounced {
       MaterialDialog(this).show {
         title(text = "Select Time")
         timePicker { _, time ->
@@ -727,7 +671,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    datetime_picker.onClickDebounced {
+    R.id.datetime_picker.onClickDebounced {
       MaterialDialog(this).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
@@ -738,7 +682,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_info.onClickDebounced {
+    R.id.bottomsheet_info.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(R.string.useGoogleLocationServices)
         message(R.string.useGoogleLocationServicesPrompt)
@@ -749,7 +693,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_list.onClickDebounced {
+    R.id.bottomsheet_list.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         listItems(R.array.states) { _, index, text ->
           toast("Selected item $text at index $index")
@@ -761,7 +705,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_grid.onClickDebounced {
+    R.id.bottomsheet_grid.onClickDebounced {
       val items = listOf(
           BasicGridItem(R.drawable.ic_icon_android, "One"),
           BasicGridItem(R.drawable.ic_icon_android, "Two"),
@@ -784,11 +728,11 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_customView.onClickDebounced {
+    R.id.bottomsheet_customView.onClickDebounced {
       showCustomViewDialog(BottomSheet(WRAP_CONTENT))
     }
 
-    bottomsheet_colorPicker.onClickDebounced {
+    R.id.bottomsheet_colorPicker.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(R.string.custom_colors_argb)
         colorChooser(
@@ -806,7 +750,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    bottomsheet_dateTimePicker.onClickDebounced {
+    R.id.bottomsheet_dateTimePicker.onClickDebounced {
       MaterialDialog(this, BottomSheet(WRAP_CONTENT)).show {
         title(text = "Select Date and Time")
         dateTimePicker(requireFutureDateTime = true) { _, dateTime ->
@@ -878,7 +822,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooser() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser { _, file ->
+      fileChooser(this@MainActivity) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
@@ -888,7 +832,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser(allowFolderCreation = true) { _, file ->
+      fileChooser(context = this@MainActivity, allowFolderCreation = true) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       negativeButton(android.R.string.cancel)
@@ -900,7 +844,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFileChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      fileChooser(filter = { it.extension == "txt" }) { _, file ->
+      fileChooser(context = this@MainActivity, filter = { it.extension == "txt" }) { _, file ->
         toast("Selected file: ${file.absolutePath}")
       }
       debugMode(debugMode)
@@ -910,7 +854,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFolderChooserButtons() = runWithPermissions(WRITE_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      folderChooser(allowFolderCreation = true) { _, folder ->
+      folderChooser(context = this@MainActivity, allowFolderCreation = true) { _, folder ->
         toast("Selected folder: ${folder.absolutePath}")
       }
       negativeButton(android.R.string.cancel)
@@ -922,7 +866,8 @@ class MainActivity : AppCompatActivity() {
 
   private fun showFolderChooserFilter() = runWithPermissions(READ_EXTERNAL_STORAGE) {
     MaterialDialog(this).show {
-      folderChooser(filter = { it.name.startsWith("a", true) }) { _, folder ->
+      folderChooser(
+          context = this@MainActivity, filter = { it.name.startsWith("a", true) }) { _, folder ->
         toast("Selected folder: ${folder.absolutePath}")
       }
       debugMode(debugMode)
@@ -993,5 +938,9 @@ class MainActivity : AppCompatActivity() {
     private const val LIGHT = "light"
     private const val DARK = "dark"
     private const val CUSTOM = "custom"
+  }
+
+  private fun Int.onClickDebounced(click: () -> Unit) {
+    findViewById<Button>(this).onClickDebounced { click() }
   }
 }

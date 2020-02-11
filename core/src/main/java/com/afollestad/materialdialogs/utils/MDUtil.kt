@@ -129,7 +129,7 @@ object MDUtil {
   ): IntArray {
     val a = context.theme.obtainStyledAttributes(attrs)
     try {
-      return (0 until attrs.size).map { index ->
+      return attrs.indices.map { index ->
         val color = a.getColor(index, 0)
         return@map if (color != 0) {
           color
@@ -159,11 +159,24 @@ object MDUtil {
   @RestrictTo(LIBRARY_GROUP) fun resolveDimen(
     context: Context,
     @AttrRes attr: Int,
+    defaultValue: (() -> Float)? = null
+  ): Float {
+    val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+    try {
+      return a.getDimension(0, defaultValue?.invoke() ?: 0f)
+    } finally {
+      a.recycle()
+    }
+  }
+
+  @RestrictTo(LIBRARY_GROUP) fun resolveFloat(
+    context: Context,
+    @AttrRes attr: Int,
     defaultValue: Float = 0f
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
-      return a.getDimension(0, defaultValue)
+      return a.getFloat(0, defaultValue)
     } finally {
       a.recycle()
     }

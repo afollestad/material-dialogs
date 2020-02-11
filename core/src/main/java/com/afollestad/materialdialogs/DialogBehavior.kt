@@ -61,7 +61,7 @@ interface DialogBehavior {
   fun setBackgroundColor(
     view: DialogLayout,
     @ColorInt color: Int,
-    cornerRounding: Float
+    cornerRadius: Float
   )
 
   /** Called when the dialog is about to be shown. */
@@ -142,10 +142,16 @@ object ModalDialog : DialogBehavior {
   override fun setBackgroundColor(
     view: DialogLayout,
     @ColorInt color: Int,
-    cornerRounding: Float
+    cornerRadius: Float
   ) {
+    view.cornerRadii = floatArrayOf(
+        cornerRadius, cornerRadius, // top left
+        cornerRadius, cornerRadius, // top right
+        0f, 0f, // bottom left
+        0f, 0f // bottom right
+    )
     view.background = GradientDrawable().apply {
-      cornerRadius = cornerRounding
+      this.cornerRadius = cornerRadius
       setColor(color)
     }
   }

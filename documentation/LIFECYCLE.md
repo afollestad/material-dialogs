@@ -15,7 +15,7 @@ The `lifecycle` module contains extensions to make dialogs work with AndroidX li
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:lifecycle:3.1.1'
+  implementation 'com.afollestad.material-dialogs:lifecycle:3.2.1'
 }
 ```
 

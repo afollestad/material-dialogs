@@ -1,24 +1,7 @@
-apply from: '../dependencies.gradle'
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+ext.module_group = "com.afollestad"
+ext.module_name = "materialdialogssample"
 
-android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTools
-
-  defaultConfig {
-    applicationId "com.afollestad.materialdialogssample"
-    minSdkVersion versions.minSdk
-    targetSdkVersion versions.compileSdk
-    versionCode versions.publishVersionCode
-    versionName versions.publishVersion
-  }
-
-  packagingOptions {
-    exclude 'META-INF/atomicfu.kotlin_module'
-  }
-}
+apply from: rootProject.file("gradle/android_application_config.gradle")
 
 dependencies {
   implementation project(':core')
@@ -29,16 +12,14 @@ dependencies {
   implementation project(':bottomsheets')
   implementation project(':lifecycle')
 
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
+  implementation deps.kotlin.stdlib8
 
-  implementation 'androidx.appcompat:appcompat:' + versions.androidxCore
-  implementation 'androidx.gridlayout:gridlayout:' + versions.androidxRecyclerView
-  implementation 'androidx.recyclerview:recyclerview:' + versions.androidxRecyclerView
-  implementation 'com.google.android.material:material:' + versions.androidxMaterial
+  implementation deps.androidx.core
+  implementation deps.androidx.grid_layout
+  implementation deps.androidx.recycler_view
+  implementation deps.google_material
 
-  implementation 'com.afollestad:assent:' + versions.assent
+  implementation deps.afollestad.assent
 
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:' + versions.leakCanary
+  debugImplementation deps.leak_canary
 }
-
-apply from: '../spotless.gradle'
