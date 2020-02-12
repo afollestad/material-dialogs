@@ -29,6 +29,7 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import com.afollestad.materialdialogs.R
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
+import com.afollestad.materialdialogs.utils.MDUtil.maybeSetAdditionalPadding
 import com.afollestad.materialdialogs.utils.isNotVisible
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible
@@ -113,7 +114,7 @@ class DialogTitleLayout(
 
     val titleHalfHeight = titleView.measuredHeight / 2
     val titleTop = contentMidPoint - titleHalfHeight
-    val titleBottom = contentMidPoint + titleHalfHeight
+    val titleBottom = contentMidPoint + titleHalfHeight + titleView.maybeSetAdditionalPadding(titleView.measuredHeight)
     var titleLeft: Int
     var titleRight: Int
 
