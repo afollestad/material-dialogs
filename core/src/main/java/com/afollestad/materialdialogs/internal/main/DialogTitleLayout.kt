@@ -28,8 +28,8 @@ import android.widget.TextView
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import com.afollestad.materialdialogs.R
+import com.afollestad.materialdialogs.utils.MDUtil.additionalPaddingForFont
 import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
-import com.afollestad.materialdialogs.utils.MDUtil.maybeSetAdditionalPadding
 import com.afollestad.materialdialogs.utils.isNotVisible
 import com.afollestad.materialdialogs.utils.isRtl
 import com.afollestad.materialdialogs.utils.isVisible
@@ -92,10 +92,7 @@ class DialogTitleLayout(
     val requiredHeight = iconViewHeight.coerceAtLeast(titleView.measuredHeight)
     val actualHeight = requiredHeight + frameMarginVertical + titleMarginBottom
 
-    setMeasuredDimension(
-        parentWidth,
-        actualHeight
-    )
+    setMeasuredDimension(parentWidth, actualHeight)
   }
 
   override fun onLayout(
@@ -114,8 +111,8 @@ class DialogTitleLayout(
 
     val titleHalfHeight = titleView.measuredHeight / 2
     val titleTop = contentMidPoint - titleHalfHeight
-    val titleBottom = contentMidPoint + titleHalfHeight
-    + titleView.maybeSetAdditionalPadding(titleView.measuredHeight)
+    val titleBottom = contentMidPoint + titleHalfHeight +
+        titleView.additionalPaddingForFont()
     var titleLeft: Int
     var titleRight: Int
 
