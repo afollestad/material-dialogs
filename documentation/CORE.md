@@ -563,7 +563,7 @@ Corner radius is the rounding of dialog corners:
 
 <img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/customtheme.png" width="250px" />
 
-it can be changed with an attribute in your app theme. It defaults to 2dp:
+it can be changed with an attribute in your app theme. It defaults to 4dp:
 
 ```xml
 <style name="AppTheme.Custom" parent="Theme.AppCompat">
