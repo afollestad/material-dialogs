@@ -234,11 +234,10 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun TextView?.maybeSetAdditionalPadding(height: Int): Int {
-    if (this == null) return 0
+  @RestrictTo(LIBRARY_GROUP) fun TextView.maybeSetAdditionalPadding(height: Int): Int {
     val fm = paint.fontMetrics
-    val measuredHeight = fm.descent - fm.ascent
-    return if (measuredHeight > height) (measuredHeight - height).toInt() else 0
+    val textHeight = fm.descent - fm.ascent
+    return if (textHeight > height) (textHeight - height).toInt() else 0
   }
 
   @RestrictTo(LIBRARY_GROUP) inline fun Int?.ifNotZero(block: (value: Int) -> Unit) {

@@ -114,7 +114,8 @@ class DialogTitleLayout(
 
     val titleHalfHeight = titleView.measuredHeight / 2
     val titleTop = contentMidPoint - titleHalfHeight
-    val titleBottom = contentMidPoint + titleHalfHeight + titleView.maybeSetAdditionalPadding(titleView.measuredHeight)
+    val titleBottom = contentMidPoint + titleHalfHeight
+    + titleView.maybeSetAdditionalPadding(titleView.measuredHeight)
     var titleLeft: Int
     var titleRight: Int
 
