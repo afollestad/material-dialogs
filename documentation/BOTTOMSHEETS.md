@@ -133,7 +133,7 @@ This is taken from the core module documentation. I'm reiterating it here to mak
 know that it is possible, since it's more common to use rounding with bottom sheets than regular 
 modal dialogs.
 
-Corner radius can be globally changed with an attribute in your app theme. It defaults to 2dp:
+Corner radius can be globally changed with an attribute in your app theme. It defaults to 4dp:
 
 ```xml
 <style name="AppTheme.Custom" parent="Theme.AppCompat">
