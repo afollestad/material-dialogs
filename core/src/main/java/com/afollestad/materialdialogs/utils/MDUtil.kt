@@ -319,9 +319,9 @@ object MDUtil {
   }
 
   @RestrictTo(LIBRARY_GROUP) fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
-    val size = Point()
-    defaultDisplay.getSize(size)
-    return Pair(size.x, size.y)
+    return Point()
+        .apply { defaultDisplay.getSize(this) }
+        .let { Pair(it.x, it.y) }
   }
 
   @RestrictTo(LIBRARY_GROUP) fun <T : View> T?.updatePadding(

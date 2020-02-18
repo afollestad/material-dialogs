@@ -41,6 +41,7 @@ import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.internal.main.DialogScrollView
 import com.afollestad.materialdialogs.internal.main.DialogTitleLayout
 import com.afollestad.materialdialogs.message.DialogMessageSettings
+import com.afollestad.materialdialogs.utils.MDUtil.dimenPx
 import com.afollestad.materialdialogs.utils.MDUtil.maybeSetTextColor
 import com.afollestad.materialdialogs.utils.MDUtil.updatePadding
 import com.afollestad.materialdialogs.utils.inflate
@@ -78,7 +79,7 @@ class DialogContentLayout(
     typeface: Typeface?,
     applySettings: (DialogMessageSettings.() -> Unit)?
   ) {
-    addContentScrollView()
+    addContentScrollView(noVerticalPadding = false)
     if (messageTextView == null) {
       messageTextView = inflate<TextView>(R.layout.md_dialog_stub_message, scrollFrame!!).apply {
         scrollFrame!!.addView(this)
@@ -114,6 +115,7 @@ class DialogContentLayout(
     @LayoutRes res: Int?,
     view: View?,
     scrollable: Boolean,
+    noVerticalPadding: Boolean,
     horizontalPadding: Boolean
   ): View {
     check(customView == null) { "Custom view already set." }
@@ -127,7 +129,7 @@ class DialogContentLayout(
     if (scrollable) {
       // Since the view is going in the main ScrollView, apply padding to custom view.
       this.useHorizontalPadding = false
-      addContentScrollView()
+      addContentScrollView(noVerticalPadding = noVerticalPadding)
       customView = view ?: inflate(res!!, scrollFrame)
       scrollFrame!!.addView(customView?.apply {
         if (horizontalPadding) {
@@ -249,11 +251,17 @@ class DialogContentLayout(
     }
   }
 
-  private fun addContentScrollView() {
+  private fun addContentScrollView(
+    noVerticalPadding: Boolean
+  ) {
     if (scrollView == null) {
       scrollView = inflate<DialogScrollView>(R.layout.md_dialog_stub_scrollview).apply {
         this.rootView = rootLayout
         scrollFrame = this.getChildAt(0) as ViewGroup
+        if (!noVerticalPadding) {
+          val scrollBottomPadding = dimenPx(R.dimen.md_dialog_frame_margin_vertical)
+          updatePadding(bottom = scrollBottomPadding)
+        }
       }
       addView(scrollView)
     }
