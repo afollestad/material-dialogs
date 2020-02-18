@@ -46,6 +46,7 @@ typealias DateTimeCallback = ((dialog: MaterialDialog, datetime: Calendar) -> Un
  */
 fun MaterialDialog.dateTimePicker(
   minDateTime: Calendar? = null,
+  maxDateTime: Calendar? = null,
   currentDateTime: Calendar? = null,
   requireFutureDateTime: Boolean = false,
   show24HoursView: Boolean = false,
@@ -68,6 +69,7 @@ fun MaterialDialog.dateTimePicker(
 
   getDatePicker().apply {
     minDateTime?.let { setMinDate(it) }
+    maxDateTime?.let { setMaxDate(it) }
     currentDateTime?.let { setDate(it) }
     addOnDateChanged { previous, date ->
       val futureTime = isFutureTime(getDatePicker(), getTimePicker())
