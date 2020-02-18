@@ -1,16 +1,12 @@
-3.2.1
+3.3.0
 
-* Fixed the module-name given to the Kotlin compiler for each Gradle module, should fix
-extension function resolution issues.
-
----
-
-3.2.0
-
-* Dependency upgrades.
-* Reduce single/multi choice list dialog margin between text and controls.
-* Fix `updateTextColor(Int)` on action buttons not always persisting. See #1783.
-* Fix corner radius not working when views have a background. See #1840.
-* All dialogs will have a default corner radius of 4dp. See #1909.
-* Non-cancelable bottom sheet dialogs cannot be swiped to dismiss.
-* Other minor changes.
+* Added `md_line_spacing_body` global theme attribute, which sets a global default for message line
+spacing. See #1903.
+* Added some assertions and sanity checks to avoid choice list adapter out of bounds crashes.
+See #1906.
+* Corner radius should not apply to the bottom of bottom sheet dialogs. See #1941.
+* Fix dialog titles being cut off with custom fonts. See #1936.
+* If `noVerticalPadding` is set with `customView(...)``, padding is not applied to the bottom of
+ the content `ScrollView` if `scrollable` is enabled. Resolves #1834.
+* Input dialog styling is not enforced by the dialog. The global default for `TextInputLayout`
+(`textInputStyle`) is used instead. See #1857.
