@@ -33,7 +33,7 @@ MaterialDialog(this).show {
 }
 ```
 
-You can optionally provide `minDate` and `currentDate` parameters as well.
+You can optionally provide `minDate`, `maxDate` and `currentDate` parameters as well.
 
 ## Time
 
@@ -63,5 +63,5 @@ MaterialDialog(this).show {
 }
 ```
 
-You can optionally provide `minDateTime`, `currentDateTime`, `show24HoursView`, 
+You can optionally provide `minDateTime`, `maxDate`,  `currentDateTime`, `show24HoursView`, 
 and `requireFutureDateTime` parameters as well.
