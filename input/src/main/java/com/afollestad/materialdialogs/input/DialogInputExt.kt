@@ -159,7 +159,7 @@ private fun MaterialDialog.styleInput(
   val resources = windowContext.resources
   val editText = getInputField()
 
-  editText.hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
+  getInputLayout().hint = hint ?: if (hintRes != null) resources.getString(hintRes) else null
   editText.inputType = inputType
   editText.maybeSetTextColor(
       windowContext,
