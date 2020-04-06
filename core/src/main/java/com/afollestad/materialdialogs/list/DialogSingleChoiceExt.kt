@@ -20,6 +20,7 @@ package com.afollestad.materialdialogs.list
 import android.util.Log
 import androidx.annotation.ArrayRes
 import androidx.annotation.CheckResult
+import androidx.annotation.ColorInt
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -42,6 +43,8 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
   disabledIndices: IntArray? = null,
   initialSelection: Int = -1,
   waitForPositiveButton: Boolean = true,
+  @ColorInt checkedColor: Int = -1,
+  @ColorInt uncheckedColor: Int = -1,
   selection: SingleChoiceListener = null
 ): MaterialDialog {
   assertOneSet("listItemsSingleChoice", items, res)
@@ -72,7 +75,9 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
           disabledItems = disabledIndices,
           initialSelection = initialSelection,
           waitForActionButton = waitForPositiveButton,
-          selection = selection
+          selection = selection,
+          checkedColor = checkedColor,
+          uncheckedColor = uncheckedColor
       )
   )
 }
