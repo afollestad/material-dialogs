@@ -19,6 +19,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -72,7 +73,9 @@ internal class SingleChoiceDialogAdapter(
   disabledItems: IntArray?,
   initialSelection: Int,
   private val waitForActionButton: Boolean,
-  internal var selection: SingleChoiceListener
+  internal var selection: SingleChoiceListener,
+  @ColorInt private val checkedColor: Int,
+  @ColorInt private val uncheckedColor: Int
 ) : RecyclerView.Adapter<SingleChoiceViewHolder>(),
     DialogAdapter<CharSequence, SingleChoiceListener> {
 
@@ -117,7 +120,10 @@ internal class SingleChoiceDialogAdapter(
         .let {
           CompoundButtonCompat.setButtonTintList(
               viewHolder.controlView,
-              createColorSelector(dialog.windowContext, checked = it[0], unchecked = it[1])
+              createColorSelector(dialog.windowContext,
+                  checked = if (checkedColor == -1) it[0] else checkedColor,
+                  unchecked = if (uncheckedColor == -1) it[1] else uncheckedColor
+              )
           )
         }
 

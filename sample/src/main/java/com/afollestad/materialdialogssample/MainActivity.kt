@@ -333,6 +333,20 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
+    R.id.single_choice_custom_radio_color.onClickDebounced {
+      MaterialDialog(this).show {
+        title(R.string.socialNetworks)
+        listItemsSingleChoice(
+            R.array.socialNetworks, initialSelection = 1, checkedColor = Color.RED, uncheckedColor = Color.CYAN
+        ) { _, index, text ->
+          toast("Selected item $text at index $index")
+        }
+        positiveButton(R.string.choose)
+        debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
+      }
+    }
+
     R.id.multiple_choice.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.socialNetworks)

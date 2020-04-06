@@ -168,6 +168,12 @@
         style="@style/SampleButton"
         />
 
+    <Button
+        android:id="@+id/single_choice_custom_radio_color"
+        android:text="Single Choice, Custom Radio Color"
+        style="@style/SampleButton"
+        />
+
     <!-- Multiple Choice Lists -->
 
     <TextView
