@@ -84,8 +84,6 @@ fun MaterialDialog.setPeekHeight(
         dest = destinationPeekHeight,
         duration = LAYOUT_PEEK_CHANGE_DURATION_MS
     )
-  } else {
-    bottomSheetBehavior!!.peekHeight = destinationPeekHeight
   }
   return this
 }
