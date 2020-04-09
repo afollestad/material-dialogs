@@ -45,6 +45,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
   initialSelection: IntArray = IntArray(0),
   waitForPositiveButton: Boolean = true,
   allowEmptySelection: Boolean = false,
+  maxItemAllowed: Int? = null,
   selection: MultiChoiceListener = null
 ): MaterialDialog {
   assertOneSet("listItemsMultiChoice", items, res)
@@ -72,6 +73,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
           initialSelection = initialSelection,
           waitForActionButton = waitForPositiveButton,
           allowEmptySelection = allowEmptySelection,
+          maxItemAllowed = maxItemAllowed,
           selection = selection
       )
   )

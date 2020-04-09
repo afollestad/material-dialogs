@@ -75,6 +75,7 @@ internal class MultiChoiceDialogAdapter(
   initialSelection: IntArray,
   private val waitForActionButton: Boolean,
   private val allowEmptySelection: Boolean,
+  private val maxItemAllowed: Int? = null,
   internal var selection: MultiChoiceListener
 ) : RecyclerView.Adapter<MultiChoiceViewHolder>(),
     DialogAdapter<CharSequence, MultiChoiceListener> {
@@ -106,6 +107,14 @@ internal class MultiChoiceDialogAdapter(
       newSelection.add(index)
     }
     this.currentSelection = newSelection.toIntArray()
+    maxItemAllowed?.let { max ->
+      this.items.indices.filter { !currentSelection.contains(it) }.filter {
+        it != index || currentSelection.size >= max
+      }
+          .forEach { target ->
+            notifyItemChanged(target)
+          }
+    }
 
     if (waitForActionButton && dialog.hasActionButtons()) {
       // Wait for action button, don't call listener
@@ -150,15 +159,28 @@ internal class MultiChoiceDialogAdapter(
     holder: MultiChoiceViewHolder,
     position: Int
   ) {
-    holder.isEnabled = !disabledIndices.contains(position)
-
     holder.controlView.isChecked = currentSelection.contains(position)
+
+    holder.isEnabled = !isItemDisabled(position, holder.controlView.isChecked)
     holder.titleView.text = items[position]
     holder.itemView.background = dialog.getItemSelector()
 
     if (dialog.bodyFont != null) {
       holder.titleView.typeface = dialog.bodyFont
     }
+  }
+
+  private fun isItemDisabled(position: Int, isChecked: Boolean): Boolean {
+    if (disabledIndices.contains(position))
+      return true
+    if (isChecked)
+      return false
+    maxItemAllowed?.let {
+      if (currentSelection.size >= it) {
+        return true
+      }
+    }
+    return false
   }
 
   override fun onBindViewHolder(
