@@ -205,6 +205,12 @@
         style="@style/SampleButton"
         />
 
+    <Button
+        android:id="@+id/multiple_choice_limited_items"
+        android:text="Multiple Choice, Limited Items"
+        style="@style/SampleButton"
+        />
+
     <!-- Action Buttons -->
 
     <TextView

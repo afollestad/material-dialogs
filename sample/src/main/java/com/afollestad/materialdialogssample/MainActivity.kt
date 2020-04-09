@@ -404,6 +404,21 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
+    R.id.multiple_choice_limited_items.onClickDebounced {
+      MaterialDialog(this).show {
+        title(R.string.socialNetworks)
+        listItemsMultiChoice(
+            R.array.socialNetworks,
+            maxItemAllowed = 2
+        ) { _, indices, text ->
+          toast("Selected items ${text.joinToString()} at indices ${indices.joinToString()}")
+        }
+        positiveButton(R.string.choose)
+        debugMode(debugMode)
+        lifecycleOwner(this@MainActivity)
+      }
+    }
+
     R.id.buttons_stacked.onClickDebounced {
       MaterialDialog(this).show {
         title(R.string.useGoogleLocationServices)
