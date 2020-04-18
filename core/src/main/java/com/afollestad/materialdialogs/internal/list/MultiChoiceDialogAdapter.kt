@@ -110,12 +110,8 @@ internal class MultiChoiceDialogAdapter(
     maxItemAllowed?.let { max ->
       this.items.indices.filter { !currentSelection.contains(it) }.filter {
         it != index || currentSelection.size >= max
-      }
-          .forEach { target ->
-            notifyItemChanged(target)
-          }
+      }.forEach { target -> notifyItemChanged(target) }
     }
-
     if (waitForActionButton && dialog.hasActionButtons()) {
       // Wait for action button, don't call listener
       // so that positive action button press can do so later.
