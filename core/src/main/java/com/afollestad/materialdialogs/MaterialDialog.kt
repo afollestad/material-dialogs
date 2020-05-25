@@ -36,6 +36,7 @@ import com.afollestad.materialdialogs.WhichButton.NEUTRAL
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.callbacks.invokeAll
+import com.afollestad.materialdialogs.callbacks.validateAll
 import com.afollestad.materialdialogs.internal.list.DialogAdapter
 import com.afollestad.materialdialogs.internal.main.DialogLayout
 import com.afollestad.materialdialogs.list.getListAdapter
@@ -51,6 +52,8 @@ import com.afollestad.materialdialogs.utils.preShow
 import com.afollestad.materialdialogs.utils.resolveColor
 
 typealias DialogCallback = (MaterialDialog) -> Unit
+
+typealias ValidateCallback = () -> Boolean
 
 /** @author Aidan Follestad (afollestad) */
 class MaterialDialog(
@@ -98,6 +101,7 @@ class MaterialDialog(
   internal val cancelListeners = mutableListOf<DialogCallback>()
 
   private val positiveListeners = mutableListOf<DialogCallback>()
+  private val positiveActionValidators = mutableListOf<ValidateCallback>()
   private val negativeListeners = mutableListOf<DialogCallback>()
   private val neutralListeners = mutableListOf<DialogCallback>()
 
@@ -189,10 +193,15 @@ class MaterialDialog(
   fun positiveButton(
     @StringRes res: Int? = null,
     text: CharSequence? = null,
+    validate: ValidateCallback? = null,
     click: DialogCallback? = null
   ): MaterialDialog = apply {
     if (click != null) {
       positiveListeners.add(click)
+    }
+
+    if (validate != null) {
+      positiveActionValidators.add(validate)
     }
 
     val btn = getActionButton(POSITIVE)
@@ -214,6 +223,7 @@ class MaterialDialog(
   /** Clears any positive action button listeners set via usages of [positiveButton]. */
   fun clearPositiveListeners(): MaterialDialog = apply {
     this.positiveListeners.clear()
+    this.positiveActionValidators.clear()
   }
 
   /**
@@ -401,16 +411,22 @@ class MaterialDialog(
   }
 
   internal fun onActionButtonClicked(which: WhichButton) {
+    var validationPassed = true
+
     when (which) {
       POSITIVE -> {
-        positiveListeners.invokeAll(this)
-        val adapter = getListAdapter() as? DialogAdapter<*, *>
-        adapter?.positiveButtonClicked()
+        validationPassed = positiveActionValidators.validateAll()
+
+        if (validationPassed) {
+          positiveListeners.invokeAll(this)
+          val adapter = getListAdapter() as? DialogAdapter<*, *>
+          adapter?.positiveButtonClicked()
+        }
       }
       NEGATIVE -> negativeListeners.invokeAll(this)
       NEUTRAL -> neutralListeners.invokeAll(this)
     }
-    if (autoDismissEnabled) {
+    if (autoDismissEnabled && validationPassed) {
       dismiss()
     }
   }

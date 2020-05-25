@@ -17,6 +17,7 @@ package com.afollestad.materialdialogs.callbacks
 
 import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.ValidateCallback
 
 /**
  * Adds a listener that's invoked right before the dialog is [MaterialDialog.show]'n. If this is called
@@ -67,4 +68,8 @@ internal fun MutableList<DialogCallback>.invokeAll(dialog: MaterialDialog) {
   for (callback in this) {
     callback.invoke(dialog)
   }
+}
+
+internal fun MutableList<ValidateCallback>.validateAll(): Boolean {
+  return all { it.invoke() }
 }

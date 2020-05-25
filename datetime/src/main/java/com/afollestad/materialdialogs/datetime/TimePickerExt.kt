@@ -17,6 +17,8 @@
 
 package com.afollestad.materialdialogs.datetime
 
+import android.os.Build
+import android.os.Build.VERSION_CODES
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton.POSITIVE
@@ -62,9 +64,12 @@ fun MaterialDialog.timePicker(
     }
   }
 
-  positiveButton(android.R.string.ok) {
-    timeCallback?.invoke(it, getTimePicker().toCalendar())
-  }
+  positiveButton(
+      android.R.string.ok,
+      validate = { validateInput() },
+      click = { timeCallback?.invoke(it, getTimePicker().toCalendar()) }
+  )
+
   negativeButton(android.R.string.cancel)
 
   if (requireFutureTime) {
@@ -79,6 +84,14 @@ fun MaterialDialog.timePicker(
   }
 
   return this
+}
+
+private fun isOreo() = Build.VERSION.SDK_INT >= VERSION_CODES.O
+
+private fun MaterialDialog.validateInput(): Boolean {
+  return if (isOreo()) getTimePicker().validateInput()
+  else
+    true
 }
 
 /**
