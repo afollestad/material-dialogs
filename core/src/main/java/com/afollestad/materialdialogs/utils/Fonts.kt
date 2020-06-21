@@ -36,8 +36,15 @@ import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
   val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr))
   try {
     val resId = a.getResourceId(0, 0)
-    if (resId == 0) return null
-    return safeGetFont(windowContext, resId)
+    if (resId != 0) {
+      val typeface = safeGetFont(windowContext, resId)
+      if (typeface != null) return typeface
+    }
+    val string = a.getString(0)
+    if (string != null) {
+      return Typeface.create(string, Typeface.NORMAL)
+    }
+    return null
   } finally {
     a.recycle()
   }
