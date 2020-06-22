@@ -604,7 +604,7 @@ text color of action buttons. If you wish to override these, there are attribute
 
 This library supports using custom fonts, powered by the Support libraries `ResourcesCompat` class. 
 With raw font files or XML font files in your `/res/font` folder, you can use them in Material Dialogs 
-using attributes in your app's theme.
+using attributes in your app's theme. Additionally you can reference system fonts by their name.
 
 ```xml
 <style name="AppTheme.Custom" parent="Theme.AppCompat">
