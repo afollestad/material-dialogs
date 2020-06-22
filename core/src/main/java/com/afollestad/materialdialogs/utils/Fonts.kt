@@ -16,6 +16,7 @@
 package com.afollestad.materialdialogs.utils
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Typeface
 import androidx.annotation.AttrRes
 import androidx.annotation.CheckResult
@@ -35,16 +36,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
   requireNotNull(attr)
   val a = windowContext.theme.obtainStyledAttributes(intArrayOf(attr))
   try {
-    val resId = a.getResourceId(0, 0)
-    if (resId != 0) {
-      val typeface = safeGetFont(windowContext, resId)
-      if (typeface != null) return typeface
-    }
-    val string = a.getString(0)
-    if (string != null) {
-      return Typeface.create(string, Typeface.NORMAL)
-    }
-    return null
+    return fontFromResIdOrString(windowContext, a)
   } finally {
     a.recycle()
   }
@@ -56,5 +48,23 @@ private fun safeGetFont(context: Context, @FontRes res: Int): Typeface? {
   } catch (e: Throwable) {
     e.printStackTrace()
     null
+  }
+}
+
+private fun fontFromResIdOrString(context: Context, a: TypedArray): Typeface? {
+  try {
+    val resId = a.getResourceId(0, 0)
+    if (resId != 0) {
+      val typeface = safeGetFont(context, resId)
+      if (typeface != null) return typeface
+    }
+    val string = a.getString(0)
+    if (string != null) {
+      return Typeface.create(string, Typeface.NORMAL)
+    }
+    return null
+  } catch (e: Throwable) {
+    e.printStackTrace()
+    return null
   }
 }
