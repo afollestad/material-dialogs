@@ -49,11 +49,12 @@ import com.afollestad.materialdialogs.R
 @RestrictTo(LIBRARY_GROUP)
 object MDUtil {
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveString(
-    materialDialog: MaterialDialog,
-    @StringRes res: Int? = null,
-    @StringRes fallback: Int? = null,
-    html: Boolean = false
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveString(
+      materialDialog: MaterialDialog,
+      @StringRes res: Int? = null,
+      @StringRes fallback: Int? = null,
+      html: Boolean = false
   ): CharSequence? = resolveString(
       context = materialDialog.windowContext,
       res = res,
@@ -61,11 +62,12 @@ object MDUtil {
       html = html
   )
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveString(
-    context: Context,
-    @StringRes res: Int? = null,
-    @StringRes fallback: Int? = null,
-    html: Boolean = false
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveString(
+      context: Context,
+      @StringRes res: Int? = null,
+      @StringRes fallback: Int? = null,
+      html: Boolean = false
   ): CharSequence? {
     val resourceId = res ?: (fallback ?: 0)
     if (resourceId == 0) return null
@@ -77,11 +79,12 @@ object MDUtil {
     return text
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveDrawable(
-    context: Context,
-    @DrawableRes res: Int? = null,
-    @AttrRes attr: Int? = null,
-    fallback: Drawable? = null
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveDrawable(
+      context: Context,
+      @DrawableRes res: Int? = null,
+      @AttrRes attr: Int? = null,
+      fallback: Drawable? = null
   ): Drawable? {
     if (attr != null) {
       val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
@@ -99,12 +102,13 @@ object MDUtil {
     return ContextCompat.getDrawable(context, res)
   }
 
-  @RestrictTo(LIBRARY_GROUP) @ColorInt
+  @RestrictTo(LIBRARY_GROUP)
+  @ColorInt
   fun resolveColor(
-    context: Context,
-    @ColorRes res: Int? = null,
-    @AttrRes attr: Int? = null,
-    fallback: (() -> Int)? = null
+      context: Context,
+      @ColorRes res: Int? = null,
+      @AttrRes attr: Int? = null,
+      fallback: (() -> Int)? = null
   ): Int {
     if (attr != null) {
       val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
@@ -123,9 +127,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveColors(
-    context: Context,
-    attrs: IntArray,
-    fallback: ((forAttr: Int) -> Int)? = null
+      context: Context,
+      attrs: IntArray,
+      fallback: ((forAttr: Int) -> Int)? = null
   ): IntArray {
     val a = context.theme.obtainStyledAttributes(attrs)
     try {
@@ -143,10 +147,11 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveInt(
-    context: Context,
-    @AttrRes attr: Int,
-    defaultValue: Int = 0
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveInt(
+      context: Context,
+      @AttrRes attr: Int,
+      defaultValue: Int = 0
   ): Int {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -156,10 +161,11 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveDimen(
-    context: Context,
-    @AttrRes attr: Int,
-    defaultValue: (() -> Float)? = null
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveDimen(
+      context: Context,
+      @AttrRes attr: Int,
+      defaultValue: (() -> Float)? = null
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -169,10 +175,25 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun resolveFloat(
-    context: Context,
-    @AttrRes attr: Int,
-    defaultValue: Float = 0f
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveTextSize(
+      context: Context,
+      @AttrRes attr: Int,
+      defaultValue: (() -> Int)? = null
+  ): Float {
+    val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+    try {
+      return a.getDimensionPixelSize(0, defaultValue?.invoke() ?: 0).toFloat()
+    } finally {
+      a.recycle()
+    }
+  }
+
+  @RestrictTo(LIBRARY_GROUP)
+  fun resolveFloat(
+      context: Context,
+      @AttrRes attr: Int,
+      defaultValue: Float = 0f
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -182,46 +203,51 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(threshold: Double = 0.5): Boolean {
+  @RestrictTo(LIBRARY_GROUP)
+  fun Int.isColorDark(threshold: Double = 0.5): Boolean {
     if (this == Color.TRANSPARENT) {
       return false
     }
     val darkness =
-      1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
+        1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
     return darkness >= threshold
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
+  @RestrictTo(LIBRARY_GROUP)
+  fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
     return context.resources.getDimensionPixelSize(res)
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun Context.isLandscape() =
-    resources.configuration.orientation == ORIENTATION_LANDSCAPE
+  @RestrictTo(LIBRARY_GROUP)
+  fun Context.isLandscape() =
+      resources.configuration.orientation == ORIENTATION_LANDSCAPE
 
-  @RestrictTo(LIBRARY_GROUP) fun EditText.textChanged(callback: (CharSequence) -> Unit) {
+  @RestrictTo(LIBRARY_GROUP)
+  fun EditText.textChanged(callback: (CharSequence) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
       override fun afterTextChanged(s: Editable) = Unit
 
       override fun beforeTextChanged(
-        s: CharSequence,
-        start: Int,
-        count: Int,
-        after: Int
+          s: CharSequence,
+          start: Int,
+          count: Int,
+          after: Int
       ) = Unit
 
       override fun onTextChanged(
-        s: CharSequence,
-        start: Int,
-        before: Int,
-        count: Int
+          s: CharSequence,
+          start: Int,
+          before: Int,
+          count: Int
       ) = callback.invoke(s)
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun TextView?.maybeSetTextColor(
-    context: Context,
-    @AttrRes attrRes: Int?,
-    @AttrRes hintAttrRes: Int? = null
+  @RestrictTo(LIBRARY_GROUP)
+  fun TextView?.maybeSetTextColor(
+      context: Context,
+      @AttrRes attrRes: Int?,
+      @AttrRes hintAttrRes: Int? = null
   ) {
     if (this == null || (attrRes == null && hintAttrRes == null)) return
     if (attrRes != null) {
@@ -238,22 +264,25 @@ object MDUtil {
    * See [https://github.com/afollestad/material-dialogs/issues/1936]. Calculates additional
    * spacing required to prevent a given [TextView] from being cut off at the bottom.
    */
-  @RestrictTo(LIBRARY_GROUP) fun TextView.additionalPaddingForFont(): Int {
+  @RestrictTo(LIBRARY_GROUP)
+  fun TextView.additionalPaddingForFont(): Int {
     val fm = paint.fontMetrics
     val textHeight = fm.descent - fm.ascent
     return if (textHeight > measuredHeight) (textHeight - measuredHeight).toInt() else 0
   }
 
-  @RestrictTo(LIBRARY_GROUP) inline fun Int?.ifNotZero(block: (value: Int) -> Unit) {
+  @RestrictTo(LIBRARY_GROUP)
+  inline fun Int?.ifNotZero(block: (value: Int) -> Unit) {
     if (this != null && this != 0) {
       block(this)
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun createColorSelector(
-    context: Context,
-    @ColorInt unchecked: Int = 0,
-    @ColorInt checked: Int = 0
+  @RestrictTo(LIBRARY_GROUP)
+  fun createColorSelector(
+      context: Context,
+      @ColorInt unchecked: Int = 0,
+      @ColorInt checked: Int = 0
   ): ColorStateList {
     val checkedColor = if (checked == 0) resolveColor(
         context, attr = R.attr.colorControlActivated
@@ -274,7 +303,8 @@ object MDUtil {
     )
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForWidth(block: T.() -> Unit) {
+  @RestrictTo(LIBRARY_GROUP)
+  fun <T : View> T.waitForWidth(block: T.() -> Unit) {
     if (measuredWidth > 0 && measuredHeight > 0) {
       this.block()
       return
@@ -296,7 +326,8 @@ object MDUtil {
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForHeight(block: T.() -> Unit) {
+  @RestrictTo(LIBRARY_GROUP)
+  fun <T : View> T.waitForHeight(block: T.() -> Unit) {
     if (measuredWidth > 0 && measuredHeight > 0) {
       this.block()
       return
@@ -318,17 +349,19 @@ object MDUtil {
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
+  @RestrictTo(LIBRARY_GROUP)
+  fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
     return Point()
         .apply { defaultDisplay.getSize(this) }
         .let { Pair(it.x, it.y) }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun <T : View> T?.updatePadding(
-    left: Int = this?.paddingLeft ?: 0,
-    top: Int = this?.paddingTop ?: 0,
-    right: Int = this?.paddingRight ?: 0,
-    bottom: Int = this?.paddingBottom ?: 0
+  @RestrictTo(LIBRARY_GROUP)
+  fun <T : View> T?.updatePadding(
+      left: Int = this?.paddingLeft ?: 0,
+      top: Int = this?.paddingTop ?: 0,
+      right: Int = this?.paddingRight ?: 0,
+      bottom: Int = this?.paddingBottom ?: 0
   ) {
     if (this != null &&
         left == this.paddingLeft &&
@@ -342,24 +375,26 @@ object MDUtil {
     this?.setPadding(left, top, right, bottom)
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun assertOneSet(
-    method: String,
-    b: Any?,
-    a: Int?
+  @RestrictTo(LIBRARY_GROUP)
+  fun assertOneSet(
+      method: String,
+      b: Any?,
+      a: Int?
   ) {
     if (a == null && b == null) {
       throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP) fun Context.getStringArray(@ArrayRes res: Int?): Array<String> {
+  @RestrictTo(LIBRARY_GROUP)
+  fun Context.getStringArray(@ArrayRes res: Int?): Array<String> {
     return if (res != null) return resources.getStringArray(res) else emptyArray()
   }
 
   @Suppress("UNCHECKED_CAST")
   @RestrictTo(LIBRARY_GROUP)
   fun <R : View> ViewGroup.inflate(
-    ctxt: Context = context,
-    @LayoutRes res: Int
+      ctxt: Context = context,
+      @LayoutRes res: Int
   ) = LayoutInflater.from(ctxt).inflate(res, this, false) as R
 }

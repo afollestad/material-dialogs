@@ -42,6 +42,7 @@ import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.message.DialogMessageSettings
 import com.afollestad.materialdialogs.utils.MDUtil.assertOneSet
 import com.afollestad.materialdialogs.utils.MDUtil.resolveDimen
+import com.afollestad.materialdialogs.utils.MDUtil.resolveTextSize
 import com.afollestad.materialdialogs.utils.font
 import com.afollestad.materialdialogs.utils.hideKeyboard
 import com.afollestad.materialdialogs.utils.isVisible
@@ -154,7 +155,10 @@ class MaterialDialog(
         textRes = res,
         text = text,
         typeface = this.titleFont,
-        textColor = R.attr.md_color_title
+        textColor = R.attr.md_color_title,
+        textSize = resolveTextSize(windowContext, attr = R.attr.md_text_size_title) {
+          context.resources.getDimensionPixelSize(R.dimen.md_title_textsize)
+        }
     )
   }
 
@@ -175,6 +179,9 @@ class MaterialDialog(
         res = res,
         text = text,
         typeface = this.bodyFont,
+        textSize = resolveTextSize(windowContext, attr = R.attr.md_text_size_body) {
+          context.resources.getDimensionPixelSize(R.dimen.md_message_textsize)
+        },
         applySettings = applySettings
     )
   }
@@ -207,7 +214,10 @@ class MaterialDialog(
         textRes = res,
         text = text,
         fallback = android.R.string.ok,
-        typeface = this.buttonFont
+        typeface = this.buttonFont,
+        textSize = resolveTextSize(windowContext, attr = R.attr.md_text_size_button) {
+          context.resources.getDimensionPixelSize(R.dimen.md_action_button_textsize)
+        }
     )
   }
 
@@ -245,7 +255,10 @@ class MaterialDialog(
         textRes = res,
         text = text,
         fallback = android.R.string.cancel,
-        typeface = this.buttonFont
+        typeface = this.buttonFont,
+        textSize = resolveTextSize(windowContext, attr = R.attr.md_text_size_button) {
+          context.resources.getDimensionPixelSize(R.dimen.md_action_button_textsize)
+        }
     )
   }
 
@@ -278,7 +291,10 @@ class MaterialDialog(
         btn,
         textRes = res,
         text = text,
-        typeface = this.buttonFont
+        typeface = this.buttonFont,
+        textSize = resolveTextSize(windowContext, attr = R.attr.md_text_size_button) {
+          context.resources.getDimensionPixelSize(R.dimen.md_action_button_textsize)
+        }
     )
   }
 

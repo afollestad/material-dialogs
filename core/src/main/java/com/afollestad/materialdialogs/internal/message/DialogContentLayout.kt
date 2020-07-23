@@ -18,6 +18,7 @@ package com.afollestad.materialdialogs.internal.message
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
@@ -77,6 +78,7 @@ class DialogContentLayout(
     @StringRes res: Int?,
     text: CharSequence?,
     typeface: Typeface?,
+    textSize: Float?,
     applySettings: (DialogMessageSettings.() -> Unit)?
   ) {
     addContentScrollView(noVerticalPadding = false)
@@ -93,6 +95,9 @@ class DialogContentLayout(
       typeface?.let { this.typeface = it }
       maybeSetTextColor(dialog.windowContext, R.attr.md_color_content)
       messageSettings.setText(res, text)
+      if (textSize != null) {
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+      }
     }
   }
 

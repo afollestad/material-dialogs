@@ -8,6 +8,9 @@
   <attr format="color" name="md_color_widget"/>
   <attr format="color" name="md_color_widget_unchecked"/>
   <attr format="dimension" name="md_corner_radius"/>
+  <attr format="dimension" name="md_text_size_title"/>
+  <attr format="dimension" name="md_text_size_body"/>
+  <attr format="dimension" name="md_text_size_button"/>
   <attr format="reference" name="md_font_title"/>
   <attr format="reference" name="md_font_body"/>
   <attr format="reference" name="md_font_button"/>

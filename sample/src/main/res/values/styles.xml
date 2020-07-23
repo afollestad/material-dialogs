@@ -27,6 +27,10 @@
     <item name="md_font_button">@font/raleway_semibold</item>
     <item name="md_ripple_color">@color/primary_custom_translucent</item>
 
+    <item name="md_text_size_body">8sp</item>
+    <item name="md_text_size_title">11sp</item>
+    <item name="md_text_size_button">4sp</item>
+
     <item name="android:windowBackground">@android:color/black</item>
     <item name="sample_button_color">#424242</item>
     <item name="md_background_color">#212121</item>
