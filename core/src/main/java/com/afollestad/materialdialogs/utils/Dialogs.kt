@@ -23,7 +23,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
@@ -38,8 +37,8 @@ import com.afollestad.materialdialogs.utils.MDUtil.resolveString
 
 @RestrictTo(Scope.LIBRARY_GROUP)
 fun MaterialDialog.invalidateDividers(
-    showTop: Boolean,
-    showBottom: Boolean
+  showTop: Boolean,
+  showBottom: Boolean
 ) = view.invalidateDividers(showTop, showBottom)
 
 internal fun MaterialDialog.preShow() {
@@ -64,9 +63,9 @@ internal fun MaterialDialog.preShow() {
 }
 
 internal fun MaterialDialog.populateIcon(
-    imageView: ImageView,
-    @DrawableRes iconRes: Int?,
-    icon: Drawable?
+  imageView: ImageView,
+  @DrawableRes iconRes: Int?,
+  icon: Drawable?
 ) {
   val drawable = resolveDrawable(windowContext, res = iconRes, fallback = icon)
   if (drawable != null) {
@@ -79,13 +78,13 @@ internal fun MaterialDialog.populateIcon(
 }
 
 internal fun MaterialDialog.populateText(
-    textView: TextView,
-    @StringRes textRes: Int? = null,
-    text: CharSequence? = null,
-    @StringRes fallback: Int = 0,
-    typeface: Typeface?,
-    textColor: Int? = null,
-    textSize: Float? = null
+  textView: TextView,
+  @StringRes textRes: Int? = null,
+  text: CharSequence? = null,
+  @StringRes fallback: Int = 0,
+  typeface: Typeface?,
+  textColor: Int? = null,
+  textSize: Float? = null
 ) {
   val value = text ?: resolveString(this, textRes, fallback)
   if (value != null) {

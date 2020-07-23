@@ -51,10 +51,10 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveString(
-      materialDialog: MaterialDialog,
-      @StringRes res: Int? = null,
-      @StringRes fallback: Int? = null,
-      html: Boolean = false
+    materialDialog: MaterialDialog,
+    @StringRes res: Int? = null,
+    @StringRes fallback: Int? = null,
+    html: Boolean = false
   ): CharSequence? = resolveString(
       context = materialDialog.windowContext,
       res = res,
@@ -64,10 +64,10 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveString(
-      context: Context,
-      @StringRes res: Int? = null,
-      @StringRes fallback: Int? = null,
-      html: Boolean = false
+    context: Context,
+    @StringRes res: Int? = null,
+    @StringRes fallback: Int? = null,
+    html: Boolean = false
   ): CharSequence? {
     val resourceId = res ?: (fallback ?: 0)
     if (resourceId == 0) return null
@@ -81,10 +81,10 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveDrawable(
-      context: Context,
-      @DrawableRes res: Int? = null,
-      @AttrRes attr: Int? = null,
-      fallback: Drawable? = null
+    context: Context,
+    @DrawableRes res: Int? = null,
+    @AttrRes attr: Int? = null,
+    fallback: Drawable? = null
   ): Drawable? {
     if (attr != null) {
       val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
@@ -105,10 +105,10 @@ object MDUtil {
   @RestrictTo(LIBRARY_GROUP)
   @ColorInt
   fun resolveColor(
-      context: Context,
-      @ColorRes res: Int? = null,
-      @AttrRes attr: Int? = null,
-      fallback: (() -> Int)? = null
+    context: Context,
+    @ColorRes res: Int? = null,
+    @AttrRes attr: Int? = null,
+    fallback: (() -> Int)? = null
   ): Int {
     if (attr != null) {
       val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
@@ -127,9 +127,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveColors(
-      context: Context,
-      attrs: IntArray,
-      fallback: ((forAttr: Int) -> Int)? = null
+    context: Context,
+    attrs: IntArray,
+    fallback: ((forAttr: Int) -> Int)? = null
   ): IntArray {
     val a = context.theme.obtainStyledAttributes(attrs)
     try {
@@ -149,9 +149,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveInt(
-      context: Context,
-      @AttrRes attr: Int,
-      defaultValue: Int = 0
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: Int = 0
   ): Int {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -163,9 +163,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveDimen(
-      context: Context,
-      @AttrRes attr: Int,
-      defaultValue: (() -> Float)? = null
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: (() -> Float)? = null
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -177,9 +177,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveTextSize(
-      context: Context,
-      @AttrRes attr: Int,
-      defaultValue: (() -> Int)? = null
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: (() -> Int)? = null
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -191,9 +191,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun resolveFloat(
-      context: Context,
-      @AttrRes attr: Int,
-      defaultValue: Float = 0f
+    context: Context,
+    @AttrRes attr: Int,
+    defaultValue: Float = 0f
   ): Float {
     val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
     try {
@@ -228,26 +228,26 @@ object MDUtil {
       override fun afterTextChanged(s: Editable) = Unit
 
       override fun beforeTextChanged(
-          s: CharSequence,
-          start: Int,
-          count: Int,
-          after: Int
+        s: CharSequence,
+        start: Int,
+        count: Int,
+        after: Int
       ) = Unit
 
       override fun onTextChanged(
-          s: CharSequence,
-          start: Int,
-          before: Int,
-          count: Int
+        s: CharSequence,
+        start: Int,
+        before: Int,
+        count: Int
       ) = callback.invoke(s)
     })
   }
 
   @RestrictTo(LIBRARY_GROUP)
   fun TextView?.maybeSetTextColor(
-      context: Context,
-      @AttrRes attrRes: Int?,
-      @AttrRes hintAttrRes: Int? = null
+    context: Context,
+    @AttrRes attrRes: Int?,
+    @AttrRes hintAttrRes: Int? = null
   ) {
     if (this == null || (attrRes == null && hintAttrRes == null)) return
     if (attrRes != null) {
@@ -280,9 +280,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun createColorSelector(
-      context: Context,
-      @ColorInt unchecked: Int = 0,
-      @ColorInt checked: Int = 0
+    context: Context,
+    @ColorInt unchecked: Int = 0,
+    @ColorInt checked: Int = 0
   ): ColorStateList {
     val checkedColor = if (checked == 0) resolveColor(
         context, attr = R.attr.colorControlActivated
@@ -358,10 +358,10 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun <T : View> T?.updatePadding(
-      left: Int = this?.paddingLeft ?: 0,
-      top: Int = this?.paddingTop ?: 0,
-      right: Int = this?.paddingRight ?: 0,
-      bottom: Int = this?.paddingBottom ?: 0
+    left: Int = this?.paddingLeft ?: 0,
+    top: Int = this?.paddingTop ?: 0,
+    right: Int = this?.paddingRight ?: 0,
+    bottom: Int = this?.paddingBottom ?: 0
   ) {
     if (this != null &&
         left == this.paddingLeft &&
@@ -377,9 +377,9 @@ object MDUtil {
 
   @RestrictTo(LIBRARY_GROUP)
   fun assertOneSet(
-      method: String,
-      b: Any?,
-      a: Int?
+    method: String,
+    b: Any?,
+    a: Int?
   ) {
     if (a == null && b == null) {
       throw IllegalArgumentException("$method: You must specify a resource ID or literal value")
@@ -394,7 +394,7 @@ object MDUtil {
   @Suppress("UNCHECKED_CAST")
   @RestrictTo(LIBRARY_GROUP)
   fun <R : View> ViewGroup.inflate(
-      ctxt: Context = context,
-      @LayoutRes res: Int
+    ctxt: Context = context,
+    @LayoutRes res: Int
   ) = LayoutInflater.from(ctxt).inflate(res, this, false) as R
 }
