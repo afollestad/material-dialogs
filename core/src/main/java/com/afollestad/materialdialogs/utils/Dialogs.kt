@@ -105,7 +105,7 @@ internal fun MaterialDialog.populateText(
 
 internal fun MaterialDialog.hideKeyboard() {
   val imm =
-      windowContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    windowContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
   val currentFocus = currentFocus
   if (currentFocus != null) {
     currentFocus.windowToken

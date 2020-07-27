@@ -49,8 +49,7 @@ import com.afollestad.materialdialogs.R
 @RestrictTo(LIBRARY_GROUP)
 object MDUtil {
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveString(
+  @RestrictTo(LIBRARY_GROUP) fun resolveString(
     materialDialog: MaterialDialog,
     @StringRes res: Int? = null,
     @StringRes fallback: Int? = null,
@@ -62,8 +61,7 @@ object MDUtil {
       html = html
   )
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveString(
+  @RestrictTo(LIBRARY_GROUP) fun resolveString(
     context: Context,
     @StringRes res: Int? = null,
     @StringRes fallback: Int? = null,
@@ -79,8 +77,7 @@ object MDUtil {
     return text
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveDrawable(
+  @RestrictTo(LIBRARY_GROUP) fun resolveDrawable(
     context: Context,
     @DrawableRes res: Int? = null,
     @AttrRes attr: Int? = null,
@@ -102,8 +99,7 @@ object MDUtil {
     return ContextCompat.getDrawable(context, res)
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  @ColorInt
+  @RestrictTo(LIBRARY_GROUP) @ColorInt
   fun resolveColor(
     context: Context,
     @ColorRes res: Int? = null,
@@ -147,8 +143,7 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveInt(
+  @RestrictTo(LIBRARY_GROUP) fun resolveInt(
     context: Context,
     @AttrRes attr: Int,
     defaultValue: Int = 0
@@ -161,8 +156,7 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveDimen(
+  @RestrictTo(LIBRARY_GROUP) fun resolveDimen(
     context: Context,
     @AttrRes attr: Int,
     defaultValue: (() -> Float)? = null
@@ -189,8 +183,7 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun resolveFloat(
+  @RestrictTo(LIBRARY_GROUP) fun resolveFloat(
     context: Context,
     @AttrRes attr: Int,
     defaultValue: Float = 0f
@@ -203,8 +196,7 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun Int.isColorDark(threshold: Double = 0.5): Boolean {
+  @RestrictTo(LIBRARY_GROUP) fun Int.isColorDark(threshold: Double = 0.5): Boolean {
     if (this == Color.TRANSPARENT) {
       return false
     }
@@ -213,13 +205,11 @@ object MDUtil {
     return darkness >= threshold
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.dimenPx(@DimenRes res: Int): Int {
     return context.resources.getDimensionPixelSize(res)
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun Context.isLandscape() =
+  @RestrictTo(LIBRARY_GROUP) fun Context.isLandscape() =
       resources.configuration.orientation == ORIENTATION_LANDSCAPE
 
   @RestrictTo(LIBRARY_GROUP)
@@ -243,8 +233,7 @@ object MDUtil {
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun TextView?.maybeSetTextColor(
+  @RestrictTo(LIBRARY_GROUP) fun TextView?.maybeSetTextColor(
     context: Context,
     @AttrRes attrRes: Int?,
     @AttrRes hintAttrRes: Int? = null
@@ -264,22 +253,19 @@ object MDUtil {
    * See [https://github.com/afollestad/material-dialogs/issues/1936]. Calculates additional
    * spacing required to prevent a given [TextView] from being cut off at the bottom.
    */
-  @RestrictTo(LIBRARY_GROUP)
-  fun TextView.additionalPaddingForFont(): Int {
+  @RestrictTo(LIBRARY_GROUP) fun TextView.additionalPaddingForFont(): Int {
     val fm = paint.fontMetrics
     val textHeight = fm.descent - fm.ascent
     return if (textHeight > measuredHeight) (textHeight - measuredHeight).toInt() else 0
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  inline fun Int?.ifNotZero(block: (value: Int) -> Unit) {
+  @RestrictTo(LIBRARY_GROUP) inline fun Int?.ifNotZero(block: (value: Int) -> Unit) {
     if (this != null && this != 0) {
       block(this)
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun createColorSelector(
+  @RestrictTo(LIBRARY_GROUP) fun createColorSelector(
     context: Context,
     @ColorInt unchecked: Int = 0,
     @ColorInt checked: Int = 0
@@ -303,8 +289,7 @@ object MDUtil {
     )
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun <T : View> T.waitForWidth(block: T.() -> Unit) {
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForWidth(block: T.() -> Unit) {
     if (measuredWidth > 0 && measuredHeight > 0) {
       this.block()
       return
@@ -326,8 +311,7 @@ object MDUtil {
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun <T : View> T.waitForHeight(block: T.() -> Unit) {
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T.waitForHeight(block: T.() -> Unit) {
     if (measuredWidth > 0 && measuredHeight > 0) {
       this.block()
       return
@@ -349,15 +333,13 @@ object MDUtil {
     })
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
+  @RestrictTo(LIBRARY_GROUP) fun WindowManager.getWidthAndHeight(): Pair<Int, Int> {
     return Point()
         .apply { defaultDisplay.getSize(this) }
         .let { Pair(it.x, it.y) }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun <T : View> T?.updatePadding(
+  @RestrictTo(LIBRARY_GROUP) fun <T : View> T?.updatePadding(
     left: Int = this?.paddingLeft ?: 0,
     top: Int = this?.paddingTop ?: 0,
     right: Int = this?.paddingRight ?: 0,
@@ -375,8 +357,7 @@ object MDUtil {
     this?.setPadding(left, top, right, bottom)
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun assertOneSet(
+  @RestrictTo(LIBRARY_GROUP) fun assertOneSet(
     method: String,
     b: Any?,
     a: Int?
@@ -386,8 +367,7 @@ object MDUtil {
     }
   }
 
-  @RestrictTo(LIBRARY_GROUP)
-  fun Context.getStringArray(@ArrayRes res: Int?): Array<String> {
+  @RestrictTo(LIBRARY_GROUP) fun Context.getStringArray(@ArrayRes res: Int?): Array<String> {
     return if (res != null) return resources.getStringArray(res) else emptyArray()
   }
 
