@@ -15,6 +15,9 @@
 The core module is the fundamental module that you need in order to use this library. The others 
 are extensions to core.
 
+Please note that since Material Dialogs v2, this library only supports Kotlin.
+The latest Java version is `0.9.6.0` and can be found [here](README_OLD.md).
+
 ## Core
 
 [ ![Core](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acore/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
