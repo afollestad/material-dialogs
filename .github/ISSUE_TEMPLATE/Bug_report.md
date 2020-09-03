@@ -5,7 +5,7 @@ labels: bug
 
 ---
 
-*Please consider making a Pull Request if you are capable of doing so.*
+*Please consider making a Pull Request if you are capable of doing so. Note that versions before 2.0.0 are no longer supported.*
 
 **Library Version:**
 

@@ -65,7 +65,7 @@ If you've used Android bottom sheets before, peek height should be a familiar co
 height is the height of the bottom sheet when it's not fully expanded. It's a point between 
 expanded and hidden.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/bottomsheet_peekheight.gif" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/bottomsheet_peekheight.gif" width="250px" />
 
 The default peek height is 60% of the screen height. You can set a custom peek height if you wish: 
 

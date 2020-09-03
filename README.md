@@ -8,15 +8,14 @@
 
 ---
 
-![Showcase](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase4.png)
+![Showcase](https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/showcase4.png)
 
 # Modules
 
 The core module is the fundamental module that you need in order to use this library. The others 
 are extensions to core.
 
-Please note that since Material Dialogs v2, this library only supports Kotlin.
-The latest Java version is `0.9.6.0` and can be found [here](README_OLD.md).
+Please note that since Material Dialogs 2.x.x, this library only supports Kotlin. The latest Java version is `0.9.6.0` and can be found [here](README_OLD.md). Note that 0.9.6.0 is unsupported, bugs & improvements will not be made to that version.
 
 ## Core
 
@@ -27,7 +26,7 @@ The latest Java version is `0.9.6.0` and can be found [here](README_OLD.md).
 The `core` module contains everything you need to get started with the library. It contains all
 core and normal-use functionality.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/basic_with_buttons.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/basic_with_buttons.png" width="250px" />
 
 ```gradle
 dependencies {
@@ -44,7 +43,7 @@ dependencies {
  
 The `input` module contains extensions to the core module, such as a text input dialog.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/input.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/input.png" width="250px" />
 
 ```gradle
 dependencies {
@@ -61,7 +60,7 @@ dependencies {
 
 The `files` module contains extensions to the core module, such as a file and folder chooser.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_chooser.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/file_chooser.png" width="250px" />
 
 ```gradle
 dependencies {
@@ -78,7 +77,7 @@ dependencies {
 
 The `color` module contains extensions to the core module, such as a color chooser.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/color_chooser.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/color_chooser.png" width="250px" />
 
 ```gradle
 dependencies {
@@ -95,7 +94,7 @@ dependencies {
 
 The `datetime` module contains extensions to make date, time, and date-time picker dialogs.
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/datetimepicker.png" width="500px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/datetimepicker.png" width="500px" />
 
 ```gradle
 dependencies {
@@ -114,7 +113,7 @@ The `bottomsheets` module contains extensions to turn modal dialogs into bottom 
 other functionality like showing a grid of items. Be sure to checkout the sample project for this,
 too!
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/bottomsheet_customview.png" width="250px" />
+<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/main/art/bottomsheet_customview.png" width="250px" />
 
 ```gradle
 dependencies {
