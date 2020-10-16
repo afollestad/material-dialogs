@@ -89,9 +89,6 @@ internal class PreviewFrameView(
     }
     this.color = color
 
-    val gradientDrawable = GradientDrawable()
-    gradientDrawable.setColor(color)
-    gradientDrawable.cornerRadius = previewCornerRadius
     argbView.background = GradientDrawable().apply {
       setColor(color)
       cornerRadius = previewCornerRadius
