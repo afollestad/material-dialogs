@@ -22,6 +22,7 @@
 
     <!-- Dialog Theming attributes -->
     <item name="md_corner_radius">16dp</item>
+    <item name="md_preview_corner_radius">25dp</item>
     <item name="md_font_title">@font/raleway_bold</item>
     <item name="md_font_body">@font/raleway_medium</item>
     <item name="md_font_button">@font/raleway_semibold</item>

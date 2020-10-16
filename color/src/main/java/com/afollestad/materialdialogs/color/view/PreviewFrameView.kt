@@ -20,7 +20,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Color.BLACK
 import android.graphics.Color.WHITE
-import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +34,7 @@ import com.afollestad.materialdialogs.color.R.layout
 import com.afollestad.materialdialogs.color.utils.hexValue
 import com.afollestad.materialdialogs.color.utils.toColor
 import com.afollestad.materialdialogs.utils.MDUtil.isColorDark
+import com.afollestad.materialdialogs.utils.MDUtil.resolveDimen
 
 internal typealias HexColorChanged = (Int) -> Boolean
 
@@ -55,11 +56,13 @@ internal class PreviewFrameView(
   var onHexChanged: HexColorChanged = { true }
   var color: Int? = null
     private set
+  var previewCornerRadius: Float = 0f
 
   init {
     setBackgroundResource(drawable.transparent_rect_repeat)
     LayoutInflater.from(context)
         .inflate(layout.md_color_chooser_preview_frame, this)
+    previewCornerRadius = resolveDimen(context, R.attr.md_preview_corner_radius) { 0f }
   }
 
   override fun onFinishInflate() {
@@ -86,7 +89,14 @@ internal class PreviewFrameView(
     }
     this.color = color
 
-    argbView.background = ColorDrawable(color)
+    val gradientDrawable = GradientDrawable()
+    gradientDrawable.setColor(color)
+    gradientDrawable.cornerRadius = previewCornerRadius
+    argbView.background = GradientDrawable().apply {
+      setColor(color)
+      cornerRadius = previewCornerRadius
+    }
+
     hexValueView.updateText(color.hexValue(supportCustomAlpha))
     hexValueView.post { hexValueView.setSelection(hexValueView.textLength) }
 

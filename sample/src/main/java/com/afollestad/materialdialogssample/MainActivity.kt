@@ -643,7 +643,8 @@ class MainActivity : AppCompatActivity() {
             colors = ColorPalette.Primary,
             subColors = ColorPalette.PrimarySub,
             allowCustomArgb = true,
-            showAlphaSelector = true
+            showAlphaSelector = true,
+            customArgbOptions = intArrayOf(Color.RED, Color.YELLOW, Color.BLUE)
         ) { _, color ->
           toast("Selected color: ${color.toHex()}")
         }

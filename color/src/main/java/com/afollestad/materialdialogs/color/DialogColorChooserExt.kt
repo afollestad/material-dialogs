@@ -81,6 +81,7 @@ fun MaterialDialog.colorChooser(
   allowCustomArgb: Boolean = false,
   showAlphaSelector: Boolean = false,
   changeActionButtonsColor: Boolean = false,
+  customArgbOptions: IntArray? = null,
   selection: ColorCallback = null
 ): MaterialDialog {
   config.run {
@@ -97,8 +98,8 @@ fun MaterialDialog.colorChooser(
         subColors = subColors,
         initialSelection = initialSelection,
         waitForPositiveButton = waitForPositiveButton,
-        selection = selection,
-        allowCustomArgb = allowCustomArgb
+        allowCustomArgb = allowCustomArgb,
+        selection = selection
     )
   } else {
     customView(R.layout.md_color_chooser_base_pager, noVerticalPadding = true)
@@ -137,7 +138,8 @@ fun MaterialDialog.colorChooser(
     setupCustomPage(
         supportCustomAlpha = showAlphaSelector,
         initialSelection = initialSelection,
-        selection = selection
+        selection = selection,
+        customArgbOptions = customArgbOptions
     )
   }
 
@@ -205,7 +207,8 @@ private fun MaterialDialog.setupGridLayout(
 private fun MaterialDialog.setupCustomPage(
   supportCustomAlpha: Boolean,
   @ColorInt initialSelection: Int?,
-  selection: ColorCallback
+  selection: ColorCallback,
+  customArgbOptions: IntArray?
 ) {
   val viewSet = CustomPageViewSet(this).tint()
   config[KEY_CUSTOM_PAGE_VIEW_SET] = viewSet
@@ -231,6 +234,27 @@ private fun MaterialDialog.setupCustomPage(
     } else {
       viewSet.alphaLabel.clearTopMargin()
     }
+  }
+
+  if (customArgbOptions != null) {
+    val gridRecyclerView = getCustomView()
+        .findViewById<DialogRecyclerView>(R.id.providedColorGrid)
+    val gridColumnCount = windowContext.resources.getInteger(R.integer.color_grid_column_count)
+    gridRecyclerView.layoutManager = GridLayoutManager(windowContext, gridColumnCount)
+    gridRecyclerView.attach(this)
+
+    val adapter = ColorGridAdapter(
+        dialog = this,
+        colors = customArgbOptions,
+        subColors = null,
+        initialSelection = initialSelection,
+        waitForPositiveButton = false,
+        callback = { _, _ ->
+          invalidateFromColorChanged(valueChanged = initialSelection != null, selection = selection)
+        },
+        enableARGBButton = context.isLandscape()
+    )
+    gridRecyclerView.adapter = adapter
   }
 
   viewSet.previewFrame.onHexChanged = { color ->
