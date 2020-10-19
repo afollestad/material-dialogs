@@ -49,7 +49,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 ): MaterialDialog {
   assertOneSet("listItemsSingleChoice", items, res)
   val array = items ?: windowContext.getStringArray(res).toList()
-  require(initialSelection >= -1 || initialSelection < array.size) {
+  require(initialSelection >= -1 && initialSelection < array.size) {
     "Initial selection $initialSelection must be between -1 and " +
         "the size of your items array ${array.size}"
   }
@@ -67,7 +67,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
     )
   }
 
-  setActionButtonEnabled(POSITIVE, initialSelection > -1)
+  setActionButtonEnabled(POSITIVE, initialSelection > -1 && initialSelection < array.size)
   return customListAdapter(
       SingleChoiceDialogAdapter(
           dialog = this,
