@@ -64,6 +64,7 @@ class DialogContentLayout(
   private var scrollFrame: ViewGroup? = null
   private var messageTextView: TextView? = null
   private var useHorizontalPadding: Boolean = false
+  private var wrapCustomView: Boolean = false
   private val frameHorizontalMargin: Int by lazy {
     resources.getDimensionPixelSize(R.dimen.md_dialog_frame_margin_horizontal)
   }
@@ -116,7 +117,8 @@ class DialogContentLayout(
     view: View?,
     scrollable: Boolean,
     noVerticalPadding: Boolean,
-    horizontalPadding: Boolean
+    horizontalPadding: Boolean,
+    dialogWrapContent: Boolean
   ): View {
     check(customView == null) { "Custom view already set." }
 
@@ -125,6 +127,8 @@ class DialogContentLayout(
       val parent = view.parent as? ViewGroup
       parent?.let { parent.removeView(view) }
     }
+
+    wrapCustomView = dialogWrapContent
 
     if (scrollable) {
       // Since the view is going in the main ScrollView, apply padding to custom view.
@@ -207,12 +211,14 @@ class DialogContentLayout(
       if (currentChild.id == scrollView?.id) {
         continue
       }
+      val widthSpecSize = specWidth - if (currentChild == customView && useHorizontalPadding) {
+        specWidth - (frameHorizontalMargin * 2)
+      } else {
+        specWidth
+      }
+      val widthSpecMode = if (currentChild == customView && wrapCustomView) AT_MOST else EXACTLY
       currentChild.measure(
-          if (currentChild == customView && useHorizontalPadding) {
-            makeMeasureSpec(specWidth - (frameHorizontalMargin * 2), EXACTLY)
-          } else {
-            makeMeasureSpec(specWidth, EXACTLY)
-          },
+          makeMeasureSpec(widthSpecSize, widthSpecMode),
           makeMeasureSpec(heightPerRemainingChild, AT_MOST)
       )
       totalChildHeight += currentChild.measuredHeight
