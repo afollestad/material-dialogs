@@ -75,8 +75,6 @@ private fun MaterialDialog.lookupInputLayout(): TextInputLayout {
  * @param inputType The input type for the input field, e.g. phone or email. Defaults to plain text.
  * @param maxLength The max length for the input field, shows a counter and disables the positive
  *    action button if the input length surpasses it.
- * @param maxLines The max line length for the input field. Requires inputType flag
- *    TYPE_TEXT_FLAG_MULTI_LINE in order to be applied.
  * @param waitForPositiveButton When true, the [callback] isn't invoked until the positive button
  *    is clicked. Otherwise, it's invoked every time the input text changes. Defaults to true if
  *    the dialog has buttons.
@@ -93,7 +91,6 @@ fun MaterialDialog.input(
   @StringRes prefillRes: Int? = null,
   inputType: Int = InputType.TYPE_CLASS_TEXT,
   maxLength: Int? = null,
-  maxLines: Int? = null,
   waitForPositiveButton: Boolean = true,
   allowEmpty: Boolean = false,
   callback: InputCallback = null
@@ -118,10 +115,6 @@ fun MaterialDialog.input(
       counterMaxLength = maxLength
     }
     invalidateInputMaxLength(allowEmpty)
-  }
-
-  if (maxLines != null) {
-    getInputField().maxLines = maxLines
   }
 
   getInputField().textChanged {

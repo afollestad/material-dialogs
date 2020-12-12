@@ -544,25 +544,6 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    R.id.input_multiline.onClickDebounced {
-      MaterialDialog(this).show {
-        title(R.string.useGoogleLocationServices)
-        input(
-            hint = "Type something",
-            inputType = InputType.TYPE_CLASS_TEXT or
-                        InputType.TYPE_TEXT_FLAG_CAP_WORDS or
-                        InputType.TYPE_TEXT_FLAG_MULTI_LINE,
-            maxLines = 4
-        ) { _, text ->
-          toast("Input: $text")
-        }
-        positiveButton(R.string.agree)
-        negativeButton(R.string.disagree)
-        debugMode(debugMode)
-        lifecycleOwner(this@MainActivity)
-      }
-    }
-
     R.id.custom_view.onClickDebounced { showCustomViewDialog() }
 
     R.id.custom_view_webview.onClickDebounced { showWebViewDialog() }

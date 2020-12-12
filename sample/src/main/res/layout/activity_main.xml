@@ -278,12 +278,6 @@
         style="@style/SampleButton"
         />
 
-    <Button
-        android:id="@+id/input_multiline"
-        android:text="Input Multiple Lines"
-        style="@style/SampleButton"
-        />
-
     <!-- Custom Views -->
 
     <TextView
