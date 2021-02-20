@@ -1,0 +1,130 @@
+if (versions == null || versions.publish_version == null) {
+  throw new IllegalStateException("Unable to reference publish_version!")
+} else if (module_group == null || module_name == null) {
+  throw new IllegalStateException("Must provide module_group and module_name!")
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task androidSourcesJar(type: Jar) {
+  archiveClassifier.set('sources')
+  if (project.plugins.findPlugin("com.android.library")) {
+    // For Android libraries
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
+  } else {
+    // For pure Kotlin libraries, in case you have them
+    from sourceSets.main.java.srcDirs
+    from sourceSets.main.kotlin.srcDirs
+  }
+}
+
+artifacts {
+  archives androidSourcesJar
+}
+
+group = module_group
+version = versions.publish_version
+
+// Default values
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+ext["sonatypeStagingProfileId"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+  Properties p = new Properties()
+  new FileInputStream(secretPropsFile).withCloseable { is -> p.load(is) }
+  p.each { name, value -> ext[name] = value }
+} else {
+  ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
+  ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
+  ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
+  ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
+  ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
+  ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
+}
+
+publishing {
+  publications {
+    release(MavenPublication) {
+      // The coordinates of the library, being set from variables that
+      // we'll set up later
+      groupId module_group
+      artifactId module_name
+      version versions.publish_version
+
+      // Two artifacts, the `aar` (or `jar`) and the sources
+      if (project.plugins.findPlugin("com.android.library")) {
+        artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+      } else {
+        artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+      }
+      artifact androidSourcesJar
+
+      // Mostly self-explanatory metadata
+      pom {
+        packaging 'aar'
+        name = module_name
+        description = '😍 A beautiful, fluid, and extensible dialogs API for Kotlin & Android.'
+        url = 'https://github.com/afollestad/material-dialogs'
+        licenses {
+          license {
+            name = 'Apache 2.0 License'
+            url = 'https://github.com/afollestad/material-dialogs/blob/main/LICENSE.md'
+          }
+        }
+        developers {
+          developer {
+            id = 'afollestad'
+            name = 'Aidan Follestad'
+            email = 'dont-email-me@af.codes'
+          }
+          // Add all other devs here...
+        }
+        // Version control info - if you're using GitHub, follow the format as seen here
+        scm {
+          connection = 'scm:git:github.com/afollestad/material-dialogs.git'
+          developerConnection = 'scm:git:ssh://github.com/afollestad/material-dialogs.git'
+          url = 'https://github.com/afollestad/material-dialogs/tree/main'
+        }
+        // A slightly hacky fix so that your POM will include any transitive dependencies
+        // that your library builds upon
+        withXml {
+          def dependenciesNode = asNode().appendNode('dependencies')
+          project.configurations.implementation.allDependencies.each {
+            def dependencyNode = dependenciesNode.appendNode('dependency')
+            dependencyNode.appendNode('groupId', it.group)
+            dependencyNode.appendNode('artifactId', it.name)
+            dependencyNode.appendNode('version', it.version)
+          }
+        }
+      }
+    }
+  }
+  // The repository to publish to, Sonatype/MavenCentral
+  repositories {
+    maven {
+      // This is an arbitrary name, you may also use "mavencentral" or
+      // any other name that's descriptive for you
+      name = "sonatype"
+      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username ossrhUsername
+        password ossrhPassword
+      }
+    }
+  }
+}
+
+signing {
+  sign publishing.publications
+}
+
+afterEvaluate {
+  publishReleasePublicationToSonatypeRepository.dependsOn assembleRelease
+}
