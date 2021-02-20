@@ -28,7 +28,7 @@
 
 ## Gradle Dependency
 
-[ ![Core](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acore/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
+[ ![Core](https://img.shields.io/maven-central/v/com.afollestad.material-dialogs/core?label=core&style=for-the-badge) ](https://repo1.maven.org/maven2/com/afollestad/material-dialogs/core)
 
 The `core` module contains everything you need to get started with the library. It contains all
 core and normal-use functionality.

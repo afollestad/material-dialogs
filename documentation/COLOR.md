@@ -9,7 +9,7 @@
 
 ## Gradle Dependency
 
-[ ![Color](https://api.bintray.com/packages/drummer-aidan/maven/material-dialogs%3Acolor/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
+[ ![Color](https://img.shields.io/maven-central/v/com.afollestad.material-dialogs/color?label=color&style=for-the-badge) ](https://repo1.maven.org/maven2/com/afollestad/material-dialogs/color)
 
 The `color` module contains extensions to the core module, such as a color chooser.
 
