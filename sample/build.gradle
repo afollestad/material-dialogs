@@ -3,6 +3,8 @@ ext.module_name = "materialdialogssample"
 
 apply from: rootProject.file("gradle/android_application_config.gradle")
 
+android.defaultConfig.vectorDrawables.useSupportLibrary = true
+
 dependencies {
   implementation project(':core')
   implementation project(':input')
