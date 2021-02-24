@@ -67,7 +67,8 @@ fun MaterialDialog.customView(
           view = view,
           scrollable = scrollable,
           horizontalPadding = horizontalPadding,
-          noVerticalPadding = noVerticalPadding
+          noVerticalPadding = noVerticalPadding,
+          dialogWrapContent = dialogWrapContent
       )
       .also {
         if (dialogWrapContent) {
