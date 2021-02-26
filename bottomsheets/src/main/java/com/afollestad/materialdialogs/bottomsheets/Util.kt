@@ -33,7 +33,7 @@ internal fun BottomSheetBehavior<*>.setCallbacks(
   onSlide: (currentHeight: Int) -> Unit,
   onHide: () -> Unit
 ) {
-  setBottomSheetCallback(object : BottomSheetCallback() {
+  addBottomSheetCallback(object : BottomSheetCallback() {
     private var currentState: Int = STATE_COLLAPSED
 
     override fun onSlide(
