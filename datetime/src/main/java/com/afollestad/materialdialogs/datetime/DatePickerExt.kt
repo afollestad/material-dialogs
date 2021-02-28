@@ -46,11 +46,11 @@ fun MaterialDialog.datePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
-  check(minDate == null || currentDate == null || minDate.before(currentDate)) {
-    "Your `minDate` must be less than `currentDate`."
+  check(minDate == null || currentDate == null || !minDate.after(currentDate)) {
+    "Your `minDate` cannot be greater than `currentDate`."
   }
-  check(maxDate == null || currentDate == null || maxDate.after(currentDate)) {
-    "Your `maxDate` must be bigger than `currentDate`."
+  check(maxDate == null || currentDate == null || !maxDate.before(currentDate)) {
+    "Your `maxDate` cannot be less than `currentDate`."
   }
 
   getDatePicker().apply {
