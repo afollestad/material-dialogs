@@ -46,10 +46,10 @@ fun MaterialDialog.datePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
-  check(minDate == null || currentDate == null || minDate.before(currentDate)) {
+  check(minDate == null || currentDate == null || minDate.isSameDayAs(currentDate) || minDate.before(currentDate)) {
     "Your `minDate` must be less than `currentDate`."
   }
-  check(maxDate == null || currentDate == null || maxDate.after(currentDate)) {
+  check(maxDate == null || currentDate == null || maxDate.isSameDayAs(currentDate) || maxDate.after(currentDate)) {
     "Your `maxDate` must be bigger than `currentDate`."
   }
 
@@ -93,4 +93,17 @@ fun MaterialDialog.datePicker(
  */
 @CheckResult fun MaterialDialog.selectedDate(): Calendar {
   return getDatePicker().getDate()!!
+}
+
+/**
+ * Checks if two calendars are the same day
+ */
+fun Calendar.isSameDayAs(other: Calendar) : Boolean {
+  val thisDayOfYear = get(Calendar.DAY_OF_YEAR)
+  val thisYear = get(Calendar.YEAR)
+
+  val otherDayOfYear = other.get(Calendar.DAY_OF_YEAR)
+  val otherYear = other.get(Calendar.YEAR)
+
+  return thisDayOfYear == otherDayOfYear && thisYear == otherYear
 }
