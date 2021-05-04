@@ -98,7 +98,7 @@ fun MaterialDialog.datePicker(
 /**
  * Checks if two calendars are the same day
  */
-fun Calendar.isSameDayAs(other: Calendar) : Boolean {
+fun Calendar.isSameDayAs(other: Calendar): Boolean {
   val thisDayOfYear = get(Calendar.DAY_OF_YEAR)
   val thisYear = get(Calendar.YEAR)
 
