@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.isFutureDate
+import com.afollestad.materialdialogs.datetime.utils.isSameDayAs
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import java.util.Calendar
 
@@ -93,17 +94,4 @@ fun MaterialDialog.datePicker(
  */
 @CheckResult fun MaterialDialog.selectedDate(): Calendar {
   return getDatePicker().getDate()!!
-}
-
-/**
- * Checks if two calendars are the same day
- */
-fun Calendar.isSameDayAs(other: Calendar): Boolean {
-  val thisDayOfYear = get(Calendar.DAY_OF_YEAR)
-  val thisYear = get(Calendar.YEAR)
-
-  val otherDayOfYear = other.get(Calendar.DAY_OF_YEAR)
-  val otherYear = other.get(Calendar.YEAR)
-
-  return thisDayOfYear == otherDayOfYear && thisYear == otherYear
 }
