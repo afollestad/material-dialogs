@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.getDatePicker
 import com.afollestad.materialdialogs.datetime.utils.isFutureDate
+import com.afollestad.materialdialogs.datetime.utils.isSameDayAs
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
 import java.util.Calendar
 
@@ -46,10 +47,10 @@ fun MaterialDialog.datePicker(
       dialogWrapContent = windowContext.isLandscape()
   )
 
-  check(minDate == null || currentDate == null || minDate.before(currentDate)) {
+  check(minDate == null || currentDate == null || minDate.isSameDayAs(currentDate) || minDate.before(currentDate)) {
     "Your `minDate` must be less than `currentDate`."
   }
-  check(maxDate == null || currentDate == null || maxDate.after(currentDate)) {
+  check(maxDate == null || currentDate == null || maxDate.isSameDayAs(currentDate) || maxDate.after(currentDate)) {
     "Your `maxDate` must be bigger than `currentDate`."
   }
 

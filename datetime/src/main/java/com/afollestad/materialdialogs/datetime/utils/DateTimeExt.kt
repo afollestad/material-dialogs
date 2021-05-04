@@ -59,3 +59,16 @@ internal fun toCalendar(
     set(Calendar.MINUTE, timePicker.minute())
   }
 }
+
+/**
+ * Checks if two calendars are the same day
+ */
+internal fun Calendar.isSameDayAs(other: Calendar): Boolean {
+  val thisDayOfYear = get(Calendar.DAY_OF_YEAR)
+  val thisYear = get(Calendar.YEAR)
+
+  val otherDayOfYear = other.get(Calendar.DAY_OF_YEAR)
+  val otherYear = other.get(Calendar.YEAR)
+
+  return thisDayOfYear == otherDayOfYear && thisYear == otherYear
+}
