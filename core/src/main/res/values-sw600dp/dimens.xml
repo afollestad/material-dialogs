@@ -2,5 +2,9 @@
 <resources>
 
   <dimen name="md_dialog_max_width">446dp</dimen>
+  
+  <dimen name="md_title_textsize">26sp</dimen>
+  <dimen name="md_message_textsize">24sp</dimen>
+  <dimen name="md_action_button_textsize">18sp</dimen>
 
 </resources>
