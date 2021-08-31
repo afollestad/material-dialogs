@@ -2,12 +2,11 @@ ext.module_package_id = "${module_group}.${module_name}"
 logger.info("Package ID: $module_package_id")
 
 apply plugin: "kotlin-android"
-apply from: rootProject.file("dependencies.gradle")
-apply from: rootProject.file("gradle/spotless_plugin_config.gradle")
+apply from: project.file("../dependencies.gradle")
+//apply from: rootProject.file("gradle/spotless_plugin_config.gradle")
 
 android {
   compileSdkVersion versions.compile_sdk
-  buildToolsVersion versions.build_tools
 
   compileOptions {
     sourceCompatibility 1.8

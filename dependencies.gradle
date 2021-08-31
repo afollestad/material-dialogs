@@ -1,15 +1,14 @@
 ext.versions = [
     min_sdk: 16,
     compile_sdk: 29,
-    build_tools: "29.0.0",
     publish_version: "3.3.0",
     publish_version_code: 262
 ]
 
 ext.deps = [
     gradle_plugins: [
-        android: "com.android.tools.build:gradle:4.1.2",
-        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61",
+        android: "com.android.tools.build:gradle:7.0.1",
+        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30",
         spotless: "com.diffplug.spotless:spotless-plugin-gradle:3.27.1",
         versions: "com.github.ben-manes:gradle-versions-plugin:0.27.0"
     ],

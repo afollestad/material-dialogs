@@ -61,7 +61,7 @@ internal fun BottomSheetBehavior<*>.setCallbacks(
   })
 }
 
-internal fun BottomSheetBehavior<*>.animatePeekHeight(
+internal fun BottomSheetBehavior<*>.animateViewHeight(
   view: View,
   start: Int = peekHeight,
   dest: Int,
