@@ -79,7 +79,7 @@ fun MaterialDialog.setPeekHeight(
   bottomSheet.defaultPeekHeight = destinationPeekHeight
   val bottomSheetBehavior = bottomSheet.bottomSheetBehavior
   if (isShowing) {
-    bottomSheetBehavior?.animatePeekHeight(
+    bottomSheetBehavior?.animateViewHeight(
         view = this.view,
         dest = destinationPeekHeight,
         duration = LAYOUT_PEEK_CHANGE_DURATION_MS

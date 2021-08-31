@@ -1,1 +1,16 @@
-include ':core', ':sample', ':files', ':color', ':input', ':lifecycle', ':datetime', ':bottomsheets'
+include ':sample'
+
+include ':md:core'
+project(':md:core').projectDir = new File("core")
+include ':md:input'
+project(':md:input').projectDir = new File("input")
+include ':md:lifecycle'
+project(':md:lifecycle').projectDir = new File("lifecycle")
+include ':md:files'
+project(':md:files').projectDir = new File("files")
+include ':md:color'
+project(':md:color').projectDir = new File("color")
+include ':md:datetime'
+project(':md:datetime').projectDir = new File("datetime")
+include ':md:bottomsheets'
+project(':md:bottomsheets').projectDir = new File("bottomsheets")

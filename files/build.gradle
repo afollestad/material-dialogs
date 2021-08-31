@@ -1,11 +1,11 @@
 ext.module_group = "com.afollestad.material-dialogs"
 ext.module_name = "files"
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
+apply from: project.file("../gradle/android_library_config.gradle")
 
 dependencies {
-  api project(':core')
-  api project(':input')
+  api project(':md:core')
+  api project(':md:input')
 
   implementation deps.kotlin.coroutines.android
   implementation deps.kotlin.stdlib8

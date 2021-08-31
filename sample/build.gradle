@@ -6,13 +6,13 @@ apply from: rootProject.file("gradle/android_application_config.gradle")
 android.defaultConfig.vectorDrawables.useSupportLibrary = true
 
 dependencies {
-  implementation project(':core')
-  implementation project(':input')
-  implementation project(':files')
-  implementation project(':color')
-  implementation project(':datetime')
-  implementation project(':bottomsheets')
-  implementation project(':lifecycle')
+  implementation project(':md:core')
+  implementation project(':md:input')
+  implementation project(':md:files')
+  implementation project(':md:color')
+  implementation project(':md:datetime')
+  implementation project(':md:bottomsheets')
+  implementation project(':md:lifecycle')
 
   implementation deps.kotlin.stdlib8
 

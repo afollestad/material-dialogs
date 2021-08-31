@@ -1,7 +1,7 @@
 ext.module_group = "com.afollestad.material-dialogs"
 ext.module_name = "core"
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
+apply from: project.file("../gradle/android_library_config.gradle")
 
 dependencies {
   api deps.androidx.core

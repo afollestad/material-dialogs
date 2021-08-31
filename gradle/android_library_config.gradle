@@ -1,4 +1,9 @@
 apply plugin: "com.android.library"
 
-apply from: rootProject.file("gradle/android_common_config.gradle")
-apply from: rootProject.file("gradle/android_publish_mavencentral.gradle")
+apply from: project.file("../gradle/android_common_config.gradle")
+
+// maven
+//apply from: project.file("../gradle/android_publish_mavencentral.gradle")
+
+// jitpack
+apply from: project.file("../gradle/android_publish_jitpack.gradle")
