@@ -1,16 +1,16 @@
 ext.versions = [
     min_sdk: 16,
-    compile_sdk: 29,
-    build_tools: "29.0.0",
+    compile_sdk: 33,
+    build_tools: "30.0.3",
     publish_version: "3.3.0",
     publish_version_code: 262
 ]
 
 ext.deps = [
     gradle_plugins: [
-        android: "com.android.tools.build:gradle:4.1.2",
-        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61",
-        spotless: "com.diffplug.spotless:spotless-plugin-gradle:3.27.1",
+        android: "com.android.tools.build:gradle:7.3.1",
+        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0",
+        spotless: "com.diffplug.spotless:spotless-plugin-gradle:4.5.1",
         versions: "com.github.ben-manes:gradle-versions-plugin:0.27.0"
     ],
 
@@ -25,7 +25,7 @@ ext.deps = [
         recycler_view: "androidx.recyclerview:recyclerview:1.1.0"
     ],
 
-    google_material: "com.google.android.material:material:1.1.0",
+    google_material: "com.google.android.material:material:1.8.0",
 
     kotlin: [
         stdlib8: "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
@@ -40,5 +40,7 @@ ext.deps = [
         date_picker: "com.afollestad:date-picker:0.6.1"
     ],
 
-    leak_canary: "com.squareup.leakcanary:leakcanary-android:2.2"
+    leak_canary: "com.squareup.leakcanary:leakcanary-android:2.2",
+
+    multiDex: "androidx.multidex:multidex:2.0.1"
 ]
