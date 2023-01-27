@@ -45,7 +45,7 @@
     <item name="android:layout_marginBottom">@dimen/headerMarginVertical</item>
   </style>
 
-  <style name="SampleButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+  <style name="SampleButton" parent="Widget.Material3.Button.UnelevatedButton">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/sample_button_height</item>
     <item name="android:layout_marginTop">@dimen/sample_button_spacing</item>

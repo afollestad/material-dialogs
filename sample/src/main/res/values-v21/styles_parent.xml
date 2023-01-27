@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="ThemeParent" parent="Theme.MaterialComponents.Light.DarkActionBar">
+  <style name="ThemeParent" parent="Theme.Material3.Light">
     <item name="android:navigationBarColor">?colorPrimaryDark</item>
     <item name="sample_button_color">#80000000</item>
     <item name="sample_button_text_color">#e6e6e6</item>
   </style>
 
-  <style name="ThemeParent.Dark" parent="Theme.MaterialComponents">
+  <style name="ThemeParent.Dark" parent="Theme.Material3.Dark">
     <item name="android:navigationBarColor">?colorPrimaryDark</item>
     <item name="sample_button_color">#80000000</item>
     <item name="sample_button_text_color">#e6e6e6</item>
