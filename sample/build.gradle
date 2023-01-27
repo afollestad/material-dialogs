@@ -4,6 +4,7 @@ ext.module_name = "materialdialogssample"
 apply from: rootProject.file("gradle/android_application_config.gradle")
 
 android.defaultConfig.vectorDrawables.useSupportLibrary = true
+android.defaultConfig.multiDexEnabled = true
 
 dependencies {
   implementation project(':core')
@@ -24,4 +25,6 @@ dependencies {
   implementation deps.afollestad.assent
 
   debugImplementation deps.leak_canary
+
+  debugImplementation deps.multiDex
 }
